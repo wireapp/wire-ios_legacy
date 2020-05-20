@@ -16,28 +16,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
 @testable import Wire
 
-class AppLockViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class AppLockViewControllerSnapshotTests: XCTestCase {
     var sut: AppLockViewController!
     
     override func setUp() {
         super.setUp()
+
         sut = AppLockViewController()
         sut.viewDidLoad()
     }
     
+    ///TODO: blur view is not visible in updated snapshots
     func testInitialState() {
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testDimmedState() {
         sut.setContents(dimmed: true)
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testReauthState() {
         sut.setReauth(visible: true)
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }

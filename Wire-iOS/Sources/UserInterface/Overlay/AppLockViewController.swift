@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import Cartography
 import WireSyncEngine
 import UIKit
-import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -32,11 +30,11 @@ final class AppLockViewController: UIViewController {
     // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
-    
+
     private var dimContents: Bool = false {
         didSet {
             view.window?.isHidden = !dimContents
-            
+
             if dimContents {
                 AppDelegate.shared.notificationsWindow?.makeKey()
             } else {
@@ -44,7 +42,7 @@ final class AppLockViewController: UIViewController {
             }
         }
     }
-    
+
     static let shared = AppLockViewController()
 
     static var isLocked: Bool {
@@ -54,25 +52,25 @@ final class AppLockViewController: UIViewController {
     convenience init() {
         self.init(nibName:nil, bundle:nil)
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.appLockPresenter = AppLockPresenter(userInterface: self)
-        
-        self.lockView = AppLockView()
+
+        lockView = AppLockView()
         self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }
             self.appLockPresenter?.requireAuthentication()
         }
-        
+
         self.spinner.hidesWhenStopped = true
         self.spinner.translatesAutoresizingMaskIntoConstraints = false
-        
+
         self.view.addSubview(self.lockView)
         self.view.addSubview(self.spinner)
 
@@ -94,7 +92,7 @@ extension AppLockViewController: AppLockUserInterface {
         self.passwordController = passwordController
         self.present(passwordController.alertController, animated: true, completion: nil)
     }
-    
+
     func setSpinner(animating: Bool) {
         if animating {
             self.spinner.startAnimating()
@@ -102,13 +100,12 @@ extension AppLockViewController: AppLockUserInterface {
             self.spinner.stopAnimating()
         }
     }
-    
+
     func setReauth(visible: Bool) {
         self.lockView.showReauth = visible
     }
-    
+
     func setContents(dimmed: Bool) {
         self.dimContents = dimmed
     }
 }
-

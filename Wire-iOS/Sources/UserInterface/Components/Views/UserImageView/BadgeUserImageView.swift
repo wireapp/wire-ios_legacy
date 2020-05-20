@@ -51,7 +51,7 @@ final class BadgeUserImageView: UserImageView {
 
     // MARK: - Initialization
 
-    @objc override convenience init(frame: CGRect) {
+    override convenience init(frame: CGRect) {
         self.init(size: .small)
     }
     

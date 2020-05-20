@@ -19,12 +19,16 @@
 import XCTest
 @testable import Wire
 
-final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+final class RemoveClientStepViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: RemoveClientStepViewController!
-    
+
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
+
         sut = RemoveClientStepViewController(clients: [mockUserClient(),
                                                        mockUserClient(),
                                                        mockUserClient(),
@@ -32,26 +36,21 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
                                                        mockUserClient()],
                                              credentials: ZMCredentials())
     }
-    
+
     override func tearDown() {
         sut = nil
+
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
     func testForWrappedInNavigationController() {
-        // GIVEN
+        // GIVEN & WHEN
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
         navigationController.viewControllers = [UIViewController(), sut]
 
-        // WHEN
-        presentViewController(navigationController)
-
-        verifyInAllDeviceSizes(view: navigationController.view) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
-
-        // CLEANUP
-        dismissViewController(navigationController)
+        // THEN
+        verify(matching: navigationController)
     }
 }

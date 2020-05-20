@@ -91,7 +91,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     private var doubleTapGesture: UITapGestureRecognizer!
     private var singleTapGesture: UITapGestureRecognizer!
 
-    @objc var showsMenu = false
+    var showsMenu = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.cellView = C.View(frame: .zero)

@@ -16,24 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 final class CallController: NSObject {
 
-    weak var targetViewController: UIViewController? = nil
+    weak var targetViewController: UIViewController?
     private(set) weak var activeCallViewController: ActiveCallViewController?
-
     fileprivate let callQualityController = CallQualityController()
-    fileprivate var scheduledPostCallAction: (()->Void)?
+    fileprivate var scheduledPostCallAction: (() -> Void)?
     fileprivate var observerTokens: [Any] = []
-    fileprivate var minimizedCall: ZMConversation? = nil
+    fileprivate var minimizedCall: ZMConversation?
     fileprivate var topOverlayCall: ZMConversation? = nil {
         didSet {
             guard  topOverlayCall != oldValue else { return }
-            
+
             if let conversation = topOverlayCall {
                 let callTopOverlayController = CallTopOverlayController(conversation: conversation)
                 callTopOverlayController.delegate = self
@@ -43,7 +40,7 @@ final class CallController: NSObject {
             }
         }
     }
-    
+
     override init() {
         super.init()
         callQualityController.delegate = self
@@ -56,17 +53,17 @@ final class CallController: NSObject {
 }
 
 extension CallController: WireCallCenterCallStateObserver {
-    
+
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateState()
     }
-    
+
     func updateState() {
         guard let userSession = ZMUserSession.shared() else { return }
-        
+
         if let priorityCallConversation = userSession.priorityCallConversation {
             topOverlayCall = priorityCallConversation
-            
+
             if priorityCallConversation == minimizedCall {
                 minimizeCall(in: priorityCallConversation)
             } else {
@@ -81,85 +78,103 @@ extension CallController: WireCallCenterCallStateObserver {
                 } else {
                     animated =  true
                 }
-                presentCall(in: priorityCallConversation, animated: animated)
+                presentCall(in: priorityCallConversation,
+                            animated: animated)
             }
         } else {
             dismissCall()
         }
     }
-    
+
     func minimizeCall(animated: Bool, completion: (() -> Void)?) {
         guard let activeCallViewController = activeCallViewController else {
             completion?()
             return
         }
-    
+
         activeCallViewController.dismiss(animated: animated, completion: completion)
     }
-    
+
     fileprivate func minimizeCall(in conversation: ZMConversation) {
         activeCallViewController?.dismiss(animated: true)
     }
-    
-    fileprivate  func presentCall(in conversation: ZMConversation, animated: Bool = true) {
-        guard activeCallViewController == nil else { return }
+
+    fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
+        guard activeCallViewController == nil else {
+            return
+        }
         guard let voiceChannel = conversation.voiceChannel else { return }
-        
+
         if minimizedCall == conversation {
             minimizedCall = nil
         }
-        
+
         let viewController = ActiveCallViewController(voiceChannel: voiceChannel)
         viewController.dismisser = self
         activeCallViewController = viewController
-        
+
         // NOTE: We resign first reponder for the input bar since it will attempt to restore
         // first responder when the call overlay is interactively dismissed but canceled.
         UIResponder.currentFirst?.resignFirstResponder()
-        
+
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        targetViewController?.present(modalVC, animated: animated)
+
+        modalVC.dismissClosure = {
+            self.activeCallViewController = nil
+        }
+
+        let callWindow: CallWindow? = targetViewController?.view.window as? CallWindow
+        let presentClosure: Completion = {
+            callWindow?.isHidden = false
+            self.targetViewController?.present(modalVC, animated: animated)
+        }
+
+        if targetViewController?.presentedViewController != nil {
+            targetViewController?.presentedViewController?.dismiss(animated: true, completion: presentClosure)
+        } else {
+            presentClosure()
+        }
     }
-    
+
     fileprivate func dismissCall() {
         minimizedCall = nil
         topOverlayCall = nil
 
-        activeCallViewController?.dismiss(animated: true) {
-            if let postCallAction = self.scheduledPostCallAction {
+        activeCallViewController?.dismiss(animated: true) { [weak self] in
+            if let postCallAction = self?.scheduledPostCallAction {
                 postCallAction()
-                self.scheduledPostCallAction = nil
+                self?.scheduledPostCallAction = nil
             }
+            self?.activeCallViewController = nil
         }
-        
-        activeCallViewController = nil
     }
 }
 
 extension CallController: ViewControllerDismisser {
-    
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
-        guard let callViewController = viewController as? CallViewController, let conversation = callViewController.conversation else { return }
-        
+
+    func dismiss(viewController: UIViewController, completion: Completion? = nil) {
+        guard let callViewController = viewController as? CallViewController,
+            let conversation = callViewController.conversation else { return }
+
         minimizedCall = conversation
-        activeCallViewController = nil        
+        activeCallViewController = nil
     }
-    
+
 }
 
 extension CallController: CallTopOverlayControllerDelegate {
-    
+
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController) {
         presentCall(in: controller.conversation)
     }
-    
+
 }
 
 extension CallController: CallQualityControllerDelegate {
 
     func dismissCurrentSurveyIfNeeded() {
         if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
-            survey.dismiss(animated: true, completion: nil)
+            survey.dismiss(animated: true)
         }
     }
 
@@ -167,19 +182,19 @@ extension CallController: CallQualityControllerDelegate {
         let presentCallQualityControllerAction: () -> Void = { [weak self] in
             self?.targetViewController?.present(controller, animated: true, completion: nil)
         }
-        
+
         if self.activeCallViewController == nil {
             presentCallQualityControllerAction()
         } else {
             scheduledPostCallAction = presentCallQualityControllerAction
         }
     }
-    
+
     func callQualityControllerDidScheduleDebugAlert() {
         let presentDebugAlertAction: () -> Void = {
             DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue and improve the overall app experience.")
         }
-        
+
         if self.activeCallViewController == nil {
             presentDebugAlertAction()
         } else {
@@ -189,12 +204,11 @@ extension CallController: CallQualityControllerDelegate {
 
 }
 
-
 extension CallController: WireCallCenterCallErrorObserver {
-    
+
     func callCenterDidReceiveCallError(_ error: CallError) {
         guard error == .unknownProtocol else { return }
-        
+
         let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized, message: "voice.call_error.unsupported_version.message".localized, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
             UIApplication.shared.open(URL.wr_wireAppOnItunes)

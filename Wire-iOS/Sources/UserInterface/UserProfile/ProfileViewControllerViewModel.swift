@@ -123,12 +123,15 @@ final class ProfileViewControllerViewModel: NSObject {
             zmLog.error("No user to open conversation with")
             return
         }
-        var conversation: ZMConversation! = nil
+        var conversation: ZMConversation? = nil
         
         ZMUserSession.shared()?.enqueue({
             conversation = fullUser.oneToOneConversation
         }, completionHandler: {
-            self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController, wantsToNavigateTo: conversation)
+            guard let conversation = conversation else { return }
+            
+            self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController,
+                                                 wantsToNavigateTo: conversation)
         })
     }
     
@@ -254,6 +257,10 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
 
         if note.nameChanged {
             viewModelDelegate?.updateTitleView()
+        }
+        
+        if note.user.isAccountDeleted {
+            viewModelDelegate?.updateFooterViews()
         }
     }
 }

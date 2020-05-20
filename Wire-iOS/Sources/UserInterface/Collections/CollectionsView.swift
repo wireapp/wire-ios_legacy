@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 import UIKit
@@ -25,19 +24,19 @@ final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()
-    
+
     static let useAutolayout = false
-    
+
     var noItemsInLibrary: Bool = false {
         didSet {
             self.noResultsView.isHidden = !self.noItemsInLibrary
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .from(scheme: .contentBackground)
-        
+
         self.recreateLayout()
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout)
 
@@ -56,14 +55,14 @@ final class CollectionsView: UIView {
         self.collectionView.isScrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clear
         self.addSubview(self.collectionView)
-   
+
         self.noResultsView.label.accessibilityLabel = "no items"
         self.noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
         self.noResultsView.icon = .library
         self.noResultsView.isHidden = true
         self.addSubview(self.noResultsView)
     }
-    
+
     private func recreateLayout() {
         let layout = CollectionViewLeftAlignedFlowLayout()
         layout.scrollDirection = .vertical
@@ -73,14 +72,14 @@ final class CollectionsView: UIView {
         if CollectionsView.useAutolayout {
             layout.estimatedItemSize = CGSize(width: 64, height: 64)
         }
-        
+
         self.collectionViewLayout = layout
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     static func closeButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
@@ -89,7 +88,7 @@ final class CollectionsView: UIView {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -24)
         return button
     }
-    
+
     static func backButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(.backArrow, size: .tiny, for: .normal)
@@ -98,20 +97,20 @@ final class CollectionsView: UIView {
         button.accessibilityIdentifier = "back"
         return button
     }
-    
+
     func constrainViews(searchViewController: TextSearchViewController) {
-        self.addSubview(searchViewController.resultsView)
-        self.addSubview(searchViewController.searchBar)
-        
+        addSubview(searchViewController.resultsView)
+        addSubview(searchViewController.searchBar)
+
         constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { selfView, searchBar, collectionView, noResultsView in
-            
+
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading
             searchBar.trailing == selfView.trailing
             searchBar.height == 56
-            
+
             collectionView.top == searchBar.bottom
-            
+
             collectionView.leading == selfView.leading
             collectionView.trailing == selfView.trailing
             collectionView.bottom == selfView.bottom
@@ -123,10 +122,10 @@ final class CollectionsView: UIView {
             noResultsView.leading >= selfView.leading + 24
             noResultsView.trailing <= selfView.trailing - 24
         }
-        
+
         constrain(self.collectionView, searchViewController.resultsView) { collectionView, resultsView in
             resultsView.edges == collectionView.edges
         }
     }
-    
+
 }

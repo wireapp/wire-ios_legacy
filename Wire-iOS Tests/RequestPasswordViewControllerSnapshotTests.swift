@@ -19,35 +19,39 @@
 import XCTest
 @testable import Wire
 
-final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
+final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var sut: RequestPasswordController!
     var fingerprint: Data!
 
     override func setUp() {
         super.setUp()
-        fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
-    }
+        coreDataFixture = CoreDataFixture()
 
+        fingerprint = coreDataFixture.mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+    }
 
     override func tearDown() {
         fingerprint = nil
         sut = nil
 
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
-    func testForRemoveDeviceContextPasswordEntered(){
+    func testForRemoveDeviceContextPasswordEntered() {
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
         sut.passwordTextField?.text = "12345678"
         sut.passwordTextFieldChanged(sut.passwordTextField!)
 
-        verifyAlertController(sut.alertController)
+        verify(matching:sut.alertController)
     }
 
-    func testForRemoveDeviceContext(){
+    func testForRemoveDeviceContext() {
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
 
-        verifyAlertController(sut.alertController)
+        verify(matching:sut.alertController)
     }
 }

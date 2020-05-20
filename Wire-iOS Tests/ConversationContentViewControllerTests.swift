@@ -19,7 +19,8 @@
 import XCTest
 @testable import Wire
 
-final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
+final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var sut: ConversationContentViewController!
     var mockConversation: ZMConversation!
@@ -28,6 +29,8 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
 
         mockConversation = createTeamGroupConversation()
 
@@ -51,6 +54,8 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         mockZMUserSession = nil
         mockMessage = nil
 
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
@@ -62,6 +67,6 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "test")!
         sut.messageAction(actionId: .delete, for: message, view: view)
 
-        verifyAlertController(sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
+        verify(matching: sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
     }
 }

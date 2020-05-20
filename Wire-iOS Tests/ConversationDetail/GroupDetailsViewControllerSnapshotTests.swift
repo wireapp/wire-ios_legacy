@@ -19,23 +19,26 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: GroupDetailsViewController!
     var groupConversation: ZMConversation!
     
     override func setUp() {
         super.setUp()
+        coreDataFixture = CoreDataFixture()
 
         groupConversation = createGroupConversation()
         groupConversation.userDefinedName = "iOS Team"
-        SelfUser.provider = selfUserProvider
     }
     
     override func tearDown() {
         sut = nil
         groupConversation = nil
         SelfUser.provider = nil
+        coreDataFixture = nil
+
         super.tearDown()
     }
     
@@ -55,7 +58,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
             
-            verify(view: sut.view)
+            verify(matching: sut)
         }
     }
     
@@ -63,7 +66,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
             sut = GroupDetailsViewController(conversation: groupConversation)
-            verify(view: sut.view)
+            verify(matching: sut)
         }
     }
     
@@ -93,7 +96,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             sut = GroupDetailsViewController(conversation: groupConversation)
             
             // THEN
-            verify(view: sut.view)
+            verify(matching: sut)
         }
     }
     
@@ -103,7 +106,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             groupConversation.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
             sut = GroupDetailsViewController(conversation: groupConversation)
-            verify(view: sut.view)
+            verify(matching: sut)
         }
     }
 
@@ -124,7 +127,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             sut = GroupDetailsViewController(conversation: groupConversation)
             
             // THEN
-            verify(view: self.sut.view)
+            verify(matching: sut)
         }
     }
 
@@ -132,7 +135,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
                                             line: UInt = #line) {
         sut = GroupDetailsViewController(conversation: groupConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
-        verifyAlertController((sut?.actionController?.alertController)!, file: file, line: line)
+        verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
 
     func testForActionMenu() {
@@ -168,7 +171,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             sut = GroupDetailsViewController(conversation: groupConversationAdmin)
             
             // THEN
-            verify(view: sut.view)
+            verify(matching: sut)
         }
     }
 }

@@ -90,8 +90,8 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         super.setUp()
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
-        if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
-            XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
+        if UIDevice.current.systemVersion.compare("13", options: .numeric, range: nil, locale: .current) == .orderedAscending {
+            XCTFail("Snapshot tests need to be run on a device running at least iOS 13")
         }
         AppRootViewController.configureAppearance()
         UIView.setAnimationsEnabled(false)
@@ -174,14 +174,17 @@ extension ZMSnapshotTestCase {
     private func snapshotVerify(view: UIView,
                                 identifier: String? = nil,
                                 suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
-                                tolerance: CGFloat = 0,
+                                tolerance: CGFloat = tolerance,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        if let errorDescription = snapshotVerifyViewOrLayer(view,
+        let errorDescription = snapshotVerifyViewOrLayer(view,
                                                             identifier: identifier,
-                                                            suffixes: suffix,
-                                                            tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
+                                                            suffixes: suffix!,
+                                                            overallTolerance: tolerance,
+                                                            defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR),
+                                                            defaultImageDiffDirectory: (IMAGE_DIFF_DIR))
 
+        if errorDescription.count > 0 {
             XCTFail("\(errorDescription)", file:file, line:line)
         } else {
             XCTAssert(true)
@@ -240,7 +243,7 @@ extension ZMSnapshotTestCase {
     /// Performs an assertion with the given view and the recorded snapshot.
     func verify(view: UIView,
                 extraLayoutPass: Bool = false,
-                tolerance: CGFloat = 0,
+                tolerance: CGFloat = tolerance,
                 identifier: String? = nil,
                 deviceName: String? = nil,
                 file: StaticString = #file,
@@ -268,11 +271,12 @@ extension ZMSnapshotTestCase {
         assertAmbigousLayout(container, file: file, line: line)
     }
 
+    static let tolerance: CGFloat = 0.3
     /// Performs an assertion with the given view and the recorded snapshot with the custom width
     func verifyView(view: UIView,
                     extraLayoutPass: Bool = false,
                     width: CGFloat,
-                    tolerance: CGFloat = 0,
+                    tolerance: CGFloat = tolerance,
                     identifier: String? = nil,
                     configuration: ((UIView) -> Swift.Void)? = nil,
                     file: StaticString = #file,
@@ -305,7 +309,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllPhoneWidths(view: UIView,
                                 extraLayoutPass: Bool = false,
-                                tolerance: CGFloat = 0,
+                                tolerance: CGFloat = tolerance,
                                 configuration: ((UIView) -> Swift.Void)? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
@@ -366,7 +370,7 @@ extension ZMSnapshotTestCase {
     // MARK: - verify the snapshots in both dark and light scheme
 
     func verifyInAllColorSchemes(view: UIView,
-                                 tolerance: CGFloat = 0,
+                                 tolerance: CGFloat = tolerance,
                                  file: StaticString = #file,
                                  line: UInt = #line) {
         if var themeable = view as? Themeable {

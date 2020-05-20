@@ -17,6 +17,7 @@
 //
 
 import Photos
+import UIKit
 
 protocol ImageManagerProtocol {
     func cancelImageRequest(_ requestID: PHImageRequestID)

@@ -1,10 +1,10 @@
-github "wireapp/wire-ios-ziphy" ~> 13.0
-github "wireapp/Cartography" "4.0.0"
-github "wireapp/wire-ios-sync-engine" ~> 319.1
-github "wireapp/wire-ios-share-engine" ~> 180.0
+github "wireapp/wire-ios-ziphy" ~> 14.0
+github "wireapp/Cartography" "4.0.0-xcode_11_4_1"
+github "wireapp/wire-ios-sync-engine" ~> 322.0
+github "wireapp/wire-ios-share-engine" ~> 182.0
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
-github "wireapp/wire-ios-canvas" ~> 10.0
+github "wireapp/wire-ios-canvas" ~> 11.0
 github "wireapp/appcenter-sdk-apple" ~> 2.5
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
-github "wireapp/Down" "v2.1.3"
-github "wireapp/DifferenceKit" "1.1.3"
+github "wireapp/Down" "v2.2.2_XCode11.4.1"
+github "wireapp/DifferenceKit" "1.1.5_XCode11.4.1"

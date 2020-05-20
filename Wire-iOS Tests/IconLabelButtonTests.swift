@@ -19,19 +19,18 @@
 import XCTest
 @testable import Wire
 
-class IconLabelButtonTests: ZMSnapshotTestCase {
-    
+final class IconLabelButtonTests: XCTestCase {
+
     fileprivate var button: IconLabelButton!
-    
+
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
         button = IconLabelButton.video()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setNeedsLayout()
         button.layoutIfNeeded()
     }
-    
+
     override func tearDown() {
         button = nil
         super.tearDown()
@@ -40,121 +39,117 @@ class IconLabelButtonTests: ZMSnapshotTestCase {
     func testIconLabelButton_Dark_Unselected_Enabled() {
         // When
         button.appearance = .dark(blurred: false)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Disabled() {
         // When
         button.isEnabled = false
         button.appearance = .dark(blurred: false)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Enabled() {
         // When
         button.isSelected = true
         button.appearance = .dark(blurred: false)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Disabled() {
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .dark(blurred: false)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Enabled_Blurred() {
         // When
         button.appearance = .dark(blurred: true)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Disabled_Blurred() {
         // When
         button.isEnabled = false
         button.appearance = .dark(blurred: true)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Enabled_Blurred() {
         // When
         button.isSelected = true
         button.appearance = .dark(blurred: true)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Disabled_Blurred() {
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .dark(blurred: true)
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Unselected_Enabled() {
         // Given
-        snapshotBackgroundColor = .white
 
         // When
         button.appearance = .light
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Unselected_Disabled() {
         // Given
-        snapshotBackgroundColor = .white
-        
+
         // When
         button.isEnabled = false
         button.appearance = .light
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Selected_Enabled() {
         // Given
-        snapshotBackgroundColor = .white
-        
+
         // When
         button.isSelected = true
         button.appearance = .light
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Selected_Disabled() {
         // Given
-        snapshotBackgroundColor = .white
-        
+
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .light
-        
+
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
-    
+
 }

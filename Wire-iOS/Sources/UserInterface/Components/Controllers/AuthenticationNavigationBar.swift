@@ -18,7 +18,7 @@
 
 import UIKit
 
-class AuthenticationNavigationBar: DefaultNavigationBar {
+final class AuthenticationNavigationBar: DefaultNavigationBar {
 
     override var colorSchemeVariant: ColorSchemeVariant {
         return .light

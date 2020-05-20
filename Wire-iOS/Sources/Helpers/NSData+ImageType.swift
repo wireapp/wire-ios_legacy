@@ -16,14 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
+///TODO: move to utilities
 import Foundation
-
-extension NSData {
-    @objc var isJPEG: Bool {
-        return (self as Data).isJPEG
-    }
-}
 
 extension Data {
     var isJPEG: Bool {
@@ -31,7 +25,7 @@ extension Data {
             [UInt8](UnsafeBufferPointer(start: unsafeRawBufferPointer.bindMemory(to: UInt8.self).baseAddress!, count: 3))
         }
         let JPEGHeader: [UInt8] = [0xFF, 0xD8, 0xFF]
-        
+
         for i in 0..<JPEGHeader.count {
             if array[i] != JPEGHeader[i] {
                 return false

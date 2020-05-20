@@ -264,11 +264,11 @@ extension ConversationStatusMatcher {
 
 // Accessors for ObjC
 extension ZMConversation {
-    @objc static func statusRegularStyle() -> [NSAttributedString.Key: AnyObject] {
+    static func statusRegularStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    @objc static func statusEmphasisStyle() -> [NSAttributedString.Key: AnyObject] {
+    static func statusEmphasisStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }

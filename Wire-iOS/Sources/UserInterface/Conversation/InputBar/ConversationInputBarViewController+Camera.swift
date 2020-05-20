@@ -16,27 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Foundation
 import MobileCoreServices
 import Photos
 import FLAnimatedImage
-import UIKit
-import WireSystem
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
-
-final class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    static let sharedDelegate = FastTransitioningDelegate()
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return VerticalTransition(offset: -180)
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return VerticalTransition(offset: 180)
-    }
-}
 
 final class StatusBarVideoEditorController: UIVideoEditorController {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -62,7 +47,6 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if duration > ZMUserSession.shared()!.maxVideoLength {
             let videoEditor = StatusBarVideoEditorController()
-            videoEditor.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             videoEditor.delegate = self
             videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
             videoEditor.videoPath = videoURL.path
@@ -104,11 +88,10 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                             }
                                                             })
             let confirmVideoViewController = ConfirmAssetViewController(context: context)
-            confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
 
-            self.present(confirmVideoViewController, animated: true) {
-            }
+            endEditing()
+            present(confirmVideoViewController, animated: true)
         }
     }
 
@@ -187,9 +170,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                     })
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-        confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
+        confirmImageViewController.previewTitle = conversation.displayName.localizedUppercase
 
+        endEditing()
         present(confirmImageViewController, animated: true)
     }
 

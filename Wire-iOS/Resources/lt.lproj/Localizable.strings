@@ -682,6 +682,9 @@
 "call.alert.ongoing.start.button" = "Vis tiek skambinti";
 "call.alert.ongoing.join.button" = "Vis tiek jungtis";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Jums skambina %@";
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Šis el. pašto adresas negali būti naudojamas kaip įmonės prisijungimas. Norėdami tęsti įrašykite SSO kodą.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Šis el. pašto adresas yra susietas su kitu serveriu, bet programėlė gali būti prijungta tik prie vieno serverio tuo pačiu metu. Atsijunkite nuo visų „Wire“ paskyrų šiame įrenginyje ir bandykite prisijungti dar kartą.";
 "login.sso.error.alert.unknown.message" = "Bandykite dar kartą vėliau.";
+"login.sso.backend_switch.title" = "Leaving Wire";
+"login.sso.backend_switch.subtitle" = "You are being redirected to";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles

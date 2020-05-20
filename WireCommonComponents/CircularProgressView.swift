@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 
-public final class CircularProgressView: UIView {
+public class CircularProgressView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -45,7 +45,7 @@ public final class CircularProgressView: UIView {
     fileprivate func setupShapeLayer() {
         self.createPath()
         self.shapeLayer.lineWidth = CGFloat(lineWidth)
-        self.shapeLayer.lineCap = .square
+        self.shapeLayer.lineCap = lineCap
         self.shapeLayer.strokeStart = 0.0
         self.shapeLayer.strokeEnd = CGFloat(self.progress)
         self.shapeLayer.fillColor = UIColor.clear.cgColor
@@ -59,6 +59,12 @@ public final class CircularProgressView: UIView {
     override public var tintColor: UIColor! {
         didSet {
             shapeLayer.strokeColor = tintColor.cgColor
+        }
+    }
+    
+    public var lineCap: CAShapeLayerLineCap = .square {
+        didSet {
+            setNeedsLayout()
         }
     }
     
@@ -120,7 +126,7 @@ public final class CircularProgressView: UIView {
         setupShapeLayer()
     }
     
-    /// pragma mark - Spinning animation
+    // MARK: - Spinning animation
     
     let SpinningAnimationKey = "com.wire.animations.spin"
     

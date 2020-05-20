@@ -19,29 +19,34 @@
 import XCTest
 @testable import Wire
 
-final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: AddParticipantsViewController!
 
     override func setUp() {
         super.setUp()
-        SelfUser.provider = selfUserProvider
+
+        coreDataFixture = CoreDataFixture()
     }
 
     override func tearDown() {
         sut = nil
         SelfUser.provider = nil
+
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
-    func testForEveryOneIsHere(){
+    func testForEveryOneIsHere() {
         let newValues = ConversationCreationValues(name: "", participants: [], allowGuests: true)
 
         sut = AddParticipantsViewController(context: .create(newValues), variant: .light)
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
-    func testForAddParticipantsButtonIsShown(){
+    func testForAddParticipantsButtonIsShown() {
         let conversation = createGroupConversation()
 
         sut = AddParticipantsViewController(context: .add(conversation), variant: .light)
@@ -50,7 +55,7 @@ final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase
         sut.userSelection.add(user)
         sut.userSelection(UserSelection(), didAddUser: user)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
 }

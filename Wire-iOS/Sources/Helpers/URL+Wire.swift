@@ -207,7 +207,7 @@ extension URL {
 
 extension NSURL {
 
-    @objc static var wr_fingerprintLearnMoreURL: NSURL {
+    static var wr_fingerprintLearnMoreURL: NSURL {
         return URL.wr_fingerprintLearnMore as NSURL
     }
 

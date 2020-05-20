@@ -19,9 +19,9 @@
 import UIKit
 
 final class MediaBar: UIView {
-    @objc private(set) var titleLabel: UILabel!
-    @objc private(set) var playPauseButton: IconButton!
-    @objc private(set) var closeButton: IconButton!
+    private(set) var titleLabel: UILabel!
+    private(set) var playPauseButton: IconButton!
+    private(set) var closeButton: IconButton!
 
     private var bottomSeparatorLine: UIView!
     private let contentView = UIView()

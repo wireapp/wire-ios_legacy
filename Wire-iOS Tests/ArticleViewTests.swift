@@ -16,74 +16,73 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ArticleViewTests: ZMSnapshotTestCase {
-    
+final class ArticleViewTests: XCTestCase {
+
     var sut: ArticleView!
 
     override func tearDown() {
-        
+
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         sut = nil
         super.tearDown()
     }
-        
+
     /// MARK - Fixture
-    
+
     func articleWithoutPicture() -> MockTextMessageData {
         let article = ArticleMetadata(originalURLString: "https://www.example.com/article/1",
-                              permanentURLString: "https://www.example.com/article/1",
-                              resolvedURLString: "https://www.example.com/article/1",
-                              offset: 0)
-        
+                                      permanentURLString: "https://www.example.com/article/1",
+                                      resolvedURLString: "https://www.example.com/article/1",
+                                      offset: 0)
+
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.backingLinkPreview = article
         return textMessageData
     }
-    
+
     func articleWithPicture(imageNamed: String = "unsplash_matterhorn.jpg") -> MockTextMessageData {
         let article = ArticleMetadata(originalURLString: "https://www.example.com/article/1",
-                              permanentURLString: "https://www.example.com/article/1",
-                              resolvedURLString: "https://www.example.com/article/1",
-                              offset: 0)
-        
+                                      permanentURLString: "https://www.example.com/article/1",
+                                      resolvedURLString: "https://www.example.com/article/1",
+                                      offset: 0)
+
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.backingLinkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id-\(imageNamed)"
         textMessageData.imageData = image(inTestBundleNamed: imageNamed).jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
-        
+
         return textMessageData
     }
-    
+
     func articleWithLongURL() -> MockTextMessageData {
         let article = ArticleMetadata(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1/",
-                              permanentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
-                              resolvedURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
-                              offset: 0)
-        
+                                      permanentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
+                                      resolvedURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
+                                      offset: 0)
+
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.backingLinkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id"
         textMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
-        
+
         return textMessageData
     }
-    
+
     func twitterStatusWithoutPicture() -> MockTextMessageData {
         let twitterStatus = TwitterStatusMetadata(
             originalURLString: "https://www.example.com/twitter/status/12345",
@@ -94,23 +93,23 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         twitterStatus.author = "John Doe"
         twitterStatus.username = "johndoe"
         twitterStatus.message = "Message message message message message message message message message message message message message message message message message message"
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.backingLinkPreview = twitterStatus
-        
+
         return textMessageData
     }
-    
+
     /// MARK - Tests
-    
+
     func testArticleViewWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verifyInAllPhoneWidths(view: sut)
+
+        verifyInAllPhoneWidths(matching: sut)
     }
 
     func testArticleViewWithPicture() {
@@ -119,12 +118,12 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        self.verifyInAllPhoneWidths(view: self.sut)
+
+        verifyInAllPhoneWidths(matching: sut)
     }
-        
+
     func testArticleViewWithPictureStillDownloading() {
-        
+
         sut = ArticleView(withImagePlaceholder: true)
         sut.layer.speed = 0 // freeze animations for deterministic tests
         sut.layer.beginTime = 0
@@ -134,28 +133,28 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verifyInAllPhoneWidths(view: sut)
+
+        verifyInAllPhoneWidths(matching: sut)
     }
-    
+
     func testArticleViewWithTruncatedURL() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        self.verifyInAllPhoneWidths(view: self.sut)
+
+        verifyInAllPhoneWidths(matching: sut)
     }
-    
+
     func testArticleViewWithTwitterStatusWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verifyInAllPhoneWidths(view: sut)
+
+        verifyInAllPhoneWidths(matching: sut)
     }
 
     func testArticleViewObfuscated() {
@@ -166,34 +165,37 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(view: sut)
+        verifyInAllPhoneWidths(matching: sut)
     }
-    
+
     /// MARK: - ArticleView images aspect
-    
+
     func testArticleViewWithImageHavingSmallSize() {
-        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")
+        createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")
     }
-    
+
     func testArticleViewWithImageHavingSmallHeight() {
-        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_height.jpg")
+        createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_height.jpg")
     }
-    
+
     func testArticleViewWithImageHavingSmallWidth() {
-        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_width.jpg")
+        createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_width.jpg")
     }
-    
+
     func testArticleViewWithImageHavingExactSize() {
-        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_exact_size.jpg")
+        createTestForArticleViewWithImage(named: "unsplash_matterhorn_exact_size.jpg")
     }
-    
-    func createTestForArticleViewWithImage(named: String) {
+
+    func createTestForArticleViewWithImage(named: String,
+                                           file: StaticString = #file,
+                                           testName: String = #function,
+                                           line: UInt = #line) {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
         sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        self.verifyInAllPhoneWidths(view: self.sut)
+
+        verifyInAllPhoneWidths(matching: sut, file: file, testName: testName, line: line)
     }
 }

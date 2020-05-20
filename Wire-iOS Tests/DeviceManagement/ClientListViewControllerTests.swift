@@ -19,7 +19,8 @@
 import XCTest
 @testable import Wire
 
-final class ClientListViewControllerTests: ZMSnapshotTestCase {
+final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var sut: ClientListViewController!
     var mockUser: MockUserType!
@@ -30,6 +31,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
 
         mockUser = SwiftMockLoader.mockUsers().first
         selfClient = mockUserClient()
@@ -43,6 +46,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         selfClient = nil
 
         resetColorScheme()
+
+        coreDataFixture = nil
 
         super.tearDown()
     }
@@ -72,7 +77,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         sut.isLoadingViewVisible = false
     }
 
-    func testThatObserverIsNonRetained(){
+    func testThatObserverIsNonRetained() {
         prepareSut(variant: nil)
 
         let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")
@@ -85,55 +90,55 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         XCTAssertNil(clientRemovalObserver)
     }
 
-    func testForTransparentBackground(){
+    func testForTransparentBackground() {
         prepareSut(variant: nil)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
-    func testForLightTheme(){
+    func testForLightTheme() {
         prepareSut(variant: .light)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
-    func testForDarkTheme(){
+    func testForDarkTheme() {
         prepareSut(variant: .dark)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
-    func testForLightThemeWrappedInNavigationController(){
+    func testForLightThemeWrappedInNavigationController() {
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
 
-    func testForOneDeviceWithNoEditButton(){
+    func testForOneDeviceWithNoEditButton() {
         prepareSut(variant: .light, numberOfClients: 0)
         let navWrapperController = sut.wrapInNavigationController()
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
 
-    func testForOneDeviceWithBackButtonAndNoEditButton(){
+    func testForOneDeviceWithBackButtonAndNoEditButton() {
         prepareSut(variant: .light, numberOfClients: 0)
         let mockRootViewController = UIViewController()
         let navWrapperController = mockRootViewController.wrapInNavigationController()
         navWrapperController.pushViewController(sut, animated: false)
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
 
-    func testForEditMode(){
+    func testForEditMode() {
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
         let editButton = sut.navigationItem.rightBarButtonItem!
         UIApplication.shared.sendAction(editButton.action!, to: editButton.target, from: nil, for: nil)
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
 }

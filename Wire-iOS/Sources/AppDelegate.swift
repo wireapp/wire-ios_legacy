@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireSystem
 import WireCommonComponents
 import WireSyncEngine
 
@@ -39,7 +37,6 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    @objc
     var window: UIWindow? {
         get {
             return rootViewController?.mainWindow
@@ -164,8 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserDefaults.standard.synchronize()
     }
-    
-    
+        
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return open(url: url, options: options)
     }

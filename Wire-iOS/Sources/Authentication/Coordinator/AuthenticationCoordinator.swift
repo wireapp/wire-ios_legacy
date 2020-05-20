@@ -312,6 +312,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .setUserPassword(let password):
                 updateUnregisteredUser(\.password, password)
 
+            case .updateBackendEnvironment(let url):
+                companyLoginController?.updateBackendEnvironment(with: url)
+                
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
 
