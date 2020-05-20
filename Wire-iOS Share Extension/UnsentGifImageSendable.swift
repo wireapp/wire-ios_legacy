@@ -43,6 +43,8 @@ final class UnsentGifImageSendable: UnsentSendableBase, UnsentSendable {
             if let url = url as? URL,
                let data = try? Data(contentsOf: url) {
                 self?.gifImageData = data
+            } else if let data = url as? Data {
+                self?.gifImageData = data
             } else {
                 error?.log(message: "Invalid Gif data")
             }
