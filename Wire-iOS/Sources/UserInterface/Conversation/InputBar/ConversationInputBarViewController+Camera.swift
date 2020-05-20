@@ -90,6 +90,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             let confirmVideoViewController = ConfirmAssetViewController(context: context)
             confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
 
+            endEditing()
             present(confirmVideoViewController, animated: true)
         }
     }
