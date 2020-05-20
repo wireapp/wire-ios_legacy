@@ -98,13 +98,18 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             return transitionContext.complete(true)
         }
 
+        weak var callWindow: CallWindow? = fromVC.view.window as? CallWindow
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
             delay: transitionContext.isInteractive ? configuration.duration : 0,
             options: [.curveLinear, .allowUserInteraction],
-            animations: animations,
-            completion: transitionContext.complete
-        )
+            animations: animations) { success in
+            transitionContext.complete(success)
+                
+            if success {
+                callWindow?.isHidden = true
+            }
+        }
     }
 
 }
@@ -114,14 +119,6 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
     var interactionInProgress = false
     private var shouldCompleteTransition = false
     private weak var presentationViewController: ModalPresentationViewController!
-
-    override func finish() {
-        super.finish()
-
-        if shouldCompleteTransition {
-            (presentationViewController.view.window as? CallWindow)?.isHidden = true
-        }
-    }
 
     func setupWith(viewController: ModalPresentationViewController) {
         presentationViewController = viewController
@@ -137,8 +134,6 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
         switch sender.state {
         case .began:
             interactionInProgress = true
-
-            weak var window = presentationViewController.view.window
             presentationViewController.dismiss(animated: true)
         case .changed:
             shouldCompleteTransition = progress > 0.2
