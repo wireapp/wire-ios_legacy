@@ -236,7 +236,7 @@
 "conversation.status.silenced" = "訊息通知已關閉";
 "conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
-"conversation.status.incoming_call" = "%@呼叫中...";
+"conversation.status.incoming_call" = "%@來電…";
 "conversation.status.incoming_call.unknown" = "來電中…";
 
 "conversation.status.message.text" = "%@";
@@ -303,7 +303,7 @@
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "選擇特效";
 
 "conversation.call.many_participants_confirmation.title" = "開始通話";
-"conversation.call.many_participants_confirmation.message" = "這將會打電話給%d位聯絡人";
+"conversation.call.many_participants_confirmation.message" = "這將會致電給%d位聯絡人";
 "conversation.call.many_participants_confirmation.call" = "通話";
 
 "conversation.connection_view.in_address_book" = "在連絡人中";
@@ -653,10 +653,10 @@
 // Voice New
 
 "call.status.connecting" = "連接中…";
-"call.status.incoming.user" = "%@呼叫中...";
-"call.status.incoming" = "呼叫中...";
+"call.status.incoming.user" = "%@來電…";
+"call.status.incoming" = "致電中...";
 "call.status.outgoing" = "響鈴中...";
-"call.status.outgoing.user" = "呼叫%@中...";
+"call.status.outgoing.user" = "致電給%@...";
 "call.status.reconnecting" = "重新連線中...";
 "call.status.terminating" = "正在掛斷...";
 "call.status.constant_bitrate" = "固定位元率";
@@ -681,6 +681,9 @@
 "call.alert.ongoing.join.message" = "在其他對話裏有另一通話。 \n加入這個通話會掛斷該通話。";
 "call.alert.ongoing.start.button" = "仍然要通話";
 "call.alert.ongoing.join.button" = "仍要加入";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "更多資訊";
 
 // Call Actions (accessibility)
 
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "該郵箱無法用於企業登錄，請輸入單一登入（SSO）登錄碼來繼續操作。";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "此電子郵件已鏈接到不同的服務器，但應用程序只能一次連接到一個服務器。 請註銷此設備上的所有Wire賬號並嘗試重新登錄。";
 "login.sso.error.alert.unknown.message" = "請稍後再重試。";
+"login.sso.backend_switch.title" = "離開Wire";
+"login.sso.backend_switch.subtitle" = "頁面正在重新導向至";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles

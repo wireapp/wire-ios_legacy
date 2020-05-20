@@ -229,7 +229,7 @@
 "conversation.voiceover.value.active" = "активне";
 "conversation.voiceover.value.disabled" = "вимкнене";
 
-"conversation.status.secutity_alert.default" = "New security alert";
+"conversation.status.secutity_alert.default" = "Нове сповіщення про безпеку";
 
 "conversation.status.typing" = "Набирається повідомлення…";
 "conversation.status.typing.group" = "%@: набирає повідомлення…";
@@ -681,6 +681,9 @@
 "call.alert.ongoing.join.message" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
 "call.alert.ongoing.start.button" = "Подзвонити все одно";
 "call.alert.ongoing.join.button" = "Приєднатися все-одно";
+
+"call.quality.indicator.message" = "Ретранслятори викликів недоступні. Це може вплинути на роботу ваших дзвінків.";
+"call.quality.indicator.more_info.button.text" = "Детальніше";
 
 // Call Actions (accessibility)
 
@@ -1377,7 +1380,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Корпоративна аутентифікація";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_and_email" = "Введіть свою електронну пошту або SSO код. Якщо електронна пошта співпадає з корпоративним розгортуванням Wire, то додаток буде підключатися до цього сервера.";
 "login.sso.alert.message.sso_only" = "Будь ласка, введіть ваш код SSO:";
 "login.sso.alert.action" = "Увійти";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "емейл або код доступу SSO";
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
+"login.sso.backend_switch.title" = "Відбувається вихід з Wire";
+"login.sso.backend_switch.subtitle" = "Вас буде перенаправлено до";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles
@@ -1511,8 +1517,8 @@
 "error.name_and_email" = "Будь ласка, введіть своє ім'я та email";
 "error.full_name" = "Будь ласка, введіть своє ім’я";
 "error.email" = "Будь ласка, введіть актуальну адресу електронної пошти";
-"error.input.too_long" = "Please enter a shorter username";
-"error.input.too_short" = "Please enter a longer username";
+"error.input.too_long" = "Будь ласка, введіть коротше ім'я користувача";
+"error.input.too_short" = "Будь ласка, введіть довше ім'я користувача";
 "error.email.invalid" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "error.phone.invalid" = "Будь ласка, введіть правильний номер телефону";
 
@@ -1753,4 +1759,4 @@
 "button_message_cell.state.selected" = "вибрано";
 "button_message_cell.state.confirmed" = "підтверджено";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "Ваша відповідь не може бути відправлена. Будь ласка, спробуйте ще раз.";

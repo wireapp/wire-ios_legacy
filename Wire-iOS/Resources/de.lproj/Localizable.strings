@@ -139,7 +139,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
 "conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
 "conversation_list.data_usage_permission_alert.disagree" = "Nein";
 "conversation_list.data_usage_permission_alert.agree" = "Ich willige ein";
@@ -681,6 +681,9 @@
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
 // Call Actions (accessibility)
 
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Diese E-Mail-Adresse kann hier nicht verwendet werden. Bitte geben Sie den SSO-Code ein, um fortzufahren.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Diese E-Mail ist mit einem anderen Server verknüpft. Die App kann aber jeweils nur mit einem Server verbunden sein. Bitte melden Sie sich von allen Wire-Konten auf diesem Gerät ab und versuchen es erneut.";
 "login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
+"login.sso.backend_switch.title" = "Wire verlassen";
+"login.sso.backend_switch.subtitle" = "Sie werden weitergeleitet zu";
+"login.sso.backend_switch.information" = "Geben Sie Ihre Zugangsdaten nur dann an, wenn Sie sicher sind, dass dies das Login Ihrer Organisation ist.";
 
 
 // Restore In Progress Loading Titles

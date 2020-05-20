@@ -682,6 +682,9 @@
 "call.alert.ongoing.start.button" = "仍然要通话";
 "call.alert.ongoing.join.button" = "仍要加入";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "收到来自%@的呼叫";
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "该邮箱无法用于企业登录，请输入SSO代码来继续操作。";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "此电子邮件已链接到不同的服务器，但应用程序只能一次连接到一个服务器。 请注销此设备上的所有Wire账号并尝试重新登录。";
 "login.sso.error.alert.unknown.message" = "请稍后重试。";
+"login.sso.backend_switch.title" = "Leaving Wire";
+"login.sso.backend_switch.subtitle" = "You are being redirected to";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles
@@ -1697,7 +1703,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
 
-"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.title" = "您想通过电子邮件接收来自 Wire 的新闻和产品更新吗？";
 "news_offers.consent.message" = "您可以随时取消订阅。";
 "news_offers.consent.button.privacy_policy.title" = "隐私政策";
 
