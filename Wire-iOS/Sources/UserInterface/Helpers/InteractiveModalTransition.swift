@@ -49,6 +49,9 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
         transitionContext.containerView.addSubview(toVC.view)
         toVC.view.layoutIfNeeded()
 
+        weak var callWindow: CallWindow? = toVC.view.window as? CallWindow
+        callWindow?.isHidden = false
+
         let animations = { [configuration] in
             toVC.dimView.backgroundColor = .init(white: 0, alpha: configuration.alpha)
             toVC.viewController.view.transform  = .identity
@@ -104,11 +107,11 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             delay: transitionContext.isInteractive ? configuration.duration : 0,
             options: [.curveLinear, .allowUserInteraction],
             animations: animations) { success in
-            transitionContext.complete(success)
-                
-            if success {
-                callWindow?.isHidden = true
-            }
+                transitionContext.complete(success)
+                    
+                if success { ///TODO: no need to hide
+                    callWindow?.isHidden = true
+                }
         }
     }
 
@@ -215,7 +218,7 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
 
     @objc
     private func didTapDimView(_ sender: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

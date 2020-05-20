@@ -78,7 +78,8 @@ extension CallController: WireCallCenterCallStateObserver {
                 } else {
                     animated =  true
                 }
-                presentCall(in: priorityCallConversation, animated: animated)
+                presentCall(in: priorityCallConversation,
+                            animated: animated)
             }
         } else {
             dismissCall()
@@ -122,7 +123,9 @@ extension CallController: WireCallCenterCallStateObserver {
             self.activeCallViewController = nil
         }
 
+        let callWindow: CallWindow? = targetViewController?.view.window as? CallWindow
         let presentClosure: Completion = {
+            callWindow?.isHidden = false
             self.targetViewController?.present(modalVC, animated: animated)
         }
 
