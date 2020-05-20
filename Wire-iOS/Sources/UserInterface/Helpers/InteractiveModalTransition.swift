@@ -109,7 +109,9 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             animations: animations) { success in
                 transitionContext.complete(success)
                     
-                if success { ///TODO: no need to hide
+                // Hide the call window when the animation is done and not bounce back
+                if success &&
+                    fromVC.viewController.view.transform != .identity {
                     callWindow?.isHidden = true
                 }
         }
