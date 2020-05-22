@@ -22,7 +22,7 @@ import WireDataModel
 import FLAnimatedImage
 import UIKit
 
-final public class ImageMessageView: UIView {
+final class ImageMessageView: UIView {
     
     private let imageView = FLAnimatedImageView()
     private let userImageView = UserImageView(size: .tiny)

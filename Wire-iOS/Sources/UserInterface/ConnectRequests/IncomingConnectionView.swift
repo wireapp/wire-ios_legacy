@@ -22,7 +22,7 @@ import Cartography
 import WireSyncEngine
 import UIKit
 
-public final class IncomingConnectionView: UIView {
+final class IncomingConnectionView: UIView {
 
     static private var correlationFormatter: AddressBookCorrelationFormatter = {
         return AddressBookCorrelationFormatter(
