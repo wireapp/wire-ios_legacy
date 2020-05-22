@@ -21,7 +21,7 @@ import Cartography
 import WireCommonComponents
 import UIKit
 
-final class StartUIIconCell: UICollectionViewCell {
+class StartUIIconCell: UICollectionViewCell {
     
     fileprivate let iconView = UIImageView()
     fileprivate let titleLabel = UILabel()
