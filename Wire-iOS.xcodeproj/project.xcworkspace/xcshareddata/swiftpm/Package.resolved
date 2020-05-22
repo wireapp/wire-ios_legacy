@@ -5,9 +5,9 @@
         "package": "Cartography",
         "repositoryURL": "https://github.com/wireapp/Cartography",
         "state": {
-          "branch": null,
-          "revision": "b75197ea134f42b5feafb04b526b37eb1a41034b",
-          "version": "4.0.0"
+          "branch": "feature/SPM",
+          "revision": "0f1f81c17a33591a50b9327505c90408f56a0b90",
+          "version": null
         }
       },
       {
