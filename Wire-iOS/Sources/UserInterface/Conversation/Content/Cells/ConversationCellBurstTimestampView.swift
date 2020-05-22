@@ -18,6 +18,7 @@
 
 
 import Cartography
+import UIKit
 
 final class ConversationCellBurstTimestampView: UIView {
     
