@@ -720,6 +720,7 @@
 		A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */; };
 		A937863423EB3BF00039987B /* CountryCodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */; };
 		A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */; };
+		A938B35D2477E0DE00236F9F /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B35C2477E0DE00236F9F /* Cartography */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
 		A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21E1D34F8F800DF0793 /* UIViewController+isInsidePopover.swift */; };
 		A949418723E08AF6001B0373 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418623E08AF6001B0373 /* Settings.swift */; };
@@ -3109,6 +3110,7 @@
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
+				A938B35D2477E0DE00236F9F /* Cartography in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -6547,6 +6549,9 @@
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
 			name = "Wire-iOS";
+			packageProductDependencies = (
+				A938B35C2477E0DE00236F9F /* Cartography */,
+			);
 			productName = "ZClient iOS";
 			productReference = 8F42C538199244A700288E4D /* Wire.app */;
 			productType = "com.apple.product-type.application";
@@ -6673,6 +6678,7 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			packageReferences = (
 				A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				A938B35B2477E0DE00236F9F /* XCRemoteSwiftPackageReference "Cartography" */,
 			);
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
@@ -8562,6 +8568,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A938B35B2477E0DE00236F9F /* XCRemoteSwiftPackageReference "Cartography" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wireapp/Cartography";
+			requirement = {
+				kind = exactVersion;
+				version = 4.0.0;
+			};
+		};
 		A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/wireapp/swift-snapshot-testing";
@@ -8573,6 +8587,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A938B35C2477E0DE00236F9F /* Cartography */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B35B2477E0DE00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
+			productName = Cartography;
+		};
 		A9E706AD24758AC50086D162 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;

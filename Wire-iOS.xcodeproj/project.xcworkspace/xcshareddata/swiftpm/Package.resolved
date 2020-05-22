@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Cartography",
+        "repositoryURL": "https://github.com/wireapp/Cartography",
+        "state": {
+          "branch": null,
+          "revision": "b75197ea134f42b5feafb04b526b37eb1a41034b",
+          "version": "4.0.0"
+        }
+      },
+      {
         "package": "SnapshotTesting",
         "repositoryURL": "https://github.com/wireapp/swift-snapshot-testing",
         "state": {
