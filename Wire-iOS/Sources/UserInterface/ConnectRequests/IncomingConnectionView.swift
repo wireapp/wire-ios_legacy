@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import WireSyncEngine
+import UIKit
 
 public final class IncomingConnectionView: UIView {
 

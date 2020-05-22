@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import WireDataModel
 import FLAnimatedImage
+import UIKit
 
 final public class ImageMessageView: UIView {
     

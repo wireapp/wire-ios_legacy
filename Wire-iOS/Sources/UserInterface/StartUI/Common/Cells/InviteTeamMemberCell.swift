@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import WireCommonComponents
+import UIKit
 
 class StartUIIconCell: UICollectionViewCell {
     

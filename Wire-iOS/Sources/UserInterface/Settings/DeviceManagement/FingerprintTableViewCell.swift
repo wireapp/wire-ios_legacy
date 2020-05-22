@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
