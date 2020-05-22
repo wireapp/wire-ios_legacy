@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
 
-class ContactsSectionHeaderView: UITableViewHeaderFooterView {
+final class ContactsSectionHeaderView: UITableViewHeaderFooterView {
     let label: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
