@@ -33,6 +33,10 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
         presenter?.isLoadingViewVisible = showLoadingView
     }
+    
+    func controllerDidStartBackendSwitch(_ controller: CompanyLoginController, toURL url: URL) {
+        stateController.transition(to: .switchBackend(url: url), mode: .replace)
+    }
 
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController) {
         stateController.transition(to: .companyLogin)

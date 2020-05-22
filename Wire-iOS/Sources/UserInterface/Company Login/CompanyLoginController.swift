@@ -32,6 +32,9 @@ protocol CompanyLoginControllerDelegate: class {
     /// when performing a required task.
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
+    /// Called when the company login controller is ready to switch backend
+    func controllerDidStartBackendSwitch(_ controller: CompanyLoginController, toURL url: URL)
+    
     /// Called when the company login controller starts the company login flow.
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController)
 
@@ -277,7 +280,7 @@ extension CompanyLoginController {
             guard let domainInfo = result.value else {
                 return self.presentCompanyLoginAlert(error: .domainNotRegistered)
             }
-            self.updateBackendEnvironment(with: domainInfo.configurationURL)
+            self.delegate?.controllerDidStartBackendSwitch(self, toURL: domainInfo.configurationURL)
         }
     }
     
@@ -285,7 +288,7 @@ extension CompanyLoginController {
     /// Updates backend environment to the specified url
     ///
     /// - Parameter url: backend url to switch to
-    private func updateBackendEnvironment(with url: URL) {
+    func updateBackendEnvironment(with url: URL) {
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.switchBackend(configuration: url) { [weak self] result in
             guard let `self` = self else { return }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -84,15 +84,6 @@ func success(_ message: String) -> Never {
     exit(0)
 }
 
-/// Gets an environment variable value with the given name.
-func getEnvironmentValue(key: String) -> String? {
-    guard let rawValue = getenv(key) else {
-        return nil
-    }
-
-    return String(cString: rawValue)
-}
-
 extension String {
 
     /// Removes the license columns in the string.
@@ -110,34 +101,6 @@ extension String {
         return singleLines.joined(separator: "\n\n")
     }
 
-}
-
-// MARK: - Arguments
-
-/// Returns the input files.
-func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
-    guard let cartfilePath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_0") else {
-        fail("The first input file in Xcode must be the 'Cartfile.resolved' file.")
-    }
-
-    guard let checkoutsPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_1") else {
-        fail("The second input file in Xcode must be the 'Cartfile/Checkouts' folder.")
-    }
-
-    guard let embeddedDependenciesPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_2") else {
-        fail("The third input file in Xcode must be the 'Cartfile/Checkouts' folder.")
-    }
-
-    return (URL(fileURLWithPath: cartfilePath), URL(fileURLWithPath: checkoutsPath), URL(fileURLWithPath: embeddedDependenciesPath))
-}
-
-/// Returns the output file.
-func getOutput() -> URL {
-    guard let plistPath = getEnvironmentValue(key: "SCRIPT_OUTPUT_FILE_0") else {
-        fail("The second input file in Xcode must be the 'Cartfile/Checkouts' folder.")
-    }
-
-    return URL(fileURLWithPath: plistPath)
 }
 
 /// Gets the license text in the given directory.
@@ -222,8 +185,10 @@ func generateFromCartfileResolved(_ content: String, checkoutsDir: URL) -> [Depe
 
 // MARK: - Execution
 
-let (cartfileURL, checkoutsURL, embeddedDependencies) = getInputs()
-let outputURL = getOutput()
+let (cartfileURL, checkoutsURL, embeddedDependencies) = (URL(fileURLWithPath: "Cartfile.resolved"),
+                                                         URL(fileURLWithPath: "Carthage/Checkouts"),
+                                                         URL(fileURLWithPath: "EmbeddedDependencies.plist"))
+let outputURL = URL(fileURLWithPath:"Wire-iOS/Resources/Licenses.generated.plist")
 
 // 1) Decode the Cartfile
 

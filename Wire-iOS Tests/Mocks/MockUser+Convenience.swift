@@ -35,7 +35,7 @@ extension MockUser {
      * - note: The accent color of a self user is red by default.
      */
     
-    @objc static func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUser {
+    static func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
         user.displayName = name
@@ -57,7 +57,7 @@ extension MockUser {
      * - note: The accent color of a self user is orange by default.
      */
 
-    @objc static func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUser {
+    static func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
         user.displayName = name

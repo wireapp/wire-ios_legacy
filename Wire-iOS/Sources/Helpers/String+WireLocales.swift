@@ -28,11 +28,11 @@ extension String {
 
 extension NSString {
     
-    @objc var uppercasedWithCurrentLocale: String {
+    var uppercasedWithCurrentLocale: String {
         return uppercased(with: NSLocale.current)
     }
     
-    @objc var lowercasedWithCurrentLocale: String {
+    var lowercasedWithCurrentLocale: String {
         return lowercased(with: NSLocale.current)
     }
     

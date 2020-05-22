@@ -21,7 +21,7 @@ import UIKit
 
 extension UITextView {
     // Autocorrects the last word, if necessary.
-    @objc func autocorrectLastWord() {
+    func autocorrectLastWord() {
         UIView.performWithoutAnimation {
             resignFirstResponder()
             becomeFirstResponder()

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import AVFoundation
 import WireSyncEngine
 import avs
 
@@ -93,7 +92,8 @@ final class CallViewController: UIViewController {
         singleTapRecognizer.require(toFail: doubleTapRecognizer)
     }
 
-    @objc func handleSingleTap(_ sender: UITapGestureRecognizer) {
+    @objc
+    private func handleSingleTap(_ sender: UITapGestureRecognizer) {
 
         guard canHideOverlay else { return }
 

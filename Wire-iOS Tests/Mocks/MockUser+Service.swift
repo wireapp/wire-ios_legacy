@@ -19,7 +19,7 @@
 import Foundation
 
 extension MockUser {
-    @objc var canSeeServices: Bool {
+    var canSeeServices: Bool {
         return self.hasTeam
     }
 

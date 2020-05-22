@@ -682,6 +682,9 @@
 "call.alert.ongoing.start.button" = "Chiama comunque";
 "call.alert.ongoing.join.button" = "Entra comunque";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "Altre Informazioni";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Chiamata in arrivo da %@";
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Questa email non può essere utilizzata per l'accesso aziendale. Inserisci il codice SSO per procedere.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Questa email è collegata ad un server diverso, ma l'app può essere connessa solo ad un server alla volta. Per favore esci da tutti gli account Wire su questo dispositivo e prova ad accedere nuovamente.";
 "login.sso.error.alert.unknown.message" = "Si prega di riprovare più tardi.";
+"login.sso.backend_switch.title" = "Leaving Wire";
+"login.sso.backend_switch.subtitle" = "You are being redirected to";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles

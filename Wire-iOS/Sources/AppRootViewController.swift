@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import SafariServices
-import WireDataModel
 import WireSyncEngine
 import avs
 import WireCommonComponents
@@ -29,9 +28,9 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 final class AppRootViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
 
-    public let mainWindow: UIWindow
-    public let callWindow: CallWindow
-    public let overlayWindow: NotificationWindow
+    let mainWindow: UIWindow
+    let callWindow: CallWindow
+    let overlayWindow: NotificationWindow
 
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?

@@ -44,12 +44,12 @@ public extension ZMConversation {
         }
     }
     
-    @objc var timeoutImage: UIImage? {
+    var timeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value)
     }
 
-    @objc var disabledTimeoutImage: UIImage? {
+    var disabledTimeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value, withColor: .lightGraphite)
     }

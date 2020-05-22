@@ -40,7 +40,7 @@ final class ConversationMessageActionController: NSObject {
 
     // MARK: - List of Actions
 
-    @objc static let allMessageActions: [UIMenuItem] = [
+    static let allMessageActions: [UIMenuItem] = [
         UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationMessageActionController.copyMessage)),
         UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationMessageActionController.quoteMessage)),
         UIMenuItem(title: "content.message.details".localized, action: #selector(ConversationMessageActionController.openMessageDetails)),
