@@ -720,7 +720,8 @@
 		A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */; };
 		A937863423EB3BF00039987B /* CountryCodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */; };
 		A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */; };
-		A938B3602477EB2E00236F9F /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B35F2477EB2E00236F9F /* Cartography */; };
+		A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3622477F19600236F9F /* SnapshotTesting */; };
+		A938B3662477F3AC00236F9F /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3652477F3AC00236F9F /* Cartography */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
 		A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21E1D34F8F800DF0793 /* UIViewController+isInsidePopover.swift */; };
 		A949418723E08AF6001B0373 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418623E08AF6001B0373 /* Settings.swift */; };
@@ -784,7 +785,6 @@
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
 		A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */; };
 		A9DA5084240FFD0900C2F886 /* ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5083240FFD0900C2F886 /* ButtonTests.swift */; };
-		A9E706AE24758AC50086D162 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A9E706AD24758AC50086D162 /* SnapshotTesting */; };
 		A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722223C1581A00DA8240 /* ContactsViewController.swift */; };
 		A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722423C3A47B00DA8240 /* AppDelegate.swift */; };
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
@@ -3110,7 +3110,7 @@
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
-				A938B3602477EB2E00236F9F /* Cartography in Frameworks */,
+				A938B3662477F3AC00236F9F /* Cartography in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -3125,7 +3125,7 @@
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
-				A9E706AE24758AC50086D162 /* SnapshotTesting in Frameworks */,
+				A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
 			);
@@ -6550,7 +6550,7 @@
 			);
 			name = "Wire-iOS";
 			packageProductDependencies = (
-				A938B35F2477EB2E00236F9F /* Cartography */,
+				A938B3652477F3AC00236F9F /* Cartography */,
 			);
 			productName = "ZClient iOS";
 			productReference = 8F42C538199244A700288E4D /* Wire.app */;
@@ -6573,7 +6573,7 @@
 			);
 			name = "Wire-iOS-Tests";
 			packageProductDependencies = (
-				A9E706AD24758AC50086D162 /* SnapshotTesting */,
+				A938B3622477F19600236F9F /* SnapshotTesting */,
 			);
 			productName = "ZClient-iOS Tests";
 			productReference = BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */;
@@ -6677,8 +6677,8 @@
 			);
 			mainGroup = 8F42C52F199244A700288E4D;
 			packageReferences = (
-				A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
-				A938B35E2477EB2E00236F9F /* XCRemoteSwiftPackageReference "Cartography" */,
+				A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */,
 			);
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
@@ -8568,7 +8568,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A938B35E2477EB2E00236F9F /* XCRemoteSwiftPackageReference "Cartography" */ = {
+		A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wireapp/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.7.2;
+			};
+		};
+		A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/wireapp/Cartography";
 			requirement = {
@@ -8576,26 +8584,18 @@
 				kind = branch;
 			};
 		};
-		A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/wireapp/swift-snapshot-testing";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.7.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A938B35F2477EB2E00236F9F /* Cartography */ = {
+		A938B3622477F19600236F9F /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A938B35E2477EB2E00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
-			productName = Cartography;
-		};
-		A9E706AD24758AC50086D162 /* SnapshotTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A9E706AC24758AC50086D162 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			package = A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		A938B3652477F3AC00236F9F /* Cartography */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
+			productName = Cartography;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
