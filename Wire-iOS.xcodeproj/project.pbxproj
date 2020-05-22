@@ -722,6 +722,7 @@
 		A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */; };
 		A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3622477F19600236F9F /* SnapshotTesting */; };
 		A938B3662477F3AC00236F9F /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3652477F3AC00236F9F /* Cartography */; };
+		A938B3682477F63100236F9F /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3672477F63100236F9F /* Cartography */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
 		A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21E1D34F8F800DF0793 /* UIViewController+isInsidePopover.swift */; };
 		A949418723E08AF6001B0373 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418623E08AF6001B0373 /* Settings.swift */; };
@@ -3084,6 +3085,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
+				A938B3682477F63100236F9F /* Cartography in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6523,6 +6525,9 @@
 				F1FEA15721DCEC3D00790A54 /* PBXTargetDependency */,
 			);
 			name = "Wire Share Extension";
+			packageProductDependencies = (
+				A938B3672477F63100236F9F /* Cartography */,
+			);
 			productName = "Wire-iOS Share Extension";
 			productReference = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -8593,6 +8598,11 @@
 			productName = SnapshotTesting;
 		};
 		A938B3652477F3AC00236F9F /* Cartography */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
+			productName = Cartography;
+		};
+		A938B3672477F63100236F9F /* Cartography */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
 			productName = Cartography;
