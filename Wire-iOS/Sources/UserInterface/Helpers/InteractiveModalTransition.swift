@@ -49,6 +49,9 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
         transitionContext.containerView.addSubview(toVC.view)
         toVC.view.layoutIfNeeded()
 
+        weak var callWindow: CallWindow? = toVC.view.window as? CallWindow
+        callWindow?.isHidden = false
+
         let animations = { [configuration] in
             toVC.dimView.backgroundColor = .init(white: 0, alpha: configuration.alpha)
             toVC.viewController.view.transform  = .identity
@@ -98,13 +101,20 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             return transitionContext.complete(true)
         }
 
+        weak var callWindow: CallWindow? = fromVC.view.window as? CallWindow
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
             delay: transitionContext.isInteractive ? configuration.duration : 0,
             options: [.curveLinear, .allowUserInteraction],
-            animations: animations,
-            completion: transitionContext.complete
-        )
+            animations: animations) { success in
+                transitionContext.complete(success)
+                    
+                // Hide the call window when the animation is done and the animation is not bounced back to init location
+                if success &&
+                    fromVC.viewController.view.transform != .identity {
+                    callWindow?.isHidden = true
+                }
+        }
     }
 
 }
@@ -129,11 +139,7 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
         switch sender.state {
         case .began:
             interactionInProgress = true
-
-            weak var window = presentationViewController.view.window
-            presentationViewController.dismiss(animated: true) {
-                window?.isHidden = true
-            }
+            presentationViewController.dismiss(animated: true)
         case .changed:
             shouldCompleteTransition = progress > 0.2
             update(progress)
@@ -150,6 +156,8 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
 }
 
 final class ModalPresentationViewController: UIViewController, UIViewControllerTransitioningDelegate {
+
+    var dismissClosure: Completion?
 
     fileprivate unowned let viewController: UIViewController
     fileprivate let dimView = UIView()
@@ -183,6 +191,14 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         return wr_supportedInterfaceOrientations
     }
 
+    override func dismiss(animated flag: Bool,
+                          completion: Completion? = nil) {
+        super.dismiss(animated: flag) {
+            completion?()
+            self.dismissClosure?()
+        }
+    }
+
     private func setupViews(with viewController: UIViewController) {
         transitioningDelegate = self
         interactionController.setupWith(viewController: self)
@@ -204,7 +220,7 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
 
     @objc
     private func didTapDimView(_ sender: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

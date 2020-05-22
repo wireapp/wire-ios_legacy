@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Wire
-# Copyright (C) 2016 Wire Swiss GmbH
+# Copyright (C) 2020 Wire Swiss GmbH
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ version=`xcodebuild -version | head -n 1 | sed "s/Xcode //"`
 XCODE_VERSION=( ${version//./ } )
 
 [[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 29 ]] || die "Carthage should be at least version 0.29"
-[[ ${XCODE_VERSION[0]} -gt 11 || ( ${XCODE_VERSION[0]} -eq 11 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 11.3.0. The current version is ${XCODE_VERSION}"
+[[ ${XCODE_VERSION[0]} -gt 11 || ( ${XCODE_VERSION[0]} -eq 11 && ${XCODE_VERSION[1]} -ge 4 ) ]] || die "Xcode version should be at least 11.4.0. The current version is ${XCODE_VERSION}"
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."
@@ -46,7 +46,7 @@ carthage bootstrap --platform ios
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh 
+./Scripts/download-avs.sh
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
@@ -55,6 +55,14 @@ echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
 ./Scripts/postprocess.sh
+echo ""
+
+echo "ℹ️  [CodeGen] Update StyleKit Icons..."
+swift run --package-path Scripts/updateStylekit
+echo ""
+
+echo "ℹ️  Update Licenses File..."
+swift run --package-path ./Scripts/updateLicenses
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"

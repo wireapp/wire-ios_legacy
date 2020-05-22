@@ -1401,7 +1401,7 @@
 "login.sso.error.alert.unknown.message" = "Please try again later.";
 "login.sso.backend_switch.title" = "Leaving Wire";
 "login.sso.backend_switch.subtitle" = "You are being redirected to";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's log in.";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles
