@@ -51,6 +51,8 @@ platform :ios do
             xcversion(version: xcode_version)
         end
 
+        build = Build.new(options: options)
+
         run_tests(
             scheme: "Wire-iOS",
             skip_detect_devices: true,
