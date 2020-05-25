@@ -60,8 +60,7 @@ platform :ios do
             derived_data_path: "~/DerivedData",
             buildlog_path: "build",
             output_directory: "build",
-            output_types: "junit",
-            prelaunch_simulator: true
+            output_types: "junit"
         )
     end
 
