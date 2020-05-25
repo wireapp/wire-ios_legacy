@@ -82,6 +82,7 @@ platform :ios do
 
         run_tests(
             scheme: "Wire-iOS",
+            skip_detect_devices: true,
             configuration: "Debug",
             test_without_building: true,
             sdk:"iphonesimulator",
@@ -107,7 +108,7 @@ platform :ios do
         if build.for_simulator
             Dir.chdir("..") do
                 # Build the app for simulator
-                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath ~/DerivedData -quiet clean build BUILD_NUMBER=#{build.build_number}"
+                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath ~/DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
