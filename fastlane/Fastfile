@@ -60,7 +60,8 @@ platform :ios do
             derived_data_path: "~/DerivedData",
             buildlog_path: "build",
             output_directory: "build",
-            output_types: "junit"
+            output_types: "junit",
+            xcargs: "BUILD_NUMBER = \"#{build.build_number}\""
         )
     end
 
