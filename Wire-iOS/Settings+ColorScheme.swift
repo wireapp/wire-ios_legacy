@@ -34,10 +34,6 @@ enum SettingsColorScheme {
 }
 
 extension Settings {
-    func notifyColorSchemeChanged() {
-        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self, userInfo: nil)
-    }
-
     var defaults: UserDefaults {
         return .standard
     }
