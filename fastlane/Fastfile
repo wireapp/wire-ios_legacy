@@ -53,15 +53,15 @@ platform :ios do
 
         run_tests(
             scheme: "Wire-iOS",
+            skip_detect_devices: true,
             configuration: "Debug",
             build_for_testing: true,
-            devices: "iPhone 8",
             sdk:"iphonesimulator",
-            code_coverage: true,
             derived_data_path: "~/DerivedData",
             buildlog_path: "build",
             output_directory: "build",
-            output_types: "junit"
+            output_types: "junit",
+            prelaunch_simulator: true
         )
     end
 
@@ -108,6 +108,7 @@ platform :ios do
         if build.for_simulator
             Dir.chdir("..") do
                 # Build the app for simulator
+                # TODO: copy above? (Build for testing)
                 sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath ~/DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
