@@ -63,7 +63,8 @@ final class PlaceholderConversationView: UIView {
 
     // MARK: - Colors
 
-    @objc private func updateForColorSchemeVariant() {
+    @objc
+    private func updateForColorSchemeVariant() {
         applyColorScheme(ColorScheme.default.variant)
     }
 

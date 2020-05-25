@@ -54,7 +54,7 @@ final class BackgroundViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(colorSchemeChanged(_:)),
+                                               selector: #selector(colorSchemeChanged),
                                                name: NSNotification.Name.SettingsColorSchemeChanged,
                                                object: nil)
     }
@@ -162,7 +162,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
-        self.darkMode = (ColorScheme.default.variant == .dark)
+        darkMode = ColorScheme.default.variant == .dark
     }
     
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
@@ -190,8 +190,8 @@ final class BackgroundViewController: UIViewController {
     }
 
     @objc
-    func colorSchemeChanged(_ object: AnyObject!) {
-        self.updateForColorScheme()
+    private func colorSchemeChanged() {
+        updateForColorScheme()
     }
 }
 

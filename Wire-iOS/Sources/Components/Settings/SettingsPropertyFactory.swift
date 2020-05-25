@@ -177,12 +177,12 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue)
+                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue) ///TODO: notif?
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
                 
-                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)

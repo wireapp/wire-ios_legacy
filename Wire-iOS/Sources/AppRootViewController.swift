@@ -86,6 +86,19 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.updateOverlayWindowFrame(size: size)
         })
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 12.0, *) {
+            if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+                
+                UserDefaults.standard.set(traitCollection.userInterfaceStyle == .light ? "light" : "dark", forKey: SettingKey.colorScheme.rawValue)
+                
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
+            }
+        }
+    }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
