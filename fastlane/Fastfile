@@ -51,9 +51,9 @@ platform :ios do
             xcversion(version: xcode_version)
         end
 
-        build = Build.new(options: options)
-        if build.nil? 
-            build = "0"
+        build_number = options[:build_number]
+        if build_number.nil? 
+            build_number = "0"
         end
 
         run_tests(
@@ -66,7 +66,7 @@ platform :ios do
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
-            xcargs: "BUILD_NUMBER=#{build.build_number}"
+            xcargs: "BUILD_NUMBER=#{build_number}"
         )
     end
 
