@@ -52,6 +52,9 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        if build.nil? 
+            build = "0"
+        end
 
         run_tests(
             scheme: "Wire-iOS",
