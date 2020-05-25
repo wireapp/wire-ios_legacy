@@ -93,8 +93,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         if #available(iOS 12.0, *) {
             if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
                 
-                UserDefaults.standard.set(traitCollection.userInterfaceStyle == .light ? "light" : "dark", forKey: SettingKey.colorScheme.rawValue)
+                ///TODO: ignore if key is not set to auto
+//                UserDefaults.standard.set(traitCollection.userInterfaceStyle == .light ? "light" : "dark", forKey: SettingKey.colorScheme.rawValue)
                 
+                ///TODO: get self.traitCollection.userInterfaceStyle if auto
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
         }

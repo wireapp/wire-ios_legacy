@@ -55,7 +55,7 @@ final class BackgroundViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(colorSchemeChanged),
-                                               name: NSNotification.Name.SettingsColorSchemeChanged,
+                                               name: .SettingsColorSchemeChanged,
                                                object: nil)
     }
     
