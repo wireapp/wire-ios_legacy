@@ -61,6 +61,7 @@ final class ConversationListContentController: UICollectionViewController {
         setupViews()
 
         if #available(iOS 13, *) {
+            // handle Context menu in each cell
         } else {
             if traitCollection.forceTouchCapability == .available {
                 registerForPreviewing(with: self, sourceView: collectionView)
@@ -387,8 +388,11 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
     }
 }
 
+//MARK: iOS 12- peek pop
 extension ConversationListContentController: UIViewControllerPreviewingDelegate {
-    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+    
+    @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         
         guard let previewViewController = viewControllerToCommit as? ConversationPreviewViewController else { return }
         
@@ -397,7 +401,8 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
         selectModelItem(previewViewController.conversation)
     }
     
-    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         guard let indexPath = collectionView.indexPathForItem(at: location),
               let layoutAttributes = collectionView.layoutAttributesForItem(at: indexPath),
               let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
