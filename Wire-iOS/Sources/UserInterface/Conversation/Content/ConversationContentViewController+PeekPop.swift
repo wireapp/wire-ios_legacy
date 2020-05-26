@@ -23,6 +23,7 @@ import WireDataModel
 
 private var lastPreviewURL: URL?
 
+///TODO: retire UIContextMenuInteraction
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -75,6 +76,29 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         } else {
             self.messagePresenter.modalTargetController?.present(viewControllerToCommit, animated: true, completion: .none)
         }
+    }
+
+}
+
+extension ConversationContentViewController: UIContextMenuInteractionDelegate {
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return self.makeContextMenu()
+               })
+    }
+    
+    
+    @available(iOS 13.0, *)
+    private func makeContextMenu() -> UIMenu {
+
+        // Create a UIAction for sharing
+        let share = UIAction(title: "Share Pupper", image: nil) { action in
+            // Show system share sheet
+        }
+
+        // Create and return a UIMenu with the share action
+        return UIMenu(title: "Main Menu", children: [share])
     }
 
 }

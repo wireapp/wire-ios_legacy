@@ -144,8 +144,14 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         super.viewDidAppear(animated)
         updateVisibleMessagesWindow()
         
-        if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: view)
+        
+        if #available(iOS 13, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            view.addInteraction(interaction) ///TODO: add to each cell
+        } else {
+            if traitCollection.forceTouchCapability == .available {
+                registerForPreviewing(with: self, sourceView: view)
+            }
         }
         
         UIAccessibility.post(notification: .screenChanged, argument: nil)

@@ -60,8 +60,11 @@ final class ConversationListContentController: UICollectionViewController {
 
         setupViews()
 
-        if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: collectionView)
+        if #available(iOS 13, *) {
+        } else {
+            if traitCollection.forceTouchCapability == .available {
+                registerForPreviewing(with: self, sourceView: collectionView)
+            }
         }
     }
 
