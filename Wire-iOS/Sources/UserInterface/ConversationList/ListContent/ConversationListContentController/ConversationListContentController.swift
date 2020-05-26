@@ -61,7 +61,7 @@ final class ConversationListContentController: UICollectionViewController {
         setupViews()
 
         if #available(iOS 13, *) {
-            // handle Context menu in each cell
+            // handle Context menu in collection view delegate
         } else {
             if traitCollection.forceTouchCapability == .available {
                 registerForPreviewing(with: self, sourceView: collectionView)
@@ -254,6 +254,38 @@ final class ConversationListContentController: UICollectionViewController {
         selectModelItem(item)
     }
     
+    @available(iOS 13.0, *)
+    override func collectionView(_ collectionView: UICollectionView,
+    contextMenuConfigurationForItemAt indexPath: IndexPath,
+    point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
+            
+            return self.conversationPreviewViewController(indexPath: indexPath)
+        }
+        
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { suggestedActions in
+
+               // "puppers" is the array backing the collection view
+               return self.makeContextMenu(/*for: self.puppers[indexPath.row]*/)
+           })
+    }
+    
+        @available(iOS 13.0, *)
+        private func makeContextMenu() -> UIMenu {
+            ///TODO: convo menu?
+            // Create a UIAction for sharing
+            let share = UIAction(title: "Share Pupper", image: nil) { action in
+                // Show system share sheet
+            }
+    
+            // Create and return a UIMenu with the share action
+            return UIMenu(title: "Main Menu", children: [share])
+        }
+    
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -404,14 +436,21 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
     @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         guard let indexPath = collectionView.indexPathForItem(at: location),
-              let layoutAttributes = collectionView.layoutAttributesForItem(at: indexPath),
-              let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
+              let layoutAttributes = collectionView.layoutAttributesForItem(at: indexPath)
+               else {
             return nil
         }
         
         previewingContext.sourceRect = layoutAttributes.frame
         
+        return conversationPreviewViewController(indexPath: indexPath)
+    }
+    
+    private func conversationPreviewViewController(indexPath: IndexPath) -> ConversationPreviewViewController? {
+        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
+
         return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+
     }
 
 }

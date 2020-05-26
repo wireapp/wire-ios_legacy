@@ -65,11 +65,6 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConversationListCell()
-        
-        if #available(iOS 13.0, *) {
-            let interaction = UIContextMenuInteraction(delegate: self)
-            addInteraction(interaction)
-        }
     }
     
     deinit {
@@ -275,29 +270,4 @@ extension ConversationListCell: AVSMediaManagerClientObserver {
             }
         })
     }
-}
-
-// MARK: - UIContextMenuInteractionDelegate
-
-extension ConversationListCell: UIContextMenuInteractionDelegate {
-    @available(iOS 13.0, *)
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-            return self.makeContextMenu()
-               })
-    }
-    
-    
-    @available(iOS 13.0, *)
-    private func makeContextMenu() -> UIMenu {
-
-        // Create a UIAction for sharing
-        let share = UIAction(title: "Share Pupper", image: nil) { action in
-            // Show system share sheet
-        }
-
-        // Create and return a UIMenu with the share action
-        return UIMenu(title: "Main Menu", children: [share])
-    }
-
 }
