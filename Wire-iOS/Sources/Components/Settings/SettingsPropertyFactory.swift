@@ -176,7 +176,6 @@ final class SettingsPropertyFactory {
                 let darkThemeOption: DarkThemeOption
                 if let colorScheme =  self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue),
                     let option =  DarkThemeOption(keyValueString: colorScheme) {
-                
                     darkThemeOption = option
                 } else {
                     darkThemeOption = DarkThemeOption.defaultPreference
@@ -187,7 +186,12 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(DarkThemeOption(rawValue: Int(number.int64Value))?.keyValueString, forKey: SettingKey.colorScheme.rawValue)
+                    if let darkThemeOption = DarkThemeOption(rawValue: Int(number.int64Value)) {
+                        self.userDefaults.set(darkThemeOption.keyValueString,
+                                              forKey: SettingKey.colorScheme.rawValue)
+                    } else {
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -195,7 +199,9 @@ final class SettingsPropertyFactory {
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
             
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+            return SettingsBlockProperty(propertyName: propertyName,
+                                         getAction: getAction,
+                                         setAction: setAction)
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
