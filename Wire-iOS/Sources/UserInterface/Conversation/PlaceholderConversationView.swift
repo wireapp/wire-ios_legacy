@@ -21,7 +21,7 @@ import UIKit
 import WireCommonComponents
 
 final class PlaceholderConversationView: UIView {
-    
+
     var shieldImageView: UIImageView!
 
     // MARK: - Initialization
@@ -33,7 +33,7 @@ final class PlaceholderConversationView: UIView {
         configureObservers()
         applyColorScheme(ColorScheme.default.variant)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSubviews()
