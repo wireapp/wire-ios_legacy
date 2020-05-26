@@ -24,24 +24,26 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
-	
+    var settingsPropertyFactory: SettingsPropertyFactory!
+
 	override func setUp() {
 		super.setUp()
-        
+
         coreDataFixture = CoreDataFixture()
 
-		let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
-		
+
 		MockUserRight.isPermitted = true
 	}
 
     override func tearDown() {
         sut = nil
 		settingsCellDescriptorFactory = nil
-		
+		settingsPropertyFactory = nil
+
         coreDataFixture = nil
-        
+
         super.tearDown()
 	}
 
@@ -74,7 +76,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - options
+    // MARK: - options
     func testForOptionsGroup() {
         let group = settingsCellDescriptorFactory.optionsGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
@@ -84,13 +86,23 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForOptionsGroupScrollToBottom() { ///TODO: update?
+    func testForOptionsGroupScrollToBottom() {
         let group = settingsCellDescriptorFactory.optionsGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
 
         sut.tableView.setContentOffset(CGPoint(x:0, y:CGFloat.greatestFiniteMagnitude), animated: false)
+
+        verify(matching: sut)
+    }
+
+    // MARK: - dark theme
+    func testForDarkThemeOptionsGroup() {
+        let group = SettingsCellDescriptorFactory.darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+
+        sut.view.backgroundColor = .black
 
         verify(matching: sut)
     }
