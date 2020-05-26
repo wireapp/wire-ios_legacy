@@ -188,8 +188,8 @@ final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType
     }
     
     func select(_ value: SettingsPropertyValue?) {
-        if let navigationController = self.viewController?.navigationController,
-           let controllerToPush = self.generateViewController() {
+        if let navigationController = viewController?.navigationController,
+           let controllerToPush = generateViewController() {
             navigationController.pushViewController(controllerToPush, animated: true)
         }
     }

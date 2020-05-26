@@ -19,13 +19,16 @@
 import XCTest
 @testable import Wire
 
-final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+final class SettingsTableViewControllerSnapshotTests: XCTestCase {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
 	
 	override func setUp() {
 		super.setUp()
+        
+        coreDataFixture = CoreDataFixture()
 
 		let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
@@ -37,6 +40,8 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         sut = nil
 		settingsCellDescriptorFactory = nil
 		
+        coreDataFixture = nil
+        
         super.tearDown()
 	}
 
@@ -46,7 +51,7 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.view.backgroundColor = .black
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForAccountGroup() {
@@ -55,7 +60,7 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.view.backgroundColor = .black
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForAccountGroupWithDisabledEditing() {
@@ -66,7 +71,7 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.view.backgroundColor = .black
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     //MARK: - options
@@ -76,10 +81,10 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.view.backgroundColor = .black
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
-    func testForOptionsGroupScrollToBottom() {
+    func testForOptionsGroupScrollToBottom() { ///TODO: update?
         let group = settingsCellDescriptorFactory.optionsGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
@@ -87,6 +92,6 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.tableView.setContentOffset(CGPoint(x:0, y:CGFloat.greatestFiniteMagnitude), animated: false)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
