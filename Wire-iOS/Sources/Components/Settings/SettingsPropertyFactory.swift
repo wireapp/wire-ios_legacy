@@ -195,7 +195,7 @@ final class SettingsPropertyFactory {
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
-                ///TODO: too early?
+
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
             

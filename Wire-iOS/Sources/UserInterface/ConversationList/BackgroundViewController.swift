@@ -162,7 +162,6 @@ final class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
-        ///TODO: auto
         darkMode = ColorScheme.default.variant == .dark
     }
     

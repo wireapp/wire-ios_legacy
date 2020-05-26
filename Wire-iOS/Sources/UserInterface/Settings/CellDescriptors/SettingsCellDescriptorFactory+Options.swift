@@ -103,7 +103,7 @@ extension SettingsCellDescriptorFactory {
         }()
 
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
-        cellDescriptors.append(soundAlertSection) ///TODO: copy this?
+        cellDescriptors.append(soundAlertSection)
         
         let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
         let callKitHeader = "self.settings.callkit.title".localized
@@ -128,7 +128,6 @@ extension SettingsCellDescriptorFactory {
         let messageSoundProperty = self.settingsPropertyFactory.property(.messageSoundName)
         let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: messageSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WireText)
 
-        ///TODO: copy
         let pingSoundProperty = self.settingsPropertyFactory.property(.pingSoundName)
         let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: pingSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WirePing)
 
@@ -166,8 +165,6 @@ extension SettingsCellDescriptorFactory {
 
         cellDescriptors.append(byPopularDemandSendButtonSection)
 
-        ///TODO:
-        
         let darkThemeSection = darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
         
         let byPopularDemandDarkThemeSection = SettingsSectionDescriptor(
@@ -223,7 +220,7 @@ extension SettingsCellDescriptorFactory {
         }
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in ///TODO: no need flatMap
+        let preview: PreviewGeneratorType = { descriptor in
             let value = property.value().value() as? Int
             guard let option = value.flatMap ({ DarkThemeOption(rawValue: $0) }) else { return .text(DarkThemeOption.defaultPreference.displayString) }
             return .text(option.displayString)

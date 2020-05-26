@@ -24,9 +24,8 @@ private let log = ZMSLog(tag: "link opening")
 enum DarkThemeOption: Int {
     case dark, light, auto
 
-//    typealias ApplicationOptionEnum = TweetOpeningOption
     static var settingKey: SettingKey = .twitterOpeningRawValue
-    static var defaultPreference: DarkThemeOption = .auto ///TODO: light for iOS 13-
+    static var defaultPreference: DarkThemeOption = .auto
 
     var keyValueString: String {
         switch self {
@@ -44,7 +43,6 @@ enum DarkThemeOption: Int {
         }
     }
 
-    ///TODO: iOS 13- ?
     static var allOptions: [DarkThemeOption] {
         return [.dark, .light, .auto]
     }
@@ -61,14 +59,6 @@ enum DarkThemeOption: Int {
             return nil
         }
     }
-
-//    var isAvailable: Bool {
-//        switch self {
-//        case .none: return true
-//        case .tweetbot: return UIApplication.shared.tweetbotInstalled
-//        case . twitterrific: return UIApplication.shared.twitterrificInstalled
-//        }
-//    }
 }
 
 

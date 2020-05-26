@@ -48,7 +48,6 @@ class ColorSchemeController: NSObject {
 
     @objc
     private func settingsColorSchemeDidChange() {
-        ///TODO: get from self.traitCollection.userInterfaceStyle if auto
         ColorScheme.default.variant = Settings.shared.colorSchemeVariant
 
         NSAttributedString.invalidateMarkdownStyle()
