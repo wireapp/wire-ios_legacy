@@ -19,10 +19,20 @@
 import Foundation
 
 enum DarkThemeOption: Int {
-    case dark, light, auto
+    case dark
+    case light
+
+    @available(iOS, introduced: 12.0, message: "auto only supported in iOS 12+")
+    case auto
 
     static var settingKey: SettingKey = .twitterOpeningRawValue
-    static var defaultPreference: DarkThemeOption = .auto
+    static var defaultPreference: DarkThemeOption {
+        if #available(iOS 12.0, *) {
+            return .auto
+        } else {
+            return .light
+        }
+    }
 
     var keyValueString: String {
         switch self {
@@ -41,7 +51,11 @@ enum DarkThemeOption: Int {
     }
 
     static var allOptions: [DarkThemeOption] {
-        return [.dark, .light, .auto]
+        if #available(iOS 12.0, *) {
+            return [.dark, .light, .auto]
+        } else {
+            return [.dark, .light]
+        }
     }
 
     init?(keyValueString: String) {
@@ -51,7 +65,11 @@ enum DarkThemeOption: Int {
         case "light":
             self = .light
         case "auto":
-            self = .auto
+            if #available(iOS 12.0, *) {
+                self = .auto
+            } else {
+                return nil
+            }
         default:
             return nil
         }
