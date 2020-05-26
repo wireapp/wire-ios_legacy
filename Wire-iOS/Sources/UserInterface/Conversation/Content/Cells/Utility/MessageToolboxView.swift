@@ -63,6 +63,7 @@ final class MessageToolboxView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 3
+        stack.isAccessibilityElement = false
         return stack
     }()
 
