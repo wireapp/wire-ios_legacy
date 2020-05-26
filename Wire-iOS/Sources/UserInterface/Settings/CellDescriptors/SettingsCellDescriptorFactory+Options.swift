@@ -103,7 +103,7 @@ extension SettingsCellDescriptorFactory {
         }()
 
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
-        cellDescriptors.append(soundAlertSection)
+        cellDescriptors.append(soundAlertSection) ///TODO: copy this?
         
         let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
         let callKitHeader = "self.settings.callkit.title".localized
@@ -128,6 +128,7 @@ extension SettingsCellDescriptorFactory {
         let messageSoundProperty = self.settingsPropertyFactory.property(.messageSoundName)
         let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: messageSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WireText)
 
+        ///TODO: copy
         let pingSoundProperty = self.settingsPropertyFactory.property(.pingSoundName)
         let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: pingSoundProperty.propertyName.settingsPropertyLabelText, customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WirePing)
 
@@ -165,9 +166,12 @@ extension SettingsCellDescriptorFactory {
 
         cellDescriptors.append(byPopularDemandSendButtonSection)
 
-        let darkThemeDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.darkMode))
+        ///TODO:
+        
+        let darkThemeSection = darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
+        
         let byPopularDemandDarkThemeSection = SettingsSectionDescriptor(
-            cellDescriptors: [darkThemeDescriptor],
+            cellDescriptors: [darkThemeSection],
             footer: "self.settings.popular_demand.dark_mode.footer".localized
         )
         
@@ -208,6 +212,25 @@ extension SettingsCellDescriptorFactory {
         return lockDescription + " " + typeKey.localized
     }
 
+    func darkThemeGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
+        let cells = DarkThemeOption.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+
+            return SettingsPropertySelectValueCellDescriptor(
+                settingsProperty: property,
+                value: SettingsPropertyValue(option.rawValue),
+                title: option.displayString
+            )
+        }
+
+        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
+        let preview: PreviewGeneratorType = { descriptor in ///TODO: no need flatMap
+            let value = property.value().value() as? Int
+            guard let option = value.flatMap ({ DarkThemeOption(rawValue: $0) }) else { return .text(DarkThemeOption.defaultPreference.displayString) }
+            return .text(option.displayString)
+        }
+        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
+    }
+    
     func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
         let cells = TweetOpeningOption.availableOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
 

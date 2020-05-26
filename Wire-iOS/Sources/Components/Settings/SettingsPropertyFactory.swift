@@ -172,16 +172,26 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark")
+                
+                let darkThemeOption: DarkThemeOption
+                if let colorScheme =  self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue),
+                    let option =  DarkThemeOption(keyValueString: colorScheme) {
+                
+                    darkThemeOption = option
+                } else {
+                    darkThemeOption = DarkThemeOption.defaultPreference
+                }
+                
+                return SettingsPropertyValue(darkThemeOption.rawValue)
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue) ///TODO: notif?
+                    self.userDefaults.set(DarkThemeOption(rawValue: Int(number.int64Value))?.keyValueString, forKey: SettingKey.colorScheme.rawValue)
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
-                
+                ///TODO: too early?
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
             

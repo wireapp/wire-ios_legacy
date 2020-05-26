@@ -20,7 +20,8 @@ import Foundation
 import UIKit
 import WireUtilities
 
-@objc enum ColorSchemeVariant: UInt {
+@objc
+enum ColorSchemeVariant: UInt {
     case light, dark
 };
 
@@ -233,7 +234,11 @@ enum ColorSchemeColor: Int {
 final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable : Any]?
     
-    var variant: ColorSchemeVariant = .light
+    var variant: ColorSchemeVariant = .light {
+        didSet {
+            
+        }
+    }
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
         

@@ -86,7 +86,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.updateOverlayWindowFrame(size: size)
         })
     }
-    
+        
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -609,7 +609,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 extension AppRootViewController: PopoverPresenter { }
 
-public extension SessionManager {
+extension SessionManager {
 
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
@@ -639,4 +639,11 @@ public extension SessionManager {
 
 final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
+}
+
+extension UIApplication {
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
 }

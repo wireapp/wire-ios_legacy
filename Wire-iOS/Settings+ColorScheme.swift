@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSystem
+import UIKit
 
 enum SettingsColorScheme {
     case light
@@ -53,6 +54,19 @@ extension Settings {
             return .dark
         case "light":
             return .light
+        case "auto":
+            if #available(iOS 12.0, *) {
+                switch UIApplication.userInterfaceStyle {
+                case .light:
+                    return .light
+                case .dark:
+                    return .dark
+                default:
+                    return .light
+                }
+            } else {
+                fatal("auto only supported in iOS 13+")
+            }
         default:
             fatal("unsupported colorScheme string")
         }

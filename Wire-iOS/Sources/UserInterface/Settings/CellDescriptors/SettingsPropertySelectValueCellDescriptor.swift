@@ -23,7 +23,7 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
+final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsValueCell.self
     let value: SettingsPropertyValue
     let title: String
@@ -56,13 +56,11 @@ class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorT
     
     func select(_ value: SettingsPropertyValue?) {
         do {
-            try self.settingsProperty.set(newValue: self.value)
-        }
-        catch (let e) {
+            try settingsProperty.set(newValue: self.value)
+        } catch (let e) {
             zmLog.error("Cannot set property: \(e)")
         }
-        if let selectAction = self.selectAction {
-            selectAction(self)
-        }
+        
+        selectAction?(self)
     }
 }

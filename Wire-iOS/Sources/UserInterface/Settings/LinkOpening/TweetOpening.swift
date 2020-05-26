@@ -21,6 +21,56 @@ import WireSystem
 
 private let log = ZMSLog(tag: "link opening")
 
+enum DarkThemeOption: Int {
+    case dark, light, auto
+
+//    typealias ApplicationOptionEnum = TweetOpeningOption
+    static var settingKey: SettingKey = .twitterOpeningRawValue
+    static var defaultPreference: DarkThemeOption = .auto ///TODO: light for iOS 13-
+
+    var keyValueString: String {
+        switch self {
+        case .dark: return "dark"
+        case .light: return "light"
+        case .auto: return "auto"
+        }
+    }
+    
+    var displayString: String {
+        switch self {
+        case .dark: return "dark_theme.option.dark".localized
+        case .light: return "dark_theme.option.light".localized
+        case .auto: return "dark_theme.option.auto".localized
+        }
+    }
+
+    ///TODO: iOS 13- ?
+    static var allOptions: [DarkThemeOption] {
+        return [.dark, .light, .auto]
+    }
+    
+    init?(keyValueString: String) {
+        switch keyValueString {
+        case "dark":
+            self = .dark
+        case "light":
+            self = .light
+        case "auto":
+            self = .auto
+        default:
+            return nil
+        }
+    }
+
+//    var isAvailable: Bool {
+//        switch self {
+//        case .none: return true
+//        case .tweetbot: return UIApplication.shared.tweetbotInstalled
+//        case . twitterrific: return UIApplication.shared.twitterrificInstalled
+//        }
+//    }
+}
+
 
 enum TweetOpeningOption: Int, LinkOpeningOption {
     case none, tweetbot, twitterrific

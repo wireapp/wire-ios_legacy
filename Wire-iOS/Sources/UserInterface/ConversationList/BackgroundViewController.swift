@@ -34,9 +34,9 @@ final class BackgroundViewController: UIViewController {
     private let user: UserType
     private let userSession: ZMUserSession?
     
-    public var darkMode: Bool = false {
+    var darkMode: Bool = false {
         didSet {
-            darkenOverlay.isHidden = !self.darkMode
+            darkenOverlay.isHidden = !darkMode
         }
     }
     
@@ -162,6 +162,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
+        ///TODO: auto
         darkMode = ColorScheme.default.variant == .dark
     }
     

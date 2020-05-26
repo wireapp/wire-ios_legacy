@@ -1096,6 +1096,11 @@
 "self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
 "self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
 
+// dark theme
+"dark_theme.option.dark" = "dark";
+"dark_theme.option.light" = "light";
+"dark_theme.option.auto" = "auto";
+
 // Open in
 "self.settings.external_apps.header" = "Open With";
 
