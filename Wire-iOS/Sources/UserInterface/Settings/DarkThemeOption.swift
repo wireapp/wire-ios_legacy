@@ -42,11 +42,7 @@ enum DarkThemeOption: Int {
     }
 
     var displayString: String {
-        switch self {
-        case .dark: return "dark_theme.option.dark".localized
-        case .light: return "dark_theme.option.light".localized
-        case .auto: return "dark_theme.option.auto".localized
-        }
+        return "dark_theme.option.\(keyValueString)".localized
     }
 
     static var allOptions: [DarkThemeOption] {

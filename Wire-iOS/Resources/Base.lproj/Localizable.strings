@@ -1099,7 +1099,7 @@
 // dark theme
 "dark_theme.option.dark" = "dark";
 "dark_theme.option.light" = "light";
-"dark_theme.option.auto" = "auto";
+"dark_theme.option.auto" = "Use system setting";
 
 // Open in
 "self.settings.external_apps.header" = "Open With";
