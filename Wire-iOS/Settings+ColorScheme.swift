@@ -32,6 +32,30 @@ enum SettingsColorScheme {
             return .dark
         }
     }
+    
+    init(from string: String) {
+        switch string {
+        case "dark":
+            self = .dark
+        case "light":
+            self = .light
+        case "auto":
+            if #available(iOS 12.0, *) {
+                switch UIApplication.userInterfaceStyle {
+                case .light:
+                    self = .light
+                case .dark:
+                    self = .dark
+                default:
+                    self = .light
+                }
+            } else {
+                fatal("auto only supported in iOS 12+")
+            }
+        default:
+            fatal("unsupported colorScheme string")
+        }
+    }
 }
 
 extension Settings {
@@ -44,41 +68,6 @@ extension Settings {
             return .light
         }
 
-        return settingsColorScheme(from: string).colorSchemeVariant
-    }
-
-    ///TODO: move to SettingsColorScheme, as a init method
-    func settingsColorScheme(from string: String) -> SettingsColorScheme {
-        switch string {
-        case "dark":
-            return .dark
-        case "light":
-            return .light
-        case "auto":
-            if #available(iOS 12.0, *) {
-                switch UIApplication.userInterfaceStyle {
-                case .light:
-                    return .light
-                case .dark:
-                    return .dark
-                default:
-                    return .light
-                }
-            } else {
-                fatal("auto only supported in iOS 13+")
-            }
-        default:
-            fatal("unsupported colorScheme string")
-        }
-    }
-
-    ///TODO: move to SettingsColorScheme
-    func string(for colorScheme: SettingsColorScheme) -> String {
-        switch colorScheme {
-        case .dark:
-            return "dark"
-        case .light:
-            return "light"
-        }
+        return SettingsColorScheme(from: string).colorSchemeVariant
     }
 }

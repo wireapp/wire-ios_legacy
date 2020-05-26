@@ -56,8 +56,8 @@ final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescr
     func select(_ value: SettingsPropertyValue?) {
         do {
             try settingsProperty.set(newValue: self.value)
-        } catch (let e) {
-            zmLog.error("Cannot set property: \(e)")
+        } catch {
+            zmLog.error("Cannot set property: \(error)")
         }
 
         selectAction?(self)
