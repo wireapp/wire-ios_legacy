@@ -81,26 +81,3 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
     }
 
 }
-
-extension ConversationContentViewController: UIContextMenuInteractionDelegate {
-    @available(iOS 13.0, *)
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-            return self.makeContextMenu()
-               })
-    }
-    
-    
-    @available(iOS 13.0, *)
-    private func makeContextMenu() -> UIMenu {
-
-        // Create a UIAction for sharing
-        let share = UIAction(title: "Share Pupper", image: nil) { action in
-            // Show system share sheet
-        }
-
-        // Create and return a UIMenu with the share action
-        return UIMenu(title: "Main Menu", children: [share])
-    }
-
-}
