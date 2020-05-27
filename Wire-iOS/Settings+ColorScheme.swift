@@ -20,10 +20,10 @@ import WireSystem
 import UIKit
 
 enum SettingsColorScheme: Int {
-    case light
-    case dark
+    case light = 0
+    case dark = 1
     @available(iOS, introduced: 12.0, message: "system only supported in iOS 12+")
-    case system
+    case system = 2
 
     var colorSchemeVariant: ColorSchemeVariant {
         switch self {
