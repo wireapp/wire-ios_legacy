@@ -260,7 +260,7 @@ final class ConversationListContentController: UICollectionViewController {
     point: CGPoint) -> UIContextMenuConfiguration? {
         guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
 
-        let previewViewController = conversationPreviewViewController(indexPath: indexPath)
+        guard let previewViewController = conversationPreviewViewController(indexPath: indexPath) else { return nil}
         let previewProvider: UIContextMenuContentPreviewProvider = {
             
             return previewViewController
@@ -269,14 +269,15 @@ final class ConversationListContentController: UICollectionViewController {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { suggestedActions in
-                                            return self.makeContextMenu(conversation: conversation)
+                                            return self.makeContextMenu(conversation: conversation, actionController: previewViewController.actionController)
            })
     }
     
     @available(iOS 13.0, *)
-    private func makeContextMenu(conversation: ZMConversation) -> UIMenu {
+    private func makeContextMenu(conversation: ZMConversation, actionController: ConversationActionController) -> UIMenu {
             let actions = conversation.listActions.map { action in
-                UIAction(title: action.title, image: nil) { action in
+                UIAction(title: action.title, image: nil) { _ in
+                    actionController.handleAction(action)
                 }
             }
     
