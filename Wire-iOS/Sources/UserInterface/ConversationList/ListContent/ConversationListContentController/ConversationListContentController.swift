@@ -244,13 +244,36 @@ final class ConversationListContentController: UICollectionViewController {
                                  didSelectItemAt indexPath: IndexPath) {
         selectionFeedbackGenerator.selectionChanged()
 
-        let item = listViewModel.item(for: indexPath)
+        openConversation(conversationListItem: listViewModel.item(for: indexPath))
+    }
+    
+    // MARK: preview
 
+    private func openConversation(conversationListItem: ConversationListItem?) {
         focusOnNextSelection = true
         animateNextSelection = true
-        selectModelItem(item)
+        selectModelItem(conversationListItem)
+    }
+    
+    private func conversationPreviewViewController(indexPath: IndexPath) -> ConversationPreviewViewController? {
+        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
+
+        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+
     }
 
+    // MARK: context menu
+    @available(iOS 13.0, *)
+    override func collectionView(_ collectionView: UICollectionView,
+    willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                        animator: UIContextMenuInteractionCommitAnimating) {
+        guard let destinationViewController = animator.previewViewController as? ConversationPreviewViewController else { return }
+
+        animator.addAnimations { [weak self] in
+            self?.openConversation(conversationListItem: destinationViewController.conversation)
+        }
+    }
+    
     @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView,
     contextMenuConfigurationForItemAt indexPath: IndexPath,
@@ -417,12 +440,9 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
 
     @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-
         guard let previewViewController = viewControllerToCommit as? ConversationPreviewViewController else { return }
 
-        focusOnNextSelection = true
-        animateNextSelection = true
-        selectModelItem(previewViewController.conversation)
+        openConversation(conversationListItem: previewViewController.conversation)
     }
 
     @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
@@ -437,14 +457,6 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
 
         return conversationPreviewViewController(indexPath: indexPath)
     }
-
-    private func conversationPreviewViewController(indexPath: IndexPath) -> ConversationPreviewViewController? {
-        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
-
-        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
-
-    }
-
 }
 
 extension ConversationListContentController: ConversationListCellDelegate {
