@@ -23,7 +23,6 @@ import WireDataModel
 
 private var lastPreviewURL: URL?
 
-///TODO: retire UIContextMenuInteraction
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
     @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
