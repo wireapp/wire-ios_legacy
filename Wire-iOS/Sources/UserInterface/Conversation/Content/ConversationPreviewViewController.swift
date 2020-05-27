@@ -24,7 +24,7 @@ import WireSyncEngine
 final class ConversationPreviewViewController: TintColorCorrectedViewController {
 
     let conversation: ZMConversation
-    fileprivate let actionController: ConversationActionController
+    let actionController: ConversationActionController
     fileprivate var contentViewController: ConversationContentViewController
 
     init(conversation: ZMConversation, presentingViewController: UIViewController) {

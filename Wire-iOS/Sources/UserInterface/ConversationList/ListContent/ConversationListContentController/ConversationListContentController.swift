@@ -260,29 +260,26 @@ final class ConversationListContentController: UICollectionViewController {
     point: CGPoint) -> UIContextMenuConfiguration? {
         guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
 
+        let previewViewController = conversationPreviewViewController(indexPath: indexPath)
         let previewProvider: UIContextMenuContentPreviewProvider = {
             
-            return self.conversationPreviewViewController(indexPath: indexPath)
+            return previewViewController
         }
         
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { suggestedActions in
-
-               // "puppers" is the array backing the collection view
                                             return self.makeContextMenu(conversation: conversation)
            })
     }
     
-        @available(iOS 13.0, *)
+    @available(iOS 13.0, *)
     private func makeContextMenu(conversation: ZMConversation) -> UIMenu {
             let actions = conversation.listActions.map { action in
                 UIAction(title: action.title, image: nil) { action in
-                    // Show system share sheet
                 }
             }
     
-            // Create and return a UIMenu with the share action
             return UIMenu(title: conversation.displayName, children: actions)
         }
     
