@@ -1099,7 +1099,7 @@
 // dark theme
 "dark_theme.option.dark" = "Dark";
 "dark_theme.option.light" = "Light";
-"dark_theme.option.auto" = "Sync with system settings";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Open With";

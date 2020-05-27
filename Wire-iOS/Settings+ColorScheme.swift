@@ -47,29 +47,29 @@ enum SettingsColorScheme: Int {
         }
     }
     
-    init?(from string: String) {
+    init(from string: String) {
         switch string {
         case "dark":
             self = .dark
         case "light":
             self = .light
-        case "auto":
+        case "system":
             if #available(iOS 12.0, *) {
                 self = .system
             } else {
-                fatal("auto only supported in iOS 12+")
+                self = SettingsColorScheme.defaultPreference
             }
         default:
-            fatal("unsupported colorScheme string")
+            self = SettingsColorScheme.defaultPreference
         }
     }
     
     static var defaultPreference: SettingsColorScheme {
         if #available(iOS 12.0, *) {
             return .system
-        } else {
-            return .light
         }
+        
+        return .light
     }
     
     static var allOptions: [SettingsColorScheme] {
@@ -99,11 +99,10 @@ extension Settings {
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
-        guard let string: String = self[.colorScheme],
-              let colorSchemeVariant = SettingsColorScheme(from: string)?.colorSchemeVariant else {
+        guard let string: String = self[.colorScheme] else {
             return SettingsColorScheme.defaultPreference.colorSchemeVariant
         }
-
-        return  colorSchemeVariant
+        
+        return  SettingsColorScheme(from: string).colorSchemeVariant
     }
 }
