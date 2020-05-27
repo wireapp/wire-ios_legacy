@@ -23,7 +23,6 @@ enum DarkThemeOption: Int {
     case light
     case dark
 
-    static var settingKey: SettingKey = .twitterOpeningRawValue
     static var defaultPreference: DarkThemeOption {
         if #available(iOS 12.0, *) {
             return .auto
