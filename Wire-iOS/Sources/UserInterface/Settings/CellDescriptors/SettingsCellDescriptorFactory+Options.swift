@@ -209,7 +209,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     static func darkThemeGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = DarkThemeOption.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+        let cells = SettingsColorScheme.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
 
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
@@ -221,7 +221,7 @@ extension SettingsCellDescriptorFactory {
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
         let preview: PreviewGeneratorType = { descriptor in
             let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ DarkThemeOption(rawValue: $0) }) else { return .text(DarkThemeOption.defaultPreference.displayString) }
+            guard let option = value.flatMap ({ SettingsColorScheme(rawValue: $0) }) else { return .text(SettingsColorScheme.defaultPreference.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)

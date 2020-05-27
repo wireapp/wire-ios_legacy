@@ -173,12 +173,12 @@ final class SettingsPropertyFactory {
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 
-                let darkThemeOption: DarkThemeOption
+                let darkThemeOption: SettingsColorScheme
                 if let colorScheme =  self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue),
-                    let option =  DarkThemeOption(keyValueString: colorScheme) {
+                    let option =  SettingsColorScheme(from: colorScheme) {
                     darkThemeOption = option
                 } else {
-                    darkThemeOption = DarkThemeOption.defaultPreference
+                    darkThemeOption = SettingsColorScheme.defaultPreference
                 }
                 
                 return SettingsPropertyValue(darkThemeOption.rawValue)
@@ -186,8 +186,8 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    if let darkThemeOption = DarkThemeOption(rawValue: Int(number.int64Value)) {
-                        self.userDefaults.set(darkThemeOption.keyValueString,
+                    if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
+                        self.userDefaults.set(settingsColorScheme.keyValueString,
                                               forKey: SettingKey.colorScheme.rawValue)
                     } else {
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
