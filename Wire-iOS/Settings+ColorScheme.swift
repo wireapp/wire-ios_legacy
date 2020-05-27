@@ -39,12 +39,12 @@ enum SettingsColorScheme: Int {
                 case .dark:
                     return .dark
                 default:
-                    return .light
+                    break
                 }
-            } else {
-                return .light
             }
         }
+
+        return .light
     }
     
     init(from string: String?) {
@@ -56,12 +56,12 @@ enum SettingsColorScheme: Int {
         case "system":
             if #available(iOS 12.0, *) {
                 self = .system
-            } else {
-                self = SettingsColorScheme.defaultPreference
             }
         default:
-            self = SettingsColorScheme.defaultPreference
+            break
         }
+
+        self = SettingsColorScheme.defaultPreference
     }
     
     static var defaultPreference: SettingsColorScheme {
@@ -75,9 +75,9 @@ enum SettingsColorScheme: Int {
     static var allOptions: [SettingsColorScheme] {
         if #available(iOS 12.0, *) {
             return [.light, .dark, .system]
-        } else {
-            return [.light, .dark]
         }
+        
+        return [.light, .dark]
     }
 
     var keyValueString: String {
@@ -103,6 +103,6 @@ extension Settings {
             return SettingsColorScheme.defaultPreference.colorSchemeVariant
         }
         
-        return  SettingsColorScheme(from: string).colorSchemeVariant
+        return SettingsColorScheme(from: string).colorSchemeVariant
     }
 }
