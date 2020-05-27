@@ -18,11 +18,10 @@
 import Foundation
 
 enum DarkThemeOption: Int {
-    case dark
-    case light
-
     @available(iOS, introduced: 12.0, message: "auto only supported in iOS 12+")
     case auto
+    case light
+    case dark
 
     static var settingKey: SettingKey = .twitterOpeningRawValue
     static var defaultPreference: DarkThemeOption {
