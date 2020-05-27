@@ -258,9 +258,9 @@ final class ConversationListContentController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
     contextMenuConfigurationForItemAt indexPath: IndexPath,
     point: CGPoint) -> UIContextMenuConfiguration? {
-        
+        guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
+
         let previewProvider: UIContextMenuContentPreviewProvider = {
-            guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
             
             return self.conversationPreviewViewController(indexPath: indexPath)
         }
@@ -270,20 +270,20 @@ final class ConversationListContentController: UICollectionViewController {
                                           actionProvider: { suggestedActions in
 
                // "puppers" is the array backing the collection view
-               return self.makeContextMenu(/*for: self.puppers[indexPath.row]*/)
+                                            return self.makeContextMenu(conversation: conversation)
            })
     }
     
         @available(iOS 13.0, *)
-        private func makeContextMenu() -> UIMenu {
-            ///TODO: convo menu?
-            // Create a UIAction for sharing
-            let share = UIAction(title: "Share Pupper", image: nil) { action in
-                // Show system share sheet
+    private func makeContextMenu(conversation: ZMConversation) -> UIMenu {
+            let actions = conversation.listActions.map { action in
+                UIAction(title: action.title, image: nil) { action in
+                    // Show system share sheet
+                }
             }
     
             // Create and return a UIMenu with the share action
-            return UIMenu(title: "Main Menu", children: [share])
+            return UIMenu(title: conversation.displayName, children: actions)
         }
     
     // MARK: - UICollectionViewDataSource

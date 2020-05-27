@@ -143,7 +143,7 @@ extension ZMConversation.Action {
         }
     }
     
-    fileprivate var title: String {
+    var title: String {
         switch self {
         case .removeFromFolder(let folder):
             return localizationKey.localized(args: folder)
@@ -175,6 +175,7 @@ extension ZMConversation.Action {
         return .init(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
     }
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     func previewAction(handler: @escaping () -> Void) -> UIPreviewAction {
         return .init(title: title, style: isDestructive ? .destructive : .default, handler: { _, _ in handler() })
     }
