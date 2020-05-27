@@ -173,15 +173,9 @@ final class SettingsPropertyFactory {
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 
-                let darkThemeOption: SettingsColorScheme
-                if let colorScheme =  self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue),
-                    let option =  SettingsColorScheme(from: colorScheme) {
-                    darkThemeOption = option
-                } else {
-                    darkThemeOption = SettingsColorScheme.defaultPreference
-                }
+                let settingsColorScheme: SettingsColorScheme = SettingsColorScheme(from: self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue))
                 
-                return SettingsPropertyValue(darkThemeOption.rawValue)
+                return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {

@@ -47,7 +47,7 @@ enum SettingsColorScheme: Int {
         }
     }
     
-    init(from string: String) {
+    init(from string: String?) {
         switch string {
         case "dark":
             self = .dark
