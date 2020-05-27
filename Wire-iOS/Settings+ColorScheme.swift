@@ -46,7 +46,7 @@ enum SettingsColorScheme: Int {
 
         return .light
     }
-    
+
     init(from string: String?) {
         switch string {
         case "dark":
@@ -63,20 +63,20 @@ enum SettingsColorScheme: Int {
 
         self = SettingsColorScheme.defaultPreference
     }
-    
+
     static var defaultPreference: SettingsColorScheme {
         if #available(iOS 12.0, *) {
             return .system
         }
-        
+
         return .light
     }
-    
+
     static var allOptions: [SettingsColorScheme] {
         if #available(iOS 12.0, *) {
             return [.light, .dark, .system]
         }
-        
+
         return [.light, .dark]
     }
 
@@ -102,7 +102,7 @@ extension Settings {
         guard let string: String = self[.colorScheme] else {
             return SettingsColorScheme.defaultPreference.colorSchemeVariant
         }
-        
+
         return SettingsColorScheme(from: string).colorSchemeVariant
     }
 }
