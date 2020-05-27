@@ -278,19 +278,20 @@ final class ConversationListContentController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
     contextMenuConfigurationForItemAt indexPath: IndexPath,
     point: CGPoint) -> UIContextMenuConfiguration? {
-        guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
+        guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation,
+              let previewViewController = conversationPreviewViewController(indexPath: indexPath) else { return nil }
 
-        guard let previewViewController = conversationPreviewViewController(indexPath: indexPath) else { return nil}
         let previewProvider: UIContextMenuContentPreviewProvider = {
-
             return previewViewController
         }
+        
+        let actionProvider: UIContextMenuActionProvider = { suggestedActions in
+                                                            return self.makeContextMenu(conversation: conversation, actionController: previewViewController.actionController)
+        }
 
-        return UIContextMenuConfiguration(identifier: nil,
+        return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath,
                                           previewProvider: previewProvider,
-                                          actionProvider: { suggestedActions in
-                                            return self.makeContextMenu(conversation: conversation, actionController: previewViewController.actionController)
-           })
+                                          actionProvider: actionProvider)
     }
 
     @available(iOS 13.0, *)
