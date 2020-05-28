@@ -278,31 +278,28 @@ final class ConversationListContentController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  contextMenuConfigurationForItemAt indexPath: IndexPath,
                                  point: CGPoint) -> UIContextMenuConfiguration? {
-        guard let conversation = self.listViewModel.item(for: indexPath) as? ZMConversation,
-            let previewViewController = conversationPreviewViewController(indexPath: indexPath) else { return nil }
+        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation,
+            let previewViewController = conversationPreviewViewController(indexPath: indexPath) else {
+                return nil                
+        }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
             return previewViewController
         }
 
         let actionProvider: UIContextMenuActionProvider = { _ in
-            return self.makeContextMenu(conversation: conversation, actionController: previewViewController.actionController)
+            let actions = conversation.listActions.map { action in
+                UIAction(title: action.title, image: nil) { _ in
+                    previewViewController.actionController.handleAction(action)
+                }
+            }
+
+            return UIMenu(title: conversation.displayName, children: actions)
         }
 
         return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath,
                                           previewProvider: previewProvider,
                                           actionProvider: actionProvider)
-    }
-
-    @available(iOS 13.0, *)
-    private func makeContextMenu(conversation: ZMConversation, actionController: ConversationActionController) -> UIMenu {
-        let actions = conversation.listActions.map { action in
-            UIAction(title: action.title, image: nil) { _ in
-                actionController.handleAction(action)
-            }
-        }
-
-        return UIMenu(title: conversation.displayName, children: actions)
     }
 
     // MARK: - UICollectionViewDataSource
