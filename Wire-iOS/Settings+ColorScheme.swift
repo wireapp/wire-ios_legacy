@@ -20,6 +20,7 @@ import WireSystem
 import UIKit
 
 enum SettingsColorScheme: Int {
+    
     case light = 0
     case dark = 1
     @available(iOS, introduced: 12.0, message: "system only supported in iOS 12+")
@@ -72,14 +73,6 @@ enum SettingsColorScheme: Int {
         return .light
     }
 
-    static var allOptions: [SettingsColorScheme] {
-        if #available(iOS 12.0, *) {
-            return [.light, .dark, .system]
-        }
-
-        return [.light, .dark]
-    }
-
     var keyValueString: String {
         switch self {
         case .dark: return "dark"
@@ -90,6 +83,16 @@ enum SettingsColorScheme: Int {
 
     var displayString: String {
         return "dark_theme.option.\(keyValueString)".localized
+    }
+}
+
+extension SettingsColorScheme: CaseIterable {
+    static var allCases: [SettingsColorScheme] {
+       if #available(iOS 12.0, *) {
+           return [.light, .dark, .system]
+       }
+
+       return [.light, .dark]
     }
 }
 

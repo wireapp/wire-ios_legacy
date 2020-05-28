@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
-"self.settings.account_picture_group.theme" = "Themes";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
 "self.settings.device_details.reset_session.subtitle" = "If fingerprints don’t match, reset the session to generate new encryption keys on both sides.";

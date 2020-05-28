@@ -209,7 +209,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     static func darkThemeGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = SettingsColorScheme.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
+        let cells = SettingsColorScheme.allCases.map { option -> SettingsPropertySelectValueCellDescriptor in
 
             return SettingsPropertySelectValueCellDescriptor(
                 settingsProperty: property,
