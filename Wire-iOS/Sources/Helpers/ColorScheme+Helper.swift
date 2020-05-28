@@ -19,16 +19,22 @@
 import Foundation
 import UIKit
 
+extension UIStatusBarStyle {
+    static var compatibleDarkContent: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        }
+        
+        return .default
+    }
+}
+
 extension ColorScheme {
 
     var statusBarStyle: UIStatusBarStyle {
         switch variant {
         case .light:
-            if #available(iOS 13.0, *) {
-                return .darkContent
-            } else {
-                return .default
-            }
+            return .compatibleDarkContent
         case .dark:
             return .lightContent
         }

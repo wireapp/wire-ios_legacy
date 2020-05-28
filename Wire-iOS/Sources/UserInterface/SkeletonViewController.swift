@@ -321,7 +321,7 @@ final class SkeletonViewController: UIViewController {
         if customSplitViewController.layoutSize == .compact {
             return .lightContent
         } else {
-            return .default
+            return .compatibleDarkContent
         }
     }
     
