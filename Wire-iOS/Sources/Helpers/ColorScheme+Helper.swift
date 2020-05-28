@@ -24,7 +24,11 @@ extension ColorScheme {
     var statusBarStyle: UIStatusBarStyle {
         switch variant {
         case .light:
-            return .default
+            if #available(iOS 13.0, *) {
+                return .darkContent
+            } else {
+                return .default
+            }
         case .dark:
             return .lightContent
         }
