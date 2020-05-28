@@ -22,7 +22,12 @@ import UIKit
 extension ColorScheme {
 
     var statusBarStyle: UIStatusBarStyle {
-        return variant == .light ? .default : .lightContent
+        switch variant {
+        case .light:
+            return .default
+        case .dark:
+            return .lightContent
+        }
     }
 
     func isCurrentAccentColor(_ accentColor: UIColor) -> Bool {
