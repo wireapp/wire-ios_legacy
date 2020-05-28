@@ -101,6 +101,8 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     // MARK: - dark theme
     func testForDarkThemeOptionsGroup() {
+        setToLightTheme()
+
         let group = SettingsCellDescriptorFactory.darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
