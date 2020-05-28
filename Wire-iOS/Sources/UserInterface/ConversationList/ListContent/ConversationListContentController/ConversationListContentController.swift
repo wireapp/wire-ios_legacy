@@ -255,13 +255,6 @@ final class ConversationListContentController: UICollectionViewController {
         selectModelItem(conversationListItem)
     }
 
-    private func conversationPreviewViewController(indexPath: IndexPath) -> ConversationPreviewViewController? {
-        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else { return nil }
-
-        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
-
-    }
-
     // MARK: context menu
     @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView,
@@ -278,19 +271,20 @@ final class ConversationListContentController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  contextMenuConfigurationForItemAt indexPath: IndexPath,
                                  point: CGPoint) -> UIContextMenuConfiguration? {
-        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation,
-            let previewViewController = conversationPreviewViewController(indexPath: indexPath) else {
+        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
                 return nil                
         }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
-            return previewViewController
+            return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
         }
 
         let actionProvider: UIContextMenuActionProvider = { _ in
             let actions = conversation.listActions.map { action in
                 UIAction(title: action.title, image: nil) { _ in
-                    previewViewController.actionController.handleAction(action)
+                    let actionController = ConversationActionController(conversation: conversation, target: self)
+
+                    actionController.handleAction(action)
                 }
             }
 
@@ -451,9 +445,13 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
                 return nil
         }
 
+        guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
+            return nil
+        }
+
         previewingContext.sourceRect = layoutAttributes.frame
 
-        return conversationPreviewViewController(indexPath: indexPath)
+        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
     }
 }
 
