@@ -56,12 +56,12 @@ enum SettingsColorScheme: Int {
         case "system":
             if #available(iOS 12.0, *) {
                 self = .system
+            } else {
+                self = SettingsColorScheme.defaultPreference
             }
         default:
-            break
+            self = SettingsColorScheme.defaultPreference
         }
-
-        self = SettingsColorScheme.defaultPreference
     }
 
     static var defaultPreference: SettingsColorScheme {

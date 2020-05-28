@@ -87,6 +87,8 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForOptionsGroupScrollToBottom() {
+        setToLightTheme()
+        
         let group = settingsCellDescriptorFactory.optionsGroup()
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
