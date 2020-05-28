@@ -24,7 +24,7 @@ extension UIStatusBarStyle {
         if #available(iOS 13.0, *) {
             return .darkContent
         }
-        
+
         return .default
     }
 }
@@ -43,5 +43,5 @@ extension ColorScheme {
     func isCurrentAccentColor(_ accentColor: UIColor) -> Bool {
         return self.accentColor == accentColor
     }
-    
+
 }
