@@ -122,9 +122,7 @@ class ColorPickerController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        get {
-            return .lightContent
-        }
+        return .lightContent
     }
     
     fileprivate class PickerCell: UITableViewCell {
