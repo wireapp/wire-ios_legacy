@@ -194,9 +194,9 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     init?(conversation: Conversation,
           sharingSession: SharingSession,
           attachment: NSItemProvider) {
-        self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
-        self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
-        self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
+        typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
+        typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
+        typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
         guard typeURL || typeData || typePass else { return nil }
@@ -214,6 +214,11 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     self.error = .unsupportedAttachment
                     return completion()
                 }
+                print("url = \(url)")
+                let filesize = try? url?.fileSize()
+                print("filesize = \(filesize)")
+                
+                    /// TODO: fail here if file size exceeded 
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
@@ -238,7 +243,9 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         self.prepareAsFile(name: nil, typeIdentifier: UnsentFileSendable.passkitUTI, completion: completion)
     }
 
-    private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {
+    private func prepareAsFile(name: String?,
+                               typeIdentifier: String,
+                               completion: @escaping () -> Void) {
         attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:]) { [weak self] (data, error) in
             guard let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
@@ -246,7 +253,8 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             }
 
             let prepareColsure: SendingCompletion = { (url, error) in
-                guard let url = url, error == nil else {
+                guard let url = url,
+                    error == nil else {
                     error?.log(message: "Unable to prepare file attachment for sending")
                     return completion()
                 }
@@ -276,9 +284,9 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                                         name: name,
                                         dataURL: dataURL,
                                         completion: prepareColsure)
-            } else {
-                completion()
             }
+                
+            completion()
         }
     }
 

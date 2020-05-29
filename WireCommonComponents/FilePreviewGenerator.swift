@@ -25,6 +25,13 @@ import CoreGraphics
 import UIKit
 
 extension URL {
+    public func fileSize() throws -> UInt64? {
+        let attributes: [FileAttributeKey: Any]
+        attributes = try FileManager.default.attributesOfItem(atPath: path)
+
+        return attributes[FileAttributeKey.size] as? UInt64
+    }
+
     public func UTI() -> String {
         guard let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self.pathExtension as CFString, .none) else {
             return kUTTypeItem as String

@@ -70,9 +70,10 @@ final class SendController {
             } else if $0.hasURL {
                 linkAttachment = $0
                 return nil
-            } else {
-                return UnsentFileSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
             }
+
+            // other kinds of files
+            return UnsentFileSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
         }
 
         sendables.insert(UnsentTextSendable(conversation: conversation, sharingSession: sharingSession, text: text, attachment: linkAttachment), at: 0)
