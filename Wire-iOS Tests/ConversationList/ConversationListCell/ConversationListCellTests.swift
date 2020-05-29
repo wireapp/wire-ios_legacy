@@ -19,6 +19,7 @@
 import UIKit
 @testable import Wire
 import XCTest
+import WireCommonComponents
 
 final class ConversationListCellTests: CoreDataSnapshotTestCase {
 

@@ -19,6 +19,7 @@
 import WireTesting
 import XCTest
 @testable import Wire
+import WireCommonComponents
 
 // MARK: - factory methods
 

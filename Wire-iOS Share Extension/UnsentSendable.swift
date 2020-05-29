@@ -58,7 +58,8 @@ class UnsentSendableBase {
 
     var error: UnsentSendableError?
 
-    init(conversation: Conversation, sharingSession: SharingSession) {
+    init(conversation: Conversation,
+         sharingSession: SharingSession) {
         self.conversation = conversation
         self.sharingSession = sharingSession
     }
@@ -180,7 +181,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 }
 
 /// `UnsentSendable` implementation to send file messages
-class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
+final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
     static let passkitUTI = "com.apple.pkpass"
     private let attachment: NSItemProvider
@@ -190,7 +191,9 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     private let typeData: Bool
     private let typePass: Bool
 
-    init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
+    init?(conversation: Conversation,
+          sharingSession: SharingSession,
+          attachment: NSItemProvider) {
         self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
         self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
         self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)

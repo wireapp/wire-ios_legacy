@@ -97,7 +97,7 @@ final class SendController {
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
         
-        self.timedOut = false
+        timedOut = false
         self.progress = progress
         
         let completion: ([Sendable]) -> Void = { [weak self] sendables in
@@ -115,7 +115,7 @@ final class SendController {
                 progress(.done)
             }
         }
-
+///TODO: check file size?
         if unsentSendables.contains(where: { $0.needsPreparation }) {
             progress(.preparing)
             prepare(unsentSendables: unsentSendables) { [weak self] in
@@ -199,7 +199,7 @@ final class SendController {
             $0.error != .unsupportedAttachment
         }.forEach {
             sendingGroup.enter()
-            $0.send(completion: appendToMessages)
+            $0.send(completion: appendToMessages) ///TODO: check file size?
         }
 
         sendingGroup.notify(queue: .main) {

@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import WireCommonComponents
 
 final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
