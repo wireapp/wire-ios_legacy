@@ -682,6 +682,9 @@
 "call.alert.ongoing.start.button" = "とにかく電話をする";
 "call.alert.ongoing.join.button" = "とにかく参加します。";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "詳細情報";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "%@ からの着信";
@@ -1396,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "このメールアドレスは組織アカウントログインには使用できません。続行するにはシングルサインオンアクセスコードを入力してください";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "このメールアドレスは他のサーバーにひも付けられています。このアプリでは、複数のサーバーへの同時接続はできません。この端末内のすべての Wire アカウントをいったんログアウトし、再度ログインしてください。";
 "login.sso.error.alert.unknown.message" = "あとで再び試してください";
+"login.sso.backend_switch.title" = "Leaving Wire";
+"login.sso.backend_switch.subtitle" = "次の場所にリダイレクトされます: ";
+"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
 
 
 // Restore In Progress Loading Titles

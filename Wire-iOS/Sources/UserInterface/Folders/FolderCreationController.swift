@@ -79,7 +79,7 @@ final class FolderCreationController: UIViewController {
     }
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return colorSchemeVariant == .light ? .default : .lightContent
+        return colorSchemeVariant == .light ? .compatibleDarkContent : .lightContent
     }
     
     override public func viewDidAppear(_ animated: Bool) {

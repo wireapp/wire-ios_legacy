@@ -364,33 +364,45 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if #available(iOS 13.0, *) {
+            return gestureRecognizer is UILongPressGestureRecognizer
+        }
+        
         // all other recognizers require this pan recognizer to fail
         return gestureRecognizer == revealDrawerGestureRecognizer
     }
 
-    // NOTE:
-    // In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
-    // the pan gesture recognizer used for the swipeable cell. The fix to this problem
-    // however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
-    // was now blocking the force touch recognizer). Although Apple documentation suggests
-    // getting the reference to the force recognizer and using delegate methods to create
-    // failure requirements, setting the delegate raised an exception (???). Here we
-    // simply apply the fix for iOS 11 and above.
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // for iOS version >= 11
-        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+    /// NOTE:
+    /// In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
+    /// the pan gesture recognizer used for the swipeable cell. The fix to this problem
+    /// however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
+    /// was now blocking the force touch recognizer). Although Apple documentation suggests
+    /// getting the reference to the force recognizer and using delegate methods to create
+    /// failure requirements, setting the delegate raised an exception (???). Here we
+    /// simply apply the fix for iOS 11 and above.
+    /// - Parameters:
+    ///   - gestureRecognizer: gestureRecognizer
+    ///   - otherGestureRecognizer: otherGestureRecognizer
+    /// - Returns: true if need to require failure of otherGestureRecognizer
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if #available(iOS 13.0, *) {
+            return false
+        } else if #available(iOS 11.0, *) {
             // pan recognizer should not require failure of any other recognizer
             return !(gestureRecognizer is UIPanGestureRecognizer)
-        } else {
-            return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
         }
+
+        return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
     }
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 
-        // iOS version >= 11
-        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+        if #available(iOS 13.0, *) {
+            return true
+        } else if #available(iOS 11.0, *) {
             // pan recognizer should not recognize simultaneously with any other recognizer
             return !(gestureRecognizer is UIPanGestureRecognizer)
         }

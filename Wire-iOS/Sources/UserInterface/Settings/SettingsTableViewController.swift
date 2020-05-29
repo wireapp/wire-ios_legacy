@@ -149,7 +149,7 @@ extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataS
 
 }
 
-class SettingsTableViewController: SettingsBaseTableViewController {
+final class SettingsTableViewController: SettingsBaseTableViewController {
 
     let group: SettingsInternalGroupCellDescriptorType
     fileprivate var sections: [SettingsSectionDescriptorType]
