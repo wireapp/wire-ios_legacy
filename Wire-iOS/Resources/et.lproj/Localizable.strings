@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Isikuandmed";
 
-"self.settings.account_picture_group.theme" = "Tume kujundus";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire annab igale seadmele unikaalse sõrmejälje. Võrdle neid ja kinnita seadmete ja vestluste turvalisust.";
 "self.settings.device_details.reset_session.subtitle" = "Kui sõrmejäljed ei kattu, lähtesta sessioon - see loob mõlemal poolel uued krüpteerimisvõtmed.";
@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
 "login.sso.error.alert.unknown.message" = "Palun proovi hiljem uuesti.";
-"login.sso.backend_switch.title" = "Leaving Wire";
-"login.sso.backend_switch.subtitle" = "You are being redirected to";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles

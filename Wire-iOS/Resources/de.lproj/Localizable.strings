@@ -303,7 +303,7 @@
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Wähle einen Filter aus";
 
 "conversation.call.many_participants_confirmation.title" = "Anruf bestätigen";
-"conversation.call.many_participants_confirmation.message" = "Dies wird %d Menschen anrufen";
+"conversation.call.many_participants_confirmation.message" = "Sie werden %d Personen anrufen";
 "conversation.call.many_participants_confirmation.call" = "Anruf";
 
 "conversation.connection_view.in_address_book" = "in Kontakte";
@@ -1399,8 +1399,8 @@
 "login.sso.error.alert.domain_not_registered.message" = "Diese E-Mail-Adresse kann hier nicht verwendet werden. Bitte geben Sie den SSO-Code ein, um fortzufahren.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Diese E-Mail ist mit einem anderen Server verknüpft. Die App kann aber jeweils nur mit einem Server verbunden sein. Bitte melden Sie sich von allen Wire-Konten auf diesem Gerät ab und versuchen es erneut.";
 "login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
-"login.sso.backend_switch.title" = "Wire verlassen";
-"login.sso.backend_switch.subtitle" = "Sie werden weitergeleitet zu";
+"login.sso.backend_switch.title" = "Weiterleitung...";
+"login.sso.backend_switch.subtitle" = "Sie werden zu Ihrem speziellen Unternehmensservice weitergeleitet.";
 "login.sso.backend_switch.information" = "Geben Sie Ihre Zugangsdaten nur dann an, wenn Sie sicher sind, dass dies das Login Ihrer Organisation ist.";
 
 
