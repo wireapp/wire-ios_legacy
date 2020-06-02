@@ -173,7 +173,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 // MARK: - Event Handling
 
 extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreatedSessionObserver {
-
+    
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
         currentPostRegistrationFields().apply(sendPostRegistrationFields)
@@ -190,6 +190,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
+        
+        if let userSession = SessionManager.shared?.activeUserSession {
+            initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+        }
 
         registrationStatus.delegate = self
     }

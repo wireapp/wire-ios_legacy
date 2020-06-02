@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "个人资料";
 
-"self.settings.account_picture_group.theme" = "暗色系主题";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire为每个设备设置了一个独特的指纹。您可以透過指纹比对来验证您的设备和聊天室。";
 "self.settings.device_details.reset_session.subtitle" = "如果设备指纹匹配失败， 请通过重置Sessionl来生成新的密匙。";
@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "该邮箱无法用于企业登录，请输入SSO代码来继续操作。";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "此电子邮件已链接到不同的服务器，但应用程序只能一次连接到一个服务器。 请注销此设备上的所有Wire账号并尝试重新登录。";
 "login.sso.error.alert.unknown.message" = "请稍后重试。";
-"login.sso.backend_switch.title" = "Leaving Wire";
-"login.sso.backend_switch.subtitle" = "You are being redirected to";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles

@@ -172,20 +172,30 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark")
+                
+                let settingsColorScheme: SettingsColorScheme = SettingsColorScheme(from: self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue))
+                
+                return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue)
+                    if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
+                        self.userDefaults.set(settingsColorScheme.keyValueString,
+                                              forKey: SettingKey.colorScheme.rawValue)
+                    } else {
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
-                
-                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
+
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
             
-            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+            return SettingsBlockProperty(propertyName: propertyName,
+                                         getAction: getAction,
+                                         setAction: setAction)
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {

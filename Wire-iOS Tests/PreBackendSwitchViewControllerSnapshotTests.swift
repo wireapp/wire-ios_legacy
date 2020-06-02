@@ -26,7 +26,6 @@ class PreBackendSwitchViewControllerSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = PreBackendSwitchViewController()
-        sut.backendURL = URL(string: "http://custom-sso-url/config.json")
     }
     
     override func tearDown() {

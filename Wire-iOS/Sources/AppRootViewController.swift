@@ -25,6 +25,7 @@ import WireCommonComponents
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
+
 final class AppRootViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
 
@@ -85,6 +86,16 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         coordinator.animate(alongsideTransition: nil, completion: { _ in
             self.updateOverlayWindowFrame(size: size)
         })
+    }
+        
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 12.0, *) {
+            if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
+            }
+        }
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -594,7 +605,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 extension AppRootViewController: PopoverPresenter { }
 
-public extension SessionManager {
+extension SessionManager {
 
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
@@ -624,4 +635,11 @@ public extension SessionManager {
 
 final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
+}
+
+extension UIApplication {
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
 }
