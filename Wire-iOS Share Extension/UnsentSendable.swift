@@ -214,11 +214,14 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     self.error = .unsupportedAttachment
                     return completion()
                 }
-                print("url = \(url)")
                 let filesize = try? url?.fileSize()
-                print("filesize = \(filesize)")
                 
-                    /// TODO: fail here if file size exceeded 
+                if filesize > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
+                    self.
+                    completion()
+                    return ///TODO: error dialog? fix endless spinner
+                }
+
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {

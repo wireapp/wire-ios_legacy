@@ -277,7 +277,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
-            case .timedOut:
+            case .timedOut: ///TODO: new case for file size 
                 self.popConfigurationViewController()
                 
                 let title = "share_extension.timeout.title".localized
