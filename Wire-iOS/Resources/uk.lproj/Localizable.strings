@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Особисті дані";
 
-"self.settings.account_picture_group.theme" = "Темна тема";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
 "self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
-"login.sso.backend_switch.title" = "Відбувається вихід з Wire";
-"login.sso.backend_switch.subtitle" = "Вас буде перенаправлено до";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles

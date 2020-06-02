@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Asmeninė informacija";
 
-"self.settings.account_picture_group.theme" = "Tamsi tema";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire kiekvienam įrenginiui suteikia unikalų kontrolinį kodą. Palyginkite juos ir patvirtinkite savo įrenginius ir pokalbius.";
 "self.settings.device_details.reset_session.subtitle" = "Jeigu kontroliniai kodai nesutampa, atstatykite seansą, kad abiejose pusėse būtų sugeneruoti nauji šifravimo raktai.";
@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Šis el. pašto adresas negali būti naudojamas kaip įmonės prisijungimas. Norėdami tęsti įrašykite SSO kodą.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Šis el. pašto adresas yra susietas su kitu serveriu, bet programėlė gali būti prijungta tik prie vieno serverio tuo pačiu metu. Atsijunkite nuo visų „Wire“ paskyrų šiame įrenginyje ir bandykite prisijungti dar kartą.";
 "login.sso.error.alert.unknown.message" = "Bandykite dar kartą vėliau.";
-"login.sso.backend_switch.title" = "Leaving Wire";
-"login.sso.backend_switch.subtitle" = "You are being redirected to";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles

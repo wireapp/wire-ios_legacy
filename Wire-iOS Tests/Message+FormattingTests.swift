@@ -220,4 +220,15 @@ class Message_FormattingTests: XCTestCase {
         // then
         XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
     }
+    
+    func testThatEmojiAreNotRenderedInsideCodeBlock() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "`:(`")
+        
+        // when
+        let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: false)
+        
+        // then
+        XCTAssertEqual(formattedText.string, ":(")
+    }
 }

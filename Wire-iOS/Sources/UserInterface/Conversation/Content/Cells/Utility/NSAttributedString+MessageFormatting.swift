@@ -163,7 +163,8 @@ extension NSAttributedString {
         let links = markdownText.links()
         let linkAttachmentRanges = links.compactMap { Range<Int>($0.range) }
         let mentionRanges = mentionTextObjects.compactMap{ $0.range(in: markdownText.string as String)}
-        markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
+        let codeBlockRanges =  markdownText.ranges(of: .code).compactMap { Range<Int>($0) }
+        markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges + codeBlockRanges)
 
         markdownText.removeTrailingWhitespace()
         markdownText.changeFontSizeIfMessageContainsOnlyEmoticons()

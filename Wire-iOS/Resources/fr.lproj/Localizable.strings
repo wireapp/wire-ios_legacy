@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Cet e-mail ne peut pas être utilisé pour vous connecter. Veuillez saisir le code SSO pour continuer.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Cet e-mail est déjà lié à un autre serveur et l'application ne peut être connectée qu'à un seul serveur à la fois. Veuillez vous déconnecter de tous les comptes Wire sur cet appareil et ré-essayez de vous reconnecter.";
 "login.sso.error.alert.unknown.message" = "Veuillez réessayer plus tard.";
-"login.sso.backend_switch.title" = "Quitter Wire";
-"login.sso.backend_switch.subtitle" = "Vous allez être redirigé vers";
-"login.sso.backend_switch.information" = "Entrez vos identifiants si vous êtes certain que ceci est la connection de votre organisation";
+"login.sso.backend_switch.title" = "Redirection...";
+"login.sso.backend_switch.subtitle" = "Vous allez être redirigé vers votre service entreprise dédié.";
+"login.sso.backend_switch.information" = "Ne saisissez vos identifiants que si vous êtes sûr d'être connecté à votre organisation.";
 
 
 // Restore In Progress Loading Titles

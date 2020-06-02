@@ -682,7 +682,7 @@
 "call.alert.ongoing.start.button" = "Все равно позвонить";
 "call.alert.ongoing.join.button" = "Все равно присоединиться";
 
-"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.message" = "Ретрансляторы вызовов недоступны. Это может повлиять на работу ваших звонков.";
 "call.quality.indicator.more_info.button.text" = "Подробнее";
 
 // Call Actions (accessibility)
@@ -1399,8 +1399,8 @@
 "login.sso.error.alert.domain_not_registered.message" = "Этот email не может быть использован при авторизации организации. Пожалуйста, введите код SSO для продолжения.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Этот email связан с другим сервером, при этом приложение одновременно может быть подключено только к одному серверу. Пожалуйста, выйдите из всех учетных записей Wire на этом устройстве и попробуйте войти снова.";
 "login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
-"login.sso.backend_switch.title" = "Выход из Wire";
-"login.sso.backend_switch.subtitle" = "Вы перенаправлены на";
+"login.sso.backend_switch.title" = "Перенаправление...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
 "login.sso.backend_switch.information" = "Указывайте учетные данные, только если вы уверены, что это форма авторизации вашей организации.";
 
 
