@@ -20,21 +20,25 @@ import WireSyncEngine
 
 extension ZMUserSession {
     static let MaxVideoWidth: UInt64 = 1920 // FullHD
-    static let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
-    private static let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes
+    static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
+    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
 
-    private static let MaxAudioLength: TimeInterval = 25 * 60.0 // 25 minutes
-    private static let MaxTeamAudioLength: TimeInterval = 100 * 60.0 // 100 minutes
+    private static let MaxAudioLength: TimeInterval = 1500 // 25 minutes (25 * 60.0)
+    private static let MaxTeamAudioLength: TimeInterval = 6000 // 100 minutes (100 * 60.0)
 
-    private static let MaxVideoLength: TimeInterval = 4.0 * 60.0 // 4 minutes
-    private static let MaxTeamVideoLength: TimeInterval = 16.0 * 60.0 // 16 minutes
+    private static let MaxVideoLength: TimeInterval = 240 // 4 minutes (4.0 * 60.0)
+    private static let MaxTeamVideoLength: TimeInterval = 960 // 16 minutes (16.0 * 60.0)
 
     private var selfUserHasTeam: Bool {
         return ZMUser.selfUser(inUserSession: self).hasTeam
     }
 
     public var maxUploadFileSize: UInt64 {
-        return selfUserHasTeam ? ZMUserSession.MaxTeamFileSize : ZMUserSession.MaxFileSize
+        return ZMUserSession.uploadFileSizeLimit(hasTeam: selfUserHasTeam)
+    }
+    
+    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
+        return hasTeam ? ZMUserSession.MaxTeamFileSize : ZMUserSession.MaxFileSize
     }
 
     public var maxAudioLength: TimeInterval {
@@ -45,3 +49,4 @@ extension ZMUserSession {
         return selfUserHasTeam ? ZMUserSession.MaxTeamVideoLength : ZMUserSession.MaxVideoLength
     }
 }
+
