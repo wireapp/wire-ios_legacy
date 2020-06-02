@@ -35,6 +35,17 @@ private enum LocalAuthenticationStatus {
     case granted
 }
 
+extension AccountManager {
+    // MARK: - Host App State
+
+    static var sharedAccountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
+    }
+
+}
+
 final class ShareExtensionViewController: SLComposeServiceViewController {
 
     // MARK: - Elements
@@ -78,14 +89,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
 
-    // MARK: - Host App State
-
-    private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        return AccountManager(sharedDirectory: sharedContainerURL)
-    }
-
     // MARK: - Configuration
 
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +111,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentAccount = accountManager?.selectedAccount
+        currentAccount = AccountManager.sharedAccountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupAppCenterIfNeeded()
         updateAccount(currentAccount)
@@ -136,7 +139,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     private var authenticatedAccounts: [Account] {
-        guard let accountManager = accountManager else { return [] }
+        guard let accountManager = AccountManager.sharedAccountManager else { return [] }
         return accountManager.accounts.filter { BackendEnvironment.shared.isAuthenticated($0) }
     }
     
@@ -155,7 +158,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     override func configurationItems() -> [Any]! {
-        if accountManager?.accounts.count > 1 {
+        if AccountManager.sharedAccountManager?.accounts.count > 1 {
             return [accountItem, conversationItem]
         } else {
             return [conversationItem]
@@ -459,7 +462,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     
     func showChooseAccount() {
         
-        guard let accountManager = accountManager else { return }
+        guard let accountManager = AccountManager.sharedAccountManager else { return }
         let accountSelectionViewController = AccountSelectionViewController(accounts: accountManager.accounts,
                                                                             current: currentAccount)
         
