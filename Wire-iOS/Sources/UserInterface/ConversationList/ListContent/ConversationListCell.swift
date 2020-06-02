@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 import avs
 
@@ -272,4 +271,3 @@ extension ConversationListCell: AVSMediaManagerClientObserver {
         })
     }
 }
-

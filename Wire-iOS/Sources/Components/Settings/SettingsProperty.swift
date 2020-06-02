@@ -171,9 +171,9 @@ class SettingsBlockProperty : SettingsProperty {
     }
     
     func set(newValue: SettingsPropertyValue) throws {
-        try self.setAction(self, newValue)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
-        self.trackNewValue()
+        try setAction(self, newValue)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: propertyName.changeNotificationName), object: self)
+        trackNewValue()
     }
     
     func trackNewValue() {

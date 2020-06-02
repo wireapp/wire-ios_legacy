@@ -256,7 +256,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .compatibleDarkContent
     }
 
     func configure(with featureProvider: AuthenticationFeatureProvider) {

@@ -257,7 +257,7 @@ final class CollectionsViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.variant == .dark ? .lightContent : .default
+        return ColorScheme.default.statusBarStyle
     }
 
     fileprivate func updateNoElementsState() {

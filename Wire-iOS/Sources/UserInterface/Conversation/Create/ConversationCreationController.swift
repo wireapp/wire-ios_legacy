@@ -164,8 +164,8 @@ final class ConversationCreationController: UIViewController {
         }
     }
 
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return colorSchemeVariant == .light ? .default : .lightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
     }
 
     override public func viewDidAppear(_ animated: Bool) {
