@@ -197,7 +197,6 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
             informationLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 10),
             informationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             informationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            informationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
