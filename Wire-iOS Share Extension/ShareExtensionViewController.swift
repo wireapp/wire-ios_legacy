@@ -277,17 +277,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             case .timedOut:
                 self.popConfigurationViewController()
                 
-                let title = "share_extension.timeout.title".localized
-                let message = "share_extension.timeout.message".localized
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                let alert = UIAlertController.alertWithOKButton(title: "share_extension.timeout.title".localized, message: "share_extension.timeout.message".localized)
                 
-            case .error(let error): ///TODO: helper
-                let title = "share_extension.error.title".localized
-                let message: String = error.localizedString
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                
+            case .error(let error):
+                let alert = UIAlertController.alertWithOKButton(title: "share_extension.error.title".localized, message: error.localizedString)
+                
                 self.present(alert, animated: true) {
                     self.popConfigurationViewController()
                 }

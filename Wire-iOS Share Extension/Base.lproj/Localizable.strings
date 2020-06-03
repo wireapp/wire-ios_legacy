@@ -20,7 +20,8 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Conversation:";
 "share_extension.send_button.title" = "Send";
