@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -20,7 +19,7 @@ import XCTest
 @testable import Wire
 
 final class AVURLAsset_conversionTests: XCTestCase {
-    
+
     func testThatVideoIsConvertedToUploadFormat() {
         // GIVEN
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
@@ -28,13 +27,13 @@ final class AVURLAsset_conversionTests: XCTestCase {
 
         // WHEN
         let expectation = self.expectation(description: "Video converted")
-        
+
         AVURLAsset.convertVideoToUploadFormat(at: videoURL,
                                               quality: AVAssetExportPresetLowQuality,
                                               deleteSourceFile: false) {
                                                 url, asset, error in
                                                 // THEN
-                                                
+
                                                 // exported file URL
                                                 XCTAssertEqual(url?.lastPathComponent, videoURL.lastPathComponent)
                                                 // temp asset URL for upload
@@ -46,7 +45,7 @@ final class AVURLAsset_conversionTests: XCTestCase {
                                                 XCTAssertNil(error)
                                                 expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 3) { error in
             XCTAssertNil(error)
         }

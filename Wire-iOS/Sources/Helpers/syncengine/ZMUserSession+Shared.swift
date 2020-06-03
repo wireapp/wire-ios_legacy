@@ -24,12 +24,11 @@ extension ZMUserSession {
     private static let MaxTeamAudioLength: TimeInterval = 6000 // 100 minutes (100 * 60.0)
     private static let MaxVideoLength: TimeInterval = 240 // 4 minutes (4.0 * 60.0)
     private static let MaxTeamVideoLength: TimeInterval = 960 // 16 minutes (16.0 * 60.0)
-    
-    
+
     static func shared() -> ZMUserSession? {
         return SessionManager.shared?.activeUserSession
     }
-    
+
     private var selfUserHasTeam: Bool {
         return ZMUser.selfUser(inUserSession: self).hasTeam
     }
