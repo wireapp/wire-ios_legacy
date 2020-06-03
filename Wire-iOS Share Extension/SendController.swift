@@ -115,7 +115,9 @@ final class SendController {
             weakSelf.observer?.sentHandler = { [weak self] in
                 self?.cancelTimeout()
                 self?.sentAllSendables = true
-                progress(.done)
+                if unsentSendableError == nil {
+                    progress(.done)
+                }
             }
             
             if let unsentSendableError = unsentSendableError {
