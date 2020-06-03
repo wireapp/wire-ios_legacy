@@ -36,6 +36,7 @@ enum SendingState {
     case timedOut // Fired when the connection is lost, e.g. with bad network connection
     case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
     case done // Sending either was cancelled (due to degradation for example) or finished.
+    case error(UnsentSendableError) // When error occurs, e.g. file is over the size limit
 }
 
 
@@ -93,6 +94,8 @@ final class SendController {
         }
     }
     
+    typealias SendableCompletion = ([Sendable], UnsentSendableError?) -> Void
+    
     /// Send (and prepare if needed) the text and attachment items passed into the initializer.
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
@@ -100,19 +103,23 @@ final class SendController {
         self.timedOut = false
         self.progress = progress
         
-        let completion: ([Sendable]) -> Void = { [weak self] sendables in
-            guard let `self` = self else { return }
+        let completion: SendableCompletion  = { [weak self] sendables, unsentSendableError in
+            guard let weakSelf = self else { return }
             
-            self.observer = SendableBatchObserver(sendables: sendables)
-            self.observer?.progressHandler = { [weak self] in
+            weakSelf.observer = SendableBatchObserver(sendables: sendables)
+            weakSelf.observer?.progressHandler = { [weak self] in
                 progress(.sending($0))
                 self?.tryToTimeout()
             }
 
-            self.observer?.sentHandler = { [weak self] in
+            weakSelf.observer?.sentHandler = { [weak self] in
                 self?.cancelTimeout()
                 self?.sentAllSendables = true
                 progress(.done)
+            }
+            
+            if let unsentSendableError = unsentSendableError {
+                progress(.error(unsentSendableError))
             }
         }
 
@@ -184,8 +191,8 @@ final class SendController {
         preparationGroup.notify(queue: .main, execute: completion)
     }
 
-    private func append(unsentSendables: [UnsentSendable], completion: @escaping ([Sendable]) -> Void) {
-        guard !isCancelled else { return completion([]) }
+    private func append(unsentSendables: [UnsentSendable], completion: @escaping SendableCompletion) {
+        guard !isCancelled else { return completion([], nil) }
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()
 
@@ -201,9 +208,11 @@ final class SendController {
             sendingGroup.enter()
             $0.send(completion: appendToMessages)
         }
+        
+        let error = unsentSendables.first(where: {$0.error != nil})?.error
 
         sendingGroup.notify(queue: .main) {
-            completion(messages)
+            completion(messages, error)
         }
     }
 

@@ -282,6 +282,15 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+                
+            case .error(let error): ///TODO: helper
+                let title = "blah".localized
+                let message = "too big".localized ///TODO: error message
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true) {
+                    self.popConfigurationViewController()
+                }
             }
         }
     }
