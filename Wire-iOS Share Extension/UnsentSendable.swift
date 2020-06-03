@@ -221,7 +221,7 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                 
                 if filesize > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
                     self.error = .fileSizeTooBig
-                    return completion() ///TODO: error dialog? fix endless spinner
+                    return completion()
                 }
 
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)

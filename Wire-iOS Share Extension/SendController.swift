@@ -191,7 +191,7 @@ final class SendController {
         unsentSendables.filter { $0.needsPreparation }.forEach {
             preparationGroup.enter()
             $0.prepare {
-                preparationGroup.leave()
+                preparationGroup.leave() ///TODO: crash when send again
             }
         }
 
