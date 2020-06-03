@@ -30,10 +30,10 @@ enum UnsentSendableError: Error {
     // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
     // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
-    
+
     // The attachment is over file size limitation
     case fileSizeTooBig
-    
+
     var localizedString: String {
         switch self {
         case .fileSizeTooBig:
@@ -211,7 +211,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         guard typeURL || typeData || typePass else { return nil }
         needsPreparation = true
     }
-    
+
     func prepare(completion: @escaping () -> Void) {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
@@ -223,12 +223,12 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     weakSelf.error = .unsupportedAttachment
                     return completion()
                 }
-                
+
                 if (try? url?.fileSize()) > AccountManager.fileSizeLimit {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
-                
+
                 weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
@@ -384,7 +384,6 @@ extension URL { ///TODO:
         return attributes[FileAttributeKey.size] as? UInt64
     }
 }
-
 
 extension UInt64 {
     private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
