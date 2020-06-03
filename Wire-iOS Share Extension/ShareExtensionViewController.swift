@@ -48,6 +48,8 @@ extension AccountManager {
 
 final class ShareExtensionViewController: SLComposeServiceViewController {
 
+    private weak var errorAlert: UIAlertController?
+    
     // MARK: - Elements
 
     lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
@@ -167,10 +169,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     // MARK: - Events
 
-    @objc private func extensionHostDidEnterBackground() {
-        postContent?.cancel { [weak self] in
-            self?.cancel()
-        }
+    @objc
+    private func extensionHostDidEnterBackground() {
+        cancelProgressSendingViewController()
     }
 
     override func presentationAnimationDidFinish() {
@@ -248,7 +249,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             switch progress {
             case .preparing:
                 DispatchQueue.main.asyncAfter(deadline: .now() + progressDisplayDelay) {
-                    guard !postContent.sentAllSendables && nil == self.progressViewController else { return }
+                    guard !postContent.sentAllSendables &&
+                        nil == self.progressViewController &&
+                        self.errorAlert == nil else { return }
+                    
                     self.presentSendingProgress(mode: .preparing)
                 }
 
@@ -277,20 +281,27 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
-            case .timedOut: ///TODO: new case for file size 
+            case .timedOut:
                 self.popConfigurationViewController()
                 
                 let title = "share_extension.timeout.title".localized
                 let message = "share_extension.timeout.message".localized
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true)
             case .error(_): ///TODO: helper
+
                 let title = "blah".localized
                 let message = "too big".localized
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                    self.errorAlert = nil
+                }))
+                self.present(alert, animated: true) {
+                    self.popConfigurationViewController()
+                }
+                
+                self.errorAlert = alert
             }
         }
     }
@@ -369,7 +380,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     // MARK: - Transitions
 
     private func cancelProgressSendingViewController() {
-        
+        postContent?.cancel { [weak self] in
+            self?.cancel()
+        }
     }
     
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
@@ -377,9 +390,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         progressViewController?.mode = mode
 
         progressSendingViewController.cancelHandler = { [weak self] in
-            self?.postContent?.cancel {
-                self?.cancel()
-            }
+            self?.cancelProgressSendingViewController()
         }
 
         progressViewController = progressSendingViewController

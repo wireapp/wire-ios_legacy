@@ -107,7 +107,7 @@ final class SendController {
             
             if let unsentSendableError = unsentSendableError {
                 progress(.error(unsentSendableError))
-                ///TODO: return
+                return
             }
             
             self.observer = SendableBatchObserver(sendables: sendables)
