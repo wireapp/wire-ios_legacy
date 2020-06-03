@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 import UIKit
 
 extension Notification.Name {

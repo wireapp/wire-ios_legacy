@@ -20,6 +20,7 @@ import Foundation
 import AVKit
 import FLAnimatedImage
 import UIKit
+import WireCommonComponents
 
 final class ConfirmAssetViewController: UIViewController {
     enum Asset {

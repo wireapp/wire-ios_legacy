@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 typealias DismissAction = (_ completion: Completion?)->()
 

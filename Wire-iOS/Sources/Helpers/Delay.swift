@@ -17,6 +17,7 @@
 // 
 
 import Foundation
+import WireCommonComponents
 
 func delay(_ delay: Double, closure:@escaping Completion) {
     DispatchQueue.main.asyncAfter(

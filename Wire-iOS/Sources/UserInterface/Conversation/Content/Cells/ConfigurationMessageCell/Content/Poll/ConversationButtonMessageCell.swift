@@ -17,6 +17,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 extension ButtonMessageState {
     var localizedName: String {

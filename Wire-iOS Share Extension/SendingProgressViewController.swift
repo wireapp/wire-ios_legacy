@@ -30,7 +30,7 @@ final class SendingProgressViewController : UIViewController {
         case preparing, sending
     }
 
-    var cancelHandler : (() -> Void)?
+    var cancelHandler : Completion?
     
     private var circularShadow = CircularProgressView()
     private var circularProgress = CircularProgressView()

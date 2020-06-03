@@ -368,6 +368,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     // MARK: - Transitions
 
+    private func cancelProgressSendingViewController() {
+        
+    }
+    
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
         let progressSendingViewController = SendingProgressViewController()
         progressViewController?.mode = mode

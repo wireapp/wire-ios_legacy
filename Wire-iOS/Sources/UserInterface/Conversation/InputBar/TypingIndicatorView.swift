@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 import WireDataModel
-
+import WireCommonComponents
 
 final class AnimatedPenView : UIView {
     

@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion

@@ -17,7 +17,7 @@
 //
 
 import Foundation
-
+import WireCommonComponents
 
 extension ConversationListViewController {
     func setState(_ state: ConversationListState,
