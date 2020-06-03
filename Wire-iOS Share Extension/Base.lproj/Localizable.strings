@@ -31,8 +31,14 @@
 "share_extension.no_internet_connection.title" = "No Internet Connection";
 "share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
 "share_extension.not_signed_in.close_button" = "Close";
+
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+
+"share_extension.error.title" = "Sharing Error";
+"share_extension.error.file_size_too_big.message" = "File size over limit (%d MB).";
+"share_extension.error.unsupported_attachment.message" = "Unsupported attachment.";
+
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
 "share_extension.logged_out.message" = "Please choose another account.";

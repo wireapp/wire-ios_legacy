@@ -33,6 +33,15 @@ enum UnsentSendableError: Error {
     
     // The attachment is over file size limitation
     case fileSizeTooBig
+    
+    var localizedString: String {
+        switch self {
+        case .fileSizeTooBig:
+            return String(format: "share_extension.error.file_size_too_big.message".localized, AccountManager.fileSizeLimit / 1048576)
+        case .unsupportedAttachment:
+            return "share_extension.error.unsupported_attachment.message".localized
+        }
+    }
 }
 
 /// This protocol defines the basic methods that an Object needes to conform to 
@@ -202,7 +211,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         guard typeURL || typeData || typePass else { return nil }
         needsPreparation = true
     }
-
+    
     func prepare(completion: @escaping () -> Void) {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
@@ -215,7 +224,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     return completion()
                 }
                 
-                if (try? url?.fileSize()) > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
+                if (try? url?.fileSize()) > AccountManager.fileSizeLimit {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
@@ -395,4 +404,7 @@ extension AccountManager {
         return AccountManager(sharedDirectory: sharedContainerURL)
     }
 
+    static var fileSizeLimit: UInt64 {
+        return UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil)
+    }
 }
