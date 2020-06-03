@@ -196,7 +196,7 @@ final class SendController {
         }
 
         unsentSendables.filter {
-            $0.error != .unsupportedAttachment
+            $0.error == nil
         }.forEach {
             sendingGroup.enter()
             $0.send(completion: appendToMessages)
