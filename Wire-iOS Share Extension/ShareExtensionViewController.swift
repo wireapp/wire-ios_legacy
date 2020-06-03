@@ -412,9 +412,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             try recreateSharingSession(account: account)
         } catch let error as SharingSession.InitializationError {
             guard error == .loggedOut else { return }
-            let alert = UIAlertController(title: "share_extension.logged_out.title".localized,
-                                          message: "share_extension.logged_out.message".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "share_extension.general.ok".localized, style: .default, handler: nil))
+            
+            let alert = UIAlertController.alertWithOKButton(title: "share_extension.logged_out.title".localized, message: "share_extension.logged_out.message".localized)
+
             self.present(alert, animated: true)
             return
         } catch { //any other error
