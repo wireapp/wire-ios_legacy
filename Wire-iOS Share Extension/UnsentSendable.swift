@@ -209,18 +209,18 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
         if typeURL {
             attachment.fetchURL { [weak self] url in
-                guard let `self` = self else { return }
-                if (url != nil && !url!.isFileURL) || !self.typeData {
-                    self.error = .unsupportedAttachment
+                guard let weakSelf = self else { return }
+                if (url != nil && !url!.isFileURL) || !weakSelf.typeData {
+                    weakSelf.error = .unsupportedAttachment
                     return completion()
                 }
                 
-                if try? url?.fileSize() > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
-                    self.error = .fileSizeTooBig
+                if (try? url?.fileSize()) > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
+                    weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
                 
-                self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
+                weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
             prepareAsWalletPass(name: nil, completion: completion)
