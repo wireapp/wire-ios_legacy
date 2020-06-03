@@ -19,17 +19,6 @@
 import XCTest
 @testable import Wire
 
-extension URL {
-    var fileSize: Int? {
-        do {
-            let resources = try resourceValues(forKeys:[.fileSizeKey])
-            return resources.fileSize
-        } catch {
-            return nil
-        }
-    }
-}
-
 final class AVURLAsset_conversionTests: XCTestCase {
     
     func testThatVideoIsConvertedToUploadFormat() {

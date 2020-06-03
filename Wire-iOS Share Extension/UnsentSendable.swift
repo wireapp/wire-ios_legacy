@@ -376,25 +376,6 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
 }
 
-extension URL { ///TODO:
-    func fileSize() throws -> UInt64? {
-        let attributes: [FileAttributeKey: Any]
-        attributes = try FileManager.default.attributesOfItem(atPath: path)
-
-        return attributes[FileAttributeKey.size] as? UInt64
-    }
-}
-
-extension UInt64 {
-    private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
-    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
-
-    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
-        return hasTeam ? MaxTeamFileSize : MaxFileSize
-    }
-
-}
-
 extension AccountManager {
     // MARK: - Host App State
     static var sharedAccountManager: AccountManager? {

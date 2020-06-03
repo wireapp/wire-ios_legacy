@@ -1,3 +1,4 @@
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,16 +17,21 @@
 //
 
 import Foundation
-import ZipArchive
 
-extension Array where Element == URL {
-    func zipFiles(filename: String = "archive.zip") -> URL? {
-        let archiveURL = URL(fileURLWithPath: NSTemporaryDirectory() + filename)
+public extension URL {
+    func fileSize() throws -> UInt64? {
+        let attributes: [FileAttributeKey: Any]
+        attributes = try FileManager.default.attributesOfItem(atPath: path)
 
-        let paths = map() {$0.path}
+        return attributes[FileAttributeKey.size] as? UInt64
+    }
+}
 
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archiveURL.path, withFilesAtPaths: paths)
+extension UInt64 {
+    private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
+    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
 
-        return zipSucceded ? archiveURL : nil
+    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
+        return hasTeam ? MaxTeamFileSize : MaxFileSize
     }
 }
