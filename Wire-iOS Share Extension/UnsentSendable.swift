@@ -30,6 +30,9 @@ enum UnsentSendableError: Error {
     // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
     // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
+    
+    // The attachment is over file size limitation
+    case fileSizeTooBig
 }
 
 /// This protocol defines the basic methods that an Object needes to conform to 
@@ -211,6 +214,12 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     self.error = .unsupportedAttachment
                     return completion()
                 }
+                
+                if try? url?.fileSize() > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
+                    self.error = .fileSizeTooBig
+                    return completion()
+                }
+                
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
@@ -354,6 +363,36 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             return "\(UUID().uuidString).\(fileExtension)"
         }
         return name
+    }
+
+}
+
+extension URL { ///TODO:
+    func fileSize() throws -> UInt64? {
+        let attributes: [FileAttributeKey: Any]
+        attributes = try FileManager.default.attributesOfItem(atPath: path)
+
+        return attributes[FileAttributeKey.size] as? UInt64
+    }
+}
+
+
+extension UInt64 {
+    private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
+    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
+
+    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
+        return hasTeam ? MaxTeamFileSize : MaxFileSize
+    }
+
+}
+
+extension AccountManager {
+    // MARK: - Host App State
+    static var sharedAccountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
     }
 
 }
