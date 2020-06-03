@@ -157,7 +157,7 @@ final class CallViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
+        return callInfoConfiguration.effectiveColorVariant == .light ? .compatibleDarkContent : .lightContent
     }
 
     override var prefersStatusBarHidden: Bool {

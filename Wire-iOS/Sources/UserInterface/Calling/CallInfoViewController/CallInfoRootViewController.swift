@@ -35,6 +35,8 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     private let contentController: CallInfoViewController
     private let contentNavigationController: UINavigationController
     private let callDegradationController: CallDegradationController
+
+    private weak var participantsViewController: CallParticipantsViewController?
     
     var context: Context = .overview {
         didSet {
@@ -95,12 +97,20 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         UIView.animate(withDuration: 0.2) { [view, configuration] in
             view?.backgroundColor = configuration.overlayBackgroundColor
         }
+
+        updatePresentedParticipantsListIfNeeded()
     }
     
     private func presentParticipantsList() {
         context = .participants
         let participantsList = CallParticipantsViewController(scrollableWithConfiguration: configuration)
+        participantsViewController = participantsList
         contentNavigationController.pushViewController(participantsList, animated: true)
+    }
+
+    private func updatePresentedParticipantsListIfNeeded() {
+        guard case let .participantsList(participants) = configuration.accessoryType else { return }
+        participantsViewController?.participants = participants
     }
     
     // MARK: - Delegates

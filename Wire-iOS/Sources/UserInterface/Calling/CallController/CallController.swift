@@ -119,10 +119,6 @@ extension CallController: WireCallCenterCallStateObserver {
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
 
-        modalVC.dismissClosure = {
-            self.activeCallViewController = nil
-        }
-
         let callWindow: CallWindow? = targetViewController?.view.window as? CallWindow
         let presentClosure: Completion = {
             callWindow?.isHidden = false
