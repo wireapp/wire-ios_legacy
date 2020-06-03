@@ -30,6 +30,9 @@ enum UnsentSendableError: Error {
     // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
     // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
+    
+    // The attachment is over file size limitation
+    case fileSizeTooBig
 }
 
 /// This protocol defines the basic methods that an Object needes to conform to 
@@ -217,9 +220,8 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                 let filesize = try? url?.fileSize()
                 
                 if filesize > UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil) {
-                    self.
-                    completion()
-                    return ///TODO: error dialog? fix endless spinner
+                    self.error = .fileSizeTooBig
+                    return completion() ///TODO: error dialog? fix endless spinner
                 }
 
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
@@ -239,7 +241,7 @@ final class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     }
 
     private func prepareAsFileData(name: String?, completion: @escaping () -> Void) {
-        self.prepareAsFile(name: name, typeIdentifier: kUTTypeData as String, completion: completion)
+        prepareAsFile(name: name, typeIdentifier: kUTTypeData as String, completion: completion)
     }
 
     private func prepareAsWalletPass(name: String?, completion: @escaping () -> Void) {

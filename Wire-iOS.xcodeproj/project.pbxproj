@@ -3450,7 +3450,6 @@
 				D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */,
 				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
 				BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */,
-				A952039A2486B02D004B1AB5 /* UInt64+MaxFileSize.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -5466,6 +5465,14 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
+		A98370B62487C86C00515687 /* FileSizeLimit */ = {
+			isa = PBXGroup;
+			children = (
+				A952039A2486B02D004B1AB5 /* UInt64+MaxFileSize.swift */,
+			);
+			path = FileSizeLimit;
+			sourceTree = "<group>";
+		};
 		A984AAE424099239002CFF2E /* LinkOpeningOption */ = {
 			isa = PBXGroup;
 			children = (
@@ -6456,6 +6463,7 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				A98370B62487C86C00515687 /* FileSizeLimit */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */,

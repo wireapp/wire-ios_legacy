@@ -55,7 +55,7 @@ final class SendController {
     private var timeoutWorkItem : DispatchWorkItem?
     private var timedOut = false
     
-    public var sentAllSendables = false
+    var sentAllSendables = false
     
 
     init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
@@ -121,7 +121,9 @@ final class SendController {
             progress(.preparing)
             prepare(unsentSendables: unsentSendables) { [weak self] in
                 guard let `self` = self else { return }
-                guard !self.isCancelled else { return progress(.done) }
+                guard !self.isCancelled else { ///TODO: cancel?
+                    return progress(.done)                    
+                }
                 progress(.startingSending)
                 self.append(unsentSendables: self.unsentSendables, completion: completion)
             }
@@ -195,17 +197,32 @@ final class SendController {
             guard let sendable = sendable else { return }
             messages.append(sendable)
         }
+        
+        let sendingGroupNotifyClosure = {
+            sendingGroup.notify(queue: .main) {
+                completion(messages)
+            }
+        }
+        
+        if unsentSendables.contains(where: {
+            $0.error == .fileSizeTooBig
+        }) {
+            ///TODO: alert and return
+            sendingGroupNotifyClosure()
+            return
+        }
 
-        unsentSendables.filter {
-            $0.error != .unsupportedAttachment
-        }.forEach {
+        let unsentSendablesWithoutError = unsentSendables.filter {
+            $0.error != .unsupportedAttachment ||
+            $0.error != .fileSizeTooBig
+        }
+
+        unsentSendablesWithoutError.forEach {
             sendingGroup.enter()
-            $0.send(completion: appendToMessages) ///TODO: check file size?
+            $0.send(completion: appendToMessages)
         }
 
-        sendingGroup.notify(queue: .main) {
-            completion(messages)
-        }
+        sendingGroupNotifyClosure()
     }
 
 }
