@@ -36,7 +36,7 @@
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 
 "share_extension.error.title" = "Sharing Error";
-"share_extension.error.file_size_too_big.message" = "File size over limit (%d MB).";
+"share_extension.error.file_size_too_big.message" = "File size for the selected account is limited to %d MB.";
 "share_extension.error.unsupported_attachment.message" = "Unsupported attachment.";
 
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
