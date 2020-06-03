@@ -58,7 +58,9 @@ enum DegradationStrategy {
 extension PostContent {
 
     /// Send the content to the selected conversation
-    func send(text: String, sharingSession: SharingSession, stateCallback: @escaping SendingStateCallback) {
+    func send(text: String,
+              sharingSession: SharingSession,
+              stateCallback: @escaping SendingStateCallback) {
         let conversation = target!
         sendController = SendController(text: text, attachments: attachments, conversation: conversation, sharingSession: sharingSession)
 
