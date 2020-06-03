@@ -90,37 +90,21 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         let label = UILabel()
         label.font = FontSpec(.normal, .regular).font!
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.text = "login.sso.backend_switch.subtitle".localized
         label.accessibilityValue = label.text
         label.textColor = .black
         return label
     }()
     
-    let backendUrlLabel: UILabel = {
+    let informationLabel: UILabel = {
         let label = UILabel()
         label.font = FontSpec(.normal, .semibold).font!
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .black
-        return label
-    }()
-    
-    let informationView: UIView = {
-        let view = UIView()
-        view.backgroundColor = PreBackendSwitchViewController.informationBackgroundBlue
-        view.layer.cornerRadius = 8.0
-        return view
-    }()
-    
-    let informationIcon = UIImageView(image: UIImage.imageForIcon(.about, size: 16, color: PreBackendSwitchViewController.informationBlue))
-    
-    let informationLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.normal, .light).font!.withSize(14)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.textColor = PreBackendSwitchViewController.informationBlue
         label.text = "login.sso.backend_switch.information".localized
+        label.accessibilityValue = label.text
         return label
     }()
     
@@ -132,9 +116,6 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         
         configureSubviews()
         createConstraints()
-        
-        backendUrlLabel.text = backendURL?.absoluteString
-        backendUrlLabel.accessibilityValue = backendUrlLabel.text
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -149,15 +130,11 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
     
     private func configureSubviews() {
         view.addSubview(headerView)
-
-        informationView.addSubview(informationIcon)
-        informationView.addSubview(informationLabel)
-        
+ 
         contentView.addSubview(progressContainerView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
-        contentView.addSubview(backendUrlLabel)
-        contentView.addSubview(informationView)
+        contentView.addSubview(informationLabel)
         
         progressContainerView.addSubview(progressView)
         progressContainerView.addSubview(wireLogo)
@@ -174,24 +151,21 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
             progressView,
             titleLabel,
             subtitleLabel,
-            backendUrlLabel,
-            informationView,
-            informationIcon,
-            informationLabel
+            informationLabel,
         ])
         
         NSLayoutConstraint.activate([
             // header view
+            headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3, constant: 0),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.bottomAnchor.constraint(equalTo: contentView.topAnchor),
 
             // content view
-            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // progress container view
             progressContainerView.centerYAnchor.constraint(equalTo: contentView.topAnchor),
@@ -219,28 +193,10 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
             subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            // backend url label
-            backendUrlLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
-            backendUrlLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            backendUrlLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            // information view
-            informationView.topAnchor.constraint(equalTo: backendUrlLabel.bottomAnchor, constant: 39),
-            informationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            informationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            informationView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            // information icon
-            informationIcon.topAnchor.constraint(equalTo: informationView.topAnchor, constant: 16),
-            informationIcon.centerXAnchor.constraint(equalTo: informationView.centerXAnchor),
-            informationIcon.widthAnchor.constraint(equalToConstant: 16),
-            informationIcon.heightAnchor.constraint(equalToConstant: 16),
-            
             // information label
-            informationLabel.topAnchor.constraint(equalTo: informationIcon.bottomAnchor, constant: 7),
-            informationLabel.leadingAnchor.constraint(equalTo: informationView.leadingAnchor, constant: 28),
-            informationLabel.trailingAnchor.constraint(equalTo: informationView.trailingAnchor, constant: -28),
-            informationLabel.bottomAnchor.constraint(equalTo: informationView.bottomAnchor, constant: -16)
+            informationLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 10),
+            informationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            informationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
 
