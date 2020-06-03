@@ -36,6 +36,7 @@ enum SendingState {
     case timedOut // Fired when the connection is lost, e.g. with bad network connection
     case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
     case done // Sending either was cancelled (due to degradation for example) or finished.
+    case error(UnsentSendableError)
 }
 
 
@@ -101,19 +102,29 @@ final class SendController {
         timedOut = false
         self.progress = progress
         
-        let completion: ([Sendable]) -> Void = { [weak self] sendables in
+        let completion: ([Sendable], UnsentSendableError?) -> Void = { [weak self] sendables, unsentSendableError in
             guard let `self` = self else { return }
+            
+            if let unsentSendableError = unsentSendableError {
+                progress(.error(unsentSendableError))
+                ///TODO: return
+            }
             
             self.observer = SendableBatchObserver(sendables: sendables)
             self.observer?.progressHandler = { [weak self] in
-                progress(.sending($0))
-                self?.tryToTimeout()
+                
+                if let unsentSendableError = unsentSendableError {
+                    progress(.error(unsentSendableError))
+                } else {
+                    progress(.sending($0)) ///TODO: error?
+                    self?.tryToTimeout()
+                }
             }
 
             self.observer?.sentHandler = { [weak self] in
                 self?.cancelTimeout()
                 self?.sentAllSendables = true
-                progress(.done)
+                progress(.done)///TODO: error?
             }
         }
 ///TODO: check file size?
@@ -187,8 +198,8 @@ final class SendController {
         preparationGroup.notify(queue: .main, execute: completion)
     }
 
-    private func append(unsentSendables: [UnsentSendable], completion: @escaping ([Sendable]) -> Void) {
-        guard !isCancelled else { return completion([]) }
+    private func append(unsentSendables: [UnsentSendable], completion: @escaping ([Sendable], UnsentSendableError?) -> Void) {
+        guard !isCancelled else { return completion([], nil) }
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()
 
@@ -198,9 +209,9 @@ final class SendController {
             messages.append(sendable)
         }
         
-        let sendingGroupNotifyClosure = {
+        let sendingGroupNotifyClosure: (UnsentSendableError?) -> Void = { error in
             sendingGroup.notify(queue: .main) {
-                completion(messages)
+                completion(messages, error)
             }
         }
         
@@ -208,7 +219,7 @@ final class SendController {
             $0.error == .fileSizeTooBig
         }) {
             ///TODO: alert and return
-            sendingGroupNotifyClosure()
+            sendingGroupNotifyClosure(.fileSizeTooBig)
             return
         }
 
@@ -222,7 +233,7 @@ final class SendController {
             $0.send(completion: appendToMessages)
         }
 
-        sendingGroupNotifyClosure()
+        sendingGroupNotifyClosure(nil)
     }
 
 }
