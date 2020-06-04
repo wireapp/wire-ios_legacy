@@ -65,11 +65,5 @@ class URL_WireTests: XCTestCase {
         let accountsURL = URL(string: "https://account.wire.com")!
         XCTAssertEqual(be.accountsURL, accountsURL)
         XCTAssertEqual(URL.wr_passwordReset, accountsURL.appendingPathComponent("forgot"))
-    }
-    
-    func testThatTeamURLsAreLoadedCorrectly() {
-        let teamsURL = URL(string: "https://teams.wire.com")!
-        XCTAssertEqual(be.teamsURL, teamsURL)
-        XCTAssertEqual(URL.wr_manageTeam, teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
-    }
+    }    
 }

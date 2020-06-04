@@ -1232,7 +1232,6 @@
 		EF58B557218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
-		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
 		EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */; };
 		EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */; };
 		EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */; };
@@ -2883,7 +2882,6 @@
 		EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+KeyCommand.swift"; sourceTree = "<group>"; };
 		EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+MarketingConsent.swift"; sourceTree = "<group>"; };
 		EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerTests.swift; sourceTree = "<group>"; };
-		EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+dayFormatter.swift"; sourceTree = "<group>"; };
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidationTests.swift; sourceTree = "<group>"; };
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTapGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -5069,7 +5067,6 @@
 				5E7315342191EADF00255A78 /* Message+Formatters.swift */,
 				8742F2EA2191DCDF00D2E40F /* ZMConversationMessage+DeliveryState.swift */,
 				A9681D8523884FF1004FE917 /* Message+DateFormatter.swift */,
-				EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */,
 				EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */,
 				A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */,
 				163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */,
@@ -7681,7 +7678,6 @@
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
 				EF17B0E2223AB371006252A8 /* ConnectRequestCell.swift in Sources */,
-				EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */,
 				A96316A623F2BCAA00AFDB71 /* UIViewController+ErrorAlert.swift in Sources */,

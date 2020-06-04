@@ -86,12 +86,4 @@ extension Message {
         return message.hasReactions()
     }
 
-    static func hasLikers(_ message: ZMConversationMessage) -> Bool {
-        return !message.likers().isEmpty
-    }
-
-    class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
-        return message.canBeLiked
-    }
-    
 }
