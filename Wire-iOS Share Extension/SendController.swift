@@ -211,8 +211,8 @@ final class SendController {
             $0.send(completion: appendToMessages)
         }
         
-        let error = unsentSendables.first(where: {$0.error != nil})?.error
-
+        let error = unsentSendables.compactMap(\.error).first
+        
         sendingGroup.notify(queue: .main) {
             completion(messages, error)
         }

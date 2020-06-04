@@ -40,7 +40,7 @@ final class AVURLAsset_conversionTests: XCTestCase {
                                                 XCTAssertEqual(asset?.url.lastPathComponent, videoURL.lastPathComponent)
                                                 XCTAssertEqual(asset?.duration, originalAsset.duration)
                                                 // converted file with low quality should be smaller
-                                                XCTAssertLessThan(try! url!.fileSize()!, try! videoURL.fileSize()!)
+                                                XCTAssertLessThan(url!.fileSize!, videoURL.fileSize!)
 
                                                 XCTAssertNil(error)
                                                 expectation.fulfill()
