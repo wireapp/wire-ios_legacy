@@ -54,11 +54,11 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
         toolboxView.translatesAutoresizingMaskIntoConstraints = false
         toolboxView.fitInSuperview()
     }
-    
+
     func willDisplay() {
         toolboxView.startCountdownTimer()
     }
-    
+
     func didEndDisplaying() {
         toolboxView.stopCountdownTimer()
     }
@@ -95,7 +95,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
     var showEphemeralTimer: Bool = false
@@ -111,5 +111,5 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
         self.message = message
         self.configuration = View.Configuration(message: message, selected: selected)
     }
-    
+
 }
