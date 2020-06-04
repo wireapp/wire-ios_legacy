@@ -29,7 +29,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
     let footerSeparator = OverflowSeparatorView()
     private let footerContainer = UIView()
 
-    public var footer: UIView? {
+    var footer: UIView? {
         didSet {
             updateFooter(footer)
         }
