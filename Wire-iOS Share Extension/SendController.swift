@@ -48,6 +48,9 @@ enum SendingState {
 /// itself has no knowledge about conversation degradation.
 final class SendController {
 
+    typealias SendableCompletion = ([Sendable], UnsentSendableError?) -> Void
+    
+
     private var observer: SendableBatchObserver? = nil
     private var isCancelled = false
     private var unsentSendables: [UnsentSendable]
@@ -93,8 +96,6 @@ final class SendController {
             self.tryToTimeout()
         }
     }
-    
-    typealias SendableCompletion = ([Sendable], UnsentSendableError?) -> Void
     
     /// Send (and prepare if needed) the text and attachment items passed into the initializer.
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
@@ -193,7 +194,8 @@ final class SendController {
         preparationGroup.notify(queue: .main, execute: completion)
     }
 
-    private func append(unsentSendables: [UnsentSendable], completion: @escaping SendableCompletion) {
+    private func append(unsentSendables: [UnsentSendable],
+                        completion: @escaping SendableCompletion) {
         guard !isCancelled else { return completion([], nil) }
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()

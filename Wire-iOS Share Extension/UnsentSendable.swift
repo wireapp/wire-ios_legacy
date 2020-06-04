@@ -37,7 +37,7 @@ enum UnsentSendableError: Error {
     var localizedString: String {
         switch self {
         case .fileSizeTooBig:
-            return String(format: "content.file.too_big".localized, "\(AccountManager.fileSizeLimit / UInt64.mega)")
+            return String(format: "content.file.too_big".localized, "\(AccountManager.fileSizeLimitInBytes / UInt64.mega)")
         case .unsupportedAttachment:
             return "content.file.unsupported_attachment".localized
         }
@@ -224,7 +224,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     return completion()
                 }
 
-                if url?.fileSize > AccountManager.fileSizeLimit {
+                if url?.fileSize > AccountManager.fileSizeLimitInBytes {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
@@ -384,7 +384,7 @@ extension AccountManager {
         return AccountManager(sharedDirectory: sharedContainerURL)
     }
 
-    static var fileSizeLimit: UInt64 {
+    static var fileSizeLimitInBytes: UInt64 {
         return UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil)
     }
 }
