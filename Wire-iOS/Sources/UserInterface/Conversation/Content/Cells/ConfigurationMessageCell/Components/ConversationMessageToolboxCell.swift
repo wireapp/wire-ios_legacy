@@ -21,9 +21,16 @@ import WireDataModel
 
 final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let message: ZMConversationMessage
         let selected: Bool
+        let deliveryState: ZMDeliveryState
+        
+        static func == (lhs: ConversationMessageToolboxCell.Configuration, rhs: ConversationMessageToolboxCell.Configuration) -> Bool {
+            return lhs.deliveryState == rhs.deliveryState &&
+                   lhs.message == rhs.message &&
+                   lhs.selected == rhs.selected
+        }
     }
 
     let toolboxView = MessageToolboxView()
@@ -109,7 +116,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
 
     init(message: ZMConversationMessage, selected: Bool) {
         self.message = message
-        self.configuration = View.Configuration(message: message, selected: selected)
+        self.configuration = View.Configuration(message: message, selected: selected, deliveryState: message.deliveryState)
     }
     
 }
