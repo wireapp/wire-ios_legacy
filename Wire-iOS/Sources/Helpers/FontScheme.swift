@@ -93,22 +93,6 @@ extension UIFont {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
         }
     }
-    
-    var classySystemFontName: String {
-        get {
-            let weightSpecifier = { () -> String in 
-                guard #available(iOSApplicationExtension 8.2, *),
-                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits) as? NSDictionary,
-                    let floatWeight = traits[UIFontDescriptor.TraitKey.weight] as? NSNumber else {
-                        return ""
-                }
-                
-                return "-\(FontWeight(weight: UIFont.Weight(rawValue: CGFloat(floatWeight.floatValue))).rawValue.capitalized)"
-            }()
-            
-            return "System\(weightSpecifier) \(self.pointSize)"
-        }
-    }
 }
 
 public struct FontSpec: Hashable {

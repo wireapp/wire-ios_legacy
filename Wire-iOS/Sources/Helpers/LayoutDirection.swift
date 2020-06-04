@@ -71,17 +71,4 @@ extension String {
             return NSAttributedString(attachment: attachment) + "  " + self
         }
     }
-
-    func addingLeadingAttachment(_ attachment: NSTextAttachment, verticalOffset: CGFloat = 0) -> NSAttributedString {
-        if let attachmentSize = attachment.image?.size {
-            attachment.bounds = CGRect(x: 0, y: verticalOffset, width: attachmentSize.width, height: attachmentSize.height)
-        }
-        
-        if UIApplication.isLeftToRightLayout {
-            return NSAttributedString(attachment: attachment) + "  " + self
-        } else {
-            return self + "  " + NSAttributedString(attachment: attachment)
-        }
-    }
-
 }
