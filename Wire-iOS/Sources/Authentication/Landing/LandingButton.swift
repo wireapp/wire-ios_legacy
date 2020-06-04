@@ -89,10 +89,5 @@ class LandingButton: UIView {
         iconButton.sendActions(for: .touchUpInside)
         return true
     }
-
-    func addTapTarget(_ target: Any, action: Selector) {
-        iconButton.addTarget(target, action: action, for: .touchUpInside)
-    }
-
 }
 
