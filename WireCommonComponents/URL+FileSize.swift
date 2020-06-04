@@ -18,9 +18,10 @@
 import Foundation
 
 public extension URL {
-    func fileSize() throws -> UInt64? {
-        let attributes: [FileAttributeKey: Any]
-        attributes = try FileManager.default.attributesOfItem(atPath: path)
+
+    /// return nil if can not obtain the file size from URL
+    var fileSize: UInt64? {
+        guard let attributes: [FileAttributeKey: Any] = try? FileManager.default.attributesOfItem(atPath: path) else { return nil }
 
         return attributes[FileAttributeKey.size] as? UInt64
     }
@@ -29,6 +30,8 @@ public extension URL {
 extension UInt64 {
     private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
     private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
+
+    public static let mega: UInt64 = 1048576 // 1024 * 1024
 
     public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
         return hasTeam ? MaxTeamFileSize : MaxFileSize

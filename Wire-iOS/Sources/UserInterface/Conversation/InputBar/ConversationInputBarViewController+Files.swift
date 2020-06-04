@@ -115,18 +115,15 @@ extension ConversationInputBarViewController {
             self?.removeItem(atPath: url.path)
         }
 
-        let fileSize: UInt64?
-        do {
-           fileSize = try url.fileSize()
-        } catch {
-            zmLog.error("Cannot get file size on selected file: \(error)")
+        guard let fileSize: UInt64 = url.fileSize else {
+            zmLog.error("Cannot get file size on selected file:")
             parent?.dismiss(animated: true)
             completion()
 
             return
         }
 
-        guard (fileSize ?? UInt64.max) <= maxUploadFileSize else {
+        guard fileSize <= maxUploadFileSize else {
             // file exceeds maximum allowed upload size
             parent?.dismiss(animated: false)
 
