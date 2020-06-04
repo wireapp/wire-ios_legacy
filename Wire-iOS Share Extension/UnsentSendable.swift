@@ -37,7 +37,7 @@ enum UnsentSendableError: Error {
     var localizedString: String {
         switch self {
         case .fileSizeTooBig:
-            return String(format: "share_extension.error.file_size_too_big.message".localized, AccountManager.fileSizeLimit / 1048576)
+            return String(format: "share_extension.error.file_size_too_big.message".localized, AccountManager.fileSizeLimit / UInt64.mega)
         case .unsupportedAttachment:
             return "share_extension.error.unsupported_attachment.message".localized
         }
@@ -224,7 +224,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     return completion()
                 }
 
-                if (try? url?.fileSize()) > AccountManager.fileSizeLimit {
+                if url?.fileSize > AccountManager.fileSizeLimit {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
