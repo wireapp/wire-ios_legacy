@@ -116,16 +116,6 @@ final class ShareContactsViewController: UIViewController {
         return attributedText
     }
     
-    private func setBackgroundBlurDisabled(_ backgroundBlurDisabled: Bool) {
-        self.backgroundBlurDisabled = backgroundBlurDisabled
-        backgroundBlurView.isHidden = backgroundBlurDisabled
-    }
-    
-    private func setNotNowButtonHidden(_ notNowButtonHidden: Bool) {
-        self.notNowButtonHidden = notNowButtonHidden
-        notNowButton.isHidden = notNowButtonHidden
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

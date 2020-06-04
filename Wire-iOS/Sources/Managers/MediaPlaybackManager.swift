@@ -109,12 +109,6 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
         audioTrackPlayer = AudioTrackPlayer()
         audioTrackPlayer.mediaPlayerDelegate = self
     }
-
-    func setPlaybackMuted(_ playbackMuted: Bool) {
-        if playbackMuted {
-            activeMediaPlayer?.pause()
-        }
-    }
 }
 
 extension MediaPlaybackManager: MediaPlayerDelegate {

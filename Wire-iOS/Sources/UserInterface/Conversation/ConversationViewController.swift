@@ -266,18 +266,6 @@ final class ConversationViewController: UIViewController {
         openConversationList()
     }
 
-    func addParticipants(_ participants: UserSet) {
-        var newConversation: ZMConversation? = nil
-        
-        session.enqueue({
-            newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
-        }, completionHandler: { [weak self] in
-            if let newConversation = newConversation {
-                self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
-            }
-        })
-    }
-    
     private func setupContentViewController() {
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
