@@ -48,10 +48,6 @@ final class PostContent {
     func send(text: String,
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
-        ///TODO: test
-        stateCallback(.error(.conversationNotExist))
-        return
-
         guard let conversation = target else {
             stateCallback(.error(.conversationNotExist))
             return
