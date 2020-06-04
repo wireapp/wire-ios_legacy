@@ -113,10 +113,6 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func requestDismissal(withCompletion completion: @escaping () -> ()) {
-        viewControllerDismisser?.dismiss(viewController: self, completion: completion)
-    }
-    
     // MARK: - Header
     private func setupHeader() {
         let userNameDetailViewModel = viewModel.makeUserNameDetailViewModel()

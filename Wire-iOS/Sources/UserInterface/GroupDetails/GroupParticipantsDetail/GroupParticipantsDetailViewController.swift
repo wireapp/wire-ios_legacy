@@ -155,29 +155,6 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
 }
 
-private final class SelectedUserCell: UserCell {
-
-    func configureContentBackground(preselected: Bool, animated: Bool) {
-        contentView.backgroundColor = .clear
-        guard preselected else { return }
-        
-        let changes: () -> () = {
-            self.contentView.backgroundColor = UIColor.from(scheme: .cellSeparator)
-        }
-        
-        if animated {
-            UIView.animate(
-                withDuration: 0.3,
-                delay: 0.5,
-                options: .curveLinear,
-                animations: changes
-            )
-        } else {
-            changes()
-        }
-    }
-}
-
 extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
     
     func presentDetails(for user: UserType) {

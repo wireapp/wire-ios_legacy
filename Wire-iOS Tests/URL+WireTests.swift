@@ -47,7 +47,6 @@ class URL_WireTests: XCTestCase {
         XCTAssertEqual(URL.wr_reportAbuse, websiteURL.appendingPathComponent("support/misuse"))
         XCTAssertEqual(URL.wr_cannotDecryptHelp, websiteURL.appendingPathComponent("privacy/error-1"))
         XCTAssertEqual(URL.wr_cannotDecryptNewRemoteIDHelp, websiteURL.appendingPathComponent("privacy/error-2"))
-        XCTAssertEqual(URL.wr_createTeam, websiteURL.appendingPathComponent("create-team?pk_campaign=client&pk_kwd=ios"))
         XCTAssertEqual(URL.wr_createTeamFeatures, websiteURL.appendingPathComponent("teams/learnmore"))
         XCTAssertEqual(URL.wr_emailInUseLearnMore, websiteURL.appendingPathComponent("support/email-in-use"))
         XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: true), websiteURL.appendingPathComponent("legal/terms/teams"))
