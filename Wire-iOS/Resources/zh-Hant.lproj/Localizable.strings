@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "該郵箱無法用於企業登錄，請輸入單一登入（SSO）登錄碼來繼續操作。";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "此電子郵件已鏈接到不同的服務器，但應用程序只能一次連接到一個服務器。 請註銷此設備上的所有Wire賬號並嘗試重新登錄。";
 "login.sso.error.alert.unknown.message" = "請稍後再重試。";
-"login.sso.backend_switch.title" = "離開Wire";
-"login.sso.backend_switch.subtitle" = "頁面正在重新導向至";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "重定向中...";
+"login.sso.backend_switch.subtitle" = "您將被重定向到您的專屬企業服務。";
+"login.sso.backend_switch.information" = "只有當你確定這是你的組織登錄時，才提供憑證。";
 
 
 // Restore In Progress Loading Titles
