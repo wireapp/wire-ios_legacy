@@ -282,7 +282,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 self.present(alert, animated: true)
                 
             case .error(let error):
-                let alert = UIAlertController.alertWithOKButton(title: "share_extension.error.title".localized, message: error.localizedString)
+                let alert = UIAlertController.alertWithOKButton(title: nil, message: error.localizedString)
                 
                 self.present(alert, animated: true) {
                     self.popConfigurationViewController()

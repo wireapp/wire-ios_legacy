@@ -36,9 +36,8 @@
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 
-"share_extension.error.title" = "Sharing Error";
-"share_extension.error.file_size_too_big.message" = "File size for the selected account is limited to %d MB.";
-"share_extension.error.unsupported_attachment.message" = "Unsupported attachment.";
+"content.file.too_big" = "You can send files up to %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
 
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
