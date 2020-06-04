@@ -34,12 +34,18 @@ enum UnsentSendableError: Error {
     // The attachment is over file size limitation
     case fileSizeTooBig
 
+    // the target conversation does not exist anymore
+    case conversationNotExist
+
     var localizedString: String {
         switch self {
         case .fileSizeTooBig:
             return String(format: "share_extension.error.file_size_too_big.message".localized, AccountManager.fileSizeLimit / 1048576)
         case .unsupportedAttachment:
             return "share_extension.error.unsupported_attachment.message".localized
+        }
+        case .conversationNotExist:
+            return "share_extension.error.conversation_not_exist.message".localized
         }
     }
 }

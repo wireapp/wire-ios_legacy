@@ -39,6 +39,7 @@
 "share_extension.error.title" = "Sharing Error";
 "share_extension.error.file_size_too_big.message" = "File size for the selected account is limited to %d MB.";
 "share_extension.error.unsupported_attachment.message" = "Unsupported attachment.";
+"share_extension.error.conversation_not_exist.message" = "The conversation does not exists."
 
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";

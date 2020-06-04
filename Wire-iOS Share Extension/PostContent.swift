@@ -26,7 +26,7 @@ import MobileCoreServices
 final class PostContent {
     
     /// Conversation to post to
-    var target: Conversation? = nil
+    var target: Conversation?
 
     fileprivate var sendController: SendController?
 
@@ -42,24 +42,21 @@ final class PostContent {
         self.attachments = attachments
     }
 
-}
-
-
-// MARK: - Send attachments
-
-/// What to do when a conversation that was verified degraded (we discovered a new
-/// non-verified client)
-enum DegradationStrategy {
-    case sendAnyway
-    case cancelSending
-}
-
-
-extension PostContent {
+    // MARK: - Send attachments
 
     /// Send the content to the selected conversation
-    func send(text: String, sharingSession: SharingSession, stateCallback: @escaping SendingStateCallback) {
-        let conversation = target!
+    func send(text: String,
+              sharingSession: SharingSession,
+              stateCallback: @escaping SendingStateCallback) {
+        ///TODO: test
+        stateCallback(.error(.conversationNotExist))
+        return
+
+        guard let conversation = target else {
+            stateCallback(.error(.conversationNotExist))
+            return
+        }
+        
         sendController = SendController(text: text, attachments: attachments, conversation: conversation, sharingSession: sharingSession)
 
         let allMessagesEnqueuedGroup = DispatchGroup()
@@ -98,4 +95,10 @@ extension PostContent {
         sendController?.cancel(completion: completion)
     }
 
+}
+/// What to do when a conversation that was verified degraded (we discovered a new
+/// non-verified client)
+enum DegradationStrategy {
+    case sendAnyway
+    case cancelSending
 }

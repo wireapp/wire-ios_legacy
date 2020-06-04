@@ -36,7 +36,7 @@ enum SendingState {
     case timedOut // Fired when the connection is lost, e.g. with bad network connection
     case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
     case done // Sending either was cancelled (due to degradation for example) or finished.
-    case error(UnsentSendableError) // When error occurs, e.g. file is over the size limit
+    case error(UnsentSendableError) // When error occurs, e.g. file is over the size limit/conversation does not exist
 }
 
 
