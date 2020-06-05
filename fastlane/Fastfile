@@ -62,12 +62,11 @@ platform :ios do
             configuration: "Debug",
             build_for_testing: true,
             sdk:"iphonesimulator",
-            code_coverage: true,
             derived_data_path: "DerivedData",
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
-            # xcargs: "BUILD_NUMBER=#{build_number}"
+            xcargs: "BUILD_NUMBER=#{build_number}"
         )
     end
 
