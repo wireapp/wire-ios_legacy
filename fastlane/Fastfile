@@ -62,7 +62,6 @@ platform :ios do
             configuration: "Debug",
             build_for_testing: true,
             sdk:"iphonesimulator",
-            derived_data_path: "~/DerivedData",
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
@@ -93,7 +92,6 @@ platform :ios do
             sdk:"iphonesimulator",
             destination: "platform=iOS Simulator,name=iPhone 8,OS=#{ios_version}",
             code_coverage: true,
-            derived_data_path: "~/DerivedData",
             buildlog_path: "test",
             output_directory: "test",
             output_types: "junit"
@@ -114,12 +112,13 @@ platform :ios do
             Dir.chdir("..") do
                 # Build the app for simulator
                 # TODO: copy above? (Build for testing)
-                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath ~/DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
+                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
-                sh "cp -r ~/DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
+                ## TODO: get system folder
+                #sh "cp -r ~/DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
                 sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
@@ -128,7 +127,6 @@ platform :ios do
                 configuration: build.configuration,
                 export_method: build.export_method,
                 export_options: {"iCloudContainerEnvironment": "Production"},
-                derived_data_path: "~/DerivedData",
                 archive_path: build.archive_path(with_filename: true),
                 buildlog_path: build.build_path,
                 output_directory: build.artifact_path(with_filename: false),
@@ -261,7 +259,7 @@ platform :ios do
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
-        codecov = "./codecov -J '^Wire$' -D ~/DerivedData"
+        codecov = "./codecov -J '^Wire$'
 
         if ENV["BUILD_REASON"] == "PullRequest"
             if ENV["CODECOV_TOKEN"].nil?
