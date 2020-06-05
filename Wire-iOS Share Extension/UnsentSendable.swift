@@ -35,7 +35,7 @@ enum UnsentSendableError: Error {
     case fileSizeTooBig
 
     // the target conversation does not exist anymore
-    case conversationNotExist
+    case conversationDoesNotExist
 
     var localizedString: String {
         switch self {
