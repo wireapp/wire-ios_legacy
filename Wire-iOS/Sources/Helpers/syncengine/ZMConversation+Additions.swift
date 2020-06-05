@@ -17,38 +17,9 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 extension ZMConversation {
-
-    func addParticipantsOrCreateConversation(_ participants: UserSet) -> ZMConversation? {
-        guard !participants.isEmpty, let userSession = ZMUserSession.shared() else { return self }
-
-        let connectedUserIsOnlyParticipant: Bool = {
-            guard let user = self.connectedUser else { return false }
-            return participants.count == 1 && participants.contains(user)
-        }()
-
-        var listOfPeople = Array(participants)
-
-        switch conversationType {
-        case .group:
-            addOrShowError(participants: listOfPeople)
-            return self
-
-        case .oneOnOne where !connectedUserIsOnlyParticipant:
-            if let connectedUser = connectedUser {
-                listOfPeople.append(connectedUser)
-            }
-            
-            return ZMConversation.insertGroupConversation(session: userSession,
-                                                          participants: listOfPeople,
-                                                          team: ZMUser.selfUser().team)
-        default:
-            return self
-        }
-    }
 
     ///TODO: move to DM
     var firstActiveParticipantOtherThanSelf: ZMUser? {

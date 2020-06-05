@@ -218,13 +218,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     }
 
-    private func audioTrackStatusChanged() {
-        if avPlayer?.currentItem?.status == .failed {
-            audioTrack?.failedToLoad = true
-            state = .error
-        }
-    }
-
     func setIsRemoteCommandCenterEnabled(_ enabled: Bool) {
         let commandCenter = MPRemoteCommandCenter.shared()
 

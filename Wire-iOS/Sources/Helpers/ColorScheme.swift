@@ -247,18 +247,6 @@ final class ColorScheme: NSObject {
         return variant == .light ? .light : .dark
     }
     
-    func blurEffectStyle() -> UIBlurEffect.Style {
-        return ColorScheme.blurEffectStyle(for: variant)
-    }
-    
-    class func blurEffectStyle(for variant: ColorSchemeVariant) -> UIBlurEffect.Style {
-        return variant == .light ? .light : .dark
-    }
-    
-    func setVariant(_ variant: ColorSchemeVariant) {
-        self.variant = variant
-    }
-    
     static let `default`: ColorScheme = ColorScheme()
 
     func color(named: ColorSchemeColor) -> UIColor {

@@ -50,7 +50,7 @@ protocol CompanyLoginControllerDelegate: class {
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
+final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
 
     weak var delegate: CompanyLoginControllerDelegate?
     
@@ -329,7 +329,7 @@ extension CompanyLoginController {
 }
 
 // MARK: - Flow
-extension CompanyLoginController {
+extension CompanyLoginController: CompanyLoginFlowHandlerDelegate {
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
         delegate?.controllerDidStartCompanyLoginFlow(self)
         flowHandler.open(authenticationURL: url)

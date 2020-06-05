@@ -65,11 +65,6 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         computeVisibleParticipants()
     }
     
-    func isUserSelected(_ user: UserType) -> Bool {
-        guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
-        return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
-    }
-    
     private func computeVisibleParticipants() {
         guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
         participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
