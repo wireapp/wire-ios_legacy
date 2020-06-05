@@ -20,7 +20,10 @@ steps:
   displayName: "Setup environment"
 
 - script: |
-    fastlane build
+    fastlane build build_number:0 \
+                     build_type:Development \
+                     configuration:Debug \
+                     for_simulator:true
   displayName: "Build"
 
 - task: PublishBuildArtifacts@1
