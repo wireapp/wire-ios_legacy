@@ -33,8 +33,10 @@ enum UnsentSendableError: Error {
 
     // The attachment is over file size limitation
     case fileSizeTooBig
+}
 
-    var localizedString: String {
+extension UnsentSendableError: LocalizedError {
+    var errorDescription: String? {
         switch self {
         case .fileSizeTooBig:
             return String(format: "content.file.too_big".localized, "\(AccountManager.fileSizeLimitInBytes / UInt64.mega)")
