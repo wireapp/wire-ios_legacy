@@ -51,10 +51,7 @@ platform :ios do
             xcversion(version: xcode_version)
         end
 
-        build_number = options[:build_number]
-        if build_number.nil? 
-            build_number = "0"
-        end
+        build = Build.new(options: options)
 
         run_tests(
             scheme: "Wire-iOS",
@@ -65,7 +62,7 @@ platform :ios do
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
-            xcargs: "BUILD_NUMBER=#{build_number}"
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
         )
     end
 
@@ -111,7 +108,6 @@ platform :ios do
         if build.for_simulator
             Dir.chdir("..") do
                 # Build the app for simulator
-                # TODO: copy above? (Build for testing)
                 sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
