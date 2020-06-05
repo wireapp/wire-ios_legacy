@@ -51,10 +51,7 @@ platform :ios do
             xcversion(version: xcode_version)
         end
 
-        build_number = options[:build_number]
-        if build_number.nil? 
-            build_number = "0"
-        end
+        build = Build.new(options: options)
 
         run_tests(
             scheme: "Wire-iOS",
@@ -66,7 +63,7 @@ platform :ios do
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
-            xcargs: "BUILD_NUMBER=#{build_number}"
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
         )
     end
 
