@@ -43,7 +43,7 @@ enum UnsentSendableError: Error {
             return String(format: "content.file.too_big".localized, "\(AccountManager.fileSizeLimitInBytes / UInt64.mega)")
         case .unsupportedAttachment:
             return "content.file.unsupported_attachment".localized
-        case .conversationNotExist:
+        case .conversationDoesNotExist:
             return "share_extension.error.conversation_not_exist.message".localized
         }
     }

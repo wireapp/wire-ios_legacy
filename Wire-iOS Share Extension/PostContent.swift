@@ -49,7 +49,7 @@ final class PostContent {
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
         guard let conversation = target else {
-            stateCallback(.error(.conversationNotExist))
+            stateCallback(.error(.conversationDoesNotExist))
             return
         }
         
