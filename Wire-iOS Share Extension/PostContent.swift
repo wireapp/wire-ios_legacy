@@ -43,13 +43,13 @@ final class PostContent {
     }
 
     // MARK: - Send attachments
-
+    
     /// Send the content to the selected conversation
     func send(text: String,
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
         guard let conversation = target else {
-            stateCallback(.error(.conversationDoesNotExist))
+            stateCallback(.error(UnsentSendableError.conversationDoesNotExist))
             return
         }
         
