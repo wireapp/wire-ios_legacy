@@ -283,10 +283,12 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 self.present(alert, animated: true)
                 
             case .error(let error):
-                let alert = UIAlertController.alertWithOKButton(title: nil, message: error.localizedString)
-                
-                self.present(alert, animated: true) {
-                    self.popConfigurationViewController()
+                if let errorDescription = (error as? UnsentSendableError )?.errorDescription {
+                    let alert = UIAlertController.alertWithOKButton(title: nil, message: errorDescription)
+                    
+                    self.present(alert, animated: true) {
+                        self.popConfigurationViewController()
+                    }
                 }
             }
         }

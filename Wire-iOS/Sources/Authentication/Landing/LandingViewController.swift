@@ -44,7 +44,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
     static let headlineFont = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     static let semiboldFont = FontSpec(.large, .semibold).font!
-    static let regularFont = FontSpec(.normal, .regular).font!
 
     static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
@@ -63,11 +62,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
-
-    // MARK: - Adaptive Constraints
-
-    private var loginHintAlignTop: NSLayoutConstraint!
-    private var loginButtonAlignBottom: NSLayoutConstraint!
 
     // MARK: - UI Elements
 
@@ -428,20 +422,6 @@ final class LandingViewController: AuthenticationStepViewController {
         logoView.accessibilityLabel = "landing.header".localized
         logoView.accessibilityTraits.insert(.header)
     }
-
-    private static let createAccountButtonTitle: NSAttributedString = {
-        let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        return title + subtitle
-    }()
-
-    private static let createTeamButtonTitle: NSAttributedString = {
-        let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        return title + subtitle
-    }()
 
     override func accessibilityPerformEscape() -> Bool {
         guard SessionManager.shared?.firstAuthenticatedAccount != nil else {

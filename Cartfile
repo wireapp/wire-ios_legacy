@@ -1,7 +1,7 @@
 github "wireapp/wire-ios-ziphy" ~> 14.0
 github "wireapp/Cartography" "4.0.0-xcode_11_4_1"
-github "wireapp/wire-ios-sync-engine" ~> 322.0
-github "wireapp/wire-ios-share-engine" ~> 182.0
+github "wireapp/wire-ios-sync-engine" ~> 323.0
+github "wireapp/wire-ios-share-engine" ~> 183.0
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" ~> 11.0
 github "wireapp/appcenter-sdk-apple" ~> 2.5

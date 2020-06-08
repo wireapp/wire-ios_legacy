@@ -46,7 +46,7 @@ extension StartUIViewController {
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
 
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
                                             section: SearchResultsViewControllerSection) {
@@ -58,7 +58,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
     
@@ -69,14 +69,14 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         delegate?.startUI(self, didSelect: user)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
         guard conversation.conversationType == .group || conversation.conversationType == .oneOnOne else { return }
 
         delegate?.startUI(self, didSelect: conversation)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnSeviceUser user: ServiceUser) {
 
         let detail = ServiceDetailViewController(serviceUser: user,
@@ -99,7 +99,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         navigationController?.pushViewController(detail, animated: true)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:

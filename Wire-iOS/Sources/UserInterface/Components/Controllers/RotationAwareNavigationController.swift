@@ -68,4 +68,16 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         super.pushViewController(viewController, animated: animated)
     }
     
+    // MARK: - status bar
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return topViewController
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
 }

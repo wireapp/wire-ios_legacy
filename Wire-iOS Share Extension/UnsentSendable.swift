@@ -36,11 +36,16 @@ enum UnsentSendableError: Error {
 
     // the target conversation does not exist anymore
     case conversationDoesNotExist
+}
 
-    var localizedString: String {
+extension UnsentSendableError: LocalizedError {
+    var errorDescription: String? {
         switch self {
         case .fileSizeTooBig:
-            return String(format: "content.file.too_big".localized, "\(AccountManager.fileSizeLimitInBytes / UInt64.mega)")
+            
+            let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(AccountManager.fileSizeLimitInBytes), countStyle: .binary)
+
+            return String(format: "content.file.too_big".localized, maxSizeString)
         case .unsupportedAttachment:
             return "content.file.unsupported_attachment".localized
         case .conversationDoesNotExist:
@@ -233,7 +238,6 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
-
                 weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {

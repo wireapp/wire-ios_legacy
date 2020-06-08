@@ -184,6 +184,8 @@ final class MessagePresenter: NSObject {
     func openImageMessage(_ message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) {
         let imageViewController = viewController(forImageMessage: message, actionResponder: delegate)
         if let imageViewController = imageViewController {
+            // to allow image rotation, present the image viewer in full screen style
+            imageViewController.modalPresentationStyle = .fullScreen
             modalTargetController?.present(imageViewController, animated: true)
         }
     }
