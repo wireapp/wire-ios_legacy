@@ -277,11 +277,18 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             case .timedOut:
                 self.popConfigurationViewController()
                 
-                let title = "share_extension.timeout.title".localized
-                let message = "share_extension.timeout.message".localized
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                let alert = UIAlertController.alertWithOKButton(title: "share_extension.timeout.title".localized, message: "share_extension.timeout.message".localized)
+                
+                self.present(alert, animated: true)
+                
+            case .error(let error):
+                if let errorDescription = (error as? UnsentSendableError )?.errorDescription {
+                    let alert = UIAlertController.alertWithOKButton(title: nil, message: errorDescription)
+                    
+                    self.present(alert, animated: true) {
+                        self.popConfigurationViewController()
+                    }
+                }
             }
         }
     }
@@ -407,9 +414,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             try recreateSharingSession(account: account)
         } catch let error as SharingSession.InitializationError {
             guard error == .loggedOut else { return }
-            let alert = UIAlertController(title: "share_extension.logged_out.title".localized,
-                                          message: "share_extension.logged_out.message".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "share_extension.general.ok".localized, style: .default, handler: nil))
+            
+            let alert = UIAlertController.alertWithOKButton(title: "share_extension.logged_out.title".localized, message: "share_extension.logged_out.message".localized)
+
             self.present(alert, animated: true)
             return
         } catch { //any other error

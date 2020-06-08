@@ -30,6 +30,23 @@ enum UnsentSendableError: Error {
     // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
     // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
+
+    // The attachment is over file size limitation
+    case fileSizeTooBig
+}
+
+extension UnsentSendableError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .fileSizeTooBig:
+            
+            let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(AccountManager.fileSizeLimitInBytes), countStyle: .binary)
+
+            return String(format: "content.file.too_big".localized, maxSizeString)
+        case .unsupportedAttachment:
+            return "content.file.unsupported_attachment".localized
+        }
+    }
 }
 
 /// This protocol defines the basic methods that an Object needes to conform to 
@@ -206,12 +223,18 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
         if typeURL {
             attachment.fetchURL { [weak self] url in
-                guard let `self` = self else { return }
-                if (url != nil && !url!.isFileURL) || !self.typeData {
-                    self.error = .unsupportedAttachment
+                guard let weakSelf = self else { return }
+                if (url != nil && !url!.isFileURL) || !weakSelf.typeData {
+                    weakSelf.error = .unsupportedAttachment
                     return completion()
                 }
-                self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
+
+                if url?.fileSize > AccountManager.fileSizeLimitInBytes {
+                    weakSelf.error = .fileSizeTooBig
+                    return completion()
+                }
+
+                weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
             prepareAsWalletPass(name: nil, completion: completion)
@@ -356,4 +379,17 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         return name
     }
 
+}
+
+extension AccountManager {
+    // MARK: - Host App State
+    static var sharedAccountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
+    }
+
+    static var fileSizeLimitInBytes: UInt64 {
+        return UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil)
+    }
 }

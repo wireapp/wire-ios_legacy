@@ -28,18 +28,6 @@ extension UIAlertAction {
         )
     }
 
-    static func ok(_ completion: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-        return UIAlertAction.ok(style: .default, handler: completion)
-    }
-
-    static func ok(style: Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-        return UIAlertAction(
-            title: "general.ok".localized,
-            style: style,
-            handler: handler
-        )
-    }
-
     static func confirm(style: Style = .cancel, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.confirm".localized,

@@ -15,25 +15,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class ZipFileTests: XCTestCase {
+public extension URL {
 
-    func testThatFileURLsCanBeZipped() {
-        // GIVEN
-        let urls = ["not_animated.gif", "0x0.pdf", "sample.pkpass"].map() {
-            urlForResource(inTestBundleNamed:$0)
-        }
+    /// return nil if can not obtain the file size from URL
+    var fileSize: UInt64? {
+        guard let attributes: [FileAttributeKey: Any] = try? FileManager.default.attributesOfItem(atPath: path) else { return nil }
 
-        // WHEN
-        let zipURL = urls.zipFiles(filename: "test.zip")
+        return attributes[FileAttributeKey.size] as? UInt64
+    }
+}
 
-        // THEN
-        XCTAssertNotNil(zipURL)
-        XCTAssertGreaterThan(zipURL!.fileSize!, 0)
+extension UInt64 {
+    private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
+    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
 
-        try! FileManager.default.removeItem(atPath: zipURL!.path)
-        XCTAssertNil(zipURL?.fileSize)
+    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
+        return hasTeam ? MaxTeamFileSize : MaxFileSize
     }
 }
