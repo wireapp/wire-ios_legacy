@@ -107,14 +107,18 @@ platform :ios do
 
         if build.for_simulator
             Dir.chdir("..") do
+                derivedDataPath = `xcodebuild -project Wire-iOS.xcodeproj -showBuildSettings | grep -m 1 "BUILD_DIR" | grep -oEi "\/.*"`
+                sh "echo #{derivedDataPath}"
+                
+                if derivedDataPath.nil? 
                 # Build the app for simulator
-                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
+                    sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
+                end
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
-                ## TODO: get system folder
-                #sh "cp -r ~/DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
+                sh "cp -r #{derivedDataPath}/Debug-iphonesimulator/*.app debug/Payload/"
                 sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
