@@ -412,6 +412,9 @@ extension ConversationViewController: ZMConversationObserver {
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
+        if changeInfo.deletedObjects.contains(conversation) {
+            ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
+        }
     }
     
     public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
