@@ -99,10 +99,6 @@ platform :ios do
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
 
-        if !xcode_version.nil? 
-            xcversion(version: xcode_version)
-        end
-
         build = Build.new(options: options)
         if build.for_simulator
             Dir.chdir("..") do
@@ -110,6 +106,10 @@ platform :ios do
                 derivedDataPath = `echo "#{derivedDataPath}" | tr -d "\n"`
                 
                 if derivedDataPath.nil? 
+                    if !xcode_version.nil? 
+                        xcversion(version: xcode_version)
+                    end
+
                     # Build the app for simulator
                     sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
                 end
@@ -121,6 +121,10 @@ platform :ios do
                 sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
+            if !xcode_version.nil? 
+                xcversion(version: xcode_version)
+            end
+            
             build_app(
                 scheme: "Wire-iOS",
                 configuration: build.configuration,
