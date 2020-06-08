@@ -108,10 +108,11 @@ platform :ios do
         if build.for_simulator
             Dir.chdir("..") do
                 derivedDataPath = `xcodebuild -project Wire-iOS.xcodeproj -showBuildSettings | grep -m 1 "BUILD_DIR" | grep -oEi "\/.*"`
-                sh "echo #{derivedDataPath}"
+                derivedDataPath = echo "#{derivedDataPath}" | xargs
+                sh "ls #{derivedDataPath}/Debug-iphonesimulator/*.app"
                 
                 if derivedDataPath.nil? 
-                # Build the app for simulator
+                    # Build the app for simulator
                     sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
                 end
 
