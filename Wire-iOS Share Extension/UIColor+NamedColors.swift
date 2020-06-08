@@ -25,20 +25,19 @@ extension UIColor {
         
         static var primaryLabel: UIColor {
             if #available(iOS 13.0, *) {
-                return .label
+                return label
             }
             
-            return .black
+            return black
         }
         
         static var secondaryLabel: UIColor {
             if #available(iOS 13.0, *) {
-                return UIColor.label.withAlphaComponent(0.7)
-            } else {
-                return UIColor.white.withAlphaComponent(0.7)
+                return label.withAlphaComponent(0.7)
             }
+
+            return black.withAlphaComponent(0.7)
         }
-        
     }
         
 }
