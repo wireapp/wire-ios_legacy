@@ -21,10 +21,9 @@ import UIKit
 import WireShareEngine
 import MobileCoreServices
 
-
 /// Content that is shared on a share extension post attempt
 final class PostContent {
-    
+
     /// Conversation to post to
     var target: Conversation?
 
@@ -34,16 +33,16 @@ final class PostContent {
         guard let sendController = sendController else { return false }
         return sendController.sentAllSendables
     }
-    
+
     /// List of attachments to post
-    var attachments : [NSItemProvider]
-    
+    var attachments: [NSItemProvider]
+
     init(attachments: [NSItemProvider]) {
         self.attachments = attachments
     }
 
     // MARK: - Send attachments
-    
+
     /// Send the content to the selected conversation
     func send(text: String,
               sharingSession: SharingSession,
@@ -52,7 +51,7 @@ final class PostContent {
             stateCallback(.error(UnsentSendableError.conversationDoesNotExist))
             return
         }
-        
+
         sendController = SendController(text: text, attachments: attachments, conversation: conversation, sharingSession: sharingSession)
 
         let allMessagesEnqueuedGroup = DispatchGroup()
