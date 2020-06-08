@@ -102,8 +102,17 @@ platform :ios do
         build = Build.new(options: options)
         if build.for_simulator
             Dir.chdir("..") do
-                # Build the app for simulator
-                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
+                derivedDataPath = `xcodebuild -project Wire-iOS.xcodeproj -showBuildSettings | grep -m 1 "BUILD_DIR" | grep -oEi "\/.*"`
+                derivedDataPath = `echo "#{derivedDataPath}" | tr -d "\n"`
+                
+                if derivedDataPath.nil? 
+                    if !xcode_version.nil? 
+                        xcversion(version: xcode_version)
+                    end
+
+                    # Build the app for simulator
+                    sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
+                end
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
