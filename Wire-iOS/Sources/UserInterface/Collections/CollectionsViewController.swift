@@ -299,7 +299,7 @@ final class CollectionsViewController: UIViewController {
 
     @objc
     fileprivate func closeButtonPressed(_ button: UIButton) {
-        self.onDismiss?(self)
+        onDismiss?(self)
     }
 
     @objc

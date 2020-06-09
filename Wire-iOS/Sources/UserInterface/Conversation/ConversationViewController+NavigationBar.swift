@@ -159,28 +159,32 @@ extension ConversationViewController {
         startCallController.joinCall()
     }
 
-    @objc func onCollectionButtonPressed(_ sender: AnyObject!) {
+    @objc
+    private func onCollectionButtonPressed(_ sender: AnyObject!) {
         if self.collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
 
             collections.onDismiss = { [weak self] _ in
 
-                guard let `self` = self, let collectionController = self.collectionController else {
+                guard let weakSelf = self else {
                     return
                 }
 
-                collectionController.dismiss(animated: true, completion: {
-                    })
+                weakSelf.collectionController?.dismiss(animated: true) {
+                    weakSelf.setNeedsStatusBarAppearanceUpdate()
+                }
             }
             self.collectionController = collections
         } else {
-            self.collectionController?.refetchCollection()
+            collectionController?.refetchCollection()
         }
 
         collectionController?.shouldTrackOnNextOpen = true
 
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
+
+        navigationController.presentationController?.delegate = ZClientViewController.shared
 
         ZClientViewController.shared?.present(navigationController, animated: true)
     }
