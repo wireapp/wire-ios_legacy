@@ -49,11 +49,15 @@ extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
     func makeContextMenu(url: URL) -> UIMenu {
         
         ///TODO: open/copy/share...and other actions related to URL only
+        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
+            UIApplication.shared.open(url)
+        }
+
         let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
             self.shareURL(url: url)
         }
 
-        return UIMenu(title: interactingUrl?.absoluteString ?? "URL", children: [share]) ///TODO: show the URL
+        return UIMenu(title: interactingUrl?.absoluteString ?? "URL", children: [openURL, share]) ///TODO: show the URL
     }
 
     func shareURL(url: URL) {
