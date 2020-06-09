@@ -48,7 +48,7 @@ extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
     @available(iOS 13.0, *)
     func makeContextMenu() -> UIMenu {
         
-        ///TODO: copy/share...and other actions
+        ///TODO: open/copy/share...and other actions related to URL only
         let share = UIAction(title: "TODO", image: UIImage(systemName: "square.and.arrow.up")) { action in
         }
 
