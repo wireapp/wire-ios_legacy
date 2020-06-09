@@ -39,8 +39,8 @@ extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
         }
 
         return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: previewProvider, actionProvider: { suggestedActions in
-
+                                          previewProvider: previewProvider,
+                                          actionProvider: { suggestedActions in
             return self.makeContextMenu()
         })
     }
