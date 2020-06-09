@@ -41,20 +41,28 @@ extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { suggestedActions in
-            return self.makeContextMenu()
+                                            return self.makeContextMenu(url: interactingUrl)
         })
     }
     
     @available(iOS 13.0, *)
-    func makeContextMenu() -> UIMenu {
+    func makeContextMenu(url: URL) -> UIMenu {
         
         ///TODO: open/copy/share...and other actions related to URL only
-        let share = UIAction(title: "TODO", image: UIImage(systemName: "square.and.arrow.up")) { action in
+        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
+            self.shareURL(url: url)
         }
 
         return UIMenu(title: interactingUrl?.absoluteString ?? "URL", children: [share]) ///TODO: show the URL
     }
 
+    func shareURL(url: URL) {
+        let activityViewController =
+            UIActivityViewController(activityItems: [url],
+                                     applicationActivities: nil)
+
+        AppDelegate.shared.window?.rootViewController?.present(activityViewController, animated: true)
+    }
 
 }
 
