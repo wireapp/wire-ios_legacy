@@ -25,11 +25,46 @@ protocol TextViewInteractionDelegate: class {
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
 
+extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
+
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        
+        guard let interactingUrl = interactingUrl else {
+            return nil            
+        }
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: interactingUrl)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider, actionProvider: { suggestedActions in
+
+            return self.makeContextMenu()
+        })
+    }
+    
+    @available(iOS 13.0, *)
+    func makeContextMenu() -> UIMenu {
+        
+        ///TODO: copy/share...and other actions
+        let share = UIAction(title: "TODO", image: UIImage(systemName: "square.and.arrow.up")) { action in
+        }
+
+        return UIMenu(title: interactingUrl?.absoluteString ?? "URL", children: [share]) ///TODO: show the URL
+    }
+
+
+}
 
 final class LinkInteractionTextView: UITextView {
     
     weak var interactionDelegate: TextViewInteractionDelegate?
-
+    
+    // the current interacting URL for showning context preview
+    private var interactingUrl : URL?
+    
     override var selectedTextRange: UITextRange? {
         get { return nil }
         set { /* no-op */ }
@@ -44,6 +79,11 @@ final class LinkInteractionTextView: UITextView {
         
         if #available(iOS 11.0, *) {
             textDragDelegate = self
+        }
+        
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
         }
     }
     
@@ -104,7 +144,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
     func textView(_ textView: UITextView,
                   shouldInteractWith URL: URL,
                   in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-
+        self.interactingUrl = URL
         switch interaction {
         case .invokeDefaultAction:
             
