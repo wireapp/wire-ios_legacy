@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireDataModel
 import WireSyncEngine
 import UIKit
 
@@ -27,7 +25,7 @@ extension ZMConversation {
     }
 }
 
-public struct Service {
+struct Service {
     let serviceUser: ServiceUser
     var serviceUserDetails: ServiceDetails?
     var provider: ServiceProvider?
@@ -54,7 +52,7 @@ final class ServiceDetailViewController: UIViewController {
         case addService(ZMConversation), removeService(ZMConversation), openConversation
     }
 
-    public var service: Service {
+    var service: Service {
         didSet {
             self.detailView.service = service
         }
@@ -63,9 +61,13 @@ final class ServiceDetailViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
-    public let completion: Completion?
-    public let variant: ServiceDetailVariant
+    let completion: Completion?
+    let variant: ServiceDetailVariant
     weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView

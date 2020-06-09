@@ -103,6 +103,18 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         useDefaultPopGesture = !translucentBackground
     }
     
+    // MARK: - status bar
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return topViewController
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 
