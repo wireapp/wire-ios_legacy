@@ -63,6 +63,36 @@ final class ConversationMessageActionController: NSObject {
             return key.localized
         }
         
+        var messageAction: MessageAction {
+            switch self {
+                
+            case .copy:
+                return .copy
+            case .reply:
+                return .reply
+            case .details:
+                return .openDetails
+            case .edit:
+                return .edit
+            case .delete:
+                return .delete
+            case .save:
+                return .save
+            case .cancel:
+                return .cancel
+            case .download:
+                return .download
+            case .forward:
+                return .forward
+            case .like, .unlike:
+                return .like
+            case .resend:
+                return .resend
+            case .revealMessage:
+                return .showInConversation
+            }
+        }
+        
         var selector: Selector {
             switch self {
             case .copy:
@@ -109,59 +139,8 @@ final class ConversationMessageActionController: NSObject {
 
 
     func actionHandler(action: Action) -> UIActionHandler {
-        switch action {
-        case .copy:
-            return {_ in
-                self.copyMessage()
-            }
-        case .reply:
-            return {_ in
-                self.quoteMessage()
-            }
-        case .details:
-            return {_ in
-                self.openMessageDetails()
-            }
-        case .edit:
-            return {_ in
-                self.editMessage()
-            }
-        case .delete:
-            return {_ in
-                self.deleteMessage()
-            }
-        case .save:
-            return {_ in
-                self.saveMessage()
-            }
-        case .cancel:
-            return {_ in
-                self.cancelDownloadingMessage()
-            }
-        case .download:
-            return {_ in
-                self.downloadMessage()
-            }
-        case .forward:
-            return {_ in
-                self.forwardMessage()
-            }
-        case .like:
-            return {_ in
-                self.likeMessage()
-            }
-        case .unlike:
-            return {_ in
-                self.unlikeMessage()
-            }
-        case .resend:
-            return {_ in
-                self.resendMessage()
-            }
-        case .revealMessage:
-            return {_ in
-                self.revealMessage()
-            }
+        return {_ in
+            self.perform(action: action.messageAction)
         }
     }
 

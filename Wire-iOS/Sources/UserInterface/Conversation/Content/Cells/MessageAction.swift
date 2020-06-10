@@ -20,7 +20,7 @@
 enum MessageAction {
     case cancel,
     resend,
-    `delete`,
+    delete,
     present,
     save,
     copy,
