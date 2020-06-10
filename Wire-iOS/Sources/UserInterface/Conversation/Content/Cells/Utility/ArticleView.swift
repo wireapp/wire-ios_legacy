@@ -58,17 +58,20 @@ final class ArticleView: UIView {
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
-    weak var message: ZMConversationMessage?
+    
+    private weak var message: ZMConversationMessage?
+    private weak var messageActionResponder: MessageActionResponder?
     
     /// MARK - for context menu action items
-    private lazy var actionController: ConversationMessageActionController? = {
-        guard let message = message else { return nil }
+    private var actionController: ConversationMessageActionController? {
+        guard let message = message,
+            let messageActionResponder = messageActionResponder else { return nil }
         
-        return ConversationMessageActionController(responder: self,
+        return ConversationMessageActionController(responder: messageActionResponder,
                                                    message: message,
                                                    context: .content,
                                                    view: self)
-    }()
+    }
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -161,11 +164,14 @@ final class ArticleView: UIView {
     
     func configure(withTextMessageData textMessageData: ZMTextMessageData,
                    message: ZMConversationMessage,
+                   messageActionResponder: MessageActionResponder?,
                    obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return
         }
+
         self.message = message
+        self.messageActionResponder = messageActionResponder
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 

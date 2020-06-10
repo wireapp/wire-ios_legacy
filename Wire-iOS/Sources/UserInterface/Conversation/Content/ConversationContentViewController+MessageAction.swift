@@ -53,8 +53,8 @@ extension ConversationContentViewController {
     }
 
     func messageAction(actionId: MessageAction,
-                               for message: ZMConversationMessage,
-                               view: UIView) {
+                       for message: ZMConversationMessage,
+                       view: UIView) {
         switch actionId {
         case .cancel:
             session.enqueue({

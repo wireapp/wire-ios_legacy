@@ -69,8 +69,10 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell 
         configuration = object
         articleView.configure(withTextMessageData: object.textMessageData,
                               message: object.message,
+                              messageActionResponder: delegate,
                               obfuscated: object.isObfuscated)
-        updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)
+        
+        updateImageLayout(isRegular: traitCollection.horizontalSizeClass == .regular)
     }
 
     func updateImageLayout(isRegular: Bool) {
@@ -101,7 +103,11 @@ final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCe
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate? {
+        didSet {
+            
+        }
+    }
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
