@@ -157,13 +157,6 @@ final class Settings {
         defaults.synchronize()
     }
 
-    func reset() {
-        for key in SettingKey.allCases {
-            defaults.removeObject(forKey: key.rawValue)
-        }
-        UserDefaults.standard.synchronize()
-    }
-
     @objc
     private func applicationDidEnterBackground(_ application: UIApplication) {
         synchronize()

@@ -47,7 +47,6 @@ class URL_WireTests: XCTestCase {
         XCTAssertEqual(URL.wr_reportAbuse, websiteURL.appendingPathComponent("support/misuse"))
         XCTAssertEqual(URL.wr_cannotDecryptHelp, websiteURL.appendingPathComponent("privacy/error-1"))
         XCTAssertEqual(URL.wr_cannotDecryptNewRemoteIDHelp, websiteURL.appendingPathComponent("privacy/error-2"))
-        XCTAssertEqual(URL.wr_createTeam, websiteURL.appendingPathComponent("create-team?pk_campaign=client&pk_kwd=ios"))
         XCTAssertEqual(URL.wr_createTeamFeatures, websiteURL.appendingPathComponent("teams/learnmore"))
         XCTAssertEqual(URL.wr_emailInUseLearnMore, websiteURL.appendingPathComponent("support/email-in-use"))
         XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: true), websiteURL.appendingPathComponent("legal/terms/teams"))
@@ -65,11 +64,5 @@ class URL_WireTests: XCTestCase {
         let accountsURL = URL(string: "https://account.wire.com")!
         XCTAssertEqual(be.accountsURL, accountsURL)
         XCTAssertEqual(URL.wr_passwordReset, accountsURL.appendingPathComponent("forgot"))
-    }
-    
-    func testThatTeamURLsAreLoadedCorrectly() {
-        let teamsURL = URL(string: "https://teams.wire.com")!
-        XCTAssertEqual(be.teamsURL, teamsURL)
-        XCTAssertEqual(URL.wr_manageTeam, teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
-    }
+    }    
 }

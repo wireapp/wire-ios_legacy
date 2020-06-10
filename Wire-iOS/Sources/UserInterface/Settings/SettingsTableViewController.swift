@@ -29,7 +29,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
     let footerSeparator = OverflowSeparatorView()
     private let footerContainer = UIView()
 
-    public var footer: UIView? {
+    var footer: UIView? {
         didSet {
             updateFooter(footer)
         }
@@ -149,7 +149,7 @@ extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataS
 
 }
 
-class SettingsTableViewController: SettingsBaseTableViewController {
+final class SettingsTableViewController: SettingsBaseTableViewController {
 
     let group: SettingsInternalGroupCellDescriptorType
     fileprivate var sections: [SettingsSectionDescriptorType]

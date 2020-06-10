@@ -34,9 +34,9 @@ final class BackgroundViewController: UIViewController {
     private let user: UserType
     private let userSession: ZMUserSession?
     
-    public var darkMode: Bool = false {
+    var darkMode: Bool = false {
         didSet {
-            darkenOverlay.isHidden = !self.darkMode
+            darkenOverlay.isHidden = !darkMode
         }
     }
     
@@ -54,8 +54,8 @@ final class BackgroundViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(colorSchemeChanged(_:)),
-                                               name: NSNotification.Name.SettingsColorSchemeChanged,
+                                               selector: #selector(colorSchemeChanged),
+                                               name: .SettingsColorSchemeChanged,
                                                object: nil)
     }
     
@@ -162,7 +162,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
-        self.darkMode = (ColorScheme.default.variant == .dark)
+        darkMode = ColorScheme.default.variant == .dark
     }
     
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
@@ -190,8 +190,8 @@ final class BackgroundViewController: UIViewController {
     }
 
     @objc
-    func colorSchemeChanged(_ object: AnyObject!) {
-        self.updateForColorScheme()
+    private func colorSchemeChanged() {
+        updateForColorScheme()
     }
 }
 

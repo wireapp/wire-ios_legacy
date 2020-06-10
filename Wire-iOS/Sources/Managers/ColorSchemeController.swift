@@ -38,7 +38,7 @@ class ColorSchemeController: NSObject {
             userObserverToken = UserChangeInfo.add(observer:self, for: SelfUser.current, in: session)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsColorSchemeDidChange(notification:)), name: .SettingsColorSchemeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsColorSchemeDidChange), name: .SettingsColorSchemeChanged, object: nil)
 
     }
 
@@ -47,7 +47,7 @@ class ColorSchemeController: NSObject {
     }
 
     @objc
-    func settingsColorSchemeDidChange(notification: Notification?) {
+    private func settingsColorSchemeDidChange() {
         ColorScheme.default.variant = Settings.shared.colorSchemeVariant
 
         NSAttributedString.invalidateMarkdownStyle()

@@ -1,6 +1,5 @@
-//
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,11 +16,22 @@
 //
 
 import Foundation
-import WireSyncEngine
 
-extension Message {
-    static func dayFormatter(date: Date) -> DateFormatter {
-        return date.olderThanOneWeekdateFormatter
+public extension URL {
+
+    /// return nil if can not obtain the file size from URL
+    var fileSize: UInt64? {
+        guard let attributes: [FileAttributeKey: Any] = try? FileManager.default.attributesOfItem(atPath: path) else { return nil }
+
+        return attributes[FileAttributeKey.size] as? UInt64
     }
 }
 
+extension UInt64 {
+    private static let MaxFileSize: UInt64 = 26214400 // 25 megabytes (25 * 1024 * 1024)
+    private static let MaxTeamFileSize: UInt64 = 104857600 // 100 megabytes (100 * 1024 * 1024)
+
+    public static func uploadFileSizeLimit(hasTeam: Bool) -> UInt64 {
+        return hasTeam ? MaxTeamFileSize : MaxFileSize
+    }
+}

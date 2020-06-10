@@ -31,9 +31,9 @@ final class ZipFileTests: XCTestCase {
 
         // THEN
         XCTAssertNotNil(zipURL)
-        XCTAssertGreaterThan(try! zipURL!.fileSize()!, 0)
+        XCTAssertGreaterThan(zipURL!.fileSize!, 0)
 
         try! FileManager.default.removeItem(atPath: zipURL!.path)
-        XCTAssertNil(try? zipURL?.fileSize())
+        XCTAssertNil(zipURL?.fileSize)
     }
 }

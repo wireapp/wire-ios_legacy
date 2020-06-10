@@ -273,19 +273,6 @@ final class FullscreenImageViewController: UIViewController {
         tapGestureRecognzier.require(toFail: doubleTapGestureRecognizer)
     }
 
-    func attributedNameString(forDisplayName displayName: String?) -> NSAttributedString? {
-        let text = displayName?.uppercasedWithCurrentLocale
-        let attributes = [
-            NSAttributedString.Key.font: UIFont.smallMediumFont,
-            NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground),
-            NSAttributedString.Key.backgroundColor: UIColor.from(scheme: .textBackground)
-        ]
-
-        let attributedName = NSAttributedString(string: text ?? "", attributes: attributes)
-
-        return attributedName
-    }
-
     // MARK: - Utilities, custom UI
     func performSaveImageAnimation(from saveView: UIView) {
         guard let imageView = imageView else { return }

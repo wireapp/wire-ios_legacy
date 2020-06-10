@@ -30,6 +30,28 @@ enum UnsentSendableError: Error {
     // which does not contain a File, e.g. an URL to a webpage, which instead will also be included in the text content.
     // `UnsentSendables` that report this error should not be sent.
     case unsupportedAttachment
+
+    // The attachment is over file size limitation
+    case fileSizeTooBig
+
+    // the target conversation does not exist anymore
+    case conversationDoesNotExist
+}
+
+extension UnsentSendableError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .fileSizeTooBig:
+
+            let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(AccountManager.fileSizeLimitInBytes), countStyle: .binary)
+
+            return String(format: "content.file.too_big".localized, maxSizeString)
+        case .unsupportedAttachment:
+            return "content.file.unsupported_attachment".localized
+        case .conversationDoesNotExist:
+            return "share_extension.error.conversation_not_exist.message".localized
+        }
+    }
 }
 
 /// This protocol defines the basic methods that an Object needes to conform to 
@@ -94,7 +116,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
         if let attachment = self.attachment, attachment.hasURL {
 
-            self.attachment?.fetchURL(completion: { (url) in
+            self.attachment?.fetchURL(completion: { (_) in
                 completion()
             })
         } else {
@@ -123,7 +145,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         let longestDimension: CGFloat = 1024
 
         // note: this doesn't seem to have any effect, but perhaps it's an iOS bug that will be fixed...
-        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
+        let options = [NSItemProviderPreferredImageSizeKey: NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
 
         // app extensions have severely limited memory resources & risk termination if they are too greedy. In order to
         // minimize memory consumption we must downscale the images being shared. Standard image scaling methods that
@@ -206,12 +228,17 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
         if typeURL {
             attachment.fetchURL { [weak self] url in
-                guard let `self` = self else { return }
-                if (url != nil && !url!.isFileURL) || !self.typeData {
-                    self.error = .unsupportedAttachment
+                guard let weakSelf = self else { return }
+                if (url != nil && !url!.isFileURL) || !weakSelf.typeData {
+                    weakSelf.error = .unsupportedAttachment
                     return completion()
                 }
-                self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
+
+                if url?.fileSize > AccountManager.fileSizeLimitInBytes {
+                    weakSelf.error = .fileSizeTooBig
+                    return completion()
+                }
+                weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {
             prepareAsWalletPass(name: nil, completion: completion)
@@ -356,4 +383,17 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         return name
     }
 
+}
+
+extension AccountManager {
+    // MARK: - Host App State
+    static var sharedAccountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
+    }
+
+    static var fileSizeLimitInBytes: UInt64 {
+        return UInt64.uploadFileSizeLimit(hasTeam: AccountManager.sharedAccountManager?.selectedAccount?.teamName != nil)
+    }
 }

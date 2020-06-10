@@ -18,15 +18,6 @@
 import Foundation
 import ZipArchive
 
-extension URL {
-    func fileSize() throws -> UInt64? {
-        let attributes: [FileAttributeKey: Any]
-        attributes = try FileManager.default.attributesOfItem(atPath: path)
-
-        return attributes[FileAttributeKey.size] as? UInt64
-    }
-}
-
 extension Array where Element == URL {
     func zipFiles(filename: String = "archive.zip") -> URL? {
         let archiveURL = URL(fileURLWithPath: NSTemporaryDirectory() + filename)

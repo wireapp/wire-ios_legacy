@@ -22,11 +22,7 @@ import WireSystem
 
 typealias TechnicalReport = [String: String]
 
-final class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-    
-    static private let technicalReportTitle = "TechnicalReportTitleKey"
-    static private let technicalReportData = "TechnicalReportDataKey"
-    
+final class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {    
     private let includedVoiceLogCell: UITableViewCell
     private let sendReportCell: UITableViewCell
     

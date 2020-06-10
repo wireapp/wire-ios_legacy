@@ -21,7 +21,6 @@ import WireSystem
 
 private let log = ZMSLog(tag: "link opening")
 
-
 enum TweetOpeningOption: Int, LinkOpeningOption {
     case none, tweetbot, twitterrific
 
@@ -45,11 +44,10 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         switch self {
         case .none: return true
         case .tweetbot: return UIApplication.shared.tweetbotInstalled
-        case . twitterrific: return UIApplication.shared.twitterrificInstalled
+        case .twitterrific: return UIApplication.shared.twitterrificInstalled
         }
     }
 }
-
 
 extension URL {
 
@@ -59,7 +57,7 @@ extension URL {
         let saved = TweetOpeningOption.storedPreference
         log.debug("Saved option to open a tweet: \(saved.displayString)")
         let app = UIApplication.shared
-        
+
         switch saved {
         case .none: return false
         case .tweetbot:
@@ -71,15 +69,13 @@ extension URL {
             log.debug("Trying to open twitterific app using \"\(url)\"")
             app.open(url)
         }
-        
+
         return true
     }
 
 }
 
-
 // MARK: - Private
-
 
 fileprivate extension UIApplication {
 
@@ -93,7 +89,6 @@ fileprivate extension UIApplication {
 
 }
 
-
 extension URL {
 
     var isTweet: Bool {
@@ -101,7 +96,6 @@ extension URL {
     }
 
 }
-
 
 fileprivate extension URL {
 
@@ -133,11 +127,10 @@ fileprivate extension URL {
 
 }
 
-
 private extension String {
 
     func replacingWithTweetbotURLScheme(_ string: String) -> String {
         return replacingOccurrences(of: string, with: "tweetbot://")
     }
-    
+
 }

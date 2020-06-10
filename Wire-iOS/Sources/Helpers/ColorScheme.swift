@@ -20,7 +20,8 @@ import Foundation
 import UIKit
 import WireUtilities
 
-@objc enum ColorSchemeVariant: UInt {
+@objc
+enum ColorSchemeVariant: UInt {
     case light, dark
 };
 
@@ -234,6 +235,7 @@ final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable : Any]?
     
     var variant: ColorSchemeVariant = .light
+    
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
         
@@ -243,18 +245,6 @@ final class ColorScheme: NSObject {
     
     class func keyboardAppearance(for variant: ColorSchemeVariant) -> UIKeyboardAppearance {
         return variant == .light ? .light : .dark
-    }
-    
-    func blurEffectStyle() -> UIBlurEffect.Style {
-        return ColorScheme.blurEffectStyle(for: variant)
-    }
-    
-    class func blurEffectStyle(for variant: ColorSchemeVariant) -> UIBlurEffect.Style {
-        return variant == .light ? .light : .dark
-    }
-    
-    func setVariant(_ variant: ColorSchemeVariant) {
-        self.variant = variant
     }
     
     static let `default`: ColorScheme = ColorScheme()

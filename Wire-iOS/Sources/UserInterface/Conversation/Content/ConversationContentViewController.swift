@@ -125,129 +125,133 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
         tableView.keyboardDismissMode = AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal ? .none : .interactive
-        
+
         tableView.backgroundColor = UIColor.from(scheme: .contentBackground)
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
-        
+
         setupMentionsResultsView()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
+
     @objc
     private func applicationDidBecomeActive(_ notification: Notification) {
         dataSource.resetSectionControllers()
         tableView.reloadData()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateVisibleMessagesWindow()
-        
-        if traitCollection.forceTouchCapability == .available {
-            registerForPreviewing(with: self, sourceView: view)
+
+        if #available(iOS 13, *) {
+            // handle Context menu in table view delegate
+        } else {
+            if traitCollection.forceTouchCapability == .available {
+                registerForPreviewing(with: self, sourceView: view)
+            }
         }
-        
+
         UIAccessibility.post(notification: .screenChanged, argument: nil)
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         onScreen = true
-        
+
         for cell in tableView.visibleCells {
             cell.willDisplayCell()
         }
-        
+
         messagePresenter.modalTargetController = parent
-        
+
         updateHeaderHeight()
-        
+
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         onScreen = false
         removeHighlightsAndMenu()
         super.viewWillDisappear(animated)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         scrollToFirstUnreadMessageIfNeeded()
         updatePopover()
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
-        
+
         guard let coordinator = coordinator else { return }
-        
+
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         coordinator.animate(alongsideTransition: nil) { _ in
             self.updatePopoverSourceRect()
         }
     }
-    
+
     func setupMentionsResultsView() {
         mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         addChild(mentionsSearchResultsViewController)
         view.addSubview(mentionsSearchResultsViewController.view)
-        
+
         mentionsSearchResultsViewController.view.fitInSuperview()
     }
-    
+
     func scrollToFirstUnreadMessageIfNeeded() {
         if !hasDoneInitialLayout {
             hasDoneInitialLayout = true
             scroll(to: messageVisibleOnLoad)
         }
     }
-    
+
     override var shouldAutorotate: Bool {
         return true
     }
-    
+
     override func didReceiveMemoryWarning() {
         zmLog.warn("Received system memory warning.")
         super.didReceiveMemoryWarning()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-    
+
     func setConversationHeaderView(_ headerView: UIView) {
         headerView.frame = headerViewFrame(view: headerView)
         tableView.tableHeaderView = headerView
     }
-    
+
     @discardableResult
     func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
         guard dataSource.messages.indices.contains(indexPath.section) == true else { return nil }
-        
+
         // If the menu is visible, hide it and do nothing
         if UIMenuController.shared.isMenuVisible {
             UIMenuController.shared.setMenuVisible(false, animated: true)
             return nil
         }
-        
+
         let message = dataSource.messages[indexPath.section] as? ZMMessage
-        
+
         if message == dataSource.selectedMessage {
-            
+
             // If this cell is already selected, deselect it.
             dataSource.selectedMessage = nil
             dataSource.deselect(indexPath: indexPath)
             tableView.deselectRow(at: indexPath, animated: true)
-            
+
             return nil
         } else {
             if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {

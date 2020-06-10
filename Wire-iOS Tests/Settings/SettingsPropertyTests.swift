@@ -63,7 +63,10 @@ final class SettingsPropertyTests: XCTestCase {
     }
 
     
-    func saveAndCheck<T>(_ property: SettingsProperty, value: T, file: String = #file, line: UInt = #line) throws where T: Equatable {
+    func saveAndCheck<T>(_ property: SettingsProperty,
+                         value: T,
+                         file: String = #file,
+                         line: UInt = #line) throws where T: Equatable {
         var property = property
         try property << value
         if let readValue : T = property.rawValue() as? T {
@@ -115,16 +118,30 @@ final class SettingsPropertyTests: XCTestCase {
         // when & then
         try! self.saveAndCheck(property, value: "Test")
     }
-    
-    func testThatSoundLevelPropertySetsValue() {
-        // given
+
+    private var settingsPropertyFactory: SettingsPropertyFactory {
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+        return SettingsPropertyFactory(userDefaults: userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+    }
+    
+    func testThatDarkThemePropertySetsValue() {
+        // given
+        let factory = settingsPropertyFactory
         
+        let property = factory.property(SettingsPropertyName.darkMode)
+        // when & then
+        try! saveAndCheck(property, value: 2)
+    }
+    
+
+    func testThatSoundLevelPropertySetsValue() {
+        // given
+        let factory = settingsPropertyFactory
+
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
         try! self.saveAndCheck(property, value: 1)

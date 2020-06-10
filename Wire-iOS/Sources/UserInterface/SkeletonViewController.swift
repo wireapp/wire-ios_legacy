@@ -319,9 +319,9 @@ final class SkeletonViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if customSplitViewController.layoutSize == .compact {
-            return UIStatusBarStyle.lightContent
+            return .lightContent
         } else {
-            return UIStatusBarStyle.default
+            return .compatibleDarkContent
         }
     }
     

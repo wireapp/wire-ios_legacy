@@ -49,7 +49,6 @@ extension ZMConversationType {
 final class ProfileViewController: UIViewController {
     let viewModel: ProfileViewControllerViewModel
     weak var viewControllerDismisser: ViewControllerDismisser?
-    weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
     private let profileFooterView: ProfileFooterView = ProfileFooterView()
     private let incomingRequestFooter: IncomingRequestFooterView = IncomingRequestFooterView()
@@ -111,10 +110,6 @@ final class ProfileViewController: UIViewController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func requestDismissal(withCompletion completion: @escaping () -> ()) {
-        viewControllerDismisser?.dismiss(viewController: self, completion: completion)
     }
     
     // MARK: - Header

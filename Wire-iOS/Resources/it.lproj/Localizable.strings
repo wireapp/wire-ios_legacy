@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Informazioni personali";
 
-"self.settings.account_picture_group.theme" = "Tema scuro";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dà un'impronta unica a ogni dispositivo. Confrontale per verificare i tuoi dispositivi e le conversazioni.";
 "self.settings.device_details.reset_session.subtitle" = "Se le impronte digitali non corrispondono, è necessario resettare la sessione per generare nuove chiavi di crittografia per entrambe le parti.";
@@ -1399,9 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Questa email non può essere utilizzata per l'accesso aziendale. Inserisci il codice SSO per procedere.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Questa email è collegata ad un server diverso, ma l'app può essere connessa solo ad un server alla volta. Per favore esci da tutti gli account Wire su questo dispositivo e prova ad accedere nuovamente.";
 "login.sso.error.alert.unknown.message" = "Si prega di riprovare più tardi.";
-"login.sso.backend_switch.title" = "Leaving Wire";
-"login.sso.backend_switch.subtitle" = "You are being redirected to";
-"login.sso.backend_switch.information" = "Provide credentials only if you are sure it is your organization's login.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles
