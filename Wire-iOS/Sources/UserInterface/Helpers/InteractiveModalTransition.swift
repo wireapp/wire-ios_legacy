@@ -49,9 +49,6 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
         transitionContext.containerView.addSubview(toVC.view)
         toVC.view.layoutIfNeeded()
 
-        weak var callWindow: CallWindow? = toVC.view.window as? CallWindow
-        callWindow?.isHidden = false
-
         let animations = { [configuration] in
             toVC.dimView.backgroundColor = .init(white: 0, alpha: configuration.alpha)
             toVC.viewController.view.transform  = .identity
