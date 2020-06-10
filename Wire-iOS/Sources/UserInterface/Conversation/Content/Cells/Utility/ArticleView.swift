@@ -24,12 +24,8 @@ import WireDataModel
 
 protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-}
-
-extension ArticleView: MessageActionResponder {
-    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
-        ///TODO: let root VC do it
-    }
+    var delegate: ConversationMessageCellDelegate? { get }
+    var message: ZMConversationMessage? { get }
 }
 
 final class ArticleView: UIView {
@@ -59,13 +55,10 @@ final class ArticleView: UIView {
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
-    weak var message: ZMConversationMessage?
-    weak var messageActionResponder: MessageActionResponder?
-    
     /// MARK - for context menu action items
     private var actionController: ConversationMessageActionController? {
-        guard let message = message,
-            let messageActionResponder = messageActionResponder else { return nil }
+        guard let message = delegate?.message,
+            let messageActionResponder = delegate?.delegate else { return nil }
         
         return ConversationMessageActionController(responder: messageActionResponder,
                                                    message: message,
@@ -170,8 +163,6 @@ final class ArticleView: UIView {
             return
         }
 
-        self.message = message
-        self.messageActionResponder = messageActionResponder
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 

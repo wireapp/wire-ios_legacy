@@ -32,16 +32,8 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell 
 
     private let articleView = ArticleView(withImagePlaceholder: true)
     
-    weak var delegate: ConversationMessageCellDelegate? = nil {
-        didSet {
-            articleView.messageActionResponder = delegate
-        }
-    }
-    weak var message: ZMConversationMessage? = nil{
-        didSet {
-            articleView.message = message
-        }
-    }
+    weak var delegate: ConversationMessageCellDelegate? = nil
+    weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
 
@@ -111,11 +103,7 @@ final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCe
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate? {
-        didSet {
-            
-        }
-    }
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
     var showEphemeralTimer: Bool = false
