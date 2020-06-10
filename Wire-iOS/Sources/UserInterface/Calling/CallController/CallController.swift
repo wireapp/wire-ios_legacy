@@ -200,8 +200,24 @@ extension CallController: CallQualityControllerDelegate {
 
 extension CallController: WireCallCenterCallErrorObserver {
 
+    private static var dateOfLastErrorAlert = Date.distantPast
+
+    private var alertDebounceInterval: TimeInterval { .oneMinute * 15 }
+
+    private var shouldDisplayErrorAlert: Bool {
+        let elapsedTimeIntervalSinceLastAlert = -type(of: self).dateOfLastErrorAlert.timeIntervalSinceNow
+        return elapsedTimeIntervalSinceLastAlert > alertDebounceInterval
+    }
+
     func callCenterDidReceiveCallError(_ error: CallError) {
-        guard error == .unknownProtocol else { return }
+        guard
+            error == .unknownProtocol,
+            shouldDisplayErrorAlert
+        else {
+            return
+        }
+
+        type(of: self).dateOfLastErrorAlert = .init()
 
         let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized,
                                                 message: "voice.call_error.unsupported_version.message".localized,
