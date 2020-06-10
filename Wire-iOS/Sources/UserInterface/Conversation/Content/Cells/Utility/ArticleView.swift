@@ -255,15 +255,6 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
         return UIMenu(title: url.absoluteString, children: actions)
     }
-
-    func shareURL(url: URL) {
-        let activityViewController =
-            UIActivityViewController(activityItems: [url],
-                                     applicationActivities: nil)
-
-        AppDelegate.shared.window?.rootViewController?.present(activityViewController, animated: true)
-    }
-
 }
 
 

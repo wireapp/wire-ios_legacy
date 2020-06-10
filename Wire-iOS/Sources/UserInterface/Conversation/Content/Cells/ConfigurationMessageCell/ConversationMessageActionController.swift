@@ -108,15 +108,72 @@ final class ConversationMessageActionController: NSObject {
     }
 
 
+    func actionHandler(action: Action) -> UIActionHandler {
+        switch action {
+        case .copy:
+            return {_ in
+                self.copyMessage()
+            }
+        case .reply:
+            return {_ in
+                self.quoteMessage()
+            }
+        case .details:
+            return {_ in
+                self.openMessageDetails()
+            }
+        case .edit:
+            return {_ in
+                self.editMessage()
+            }
+        case .delete:
+            return {_ in
+                self.deleteMessage()
+            }
+        case .save:
+            return {_ in
+                self.saveMessage()
+            }
+        case .cancel:
+            return {_ in
+                self.cancelDownloadingMessage()
+            }
+        case .download:
+            return {_ in
+                self.downloadMessage()
+            }
+        case .forward:
+            return {_ in
+                self.forwardMessage()
+            }
+        case .like:
+            return {_ in
+                self.likeMessage()
+            }
+        case .unlike:
+            return {_ in
+                self.unlikeMessage()
+            }
+        case .resend:
+            return {_ in
+                self.resendMessage()
+            }
+        case .revealMessage:
+            return {_ in
+                self.revealMessage()
+            }
+        }
+    }
+
     // MARK: - List of Actions
     
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
-        return [ ///TODO: icon?
-        UIAction(title: "content.message.copy".localized, image: nil) { action in
-            self.copyMessage()
+        return Action.allCases.map() {
+            return UIAction(title: $0.title,
+                            image: nil,
+                            handler: self.actionHandler(action: $0))
         }
-    ]
     }
 
     static var allMessageActions: [UIMenuItem] {
