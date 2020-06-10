@@ -39,6 +39,15 @@ final class ConversationMessageActionController: NSObject {
 
 
     // MARK: - List of Actions
+    
+    @available(iOS 13.0, *)
+    func allMessageMenuElements() -> [UIAction] {
+        return [ ///TODO: icon?
+        UIAction(title: "content.message.copy".localized, image: nil) { action in
+            self.copyMessage()
+        }
+    ]
+    }
 
     static let allMessageActions: [UIMenuItem] = [
         UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationMessageActionController.copyMessage)),

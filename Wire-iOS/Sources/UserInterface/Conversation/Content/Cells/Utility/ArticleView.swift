@@ -26,6 +26,12 @@ protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
 }
 
+extension ArticleView: MessageActionResponder {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        ///TODO: let root VC do it
+    }
+}
+
 final class ArticleView: UIView {
 
     /// MARK - Styling
@@ -52,6 +58,17 @@ final class ArticleView: UIView {
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
+    weak var message: ZMConversationMessage?
+    
+    /// MARK - for context menu action items
+    private lazy var actionController: ConversationMessageActionController? = {
+        guard let message = message else { return nil }
+        
+        return ConversationMessageActionController(responder: self,
+                                                   message: message,
+                                                   context: .content,
+                                                   view: self)
+    }()
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -142,10 +159,13 @@ final class ArticleView: UIView {
         }
     }
     
-    func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
+    func configure(withTextMessageData textMessageData: ZMTextMessageData,
+                   message: ZMConversationMessage,
+                   obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return
         }
+        self.message = message
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 
@@ -234,17 +254,21 @@ extension ArticleView: UIContextMenuInteractionDelegate {
     
     @available(iOS 13.0, *)
     func makeContextMenu(url: URL) -> UIMenu {
+        
+        ///TODO: map to UIMenuElement
+        let actions = actionController?.allMessageMenuElements() ?? []
+        
         ///TODO: menu from message
         ///TODO: open/copy/share...and other actions related to URL only
-        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
-            UIApplication.shared.open(url)
-        }
+//        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
+//            UIApplication.shared.open(url)
+//        }
+//
+//        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
+//            self.shareURL(url: url)
+//        }
 
-        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
-            self.shareURL(url: url)
-        }
-
-        return UIMenu(title: url.absoluteString, children: [openURL, share]) ///TODO: show the URL
+        return UIMenu(title: url.absoluteString, children: actions) ///TODO: show the URL
     }
 
     func shareURL(url: URL) {
