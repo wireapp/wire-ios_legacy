@@ -28,6 +28,41 @@ final class ConversationMessageActionController: NSObject {
     enum Action: CaseIterable {
         case copy, reply, details, edit, delete, save, cancel, download, forward, like, unlike, resend, revealMessage
 
+        @available(iOS 13.0, *)
+        func icon() -> UIImage? {
+            let imageName: String
+            switch self {
+            case .copy:
+                imageName = "doc.on.doc"
+            case .reply:
+                imageName = "arrowshape.turn.up.left"
+            case .details:
+                imageName = "info"
+            case .edit:
+                imageName = "pencil"
+            case .delete:
+                imageName = "trash"
+            case .save:
+                imageName = "square.and.arrow.down"
+            case .cancel:
+                imageName = "arrowshape.turn.up.left"
+            case .download:
+                imageName = "xmark.circle"
+            case .forward:
+                imageName = "arrowshape.turn.up.right"
+            case .like:
+                imageName = "suit.heart.fill"
+            case .unlike:
+                imageName = "suit.heart"
+            case .resend:
+                imageName = "repeat"
+            case .revealMessage:
+                imageName = "eye"
+            }
+            
+            return UIImage(systemName: imageName)
+        }
+        
         var title: String {
             let key: String
 
@@ -153,7 +188,7 @@ final class ConversationMessageActionController: NSObject {
             }
             .map {
             return UIAction(title: $0.title,
-                            image: nil,
+                            image: $0.icon(),
                             handler: self.actionHandler(action: $0))
         }
     }

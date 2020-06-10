@@ -249,7 +249,7 @@ extension ArticleView: UIContextMenuInteractionDelegate {
     func makeContextMenu(url: URL) -> UIMenu {
         let actions = actionController?.allMessageMenuElements() ?? []
 
-        return UIMenu(title: url.absoluteString, children: actions)
+        return UIMenu(title: "", children: actions)
     }
 }
 
