@@ -138,8 +138,8 @@ final class ConversationMessageActionController: NSObject {
     }
 
     func actionHandler(action: Action) -> UIActionHandler {
-        return {_ in
-            self.perform(action: action.messageAction)
+        return {[weak self] _ in
+            self?.perform(action: action.messageAction)
         }
     }
 
@@ -259,7 +259,9 @@ final class ConversationMessageActionController: NSObject {
     // MARK: - Handler
 
     private func perform(action: MessageAction) {
-        responder?.perform(action: action, for: message, view: view)
+        responder?.perform(action: action,
+                           for: message,
+                           view: view)
     }
 
     @objc func copyMessage() {
