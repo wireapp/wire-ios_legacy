@@ -251,21 +251,9 @@ extension ArticleView: UIContextMenuInteractionDelegate {
     
     @available(iOS 13.0, *)
     func makeContextMenu(url: URL) -> UIMenu {
-        
-        ///TODO: map to UIMenuElement
         let actions = actionController?.allMessageMenuElements() ?? []
-        
-        ///TODO: menu from message
-        ///TODO: open/copy/share...and other actions related to URL only
-//        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
-//            UIApplication.shared.open(url)
-//        }
-//
-//        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
-//            self.shareURL(url: url)
-//        }
 
-        return UIMenu(title: url.absoluteString, children: actions) ///TODO: show the URL
+        return UIMenu(title: url.absoluteString, children: actions)
     }
 
     func shareURL(url: URL) {

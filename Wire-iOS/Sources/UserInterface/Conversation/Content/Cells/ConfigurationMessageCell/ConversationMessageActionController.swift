@@ -24,6 +24,76 @@ final class ConversationMessageActionController: NSObject {
     enum Context: Int {
         case content, collection
     }
+    
+    enum Action: CaseIterable {
+        case copy, reply, details, edit, delete, save, cancel, download, forward, like, unlike, resend, revealMessage
+        
+        var title: String {
+            let key: String
+
+            switch self {
+            case .copy:
+                key = "content.message.copy"
+            case .reply:
+                key = "content.message.reply"
+            case .details:
+                key = "content.message.details"
+            case .edit:
+                key = "message.menu.edit.title"
+            case .delete:
+                key = "content.message.delete"
+            case .save:
+                key = "content.message.save"
+            case .cancel:
+                key = "general.cancel"
+            case .download:
+                key = "content.message.download"
+            case .forward:
+                key = "content.message.forward"
+            case .like:
+                key = "content.message.like"
+            case .unlike:
+                key = "content.message.unlike"
+            case .resend:
+                key = "content.message.resend"
+            case .revealMessage:
+                key = "content.message.go_to_conversation"
+            }
+            
+            return key.localized
+        }
+        
+        var selector: Selector {
+            switch self {
+            case .copy:
+                return #selector(ConversationMessageActionController.copyMessage)
+            case .reply:
+                return #selector(ConversationMessageActionController.quoteMessage)
+            case .details:
+                return #selector(ConversationMessageActionController.openMessageDetails)
+            case .edit:
+                return #selector(ConversationMessageActionController.editMessage)
+            case .delete:
+                return #selector(ConversationMessageActionController.deleteMessage)
+            case .save:
+                return #selector(ConversationMessageActionController.saveMessage)
+            case .cancel:
+                return #selector(ConversationMessageActionController.cancelDownloadingMessage)
+            case .download:
+                return #selector(ConversationMessageActionController.downloadMessage)
+            case .forward:
+                return #selector(ConversationMessageActionController.forwardMessage)
+            case .like:
+                return #selector(ConversationMessageActionController.likeMessage)
+            case .unlike:
+                return #selector(ConversationMessageActionController.unlikeMessage)
+            case .resend:
+                return #selector(ConversationMessageActionController.resendMessage)
+            case .revealMessage:
+                return #selector(ConversationMessageActionController.revealMessage)
+            }
+        }
+    }
 
     let message: ZMConversationMessage
     let context: Context
@@ -49,23 +119,13 @@ final class ConversationMessageActionController: NSObject {
     ]
     }
 
-    static let allMessageActions: [UIMenuItem] = [
-        UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationMessageActionController.copyMessage)),
-        UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationMessageActionController.quoteMessage)),
-        UIMenuItem(title: "content.message.details".localized, action: #selector(ConversationMessageActionController.openMessageDetails)),
-        UIMenuItem(title: "message.menu.edit.title".localized, action: #selector(ConversationMessageActionController.editMessage)),
-        UIMenuItem(title: "content.message.delete".localized, action: #selector(ConversationMessageActionController.deleteMessage)),
-        UIMenuItem(title: "content.message.save".localized, action: #selector(ConversationMessageActionController.saveMessage)),
-        UIMenuItem(title: "general.cancel".localized, action: #selector(ConversationMessageActionController.cancelDownloadingMessage)),
-        UIMenuItem(title: "content.message.download".localized, action: #selector(ConversationMessageActionController.downloadMessage)),
-        UIMenuItem(title: "content.message.forward".localized, action: #selector(ConversationMessageActionController.forwardMessage)),
-        UIMenuItem(title: "content.message.like".localized, action: #selector(ConversationMessageActionController.likeMessage)),
-        UIMenuItem(title: "content.message.unlike".localized, action: #selector(ConversationMessageActionController.unlikeMessage)),
-        UIMenuItem(title: "content.message.resend".localized, action: #selector(ConversationMessageActionController.resendMessage)),
-        UIMenuItem(title: "content.message.go_to_conversation".localized, action: #selector(ConversationMessageActionController.revealMessage))
-    ]
+    static var allMessageActions: [UIMenuItem] {
+        return Action.allCases.map() {
+            return UIMenuItem(title: $0.title, action: $0.selector)
+        }
+    }
 
-    @objc func canPerformAction(_ selector: Selector) -> Bool {
+    func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
         case #selector(ConversationMessageActionController.copyMessage):
             return message.canBeCopied
