@@ -169,7 +169,11 @@ final class ConversationMessageActionController: NSObject {
     
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
-        return Action.allCases.map() {
+        return Action.allCases
+            .filter() {
+                self.canPerformAction(action:$0)
+            }
+            .map() {
             return UIAction(title: $0.title,
                             image: nil,
                             handler: self.actionHandler(action: $0))
@@ -182,40 +186,47 @@ final class ConversationMessageActionController: NSObject {
         }
     }
 
-    func canPerformAction(_ selector: Selector) -> Bool {
-        switch selector {
-        case #selector(ConversationMessageActionController.copyMessage):
+    func canPerformAction(action: Action) -> Bool {
+        switch action {
+            
+        case .copy:
             return message.canBeCopied
-        case #selector(ConversationMessageActionController.editMessage):
-            return message.canBeEdited
-        case #selector(ConversationMessageActionController.quoteMessage):
+        case .reply:
             return message.canBeQuoted
-        case #selector(ConversationMessageActionController.openMessageDetails):
+        case .details:
             return message.areMessageDetailsAvailable
-        case #selector(ConversationMessageActionController.cancelDownloadingMessage):
-            return message.canCancelDownload
-        case #selector(ConversationMessageActionController.downloadMessage):
-            return message.canBeDownloaded
-        case #selector(ConversationMessageActionController.saveMessage):
-            return message.canBeSaved
-        case #selector(ConversationMessageActionController.forwardMessage):
-            return message.canBeForwarded
-        case #selector(ConversationMessageActionController.likeMessage):
-            return message.canBeLiked && !message.liked
-        case #selector(ConversationMessageActionController.unlikeMessage):
-            return message.canBeLiked && message.liked
-        case #selector(ConversationMessageActionController.deleteMessage):
+        case .edit:
+            return message.canBeEdited
+        case .delete:
             return message.canBeDeleted
-        case #selector(ConversationMessageActionController.resendMessage):
+        case .save:
+            return message.canBeSaved
+        case .cancel:
+            return message.canCancelDownload
+        case .download:
+            return message.canCancelDownload
+        case .forward:
+            return message.canBeForwarded
+        case .like:
+            return message.canBeLiked && !message.liked
+        case .unlike:
+            return message.canBeLiked && message.liked
+        case .resend:
             return message.canBeResent
-        case #selector(ConversationMessageActionController.revealMessage):
+        case .revealMessage:
             return context == .collection
-        default:
-            return false
         }
     }
+    
+    func canPerformAction(_ selector: Selector) -> Bool {
+        guard let action = Action.allCases.first(where:{
+                $0.selector == selector
+        }) else { return false }
+        
+        return canPerformAction(action: action)
+    }
 
-    @objc func makeAccessibilityActions() -> [UIAccessibilityCustomAction] {
+    func makeAccessibilityActions() -> [UIAccessibilityCustomAction] {
         return ConversationMessageActionController.allMessageActions
             .filter { self.canPerformAction($0.action) }
             .map { menuItem in
@@ -223,7 +234,7 @@ final class ConversationMessageActionController: NSObject {
             }
     }
 
-    @objc func makePreviewActions() -> [UIPreviewAction] {
+    func makePreviewActions() -> [UIPreviewAction] {
         return ConversationMessageActionController.allMessageActions
             .filter { self.canPerformAction($0.action) }
             .map { menuItem in
@@ -235,7 +246,7 @@ final class ConversationMessageActionController: NSObject {
     
     // MARK: - Single Tap Action
     
-    @objc func performSingleTapAction() {
+    func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
 
         perform(action: singleTapAction)
@@ -258,7 +269,7 @@ final class ConversationMessageActionController: NSObject {
 
     // MARK: - Double Tap Action
 
-    @objc func performDoubleTapAction() {
+    func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
         perform(action: doubleTapAction)
     }
