@@ -59,8 +59,8 @@ final class ArticleView: UIView {
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
-    private weak var message: ZMConversationMessage?
-    private weak var messageActionResponder: MessageActionResponder?
+    weak var message: ZMConversationMessage?
+    weak var messageActionResponder: MessageActionResponder?
     
     /// MARK - for context menu action items
     private var actionController: ConversationMessageActionController? {
