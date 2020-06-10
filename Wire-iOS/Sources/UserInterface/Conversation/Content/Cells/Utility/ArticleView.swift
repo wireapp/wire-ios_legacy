@@ -54,7 +54,7 @@ final class ArticleView: UIView {
     weak var delegate: ArticleViewDelegate?
     
     init(withImagePlaceholder imagePlaceholder: Bool) {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         [messageLabel, authorLabel, imageView, obfuscationView].forEach(addSubview)
         
         if (imagePlaceholder) {
@@ -64,6 +64,11 @@ final class ArticleView: UIView {
 
         setupViews()
         setupConstraints(imagePlaceholder)
+
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
+        }
     }
     
     
@@ -204,6 +209,54 @@ final class ArticleView: UIView {
     }
     
 }
+
+// MARK: - context menu
+
+extension ArticleView: UIContextMenuInteractionDelegate {
+
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        
+        guard let url: URL = linkPreview?.openableURL as URL? else {
+            return nil
+        }
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: url)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { suggestedActions in
+                                            return self.makeContextMenu(url: url)
+        })
+    }
+    
+    @available(iOS 13.0, *)
+    func makeContextMenu(url: URL) -> UIMenu {
+        ///TODO: menu from message
+        ///TODO: open/copy/share...and other actions related to URL only
+        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
+            UIApplication.shared.open(url)
+        }
+
+        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
+            self.shareURL(url: url)
+        }
+
+        return UIMenu(title: url.absoluteString, children: [openURL, share]) ///TODO: show the URL
+    }
+
+    func shareURL(url: URL) {
+        let activityViewController =
+            UIActivityViewController(activityItems: [url],
+                                     applicationActivities: nil)
+
+        AppDelegate.shared.window?.rootViewController?.present(activityViewController, animated: true)
+    }
+
+}
+
 
 extension LinkMetadata {
 
