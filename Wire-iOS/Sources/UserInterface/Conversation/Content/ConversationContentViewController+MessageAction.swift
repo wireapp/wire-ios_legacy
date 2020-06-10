@@ -131,7 +131,7 @@ extension ConversationContentViewController {
         case .forward:
             showForwardFor(message: message, from: view)
         case .showInConversation:
-            scroll(to: message) { cell in
+            scroll(to: message) { _ in
                 self.dataSource.highlight(message: message)
             }
         case .copy:
@@ -145,7 +145,7 @@ extension ConversationContentViewController {
 
         case .openQuote:
             if let quote = message.textMessageData?.quote {
-                scroll(to: quote) { cell in
+                scroll(to: quote) { _ in
                     self.dataSource.highlight(message: quote)
                 }
             }

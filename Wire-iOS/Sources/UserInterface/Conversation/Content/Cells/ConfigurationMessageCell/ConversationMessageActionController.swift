@@ -24,10 +24,10 @@ final class ConversationMessageActionController: NSObject {
     enum Context: Int {
         case content, collection
     }
-    
+
     enum Action: CaseIterable {
         case copy, reply, details, edit, delete, save, cancel, download, forward, like, unlike, resend, revealMessage
-        
+
         var title: String {
             let key: String
 
@@ -59,13 +59,13 @@ final class ConversationMessageActionController: NSObject {
             case .revealMessage:
                 key = "content.message.go_to_conversation"
             }
-            
+
             return key.localized
         }
-        
+
         var messageAction: MessageAction {
             switch self {
-                
+
             case .copy:
                 return .copy
             case .reply:
@@ -92,7 +92,7 @@ final class ConversationMessageActionController: NSObject {
                 return .showInConversation
             }
         }
-        
+
         var selector: Selector {
             switch self {
             case .copy:
@@ -137,7 +137,6 @@ final class ConversationMessageActionController: NSObject {
         self.view = view
     }
 
-
     func actionHandler(action: Action) -> UIActionHandler {
         return {_ in
             self.perform(action: action.messageAction)
@@ -145,14 +144,14 @@ final class ConversationMessageActionController: NSObject {
     }
 
     // MARK: - List of Actions
-    
+
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         return Action.allCases
-            .filter() {
-                self.canPerformAction(action:$0)
+            .filter {
+                self.canPerformAction(action: $0)
             }
-            .map() {
+            .map {
             return UIAction(title: $0.title,
                             image: nil,
                             handler: self.actionHandler(action: $0))
@@ -160,14 +159,14 @@ final class ConversationMessageActionController: NSObject {
     }
 
     static var allMessageActions: [UIMenuItem] {
-        return Action.allCases.map() {
+        return Action.allCases.map {
             return UIMenuItem(title: $0.title, action: $0.selector)
         }
     }
 
     func canPerformAction(action: Action) -> Bool {
         switch action {
-            
+
         case .copy:
             return message.canBeCopied
         case .reply:
@@ -196,12 +195,12 @@ final class ConversationMessageActionController: NSObject {
             return context == .collection
         }
     }
-    
+
     func canPerformAction(_ selector: Selector) -> Bool {
-        guard let action = Action.allCases.first(where:{
+        guard let action = Action.allCases.first(where: {
                 $0.selector == selector
         }) else { return false }
-        
+
         return canPerformAction(action: action)
     }
 
@@ -222,15 +221,15 @@ final class ConversationMessageActionController: NSObject {
                 }
             }
     }
-    
+
     // MARK: - Single Tap Action
-    
+
     func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
 
         perform(action: singleTapAction)
     }
-    
+
     var singleTapAction: MessageAction? {
         if message.isImage, message.imageMessageData?.isDownloaded == true {
             return .present
@@ -242,7 +241,7 @@ final class ConversationMessageActionController: NSObject {
                 return nil
             }
         }
-        
+
         return nil
     }
 
@@ -270,7 +269,7 @@ final class ConversationMessageActionController: NSObject {
     @objc func editMessage() {
         perform(action: .edit)
     }
-    
+
     @objc func quoteMessage() {
         perform(action: .reply)
     }
@@ -286,7 +285,7 @@ final class ConversationMessageActionController: NSObject {
     @objc func downloadMessage() {
         perform(action: .download)
     }
-    
+
     @objc func saveMessage() {
         perform(action: .save)
     }
@@ -294,7 +293,7 @@ final class ConversationMessageActionController: NSObject {
     @objc func forwardMessage() {
         perform(action: .forward)
     }
-    
+
     @objc func likeMessage() {
         perform(action: .like)
     }
@@ -302,11 +301,11 @@ final class ConversationMessageActionController: NSObject {
     @objc func unlikeMessage() {
         perform(action: .like)
     }
-    
+
     @objc func deleteMessage() {
         perform(action: .delete)
     }
-    
+
     @objc func resendMessage() {
         perform(action: .resend)
     }

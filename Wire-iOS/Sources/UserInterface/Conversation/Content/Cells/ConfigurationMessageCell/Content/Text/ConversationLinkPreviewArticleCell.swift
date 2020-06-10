@@ -31,9 +31,9 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell 
     }
 
     private let articleView = ArticleView(withImagePlaceholder: true)
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 
@@ -69,7 +69,7 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell 
         configuration = object
         articleView.configure(withTextMessageData: object.textMessageData,
                               obfuscated: object.isObfuscated)
-        
+
         updateImageLayout(isRegular: traitCollection.horizontalSizeClass == .regular)
     }
 
@@ -89,11 +89,11 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell 
 }
 
 extension ConversationLinkPreviewArticleCell: ArticleViewDelegate {
-    
+
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
         url.open()
     }
-    
+
 }
 
 final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
@@ -103,7 +103,7 @@ final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCe
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
