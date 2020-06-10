@@ -33,8 +33,6 @@ final class CollectionLinkCell: CollectionCell {
         articleView.messageLabel.numberOfLines = 1
         articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData,
-                              message: message!,
-                              messageActionResponder:self,
                               obfuscated: false)
         self.secureContentsView.addSubview(articleView)
         // Reconstraint the header
