@@ -16,10 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireSystem
-import WireDataModel
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
@@ -30,7 +27,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     static let InitiallyShowsKeyboardConversationThreshold = 10
     
     weak var delegate: StartUIDelegate?
-    private(set) var scrollView: UIScrollView?
     //TODO:    let selfUser: UserType
     
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)

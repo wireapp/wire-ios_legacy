@@ -31,7 +31,7 @@ protocol CompanyLoginFlowHandlerDelegate: class {
  * Handles opening URLs to validate company login authentication.
  */
 
-class CompanyLoginFlowHandler {
+final class CompanyLoginFlowHandler {
 
     /// The delegate of the flow handler.
     weak var delegate: CompanyLoginFlowHandlerDelegate?

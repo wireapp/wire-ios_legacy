@@ -266,18 +266,6 @@ final class ConversationViewController: UIViewController {
         openConversationList()
     }
 
-    func addParticipants(_ participants: UserSet) {
-        var newConversation: ZMConversation? = nil
-        
-        session.enqueue({
-            newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
-        }, completionHandler: { [weak self] in
-            if let newConversation = newConversation {
-                self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
-            }
-        })
-    }
-    
     private func setupContentViewController() {
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -424,6 +412,9 @@ extension ConversationViewController: ZMConversationObserver {
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
+        if changeInfo.deletedObjects.contains(conversation) {
+            ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
+        }
     }
     
     public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {

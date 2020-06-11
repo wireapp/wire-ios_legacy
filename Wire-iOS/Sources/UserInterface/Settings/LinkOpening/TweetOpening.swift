@@ -44,7 +44,7 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         switch self {
         case .none: return true
         case .tweetbot: return UIApplication.shared.tweetbotInstalled
-        case . twitterrific: return UIApplication.shared.twitterrificInstalled
+        case .twitterrific: return UIApplication.shared.twitterrificInstalled
         }
     }
 }

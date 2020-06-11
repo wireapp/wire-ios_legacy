@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 extension UIViewController {
 
@@ -27,7 +28,7 @@ extension UIViewController {
                                                     okActionHandler: handler), animated: true)
 
     }
-    
+
     func showAlert(for error: Error, handler: AlertActionHandler? = nil) {
         let nsError: NSError = error as NSError
         var message = ""

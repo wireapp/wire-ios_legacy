@@ -146,6 +146,13 @@ final class MessageToolboxView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         clipsToBounds = true
+                
+        setupViews()
+        createConstraints()
+        
+        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
+        tapGestureRecogniser.delegate = self
+        addGestureRecognizer(tapGestureRecogniser)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -237,15 +244,8 @@ final class MessageToolboxView: UIView {
     func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if dataSource?.message.nonce != message.nonce {
             dataSource = MessageToolboxDataSource(message: message)
-
-            setupViews()
-            createConstraints()
-            
-            tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
-            tapGestureRecogniser.delegate = self
-            addGestureRecognizer(tapGestureRecogniser)
         }
-
+        
         self.forceShowTimestamp = forceShowTimestamp
         reloadContent(animated: animated)
     }
