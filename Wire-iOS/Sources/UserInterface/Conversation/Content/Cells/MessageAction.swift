@@ -81,7 +81,7 @@ enum MessageAction: CaseIterable {
 
         return key?.localized
     }
-    
+
     var icon: StyleKitIcon? {
         switch self {
         case .copy:
@@ -122,7 +122,6 @@ enum MessageAction: CaseIterable {
             return nil ///TODO
         }
     }
-
 
     var selector: Selector? {
         switch self {

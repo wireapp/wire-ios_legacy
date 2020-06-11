@@ -21,16 +21,16 @@ import WireDataModel
 import WireCommonComponents
 
 final class ConversationMessageActionController {
-    
+
     enum Context: Int {
         case content, collection
     }
-    
+
     let message: ZMConversationMessage
     let context: Context
     weak var responder: MessageActionResponder?
     weak var view: UIView!
-    
+
     init(responder: MessageActionResponder?,
          message: ZMConversationMessage,
          context: Context,
@@ -40,24 +40,24 @@ final class ConversationMessageActionController {
         self.context = context
         self.view = view
     }
-    
+
     // MARK: - List of Actions
-    
+
     private var allPerformableMessageAction: [MessageAction] {
         return MessageAction.allCases
             .filter {
                 self.canPerformAction(action: $0)
         }
     }
-    
+
     // MARK: iOS 13 context menu
-    
+
     private func actionHandler(action: MessageAction) -> UIActionHandler {
         return {[weak self] _ in
             guard let weakSelf = self else {
                 return
             }
-            
+
             weakSelf.perform(action: action)
         }
     }
@@ -67,10 +67,10 @@ final class ConversationMessageActionController {
         weak var responder = self.responder
         weak var message = self.message
         unowned let targetView: UIView = self.view
-        
+
         return allPerformableMessageAction.compactMap { messageAction in
             if let title = messageAction.title {
-                
+
                 let iconImage: UIImage?
                 if let icon = messageAction.icon {
                 iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
@@ -87,11 +87,11 @@ final class ConversationMessageActionController {
 
                                 })
             }
-            
+
             return nil
         }
     }
-    
+
     static var allMessageActions: [UIMenuItem] {
         return MessageAction.allCases.compactMap {
             if let selector = $0.selector {
@@ -100,11 +100,11 @@ final class ConversationMessageActionController {
                                       action: selector)
                 }
             }
-            
+
             return nil
         }
     }
-    
+
     func canPerformAction(action: MessageAction) -> Bool {
         switch action {
         case .copy:
@@ -141,15 +141,15 @@ final class ConversationMessageActionController {
             return false
         }
     }
-    
+
     func canPerformAction(_ selector: Selector) -> Bool {
         guard let action = MessageAction.allCases.first(where: {
             $0.selector == selector
         }) else { return false }
-        
+
         return canPerformAction(action: action)
     }
-    
+
     func makeAccessibilityActions() -> [UIAccessibilityCustomAction] {
         return ConversationMessageActionController.allMessageActions
             .filter { self.canPerformAction($0.action) }
@@ -157,7 +157,7 @@ final class ConversationMessageActionController {
                 UIAccessibilityCustomAction(name: menuItem.title, target: self, selector: menuItem.action)
         }
     }
-    
+
     @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     var makePreviewActions: [UIPreviewAction] {
         return allPerformableMessageAction
@@ -168,19 +168,19 @@ final class ConversationMessageActionController {
                         self?.perform(action: messageAction)
                     }
                 }
-                
+
                 return nil
         }
     }
-    
+
     // MARK: - Single Tap Action
-    
+
     func performSingleTapAction() {
         guard let singleTapAction = singleTapAction else { return }
-        
+
         perform(action: singleTapAction)
     }
-    
+
     var singleTapAction: MessageAction? {
         if message.isImage, message.imageMessageData?.isDownloaded == true {
             return .present
@@ -192,79 +192,79 @@ final class ConversationMessageActionController {
                 return nil
             }
         }
-        
+
         return nil
     }
-    
+
     // MARK: - Double Tap Action
-    
+
     func performDoubleTapAction() {
         guard let doubleTapAction = doubleTapAction else { return }
         perform(action: doubleTapAction)
     }
-    
+
     var doubleTapAction: MessageAction? {
         return message.canBeLiked ? .like : nil
     }
-    
+
     // MARK: - Handler
-    
+
     private func perform(action: MessageAction) {
         responder?.perform(action: action,
                            for: message,
                            view: view)
     }
-    
+
     @objc func copyMessage() {
         perform(action: .copy)
     }
-    
+
     @objc func editMessage() {
         perform(action: .edit)
     }
-    
+
     @objc func quoteMessage() {
         perform(action: .reply)
     }
-    
+
     @objc func openMessageDetails() {
         perform(action: .openDetails)
     }
-    
+
     @objc func cancelDownloadingMessage() {
         perform(action: .cancel)
     }
-    
+
     @objc func downloadMessage() {
         perform(action: .download)
     }
-    
+
     @objc func saveMessage() {
         perform(action: .save)
     }
-    
+
     @objc func forwardMessage() {
         perform(action: .forward)
     }
-    
+
     @objc func likeMessage() {
         perform(action: .like)
     }
-    
+
     @objc func unlikeMessage() {
         perform(action: .like)
     }
-    
+
     @objc func deleteMessage() {
         perform(action: .delete)
     }
-    
+
     @objc func resendMessage() {
         perform(action: .resend)
     }
-    
+
     @objc func revealMessage() {
         perform(action: .showInConversation)
     }
-    
+
 }
