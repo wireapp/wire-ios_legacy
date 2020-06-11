@@ -68,14 +68,12 @@ final class ConversationMessageActionController {
         weak var message = self.message
         unowned let targetView: UIView = self.view
         
-        let iconColor = UIColor.from(scheme: .iconNormal, variant: ColorScheme.default.variant)
-        
         return allPerformableMessageAction.compactMap { messageAction in
             if let title = messageAction.title {
                 
                 let iconImage: UIImage?
                 if let icon = messageAction.icon {
-                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: iconColor)
+                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
                 } else {
                     iconImage = nil
                 }
