@@ -212,7 +212,8 @@ final class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
 
-    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+    @objc
+    private func viewTapped(_ sender: UITapGestureRecognizer) {
         if UIMenuController.shared.isMenuVisible {
             return UIMenuController.shared.setMenuVisible(false, animated: true)
         }

@@ -360,11 +360,13 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         perform(action: .showInConversation, sender: sender)
     }
     
-    @objc func sketchCurrent(_ sender: AnyObject!) {
+    @objc
+    private func sketchCurrent(_ sender: AnyObject!) {
         perform(action: .sketchDraw, sender: sender)
     }
     
-    @objc func sketchCurrentEmoji(_ sender: AnyObject!) {
+    @objc
+    private func sketchCurrentEmoji(_ sender: AnyObject!) {
         perform(action: .sketchEmoji, sender: sender)
     }
 }

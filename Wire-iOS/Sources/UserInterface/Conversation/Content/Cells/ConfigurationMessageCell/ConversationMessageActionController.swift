@@ -113,7 +113,7 @@ final class ConversationMessageActionController {
         case .cancel:
             return message.canCancelDownload
         case .download:
-            return message.canCancelDownload
+            return message.canBeDownloaded
         case .forward:
             return message.canBeForwarded
         case .like:

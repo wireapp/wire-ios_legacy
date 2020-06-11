@@ -112,6 +112,19 @@ final class ArticleViewTests: XCTestCase {
         verifyInAllPhoneWidths(matching: sut)
     }
 
+    @available(iOS 13.0, *)
+    func testContextMenu() {
+        sut = ArticleView(withImagePlaceholder: true)
+        sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
+        XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+        
+        let menu = sut.makeContextMenu(url: URL(string: "http://www.wire.com")!)
+        
+        let children = menu.children
+        
+        XCTAssertEqual(children.count, 10)
+    }
+    
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
