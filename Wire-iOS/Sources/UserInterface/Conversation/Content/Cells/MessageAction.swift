@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 enum MessageAction: CaseIterable {
     case
@@ -80,6 +81,48 @@ enum MessageAction: CaseIterable {
 
         return key?.localized
     }
+    
+    var icon: StyleKitIcon? {
+        switch self {
+        case .copy:
+            return .copy
+        case .reply:
+            return .reply
+        case .openDetails:
+            return .about
+        case .edit:
+            return .pencil
+        case .delete:
+            return .trash
+        case .save:
+            return .save
+        case .cancel:
+            return .cross
+        case .download:
+            return .downArrow
+        case .forward:
+            return .export
+        case .like:
+            return .like
+        case .unlike:
+            return .liked
+        case .resend:
+            return nil ///TODO
+        case .showInConversation:
+            return .eye
+        case .present:
+            return nil ///TODO
+        case .sketchDraw:
+            return .brush
+        case .sketchEmoji:
+            return .emoji
+        case .sketchText:
+            return nil ///TODO
+        case .openQuote:
+            return nil ///TODO
+        }
+    }
+
 
     var selector: Selector? {
         switch self {
