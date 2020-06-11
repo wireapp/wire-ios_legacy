@@ -16,22 +16,107 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-enum MessageAction {
-    case cancel,
-    resend,
-    delete,
-    present,
-    save,
+import Foundation
+
+enum MessageAction: CaseIterable {
+    case
     copy,
+    reply,
+    openDetails,
     edit,
+    delete,
+    save,
+    cancel,
+    download,
+    forward,
+    like,
+    unlike,
+    resend,
+    showInConversation,
+    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
+    present,
     sketchDraw,
     sketchEmoji,
     sketchText,
-    like,
-    forward,
-    showInConversation,
-    download,
-    reply,
-    openQuote,
-    openDetails
+    openQuote
+
+    var title: String? {
+        let key: String?
+
+        switch self {
+        case .copy:
+            key = "content.message.copy"
+        case .reply:
+            key = "content.message.reply"
+        case .openDetails:
+            key = "content.message.details"
+        case .edit:
+            key = "message.menu.edit.title"
+        case .delete:
+            key = "content.message.delete"
+        case .save:
+            key = "content.message.save"
+        case .cancel:
+            key = "general.cancel"
+        case .download:
+            key = "content.message.download"
+        case .forward:
+            key = "content.message.forward"
+        case .like:
+            key = "content.message.like"
+        case .unlike:
+            key = "content.message.unlike"
+        case .resend:
+            key = "content.message.resend"
+        case .showInConversation:
+            key = "content.message.go_to_conversation"
+        case .present,
+             .sketchDraw,
+             .sketchEmoji,
+             .sketchText,
+             .openQuote:
+            key = nil
+        }
+
+        return key?.localized
+    }
+
+    var selector: Selector? {
+        switch self {
+        case .copy:
+            return #selector(ConversationMessageActionController.copyMessage)
+        case .reply:
+            return #selector(ConversationMessageActionController.quoteMessage)
+        case .openDetails:
+            return #selector(ConversationMessageActionController.openMessageDetails)
+        case .edit:
+            return #selector(ConversationMessageActionController.editMessage)
+        case .delete:
+            return #selector(ConversationMessageActionController.deleteMessage)
+        case .save:
+            return #selector(ConversationMessageActionController.saveMessage)
+        case .cancel:
+            return #selector(ConversationMessageActionController.cancelDownloadingMessage)
+        case .download:
+            return #selector(ConversationMessageActionController.downloadMessage)
+        case .forward:
+            return #selector(ConversationMessageActionController.forwardMessage)
+        case .like:
+            return #selector(ConversationMessageActionController.likeMessage)
+        case .unlike:
+            return #selector(ConversationMessageActionController.unlikeMessage)
+        case .resend:
+            return #selector(ConversationMessageActionController.resendMessage)
+        case .showInConversation:
+            return #selector(ConversationMessageActionController.revealMessage)
+        case .present,
+             .sketchDraw,
+             .sketchEmoji,
+             .sketchText,
+             .openQuote:
+            // no message related actions are not handled in ConversationMessageActionController
+            return nil
+            break
+        }
+    }
 }

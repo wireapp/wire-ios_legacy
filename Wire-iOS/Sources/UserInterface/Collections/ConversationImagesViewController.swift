@@ -486,7 +486,7 @@ extension ConversationImagesViewController: MenuVisibilityController {
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        return currentActionController?.makePreviewActions() ?? []
+        return currentActionController?.makePreviewActions ?? []
     }
  
 }

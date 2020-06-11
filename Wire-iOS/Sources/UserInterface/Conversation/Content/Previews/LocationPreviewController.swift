@@ -125,7 +125,7 @@ final class LocationPreviewController: TintColorCorrectedViewController {
     // MARK: - Preview
 
     override var previewActionItems: [UIPreviewActionItem] {
-        return actionController.makePreviewActions()
+        return actionController.makePreviewActions
     }
 
 }
