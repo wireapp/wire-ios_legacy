@@ -220,13 +220,17 @@ final class ArticleView: UIView {
             return UIMenuController.shared.setMenuVisible(false, animated: true)
         }
 
+        openURL()
+    }
+    
+    private func openURL() {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
 
 }
 
-// MARK: - context menu
+// MARK: - UIContextMenuInteractionDelegate
 
 extension ArticleView: UIContextMenuInteractionDelegate {
 
@@ -254,6 +258,16 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
         return UIMenu(title: url.absoluteString, children: actions)
     }
+    
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.openURL()
+        }
+    }
+
 }
 
 extension LinkMetadata {
