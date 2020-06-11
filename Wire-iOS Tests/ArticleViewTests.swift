@@ -20,6 +20,52 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
+final class MockConversationMessageCellDelegate: ConversationMessageCellDelegate {
+    func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
+        // no-op
+        return false
+    }
+    
+    func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
+        // no-op
+    }
+    
+    func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
+        // no-op
+    }
+    
+    func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView) {
+        // no-op
+    }
+    
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView) {
+        // no-op
+    }
+    
+    func conversationMessageShouldUpdate() {
+        // no-op
+    }
+    
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+        // no-op
+    }
+}
+
+
+final class MockArticleViewDelegate: ArticleViewDelegate {
+    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
+        // no-op
+    }
+    
+    var delegate: ConversationMessageCellDelegate?
+    var message: ZMConversationMessage?
+
+    init() {
+        delegate = MockConversationMessageCellDelegate()        
+        message = MockMessage()
+    }
+}
+
 final class ArticleViewTests: XCTestCase {
 
     var sut: ArticleView!
@@ -113,16 +159,19 @@ final class ArticleViewTests: XCTestCase {
     }
 
     @available(iOS 13.0, *)
-    func testContextMenu() {
+    func testContextMenuIsCreatedWithDeleteItem() {
+        // GIVEN
         sut = ArticleView(withImagePlaceholder: true)
-        sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
-        XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
+        let mockArticleViewDelegate = MockArticleViewDelegate()
+        sut.delegate = mockArticleViewDelegate
+
+        // WHEN
         let menu = sut.makeContextMenu(url: URL(string: "http://www.wire.com")!)
         
+        // THEN
         let children = menu.children
-        
-        XCTAssertEqual(children.count, 10)
+        XCTAssertEqual(children.count, 1)
+        XCTAssertEqual(children.first?.title, "Delete")
     }
     
     func testArticleViewWithPicture() {

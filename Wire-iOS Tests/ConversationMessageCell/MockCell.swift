@@ -36,7 +36,7 @@ class MockCell: UIView, ConversationMessageCell {
     }
 }
 
-class MockCellDescription<T>: ConversationMessageCellDescription {
+final class MockCellDescription<T>: ConversationMessageCellDescription {
     typealias View = MockCell
     let configuration: View.Configuration
 

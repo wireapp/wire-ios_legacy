@@ -57,7 +57,9 @@ final class ArticleView: UIView {
     // MARK: - for context menu action items
     private var actionController: ConversationMessageActionController? {
         guard let message = delegate?.message,
-            let messageActionResponder = delegate?.delegate else { return nil }
+              let messageActionResponder = delegate?.delegate else {
+                return nil
+        }
 
         return ConversationMessageActionController(responder: messageActionResponder,
                                                    message: message,
