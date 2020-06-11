@@ -30,13 +30,13 @@ protocol ArticleViewDelegate: class {
 final class ArticleView: UIView {
 
     // MARK: - Styling
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
-    var titleTextColor: UIColor? = .from(scheme: .textForeground)
-    var titleFont: UIFont? = .normalSemiboldFont
-    var authorTextColor: UIColor? = .from(scheme: .textDimmed)
-    var authorFont: UIFont? = .smallLightFont
-    let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
-    let authorHighlightFont = UIFont.smallSemiboldFont
+    private let containerColor: UIColor = .from(scheme: .placeholderBackground)
+    private let titleTextColor: UIColor = .from(scheme: .textForeground)
+    private let titleFont: UIFont = .normalSemiboldFont
+    private let authorTextColor: UIColor = .from(scheme: .textDimmed)
+    private let authorFont: UIFont = .smallLightFont
+    private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
+    private let authorHighlightFont = UIFont.smallSemiboldFont
 
     var imageHeight: CGFloat = 144 {
         didSet {
@@ -185,7 +185,6 @@ final class ArticleView: UIView {
     }
 
     func updateContentMode() {
-
         guard let image = self.imageView.image else { return }
         let width = image.size.width * image.scale
         let height = image.size.height * image.scale
@@ -227,14 +226,13 @@ final class ArticleView: UIView {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
-
 }
 
 // MARK: - UIContextMenuInteractionDelegate
 
+@available(iOS 13.0, *)
 extension ArticleView: UIContextMenuInteractionDelegate {
 
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 
         guard let url: URL = linkPreview?.openableURL as URL? else {
@@ -252,14 +250,12 @@ extension ArticleView: UIContextMenuInteractionDelegate {
         })
     }
 
-    @available(iOS 13.0, *)
     func makeContextMenu(url: URL) -> UIMenu {
         let actions = actionController?.allMessageMenuElements() ?? []
 
         return UIMenu(title: url.absoluteString, children: actions)
     }
     
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {
@@ -267,7 +263,6 @@ extension ArticleView: UIContextMenuInteractionDelegate {
             self.openURL()
         }
     }
-
 }
 
 extension LinkMetadata {
