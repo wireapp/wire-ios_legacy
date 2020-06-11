@@ -200,15 +200,41 @@ extension CallController: CallQualityControllerDelegate {
 
 extension CallController: WireCallCenterCallErrorObserver {
 
-    func callCenterDidReceiveCallError(_ error: CallError) {
-        guard error == .unknownProtocol else { return }
+    private static var dateOfLastErrorAlertByConversationId = [UUID: Date]()
 
-        let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized, message: "voice.call_error.unsupported_version.message".localized, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
-            UIApplication.shared.open(URL.wr_wireAppOnItunes)
+    private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
+
+    private func shouldDisplayErrorAlert(for conversation: UUID) -> Bool {
+        guard let dateOfLastErrorAlert = type(of: self).dateOfLastErrorAlertByConversationId[conversation] else {
+            return true
         }
-        alertController.addAction(alertAction)
-        alertController.addAction(UIAlertAction(title: "voice.call_error.unsupported_version.dismiss".localized, style: .default, handler: nil))
+
+        let elapsedTimeIntervalSinceLastAlert = -dateOfLastErrorAlert.timeIntervalSinceNow
+        return elapsedTimeIntervalSinceLastAlert > alertDebounceInterval
+    }
+
+    func callCenterDidReceiveCallError(_ error: CallError, conversationId: UUID) {
+        guard
+            error == .unknownProtocol,
+            shouldDisplayErrorAlert(for: conversationId)
+        else {
+            return
+        }
+
+        type(of: self).dateOfLastErrorAlertByConversationId[conversationId] = .init()
+
+        let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized,
+                                                message: "voice.call_error.unsupported_version.message".localized,
+                                                preferredStyle: .alert)
+
+        alertController.addAction(UIAlertAction(title: "force.update.ok_button".localized,
+                                                style: .default,
+                                                handler: { _ in UIApplication.shared.open(URL.wr_wireAppOnItunes) }))
+
+        alertController.addAction(UIAlertAction(title: "voice.call_error.unsupported_version.dismiss".localized,
+                                                style: .default,
+                                                handler: nil))
+
         targetViewController?.present(alertController, animated: true, completion: nil)
     }
 }
