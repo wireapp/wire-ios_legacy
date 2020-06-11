@@ -30,35 +30,53 @@ final class ConversationMessageActionController {
     weak var responder: MessageActionResponder?
     weak var view: UIView!
     
-    init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
+    init(responder: MessageActionResponder?,
+         message: ZMConversationMessage,
+         context: Context,
+         view: UIView) {
         self.responder = responder
         self.message = message
         self.context = context
         self.view = view
     }
     
-    func actionHandler(action: MessageAction) -> UIActionHandler {
-        return {[weak self] _ in
-            self?.perform(action: action)
-        }
-    }
-    
     // MARK: - List of Actions
     
-    var allPerformableMessageAction: [MessageAction] {
+    private var allPerformableMessageAction: [MessageAction] {
         return MessageAction.allCases
             .filter {
                 self.canPerformAction(action: $0)
         }
     }
     
+    // MARK: iOS 13 context menu
+    
+    private func actionHandler(action: MessageAction) -> UIActionHandler {
+        return {[weak self] _ in
+            guard let weakSelf = self else {
+                return
+            }
+            
+            weakSelf.perform(action: action)
+        }
+    }
+
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
-        return allPerformableMessageAction.compactMap {
-            if let title = $0.title {
+        weak var responder = self.responder
+        weak var message = self.message
+        unowned let targetView: UIView = self.view
+        
+        return allPerformableMessageAction.compactMap { messageAction in
+            if let title = messageAction.title {
                 return UIAction(title: title,
                                 image: nil,
-                                handler: self.actionHandler(action: $0))
+                                handler: { _ in
+                                    responder?.perform(action: messageAction,
+                                                        for: message,
+                                                        view: targetView)
+
+                                })
             }
             
             return nil

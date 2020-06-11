@@ -116,7 +116,6 @@ enum MessageAction: CaseIterable {
              .openQuote:
             // no message related actions are not handled in ConversationMessageActionController
             return nil
-            break
         }
     }
 }
