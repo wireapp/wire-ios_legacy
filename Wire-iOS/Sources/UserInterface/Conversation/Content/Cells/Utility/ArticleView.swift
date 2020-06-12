@@ -221,7 +221,7 @@ final class ArticleView: UIView {
 
         openURL()
     }
-    
+
     private func openURL() {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
@@ -256,7 +256,7 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
         return UIMenu(title: title, children: actions)
     }
-    
+
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {

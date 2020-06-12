@@ -25,43 +25,42 @@ final class MockConversationMessageCellDelegate: ConversationMessageCellDelegate
         // no-op
         return false
     }
-    
+
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
         // no-op
     }
-    
+
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
         // no-op
     }
-    
+
     func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView) {
         // no-op
     }
-    
+
     func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView) {
         // no-op
     }
-    
+
     func conversationMessageShouldUpdate() {
         // no-op
     }
-    
+
     func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         // no-op
     }
 }
 
-
 final class MockArticleViewDelegate: ArticleViewDelegate {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
         // no-op
     }
-    
-    var delegate: ConversationMessageCellDelegate?
+
+    weak var delegate: ConversationMessageCellDelegate?
     var message: ZMConversationMessage?
 
     init() {
-        delegate = MockConversationMessageCellDelegate()        
+        delegate = MockConversationMessageCellDelegate()
         message = MockMessage()
     }
 }
@@ -77,7 +76,7 @@ final class ArticleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    /// MARK - Fixture
+    // MARK: - Fixture
 
     func articleWithoutPicture() -> MockTextMessageData {
         let article = ArticleMetadata(originalURLString: "https://www.example.com/article/1",
@@ -146,7 +145,7 @@ final class ArticleViewTests: XCTestCase {
         return textMessageData
     }
 
-    /// MARK - Tests
+    // MARK: - Tests
 
     func testArticleViewWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
@@ -167,13 +166,13 @@ final class ArticleViewTests: XCTestCase {
 
         // WHEN
         let menu = sut.makeContextMenu(url: URL(string: "http://www.wire.com")!)
-        
+
         // THEN
         let children = menu.children
         XCTAssertEqual(children.count, 1)
         XCTAssertEqual(children.first?.title, "Delete")
     }
-    
+
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
@@ -230,7 +229,7 @@ final class ArticleViewTests: XCTestCase {
         verifyInAllPhoneWidths(matching: sut)
     }
 
-    /// MARK: - ArticleView images aspect
+    // MARK: - ArticleView images aspect
 
     func testArticleViewWithImageHavingSmallSize() {
         createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")

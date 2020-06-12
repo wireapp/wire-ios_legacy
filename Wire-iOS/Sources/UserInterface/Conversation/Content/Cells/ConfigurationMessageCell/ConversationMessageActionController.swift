@@ -45,20 +45,14 @@ final class ConversationMessageActionController {
 
     private var allPerformableMessageAction: [MessageAction] {
         return MessageAction.allCases
-            .filter {
-                self.canPerformAction(action: $0)
-        }
+            .filter(canPerformAction)
     }
 
     // MARK: iOS 13 context menu
 
     private func actionHandler(action: MessageAction) -> UIActionHandler {
         return {[weak self] _ in
-            guard let weakSelf = self else {
-                return
-            }
-
-            weakSelf.perform(action: action)
+            self?.perform(action: action)
         }
     }
 
@@ -73,7 +67,7 @@ final class ConversationMessageActionController {
 
                 let iconImage: UIImage?
                 if let icon = messageAction.icon {
-                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
+                    iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
                 } else {
                     iconImage = nil
                 }
@@ -82,10 +76,10 @@ final class ConversationMessageActionController {
                                 image: iconImage,
                                 handler: { _ in
                                     responder?.perform(action: messageAction,
-                                                        for: message,
-                                                        view: targetView)
+                                                       for: message,
+                                                       view: targetView)
 
-                                })
+                })
             }
 
             return nil
@@ -159,17 +153,16 @@ final class ConversationMessageActionController {
     }
 
     @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
-    var makePreviewActions: [UIPreviewAction] {
-        return allPerformableMessageAction
-            .compactMap { messageAction in
-                if let title = messageAction.title {
-                    return UIPreviewAction(title: title,
-                                           style: .default) { [weak self] _, _ in
-                        self?.perform(action: messageAction)
-                    }
+    var previewActionItems: [UIPreviewAction] {
+        return allPerformableMessageAction.compactMap { messageAction in
+            if let title = messageAction.title {
+                return UIPreviewAction(title: title,
+                                       style: .default) { [weak self] _, _ in
+                                        self?.perform(action: messageAction)
                 }
+            }
 
-                return nil
+            return nil
         }
     }
 
