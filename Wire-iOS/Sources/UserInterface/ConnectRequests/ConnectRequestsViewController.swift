@@ -137,7 +137,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if connectionRequests.isEmpty {
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
-            tableView.scrollToLastRow(animated: animated)
+            tableView.scrollToFirststRow(animated: animated)
         }
     }
     
@@ -170,8 +170,7 @@ extension ConnectRequestsViewController: ZMUserObserver {
 }
 
 extension UITableView {
-    func scrollToLastRow(animated: Bool) {
-        let rowCount = numberOfRows(inSection: numberOfSections - 1)
-        scrollToRow(at: IndexPath(row: rowCount - 1, section: numberOfSections - 1), at: .bottom, animated: animated)
+    func scrollToFirstRow(animated: Bool) {
+        scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: animated)
     }
 }
