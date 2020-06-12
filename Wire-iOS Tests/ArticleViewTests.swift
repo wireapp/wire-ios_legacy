@@ -59,8 +59,10 @@ final class MockArticleViewDelegate: ArticleViewDelegate {
     weak var delegate: ConversationMessageCellDelegate?
     var message: ZMConversationMessage?
 
+    let mockConversationMessageCellDelegate = MockConversationMessageCellDelegate()
+
     init() {
-        delegate = MockConversationMessageCellDelegate()
+        delegate = mockConversationMessageCellDelegate
         message = MockMessage()
     }
 }
@@ -146,6 +148,24 @@ final class ArticleViewTests: XCTestCase {
     }
 
     // MARK: - Tests
+    
+    @available(iOS 13.0, *)
+    func testContextMenuIsCreatedWithDeleteItem() {
+        // GIVEN
+        sut = ArticleView(withImagePlaceholder: true)
+        let mockArticleViewDelegate = MockArticleViewDelegate()
+        sut.delegate = mockArticleViewDelegate
+
+        // WHEN
+        let menu = sut.makeContextMenu(title: "test")
+
+        // THEN
+        let children = menu.children
+        XCTAssertEqual(children.count, 1)
+        XCTAssertEqual(children.first?.title, "Delete")
+    }
+
+    // MARK: - Snapshot Tests
 
     func testArticleViewWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
@@ -155,22 +175,6 @@ final class ArticleViewTests: XCTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verifyInAllPhoneWidths(matching: sut)
-    }
-
-    @available(iOS 13.0, *)
-    func testContextMenuIsCreatedWithDeleteItem() {
-        // GIVEN
-        sut = ArticleView(withImagePlaceholder: true)
-        let mockArticleViewDelegate = MockArticleViewDelegate()
-        sut.delegate = mockArticleViewDelegate
-
-        // WHEN
-        let menu = sut.makeContextMenu(url: URL(string: "http://www.wire.com")!)
-
-        // THEN
-        let children = menu.children
-        XCTAssertEqual(children.count, 1)
-        XCTAssertEqual(children.first?.title, "Delete")
     }
 
     func testArticleViewWithPicture() {
