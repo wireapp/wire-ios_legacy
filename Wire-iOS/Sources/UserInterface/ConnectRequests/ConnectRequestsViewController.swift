@@ -137,7 +137,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if connectionRequests.isEmpty {
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
-            tableView.scrollToFirststRow(animated: animated)
+            tableView.scrollToFirstRow(animated: animated)
         }
     }
     
