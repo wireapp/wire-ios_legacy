@@ -38,7 +38,6 @@ enum MessageAction: CaseIterable {
     present,
     sketchDraw,
     sketchEmoji,
-    sketchText,
     openQuote
 
     var title: String? {
@@ -74,7 +73,6 @@ enum MessageAction: CaseIterable {
         case .present,
              .sketchDraw,
              .sketchEmoji,
-             .sketchText,
              .openQuote:
             key = nil
         }
@@ -107,19 +105,20 @@ enum MessageAction: CaseIterable {
         case .unlike:
             return .liked
         case .resend:
-            return nil ///TODO
+            // no icon for resend
+            return nil
         case .showInConversation:
             return .eye
         case .present:
-            return nil ///TODO
+            // no icon for present
+            return nil
         case .sketchDraw:
             return .brush
         case .sketchEmoji:
             return .emoji
-        case .sketchText:
-            return nil ///TODO
         case .openQuote:
-            return nil ///TODO
+            // no icon for openQuote
+            return nil
         }
     }
 
@@ -154,7 +153,6 @@ enum MessageAction: CaseIterable {
         case .present,
              .sketchDraw,
              .sketchEmoji,
-             .sketchText,
              .openQuote:
             // no message related actions are not handled in ConversationMessageActionController
             return nil

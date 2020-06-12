@@ -48,7 +48,7 @@ final class ConversationMessageActionController {
             .filter(canPerformAction)
     }
 
-    // MARK: iOS 13 context menu
+    // MARK: - iOS 13+ context menu
 
     private func actionHandler(action: MessageAction) -> UIActionHandler {
         return {[weak self] _ in
@@ -86,16 +86,13 @@ final class ConversationMessageActionController {
         }
     }
 
+    // MARK: - UI menu
+    
     static var allMessageActions: [UIMenuItem] {
         return MessageAction.allCases.compactMap {
-            if let selector = $0.selector {
-                if let title = $0.title {
-                    return UIMenuItem(title: title,
-                                      action: selector)
-                }
-            }
-
-            return nil
+            guard let selector = $0.selector,
+                  let title = $0.title else { return nil }
+            return UIMenuItem(title: title, action: selector)
         }
     }
 
@@ -130,7 +127,6 @@ final class ConversationMessageActionController {
         case .present,
              .sketchDraw,
              .sketchEmoji,
-             .sketchText,
              .openQuote:
             return false
         }
