@@ -97,7 +97,7 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
 
 }
 
-class ConversationMessageToolboxCellDescription: ConversationMessageCellDescription {
+final class ConversationMessageToolboxCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationMessageToolboxCell
     let configuration: View.Configuration
 

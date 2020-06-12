@@ -487,8 +487,9 @@ extension ConversationImagesViewController: MenuVisibilityController {
 
 extension ConversationImagesViewController {
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     override var previewActionItems: [UIPreviewActionItem] {
-        return currentActionController?.makePreviewActions ?? []
+        return currentActionController?.previewActionItems ?? []
     }
  
 }

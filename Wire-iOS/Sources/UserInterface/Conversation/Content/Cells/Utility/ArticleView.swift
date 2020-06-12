@@ -235,7 +235,8 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 
-        guard let url: URL = linkPreview?.openableURL as URL? else {
+        guard let linkPreview = linkPreview,
+            let url = linkPreview.openableURL else {
             return nil
         }
 
@@ -246,14 +247,14 @@ extension ArticleView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.makeContextMenu(title: self.linkPreview?.originalURLString)
+                                            return self.makeContextMenu(title: linkPreview.originalURLString)
         })
     }
 
-    func makeContextMenu(title: String?) -> UIMenu {
+    func makeContextMenu(title: String) -> UIMenu {
         let actions = actionController?.allMessageMenuElements() ?? []
 
-        return UIMenu(title: title ?? "", children: actions)
+        return UIMenu(title: title, children: actions)
     }
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
@@ -267,14 +268,16 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
 extension LinkMetadata {
 
-    /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
-    var openableURL: NSURL? {
+    /// Returns a `URL` that can be openened using `openURL()` on `UIApplication` or `nil` if no openable `URL` could be created.
+    var openableURL: URL? {
         let application = UIApplication.shared
 
-        if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
+        if let originalURL = URL(string: originalURLString),
+            application.canOpenURL(originalURL) {
             return originalURL
-        } else if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
-            return permanentURL as NSURL?
+        } else if let permanentURL = permanentURL,
+            application.canOpenURL(permanentURL) {
+            return permanentURL
         }
 
         return nil
