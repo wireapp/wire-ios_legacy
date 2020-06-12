@@ -50,12 +50,6 @@ final class ConversationMessageActionController {
 
     // MARK: - iOS 13+ context menu
 
-    private func actionHandler(action: MessageAction) -> UIActionHandler {
-        return { [weak self] _ in
-            self?.perform(action: action)
-        }
-    }
-
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         weak var responder = self.responder
@@ -63,25 +57,24 @@ final class ConversationMessageActionController {
         unowned let targetView: UIView = self.view
 
         return allPerformableMessageAction.compactMap { messageAction in
-            if let title = messageAction.title {
+            guard let title = messageAction.title else { return nil }
 
-                let iconImage: UIImage?
-                if let icon = messageAction.icon {
-                    iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
-                } else {
-                    iconImage = nil
-                }
-
-                return UIAction(title: title,
-                                image: iconImage,
-                                handler: { _ in
-                                    responder?.perform(action: messageAction,
-                                                       for: message,
-                                                       view: targetView)
-                })
+            let iconImage: UIImage?
+            if let icon = messageAction.icon {
+                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
+            } else {
+                iconImage = nil
+            }
+            
+            let handler: UIActionHandler = { _ in
+                responder?.perform(action: messageAction,
+                                   for: message,
+                                   view: targetView)
             }
 
-            return nil
+            return UIAction(title: title,
+                            image: iconImage,
+                            handler: handler)
         }
     }
 
