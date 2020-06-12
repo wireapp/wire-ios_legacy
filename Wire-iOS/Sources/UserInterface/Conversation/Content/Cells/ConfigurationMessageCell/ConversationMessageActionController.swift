@@ -51,7 +51,7 @@ final class ConversationMessageActionController {
     // MARK: - iOS 13+ context menu
 
     private func actionHandler(action: MessageAction) -> UIActionHandler {
-        return {[weak self] _ in
+        return { [weak self] _ in
             self?.perform(action: action)
         }
     }
@@ -78,7 +78,6 @@ final class ConversationMessageActionController {
                                     responder?.perform(action: messageAction,
                                                        for: message,
                                                        view: targetView)
-
                 })
             }
 
@@ -151,14 +150,12 @@ final class ConversationMessageActionController {
     @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     var previewActionItems: [UIPreviewAction] {
         return allPerformableMessageAction.compactMap { messageAction in
-            if let title = messageAction.title {
-                return UIPreviewAction(title: title,
-                                       style: .default) { [weak self] _, _ in
-                                        self?.perform(action: messageAction)
-                }
+            guard let title = messageAction.title else { return nil }
+            
+            return UIPreviewAction(title: title,
+                                   style: .default) { [weak self] _, _ in
+                                    self?.perform(action: messageAction)
             }
-
-            return nil
         }
     }
 
