@@ -29,8 +29,8 @@ final class ImageResourceView: FLAnimatedImageView {
     fileprivate var reuseToken = UUID()
     fileprivate var imageResourceInternal: ImageResource? = nil
     
-    public var imageSizeLimit: ImageSizeLimit = .deviceOptimized
-    public var imageResource: ImageResource? {
+    var imageSizeLimit: ImageSizeLimit = .deviceOptimized
+    var imageResource: ImageResource? {
         set {
             setImageResource(newValue)
         }
@@ -39,7 +39,7 @@ final class ImageResourceView: FLAnimatedImageView {
         }
     }
     
-    public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
+    func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
         let token = UUID()
         mediaAsset = nil
 
@@ -71,7 +71,7 @@ final class ImageResourceView: FLAnimatedImageView {
     }
     
     convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
     
     override init(frame: CGRect) {
