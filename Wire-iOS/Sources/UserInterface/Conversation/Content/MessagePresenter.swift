@@ -43,7 +43,6 @@ final class MessagePresenter: NSObject {
     /// init method for injecting MediaPlaybackManager for testing
     ///
     /// - Parameter mediaPlaybackManager: for testing only
-    @objc
     convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
         self.init()
 
