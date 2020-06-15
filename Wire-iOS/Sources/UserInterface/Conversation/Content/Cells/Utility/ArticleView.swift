@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import WireLinkPreview
 import WireCommonComponents
@@ -24,26 +23,28 @@ import WireDataModel
 
 protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
+    var delegate: ConversationMessageCellDelegate? { get }
+    var message: ZMConversationMessage? { get }
 }
 
 final class ArticleView: UIView {
 
-    /// MARK - Styling
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
-    var titleTextColor: UIColor? = .from(scheme: .textForeground)
-    var titleFont: UIFont? = .normalSemiboldFont
-    var authorTextColor: UIColor? = .from(scheme: .textDimmed)
-    var authorFont: UIFont? = .smallLightFont
-    let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
-    let authorHighlightFont = UIFont.smallSemiboldFont
-    
+    // MARK: - Styling
+    private let containerColor: UIColor = .from(scheme: .placeholderBackground)
+    private let titleTextColor: UIColor = .from(scheme: .textForeground)
+    private let titleFont: UIFont = .normalSemiboldFont
+    private let authorTextColor: UIColor = .from(scheme: .textDimmed)
+    private let authorFont: UIFont = .smallLightFont
+    private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
+    private let authorHighlightFont = UIFont.smallSemiboldFont
+
     var imageHeight: CGFloat = 144 {
         didSet {
             self.imageHeightConstraint.constant = self.imageHeight
         }
     }
-    
-    /// MARK - Views
+
+    // MARK: - Views
     let messageLabel = UILabel()
     let authorLabel = UILabel()
     let imageView = ImageResourceView()
@@ -52,32 +53,49 @@ final class ArticleView: UIView {
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
-    
+
+    // MARK: - for context menu action items
+    private var actionController: ConversationMessageActionController? {
+        guard let message = delegate?.message,
+              let messageActionResponder = delegate?.delegate else {
+                return nil
+        }
+
+        return ConversationMessageActionController(responder: messageActionResponder,
+                                                   message: message,
+                                                   context: .content,
+                                                   view: self)
+    }
+
     init(withImagePlaceholder imagePlaceholder: Bool) {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         [messageLabel, authorLabel, imageView, obfuscationView].forEach(addSubview)
-        
-        if (imagePlaceholder) {
+
+        if imagePlaceholder {
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
         }
 
         setupViews()
         setupConstraints(imagePlaceholder)
+
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
+        }
     }
-    
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         accessibilityElements = [authorLabel, messageLabel, imageView]
         self.backgroundColor = self.containerColor
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
         accessibilityIdentifier = "linkPreview"
-        
+
         imageView.clipsToBounds = true
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
@@ -101,11 +119,11 @@ final class ArticleView: UIView {
         authorLabel.textColor = obfuscated ? ephemeralColor : authorTextColor
         messageLabel.textColor = obfuscated ? ephemeralColor : titleTextColor
     }
-    
-    private func setupConstraints(_ imagePlaceholder: Bool) {
-        let imageHeight : CGFloat = imagePlaceholder ? self.imageHeight : 0
 
-        [messageLabel, authorLabel, imageView, obfuscationView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+    private func setupConstraints(_ imagePlaceholder: Bool) {
+        let imageHeight: CGFloat = imagePlaceholder ? self.imageHeight : 0
+
+        [messageLabel, authorLabel, imageView, obfuscationView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         imageView.fitInSuperview(exclude: [.bottom])
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
@@ -121,11 +139,11 @@ final class ArticleView: UIView {
             authorLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8)
             ])
     }
-    
-    private var authorHighlightAttributes : [NSAttributedString.Key: AnyObject] {
-        return [.font : authorHighlightFont, .foregroundColor: authorHighlightTextColor]
+
+    private var authorHighlightAttributes: [NSAttributedString.Key: AnyObject] {
+        return [.font: authorHighlightFont, .foregroundColor: authorHighlightTextColor]
     }
-    
+
     private func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
         let urlWithoutScheme = URL.urlWithoutScheme
         let displayString = urlWithoutScheme.removingPrefixWWW.removingTrailingForwardSlash
@@ -136,18 +154,20 @@ final class ArticleView: UIView {
             return displayString.attributedString
         }
     }
-    
-    func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
+
+    func configure(withTextMessageData textMessageData: ZMTextMessageData,
+                   obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return
         }
+
         self.linkPreview = linkPreview
         updateLabels(obfuscated: obfuscated)
 
         if let article = linkPreview as? ArticleMetadata {
             configure(withArticle: article, obfuscated: obfuscated)
         }
-        
+
         if let twitterStatus = linkPreview as? TwitterStatusMetadata {
             configure(withTwitterStatus: twitterStatus)
         }
@@ -163,20 +183,19 @@ final class ArticleView: UIView {
             }
         }
     }
-    
+
     func updateContentMode() {
-        
         guard let image = self.imageView.image else { return }
         let width = image.size.width * image.scale
         let height = image.size.height * image.scale
-        
+
         if width < 480.0 || height < 160.0 {
             self.imageView.contentMode = .center
         } else {
             self.imageView.contentMode = .scaleAspectFill
         }
     }
-    
+
     private func configure(withArticle article: ArticleMetadata, obfuscated: Bool) {
         if let url = article.openableURL, !obfuscated {
             authorLabel.attributedText = formatURL(url as URL)
@@ -186,7 +205,7 @@ final class ArticleView: UIView {
 
         messageLabel.text = article.title
     }
-    
+
     private func configure(withTwitterStatus twitterStatus: TwitterStatusMetadata) {
         let author = twitterStatus.author ?? "-"
         authorLabel.attributedText = "twitter_status.on_twitter".localized(args: author).attributedString.addAttributes(authorHighlightAttributes, toSubstring: author)
@@ -194,30 +213,73 @@ final class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
 
-    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+    @objc
+    private func viewTapped(_ sender: UITapGestureRecognizer) {
         if UIMenuController.shared.isMenuVisible {
             return UIMenuController.shared.setMenuVisible(false, animated: true)
         }
 
+        openURL()
+    }
+
+    private func openURL() {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
-    
+}
+
+// MARK: - UIContextMenuInteractionDelegate
+
+@available(iOS 13.0, *)
+extension ArticleView: UIContextMenuInteractionDelegate {
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+
+        guard let linkPreview = linkPreview,
+            let url = linkPreview.openableURL else {
+            return nil
+        }
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: url)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { _ in
+                                            return self.makeContextMenu(title: linkPreview.originalURLString)
+        })
+    }
+
+    func makeContextMenu(title: String) -> UIMenu {
+        let actions = actionController?.allMessageMenuElements() ?? []
+
+        return UIMenu(title: title, children: actions)
+    }
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.openURL()
+        }
+    }
 }
 
 extension LinkMetadata {
 
-    /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
-    var openableURL: NSURL? {
+    /// Returns a `URL` that can be openened using `openURL()` on `UIApplication` or `nil` if no openable `URL` could be created.
+    var openableURL: URL? {
         let application = UIApplication.shared
 
-        if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
+        if let originalURL = URL(string: originalURLString),
+            application.canOpenURL(originalURL) {
             return originalURL
-        } else if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
-            return permanentURL as NSURL?
+        } else if let permanentURL = permanentURL,
+            application.canOpenURL(permanentURL) {
+            return permanentURL
         }
 
         return nil
     }
 }
-
