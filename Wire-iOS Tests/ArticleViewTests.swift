@@ -157,10 +157,10 @@ final class ArticleViewTests: XCTestCase {
         sut.delegate = mockArticleViewDelegate
 
         // WHEN
-        let menu = sut.makeContextMenu(title: "test", view: sut)
+        let menu = sut.delegate?.makeContextMenu(title: "test", view: sut)
 
         // THEN
-        let children = menu.children
+        let children = menu!.children
         XCTAssertEqual(children.count, 1)
         XCTAssertEqual(children.first?.title, "Delete")
     }
