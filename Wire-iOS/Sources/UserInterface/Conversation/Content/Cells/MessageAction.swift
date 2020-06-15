@@ -105,8 +105,7 @@ enum MessageAction: CaseIterable {
         case .unlike:
             return .liked
         case .resend:
-            // no icon for resend
-            return nil
+            return .redo
         case .showInConversation:
             return .eye
         case .present:
