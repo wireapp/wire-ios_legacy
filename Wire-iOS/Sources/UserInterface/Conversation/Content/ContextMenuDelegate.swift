@@ -23,11 +23,20 @@ protocol ContextMenuDelegate: class {
     var delegate: ConversationMessageCellDelegate? { get }
     var message: ZMConversationMessage? { get }
     
-    func actionController(view: UIView) -> ConversationMessageActionController?
+//    func actionController(view: UIView) -> ConversationMessageActionController?
+    @available(iOS 13.0, *)
+    func makeContextMenu(title: String, view: UIView) -> UIMenu
 }
 
 extension ContextMenuDelegate {
-    func actionController(view: UIView) -> ConversationMessageActionController? {
+    @available(iOS 13.0, *)
+    func makeContextMenu(title: String, view: UIView) -> UIMenu {
+        let actions = actionController(view: view)?.allMessageMenuElements() ?? []
+
+        return UIMenu(title: title, children: actions)
+    }
+    
+    private func actionController(view: UIView) -> ConversationMessageActionController? {
         guard let message = message else {
             return nil
         }

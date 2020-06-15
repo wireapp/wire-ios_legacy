@@ -199,15 +199,8 @@ extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: message.objectIdentifier as NSCopying,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.makeContextMenu()
+                                            return self.makeContextMenu(title: "", view: self)
         })
-    }
-
-    @available(iOS 13.0, *)
-    func makeContextMenu() -> UIMenu {
-        let actions = actionController(view: self)?.allMessageMenuElements() ?? []
-
-        return UIMenu(title: "", children: actions)
     }
 
     @available(iOS 13.0, *)
