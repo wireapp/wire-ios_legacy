@@ -36,7 +36,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
-    fileprivate let likeButton = IconButton(style: .default)
+    lazy var likeButton = iconButton(messageAction: .like)
     
     let inverse: Bool
 
@@ -218,7 +218,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             return #selector(revealCurrent(_:))
         case .delete:
             return #selector(deleteCurrent)
-            
+        case .like, .unlike:
+            return #selector(likeCurrent)
+
         default:
             return nil
         }
@@ -248,7 +250,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             let copyButton = iconButton(messageAction:
                 .copy)
             
-            likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
+
             updateLikeButton()
 
             let saveButton = iconButton(messageAction:
@@ -292,8 +294,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     fileprivate func updateLikeButton() {
-        likeButton.setIcon(currentMessage.liked ? .liked : .like, size: .tiny, for: .normal)
-        likeButton.accessibilityLabel = currentMessage.liked ? "unlike" : "like"
+        
+        let messageAction: MessageAction = currentMessage.liked ? .like : .unlike
+        
+        likeButton.setIcon(messageAction.icon, size: .tiny, for: .normal)
+        likeButton.accessibilityLabel = messageAction.accessibilityLabel
     }
 
     fileprivate func updateBarsForPreview() {

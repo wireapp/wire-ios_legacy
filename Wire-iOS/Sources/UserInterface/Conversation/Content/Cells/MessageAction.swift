@@ -172,6 +172,10 @@ enum MessageAction: CaseIterable {
             return "reveal in conversation"
         case .delete:
             return "delete"
+        case .unlike:
+            return "unlike"
+        case .like:
+            return "like"
         default:
             return nil
         }
