@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -137,7 +136,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if connectionRequests.isEmpty {
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
-            tableView.scrollToLastRow(animated: animated)
+            // scroll to bottom to show the next request
+            tableView.setContentOffset(CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: animated)
         }
     }
     
@@ -166,12 +166,5 @@ extension ConnectRequestsViewController: ZMConversationListObserver {
 extension ConnectRequestsViewController: ZMUserObserver {
     func userDidChange(_ change: UserChangeInfo) {
         tableView.reloadData() //may need a slightly different approach, like enumerating through table cells of type FirstTimeTableViewCell and setting their bgColor property
-    }
-}
-
-extension UITableView {
-    func scrollToLastRow(animated: Bool) {
-        let rowCount = numberOfRows(inSection: numberOfSections - 1)
-        scrollToRow(at: IndexPath(row: rowCount - 1, section: numberOfSections - 1), at: .bottom, animated: animated)
     }
 }

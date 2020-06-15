@@ -360,11 +360,13 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         perform(action: .showInConversation, sender: sender)
     }
     
-    @objc func sketchCurrent(_ sender: AnyObject!) {
+    @objc
+    private func sketchCurrent(_ sender: AnyObject!) {
         perform(action: .sketchDraw, sender: sender)
     }
     
-    @objc func sketchCurrentEmoji(_ sender: AnyObject!) {
+    @objc
+    private func sketchCurrentEmoji(_ sender: AnyObject!) {
         perform(action: .sketchEmoji, sender: sender)
     }
 }
@@ -485,8 +487,9 @@ extension ConversationImagesViewController: MenuVisibilityController {
 
 extension ConversationImagesViewController {
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     override var previewActionItems: [UIPreviewActionItem] {
-        return currentActionController?.makePreviewActions() ?? []
+        return currentActionController?.previewActionItems ?? []
     }
  
 }

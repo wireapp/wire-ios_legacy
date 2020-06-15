@@ -35,7 +35,7 @@ protocol ConversationMessageCellDelegate: MessageActionResponder {
  * A generic view that displays conversation contents.
  */
 
-protocol ConversationMessageCell {
+protocol ConversationMessageCell: class {
     /// The object that contains the configuration of the view.
     associatedtype Configuration
 
