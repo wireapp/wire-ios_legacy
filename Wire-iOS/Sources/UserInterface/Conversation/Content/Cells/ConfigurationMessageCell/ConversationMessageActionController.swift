@@ -47,7 +47,7 @@ final class ConversationMessageActionController {
         return MessageAction.allCases
             .filter(canPerformAction)
     }
-    
+
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         weak var responder = self.responder
@@ -63,7 +63,7 @@ final class ConversationMessageActionController {
             } else {
                 iconImage = nil
             }
-            
+
             let handler: UIActionHandler = { _ in
                 responder?.perform(action: messageAction,
                                    for: message,
@@ -77,7 +77,7 @@ final class ConversationMessageActionController {
     }
 
     // MARK: - UI menu
-    
+
     static var allMessageActions: [UIMenuItem] {
         return MessageAction.allCases.compactMap {
             guard let selector = $0.selector,
@@ -142,7 +142,7 @@ final class ConversationMessageActionController {
     var previewActionItems: [UIPreviewAction] {
         return allPerformableMessageAction.compactMap { messageAction in
             guard let title = messageAction.title else { return nil }
-            
+
             return UIPreviewAction(title: title,
                                    style: .default) { [weak self] _, _ in
                                     self?.perform(action: messageAction)

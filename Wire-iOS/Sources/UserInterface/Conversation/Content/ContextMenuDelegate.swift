@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,8 +21,7 @@ import WireDataModel
 protocol ContextMenuDelegate: class {
     var delegate: ConversationMessageCellDelegate? { get }
     var message: ZMConversationMessage? { get }
-    
-//    func actionController(view: UIView) -> ConversationMessageActionController?
+
     @available(iOS 13.0, *)
     func makeContextMenu(title: String, view: UIView) -> UIMenu
 }
@@ -35,16 +33,16 @@ extension ContextMenuDelegate {
 
         return UIMenu(title: title, children: actions)
     }
-    
+
     private func actionController(view: UIView) -> ConversationMessageActionController? {
         guard let message = message else {
             return nil
         }
-        
+
         return ConversationMessageActionController(responder: delegate,
                                                    message: message,
                                                    context: .content,
                                                    view: view)
     }
-    
+
 }
