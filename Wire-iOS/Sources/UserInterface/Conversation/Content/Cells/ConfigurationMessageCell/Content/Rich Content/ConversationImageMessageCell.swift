@@ -31,7 +31,17 @@ final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     }
     
     private var containerView = UIView()
-    private var imageResourceView = ImageResourceView()
+    private var imageResourceView: ImageResourceView = {
+        let view = ImageResourceView()
+        
+        // allow iOS 13 context menu
+        if #available(iOS 13.0, *) {
+            view.isUserInteractionEnabled = true
+        }
+        
+        return view
+    }()
+    
     private let obfuscationView = ObfuscationView(icon: .photo)
     
     private var aspectConstraint: NSLayoutConstraint?

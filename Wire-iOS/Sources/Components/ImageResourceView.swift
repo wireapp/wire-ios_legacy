@@ -77,12 +77,18 @@ final class ImageResourceView: FLAnimatedImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.loadingView.accessibilityIdentifier = "loading"
+        loadingView.accessibilityIdentifier = "loading"
         
         addSubview(loadingView)
         
         constrain(self, loadingView) { containerView, loadingView in
             loadingView.center == containerView.center
+        }
+        
+        
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
         }
     }
     
@@ -90,4 +96,38 @@ final class ImageResourceView: FLAnimatedImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: - UIContextMenuInteractionDelegate
+
+@available(iOS 13.0, *)
+extension ImageResourceView: UIContextMenuInteractionDelegate {
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+
+        let url = URL(string: "http://www.wire.com")!
+        
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: url)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: nil)
+    }
+
+//    func makeContextMenu(title: String) -> UIMenu {
+//        let actions = actionController?.allMessageMenuElements() ?? []
+//
+//        return UIMenu(title: title, children: actions)
+//    }
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            ///TODO
+//            self.openURL()
+        }
+    }
 }
