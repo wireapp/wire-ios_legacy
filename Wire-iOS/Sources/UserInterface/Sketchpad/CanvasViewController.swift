@@ -76,6 +76,8 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         
         canvas.delegate = self
         canvas.backgroundColor = UIColor.white
+        canvas.isAccessibilityElement = true
+        canvas.accessibilityIdentifier = "canvas"
         
         emojiKeyboardViewController.delegate = self
     
