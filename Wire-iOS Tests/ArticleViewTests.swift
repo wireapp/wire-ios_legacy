@@ -51,7 +51,7 @@ final class MockConversationMessageCellDelegate: ConversationMessageCellDelegate
     }
 }
 
-final class MockArticleViewDelegate: ArticleViewDelegate {
+final class MockArticleViewDelegate: ArticleViewDelegate, ContextMenuDelegate {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
         // no-op
     }
@@ -157,7 +157,7 @@ final class ArticleViewTests: XCTestCase {
         sut.delegate = mockArticleViewDelegate
 
         // WHEN
-        let menu = sut.makeContextMenu(title: "test")
+        let menu = sut.makeContextMenu(title: "test", view: sut)
 
         // THEN
         let children = menu.children
