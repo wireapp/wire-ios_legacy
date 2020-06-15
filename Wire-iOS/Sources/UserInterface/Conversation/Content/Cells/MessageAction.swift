@@ -157,7 +157,7 @@ enum MessageAction: CaseIterable {
             return nil
         }
     }
-    
+
     var accessibilityLabel: String? {
         switch self {
         case .copy:
