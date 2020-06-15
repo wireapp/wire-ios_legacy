@@ -20,7 +20,7 @@ import UIKit
 import MapKit
 import WireDataModel
 
-final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
+final class ConversationLocationMessageCell: UIView, ConversationMessageCell, ContextMenuDelegate {
 
     struct Configuration {
         let location: LocationMessageData
@@ -206,7 +206,7 @@ extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
     @available(iOS 13.0, *)
     func makeContextMenu() -> UIMenu {
         ///TODO: ask adapter?
-        delegate?.
+//        delegate?.perform(action: <#T##MessageAction#>, for: <#T##ZMConversationMessage!#>, view: <#T##UIView#>)
 //    let actions = actionController?.allMessageMenuElements() ?? []
 
         return UIMenu(title: "", children: [] /*actions*/)
