@@ -16,7 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import WireDataModel
 
 protocol ContextMenuDelegate: class {
     var delegate: ConversationMessageCellDelegate? { get }
@@ -26,19 +27,15 @@ protocol ContextMenuDelegate: class {
 }
 
 extension ContextMenuDelegate {
-    // MARK: - for context menu action items
     func actionController(view: UIView) -> ConversationMessageActionController? {
-//    private func actionController: ConversationMessageActionController? {
-        guard let message = message //,
-//              let messageActionResponder = delegate?.delegate
-        else {
-                return nil
+        guard let message = message else {
+            return nil
         }
-
+        
         return ConversationMessageActionController(responder: delegate,
                                                    message: message,
                                                    context: .content,
                                                    view: view)
     }
-
+    
 }

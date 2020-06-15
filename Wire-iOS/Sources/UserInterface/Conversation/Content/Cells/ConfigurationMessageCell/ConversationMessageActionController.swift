@@ -47,9 +47,7 @@ final class ConversationMessageActionController {
         return MessageAction.allCases
             .filter(canPerformAction)
     }
-
-    // MARK: - iOS 13+ context menu
-
+    
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         weak var responder = self.responder

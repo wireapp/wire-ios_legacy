@@ -205,11 +205,9 @@ extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
 
     @available(iOS 13.0, *)
     func makeContextMenu() -> UIMenu {
-        ///TODO: ask adapter?
-//        delegate?.perform(action: <#T##MessageAction#>, for: <#T##ZMConversationMessage!#>, view: <#T##UIView#>)
-//    let actions = actionController?.allMessageMenuElements() ?? []
+        let actions = actionController(view: self)?.allMessageMenuElements() ?? []
 
-        return UIMenu(title: "", children: [] /*actions*/)
+        return UIMenu(title: "", children: actions)
     }
 
     @available(iOS 13.0, *)
