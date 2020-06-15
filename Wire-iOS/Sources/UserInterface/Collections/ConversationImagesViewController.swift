@@ -28,7 +28,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
-    let deleteButton = IconButton(style: .default)
+    lazy var deleteButton = iconButton(messageAction: .delete)
     var shareButton: IconButton?
     let overlay = FeedbackOverlayView()
     let separator: UIView = {
@@ -200,6 +200,42 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         
         return nextIndex
     }
+    
+    // MARK: icon botton factory
+    
+    private func selector(for action: MessageAction) -> Selector? {
+        switch action {
+        case .copy:
+            return #selector(copyCurrent(_:))
+            
+        case .save:
+            return #selector(saveCurrent(_:))
+        case .sketchDraw:
+            return #selector(sketchCurrent(_:))
+        case .sketchEmoji:
+            return #selector(sketchCurrentEmoji(_:))
+        case .showInConversation:
+            return #selector(revealCurrent(_:))
+        case .delete:
+            return #selector(deleteCurrent)
+            
+        default:
+            return nil
+        }
+    }
+    
+    private func iconButton(messageAction: MessageAction) -> IconButton {
+        let button = IconButton(style: .default)
+        button.setIcon(messageAction.icon, size: .tiny, for: .normal)
+        button.accessibilityLabel = messageAction.accessibilityLabel
+        
+        if let action = selector(for: messageAction) {
+            button.addTarget(self, action: action, for: .touchUpInside)
+        }
+
+        return button
+    }
+
 
     private func createControlsBarButtons() -> [IconButton] {
         var buttons = [IconButton]()
@@ -209,18 +245,14 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
 
-            let copyButton = IconButton(style: .default)
-            copyButton.setIcon(.copy, size: .tiny, for: .normal)
-            copyButton.accessibilityLabel = "copy"
-            copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
-
+            let copyButton = iconButton(messageAction:
+                .copy)
+            
             likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
             updateLikeButton()
 
-            let saveButton = IconButton(style: .default)
-            saveButton.setIcon(.save, size: .tiny, for: .normal)
-            saveButton.accessibilityLabel = "save"
-            saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
+            let saveButton = iconButton(messageAction:
+            .save)
 
             let shareButton = IconButton(style: .default)
             shareButton.setIcon(.export, size: .tiny, for: .normal)
@@ -228,27 +260,18 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
             self.shareButton = shareButton
 
-            let sketchButton = IconButton(style: .default)
-            sketchButton.setIcon(.brush, size: .tiny, for: .normal)
-            sketchButton.accessibilityLabel = "sketch over image"
-            sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
+            let sketchButton = iconButton(messageAction:
+            .sketchDraw)
 
-            let emojiSketchButton = IconButton(style: .default)
-            emojiSketchButton.setIcon(.emoji, size: .tiny, for: .normal)
-            emojiSketchButton.accessibilityLabel = "sketch emoji over image"
-            emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
 
-            let revealButton = IconButton(style: .default)
-            revealButton.setIcon(.eye, size: .tiny, for: .normal)
-            revealButton.accessibilityLabel = "reveal in conversation"
-            revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
+            let emojiSketchButton = iconButton(messageAction:
+            .sketchEmoji)
+
+            let revealButton = iconButton(messageAction:
+            .showInConversation)
 
             buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
         }
-
-        deleteButton.setIcon(.trash, size: .tiny, for: .normal)
-        deleteButton.accessibilityLabel = "delete"
-        deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
 
         buttons.append(deleteButton)
         buttons.forEach { $0.hitAreaPadding = .zero }
@@ -327,7 +350,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
                                        view: sender as? UIView ?? view)
     }
 
-    @objc func copyCurrent(_ sender: AnyObject!) {
+    @objc
+    private func copyCurrent(_ sender: AnyObject!) {
         let text = "collections.image_viewer.copied.title".localized(uppercased: true)
         overlay.show(text: text)
         perform(action: .copy, sender: sender)
