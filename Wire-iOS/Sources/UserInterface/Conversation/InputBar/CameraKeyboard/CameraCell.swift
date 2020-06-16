@@ -93,8 +93,7 @@ final class CameraCell: UICollectionViewCell {
     }
     
     private func createConstraints() {
-        [contentView,
-         expandButton,
+        [expandButton,
          takePictureButton,
          changeCameraButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -117,6 +116,7 @@ final class CameraCell: UICollectionViewCell {
         )
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

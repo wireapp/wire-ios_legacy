@@ -102,7 +102,8 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    @objc func applicationDidBecomeActive(_ notification: Notification!) {
+    @objc
+    private func applicationDidBecomeActive(_ notification: Notification!) {
         self.assetLibrary.refetchAssets()
     }
 
@@ -436,7 +437,8 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return collectionView.frame.size }
 
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
-        case .camera: return cameraCellSize
+        case .camera:
+            return cameraCellSize
         case .photos:
             guard permissions.isPhotoLibraryAuthorized else {
                 return CGSize(width: self.view.bounds.size.width - cameraCellSize.width, height: self.view.bounds.size.height)
