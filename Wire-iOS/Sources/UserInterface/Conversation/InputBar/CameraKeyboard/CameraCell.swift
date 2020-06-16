@@ -103,12 +103,14 @@ final class CameraCell: UICollectionViewCell {
         NSLayoutConstraint.activate(
             expandButton.squareConstraints(size: 40) +
             [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)] +
+             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)])
                 
+        NSLayoutConstraint.activate(
             takePictureButton.squareConstraints(size: 60) +
             [takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
-            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)] +
+            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)])
             
+        NSLayoutConstraint.activate(
             changeCameraButton.squareConstraints(size: 40) +
             [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
              changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]
