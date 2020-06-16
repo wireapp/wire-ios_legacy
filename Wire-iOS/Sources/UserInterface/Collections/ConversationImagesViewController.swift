@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-typealias DismissAction = (_ completion: Completion?)->Void
+typealias DismissAction = (_ completion: Completion?)->()
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
 
