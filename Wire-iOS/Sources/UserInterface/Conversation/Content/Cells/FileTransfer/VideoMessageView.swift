@@ -23,10 +23,10 @@ import WireDataModel
 import WireCommonComponents
 
 final class VideoMessageView: UIView, TransferView {
-    public var fileMessage: ZMConversationMessage?
-    weak public var delegate: TransferViewDelegate?
+    var fileMessage: ZMConversationMessage?
+    weak var delegate: TransferViewDelegate?
     
-    public var timeLabelHidden: Bool = false {
+    var timeLabelHidden: Bool = false {
         didSet {
             self.timeLabel.isHidden = timeLabelHidden
         }
@@ -53,7 +53,7 @@ final class VideoMessageView: UIView, TransferView {
     private var allViews : [UIView] = []
     private var state: FileMessageViewState = .unavailable
     
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
 
         self.previewImageView.contentMode = .scaleAspectFill
@@ -90,11 +90,11 @@ final class VideoMessageView: UIView, TransferView {
         layoutIfNeeded()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func createConstraints() {
+    func createConstraints() {
         constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
             (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
             previewImageView.edges == selfView.edges
@@ -117,7 +117,7 @@ final class VideoMessageView: UIView, TransferView {
         }
     }
     
-    public func configure(for message: ZMConversationMessage, isInitial: Bool) {
+    func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
         
         guard let fileMessage = self.fileMessage,
@@ -202,13 +202,13 @@ final class VideoMessageView: UIView, TransferView {
         updateVisibleViews(allViews, visibleViews: visibleViews(for: state), animated: !self.loadingView.isHidden)
     }
     
-    override public var tintColor: UIColor! {
+    override var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
     }
     
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
