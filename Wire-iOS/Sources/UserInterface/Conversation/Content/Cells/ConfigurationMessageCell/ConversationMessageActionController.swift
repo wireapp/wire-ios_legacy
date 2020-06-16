@@ -48,8 +48,6 @@ final class ConversationMessageActionController {
             .filter(canPerformAction)
     }
 
-    // MARK: - iOS 13+ context menu
-
     @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         weak var responder = self.responder
@@ -59,13 +57,6 @@ final class ConversationMessageActionController {
         return allPerformableMessageAction.compactMap { messageAction in
             guard let title = messageAction.title else { return nil }
 
-            let iconImage: UIImage?
-            if let icon = messageAction.icon {
-                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
-            } else {
-                iconImage = nil
-            }
-            
             let handler: UIActionHandler = { _ in
                 responder?.perform(action: messageAction,
                                    for: message,
@@ -73,13 +64,13 @@ final class ConversationMessageActionController {
             }
 
             return UIAction(title: title,
-                            image: iconImage,
+                            image: nil,
                             handler: handler)
         }
     }
 
     // MARK: - UI menu
-    
+
     static var allMessageActions: [UIMenuItem] {
         return MessageAction.allCases.compactMap {
             guard let selector = $0.selector,
@@ -144,7 +135,7 @@ final class ConversationMessageActionController {
     var previewActionItems: [UIPreviewAction] {
         return allPerformableMessageAction.compactMap { messageAction in
             guard let title = messageAction.title else { return nil }
-            
+
             return UIPreviewAction(title: title,
                                    style: .default) { [weak self] _, _ in
                                     self?.perform(action: messageAction)

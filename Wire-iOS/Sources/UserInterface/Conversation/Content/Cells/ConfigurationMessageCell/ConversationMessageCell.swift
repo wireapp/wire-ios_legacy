@@ -192,8 +192,8 @@ extension ConversationMessageCellDescription {
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        cell.cellView.message = self.message
+        cell.cellView.delegate = delegate
+        cell.cellView.message = message
         cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
