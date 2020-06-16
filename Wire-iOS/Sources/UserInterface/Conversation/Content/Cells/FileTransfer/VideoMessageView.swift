@@ -94,27 +94,47 @@ final class VideoMessageView: UIView, TransferView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func createConstraints() { ///TODO
-        constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
-            (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
-            previewImageView.edges == selfView.edges
-            playButton.center == previewImageView.center
-            playButton.width == 56
-            playButton.height == playButton.width
-            progressView.center == playButton.center
-            progressView.width == playButton.width - 2
-            progressView.height == playButton.height - 2
-            bottomGradientView.left == selfView.left
-            bottomGradientView.right == selfView.right
-            bottomGradientView.bottom == selfView.bottom
-            bottomGradientView.height == 56
+    private func createConstraints() {
+        
+        [self,
+         previewImageView,
+         progressView,
+         playButton,
+         bottomGradientView,
+         timeLabel,
+         loadingView].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        constrain(bottomGradientView, timeLabel, previewImageView, loadingView) { bottomGradientView, timeLabel, previewImageView, loadingView in
-            timeLabel.right == bottomGradientView.right - 16
-            timeLabel.bottom == bottomGradientView.bottom - 16
-            loadingView.center == previewImageView.center
-        }
+        let sizeConstraint = widthAnchor.constraint(equalTo: heightAnchor, constant: 4/3)
+        
+        sizeConstraint.priority = UILayoutPriority(750)
+        
+        NSLayoutConstraint.activate([sizeConstraint,
+                                     
+                                     previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                     previewImageView.topAnchor.constraint(equalTo: topAnchor),
+                                     previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                                     previewImageView.bottomAnchor.constraint(equalTo: bottomAnchor)] +
+
+                                    playButton.centerConstraints(to: previewImageView) +
+                                    [playButton.widthAnchor.constraint(equalToConstant: 56),
+                                     playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor)] +
+            
+                                    progressView.centerConstraints(to: playButton) +
+                                    [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+                                     progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
+                                        
+                                     bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                     bottomGradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                                     bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                                     bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
+                                        
+                                    timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
+                                    timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16)] +
+                                    
+                                    loadingView.centerConstraints(to: previewImageView)
+        )
     }
     
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
@@ -236,4 +256,11 @@ final class VideoMessageView: UIView, TransferView {
         }
     }
     
+}
+
+extension UIView {
+    func centerConstraints(to view: UIView) -> [NSLayoutConstraint] {
+        return [centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        centerYAnchor.constraint(equalTo: view.centerYAnchor)]
+    }
 }
