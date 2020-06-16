@@ -111,7 +111,8 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    @discardableResult func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
+    @discardableResult
+    private func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)
         self.sut.endAppearanceTransition()
 
@@ -198,7 +199,7 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
     }
 
-    func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
+    private func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
                                        file: StaticString = #file,
                                        testName: String = #function,
                                        line: UInt = #line) {
@@ -233,7 +234,7 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeCompact(with: permissions)
     }
 
-    func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController,
+    private func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController,
             file: StaticString = #file,
             testName: String = #function,
             line: UInt = #line) {
@@ -302,7 +303,7 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeRegularLandscape(with: permissions)
     }
 
-    func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController,
+    private func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController,
                                                file: StaticString = #file,
                                                testName: String = #function,
                                                line: UInt = #line) {
