@@ -32,7 +32,7 @@ class LayerHostView<LayerType: CALayer>: UIView {
 
 
 final class ShapeView: LayerHostView<CAShapeLayer> {
-    public var pathGenerator: ((CGSize) -> (UIBezierPath))? {
+    var pathGenerator: ((CGSize) -> (UIBezierPath))? {
         didSet {
             self.updatePath()
         }
@@ -97,7 +97,7 @@ typealias AccountView = BaseAccountView & AccountViewType
 /// The subclasses of BaseAccountView must conform to AccountViewType,
 /// otherwise `init?(account: Account, user: ZMUser? = nil)` returns nil
 class BaseAccountView: UIView {
-    public var autoUpdateSelection: Bool = true
+    var autoUpdateSelection: Bool = true
     
     let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
@@ -105,27 +105,27 @@ class BaseAccountView: UIView {
     let selectionView = ShapeView()
     fileprivate var unreadCountToken : Any?
     fileprivate var selfUserObserver: NSObjectProtocol!
-    public let account: Account
+    let account: Account
     
-    public var unreadCountStyle : AccountUnreadCountStyle = .none {
+    var unreadCountStyle : AccountUnreadCountStyle = .none {
         didSet {
             updateAppearance()
         }
     }
     
-    public var selected: Bool = false {
+    var selected: Bool = false {
         didSet {
             updateAppearance()
         }
     }
     
-    public var collapsed: Bool = false {
+    var collapsed: Bool = false {
         didSet {
             updateAppearance()
         }
     }
     
-    public var hasUnreadMessages: Bool {
+    var hasUnreadMessages: Bool {
         switch unreadCountStyle {
         case .none:
             return false
@@ -143,9 +143,9 @@ class BaseAccountView: UIView {
         self.layoutSubviews()
     }
     
-    public var onTap: ((Account?) -> ())? = .none
+    var onTap: ((Account?) -> ())? = .none
     
-    public var accessibilityState: String {
+    var accessibilityState: String {
         return ("conversation_list.header.self_team.accessibility_value." + (self.selected ? "active" : "inactive")).localized +
                 (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
@@ -215,11 +215,11 @@ class BaseAccountView: UIView {
         updateAppearance()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update() {
+    func update() {
         if self.autoUpdateSelection {
             self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
         }
@@ -231,17 +231,17 @@ class BaseAccountView: UIView {
 }
 
 extension BaseAccountView: ZMConversationListObserver {
-    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+    func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateAppearance()
     }
     
-    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateAppearance()
     }
 }
 
 extension BaseAccountView: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.accentColorValueChanged {
             updateAppearance()
         }
@@ -262,7 +262,7 @@ final class PersonalAccountView: AccountView {
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
     
-    public override var collapsed: Bool {
+    override var collapsed: Bool {
         didSet {
             self.userImageView.isHidden = collapsed
         }
@@ -294,11 +294,11 @@ final class PersonalAccountView: AccountView {
         update()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func update() {
+    override func update() {
         super.update()
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.userName) + " " + accessibilityState
         if let imageData = self.account.imageData {
@@ -326,7 +326,7 @@ final class PersonalAccountView: AccountView {
 }
 
 extension PersonalAccountView {
-    override public func userDidChange(_ changeInfo: UserChangeInfo) {
+    override func userDidChange(_ changeInfo: UserChangeInfo) {
         super.userDidChange(changeInfo)
         if changeInfo.nameChanged || changeInfo.imageMediumDataChanged || changeInfo.imageSmallProfileDataChanged  {
             update()
