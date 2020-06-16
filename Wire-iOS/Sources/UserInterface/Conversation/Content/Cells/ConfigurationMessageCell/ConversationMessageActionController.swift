@@ -57,13 +57,6 @@ final class ConversationMessageActionController {
         return allPerformableMessageAction.compactMap { messageAction in
             guard let title = messageAction.title else { return nil }
 
-            let iconImage: UIImage?
-            if let icon = messageAction.icon {
-                iconImage = UIImage.imageForIcon(icon, size: StyleKitIcon.Size.tiny.rawValue, color: .label)
-            } else {
-                iconImage = nil
-            }
-
             let handler: UIActionHandler = { _ in
                 responder?.perform(action: messageAction,
                                    for: message,
@@ -71,7 +64,7 @@ final class ConversationMessageActionController {
             }
 
             return UIAction(title: title,
-                            image: iconImage,
+                            image: nil,
                             handler: handler)
         }
     }
