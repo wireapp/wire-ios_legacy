@@ -25,13 +25,13 @@ import WireCommonComponents
 final class VideoMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
-    
+
     var timeLabelHidden: Bool = false {
         didSet {
             self.timeLabel.isHidden = timeLabelHidden
         }
     }
-    
+
     private let previewImageView = UIImageView()
     private let progressView = CircularProgressView()
     private let playButton: IconButton = {
@@ -47,12 +47,12 @@ final class VideoMessageView: UIView, TransferView {
         return label
     }()
     private let loadingView = ThreeDotsLoadingView()
-    
+
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
     private let failureColor = UIColor.red.withAlphaComponent(0.24)
-    private var allViews : [UIView] = []
+    private var allViews: [UIView] = []
     private var state: FileMessageViewState = .unavailable
-    
+
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -75,43 +75,41 @@ final class VideoMessageView: UIView, TransferView {
         self.timeLabel.accessibilityIdentifier = "VideoActionTimeLabel"
 
         self.loadingView.isHidden = true
-        
+
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView]
         self.allViews.forEach(self.addSubview)
-        
-        
-        
+
         createConstraints()
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [previewImageView, playButton, timeLabel, progressView])
         self.accessibilityElements = currentElements
-        
+
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func createConstraints() {
-        
+
         [self,
          previewImageView,
          progressView,
          playButton,
          bottomGradientView,
          timeLabel,
-         loadingView].forEach() {
+         loadingView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+
         let sizeConstraint = widthAnchor.constraint(equalTo: heightAnchor, constant: 4/3)
-        
+
         sizeConstraint.priority = UILayoutPriority(750)
-        
+
         NSLayoutConstraint.activate([sizeConstraint,
-                                     
+
                                      previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      previewImageView.topAnchor.constraint(equalTo: topAnchor),
                                      previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -120,126 +118,126 @@ final class VideoMessageView: UIView, TransferView {
                                     playButton.centerConstraints(to: previewImageView) +
                                     [playButton.widthAnchor.constraint(equalToConstant: 56),
                                      playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor)] +
-            
+
                                     progressView.centerConstraints(to: playButton) +
                                     [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
                                      progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
-                                        
+
                                      bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      bottomGradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
                                      bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
                                      bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
-                                        
+
                                     timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
                                     timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16)] +
-                                    
+
                                     loadingView.centerConstraints(to: previewImageView)
         )
     }
-    
+
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
-        
+
         guard let fileMessage = self.fileMessage,
               let fileMessageData = fileMessage.fileMessageData,
               let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
-                
+
         self.state = state
         self.previewImageView.image = nil
-        
-        if (state != .unavailable) {
+
+        if state != .unavailable {
             updateTimeLabel(withFileMessageData: fileMessageData)
             self.timeLabel.textColor = UIColor.from(scheme: .textForeground)
-            
+
             fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
                 guard let image = image else { return }
                 self?.updatePreviewImage(image)
             }
         }
-        
+
         if state == .uploading || state == .downloading {
             self.progressView.setProgress(fileMessageData.progress, animated: !isInitial)
         }
-        
+
         if let viewsState = state.viewsStateForVideo() {
             self.playButton.setIcon(viewsState.playButtonIcon, size: 28, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
-        
+
         updateVisibleViews()
     }
-    
+
     private func visibleViews(for state: FileMessageViewState) -> [UIView] {
         guard state != .obfuscated else {
             return []
         }
-        
+
         guard state != .unavailable else {
             return [loadingView]
         }
-        
+
         var visibleViews: [UIView] = [playButton, previewImageView]
-        
+
         switch state {
         case .uploading, .downloading:
             visibleViews.append(progressView)
         default:
             break
         }
-        
+
         if !previewImageView.isHidden && previewImageView.image != nil {
             visibleViews.append(bottomGradientView)
         }
-        
+
         if !timeLabelHidden {
             visibleViews.append(timeLabel)
         }
-        
+
         return visibleViews
     }
-    
+
     private func updatePreviewImage(_ image: MediaAsset) {
         previewImageView.mediaAsset = image
         timeLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         updateVisibleViews()
     }
-    
+
     private func updateTimeLabel(withFileMessageData fileMessageData: ZMFileMessageData) {
         let duration = Int(roundf(Float(fileMessageData.durationMilliseconds) / 1000.0))
         var timeLabelText = ByteCountFormatter.string(fromByteCount: Int64(fileMessageData.size), countStyle: .binary)
-        
+
         if duration != 0 {
             let (seconds, minutes) = (duration % 60, duration / 60)
             let time = String(format: "%d:%02d", minutes, seconds)
             timeLabelText = time + " " + String.MessageToolbox.middleDot + " " + timeLabelText
         }
-        
+
         self.timeLabel.text = timeLabelText
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
-    
+
     private func updateVisibleViews() {
         updateVisibleViews(allViews, visibleViews: visibleViews(for: state), animated: !self.loadingView.isHidden)
     }
-    
+
     override var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
-    
+
     // MARK: - Actions
-    
+
     @objc
     func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
-        
-        switch(fileMessageData.transferState) {
+
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != fileMessageData.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)
@@ -255,7 +253,7 @@ final class VideoMessageView: UIView, TransferView {
             }
         }
     }
-    
+
 }
 
 extension UIView {
