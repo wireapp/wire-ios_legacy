@@ -81,7 +81,7 @@ final class VideoMessageView: UIView, TransferView {
         
         
         
-        self.createConstraints()
+        createConstraints()
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [previewImageView, playButton, timeLabel, progressView])
         self.accessibilityElements = currentElements
@@ -94,7 +94,7 @@ final class VideoMessageView: UIView, TransferView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createConstraints() {
+    private func createConstraints() { ///TODO
         constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
             (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
             previewImageView.edges == selfView.edges
