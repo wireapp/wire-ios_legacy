@@ -338,15 +338,22 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         let permissions = MockPhotoPermissionsController(camera: false, library: true)
         cameraScrolledHorizontallySomePercent(with: permissions)
     }
-    func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController) {
+    
+    private func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController,
+                                               file: StaticString = #file,
+                                               testName: String = #function,
+                                               line: UInt = #line) {
         // given
-        self.splitView?.layoutSize = .compact
+        splitView?.layoutSize = .compact
         setupSut(permissions: permissions)
-        self.prepareForSnapshot()
+        prepareForSnapshot()
         // when
-        self.sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
+        sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
         // then
-        self.verify(matching: self.prepareForSnapshot())
+        verify(matching: prepareForSnapshot(),
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func testCameraScrolledHorizontallyAwayPercent() {
