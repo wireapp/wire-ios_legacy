@@ -108,30 +108,26 @@ final class VideoMessageView: UIView, TransferView {
 
         sizeConstraint.priority = UILayoutPriority(750)
 
-        NSLayoutConstraint.activate([sizeConstraint,
+        NSLayoutConstraint.activate(
+            [sizeConstraint] +
+            previewImageView.edgeConstraints(to: self) +
 
-                                     previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                     previewImageView.topAnchor.constraint(equalTo: topAnchor),
-                                     previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     previewImageView.bottomAnchor.constraint(equalTo: bottomAnchor)] +
+            playButton.centerConstraints(to: previewImageView) +
+            playButton.squareConstraints(size: 56) +
+                
+            progressView.centerConstraints(to: playButton) +
+            [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+             progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
 
-                                    playButton.centerConstraints(to: previewImageView) +
-                                    [playButton.widthAnchor.constraint(equalToConstant: 56),
-                                     playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor)] +
+             bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
+             bottomGradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
+             bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
+             bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
 
-                                    progressView.centerConstraints(to: playButton) +
-                                    [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
-                                     progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
+            timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
+            timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16)] +
 
-                                     bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                     bottomGradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                                     bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
-
-                                    timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
-                                    timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16)] +
-
-                                    loadingView.centerConstraints(to: previewImageView)
+            loadingView.centerConstraints(to: previewImageView)
         )
     }
 
@@ -261,7 +257,7 @@ extension UIView {
         return [widthAnchor.constraint(equalToConstant: size),
         widthAnchor.constraint(equalTo: heightAnchor)]
     }
-    
+
     func edgeConstraints(to view: UIView) -> [NSLayoutConstraint] {
         return [leadingAnchor.constraint(equalTo: view.leadingAnchor),
         topAnchor.constraint(equalTo: view.topAnchor),

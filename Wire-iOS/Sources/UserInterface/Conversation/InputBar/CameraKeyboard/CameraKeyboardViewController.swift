@@ -17,7 +17,6 @@
 // 
 
 import Photos
-import Cartography
 import AVFoundation
 import UIKit
 import WireSyncEngine
@@ -138,19 +137,22 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
 
     private func createConstraints() {
-        constrain(self.view, self.collectionView, self.goBackButton, self.cameraRollButton) { view, collectionView, goBackButton, cameraRollButton in
-            collectionView.edges == view.edges
-
-            goBackButton.width == 36
-            goBackButton.height == goBackButton.width
-            goBackButton.leading == view.leading + self.sideMargin
-            goBackButton.bottom == view.bottom - 18 - UIScreen.safeArea.bottom
-
-            cameraRollButton.width == 36
-            cameraRollButton.height == goBackButton.width
-            cameraRollButton.trailing == view.trailing - self.sideMargin
-            cameraRollButton.centerY == goBackButton.centerY
+        [view,
+         collectionView,
+         goBackButton,
+         cameraRollButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
+
+        NSLayoutConstraint.activate(
+            collectionView.edgeConstraints(to: view) +
+            goBackButton.squareConstraints(size: 36) +
+            [goBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideMargin),
+             goBackButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(18 + UIScreen.safeArea.bottom))] +
+            cameraRollButton.squareConstraints(size: 36) +
+            [cameraRollButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideMargin),
+             cameraRollButton.centerYAnchor.constraint(equalTo: goBackButton.centerYAnchor)]
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -238,7 +240,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.resizeMode = .exact
             options.isSynchronous = false
 
-            imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+            imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
                     let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
@@ -248,7 +250,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
 
-                    self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                    self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -277,7 +279,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
 
-                    self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                    self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -300,8 +302,8 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
         isLoadingViewVisible = true
         guard let fileLengthLimit: UInt64 = ZMUserSession.shared()?.maxUploadFileSize else { return }
-        
-        asset.getVideoURL() { url in
+
+        asset.getVideoURL { url in
             DispatchQueue.main.async(execute: {
                 self.isLoadingViewVisible = false
             })
@@ -316,11 +318,11 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                 DispatchQueue.main.async(execute: {
                     self.isLoadingViewVisible = false
                 })
-                
+
                 guard error == nil,
                     let resultURL = resultURL,
                     let asset = asset else { return }
-                
+
                 DispatchQueue.main.async(execute: {
                     self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset.duration))
                 })
@@ -527,7 +529,7 @@ extension PHAsset {
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
 
-        PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable: Any]?) -> Void in
+        PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, _: AVAudioMix?, _: [AnyHashable: Any]?) -> Void in
             if let urlAsset = asset as? AVURLAsset {
                 let localVideoUrl: URL = urlAsset.url as URL
                 completionHandler(localVideoUrl)
