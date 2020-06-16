@@ -257,6 +257,18 @@ final class VideoMessageView: UIView, TransferView {
 }
 
 extension UIView {
+    func squareConstraints(size: CGFloat) -> [NSLayoutConstraint] {
+        return [widthAnchor.constraint(equalToConstant: size),
+        widthAnchor.constraint(equalTo: heightAnchor)]
+    }
+    
+    func edgeConstraints(to view: UIView) -> [NSLayoutConstraint] {
+        return [leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        topAnchor.constraint(equalTo: view.topAnchor),
+        trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        bottomAnchor.constraint(equalTo: view.bottomAnchor)]
+    }
+
     func centerConstraints(to view: UIView) -> [NSLayoutConstraint] {
         return [centerXAnchor.constraint(equalTo: view.centerXAnchor),
         centerYAnchor.constraint(equalTo: view.centerYAnchor)]
