@@ -146,8 +146,13 @@ class BaseAccountView: UIView {
     var onTap: ((Account?) -> ())? = .none
     
     var accessibilityState: String {
-        return ("conversation_list.header.self_team.accessibility_value." + (self.selected ? "active" : "inactive")).localized +
-                (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
+        var returnString = "conversation_list.header.self_team.accessibility_value.\(selected ? "active" : "inactive")".localized
+        
+        if hasUnreadMessages {
+            returnString += " \("conversation_list.header.self_team.accessibility_value.has_new_messages".localized)"
+        }
+        
+        return returnString
     }
     
     init?(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) {
