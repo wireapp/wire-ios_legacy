@@ -23,8 +23,6 @@ import WireDataModel
 
 protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-    var delegate: ConversationMessageCellDelegate? { get }
-    var message: ZMConversationMessage? { get }
 }
 
 final class ArticleView: UIView {
@@ -52,20 +50,7 @@ final class ArticleView: UIView {
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
-    weak var delegate: ArticleViewDelegate?
-
-    // MARK: - for context menu action items
-    private var actionController: ConversationMessageActionController? {
-        guard let message = delegate?.message,
-              let messageActionResponder = delegate?.delegate else {
-                return nil
-        }
-
-        return ConversationMessageActionController(responder: messageActionResponder,
-                                                   message: message,
-                                                   context: .content,
-                                                   view: self)
-    }
+    weak var delegate: (ArticleViewDelegate & ContextMenuDelegate)?
 
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -247,14 +232,8 @@ extension ArticleView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.makeContextMenu(title: linkPreview.originalURLString)
+                                            return self.delegate?.makeContextMenu(title: linkPreview.originalURLString, view: self)
         })
-    }
-
-    func makeContextMenu(title: String) -> UIMenu {
-        let actions = actionController?.allMessageMenuElements() ?? []
-
-        return UIMenu(title: title, children: actions)
     }
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,

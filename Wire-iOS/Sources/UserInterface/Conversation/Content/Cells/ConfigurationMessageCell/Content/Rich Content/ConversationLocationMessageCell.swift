@@ -20,7 +20,7 @@ import UIKit
 import MapKit
 import WireDataModel
 
-final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
+final class ConversationLocationMessageCell: UIView, ConversationMessageCell, ContextMenuDelegate {
 
     struct Configuration {
         let location: LocationMessageData
@@ -38,10 +38,10 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
-    private weak var locationAnnotation: MKPointAnnotation? = nil
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    private weak var locationAnnotation: MKPointAnnotation?
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var labelFont: UIFont? = .normalFont
     var labelTextColor: UIColor? = .from(scheme: .textForeground)
@@ -58,9 +58,14 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         super.init(frame: frame)
         configureViews()
         createConstraints()
+
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
+        }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -152,7 +157,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         locationAnnotation = annotation
     }
 
-    func updateMapLocation(withLocationData locationData: LocationMessageData) {        
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {
         if locationData.zoomLevel != 0 {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {
@@ -176,14 +181,46 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
 }
 
+// MARK: - context menu
+extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
+
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        guard let message = message,
+            let actionResponder = delegate else {
+                return nil
+        }
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return LocationPreviewController(message: message, actionResponder: actionResponder)
+        }
+
+        return UIContextMenuConfiguration(identifier: message.objectIdentifier as NSCopying,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { _ in
+                                            return self.makeContextMenu(title: "", view: self)
+        })
+    }
+
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.openInMaps()
+        }
+    }
+}
+
 final class ConversationLocationMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationLocationMessageCell
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate?     
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
