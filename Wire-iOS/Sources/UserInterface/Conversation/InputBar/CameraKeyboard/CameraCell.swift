@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Cartography
 import avs
 
 protocol CameraCellDelegate: class {
@@ -40,7 +39,8 @@ final class CameraCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
-        cameraController = CameraController(camera: Settings.shared[.preferredCamera] ?? .front)
+        let camera: SettingsCamera = Settings.shared[.preferredCamera] ?? .front
+        cameraController = CameraController(camera: camera)
 
         super.init(frame: frame)
         
@@ -89,26 +89,33 @@ final class CameraCell: UICollectionViewCell {
             button.layer.shadowOpacity = 0.5
         }
         
-        constrain(self.contentView, self.expandButton, self.takePictureButton, self.changeCameraButton) {
-            contentView, expandButton, takePictureButton, changeCameraButton in
-            expandButton.width == 40
-            expandButton.height == expandButton.width
-            expandButton.right == contentView.right - 12
-            expandButton.top == contentView.top + 10
-            
-            takePictureButton.width == 60
-            takePictureButton.height == takePictureButton.width
-            takePictureButton.bottom == contentView.bottom - 6 - UIScreen.safeArea.bottom
-            takePictureButton.centerX == contentView.centerX
-            
-            changeCameraButton.width == 40
-            changeCameraButton.height == changeCameraButton.width
-            changeCameraButton.left == contentView.left + 12
-            changeCameraButton.top == contentView.top + 10
-        }
+        createConstraints()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    private func createConstraints() {
+        [contentView,
+         expandButton,
+         takePictureButton,
+         changeCameraButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate(
+            expandButton.squareConstraints(size: 40) +
+            [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)] +
+                
+            takePictureButton.squareConstraints(size: 60) +
+            [takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
+            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)] +
+            
+            changeCameraButton.squareConstraints(size: 40) +
+            [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
+             changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]
+        )
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
