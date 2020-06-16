@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,99 +16,139 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
-fileprivate extension NSLayoutConstraint.Axis{
-    var flipped: NSLayoutConstraint.Axis {
-        switch self {
-        case .horizontal: return .vertical
-        case .vertical: return .horizontal
-        @unknown default:
-            fatalError()
-        }
-    }
-}
-
-class GridView: UIStackView {
+class GridView: NSObject {
+    let collectionView: UICollectionView
+    private let layout = UICollectionViewFlowLayout()
+    private(set) var videoStreamViews = [UIView]()
     
-    let upperHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
-    let lowerHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
-
-    var layoutDirection: NSLayoutConstraint.Axis = .vertical {
+    var layoutDirection: UICollectionView.ScrollDirection = .vertical {
         didSet {
-            axis = layoutDirection
-            lowerHorizontalStackerView.axis = layoutDirection.flipped
-            upperHorizontalStackerView.axis = layoutDirection.flipped
+            layout.scrollDirection = layoutDirection
+            collectionView.reloadData()
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        lowerHorizontalStackerView.axis = .horizontal
-        upperHorizontalStackerView.axis = .horizontal
-        
-        lowerHorizontalStackerView.distribution = .fillEqually
-        upperHorizontalStackerView.distribution = .fillEqually
-        
-        self.distribution = .fillEqually
-        self.axis = .vertical
-        self.addArrangedSubview(upperHorizontalStackerView)
-        self.addArrangedSubview(lowerHorizontalStackerView)
-    }
-    
-    var gridSubviews: [UIView] {
-        return upperHorizontalStackerView.arrangedSubviews + lowerHorizontalStackerView.arrangedSubviews
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        super.init()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
+        collectionView.isScrollEnabled = false
     }
     
     func append(view: UIView) {
-        if upperHorizontalStackerView.arrangedSubviews.count <= lowerHorizontalStackerView.arrangedSubviews.count {
-            upperHorizontalStackerView.addArrangedSubview(view)
-        } else {
-            lowerHorizontalStackerView.addArrangedSubview(view)
-        }
-        
-        updateVisibleStacksViews()
+        videoStreamViews.append(view)
+        collectionView.reloadData()
     }
     
     func remove(view: UIView) {
-        if let view = upperHorizontalStackerView.arrangedSubviews.first(where: { $0 == view }) {
-            upperHorizontalStackerView.removeArrangedSubview(view)
-            view.removeFromSuperview()
+        videoStreamViews.firstIndex(of: view).apply { videoStreamViews.remove(at: $0) }
+        collectionView.reloadData()
+    }
+}
+
+extension GridView: UICollectionViewDelegate {
+
+}
+
+extension GridView: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return videoStreamViews.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCell.reuseIdentifier, for: indexPath) as? GridCell else {
+            return UICollectionViewCell()
         }
         
-        if let view = lowerHorizontalStackerView.arrangedSubviews.first(where: { $0 == view }) {
-            lowerHorizontalStackerView.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
+        let streamView = videoStreamViews[indexPath.row]
+        cell.add(streamView: streamView)
+        return cell
+    }
+}
+
+extension GridView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxWidth = collectionView.bounds.size.width
+        let maxHeight = collectionView.bounds.size.height
         
-        rearrangeViews()
-        updateVisibleStacksViews()
-    }
-    
-    private func reinsert(view: UIView) {
-        remove(view: view)
-        append(view: view)
-    }
-    
-    private func rearrangeViews() {
-        if lowerHorizontalStackerView.arrangedSubviews.isEmpty, upperHorizontalStackerView.arrangedSubviews.count > 1, let view = upperHorizontalStackerView.arrangedSubviews.last {
-            reinsert(view: view)
-        }
+        let rows = calculateRows(for: indexPath)
+        let columns = calculateColumns(for: indexPath)
         
-        if upperHorizontalStackerView.arrangedSubviews.isEmpty, lowerHorizontalStackerView.arrangedSubviews.count > 1, let view = lowerHorizontalStackerView.arrangedSubviews.last {
-            reinsert(view: view)
+        // calculate width
+        let width = maxWidth / CGFloat(columns)
+        let height = maxHeight / CGFloat(rows)
+
+        return CGSize(width: width, height: height)
+    }
+    
+    func calculateRows(for indexPath: IndexPath) -> Int {
+        let verticalLayout = layoutDirection == .vertical
+        if videoStreamViews.count > 2 {
+            if verticalLayout {
+                return videoStreamViews.count.evened / 2
+            } else {
+                 return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+            }
+        } else {
+            return verticalLayout ? 2 : 1
         }
     }
     
-    private func updateVisibleStacksViews() {
-        upperHorizontalStackerView.isHidden = upperHorizontalStackerView.arrangedSubviews.isEmpty
-        lowerHorizontalStackerView.isHidden = lowerHorizontalStackerView.arrangedSubviews.isEmpty
+    func calculateColumns(for indexPath: IndexPath) -> Int {
+        let verticalLayout = layoutDirection == .vertical
+        if videoStreamViews.count > 2 {
+            if verticalLayout {
+                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+            } else {
+                return videoStreamViews.count.evened / 2
+            }
+        } else {
+            return verticalLayout ? 1 : 2
+        }
     }
     
+    private var videoStreamsViewsIsEven: Bool {
+        return videoStreamViews.count.isEven
+    }
+    
+    private func isLastRow(_ indexPath: IndexPath) -> Bool {
+        return videoStreamViews.count == indexPath.row + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .zero
+    }
+}
+
+extension Int {
+    var isEven: Bool {
+        guard self != 0 else {
+            return true
+        }
+        return self % 2 == 0
+    }
+    
+    var evened: Int {
+        return Int(round(Double(self) / 2) * 2)
+    }
 }
