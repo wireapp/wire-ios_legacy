@@ -157,4 +157,27 @@ enum MessageAction: CaseIterable {
             return nil
         }
     }
+
+    var accessibilityLabel: String? {
+        switch self {
+        case .copy:
+            return "copy"
+        case .save:
+            return "save"
+        case .sketchDraw:
+            return "sketch over image"
+        case .sketchEmoji:
+            return "sketch emoji over image"
+        case .showInConversation:
+            return "reveal in conversation"
+        case .delete:
+            return "delete"
+        case .unlike:
+            return "unlike"
+        case .like:
+            return "like"
+        default:
+            return nil
+        }
+    }
 }
