@@ -114,7 +114,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         imagePreview.layer.cornerRadius = 4
         
         allViews.prepareForLayout()
-        allViews.forEach(self.addSubview)
+        allViews.forEach(addSubview)
     }
     
     private func setupConstraints() {
