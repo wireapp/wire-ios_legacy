@@ -111,7 +111,8 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    @discardableResult func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
+    @discardableResult
+    private func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)
         self.sut.endAppearanceTransition()
 
@@ -128,7 +129,7 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
             sut.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
-            ])
+        ])
 
         container.layoutIfNeeded()
         return container
@@ -198,13 +199,19 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
     }
 
-    func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController) {
+    private func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
+                                               file: StaticString = #file,
+                                               testName: String = #function,
+                                               line: UInt = #line) {
         // given
-        self.splitView?.layoutSize = .compact
+        splitView?.layoutSize = .compact
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(matching: self.prepareForSnapshot())
+        verify(matching: prepareForSnapshot(),
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func testInitialStateLayoutSizeCompact() {
@@ -227,14 +234,20 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeCompact(with: permissions)
     }
 
-    func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController) {
+    private func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController,
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
-        self.splitView?.layoutSize = .regularPortrait
-        self.splitView?.leftViewControllerWidth = 216
+        splitView?.layoutSize = .regularPortrait
+        splitView?.leftViewControllerWidth = 216
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(matching: self.prepareForSnapshot(CGSize(width: 768, height: 264)))
+        verify(matching: prepareForSnapshot(CGSize(width: 768, height: 264)),
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func testInitialStateLayoutSizeRegularPortrait() {
@@ -257,14 +270,17 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeRegularPortrait(with: permissions)
     }
 
-    func initialStateLayoutSizeRegularLandscape(with permissions: PhotoPermissionsController) {
+    func initialStateLayoutSizeRegularLandscape(with permissions: PhotoPermissionsController,
+                                                file: StaticString = #file,
+                                                testName: String = #function,
+                                                line: UInt = #line) {
         // given
-        self.splitView?.layoutSize = .regularLandscape
-        self.splitView?.leftViewControllerWidth = 216
+        splitView?.layoutSize = .regularLandscape
+        splitView?.leftViewControllerWidth = 216
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(matching: self.prepareForSnapshot(CGSize(width: 1024, height: 352)))
+        verify(matching: prepareForSnapshot(CGSize(width: 1024, height: 352)), file: file, testName: testName, line: line)
     }
 
     func testInitialStateLayoutSizeRegularLandscape() {
@@ -287,7 +303,10 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeRegularLandscape(with: permissions)
     }
 
-    func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController) {
+    private func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController,
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
         self.splitView?.layoutSize = .compact
         setupSut(permissions: permissions)
@@ -295,7 +314,10 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 300, y: 0, width: 160, height: 10), animated: false)
         // then
-        self.verify(matching: self.prepareForSnapshot())
+        verify(matching: prepareForSnapshot(),
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func testCameraScrolledHorizontallySomePercent() {
@@ -317,15 +339,22 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         let permissions = MockPhotoPermissionsController(camera: false, library: true)
         cameraScrolledHorizontallySomePercent(with: permissions)
     }
-    func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController) {
+
+    private func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController,
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
-        self.splitView?.layoutSize = .compact
+        splitView?.layoutSize = .compact
         setupSut(permissions: permissions)
-        self.prepareForSnapshot()
+        prepareForSnapshot()
         // when
-        self.sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
+        sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
         // then
-        self.verify(matching: self.prepareForSnapshot())
+        verify(matching: prepareForSnapshot(),
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func testCameraScrolledHorizontallyAwayPercent() {

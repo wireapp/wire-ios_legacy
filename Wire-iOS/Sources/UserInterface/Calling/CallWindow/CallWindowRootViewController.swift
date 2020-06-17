@@ -87,4 +87,11 @@ final class CallWindowRootViewController: UIViewController {
         view.window?.isHidden = false
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
+
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag) {
+            self.view.window?.isHidden = true
+        }
+    }
+
 }

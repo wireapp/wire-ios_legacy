@@ -175,9 +175,10 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     // MARK: - Menu
 
-    @objc private func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    @objc
+    private func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
-            self.showMenu()
+            showMenu()
         }
     }
 

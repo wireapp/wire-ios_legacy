@@ -60,11 +60,13 @@ final class CallQualityController: NSObject {
     /**
      * Whether the call quality survey can be presented.
      *
-     * We only present the call quality survey for internal users.
+     * We only present the call quality survey for internal users and if the application is in the foreground.
      */
 
     var canPresentCallQualitySurvey: Bool {
-        return Bundle.developerModeEnabled && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+        return Bundle.developerModeEnabled
+            && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+            && AppDelegate.shared.launchType != .unknown
     }
 
     // MARK: - Events

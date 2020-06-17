@@ -165,7 +165,10 @@ final class InputBarButtonsView: UIView {
         constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
     }
     
-    fileprivate func constrainRowOfButtons(_ buttons: [UIButton], inset: CGFloat, rowIsFull: Bool, referenceButton: UIButton?) {
+    fileprivate func constrainRowOfButtons(_ buttons: [UIButton],
+                                           inset: CGFloat,
+                                           rowIsFull: Bool,
+                                           referenceButton: UIButton?) {
         constrain(buttons.first!) { firstButton in
             firstButton.leading == firstButton.superview!.leading
         }

@@ -77,8 +77,10 @@ final class PostContent {
         // conversation degradation and to tearDown the observer once done.
         sendController?.send {
             switch $0 {
-            case .done: conversationObserverToken.tearDown()
-            case .startingSending: allMessagesEnqueuedGroup.leave()
+            case .done:
+                conversationObserverToken.tearDown()
+            case .startingSending:
+                allMessagesEnqueuedGroup.leave()
             default: break
             }
 

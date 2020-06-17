@@ -124,8 +124,9 @@ final class LocationPreviewController: TintColorCorrectedViewController {
 
     // MARK: - Preview
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     override var previewActionItems: [UIPreviewActionItem] {
-        return actionController.makePreviewActions()
+        return actionController.previewActionItems
     }
 
 }

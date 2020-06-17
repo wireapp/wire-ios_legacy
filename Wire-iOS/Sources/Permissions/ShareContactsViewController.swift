@@ -155,7 +155,7 @@ final class ShareContactsViewController: UIViewController {
          shareContactsContainerView,
          addressBookAccessDeniedViewController.view,
          heroLabel,
-         shareContactsButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+         shareContactsButton].prepareForLayout()
 
         let constraints: [NSLayoutConstraint] = [
             shareContactsContainerView.topAnchor.constraint(equalTo: shareContactsContainerView.superview!.topAnchor),
