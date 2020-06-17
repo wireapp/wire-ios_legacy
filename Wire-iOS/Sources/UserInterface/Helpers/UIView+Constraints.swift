@@ -331,7 +331,7 @@ extension UIView {
 }
 
 extension Sequence where Element == UIView {
-  func prepareForLayout() {
-    forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-  }
+	func prepareForLayout() {
+		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+	}
 }
