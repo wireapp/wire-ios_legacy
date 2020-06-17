@@ -141,9 +141,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         [view,
          collectionView,
          goBackButton,
-         cameraRollButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+         cameraRollButton].prepareForLayout()
 
         let constraints =
             [collectionView.edgeConstraints(to: view),

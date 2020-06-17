@@ -148,9 +148,7 @@ final class ServiceDetailViewController: UIViewController {
     }
 
     private func createConstraints() {
-        [detailView, actionButton].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [detailView, actionButton].prepareForLayout()
 
         detailView.fitInSuperview(with: EdgeInsets(margin: 16), exclude: [.top, .bottom])
 

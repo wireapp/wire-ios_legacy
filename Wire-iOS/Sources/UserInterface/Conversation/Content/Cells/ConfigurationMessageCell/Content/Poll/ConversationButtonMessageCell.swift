@@ -133,9 +133,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     private func createConstraints() {
-        [button, errorLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [button, errorLabel].prepareForLayout()
 
         let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
 

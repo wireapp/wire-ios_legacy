@@ -95,9 +95,7 @@ final class CameraCell: UICollectionViewCell {
     private func createConstraints() {
         [expandButton,
          takePictureButton,
-         changeCameraButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+         changeCameraButton].prepareForLayout()
         
         let constraints = [
             expandButton.squareConstraints(size: 40),

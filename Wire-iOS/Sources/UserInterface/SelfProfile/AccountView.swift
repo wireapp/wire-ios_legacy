@@ -313,9 +313,7 @@ final class PersonalAccountView: AccountView {
     func createDotConstraints() {
         let dotSize: CGFloat = 9
 
-        [dotView, imageViewContainer].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [dotView, imageViewContainer].prepareForLayout()
 
         NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),

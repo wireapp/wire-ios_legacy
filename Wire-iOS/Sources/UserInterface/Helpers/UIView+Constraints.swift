@@ -334,3 +334,9 @@ extension UIView {
                 centerYAnchor.constraint(equalTo: view.centerYAnchor)]
     }
 }
+
+extension Sequence where Element == UIView {
+  func prepareForLayout() {
+    forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+  }
+}
