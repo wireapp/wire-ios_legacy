@@ -127,7 +127,10 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        [leftView, rightView].prepareForLayout()
+        [leftView, rightView].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
 
         setupInitialConstraints()
         updateLayoutSize(for: traitCollection)
@@ -163,8 +166,8 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
 
         update(for: size)
 
-        coordinator.animate(alongsideTransition: { _ in
-        }) { _ in
+        coordinator.animate(alongsideTransition: { context in
+        }) { context in
             self.updateLayoutSizeAndLeftViewVisibility()
         }
 
