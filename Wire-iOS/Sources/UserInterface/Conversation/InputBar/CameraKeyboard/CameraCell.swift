@@ -37,11 +37,11 @@ final class CameraCell: UICollectionViewCell {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     override init(frame: CGRect) {
         let camera: SettingsCamera = Settings.shared[.preferredCamera] ?? .front
         cameraController = CameraController(camera: camera)
-
+        
         super.init(frame: frame)
         
         if let cameraController = self.cameraController {
@@ -97,34 +97,31 @@ final class CameraCell: UICollectionViewCell {
          takePictureButton,
          changeCameraButton].prepareForLayout()
         
-        let constraints = [
-            [
-                expandButton.widthAnchor.constraint(equalToConstant: 40),
-                expandButton.widthAnchor.constraint(equalTo: expandButton.heightAnchor)
-            ],
-            [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)],
-            [
-                takePictureButton.widthAnchor.constraint(equalToConstant: 60),
-                takePictureButton.widthAnchor.constraint(equalTo: takePictureButton.heightAnchor)
-            ],
-            [takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
-            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)],
-            [
-                changeCameraButton.widthAnchor.constraint(equalToConstant: 40),
-                changeCameraButton.widthAnchor.constraint(equalTo: changeCameraButton.heightAnchor)
-            ],
-            [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-             changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]]
-        
-        NSLayoutConstraint.activate(constraints.reduce([],+))
+        NSLayoutConstraint.activate([
+            expandButton.widthAnchor.constraint(equalToConstant: 40),
+            expandButton.widthAnchor.constraint(equalTo: expandButton.heightAnchor),
+            
+            expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+            expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            
+            takePictureButton.widthAnchor.constraint(equalToConstant: 60),
+            takePictureButton.widthAnchor.constraint(equalTo: takePictureButton.heightAnchor),
+            
+            takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
+            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            changeCameraButton.widthAnchor.constraint(equalToConstant: 40),
+            changeCameraButton.widthAnchor.constraint(equalTo: changeCameraButton.heightAnchor),
+            
+            changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
+            changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)])
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func didMoveToWindow() {
         super.didMoveToWindow()
         if self.window == .none { cameraController?.stopRunning() }
@@ -136,7 +133,7 @@ final class CameraCell: UICollectionViewCell {
         cameraController?.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
     }
-
+    
     func updateVideoOrientation() {
         guard UIDevice.current.userInterfaceIdiom == .pad else { return }
         cameraController?.updatePreviewOrientation()
