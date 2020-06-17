@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import FLAnimatedImage
 import WireDataModel
 
@@ -91,9 +90,9 @@ final class ImageResourceView: FLAnimatedImageView {
 
         addSubview(loadingView)
 
-        constrain(self, loadingView) { containerView, loadingView in
-            loadingView.center == containerView.center
-        }
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+            centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)])
 
         if #available(iOS 13.0, *) {
             let interaction = UIContextMenuInteraction(delegate: self)
