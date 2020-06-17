@@ -82,7 +82,6 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let rows = calculateRows(for: indexPath)
         let columns = calculateColumns(for: indexPath)
         
-        // calculate width
         let width = maxWidth / CGFloat(columns)
         let height = maxHeight / CGFloat(rows)
 
@@ -95,10 +94,10 @@ extension GridView: UICollectionViewDelegateFlowLayout {
             if verticalLayout {
                 return videoStreamViews.count.evened / 2
             } else {
-                 return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
             }
         } else {
-            return verticalLayout ? 2 : 1
+            return verticalLayout ? videoStreamViews.count : 1
         }
     }
     
@@ -111,7 +110,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
                 return videoStreamViews.count.evened / 2
             }
         } else {
-            return verticalLayout ? 1 : 2
+            return verticalLayout ? 1 : videoStreamViews.count
         }
     }
     
