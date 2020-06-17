@@ -95,6 +95,7 @@ final class ImageResourceView: FLAnimatedImageView {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -119,14 +120,10 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
 
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
-                                          actionProvider: nil)
+                                          actionProvider:  { _ in
+                                            return self.delegate?.makeContextMenu(title: "conversation.input_bar.message_preview.image".localized, view: self)
+        })
     }
-
-//    func makeContextMenu(title: String) -> UIMenu {
-//        let actions = actionController?.allMessageMenuElements() ?? []
-//
-//        return UIMenu(title: title, children: actions)
-//    }
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
