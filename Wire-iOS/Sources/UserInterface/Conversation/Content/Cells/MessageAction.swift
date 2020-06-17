@@ -34,10 +34,10 @@ enum MessageAction: CaseIterable {
     unlike,
     resend,
     showInConversation,
-    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
-    present,
     sketchDraw,
     sketchEmoji,
+    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
+    present,
     openQuote
 
     var title: String? {
@@ -70,9 +70,11 @@ enum MessageAction: CaseIterable {
             key = "content.message.resend"
         case .showInConversation:
             key = "content.message.go_to_conversation"
+        case .sketchDraw:
+            key = "image.add_sketch"
+        case .sketchEmoji:
+            key = "image.add_emoji"
         case .present,
-             .sketchDraw,
-             .sketchEmoji,
              .openQuote:
             key = nil
         }

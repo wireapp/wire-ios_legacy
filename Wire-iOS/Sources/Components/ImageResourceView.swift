@@ -48,7 +48,9 @@ final class ImageResourceView: FLAnimatedImageView {
         }
     }
 
-    func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
+    func setImageResource(_ imageResource: ImageResource?,
+                          hideLoadingView: Bool = false,
+                          completion: Completion? = nil) {
         let token = UUID()
         mediaAsset = nil
 
@@ -89,7 +91,8 @@ final class ImageResourceView: FLAnimatedImageView {
         loadingView.accessibilityIdentifier = "loading"
 
         addSubview(loadingView)
-
+        
+        [self, loadingView].prepareForLayout()
         NSLayoutConstraint.activate([
             centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
             centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)])

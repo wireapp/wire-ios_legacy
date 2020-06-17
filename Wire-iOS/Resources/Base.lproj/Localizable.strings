@@ -359,6 +359,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
 "image.add_sketch" = "Add a sketch";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Edit image";
 
 // Camera access
