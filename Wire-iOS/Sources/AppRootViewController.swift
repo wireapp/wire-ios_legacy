@@ -91,7 +91,12 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if #available(iOS 12.0, *) {
+
+        if #available(iOS 12.0, *) {            
+            if UIApplication.shared.applicationState == .background {
+                return
+            }
+
             if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
