@@ -114,7 +114,7 @@ final class VideoMessageView: UIView, TransferView {
 
             playButton.centerConstraints(to: previewImageView) +
             playButton.squareConstraints(size: 56) +
-                
+
             progressView.centerConstraints(to: playButton) +
             [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
              progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),

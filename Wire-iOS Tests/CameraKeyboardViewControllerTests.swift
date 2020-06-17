@@ -129,7 +129,7 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
             sut.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
-            ])
+        ])
 
         container.layoutIfNeeded()
         return container
@@ -200,9 +200,9 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
     }
 
     private func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
-                                       file: StaticString = #file,
-                                       testName: String = #function,
-                                       line: UInt = #line) {
+                                               file: StaticString = #file,
+                                               testName: String = #function,
+                                               line: UInt = #line) {
         // given
         splitView?.layoutSize = .compact
         // when
@@ -235,9 +235,9 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
     }
 
     private func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController,
-            file: StaticString = #file,
-            testName: String = #function,
-            line: UInt = #line) {
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
         splitView?.layoutSize = .regularPortrait
         splitView?.leftViewControllerWidth = 216
@@ -304,9 +304,9 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
     }
 
     private func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController,
-                                               file: StaticString = #file,
-                                               testName: String = #function,
-                                               line: UInt = #line) {
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
         self.splitView?.layoutSize = .compact
         setupSut(permissions: permissions)
@@ -339,11 +339,11 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         let permissions = MockPhotoPermissionsController(camera: false, library: true)
         cameraScrolledHorizontallySomePercent(with: permissions)
     }
-    
+
     private func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController,
-                                               file: StaticString = #file,
-                                               testName: String = #function,
-                                               line: UInt = #line) {
+                                                       file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) {
         // given
         splitView?.layoutSize = .compact
         setupSut(permissions: permissions)

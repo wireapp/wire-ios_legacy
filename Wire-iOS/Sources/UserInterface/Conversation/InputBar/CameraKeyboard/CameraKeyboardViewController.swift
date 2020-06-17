@@ -148,11 +148,11 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         NSLayoutConstraint.activate(
             collectionView.edgeConstraints(to: view) +
             goBackButton.squareConstraints(size: 36))
-        
+
         NSLayoutConstraint.activate(
             [goBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideMargin),
              goBackButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(18 + UIScreen.safeArea.bottom))])
-        
+
         NSLayoutConstraint.activate(
             cameraRollButton.squareConstraints(size: 36) +
             [cameraRollButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideMargin),
@@ -276,7 +276,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.isNetworkAccessAllowed = false
             options.isSynchronous = false
 
-            imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+            imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
 
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
