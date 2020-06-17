@@ -94,26 +94,50 @@ extension GridView: UICollectionViewDelegateFlowLayout {
     }
         
     private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
-        if videoStreamViews.count > 2 {
-            switch (layoutDirection, segmentType) {
-            case (.vertical, .row), (.horizontal, .column):
-                return videoStreamViews.count.evened / 2
-            case (.horizontal, .row), (.vertical, .column):
-                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
-            default:
-                break
-            }
-        } else {
-            switch (layoutDirection, segmentType) {
-            case (.vertical, .row), (.horizontal, .column):
-                return videoStreamViews.count
-            case (.horizontal, .row), (.vertical, .column):
-                return 1
-            default:
-                break
+        enum ParticipantAmount {
+            case moreThanTwo
+            case twoAndLess
+            
+            init(_ amount: Int) {
+                self = amount > 2 ? .moreThanTwo : .twoAndLess
             }
         }
-        return 0
+        
+        enum SplitType {
+            case middleSplit
+            case proportionalSplit
+            
+            init?(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
+                switch (layoutDirection, segmentType) {
+                case (.vertical, .row), (.horizontal, .column):
+                    self = .proportionalSplit
+                case (.horizontal, .row), (.vertical, .column):
+                    self = .middleSplit
+                default:
+                    return nil
+                }
+            }
+        }
+        
+        let values: [ParticipantAmount: [SplitType: Int]] = [
+            .moreThanTwo: [
+                .proportionalSplit: videoStreamViews.count.evened / 2,
+                .middleSplit: (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+            ],
+            .twoAndLess: [
+                .proportionalSplit: videoStreamViews.count,
+                .middleSplit: 1
+            ]
+        ]
+        
+        let participantAmount = ParticipantAmount(videoStreamViews.count)
+        guard
+            let splitType = SplitType(layoutDirection, segmentType),
+            let value = values[participantAmount]?[splitType] else {
+            return 1
+        }
+        
+        return value
     }
     
     private var videoStreamsViewsIsEven: Bool {
