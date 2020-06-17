@@ -145,19 +145,18 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        NSLayoutConstraint.activate(
-            collectionView.edgeConstraints(to: view) +
-            goBackButton.squareConstraints(size: 36))
+        let constraints =
+            [collectionView.edgeConstraints(to: view),
+            goBackButton.squareConstraints(size: 36),
 
-        NSLayoutConstraint.activate(
             [goBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideMargin),
-             goBackButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(18 + UIScreen.safeArea.bottom))])
+             goBackButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(18 + UIScreen.safeArea.bottom))],
 
-        NSLayoutConstraint.activate(
-            cameraRollButton.squareConstraints(size: 36) +
+            cameraRollButton.squareConstraints(size: 36),
             [cameraRollButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideMargin),
-             cameraRollButton.centerYAnchor.constraint(equalTo: goBackButton.centerYAnchor)]
-        )
+             cameraRollButton.centerYAnchor.constraint(equalTo: goBackButton.centerYAnchor)]]
+
+        NSLayoutConstraint.activate(constraints.reduce([],+))
     }
 
     override func viewWillAppear(_ animated: Bool) {

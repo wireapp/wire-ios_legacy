@@ -99,7 +99,7 @@ final class CameraCell: UICollectionViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        let array = [
+        let constraints = [
             expandButton.squareConstraints(size: 40),
             [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
              expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)],
@@ -110,7 +110,7 @@ final class CameraCell: UICollectionViewCell {
             [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
              changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]]
         
-        NSLayoutConstraint.activate(array.reduce([],+))
+        NSLayoutConstraint.activate(constraints.reduce([],+))
     }
     
     @available(*, unavailable)
