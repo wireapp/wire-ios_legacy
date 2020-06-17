@@ -89,7 +89,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
     
-    func calculateRows(for indexPath: IndexPath) -> Int {
+    private func calculateRows(for indexPath: IndexPath) -> Int {
         let verticalLayout = layoutDirection == .vertical
         if videoStreamViews.count > 2 {
             if verticalLayout {
@@ -102,7 +102,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    func calculateColumns(for indexPath: IndexPath) -> Int {
+    private func calculateColumns(for indexPath: IndexPath) -> Int {
         let verticalLayout = layoutDirection == .vertical
         if videoStreamViews.count > 2 {
             if verticalLayout {
@@ -140,15 +140,3 @@ extension GridView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension Int {
-    var isEven: Bool {
-        guard self != 0 else {
-            return true
-        }
-        return self % 2 == 0
-    }
-    
-    var evened: Int {
-        return Int(round(Double(self) / 2) * 2)
-    }
-}
