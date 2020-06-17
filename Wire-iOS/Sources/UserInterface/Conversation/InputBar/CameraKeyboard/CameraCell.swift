@@ -98,13 +98,22 @@ final class CameraCell: UICollectionViewCell {
          changeCameraButton].prepareForLayout()
         
         let constraints = [
-            expandButton.squareConstraints(size: 40),
+            [
+                expandButton.widthAnchor.constraint(equalToConstant: 40),
+                expandButton.widthAnchor.constraint(equalTo: expandButton.heightAnchor)
+            ],
             [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
              expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)],
-            takePictureButton.squareConstraints(size: 60),
+            [
+                takePictureButton.widthAnchor.constraint(equalToConstant: 60),
+                takePictureButton.widthAnchor.constraint(equalTo: takePictureButton.heightAnchor)
+            ],
             [takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
             takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)],
-            changeCameraButton.squareConstraints(size: 40),
+            [
+                changeCameraButton.widthAnchor.constraint(equalToConstant: 40),
+                changeCameraButton.widthAnchor.constraint(equalTo: changeCameraButton.heightAnchor)
+            ],
             [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
              changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]]
         

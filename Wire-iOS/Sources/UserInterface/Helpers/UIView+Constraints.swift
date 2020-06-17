@@ -317,11 +317,6 @@ extension UIView {
 
 ///TODO: snippets
 extension UIView {
-    func squareConstraints(size: CGFloat) -> [NSLayoutConstraint] {
-        return [widthAnchor.constraint(equalToConstant: size),
-                widthAnchor.constraint(equalTo: heightAnchor)]
-    }
-
     func edgeConstraints(to view: UIView) -> [NSLayoutConstraint] {
         return [leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 topAnchor.constraint(equalTo: view.topAnchor),

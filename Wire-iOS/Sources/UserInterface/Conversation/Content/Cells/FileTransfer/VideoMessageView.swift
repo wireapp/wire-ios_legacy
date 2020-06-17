@@ -105,13 +105,16 @@ final class VideoMessageView: UIView, TransferView {
         let sizeConstraint = widthAnchor.constraint(equalTo: heightAnchor, constant: 4/3)
 
         sizeConstraint.priority = UILayoutPriority(750)
-
+        
         NSLayoutConstraint.activate(
             [sizeConstraint] +
             previewImageView.edgeConstraints(to: self) +
 
             playButton.centerConstraints(to: previewImageView) +
-            playButton.squareConstraints(size: 56) +
+            [
+            playButton.widthAnchor.constraint(equalToConstant: 56),
+            playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor)
+            ] +
 
             progressView.centerConstraints(to: playButton) +
             [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),

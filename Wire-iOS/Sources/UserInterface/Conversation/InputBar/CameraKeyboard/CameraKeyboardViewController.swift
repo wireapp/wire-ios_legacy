@@ -145,12 +145,18 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
 
         let constraints =
             [collectionView.edgeConstraints(to: view),
-            goBackButton.squareConstraints(size: 36),
+             [
+                goBackButton.widthAnchor.constraint(equalToConstant: 36),
+                goBackButton.widthAnchor.constraint(equalTo: goBackButton.heightAnchor)
+                ],
 
             [goBackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideMargin),
              goBackButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(18 + UIScreen.safeArea.bottom))],
 
-            cameraRollButton.squareConstraints(size: 36),
+            [
+                cameraRollButton.widthAnchor.constraint(equalToConstant: 36),
+                cameraRollButton.widthAnchor.constraint(equalTo: cameraRollButton.heightAnchor)
+                ],
             [cameraRollButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideMargin),
              cameraRollButton.centerYAnchor.constraint(equalTo: goBackButton.centerYAnchor)]]
 
