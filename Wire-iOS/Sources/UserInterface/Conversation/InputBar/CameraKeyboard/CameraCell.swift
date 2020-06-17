@@ -99,21 +99,18 @@ final class CameraCell: UICollectionViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        NSLayoutConstraint.activate(
-            expandButton.squareConstraints(size: 40) +
+        let array = [
+            expandButton.squareConstraints(size: 40),
             [expandButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)])
-                
-        NSLayoutConstraint.activate(
-            takePictureButton.squareConstraints(size: 60) +
+             expandButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)],
+            takePictureButton.squareConstraints(size: 60),
             [takePictureButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(6 + UIScreen.safeArea.bottom)),
-            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)])
-            
-        NSLayoutConstraint.activate(
-            changeCameraButton.squareConstraints(size: 40) +
+            takePictureButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)],
+            changeCameraButton.squareConstraints(size: 40),
             [changeCameraButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-             changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]
-        )
+             changeCameraButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)]]
+        
+        NSLayoutConstraint.activate(array.reduce([],+))
     }
     
     @available(*, unavailable)
