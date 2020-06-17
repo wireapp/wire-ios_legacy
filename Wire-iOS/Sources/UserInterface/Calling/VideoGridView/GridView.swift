@@ -79,8 +79,8 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
         
-        let rows = calculateRows(for: indexPath)
-        let columns = calculateColumns(for: indexPath)
+        let rows = calculate(segments: .row, for: indexPath)
+        let columns = calculate(segments: .column, for: indexPath)
         
         let width = maxWidth / CGFloat(columns)
         let height = maxHeight / CGFloat(rows)
@@ -88,30 +88,32 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
     
-    private func calculateRows(for indexPath: IndexPath) -> Int {
-        let verticalLayout = layoutDirection == .vertical
-        if videoStreamViews.count > 2 {
-            if verticalLayout {
-                return videoStreamViews.count.evened / 2
-            } else {
-                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
-            }
-        } else {
-            return verticalLayout ? videoStreamViews.count : 1
-        }
+    private enum SegmentType {
+        case row
+        case column
     }
-    
-    private func calculateColumns(for indexPath: IndexPath) -> Int {
-        let verticalLayout = layoutDirection == .vertical
+        
+    private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
         if videoStreamViews.count > 2 {
-            if verticalLayout {
-                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
-            } else {
+            switch (layoutDirection, segmentType) {
+            case (.vertical, .row), (.horizontal, .column):
                 return videoStreamViews.count.evened / 2
+            case (.horizontal, .row), (.vertical, .column):
+                return (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+            default:
+                break
             }
         } else {
-            return verticalLayout ? 1 : videoStreamViews.count
+            switch (layoutDirection, segmentType) {
+            case (.vertical, .row), (.horizontal, .column):
+                return videoStreamViews.count
+            case (.horizontal, .row), (.vertical, .column):
+                return 1
+            default:
+                break
+            }
         }
+        return 0
     }
     
     private var videoStreamsViewsIsEven: Bool {
