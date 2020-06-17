@@ -141,7 +141,6 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
                 return
         }
 
-        //TODO: tableView.targetView(for: message, dataSource: dataSource)
         animator.addCompletion {
             self.messagePresenter.open(message, targetView: self, actionResponder: actionResponder)
         }
