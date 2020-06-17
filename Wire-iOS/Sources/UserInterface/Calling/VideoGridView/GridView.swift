@@ -38,7 +38,10 @@ class GridView: NSObject {
         collectionView.register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
         collectionView.isScrollEnabled = false
     }
-    
+}
+
+// MARK: - Interface
+extension GridView {
     func append(view: UIView) {
         videoStreamViews.append(view)
         collectionView.reloadData()
@@ -50,10 +53,102 @@ class GridView: NSObject {
     }
 }
 
-extension GridView: UICollectionViewDelegate {
+// MARK: - Segment calculation
+extension GridView {
+    private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        let values: [ParticipantAmount: [SplitType: Int]] = [
+            .moreThanTwo: [
+                .proportionalSplit: videoStreamViews.count.evened / 2,
+                .middleSplit: (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+            ],
+            .twoAndLess: [
+                .proportionalSplit: videoStreamViews.count,
+                .middleSplit: 1
+            ]
+        ]
+        
+        let participantAmount = ParticipantAmount(videoStreamViews.count)
+        guard
+            let splitType = SplitType(layoutDirection, segmentType),
+            let value = values[participantAmount]?[splitType] else {
+                return 1
+        }
+        
+        return value
+    }
 
+    private enum SegmentType {
+        case row
+        case column
+    }
+    
+    private enum ParticipantAmount {
+        case moreThanTwo
+        case twoAndLess
+        
+        init(_ amount: Int) {
+            self = amount > 2 ? .moreThanTwo : .twoAndLess
+        }
+    }
+    
+    private enum SplitType {
+        case middleSplit
+        case proportionalSplit
+        
+        init?(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
+            switch (layoutDirection, segmentType) {
+            case (.vertical, .row), (.horizontal, .column):
+                self = .proportionalSplit
+            case (.horizontal, .row), (.vertical, .column):
+                self = .middleSplit
+            default:
+                return nil
+            }
+        }
+    }
+    
+    private var videoStreamsViewsIsEven: Bool {
+        return videoStreamViews.count.isEven
+    }
+    
+    private func isLastRow(_ indexPath: IndexPath) -> Bool {
+        return videoStreamViews.count == indexPath.row + 1
+    }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+extension GridView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxWidth = collectionView.bounds.size.width
+        let maxHeight = collectionView.bounds.size.height
+        
+        let rows = calculate(segments: .row, for: indexPath)
+        let columns = calculate(segments: .column, for: indexPath)
+        
+        let width = maxWidth / CGFloat(columns)
+        let height = maxHeight / CGFloat(rows)
+
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .zero
+    }
+}
+
+// MARK: - UICollectionViewDataSource
 extension GridView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -74,94 +169,5 @@ extension GridView: UICollectionViewDataSource {
     }
 }
 
-extension GridView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let maxWidth = collectionView.bounds.size.width
-        let maxHeight = collectionView.bounds.size.height
-        
-        let rows = calculate(segments: .row, for: indexPath)
-        let columns = calculate(segments: .column, for: indexPath)
-        
-        let width = maxWidth / CGFloat(columns)
-        let height = maxHeight / CGFloat(rows)
-
-        return CGSize(width: width, height: height)
-    }
-    
-    private enum SegmentType {
-        case row
-        case column
-    }
-        
-    private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
-        enum ParticipantAmount {
-            case moreThanTwo
-            case twoAndLess
-            
-            init(_ amount: Int) {
-                self = amount > 2 ? .moreThanTwo : .twoAndLess
-            }
-        }
-        
-        enum SplitType {
-            case middleSplit
-            case proportionalSplit
-            
-            init?(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
-                switch (layoutDirection, segmentType) {
-                case (.vertical, .row), (.horizontal, .column):
-                    self = .proportionalSplit
-                case (.horizontal, .row), (.vertical, .column):
-                    self = .middleSplit
-                default:
-                    return nil
-                }
-            }
-        }
-        
-        let values: [ParticipantAmount: [SplitType: Int]] = [
-            .moreThanTwo: [
-                .proportionalSplit: videoStreamViews.count.evened / 2,
-                .middleSplit: (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
-            ],
-            .twoAndLess: [
-                .proportionalSplit: videoStreamViews.count,
-                .middleSplit: 1
-            ]
-        ]
-        
-        let participantAmount = ParticipantAmount(videoStreamViews.count)
-        guard
-            let splitType = SplitType(layoutDirection, segmentType),
-            let value = values[participantAmount]?[splitType] else {
-            return 1
-        }
-        
-        return value
-    }
-    
-    private var videoStreamsViewsIsEven: Bool {
-        return videoStreamViews.count.isEven
-    }
-    
-    private func isLastRow(_ indexPath: IndexPath) -> Bool {
-        return videoStreamViews.count == indexPath.row + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .zero
-    }
-}
-
+// MARK: - UICollectionViewDelegate
+extension GridView: UICollectionViewDelegate {}
