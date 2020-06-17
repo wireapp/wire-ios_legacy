@@ -19,9 +19,12 @@
 import Foundation
 import Cartography
 import FLAnimatedImage
+import WireDataModel
 
 final class ImageResourceView: FLAnimatedImageView {
     
+    weak var delegate: ContextMenuDelegate?
+
     fileprivate var loadingView = ThreeDotsLoadingView()
     
     /// This token is changes everytime the cell is re-used. Useful when performing
@@ -105,10 +108,13 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 
-        let url = URL(string: "http://www.wire.com")!
-        
         let previewProvider: UIContextMenuContentPreviewProvider = {
-            return BrowserViewController(url: url)
+            guard let message = self.delegate?.message,
+                  let actionResponder = self.delegate?.delegate else { return nil}
+            
+            let messagePresenter = MessagePresenter(mediaPlaybackManager: nil)
+            
+            return messagePresenter.viewController(forImageMessagePreview: message, actionResponder: actionResponder)
         }
 
         return UIContextMenuConfiguration(identifier: nil,

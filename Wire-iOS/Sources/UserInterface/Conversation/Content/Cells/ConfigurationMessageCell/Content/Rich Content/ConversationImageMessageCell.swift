@@ -20,7 +20,9 @@ import Foundation
 import UIKit
 import WireDataModel
 
-final class ConversationImageMessageCell: UIView, ConversationMessageCell {
+final class ConversationImageMessageCell: UIView,
+                                          ConversationMessageCell,
+                                          ContextMenuDelegate {
     
     struct Configuration {
         let image: ZMImageMessageData
@@ -31,11 +33,12 @@ final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     }
     
     private var containerView = UIView()
-    private var imageResourceView: ImageResourceView = {
+    private lazy var imageResourceView: ImageResourceView = {
         let view = ImageResourceView()
         
         // allow iOS 13 context menu
         if #available(iOS 13.0, *) {
+            view.delegate = self
             view.isUserInteractionEnabled = true
         }
         
