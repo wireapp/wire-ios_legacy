@@ -179,7 +179,8 @@ final class MessagePresenter: NSObject {
         }
     }
 
-    func openImageMessage(_ message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) {
+    func openImageMessage(_ message: ZMConversationMessage,
+                          actionResponder delegate: MessageActionResponder) {
         let imageViewController = viewController(forImageMessage: message, actionResponder: delegate)
         if let imageViewController = imageViewController {
             // to allow image rotation, present the image viewer in full screen style
@@ -194,7 +195,9 @@ final class MessagePresenter: NSObject {
                 return nil
         }
 
-        return imagesViewController(for: message, actionResponder: delegate, isPreviewing: false)
+        return imagesViewController(for: message,
+                                    actionResponder: delegate,
+                                    isPreviewing: false)
     }
 
     func viewController(forImageMessagePreview message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) -> UIViewController? {

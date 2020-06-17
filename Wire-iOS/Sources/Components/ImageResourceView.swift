@@ -23,7 +23,14 @@ import WireDataModel
 
 final class ImageResourceView: FLAnimatedImageView {
     
+    // MARK: - context menu
     weak var delegate: ContextMenuDelegate?
+    private lazy var messagePresenter: MessagePresenter = {
+        let messagePresenter = MessagePresenter(mediaPlaybackManager: nil)
+        messagePresenter.modalTargetController = AppDelegate.shared.window?.rootViewController
+        
+        return messagePresenter
+    }()
 
     fileprivate var loadingView = ThreeDotsLoadingView()
     
@@ -111,11 +118,13 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
             guard let message = self.delegate?.message,
-                  let actionResponder = self.delegate?.delegate else { return nil}
+                  let actionResponder = self.delegate?.delegate else {
+                    return nil
+            }
             
-            let messagePresenter = MessagePresenter(mediaPlaybackManager: nil)
             
-            return messagePresenter.viewController(forImageMessagePreview: message, actionResponder: actionResponder)
+            
+            return self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: actionResponder)
         }
 
         return UIContextMenuConfiguration(identifier: nil,
@@ -128,9 +137,14 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {
+        guard let message = delegate?.message,
+            let actionResponder = delegate?.delegate else {
+                return
+        }
+
+        //TODO: tableView.targetView(for: message, dataSource: dataSource)
         animator.addCompletion {
-            ///TODO
-//            self.openURL()
+            self.messagePresenter.open(message, targetView: self, actionResponder: actionResponder)
         }
     }
 }

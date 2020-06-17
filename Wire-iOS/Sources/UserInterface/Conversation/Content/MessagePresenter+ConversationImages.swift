@@ -58,14 +58,12 @@ extension MessagePresenter {
         }
 
         if (UIDevice.current.userInterfaceIdiom == .phone) {
-            imagesController.modalPresentationStyle = .fullScreen;
+            imagesController.modalPresentationStyle = .fullScreen
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
         } else {
             imagesController.modalPresentationStyle = .overFullScreen
         }
         imagesController.modalTransitionStyle = .crossDissolve
-
-        
 
         let closeButton = CollectionsView.closeButton()
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)
@@ -80,14 +78,11 @@ extension MessagePresenter {
             self.modalTargetController?.dismiss(animated: true, completion: completion)
         }
 
-        if isPreviewing {
-            return imagesController
-        } else {
-            return imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
-        }
+        return isPreviewing ? imagesController : imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
     }
     
-    @objc func closeImagesButtonPressed(_ sender: AnyObject!) {
-        modalTargetController?.dismiss(animated: true, completion: .none)
+    @objc
+    private func closeImagesButtonPressed(_ sender: AnyObject!) {
+        modalTargetController?.dismiss(animated: true)
     }
 }
