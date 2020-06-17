@@ -59,7 +59,7 @@ extension GridView {
         let values: [ParticipantAmount: [SplitType: Int]] = [
             .moreThanTwo: [
                 .proportionalSplit: videoStreamViews.count.evened / 2,
-                .middleSplit: (!videoStreamsViewsIsEven && isLastRow(indexPath)) ? 1 : 2
+                .middleSplit: isOddLastRow(indexPath) ? 1 : 2
             ],
             .twoAndLess: [
                 .proportionalSplit: videoStreamViews.count,
@@ -107,12 +107,10 @@ extension GridView {
         }
     }
     
-    private var videoStreamsViewsIsEven: Bool {
-        return videoStreamViews.count.isEven
-    }
-    
-    private func isLastRow(_ indexPath: IndexPath) -> Bool {
-        return videoStreamViews.count == indexPath.row + 1
+    private func isOddLastRow(_ indexPath: IndexPath) -> Bool {
+        let isLastRow = videoStreamViews.count == indexPath.row + 1
+        let isOdd = !videoStreamViews.count.isEven
+        return isOdd && isLastRow
     }
 }
 
