@@ -17,10 +17,9 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
-class TopPeopleCell: UICollectionViewCell {
+final class TopPeopleCell: UICollectionViewCell {
 
     // MARK: - Properties
 
