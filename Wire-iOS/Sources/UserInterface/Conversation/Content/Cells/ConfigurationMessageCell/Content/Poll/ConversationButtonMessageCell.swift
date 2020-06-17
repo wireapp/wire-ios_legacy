@@ -69,7 +69,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         guard let config = config else {
             return
         }
-        
+
         button.setTitle(config.text, for: .normal)
 
         switch config.state {
@@ -127,7 +127,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     private func configureViews() {
-        [button, errorLabel].forEach() {
+        [button, errorLabel].forEach {
             addSubview($0)
         }
     }
@@ -167,7 +167,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var message: ZMConversationMessage?
 
-    var delegate: ConversationMessageCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
 
     var actionController: ConversationMessageActionController?
 

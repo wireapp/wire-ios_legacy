@@ -88,7 +88,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
                         self.layoutIfNeeded()
-                    }) { finished in
+                    }) { _ in
                         // reset gesture state
                         let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
 
@@ -367,7 +367,7 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
         if #available(iOS 13.0, *) {
             return gestureRecognizer is UILongPressGestureRecognizer
         }
-        
+
         // all other recognizers require this pan recognizer to fail
         return gestureRecognizer == revealDrawerGestureRecognizer
     }
@@ -386,7 +386,7 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     /// - Returns: true if need to require failure of otherGestureRecognizer
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         if #available(iOS 13.0, *) {
             return false
         } else if #available(iOS 11.0, *) {

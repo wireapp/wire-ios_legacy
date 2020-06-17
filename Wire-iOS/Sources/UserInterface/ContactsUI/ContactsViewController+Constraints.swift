@@ -56,7 +56,7 @@ extension ContactsViewController {
 
         constraints += [
             emptyResultsLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyResultsLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+            emptyResultsLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
         ]
 
         constraints += [

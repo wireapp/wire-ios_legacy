@@ -68,12 +68,9 @@ struct LengthConstraints {
     }
 
     var array: [NSLayoutConstraint] {
-        return constraints.values.map{ $0 }
+        return constraints.values.map { $0 }
     }
 }
-
-
-
 
 extension UIView {
 
