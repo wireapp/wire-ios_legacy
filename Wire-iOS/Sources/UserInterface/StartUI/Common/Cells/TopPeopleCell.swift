@@ -53,7 +53,6 @@ final class TopPeopleCell: UICollectionViewCell {
     private var conversationImageViewSize: NSLayoutConstraint?
     private var initialConstraintsCreated = false
 
-
     // MARK: - Life Cycle
 
     override init(frame: CGRect) {
@@ -70,7 +69,6 @@ final class TopPeopleCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     // MARK: - Methods
 

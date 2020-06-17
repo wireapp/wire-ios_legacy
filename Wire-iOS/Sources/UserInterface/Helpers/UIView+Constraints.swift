@@ -315,21 +315,6 @@ extension UIView {
 
 }
 
-///TODO: snippets
-extension UIView {
-    func edgeConstraints(to view: UIView) -> [NSLayoutConstraint] {
-        return [leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                topAnchor.constraint(equalTo: view.topAnchor),
-                trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                bottomAnchor.constraint(equalTo: view.bottomAnchor)]
-    }
-
-    func centerConstraints(to view: UIView) -> [NSLayoutConstraint] {
-        return [centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                centerYAnchor.constraint(equalTo: view.centerYAnchor)]
-    }
-}
-
 extension Sequence where Element == UIView {
 	func prepareForLayout() {
 		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }

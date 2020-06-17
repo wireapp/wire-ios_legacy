@@ -105,24 +105,23 @@ final class VideoMessageView: UIView, TransferView {
         let sizeConstraint = widthAnchor.constraint(equalTo: heightAnchor, constant: 4/3)
 
         sizeConstraint.priority = UILayoutPriority(750)
-        
+
         NSLayoutConstraint.activate(
             [sizeConstraint,
-                    previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                    previewImageView.topAnchor.constraint(equalTo: topAnchor),
-                    previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                    previewImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+             previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+             previewImageView.topAnchor.constraint(equalTo: topAnchor),
+             previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+             previewImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            ] +
+             playButton.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor),
+             playButton.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor),
+             playButton.widthAnchor.constraint(equalToConstant: 56),
+             playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor),
 
-            playButton.centerConstraints(to: previewImageView) +
-            [
-            playButton.widthAnchor.constraint(equalToConstant: 56),
-            playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor)
-            ] +
+             progressView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor),
+             progressView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
 
-            progressView.centerConstraints(to: playButton) +
-            [progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+             progressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
              progressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
 
              bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -130,10 +129,11 @@ final class VideoMessageView: UIView, TransferView {
              bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
              bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
 
-            timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
-            timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16)] +
+             timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
+             timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16),
 
-            loadingView.centerConstraints(to: previewImageView)
+             loadingView.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor),
+             loadingView.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor)]
         )
     }
 
@@ -141,8 +141,8 @@ final class VideoMessageView: UIView, TransferView {
         self.fileMessage = message
 
         guard let fileMessage = self.fileMessage,
-              let fileMessageData = fileMessage.fileMessageData,
-              let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
+            let fileMessageData = fileMessage.fileMessageData,
+            let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
 
         self.state = state
         self.previewImageView.image = nil
