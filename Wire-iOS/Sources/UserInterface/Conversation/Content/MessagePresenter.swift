@@ -56,7 +56,7 @@ final class MessagePresenter: NSObject {
               !fileURL.path.isEmpty else {
             let errorMessage = "File URL is missing: \(message.fileMessageData?.fileURL.debugDescription ?? "") (\(message.fileMessageData.debugDescription))"
             assert(false, errorMessage)
-            
+
             zmLog.error(errorMessage)
             ZMUserSession.shared()?.enqueue({
                 message.fileMessageData?.requestFileDownload()
@@ -99,7 +99,7 @@ final class MessagePresenter: NSObject {
 // MARK: - AVPlayerViewController dismissial
 
     fileprivate func observePlayerDismissial() {
-        videoPlayerObserver = NotificationCenter.default.addObserver(forName: .dismissingAVPlayer, object: nil, queue: OperationQueue.main) { notification in
+        videoPlayerObserver = NotificationCenter.default.addObserver(forName: .dismissingAVPlayer, object: nil, queue: OperationQueue.main) { _ in
             self.mediaPlayerController?.tearDown()
 
             UIViewController.attemptRotationToDeviceOrientation()
