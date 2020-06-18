@@ -31,7 +31,7 @@ final class ConversationTextMessageCell: UIView,
 
     private lazy var messageTextView: LinkInteractionTextView = {
         let view = LinkInteractionTextView()
-        
+
         view.isEditable = false
         view.isSelectable = true
         view.backgroundColor = .clear
@@ -42,29 +42,29 @@ final class ConversationTextMessageCell: UIView,
         view.accessibilityIdentifier = "Message"
         view.accessibilityElementsHidden = false
         view.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
-        view.linkTextAttributes = [.foregroundColor : UIColor.accent()]
+        view.linkTextAttributes = [.foregroundColor: UIColor.accent()]
         view.setContentHuggingPriority(.required, for: .vertical)
         view.setContentCompressionResistancePriority(.required, for: .vertical)
         view.interactionDelegate = self
-        
+
         if #available(iOS 11.0, *) {
             view.textDragInteraction?.isEnabled = false
         }
-        
+
         return view
     }()
-    
+
     var isSelected: Bool = false
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var menuPresenter: ConversationMessageCellMenuPresenter?
-    
+
     var ephemeralTimerTopInset: CGFloat {
         guard let font = messageTextView.font else {
             return 0
         }
-        
+
         return font.lineHeight / 2
     }
 
@@ -142,7 +142,7 @@ final class ConversationTextMessageCellDescription: ConversationMessageCellDescr
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
@@ -175,10 +175,10 @@ extension ConversationTextMessageCellDescription {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
-        
+
         return cells(textMessageData: textMessageData, message: message, searchQueries: searchQueries)
     }
-    
+
     static func cells(textMessageData: ZMTextMessageData,
                       message: ZMConversationMessage,
                       searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
