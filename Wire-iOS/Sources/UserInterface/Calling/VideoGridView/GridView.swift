@@ -21,7 +21,11 @@ import UIKit
 class GridView: NSObject {
     let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
-    private(set) var videoStreamViews = [UIView]()
+    private(set) var videoStreamViews = [UIView]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var layoutDirection: UICollectionView.ScrollDirection = .vertical {
         didSet {
@@ -44,19 +48,20 @@ class GridView: NSObject {
 extension GridView {
     func append(view: UIView) {
         videoStreamViews.append(view)
-        collectionView.reloadData()
     }
     
     func remove(view: UIView) {
         videoStreamViews.firstIndex(of: view).apply { videoStreamViews.remove(at: $0) }
-        collectionView.reloadData()
     }
 }
 
 // MARK: - Segment calculation
 extension GridView {
-    private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
-        let values: [ParticipantAmount: [SplitType: Int]] = [
+    private func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        let participantAmount = ParticipantAmount(videoStreamViews.count)
+        let splitType = SplitType(layoutDirection, segmentType)
+        
+        let numberOfItems: [ParticipantAmount: [SplitType: Int]] = [
             .moreThanTwo: [
                 .proportionalSplit: videoStreamViews.count.evenlyCeiled / 2,
                 .middleSplit: isOddLastRow(indexPath) ? 1 : 2
@@ -66,15 +71,8 @@ extension GridView {
                 .middleSplit: 1
             ]
         ]
-        
-        let participantAmount = ParticipantAmount(videoStreamViews.count)
-        guard
-            let splitType = SplitType(layoutDirection, segmentType),
-            let value = values[participantAmount]?[splitType] else {
-                return 1
-        }
-        
-        return value
+    
+        return numberOfItems[participantAmount]?[splitType] ?? 1
     }
 
     private enum SegmentType {
@@ -95,14 +93,14 @@ extension GridView {
         case middleSplit
         case proportionalSplit
         
-        init?(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
+        init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
             switch (layoutDirection, segmentType) {
             case (.vertical, .row), (.horizontal, .column):
                 self = .proportionalSplit
             case (.horizontal, .row), (.vertical, .column):
                 self = .middleSplit
-            default:
-                return nil
+            @unknown default:
+                fatalError()
             }
         }
     }
@@ -120,8 +118,8 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
         
-        let rows = calculate(segments: .row, for: indexPath)
-        let columns = calculate(segments: .column, for: indexPath)
+        let rows = numberOfItems(in: .row, for: indexPath)
+        let columns = numberOfItems(in: .column, for: indexPath)
         
         let width = maxWidth / CGFloat(columns)
         let height = maxHeight / CGFloat(rows)
