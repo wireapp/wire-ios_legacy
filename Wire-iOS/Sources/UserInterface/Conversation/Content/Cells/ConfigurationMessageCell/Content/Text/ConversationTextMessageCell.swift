@@ -22,8 +22,7 @@ import UIKit
 
 final class ConversationTextMessageCell: UIView,
                                          ConversationMessageCell,
-                                         TextViewInteractionDelegate,
-                                         ContextMenuDelegate {
+                                         TextViewInteractionDelegate {
 
     struct Configuration: Equatable {
         let attributedText: NSAttributedString
@@ -51,9 +50,7 @@ final class ConversationTextMessageCell: UIView,
         if #available(iOS 11.0, *) {
             view.textDragInteraction?.isEnabled = false
         }
-
         
-        view.contextMenuDelegate = self
         return view
     }()
     

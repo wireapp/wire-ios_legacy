@@ -25,11 +25,7 @@ protocol TextViewInteractionDelegate: class {
 }
 
 final class LinkInteractionTextView: UITextView {
-    weak var contextMenuDelegate: ContextMenuDelegate?
     weak var interactionDelegate: TextViewInteractionDelegate?
-    
-    // the current interacting URL for showning context preview
-    private var interactingUrl : URL?
     
     override var selectedTextRange: UITextRange? {
         get { return nil }
@@ -112,13 +108,10 @@ extension LinkInteractionTextView: UITextViewDelegate {
                   interaction: UITextItemInteraction) -> Bool {
         
         // present system context preview
-        if #available(iOS 13.0, *) {
-            if UIApplication.shared.canOpenURL(URL),
-                interaction == .presentActions {
-                interactingUrl = URL
-                
-                return true
-            }
+        if #available(iOS 13.0, *),
+            UIApplication.shared.canOpenURL(URL),
+            interaction == .presentActions {
+            return true
         }
         
         switch interaction {
