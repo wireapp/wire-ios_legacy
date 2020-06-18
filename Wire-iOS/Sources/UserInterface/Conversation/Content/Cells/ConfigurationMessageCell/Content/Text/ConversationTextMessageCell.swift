@@ -32,6 +32,27 @@ final class ConversationTextMessageCell: UIView,
 
     private lazy var messageTextView: LinkInteractionTextView = {
         let view = LinkInteractionTextView()
+        
+        view.isEditable = false
+        view.isSelectable = true
+        view.backgroundColor = .clear
+        view.isScrollEnabled = false
+        view.textContainerInset = UIEdgeInsets.zero
+        view.textContainer.lineFragmentPadding = 0
+        view.isUserInteractionEnabled = true
+        view.accessibilityIdentifier = "Message"
+        view.accessibilityElementsHidden = false
+        view.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+        view.linkTextAttributes = [.foregroundColor : UIColor.accent()]
+        view.setContentHuggingPriority(.required, for: .vertical)
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
+        view.interactionDelegate = self
+        
+        if #available(iOS 11.0, *) {
+            view.textDragInteraction?.isEnabled = false
+        }
+
+        
         view.contextMenuDelegate = self
         return view
     }()
@@ -60,37 +81,17 @@ final class ConversationTextMessageCell: UIView,
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureSubviews()
-        configureConstraints()
+        setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureSubviews() {
-        messageTextView.isEditable = false
-        messageTextView.isSelectable = true
-        messageTextView.backgroundColor = .clear
-        messageTextView.isScrollEnabled = false
-        messageTextView.textContainerInset = UIEdgeInsets.zero
-        messageTextView.textContainer.lineFragmentPadding = 0
-        messageTextView.isUserInteractionEnabled = true
-        messageTextView.accessibilityIdentifier = "Message"
-        messageTextView.accessibilityElementsHidden = false
-        messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
-        messageTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
-        messageTextView.setContentHuggingPriority(.required, for: .vertical)
-        messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
-        messageTextView.interactionDelegate = self
-
-        if #available(iOS 11.0, *) {
-            messageTextView.textDragInteraction?.isEnabled = false
-        }
-
+    private func setup() {
         addSubview(messageTextView)
+        configureConstraints()
     }
 
     private func configureConstraints() {

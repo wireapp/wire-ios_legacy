@@ -47,10 +47,6 @@ final class LinkInteractionTextView: UITextView {
         if #available(iOS 11.0, *) {
             textDragDelegate = self
         }
-        
-        if #available(iOS 13.0, *) {
-            addInteraction(UIContextMenuInteraction(delegate: self))
-        }
     }
     
     @available(*, unavailable)
@@ -114,6 +110,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
                   shouldInteractWith URL: URL,
                   in characterRange: NSRange,
                   interaction: UITextItemInteraction) -> Bool {
+        
+        // present system context preview
         if #available(iOS 13.0, *) {
             if UIApplication.shared.canOpenURL(URL),
                 interaction == .presentActions {
@@ -192,35 +190,4 @@ extension LinkInteractionTextView: UITextDragDelegate {
         return dragRequest.suggestedItems
     }
     
-}
-
-//MARK: - UIContextMenuInteractionDelegate
-
-@available(iOS 13.0, *)
-extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        
-        guard let interactingUrl = interactingUrl,
-            UIApplication.shared.canOpenURL(interactingUrl) else {
-                return nil
-        }
-        
-        let previewProvider: UIContextMenuContentPreviewProvider = {
-            return BrowserViewController(url: interactingUrl)
-        }
-        
-        return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: previewProvider,
-                                          actionProvider: { _ in
-                                            return self.contextMenuDelegate?.makeContextMenu(title: interactingUrl.absoluteString, view: self)
-        })
-    }
-    
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
-                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
-                                animator: UIContextMenuInteractionCommitAnimating) {
-        animator.addCompletion {
-            self.interactingUrl?.open()
-        }
-    }
 }
