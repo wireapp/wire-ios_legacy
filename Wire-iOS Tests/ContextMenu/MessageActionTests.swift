@@ -29,7 +29,9 @@ final class MessageActionTests: XCTestCase {
         MessageAction.allCases.forEach() { action in
             if let imageSystemName = action.imageSystemName(),
                 let image = UIImage(systemName: imageSystemName, withConfiguration: config) {
-                verify(matching: image, named: "\(action)")
+                
+                let imageView = UIImageView(image: image)
+                verify(matching: imageView, named: "\(action)")
             }
         }
     }
