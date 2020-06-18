@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireCommonComponents
 
 final class MessageActionTests: XCTestCase {
     
@@ -39,6 +40,15 @@ final class MessageActionTests: XCTestCase {
         MessageAction.allCases.forEach() { action in
             if let imageSystemName = action.imageSystemName(),
                 let image = UIImage(systemName: imageSystemName) {
+                verify(matching: image, named: "\(action)" )
+            }
+        }
+    }
+
+    func testForStyleKitIcons() {
+        MessageAction.allCases.forEach() { action in
+            if let icon = action.icon {
+                let image = icon.makeImage(size: .tiny, color: .black)
                 verify(matching: image, named: "\(action)" )
             }
         }
