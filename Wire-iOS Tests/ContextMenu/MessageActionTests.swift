@@ -25,10 +25,11 @@ final class MessageActionTests: XCTestCase {
     
     @available(iOS 13.0, *)
     func testForSystemIcons() {
+        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular, scale: .large)
         MessageAction.allCases.forEach() { action in
             if let imageSystemName = action.imageSystemName(),
-                let image = UIImage(systemName: imageSystemName) {
-                verify(matching: image, named: "\(action)" )
+                let image = UIImage(systemName: imageSystemName, withConfiguration: config) {
+                verify(matching: image, named: "\(action)")
             }
         }
     }
@@ -37,7 +38,7 @@ final class MessageActionTests: XCTestCase {
         MessageAction.allCases.forEach() { action in
             if let icon = action.icon {
                 let image = icon.makeImage(size: .tiny, color: .black)
-                verify(matching: image, named: "\(action)" )
+                verify(matching: image, named: "\(action)")
             }
         }
     }
