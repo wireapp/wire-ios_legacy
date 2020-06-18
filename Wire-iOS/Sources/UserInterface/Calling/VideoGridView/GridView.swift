@@ -58,7 +58,7 @@ extension GridView {
     private func calculate(segments segmentType: SegmentType, for indexPath: IndexPath) -> Int {
         let values: [ParticipantAmount: [SplitType: Int]] = [
             .moreThanTwo: [
-                .proportionalSplit: videoStreamViews.count.evened / 2,
+                .proportionalSplit: videoStreamViews.count.evenlyCeiled / 2,
                 .middleSplit: isOddLastRow(indexPath) ? 1 : 2
             ],
             .twoAndLess: [

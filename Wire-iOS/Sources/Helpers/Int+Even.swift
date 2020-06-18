@@ -20,10 +20,10 @@ import Foundation
 
 extension Int {
     var isEven: Bool {
-        return self % 2 == 0
+        return self.isMultiple(of: 2)
     }
     
-    var evened: Int {
-        return Int(round(Double(self) / 2) * 2)
+    var evenlyCeiled: Int {
+        return isEven ? self : self + 1
     }
 }
