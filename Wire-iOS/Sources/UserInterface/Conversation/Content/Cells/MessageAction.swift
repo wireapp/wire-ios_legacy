@@ -123,13 +123,13 @@ enum MessageAction: CaseIterable {
     
     @available(iOS 13.0, *)
     func imageSystemName() -> String? {
-        let imageName: String
+        let imageName: String?
         switch self {
         case .copy:
             imageName = "doc.on.doc"
         case .reply:
             imageName = "arrowshape.turn.up.left"
-        case .details:
+        case .openDetails:
             imageName = "info"
         case .edit:
             imageName = "pencil"
@@ -149,11 +149,21 @@ enum MessageAction: CaseIterable {
             imageName = "suit.heart"
         case .resend:
             imageName = "repeat"
-        case .revealMessage:
+        case .showInConversation:
             imageName = "eye"
+        case .sketchDraw:
+        //TODO:
+            imageName =  nil
+        case .sketchEmoji:
+        //TODO:
+            imageName =  nil
+        case .present,
+             .openQuote:
+            // no icon for present and openQuote
+            imageName =  nil
         }
         
-        return UIImage(systemName: imageName)
+        return imageName
     }
 
 

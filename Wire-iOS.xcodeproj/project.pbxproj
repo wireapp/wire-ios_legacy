@@ -701,6 +701,7 @@
 		A90E4ABF2381CD0200468F31 /* AccentColorChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */; };
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
+		A90F3E08249B978400429BFE /* MessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F3E07249B978400429BFE /* MessageActionTests.swift */; };
 		A9150DB523D1B6B900844185 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9150DB423D1B6B800844185 /* Analytics.swift */; };
 		A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */; };
 		A918330F2419272E00CBD0B7 /* TokenSeparatorAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330E2419272E00CBD0B7 /* TokenSeparatorAttachment.swift */; };
@@ -2291,6 +2292,7 @@
 		A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorChangeHandler.swift; sourceTree = "<group>"; };
 		A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIControlState+ExpandState.swift"; path = "Wire-iOS/UIControlState+ExpandState.swift"; sourceTree = SOURCE_ROOT; };
 		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		A90F3E07249B978400429BFE /* MessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageActionTests.swift; sourceTree = "<group>"; };
 		A9150DB423D1B6B800844185 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTextAttachmentTests.swift; sourceTree = "<group>"; };
 		A918330E2419272E00CBD0B7 /* TokenSeparatorAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSeparatorAttachment.swift; sourceTree = "<group>"; };
@@ -5402,6 +5404,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A90F3E06249B976200429BFE /* ContextMenu */ = {
+			isa = PBXGroup;
+			children = (
+				A90F3E07249B978400429BFE /* MessageActionTests.swift */,
+			);
+			path = ContextMenu;
+			sourceTree = "<group>";
+		};
 		A918330B241922D700CBD0B7 /* Token */ = {
 			isa = PBXGroup;
 			children = (
@@ -5499,6 +5509,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A90F3E06249B976200429BFE /* ContextMenu */,
 				A923F1C32428C562003F361F /* ZipFile */,
 				A918330B241922D700CBD0B7 /* Token */,
 				A9DA5082240FFCEB00C2F886 /* Button */,
@@ -8225,6 +8236,7 @@
 				EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */,
 				EF2B255D22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift in Sources */,
 				EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */,
+				A90F3E08249B978400429BFE /* MessageActionTests.swift in Sources */,
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
 				EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */,
 				EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */,
