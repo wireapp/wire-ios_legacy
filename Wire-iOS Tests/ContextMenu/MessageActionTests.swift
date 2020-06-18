@@ -23,18 +23,6 @@ import WireCommonComponents
 
 final class MessageActionTests: XCTestCase {
     
-    var sut: MessageAction!
-    
-    override func setUp() {
-        super.setUp()
-//        sut = MessageAction
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-    
     @available(iOS 13.0, *)
     func testForSystemIcons() {
         MessageAction.allCases.forEach() { action in

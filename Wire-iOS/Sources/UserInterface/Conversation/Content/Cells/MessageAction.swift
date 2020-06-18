@@ -128,39 +128,37 @@ enum MessageAction: CaseIterable {
         case .copy:
             imageName = "doc.on.doc"
         case .reply:
-            imageName = "arrowshape.turn.up.left"
+            imageName = "arrow.uturn.left"
         case .openDetails:
-            imageName = "info"
+            imageName = "info.circle"
         case .edit:
             imageName = "pencil"
         case .delete:
             imageName = "trash"
         case .save:
-            imageName = "square.and.arrow.down"
+            imageName = "arrow.down.to.line"
         case .cancel:
-            imageName = "arrowshape.turn.up.left"
+            imageName = "xmark"
         case .download:
-            imageName = "xmark.circle"
+            imageName = "chevron.down"
         case .forward:
-            imageName = "arrowshape.turn.up.right"
+            imageName = "arrow.up.to.line"
         case .like:
-            imageName = "suit.heart.fill"
-        case .unlike:
             imageName = "suit.heart"
+        case .unlike:
+            imageName = "suit.heart.fill"
         case .resend:
-            imageName = "repeat"
+            imageName = "arrow.clockwise"
         case .showInConversation:
-            imageName = "eye"
+            imageName = "eye.fill"
         case .sketchDraw:
-        //TODO:
-            imageName =  nil
+            imageName = "scribble"
         case .sketchEmoji:
-        //TODO:
-            imageName =  nil
+            imageName = "smiley.fill"
         case .present,
              .openQuote:
             // no icon for present and openQuote
-            imageName =  nil
+            imageName = nil
         }
         
         return imageName
