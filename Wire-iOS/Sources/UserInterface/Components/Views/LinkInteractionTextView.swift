@@ -25,53 +25,8 @@ protocol TextViewInteractionDelegate: class {
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
 
-extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
-
-    @available(iOS 13.0, *)
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        
-        guard let interactingUrl = interactingUrl else {
-            return nil            
-        }
-
-        let previewProvider: UIContextMenuContentPreviewProvider = {
-            return BrowserViewController(url: interactingUrl)
-        }
-
-        return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: previewProvider,
-                                          actionProvider: { suggestedActions in
-                                            return self.makeContextMenu(url: interactingUrl)
-        })
-    }
-    
-    @available(iOS 13.0, *)
-    func makeContextMenu(url: URL) -> UIMenu {
-        
-        ///TODO: open/copy/share...and other actions related to URL only
-        let openURL = UIAction(title: "Open", image: UIImage(systemName: "safari")) { action in
-            UIApplication.shared.open(url)
-        }
-
-        let share = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { action in
-            self.shareURL(url: url)
-        }
-
-        return UIMenu(title: interactingUrl?.absoluteString ?? "URL", children: [openURL, share]) ///TODO: show the URL
-    }
-
-    func shareURL(url: URL) {
-        let activityViewController =
-            UIActivityViewController(activityItems: [url],
-                                     applicationActivities: nil)
-
-        AppDelegate.shared.window?.rootViewController?.present(activityViewController, animated: true)
-    }
-
-}
-
 final class LinkInteractionTextView: UITextView {
-    
+    weak var contextMenuDelegate: ContextMenuDelegate?
     weak var interactionDelegate: TextViewInteractionDelegate?
     
     // the current interacting URL for showning context preview
@@ -85,7 +40,8 @@ final class LinkInteractionTextView: UITextView {
     // URLs with these schemes should be handled by the os.
     fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
     
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
+    override init(frame: CGRect,
+                  textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
         
@@ -206,6 +162,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
     }
 }
 
+//MARK: - UITextDragDelegate
+
 @available(iOS 11.0, *)
 extension LinkInteractionTextView: UITextDragDelegate {
     
@@ -224,4 +182,28 @@ extension LinkInteractionTextView: UITextDragDelegate {
         return dragRequest.suggestedItems
     }
     
+}
+
+//MARK: - UIContextMenuInteractionDelegate
+
+extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
+    
+    @available(iOS 13.0, *)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        
+        guard let interactingUrl = interactingUrl,
+            UIApplication.shared.canOpenURL(interactingUrl) else {
+                return nil
+        }
+        
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: interactingUrl)
+        }
+        
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { _ in
+                                            return self.contextMenuDelegate?.makeContextMenu(title: interactingUrl.absoluteString, view: self)
+        })
+    }
 }

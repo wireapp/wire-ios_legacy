@@ -20,14 +20,22 @@ import Foundation
 import WireSyncEngine
 import UIKit
 
-final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
+final class ConversationTextMessageCell: UIView,
+                                         ConversationMessageCell,
+                                         TextViewInteractionDelegate,
+                                         ContextMenuDelegate {
 
     struct Configuration: Equatable {
         let attributedText: NSAttributedString
         let isObfuscated: Bool
     }
 
-    let messageTextView = LinkInteractionTextView()
+    private lazy var messageTextView: LinkInteractionTextView = {
+        let view = LinkInteractionTextView()
+        view.contextMenuDelegate = self
+        return view
+    }()
+    
     var isSelected: Bool = false
 
     weak var message: ZMConversationMessage?
