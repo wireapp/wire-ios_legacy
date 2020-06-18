@@ -62,9 +62,9 @@ final class ConversationMessageActionController {
                                    for: message,
                                    view: targetView)
             }
-
+            
             return UIAction(title: title,
-                            image: nil,
+                            image: messageAction.systemIcon(),
                             handler: handler)
         }
     }

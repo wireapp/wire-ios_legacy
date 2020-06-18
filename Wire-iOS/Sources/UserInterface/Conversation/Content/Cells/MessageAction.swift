@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
 
 enum MessageAction: CaseIterable {
     case
@@ -119,6 +120,18 @@ enum MessageAction: CaseIterable {
             // no icon for openQuote
             return nil
         }
+    }
+    
+    @available(iOS 13.0, *)
+    func systemIcon() -> UIImage? {
+        let icon: UIImage?
+        if let imageSystemName = imageSystemName() {
+            icon = UIImage(systemName: imageSystemName)
+        } else {
+            icon = nil
+        }
+
+        return icon
     }
     
     @available(iOS 13.0, *)
