@@ -200,7 +200,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
          recordingDotView,
          audioPreviewView,
          cancelButton,
-         rightSeparator].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+         rightSeparator].prepareForLayout()
 
         var constraints: [NSLayoutConstraint] = []
 

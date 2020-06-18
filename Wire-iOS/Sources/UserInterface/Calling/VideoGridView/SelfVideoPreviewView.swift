@@ -57,10 +57,8 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     }
     
     private func setupViews() {
-        [previewView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)
-        }
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(previewView)
     }
     
     private func createConstraints() {

@@ -69,7 +69,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         guard let config = config else {
             return
         }
-        
+
         button.setTitle(config.text, for: .normal)
 
         switch config.state {
@@ -127,15 +127,13 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     private func configureViews() {
-        [button, errorLabel].forEach() {
+        [button, errorLabel].forEach {
             addSubview($0)
         }
     }
 
     private func createConstraints() {
-        [button, errorLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [button, errorLabel].prepareForLayout()
 
         let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
 
@@ -169,7 +167,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var message: ZMConversationMessage?
 
-    var delegate: ConversationMessageCellDelegate?
+    weak var delegate: ConversationMessageCellDelegate?
 
     var actionController: ConversationMessageActionController?
 

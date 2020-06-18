@@ -16,14 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireSystem
 import UIKit
 import AVFoundation
 
 fileprivate let zmLog = ZMSLog(tag: "UI")
 
-class CameraController {
+final class CameraController {
     
     private(set) var currentCamera: SettingsCamera
     

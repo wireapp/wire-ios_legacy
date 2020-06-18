@@ -23,20 +23,18 @@ import WireDataModel
 
 protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-    var delegate: ConversationMessageCellDelegate? { get }
-    var message: ZMConversationMessage? { get }
 }
 
 final class ArticleView: UIView {
 
     // MARK: - Styling
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
-    var titleTextColor: UIColor? = .from(scheme: .textForeground)
-    var titleFont: UIFont? = .normalSemiboldFont
-    var authorTextColor: UIColor? = .from(scheme: .textDimmed)
-    var authorFont: UIFont? = .smallLightFont
-    let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
-    let authorHighlightFont = UIFont.smallSemiboldFont
+    private let containerColor: UIColor = .from(scheme: .placeholderBackground)
+    private let titleTextColor: UIColor = .from(scheme: .textForeground)
+    private let titleFont: UIFont = .normalSemiboldFont
+    private let authorTextColor: UIColor = .from(scheme: .textDimmed)
+    private let authorFont: UIFont = .smallLightFont
+    private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
+    private let authorHighlightFont = UIFont.smallSemiboldFont
 
     var imageHeight: CGFloat = 144 {
         didSet {
@@ -52,18 +50,7 @@ final class ArticleView: UIView {
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
-    weak var delegate: ArticleViewDelegate?
-
-    // MARK: - for context menu action items
-    private var actionController: ConversationMessageActionController? {
-        guard let message = delegate?.message,
-            let messageActionResponder = delegate?.delegate else { return nil }
-
-        return ConversationMessageActionController(responder: messageActionResponder,
-                                                   message: message,
-                                                   context: .content,
-                                                   view: self)
-    }
+    weak var delegate: (ArticleViewDelegate & ContextMenuDelegate)?
 
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -121,7 +108,7 @@ final class ArticleView: UIView {
     private func setupConstraints(_ imagePlaceholder: Bool) {
         let imageHeight: CGFloat = imagePlaceholder ? self.imageHeight : 0
 
-        [messageLabel, authorLabel, imageView, obfuscationView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [messageLabel, authorLabel, imageView, obfuscationView].prepareForLayout()
 
         imageView.fitInSuperview(exclude: [.bottom])
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
@@ -183,7 +170,6 @@ final class ArticleView: UIView {
     }
 
     func updateContentMode() {
-
         guard let image = self.imageView.image else { return }
         let width = image.size.width * image.scale
         let height = image.size.height * image.scale
@@ -212,25 +198,30 @@ final class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
 
-    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+    @objc
+    private func viewTapped(_ sender: UITapGestureRecognizer) {
         if UIMenuController.shared.isMenuVisible {
             return UIMenuController.shared.setMenuVisible(false, animated: true)
         }
 
+        openURL()
+    }
+
+    private func openURL() {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
-
 }
 
-// MARK: - context menu
+// MARK: - UIContextMenuInteractionDelegate
 
+@available(iOS 13.0, *)
 extension ArticleView: UIContextMenuInteractionDelegate {
 
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 
-        guard let url: URL = linkPreview?.openableURL as URL? else {
+        guard let linkPreview = linkPreview,
+            let url = linkPreview.openableURL else {
             return nil
         }
 
@@ -241,28 +232,31 @@ extension ArticleView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.makeContextMenu(url: url)
+                                            return self.delegate?.makeContextMenu(title: linkPreview.originalURLString, view: self)
         })
     }
 
-    @available(iOS 13.0, *)
-    func makeContextMenu(url: URL) -> UIMenu {
-        let actions = actionController?.allMessageMenuElements() ?? []
-
-        return UIMenu(title: "", children: actions)
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.openURL()
+        }
     }
 }
 
 extension LinkMetadata {
 
-    /// Returns a `NSURL` that can be openened using `-openURL:` on `UIApplication` or `nil` if no openable `NSURL` could be created.
-    var openableURL: NSURL? {
+    /// Returns a `URL` that can be openened using `openURL()` on `UIApplication` or `nil` if no openable `URL` could be created.
+    var openableURL: URL? {
         let application = UIApplication.shared
 
-        if let originalURL = NSURL(string: originalURLString), application.canOpenURL(originalURL as URL) {
+        if let originalURL = URL(string: originalURLString),
+            application.canOpenURL(originalURL) {
             return originalURL
-        } else if let permanentURL = permanentURL, application.canOpenURL(permanentURL) {
-            return permanentURL as NSURL?
+        } else if let permanentURL = permanentURL,
+            application.canOpenURL(permanentURL) {
+            return permanentURL
         }
 
         return nil
