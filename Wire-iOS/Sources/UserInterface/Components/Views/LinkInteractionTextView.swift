@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import WireDataModel
 
@@ -100,7 +99,6 @@ final class LinkInteractionTextView: UITextView {
     }
 }
 
-
 extension LinkInteractionTextView: UITextViewDelegate {
     
     func textView(_ textView: UITextView,
@@ -116,7 +114,15 @@ extension LinkInteractionTextView: UITextViewDelegate {
                   shouldInteractWith URL: URL,
                   in characterRange: NSRange,
                   interaction: UITextItemInteraction) -> Bool {
-        interactingUrl = URL
+        if #available(iOS 13.0, *) {
+            if UIApplication.shared.canOpenURL(URL),
+                interaction == .presentActions {
+                interactingUrl = URL
+                
+                return true
+            }
+        }
+        
         switch interaction {
         case .invokeDefaultAction:
             
