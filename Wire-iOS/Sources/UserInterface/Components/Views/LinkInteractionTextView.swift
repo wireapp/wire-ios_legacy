@@ -50,11 +50,11 @@ final class LinkInteractionTextView: UITextView {
         }
         
         if #available(iOS 13.0, *) {
-            let interaction = UIContextMenuInteraction(delegate: self)
-            addInteraction(interaction)
+            addInteraction(UIContextMenuInteraction(delegate: self))
         }
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -103,7 +103,10 @@ final class LinkInteractionTextView: UITextView {
 
 extension LinkInteractionTextView: UITextViewDelegate {
     
-    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView,
+                  shouldInteractWith textAttachment: NSTextAttachment,
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction) -> Bool {
         guard interaction == .presentActions else { return true }
         interactionDelegate?.textViewDidLongPress(self)
         return false
@@ -111,8 +114,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
     
     func textView(_ textView: UITextView,
                   shouldInteractWith URL: URL,
-                  in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        self.interactingUrl = URL
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction) -> Bool {
+        interactingUrl = URL
         switch interaction {
         case .invokeDefaultAction:
             
@@ -186,9 +190,8 @@ extension LinkInteractionTextView: UITextDragDelegate {
 
 //MARK: - UIContextMenuInteractionDelegate
 
+@available(iOS 13.0, *)
 extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
-    
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         
         guard let interactingUrl = interactingUrl,
@@ -205,5 +208,13 @@ extension LinkInteractionTextView: UIContextMenuInteractionDelegate {
                                           actionProvider: { _ in
                                             return self.contextMenuDelegate?.makeContextMenu(title: interactingUrl.absoluteString, view: self)
         })
+    }
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.interactingUrl?.open()
+        }
     }
 }

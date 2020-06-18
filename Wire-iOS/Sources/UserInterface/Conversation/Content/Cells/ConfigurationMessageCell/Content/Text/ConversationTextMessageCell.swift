@@ -129,7 +129,7 @@ final class ConversationTextMessageCell: UIView,
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
         if !UIMenuController.shared.isMenuVisible {
-            self.menuPresenter?.showMenu()
+            menuPresenter?.showMenu()
         }
     }
 
@@ -137,7 +137,7 @@ final class ConversationTextMessageCell: UIView,
 
 // MARK: - Description
 
-class ConversationTextMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationTextMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationTextMessageCell
     let configuration: View.Configuration
 

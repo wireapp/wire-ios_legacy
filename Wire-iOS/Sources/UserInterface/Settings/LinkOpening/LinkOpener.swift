@@ -24,18 +24,10 @@ import UIKit
 
 private let log = ZMSLog(tag: "link opening")
 
+extension URL {
 
-public extension NSURL {
-
-    @discardableResult @objc func open() -> Bool {
-        return (self as URL).open()
-    }
-
-}
-
-public extension URL {
-
-    @discardableResult func open() -> Bool {
+    @discardableResult
+    func open() -> Bool {
         let opened = openAsTweet() || openAsLink()
         if opened {
             return true
