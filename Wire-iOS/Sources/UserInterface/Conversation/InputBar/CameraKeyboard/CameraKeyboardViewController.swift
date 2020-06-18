@@ -138,8 +138,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
     
     private func createConstraints() {
-        [view,
-         collectionView,
+        [collectionView,
          goBackButton,
          cameraRollButton].prepareForLayout()
         
