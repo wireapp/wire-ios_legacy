@@ -25,10 +25,9 @@ final class MessageActionTests: XCTestCase {
     
     @available(iOS 13.0, *)
     func testForSystemIcons() {
-        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular, scale: .large)
         MessageAction.allCases.forEach() { action in
             if let imageSystemName = action.imageSystemName(),
-                let image = UIImage(systemName: imageSystemName, withConfiguration: config) {
+                let image = UIImage(systemName: imageSystemName) {
                 
                 let imageView = UIImageView(image: image)
                 verify(matching: imageView, named: "\(action)")
