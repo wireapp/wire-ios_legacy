@@ -34,7 +34,8 @@ final class RequestPasswordController {
     private weak var okAction: UIAlertAction?
     weak var passwordTextField: UITextField?
 
-    init(context: RequestPasswordContext, callback: @escaping Callback) {
+    init(context: RequestPasswordContext,
+         callback: @escaping Callback) {
 
         self.callback = callback
         

@@ -27,7 +27,8 @@ final class ClientListViewController: UIViewController,
                                 UITableViewDataSource,
                                 ClientUpdateObserver,
                                 ClientColorVariantProtocol,
-                                SpinnerCapable {
+                                SpinnerCapable,
+                                ClientRemovalObserverDelegate {
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
@@ -248,7 +249,7 @@ final class ClientListViewController: UIViewController,
         removalObserver = nil
 
         removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
-                                                controller: self,
+                                                delegate: self,
                                                 credentials: credentials)
 
         removalObserver?.startRemoval()
@@ -437,6 +438,11 @@ final class ClientListViewController: UIViewController,
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
+    }
+    
+    //MARK: - ClientRemovalObserverDelegate
+    func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
+        present(viewControllerToPresent, animated: true)
     }
 }
 
