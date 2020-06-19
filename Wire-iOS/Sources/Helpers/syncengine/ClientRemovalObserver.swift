@@ -26,7 +26,7 @@ enum ClientRemovalUIError: Error {
 protocol ClientRemovalObserverDelegate: class {
     func present(_ clientRemovalObserver: ClientRemovalObserver,
                  viewControllerToPresent: UIViewController)
-    var isLoadingViewVisible: Bool { get set }
+    func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool)
 }
 
 final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
@@ -66,7 +66,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
     
     func startRemoval() {
-        delegate?.isLoadingViewVisible = true
+        delegate?.setIsLoadingViewVisible(self, isVisible: true)
         ZMUserSession.shared()?.deleteClient(userClientToDelete, credentials: credentials)
     }
     
@@ -86,13 +86,13 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]) {
-        delegate?.isLoadingViewVisible = false
+        delegate?.setIsLoadingViewVisible(self, isVisible: false)
 
         endRemoval(result: nil)
     }
     
     func failedToDeleteClients(_ error: Error) {
-        delegate?.isLoadingViewVisible = false
+        delegate?.setIsLoadingViewVisible(self, isVisible: false)
 
         if passwordIsNecessaryForDelete {
             let alert = UIAlertController.alertWithOKButton(title: nil,

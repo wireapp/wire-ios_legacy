@@ -37,8 +37,7 @@ final class SettingsClientViewController: UIViewController,
                                           UITableViewDataSource,
                                           UserClientObserver,
                                           ClientColorVariantProtocol,
-                                          SpinnerCapable,
-                                          ClientRemovalObserverDelegate {
+                                          SpinnerCapable {
         
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
@@ -395,8 +394,15 @@ final class SettingsClientViewController: UIViewController,
             self.resetSessionPending = false
         }
     }
+}
+
+//MARK: - ClientRemovalObserverDelegate
+
+extension SettingsClientViewController: ClientRemovalObserverDelegate {
+    func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {
+        isLoadingViewVisible = isVisible
+    }
     
-    // MARK: - ClientRemovalObserverDelegate
     func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
         ///TODO: clientRemovalObserver check
         present(viewControllerToPresent, animated: true)

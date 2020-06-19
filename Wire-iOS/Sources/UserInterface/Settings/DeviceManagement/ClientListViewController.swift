@@ -27,8 +27,7 @@ final class ClientListViewController: UIViewController,
                                 UITableViewDataSource,
                                 ClientUpdateObserver,
                                 ClientColorVariantProtocol,
-                                SpinnerCapable,
-                                ClientRemovalObserverDelegate {
+                                SpinnerCapable {
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
@@ -440,8 +439,24 @@ final class ClientListViewController: UIViewController,
         }
     }
     
-    //MARK: - ClientRemovalObserverDelegate
+}
+
+//MARK: - ClientRemovalObserverDelegate
+
+extension ClientListViewController: ClientRemovalObserverDelegate {
+    func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {
+        guard removalObserver == clientRemovalObserver else {
+            return
+        }
+        
+        isLoadingViewVisible = isVisible
+    }
+    
     func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
+        guard removalObserver == clientRemovalObserver else {
+            return
+        }
+        
         present(viewControllerToPresent, animated: true)
     }
 }
