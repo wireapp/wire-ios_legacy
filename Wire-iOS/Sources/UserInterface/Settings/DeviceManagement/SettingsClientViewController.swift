@@ -404,7 +404,6 @@ extension SettingsClientViewController: ClientRemovalObserverDelegate {
     }
     
     func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
-        ///TODO: clientRemovalObserver check
         present(viewControllerToPresent, animated: true)
     }
 }
