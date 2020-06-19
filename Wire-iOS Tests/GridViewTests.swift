@@ -53,7 +53,7 @@ class GridViewTests: XCTestCase {
         }
         
         sut = GridView()
-        sut.collectionView.frame = frame
+        sut.frame = frame
     }
     
     override func tearDown() {
@@ -78,7 +78,7 @@ class GridViewTests: XCTestCase {
         appendViews(amount)
         
         // Then
-        verify(matching: sut.collectionView, file: file, testName: testName, line: line)
+        verify(matching: sut, file: file, testName: testName, line: line)
     }
     
     func testOneView() {
@@ -119,7 +119,7 @@ class GridViewTests: XCTestCase {
         sut.remove(view: views[0])
         
         // Then
-        verify(matching: sut.collectionView)
+        verify(matching: sut)
     }
     
     func testTwoViewsAfterRemovingBottomView() {
@@ -128,6 +128,6 @@ class GridViewTests: XCTestCase {
         sut.remove(view: views[2])
         
         // Then
-        verify(matching: sut.collectionView)
+        verify(matching: sut)
     }
 }

@@ -18,8 +18,8 @@
 
 import UIKit
 
-class GridView: NSObject {
-    let collectionView: UICollectionView
+class GridView: UIView {
+    private let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
     private(set) var videoStreamViews = [UIView]() {
         didSet {
@@ -34,13 +34,20 @@ class GridView: NSObject {
         }
     }
     
-    override init() {
+    init() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        super.init()
+        super.init(frame: .zero)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
         collectionView.isScrollEnabled = false
+        addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.fitInSuperview()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -61,18 +68,16 @@ extension GridView {
         let participantAmount = ParticipantAmount(videoStreamViews.count)
         let splitType = SplitType(layoutDirection, segmentType)
         
-        let numberOfItems: [ParticipantAmount: [SplitType: Int]] = [
-            .moreThanTwo: [
-                .proportionalSplit: videoStreamViews.count.evenlyCeiled / 2,
-                .middleSplit: isOddLastRow(indexPath) ? 1 : 2
-            ],
-            .twoAndLess: [
-                .proportionalSplit: videoStreamViews.count,
-                .middleSplit: 1
-            ]
-        ]
-    
-        return numberOfItems[participantAmount]?[splitType] ?? 1
+        switch (participantAmount, splitType) {
+        case (.moreThanTwo, .proportionalSplit):
+            return videoStreamViews.count.evenlyCeiled / 2
+        case (.moreThanTwo, .middleSplit):
+            return isOddLastRow(indexPath) ? 1 : 2
+        case (.twoAndLess, .proportionalSplit):
+            return videoStreamViews.count
+        case (.twoAndLess, .middleSplit):
+            return 1
+        }
     }
 
     private enum SegmentType {

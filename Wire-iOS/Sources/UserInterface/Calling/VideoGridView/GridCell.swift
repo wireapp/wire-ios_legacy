@@ -26,11 +26,6 @@ class GridCell: UICollectionViewCell {
         guard !contentView.subviews.contains(streamView) else { return }
         contentView.subviews.forEach { $0.removeFromSuperview() }
         contentView.addSubview(streamView)
-        NSLayoutConstraint.activate([
-            streamView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            streamView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            streamView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            streamView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
+        streamView.fitInSuperview()
     }
 }

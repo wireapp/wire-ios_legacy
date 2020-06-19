@@ -156,9 +156,9 @@ final class VideoGridViewController: UIViewController {
     }
 
     func setupViews() {
-        gridView.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        gridView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(gridView.collectionView)
+        view.addSubview(gridView)
         addToSelf(thumbnailViewController)
 
         view.addSubview(muteIndicatorView)
@@ -168,7 +168,7 @@ final class VideoGridViewController: UIViewController {
     }
 
     func createConstraints() {
-        gridView.collectionView.fitInSuperview()
+        gridView.fitInSuperview()
         [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
 
         constrain(view, muteIndicatorView, networkConditionView) { view, muteIndicatorView, networkConditionView in
