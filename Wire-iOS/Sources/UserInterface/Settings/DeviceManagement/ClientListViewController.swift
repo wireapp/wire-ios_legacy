@@ -248,11 +248,9 @@ final class ClientListViewController: UIViewController,
         removalObserver = nil
 
         removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
-                                                    controller: self,
-                                                    credentials: credentials)
+                                                controller: self,
+                                                credentials: credentials)
 
-        removalObserver?.userClientToDelete = userClient
-        removalObserver?.credentials = credentials
         removalObserver?.startRemoval()
 
         delegate?.finishedDeleting(self)

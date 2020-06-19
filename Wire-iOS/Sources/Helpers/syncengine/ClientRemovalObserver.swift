@@ -26,9 +26,20 @@ enum ClientRemovalUIError: Error {
 final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     var userClientToDelete: UserClient
     private weak var controller: SpinnerCapableViewController?
-    let completion: ((Error?)->())?
-    var credentials: ZMEmailCredentials?
-    private var requestPasswordController: RequestPasswordController?
+    private let completion: ((Error?)->())?
+    private var credentials: ZMEmailCredentials?
+    private lazy var requestPasswordController: RequestPasswordController = {
+        return RequestPasswordController(context: .removeDevice, callback: {[weak self] (password) in
+            guard let password = password, !password.isEmpty else {
+                self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
+                return
+            }
+            
+            self?.credentials = ZMEmailCredentials(email: "", password: password)
+            self?.startRemoval()
+            self?.passwordIsNecessaryForDelete = true
+        })
+    }()
     private var passwordIsNecessaryForDelete: Bool = false
     private var observerToken: Any?
     
@@ -44,17 +55,6 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
         super.init()
         
         observerToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
-        
-        requestPasswordController = RequestPasswordController(context: .removeDevice, callback: {[weak self] (password) in
-            guard let password = password, !password.isEmpty else {
-                self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
-                return
-            }
-            
-            self?.credentials = ZMEmailCredentials(email: "", password: password)
-            self?.startRemoval()
-            self?.passwordIsNecessaryForDelete = true
-        })
     }
     
     deinit {
@@ -91,8 +91,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
         controller?.isLoadingViewVisible = false
 
         if !passwordIsNecessaryForDelete {
-            guard let requestPasswordController = requestPasswordController else { return }
-            controller?.present(requestPasswordController.alertController, animated: true)
+            controller?.present(requestPasswordController.alertController, animated: true) ///TODO: delegate
         } else {
             controller?.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
