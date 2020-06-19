@@ -30,7 +30,7 @@ final class ClientListViewController: UIViewController,
     // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
-    private var removalObserver: ClientRemovalObserver?
+    var removalObserver: ClientRemovalObserver?
 
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()

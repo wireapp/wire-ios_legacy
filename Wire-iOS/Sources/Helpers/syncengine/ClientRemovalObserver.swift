@@ -87,7 +87,6 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
 
     func finishedDeleting(_ remainingClients: [UserClient]) {
         delegate?.setIsLoadingViewVisible(self, isVisible: false)
-
         endRemoval(result: nil)
     }
 
