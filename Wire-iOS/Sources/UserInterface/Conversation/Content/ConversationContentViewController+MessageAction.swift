@@ -53,8 +53,8 @@ extension ConversationContentViewController {
     }
 
     func messageAction(actionId: MessageAction,
-                               for message: ZMConversationMessage,
-                               view: UIView) {
+                       for message: ZMConversationMessage,
+                       view: UIView) {
         switch actionId {
         case .cancel:
             session.enqueue({
@@ -101,10 +101,7 @@ extension ConversationContentViewController {
             openSketch(for: message, in: .draw)
         case .sketchEmoji:
             openSketch(for: message, in: .emoji)
-        case .sketchText:
-            // Not implemented yet
-            break
-        case .like:
+        case .like, .unlike:
             // The new liked state, the value is flipped
             let updatedLikedState = !Message.isLikedMessage(message)
             guard let indexPath = dataSource.topIndexPath(for: message) else { return }
@@ -131,7 +128,7 @@ extension ConversationContentViewController {
         case .forward:
             showForwardFor(message: message, from: view)
         case .showInConversation:
-            scroll(to: message) { cell in
+            scroll(to: message) { _ in
                 self.dataSource.highlight(message: message)
             }
         case .copy:
@@ -145,7 +142,7 @@ extension ConversationContentViewController {
 
         case .openQuote:
             if let quote = message.textMessageData?.quote {
-                scroll(to: quote) { cell in
+                scroll(to: quote) { _ in
                     self.dataSource.highlight(message: quote)
                 }
             }

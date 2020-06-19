@@ -118,7 +118,9 @@ final class UpsideDownTableView: UITableView {
         super.scrollToNearestSelectedRow(at: inverseScrollPosition(scrollPosition), animated: animated)
     }
 
-    override func scrollToRow(at indexPath: IndexPath, at scrollPosition: UITableView.ScrollPosition, animated: Bool) {
+    override func scrollToRow(at indexPath: IndexPath,
+                              at scrollPosition: UITableView.ScrollPosition,
+                              animated: Bool) {
         super.scrollToRow(at: indexPath, at: inverseScrollPosition(scrollPosition), animated: animated)
     }
 

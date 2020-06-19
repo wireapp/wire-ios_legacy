@@ -26,7 +26,7 @@ class MockCell: UIView, ConversationMessageCell {
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
-    
+
     var isConfigured: Bool  = false
     var isSelected: Bool = false
 
@@ -36,7 +36,7 @@ class MockCell: UIView, ConversationMessageCell {
     }
 }
 
-class MockCellDescription<T>: ConversationMessageCellDescription {
+final class MockCellDescription<T>: ConversationMessageCellDescription {
     typealias View = MockCell
     let configuration: View.Configuration
 

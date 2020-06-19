@@ -111,9 +111,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
     func createConstraints() {
 
-        [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].prepareForLayout()
 
         displayNameLabel.fitInSuperview(exclude: [.top, .bottom])
         suggestedHandleLabel.fitInSuperview(exclude: [.top, .bottom])

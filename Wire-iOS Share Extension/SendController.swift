@@ -102,7 +102,9 @@ final class SendController {
         self.progress = progress
         
         let completion: SendableCompletion  = { [weak self] sendableResult in
-            guard let weakSelf = self else { return }
+            guard let weakSelf = self else {
+                return                
+            }
             
             switch sendableResult {
             case .success(let sendables):
@@ -115,6 +117,7 @@ final class SendController {
                 weakSelf.observer?.sentHandler = { [weak self] in
                     self?.cancelTimeout()
                     self?.sentAllSendables = true
+                    progress(.done)
                 }
             case .failure(let error):
                 progress(.error(error))
@@ -125,7 +128,9 @@ final class SendController {
             progress(.preparing)
             prepare(unsentSendables: unsentSendables) { [weak self] in
                 guard let `self` = self else { return }
-                guard !self.isCancelled else { return progress(.done) }
+                guard !self.isCancelled else {
+                    return progress(.done)                    
+                }
                 progress(.startingSending)
                 self.append(unsentSendables: self.unsentSendables, completion: completion)
             }
