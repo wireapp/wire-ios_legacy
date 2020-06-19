@@ -17,10 +17,11 @@
 //
 
 import Foundation
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-class GridViewTests: ZMSnapshotTestCase {
+class GridViewTests: XCTestCase {
     
     var sut: GridView!
     var views: [UIView]!
@@ -53,7 +54,6 @@ class GridViewTests: ZMSnapshotTestCase {
         
         sut = GridView()
         sut.collectionView.frame = frame
-        snapshotBackgroundColor = .darkGray
     }
     
     override func tearDown() {
@@ -70,12 +70,15 @@ class GridViewTests: ZMSnapshotTestCase {
         }
     }
     
-    func testGrid(withAmount amount: Int) {
+    func testGrid(withAmount amount: Int,
+                  file: StaticString = #file,
+                  testName: String = #function,
+                  line: UInt = #line) {
         // Given
         appendViews(amount)
         
         // Then
-        verifyInIPhoneSize(view: sut.collectionView)
+        verify(matching: sut.collectionView, file: file, testName: testName, line: line)
     }
     
     func testOneView() {
@@ -116,7 +119,7 @@ class GridViewTests: ZMSnapshotTestCase {
         sut.remove(view: views[0])
         
         // Then
-        verifyInIPhoneSize(view: sut.collectionView)
+        verify(matching: sut.collectionView)
     }
     
     func testTwoViewsAfterRemovingBottomView() {
@@ -125,6 +128,6 @@ class GridViewTests: ZMSnapshotTestCase {
         sut.remove(view: views[2])
         
         // Then
-        verifyInIPhoneSize(view: sut.collectionView)
+        verify(matching: sut.collectionView)
     }
 }
