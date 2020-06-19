@@ -56,6 +56,10 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
             self?.passwordIsNecessaryForDelete = true
         })
     }
+    
+    deinit {
+        
+    }
 
     func startRemoval() {
         controller?.isLoadingViewVisible = true
@@ -64,6 +68,9 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     
     private func endRemoval(result: Error?) {
         completion?(result)
+
+        /// allow password input alert can be show next time
+        passwordIsNecessaryForDelete = false
     }
     
     func finishedFetching(_ userClients: [UserClient]) {
@@ -89,9 +96,6 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
         } else {
             controller?.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
-
-            /// allow password input alert can be show next time
-            passwordIsNecessaryForDelete = false
         }
     }
 }

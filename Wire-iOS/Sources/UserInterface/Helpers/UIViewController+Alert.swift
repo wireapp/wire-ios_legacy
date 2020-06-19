@@ -36,10 +36,10 @@ extension UIViewController {
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
 
         let alert = UIAlertController.alertWithOKButton(title: title,
-                                         message: message,
-                                         okActionHandler: okActionHandler)
+                                                        message: message,
+                                                        okActionHandler: okActionHandler)
 
-        present(alert, animated: animated, completion: nil)
+        present(alert, animated: animated)
 
         return alert
     }

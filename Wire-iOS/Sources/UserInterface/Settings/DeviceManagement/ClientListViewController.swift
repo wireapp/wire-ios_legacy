@@ -20,7 +20,6 @@
 import UIKit
 import WireSyncEngine
 
-
 private let zmLog = ZMSLog(tag: "UI")
 
 final class ClientListViewController: UIViewController,
@@ -32,7 +31,7 @@ final class ClientListViewController: UIViewController,
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
-    var removalObserver: ClientRemovalObserver?
+    private var removalObserver: ClientRemovalObserver?
 
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
@@ -137,14 +136,16 @@ final class ClientListViewController: UIViewController,
         }
     }
     
+    @available(*, unavailable)
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
     
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
         self.clients = clientsList
         self.editingList = false
@@ -242,7 +243,8 @@ final class ClientListViewController: UIViewController,
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
-    func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials?) {
+    func deleteUserClient(_ userClient: UserClient,
+                          credentials: ZMEmailCredentials?) {
         removalObserver = nil
 
         removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
@@ -279,7 +281,7 @@ final class ClientListViewController: UIViewController,
     }
     
     func failedToDeleteClients(_ error: Error) {
-
+        // no-op
     }
     
     // MARK: - UITableViewDataSource & UITableViewDelegate
