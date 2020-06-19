@@ -135,7 +135,7 @@ enum MessageAction: CaseIterable {
     }
     
     @available(iOS 13.0, *)
-    func imageSystemName() -> String? {
+    private func imageSystemName() -> String? {
         let imageName: String?
         switch self {
         case .copy:
@@ -155,7 +155,7 @@ enum MessageAction: CaseIterable {
         case .download:
             imageName = "chevron.down"
         case .forward:
-            imageName = "arrow.up.to.line"
+            imageName = "square.and.arrow.up"
         case .like:
             imageName = "suit.heart"
         case .unlike:
