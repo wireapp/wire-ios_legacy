@@ -180,13 +180,11 @@ extension ConversationContentViewController {
 // MARK: - SignatureObserver
 extension ConversationContentViewController: SignatureObserver {
     func willReceiveSignatureURL() {
-//        showLoadingView = true
-        navigationController?.isLoadingViewVisible = true
+        isLoadingViewVisible = true
     }
     
     func didReceiveSignatureURL(_ url: URL) {
-//        showLoadingView = false
-        navigationController?.isLoadingViewVisible = false
+        isLoadingViewVisible = false
         presentDigitalSignatureVerification(with: url)
     }
     
@@ -199,8 +197,7 @@ extension ConversationContentViewController: SignatureObserver {
     }
     
     func didFailSignature(errorType: SignatureStatus.ErrorYpe) {
-//        showLoadingView = false
-        navigationController?.isLoadingViewVisible = false
+        isLoadingViewVisible = false
         isDigitalSignatureVerificationShown
             ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert(errorType: errorType)
             })
