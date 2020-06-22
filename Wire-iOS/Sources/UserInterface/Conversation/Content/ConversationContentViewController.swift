@@ -23,10 +23,11 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 
 /// The main conversation view controller
-final class ConversationContentViewController: UIViewController, PopoverPresenter {
+final class ConversationContentViewController: UIViewController, PopoverPresenter, SpinnerCapable {
     //MARK: PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
+    var dismissSpinner: SpinnerCompletion?
 
     weak var delegate: ConversationContentViewControllerDelegate?
     let conversation: ZMConversation
