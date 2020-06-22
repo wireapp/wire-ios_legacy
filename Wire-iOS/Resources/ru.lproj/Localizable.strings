@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Личные данные";
 
-"self.settings.account_picture_group.theme" = "Темная тема";
+"self.settings.account_picture_group.theme" = "Тема";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присваивает каждому устройству уникальный отпечаток. Сравните их и верифицируйте ваши устройства и беседы.";
 "self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте сессию для создания новых ключей шифрования на обеих сторонах.";
@@ -1084,7 +1084,7 @@
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если вы используете iCloud, история вызовов будет передана Apple.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
-"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
+"self.settings.vbr.description" = "Данная опция позволяет аудиозвонкам экономить трафик и улучшает их качество в сетях с низкой скоростью передачи данных. Вы можете отключить ее, включив кодирование с постоянным битрейтом.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Кнопка 'Отправить'";
 "self.settings.popular_demand.send_button.footer" = "Отключает отправку с помощью Enter.";
 "self.settings.popular_demand.dark_mode.footer" = "Переключение между темной и светлой темами.";
+
+// dark theme
+"dark_theme.option.dark" = "Темная";
+"dark_theme.option.light" = "Светлая";
+"dark_theme.option.system" = "Синхронизировать с настройками системы";
 
 // Open in
 "self.settings.external_apps.header" = "Открыть с помощью";
@@ -1234,7 +1239,7 @@
 // Landing screen
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
-"landing.welcome_message" = "Добро пожаловать в %@";
+"landing.welcome_message" = "Приветствуем вас в %@";
 "landing.create_account.title" = "Создать аккаунт";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
@@ -1400,7 +1405,7 @@
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Этот email связан с другим сервером, при этом приложение одновременно может быть подключено только к одному серверу. Пожалуйста, выйдите из всех учетных записей Wire на этом устройстве и попробуйте войти снова.";
 "login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
 "login.sso.backend_switch.title" = "Перенаправление...";
-"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.subtitle" = "Вы будете перенаправлены на специализированное обслуживание вашей организации.";
 "login.sso.backend_switch.information" = "Указывайте учетные данные, только если вы уверены, что это форма авторизации вашей организации.";
 
 
@@ -1422,7 +1427,7 @@
 "registration.enter_name.hero" = "Как вас называть?";
 "registration.enter_name.placeholder" = "Ваше полное имя";
 
-"registration.terms_of_use.title" = "Добро пожаловать в Wire.";
+"registration.terms_of_use.title" = "Приветствуем вас в Wire.";
 "registration.terms_of_use.terms" = "Продолжая, вы соглашаетесь с Условиями использования Wire.";
 "registration.terms_of_use.terms.link" = "Условия использования";
 "registration.terms_of_use.agree" = "Принять";
