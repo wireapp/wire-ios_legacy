@@ -16,26 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
+import WireCommonComponents
+
 extension UIAlertAction {
-    @objc(cancelActionWithCompletion:)
-    static func cancel(_ completion: (() -> Void)? = nil) -> UIAlertAction {
+    static func cancel(_ completion: Completion? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.cancel".localized,
             style: .cancel,
             handler: { _ in completion?() }
-        )
-    }
-
-    @objc(okActionWithCompletion:)
-    static func ok(_ completion: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-        return UIAlertAction.ok(style: .default, handler: completion)
-    }
-
-    static func ok(style: Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-        return UIAlertAction(
-            title: "general.ok".localized,
-            style: style,
-            handler: handler
         )
     }
 

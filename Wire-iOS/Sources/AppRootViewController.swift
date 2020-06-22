@@ -19,14 +19,19 @@
 import Foundation
 import UIKit
 import SafariServices
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-final class AppRootViewController: UIViewController {
 
-    public let mainWindow: UIWindow
-    public let callWindow: CallWindow
-    public let overlayWindow: NotificationWindow
+final class AppRootViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
+    let mainWindow: UIWindow
+    let callWindow: CallWindow
+    let overlayWindow: NotificationWindow
 
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?
@@ -48,6 +53,8 @@ final class AppRootViewController: UIViewController {
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var authenticationCoordinator: AuthenticationCoordinator?
+
+    private let teamMetadataRefresher = TeamMetadataRefresher()
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
@@ -79,6 +86,24 @@ final class AppRootViewController: UIViewController {
         coordinator.animate(alongsideTransition: nil, completion: { _ in
             self.updateOverlayWindowFrame(size: size)
         })
+    }
+        
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // Do not refresh for iOS 13+ when the app is in background.
+        // Go to home screen may trigger `traitCollectionDidChange` twice.
+        if #available(iOS 13.0, *) {
+            if UIApplication.shared.applicationState == .background {
+                return
+            }
+        }
+
+        if #available(iOS 12.0, *) {
+            if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
+            }
+        }
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -214,12 +239,6 @@ final class AppRootViewController: UIViewController {
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
-        // When transitioning states, invalidate the SelfUser. If we transition to the authenticated
-        // state, it will be revalidated.
-        if AppDelegate.shared.shouldConfigureSelfUserProvider {
-            SelfUser.provider = nil
-        }
-
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
@@ -238,7 +257,7 @@ final class AppRootViewController: UIViewController {
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+            let navigationController = SpinnerCapableNavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
@@ -250,10 +269,6 @@ final class AppRootViewController: UIViewController {
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
-            if AppDelegate.shared.shouldConfigureSelfUserProvider {
-                SelfUser.provider = ZMUserSession.shared()
-            }
-
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -347,12 +362,15 @@ final class AppRootViewController: UIViewController {
     func applicationWillTransition(to appState: AppState) {
 
         if case .authenticated = appState {
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+            
             callWindow.callController.transitionToLoggedInSession()
         }
 
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
-
         colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
@@ -360,6 +378,8 @@ final class AppRootViewController: UIViewController {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
+            SelfUser.provider = nil
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
@@ -516,6 +536,7 @@ extension AppRootViewController {
 
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
+        teamMetadataRefresher.triggerRefreshIfNeeded()
     }
 }
 
@@ -592,7 +613,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 extension AppRootViewController: PopoverPresenter { }
 
-public extension SessionManager {
+extension SessionManager {
 
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
@@ -618,4 +639,15 @@ public extension SessionManager {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 
+}
+
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+}
+
+extension UIApplication {
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
 }

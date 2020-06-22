@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIViewControllerTransitioningDelegate where Self: UIViewController {
     func show(_ viewController: UIViewController,

@@ -63,7 +63,7 @@ public class AppLock {
     private static weak var weakLAContext: LAContext? = nil
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
-    open class func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
+    public class func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
         guard AppLock.weakLAContext == nil else { return }
 
         let useBiometricsOrAccountPassword = rules.useBiometricsOrAccountPassword
@@ -97,7 +97,7 @@ public class AppLock {
         }
     }
     
-    open class func persistBiometrics() {
+    public class func persistBiometrics() {
         BiometricsState.persist()
     }
 }

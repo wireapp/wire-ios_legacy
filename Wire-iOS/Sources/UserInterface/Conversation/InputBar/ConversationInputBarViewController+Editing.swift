@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireSyncEngine
 
 
 private let endEditingNotificationName = "ConversationInputBarViewControllerShouldEndEditingNotification"
@@ -25,7 +26,7 @@ private let endEditingNotificationName = "ConversationInputBarViewControllerShou
 
 extension ConversationInputBarViewController {
     
-    @objc func editMessage(_ message: ZMConversationMessage) {
+    func editMessage(_ message: ZMConversationMessage) {
         guard let text = message.textMessageData?.messageText else { return }
         mode = .textInput
         editingMessage = message
@@ -42,7 +43,8 @@ extension ConversationInputBarViewController {
         )
     }
     
-    @objc func endEditingMessageIfNeeded() {
+    @objc
+    func endEditingMessageIfNeeded() {
         guard let message = editingMessage else { return }
         delegate?.conversationInputBarViewControllerDidCancelEditing(message)
         editingMessage = nil
@@ -59,12 +61,11 @@ extension ConversationInputBarViewController {
         )
     }
     
-    @objc static func endEditingMessage() {
+    static func endEditingMessage() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: endEditingNotificationName), object: nil)
     }
 
-    @objc(updateWritingStateAnimated:)
-    public func updateWritingState(animated: Bool) {
+    func updateWritingState(animated: Bool) {
         guard nil == editingMessage else { return }
         inputBar.setInputBarState(.writing(ephemeral: ephemeralState), animated: animated)
         updateRightAccessoryView()
@@ -76,7 +77,7 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: InputBarEditViewDelegate {
 
-    @objc public func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType) {
+    func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType) {
         switch buttonType {
         case .undo: inputBar.undo()
         case .cancel: endEditingMessageIfNeeded()
@@ -85,7 +86,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         }
     }
     
-    @objc public func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
+    func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
         guard let text = editingMessage?.textMessageData?.messageText else { return }
         inputBar.setInputBarText(text, mentions: editingMessage?.textMessageData?.mentions ?? [])
     }

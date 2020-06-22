@@ -18,8 +18,12 @@
 
 
 import Foundation
+import UIKit
 
-final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter, SpinnerCapable {
+
+    //MARK: SpinnerCapable
+    var dismissSpinner: SpinnerCompletion?
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
@@ -64,4 +68,16 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         super.pushViewController(viewController, animated: animated)
     }
     
+    // MARK: - status bar
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return topViewController
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
 }

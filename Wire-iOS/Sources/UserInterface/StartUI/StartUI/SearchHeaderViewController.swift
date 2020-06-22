@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
-@objc
 protocol SearchHeaderViewControllerDelegate: class {
     func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
@@ -169,7 +170,7 @@ extension SearchHeaderViewController: UserSelectionObserver {
 extension SearchHeaderViewController: TokenFieldDelegate {
 
     func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token<NSObjectProtocol>]) {
-        userSelection.replace(tokens.compactMap { $0.representedObject.value as? ZMUser })
+        userSelection.replace(tokens.compactMap { $0.representedObject.value as? UserType })
         updateClearIndicator(for: tokenField)
     }
 

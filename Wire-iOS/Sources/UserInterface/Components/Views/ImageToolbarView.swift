@@ -19,13 +19,13 @@
 import UIKit
 import Cartography
 
-@objc enum ImageToolbarConfiguration : UInt {
+enum ImageToolbarConfiguration {
     case cell
     case compactCell
     case preview
 }
 
-@objcMembers class ImageToolbarView: UIView {
+final class ImageToolbarView: UIView {
     
     let buttonContainer = UIView()
     let sketchButton = IconButton()
@@ -42,7 +42,7 @@ import Cartography
         }
     }
 
-    @objc public var showsSketchButton = true {
+    var showsSketchButton = true {
         didSet {
             guard oldValue != showsSketchButton else { return }
             updateButtonConfiguration()
@@ -75,7 +75,7 @@ import Cartography
         }
     }
 
-    @objc public init(withConfiguraton configuration: ImageToolbarConfiguration) {
+    init(withConfiguraton configuration: ImageToolbarConfiguration) {
         self.configuration = configuration
         
         super.init(frame: CGRect.zero)

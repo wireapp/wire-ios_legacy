@@ -16,12 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import UIKit
+
 final class StartUIInviteActionBar: UIView {
 
     var backgroundView: UIVisualEffectView?
     var bottomEdgeConstraint: NSLayoutConstraint!
 
-    @objc private(set) var inviteButton: Button!
+    private(set) var inviteButton: Button!
 
     private let padding:CGFloat = 12
 

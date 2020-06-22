@@ -24,6 +24,7 @@ final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
         sut = SettingsTechnicalReportViewController()
     }
 

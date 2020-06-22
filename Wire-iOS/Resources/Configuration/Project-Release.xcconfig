@@ -17,7 +17,7 @@
 //
 
 #include "../../../Configuration/Release.xcconfig"
-#include "Project-Base.xcconfig"
+#include "./Project-Base.xcconfig"
 
 // Deployment
 //

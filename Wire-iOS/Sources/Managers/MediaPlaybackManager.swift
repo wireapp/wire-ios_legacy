@@ -16,6 +16,8 @@
 //
 
 import Foundation
+import WireSystem
+import avs
 
 private let zmLog = ZMSLog(tag: "MediaPlaybackManager")
 
@@ -106,12 +108,6 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 
         audioTrackPlayer = AudioTrackPlayer()
         audioTrackPlayer.mediaPlayerDelegate = self
-    }
-
-    func setPlaybackMuted(_ playbackMuted: Bool) {
-        if playbackMuted {
-            activeMediaPlayer?.pause()
-        }
     }
 }
 

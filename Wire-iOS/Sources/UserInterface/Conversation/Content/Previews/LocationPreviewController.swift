@@ -19,9 +19,10 @@
 import UIKit
 import MapKit
 import Cartography
+import WireDataModel
 
 /// Displays the preview of a location message.
-class LocationPreviewController: TintColorCorrectedViewController {
+final class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
     private var actionController: ConversationMessageActionController!
@@ -123,8 +124,9 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     // MARK: - Preview
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, message: "UIViewControllerPreviewing is deprecated. Please use UIContextMenuInteraction.")
     override var previewActionItems: [UIPreviewActionItem] {
-        return actionController.makePreviewActions()
+        return actionController.previewActionItems
     }
 
 }

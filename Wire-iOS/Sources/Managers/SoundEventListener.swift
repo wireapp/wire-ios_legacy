@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
+import avs
 
 extension ZMConversationMessage {
     var isSentBySelfUser: Bool {
@@ -210,7 +213,8 @@ extension SoundEventListener {
         }
     }
     
-    @objc func applicationDidEnterBackground() {
+    @objc
+    func applicationDidEnterBackground() {
         soundEventWatchDog.isMuted = true
     }
 }

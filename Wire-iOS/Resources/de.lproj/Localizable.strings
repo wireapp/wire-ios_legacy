@@ -139,7 +139,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
 "conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
 "conversation_list.data_usage_permission_alert.disagree" = "Nein";
 "conversation_list.data_usage_permission_alert.agree" = "Ich willige ein";
@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "aktiv";
 "conversation.voiceover.value.disabled" = "deaktiviert";
 
+"conversation.status.secutity_alert.default" = "Neue Sicherheitswarnung";
+
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
 "conversation.status.silenced" = "Lautlos";
@@ -301,7 +303,7 @@
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Wähle einen Filter aus";
 
 "conversation.call.many_participants_confirmation.title" = "Anruf bestätigen";
-"conversation.call.many_participants_confirmation.message" = "Dies wird %d Menschen anrufen";
+"conversation.call.many_participants_confirmation.message" = "Sie werden %d Personen anrufen";
 "conversation.call.many_participants_confirmation.call" = "Anruf";
 
 "conversation.connection_view.in_address_book" = "in Kontakte";
@@ -679,6 +681,9 @@
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
 // Call Actions (accessibility)
 
@@ -1375,7 +1380,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Anmeldung für Unternehmen";
-"login.sso.alert.message.sso_and_email" = "Bitte E-Mail-Adresse oder SSO-Code eingeben:";
+"login.sso.alert.message.sso_and_email" = "Bitte geben Sie Ihre E-Mail-Adresse oder den SSO-Code ein. Wenn Ihre E-Mail mit einer Installation von Wire übereinstimmt, verbindet sich die App mit dem Server.";
 "login.sso.alert.message.sso_only" = "Bitte den SSO-Code eingeben:";
 "login.sso.alert.action" = "Einloggen";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "E-Mail-Adresse oder SSO-Code";
@@ -1394,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Diese E-Mail-Adresse kann hier nicht verwendet werden. Bitte geben Sie den SSO-Code ein, um fortzufahren.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Diese E-Mail ist mit einem anderen Server verknüpft. Die App kann aber jeweils nur mit einem Server verbunden sein. Bitte melden Sie sich von allen Wire-Konten auf diesem Gerät ab und versuchen es erneut.";
 "login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
+"login.sso.backend_switch.title" = "Weiterleitung...";
+"login.sso.backend_switch.subtitle" = "Sie werden zu Ihrem speziellen Unternehmensservice weitergeleitet.";
+"login.sso.backend_switch.information" = "Geben Sie Ihre Zugangsdaten nur dann an, wenn Sie sicher sind, dass dies das Login Ihrer Organisation ist.";
 
 
 // Restore In Progress Loading Titles
@@ -1509,8 +1517,8 @@
 "error.name_and_email" = "Bitte gib deinen Namen und eine gültige E-Mail-Adresse ein";
 "error.full_name" = "Bitte gib deinen vollständigen Namen ein";
 "error.email" = "Bitte gib eine gültige E-Mail-Adresse ein";
-"error.input.too_long" = "Eingabe zu lang";
-"error.input.too_short" = "Eingabe zu kurz";
+"error.input.too_long" = "Bitte verwenden Sie einen kürzeren Benutzernamen";
+"error.input.too_short" = "Bitte verwenden Sie einen längeren Benutzernamen";
 "error.email.invalid" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "error.phone.invalid" = "Bitte gib eine gültige \nTelefonnummer ein";
 
@@ -1745,3 +1753,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
 "account_deleted_session_expired_alert.message" = "Die App hat über einen längeren Zeitraum nicht mit dem Server kommuniziert oder die Session wurde per Fernzugriff für ungültig erklärt.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "nicht ausgewählt";
+"button_message_cell.state.selected" = "ausgewählt";
+"button_message_cell.state.confirmed" = "bestätigt";
+
+"button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";

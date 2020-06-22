@@ -16,6 +16,10 @@
 //
 
 import Foundation
+import WireSystem
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 enum SettingsLastScreen: Int {
     case none = 0
@@ -151,13 +155,6 @@ final class Settings {
         storeCurrentIntensityLevelAsLastUsed()
 
         defaults.synchronize()
-    }
-
-    func reset() {
-        for key in SettingKey.allCases {
-            defaults.removeObject(forKey: key.rawValue)
-        }
-        UserDefaults.standard.synchronize()
     }
 
     @objc

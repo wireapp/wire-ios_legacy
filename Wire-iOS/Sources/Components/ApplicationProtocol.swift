@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ApplicationProtocol {
     var statusBarOrientation: UIInterfaceOrientation { get }

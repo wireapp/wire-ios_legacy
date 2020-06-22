@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "TokenField")
 
@@ -668,7 +669,9 @@ final class TokenField: UIView {
 // MARK: - TokenizedTextViewDelegate
 
 extension TokenField: TokenizedTextViewDelegate {
-    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat) {
+    func tokenizedTextView(_ textView: TokenizedTextView,
+                           didTapTextRange range: NSRange,
+                           fraction: CGFloat) {
         if isCollapsed {
             setCollapsed(false, animated: true)
             return

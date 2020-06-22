@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSyncEngine
+import avs
 
 final class ConversationListCell: SwipeMenuCollectionCell,
                                   SectionListCellType {
@@ -154,8 +156,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         }
         hasCreatedInitialConstraints = true
 
-        [itemView, menuDotsView, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
-
+        [itemView, menuDotsView, menuView].prepareForLayout()
 
         itemView.fitInSuperview()
 
@@ -269,4 +270,3 @@ extension ConversationListCell: AVSMediaManagerClientObserver {
         })
     }
 }
-

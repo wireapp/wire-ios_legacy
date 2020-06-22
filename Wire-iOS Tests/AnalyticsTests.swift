@@ -18,14 +18,14 @@
 
 import Foundation
 import XCTest
-import Wire
+@testable import Wire
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
 import WireCommonComponents
 
-class AnalyticsTests : XCTestCase {
+final class AnalyticsTests : XCTestCase {
 
     func testThatItSetsOptOutOnAppCenter() {
         // GIVEN

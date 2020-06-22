@@ -17,6 +17,9 @@
 //
 
 import UIKit
+import WireCommonComponents
+import WireDataModel
+import WireSyncEngine
 
 // MARK: - Cells
 
@@ -395,14 +398,6 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
-    }
-
-    func isConfigurationEqual(with description: Any) -> Bool {
-        guard let otherSystemMessageDescription = description as? ConversationParticipantsChangedSystemMessageCellDescription else {
-            return false
-        }
-
-        return self.configuration == otherSystemMessageDescription.configuration
     }
 }
 

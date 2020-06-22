@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 final class GroupParticipantsDetailViewController: UIViewController {
 
@@ -154,29 +155,6 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
 }
 
-private final class SelectedUserCell: UserCell {
-
-    func configureContentBackground(preselected: Bool, animated: Bool) {
-        contentView.backgroundColor = .clear
-        guard preselected else { return }
-        
-        let changes: () -> () = {
-            self.contentView.backgroundColor = UIColor.from(scheme: .cellSeparator)
-        }
-        
-        if animated {
-            UIView.animate(
-                withDuration: 0.3,
-                delay: 0.5,
-                options: .curveLinear,
-                animations: changes
-            )
-        } else {
-            changes()
-        }
-    }
-}
-
 extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
     
     func presentDetails(for user: UserType) {
@@ -195,7 +173,6 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     
-    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
     func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
             selectedParticipants: selectedUsers,

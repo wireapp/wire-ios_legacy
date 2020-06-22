@@ -16,15 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
-final class StartUIViewController: UIViewController {
+final class StartUIViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+    
     static let InitiallyShowsKeyboardConversationThreshold = 10
     
     weak var delegate: StartUIDelegate?
-    private(set) var scrollView: UIScrollView?
     //TODO:    let selfUser: UserType
     
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
@@ -91,11 +93,6 @@ final class StartUIViewController: UIViewController {
         view = StartUIView(frame: CGRect.zero)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        handleUploadAddressBookLogicIfNeeded()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -178,7 +175,7 @@ final class StartUIViewController: UIViewController {
     func showKeyboardIfNeeded() {
         let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count ///TODO: unwrap
         if conversationCount > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
-            searchHeader.tokenField.becomeFirstResponder()
+            _ = searchHeader.tokenField.becomeFirstResponder()
         }
         
     }
@@ -195,7 +192,7 @@ final class StartUIViewController: UIViewController {
     
     @objc
     func onDismissPressed() {
-        searchHeader.tokenField.resignFirstResponder()
+        _ = searchHeader.tokenField.resignFirstResponder()
         navigationController?.dismiss(animated: true)
     }
     

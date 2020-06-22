@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 /**
  * The first page of the user settings.
@@ -60,11 +61,14 @@ final class SelfProfileViewController: UIViewController {
      * - parameter userRightInterfaceType: The type of object to determine the user permissions.
      */
 
-    init(selfUser: SettingsSelfUser, userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
+    init(selfUser: SettingsSelfUser,
+         userRightInterfaceType: UserRightInterface.Type = UserRight.self,
+         userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+        
         self.selfUser = selfUser
 
         // Create the settings hierarchy
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: selfUser)
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: userSession, selfUser: selfUser)
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
 		let rootGroup = settingsCellDescriptorFactory.rootGroup()
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
@@ -76,6 +80,12 @@ final class SelfProfileViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         settingsPropertyFactory.delegate = self
+
+        if selfUser.isTeamMember {
+            userSession?.enqueue {
+                selfUser.refreshTeamData()
+            }
+        }
     }
 
     @available(*, unavailable)
@@ -177,11 +187,12 @@ final class SelfProfileViewController: UIViewController {
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = true
+        // topViewController is SettingsTableViewController
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = false
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
 }

@@ -17,12 +17,20 @@
 //
 
 import UIKit
+import WireDataModel
 
 final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
 
-    struct Configuration {
+    struct Configuration: Equatable {
         let message: ZMConversationMessage
         let selected: Bool
+        let deliveryState: ZMDeliveryState
+
+        static func == (lhs: ConversationMessageToolboxCell.Configuration, rhs: ConversationMessageToolboxCell.Configuration) -> Bool {
+            return lhs.deliveryState == rhs.deliveryState &&
+                   lhs.message == rhs.message &&
+                   lhs.selected == rhs.selected
+        }
     }
 
     let toolboxView = MessageToolboxView()
@@ -53,11 +61,11 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
         toolboxView.translatesAutoresizingMaskIntoConstraints = false
         toolboxView.fitInSuperview()
     }
-    
+
     func willDisplay() {
         toolboxView.startCountdownTimer()
     }
-    
+
     func didEndDisplaying() {
         toolboxView.stopCountdownTimer()
     }
@@ -89,12 +97,12 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
 
 }
 
-class ConversationMessageToolboxCellDescription: ConversationMessageCellDescription {
+final class ConversationMessageToolboxCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationMessageToolboxCell
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
     var showEphemeralTimer: Bool = false
@@ -108,7 +116,7 @@ class ConversationMessageToolboxCellDescription: ConversationMessageCellDescript
 
     init(message: ZMConversationMessage, selected: Bool) {
         self.message = message
-        self.configuration = View.Configuration(message: message, selected: selected)
+        self.configuration = View.Configuration(message: message, selected: selected, deliveryState: message.deliveryState)
     }
-    
+
 }

@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 import Cartography
+import WireCommonComponents
 
 protocol ColorPickerControllerDelegate {
     func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)
@@ -121,9 +122,7 @@ class ColorPickerController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        get {
-            return .lightContent
-        }
+        return .lightContent
     }
     
     fileprivate class PickerCell: UITableViewCell {

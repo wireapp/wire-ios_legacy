@@ -139,10 +139,12 @@ static id<UserType> mockSelfUser = nil;
 @synthesize activeConversations;
 @synthesize isUnderLegalHold;
 @synthesize richProfile;
-@synthesize needsRichProfileUpdate;
 @synthesize canCreateService;
 @synthesize oneToOneConversation;
-@synthesize shouldHideAvailability;
+@synthesize refreshDataCount;
+@synthesize refreshRichProfileCount;
+@synthesize refreshMembershipCount;
+@synthesize refreshTeamDataCount;
 
 #pragma mark - ZMBareUserConnection
 
@@ -200,7 +202,22 @@ static id<UserType> mockSelfUser = nil;
 
 - (void)refreshData
 {
-    // no-op
+    refreshDataCount += 1;
+}
+
+- (void)refreshMembership
+{
+    refreshMembershipCount += 1;
+}
+
+- (void)refreshRichProfile
+{
+    refreshRichProfileCount += 1;
+}
+
+- (void)refreshTeamData
+{
+    refreshTeamDataCount += 1;
 }
 
 - (void)connectWithMessage:(NSString * _Nonnull)message {

@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ParticipantDeviceHeaderViewDelegate: class {
     func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView)

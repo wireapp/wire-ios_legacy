@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 
 fileprivate enum EmptySearchResultsViewState {
@@ -26,7 +27,7 @@ fileprivate enum EmptySearchResultsViewState {
     case noServicesEnabled
 }
 
-@objc enum EmptySearchResultsViewAction: Int {
+enum EmptySearchResultsViewAction {
     case openManageServices
 }
 
@@ -39,11 +40,11 @@ extension EmptySearchResultsViewAction {
     }
 }
 
-@objc protocol EmptySearchResultsViewDelegate: class {
+protocol EmptySearchResultsViewDelegate: class {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView)
 }
 
-@objc final class EmptySearchResultsView: UIView {
+final class EmptySearchResultsView: UIView {
     
     private var state: EmptySearchResultsViewState = .noUsersOrServices {
         didSet {
@@ -67,7 +68,7 @@ extension EmptySearchResultsViewAction {
         }
     }
     
-    @objc public func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
+    func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
         switch (searchingForServices, hasFilter) {
         case (true, false):
             self.state = .noServicesEnabled
@@ -86,9 +87,9 @@ extension EmptySearchResultsViewAction {
     private let statusLabel  = UILabel()
     private let actionButton: InviteButton
     
-    @objc weak var delegate: EmptySearchResultsViewDelegate?
+    weak var delegate: EmptySearchResultsViewDelegate?
     
-    @objc public init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
+    init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
         self.variant = variant
         self.isSelfUserAdmin = isSelfUserAdmin
         stackView = UIStackView()
@@ -103,7 +104,7 @@ extension EmptySearchResultsViewAction {
         stackView.alignment = .center
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        [iconView, statusLabel, actionButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [iconView, statusLabel, actionButton].prepareForLayout()
         [iconView, statusLabel, actionButton].forEach(stackView.addArrangedSubview)
         
         addSubview(stackView)

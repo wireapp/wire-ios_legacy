@@ -21,7 +21,7 @@ import UIKit
 extension UIApplication {
 
     /// Check whether that app is in left to right layout.
-    @objc static var isLeftToRightLayout: Bool {
+    static var isLeftToRightLayout: Bool {
         return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight
     }
 
@@ -71,17 +71,4 @@ extension String {
             return NSAttributedString(attachment: attachment) + "  " + self
         }
     }
-
-    func addingLeadingAttachment(_ attachment: NSTextAttachment, verticalOffset: CGFloat = 0) -> NSAttributedString {
-        if let attachmentSize = attachment.image?.size {
-            attachment.bounds = CGRect(x: 0, y: verticalOffset, width: attachmentSize.width, height: attachmentSize.height)
-        }
-        
-        if UIApplication.isLeftToRightLayout {
-            return NSAttributedString(attachment: attachment) + "  " + self
-        } else {
-            return self + "  " + NSAttributedString(attachment: attachment)
-        }
-    }
-
 }

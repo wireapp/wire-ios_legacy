@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum ConversationType: Int {
     case oneToOne
@@ -78,7 +79,6 @@ extension ZMConversation {
     }
 
     ///TODO: move to DM
-    @objc
     var sortedOtherParticipants: [UserType] {
         return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }

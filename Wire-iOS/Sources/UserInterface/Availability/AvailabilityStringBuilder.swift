@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objcMembers public class AvailabilityStringBuilder: NSObject {
+import WireDataModel
+
+final class AvailabilityStringBuilder: NSObject {
 
     static func string(for user: UserType, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
         
@@ -41,7 +43,7 @@
                 color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
-                guard availability != .none && !user.shouldHideAvailability else { //Should use the default placeholder string
+                guard availability != .none else { //Should use the default placeholder string
                     return nil
                 }
                 title = "availability.\(availability.canonicalName)".localized.localizedUppercase
@@ -49,7 +51,7 @@
         }
         
         guard let textColor = color else { return nil }
-        let icon = user.shouldHideAvailability ? nil : AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }

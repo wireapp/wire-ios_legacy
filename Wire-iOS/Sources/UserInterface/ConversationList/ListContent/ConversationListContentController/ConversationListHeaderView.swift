@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 extension UIView {
     func rotate(to angleInDegrees: CGFloat) {
@@ -158,9 +160,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
 
     private func createConstraints() {
-        [arrowIconImageView, titleLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [arrowIconImageView, titleLabel].prepareForLayout()
 
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 

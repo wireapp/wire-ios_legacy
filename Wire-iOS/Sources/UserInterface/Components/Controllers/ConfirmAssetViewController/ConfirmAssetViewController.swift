@@ -19,6 +19,7 @@
 import Foundation
 import AVKit
 import FLAnimatedImage
+import UIKit
 
 final class ConfirmAssetViewController: UIViewController {
     enum Asset {
@@ -199,7 +200,11 @@ final class ConfirmAssetViewController: UIViewController {
         canvasViewController.select(editMode: editMode, animated: false)
 
         let navigationController = canvasViewController.wrapInNavigationController()
-        navigationController.modalTransitionStyle = .crossDissolve
+        
+        if #available(iOS 13.0, *) {
+        } else {
+            navigationController.modalTransitionStyle = .crossDissolve
+        }
 
         present(navigationController, animated: true)
     }

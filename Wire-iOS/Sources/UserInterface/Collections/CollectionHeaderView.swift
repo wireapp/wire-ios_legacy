@@ -18,6 +18,9 @@
 
 import Foundation
 import Cartography
+import WireCommonComponents
+import UIKit
+import WireSystem
 
 final class CollectionHeaderView: UICollectionReusableView {
     
@@ -125,7 +128,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         return layoutAttributes
     }
     
-    @objc public func didSelect(_ button: UIButton!) {
+    @objc func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }
 }

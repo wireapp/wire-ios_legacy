@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 typealias CallParticipantsList = [CallParticipantsCellConfiguration]
 
@@ -63,12 +65,6 @@ class CallParticipantsView: UICollectionView, Themeable {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
-        }
-    }
-    
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return subviews.any {
-            !$0.isHidden && $0.point(inside: convert(point, to: $0), with: event) && $0 is ShowAllParticipantsCell
         }
     }
     

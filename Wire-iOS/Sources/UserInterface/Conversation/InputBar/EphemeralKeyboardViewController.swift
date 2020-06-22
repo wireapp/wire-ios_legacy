@@ -20,6 +20,7 @@
 import UIKit
 import WireCommonComponents
 import Cartography
+import WireDataModel
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
@@ -43,12 +44,12 @@ public extension ZMConversation {
         }
     }
     
-    @objc var timeoutImage: UIImage? {
+    var timeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value)
     }
 
-    @objc var disabledTimeoutImage: UIImage? {
+    var disabledTimeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value, withColor: .lightGraphite)
     }
@@ -103,7 +104,7 @@ extension UIAlertController {
     }
 }
 
-@objcMembers public final class EphemeralKeyboardViewController: UIViewController {
+final class EphemeralKeyboardViewController: UIViewController {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 

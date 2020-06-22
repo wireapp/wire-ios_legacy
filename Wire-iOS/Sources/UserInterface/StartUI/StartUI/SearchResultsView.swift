@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SearchResultsView : UIView {
     
@@ -101,7 +102,6 @@ final class SearchResultsView : UIView {
         super.layoutSubviews()
     }
 
-    @objc
     var accessoryView : UIView? {
         didSet {
             guard oldValue != accessoryView else { return }
@@ -128,7 +128,6 @@ final class SearchResultsView : UIView {
         }
     }
 
-    @objc
     var emptyResultView : UIView? {
         didSet {
             guard oldValue != emptyResultView else { return }

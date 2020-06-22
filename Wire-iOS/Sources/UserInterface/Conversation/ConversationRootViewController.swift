@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import Cartography
+import UIKit
+import WireSyncEngine
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 final class ConversationRootViewController: UIViewController {
@@ -124,12 +125,10 @@ final class ConversationRootViewController: UIViewController {
         return child
     }
 
-    @objc (scrollToMessage:)
     func scroll(to message: ZMConversationMessage) {
         conversationViewController?.scroll(to: message)
     }
 }
-
 
 extension ConversationRootViewController: NetworkStatusBarDelegate {
     var bottomMargin: CGFloat {

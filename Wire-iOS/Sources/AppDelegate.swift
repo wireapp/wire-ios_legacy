@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import WireCommonComponents
+import WireSyncEngine
 
 enum ApplicationLaunchType {
     case unknown
@@ -35,7 +37,6 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    @objc
     var window: UIWindow? {
         get {
             return rootViewController?.mainWindow
@@ -67,12 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private static var sharedAppDelegate: AppDelegate!
 
-    @objc(sharedAppDelegate)
     static var shared: AppDelegate {
         return sharedAppDelegate!
     }
 
-    @objc
     var mediaPlaybackManager: MediaPlaybackManager? {
         return (rootViewController.visibleViewController as? ZClientViewController)?.mediaPlaybackManager
     }
@@ -162,8 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserDefaults.standard.synchronize()
     }
-    
-    
+        
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return open(url: url, options: options)
     }
@@ -205,9 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
         
-        guard let restorationHandler = restorationHandler as? (([AnyObject]?) -> Void) else { return false }
-        
-        return (SessionManager.shared?.continueUserActivity(userActivity, restorationHandler: restorationHandler)) ?? false
+        return (SessionManager.shared?.continueUserActivity(userActivity)) ?? false
     }
     
     // MARK : - BackgroundUpdates

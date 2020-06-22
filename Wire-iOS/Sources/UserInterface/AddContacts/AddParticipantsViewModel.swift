@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 struct AddParticipantsViewModel {
     let context: AddParticipantsViewController.Context

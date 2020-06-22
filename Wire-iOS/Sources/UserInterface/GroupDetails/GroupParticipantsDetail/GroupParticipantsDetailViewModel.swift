@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 fileprivate extension String {
     var isValidQuery: Bool {
@@ -62,11 +63,6 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         super.init()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
         computeVisibleParticipants()
-    }
-    
-    func isUserSelected(_ user: UserType) -> Bool {
-        guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
-        return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
     }
     
     private func computeVisibleParticipants() {

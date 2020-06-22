@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ShareContactsViewControllerDelegate: class {
     func shareDidSkip(_ viewController: UIViewController)
@@ -115,30 +116,6 @@ final class ShareContactsViewController: UIViewController {
         return attributedText
     }
     
-    private func setBackgroundBlurDisabled(_ backgroundBlurDisabled: Bool) {
-        self.backgroundBlurDisabled = backgroundBlurDisabled
-        backgroundBlurView.isHidden = backgroundBlurDisabled
-    }
-    
-    private func setNotNowButtonHidden(_ notNowButtonHidden: Bool) {
-        self.notNowButtonHidden = notNowButtonHidden
-        notNowButton.isHidden = notNowButtonHidden
-    }
-    
-    required init() {
-        super.init(nibName:nil, bundle:nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive(_:)),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: nil)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -178,7 +155,7 @@ final class ShareContactsViewController: UIViewController {
          shareContactsContainerView,
          addressBookAccessDeniedViewController.view,
          heroLabel,
-         shareContactsButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+         shareContactsButton].prepareForLayout()
 
         let constraints: [NSLayoutConstraint] = [
             shareContactsContainerView.topAnchor.constraint(equalTo: shareContactsContainerView.superview!.topAnchor),
@@ -217,7 +194,6 @@ final class ShareContactsViewController: UIViewController {
         AddressBookHelper.sharedHelper.requestPermissions({ [weak self] success in
             guard let weakSelf = self else { return }
             if success {
-                AddressBookHelper.sharedHelper.startRemoteSearch( weakSelf.uploadAddressBookImmediately)
                 weakSelf.delegate?.shareDidFinish(weakSelf)
             } else {
                 weakSelf.displayContactsAccessDeniedMessage(animated: true)
@@ -227,18 +203,7 @@ final class ShareContactsViewController: UIViewController {
     
     @objc
     private func shareContactsLater(_ sender: Any?) {
-        AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
         delegate?.shareDidSkip(self)
-    }
-    
-    // MARK: - UIApplication notifications
-
-    @objc
-    private func applicationDidBecomeActive(_ notification: Notification) {
-        if AddressBookHelper.sharedHelper.isAddressBookAccessGranted {
-            AddressBookHelper.sharedHelper.startRemoteSearch(true)
-            delegate?.shareDidFinish(self)
-        }
     }
 
     // MARK: - AddressBook Access Denied ViewController
@@ -262,7 +227,6 @@ final class ShareContactsViewController: UIViewController {
 
 extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
     public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
-        AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
         delegate?.shareDidSkip(self)
     }
 }

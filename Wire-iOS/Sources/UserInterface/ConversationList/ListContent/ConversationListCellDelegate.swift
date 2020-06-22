@@ -18,8 +18,7 @@
 
 import Foundation
 
-@objc
-protocol ConversationListCellDelegate: NSObjectProtocol {
+protocol ConversationListCellDelegate: class {
     func conversationListCellOverscrolled(_ cell: ConversationListCell)
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell)
 

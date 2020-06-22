@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
@@ -73,7 +75,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     init(configuration: CallInfoViewControllerInput) {
-        self.configuration = configuration        
+        self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
         backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
@@ -81,24 +83,24 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.delegate = self
         actionsView.delegate = self
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
         updateNavigationItem()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateState()
     }
-    
+
     private func setupViews() {
         addToSelf(backgroundViewController)
 
@@ -127,7 +129,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
         backgroundViewController.view.fitInSuperview()
     }
-    
+
     private func updateNavigationItem() {
         let minimizeItem = UIBarButtonItem(
             icon: .downArrow,
@@ -158,19 +160,19 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             navigationItem.titleView = label
         }
     }
-    
+
     // MARK: - Actions + Delegates
-    
-    @objc func minimizeCallOverlay(_ sender: UIBarButtonItem) {
+
+    @objc
+    private func minimizeCallOverlay(_ sender: UIBarButtonItem) {
         delegate?.infoViewController(self, perform: .minimizeOverlay)
     }
 
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
         delegate?.infoViewController(self, perform: action)
     }
-    
+
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController) {
         delegate?.infoViewController(self, perform: .showParticipantsList)
     }
-
 }

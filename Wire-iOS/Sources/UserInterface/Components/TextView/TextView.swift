@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "TextView")
 
@@ -27,7 +30,6 @@ protocol InformalTextViewDelegate: class {
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
 // and by http://derpturkey.com/placeholder-in-uitextview/
-@objc
 class TextView: UITextView {
 
     weak var informalTextViewDelegate: InformalTextViewDelegate?
@@ -102,13 +104,13 @@ class TextView: UITextView {
         }
     }
     
-    override open var text: String! {
+    override var text: String! {
         didSet {
             showOrHidePlaceholder()
         }
     }
 
-    override open var attributedText: NSAttributedString! {
+    override var attributedText: NSAttributedString! {
         didSet {
             showOrHidePlaceholder()
         }

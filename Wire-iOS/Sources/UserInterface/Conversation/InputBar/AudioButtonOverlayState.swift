@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 enum AudioButtonOverlayState {
     case hidden, expanded(CGFloat), `default`

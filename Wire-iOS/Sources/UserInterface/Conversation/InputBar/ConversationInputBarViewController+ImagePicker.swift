@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSyncEngine
+import AVFoundation
 
 private let zmLog = ZMSLog(tag: "ConversationInputBarViewController - Image Picker")
 
@@ -49,7 +51,10 @@ extension ConversationInputBarViewController {
             pickerController.delegate = self
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
-            pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
+            pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
+            if #available(iOS 11.0, *) {
+                pickerController.videoExportPreset = AVURLAsset.defaultVideoQuality
+            }
 
             if let popover = pickerController.popoverPresentationController,
                 let imageView = pointToView {
@@ -81,7 +86,6 @@ extension ConversationInputBarViewController {
         }
     }
 
-    @objc
     func processVideo(info: [UIImagePickerController.InfoKey: Any],
                       picker: UIImagePickerController) {
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
@@ -93,16 +97,8 @@ extension ConversationInputBarViewController {
         let videoTempURL = URL(fileURLWithPath: NSTemporaryDirectory(),
             isDirectory: true).appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)
 
-        if FileManager.default.fileExists(atPath: videoTempURL.path) {
-            do {
-                try FileManager.default.removeItem(at: videoTempURL)
-            } catch let deleteError {
-                zmLog.error("Cannot delete old tmp video at \(videoTempURL): \(deleteError)")
-            }
-        }
-
         do {
-            try FileManager.default.copyItem(at: videoURL, to: videoTempURL)
+            try FileManager.default.removeTmpIfNeededAndCopy(fileURL: videoURL, tmpURL: videoTempURL)
         } catch let error {
             zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
             return
@@ -112,16 +108,13 @@ extension ConversationInputBarViewController {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }
 
-        picker.showLoadingView = true
-        AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
+        AVURLAsset.convertVideoToUploadFormat(at: videoTempURL, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { resultURL, asset, error in
             if error == nil,
                let resultURL = resultURL {
                 self.uploadFile(at: resultURL)
             }
 
-            self.parent?.dismiss(animated: true) {
-                picker.showLoadingView = false
-            }
+            self.parent?.dismiss(animated: true)
         }
     }
 

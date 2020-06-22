@@ -19,6 +19,7 @@
 import XCTest
 import SnapshotTesting
 @testable import Wire
+import UIKit
 
 extension ViewImageConfig: Hashable {
     public static func == (lhs: ViewImageConfig, rhs: ViewImageConfig) -> Bool {
@@ -81,15 +82,18 @@ extension XCTestCase {
         }
     }
 
-    func verifyInAllPhoneWidths(matching value: UIView,
-                                named name: String? = nil,
-                                file: StaticString = #file,
-                                testName: String = #function,
-                                line: UInt = #line) {
-        let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
+    func verifyInWidths(matching value: UIView,
+                        widths: Set<CGFloat>,
+                        snapshotBackgroundColor: UIColor,
+                        named name: String? = nil,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        let container = containerView(with: value,
+                                      snapshotBackgroundColor: snapshotBackgroundColor)
         let widthConstraint = container.addWidthConstraint(width: 300)
 
-        for width in phoneWidths() {
+        for width in widths {
             widthConstraint.constant = width
 
             let nameWithProperty: String
@@ -105,6 +109,21 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
         }
+    }
+
+    func verifyInAllPhoneWidths(matching value: UIView,
+                                snapshotBackgroundColor: UIColor? = nil,
+                                named name: String? = nil,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        verifyInWidths(matching: value,
+                       widths: phoneWidths(),
+                       snapshotBackgroundColor: snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black),
+                       named: name,
+                       file: file,
+                       testName: testName,
+                       line: line)
     }
 
     // MARK: - verify the snapshots in both dark and light scheme
@@ -283,8 +302,11 @@ extension XCTestCase {
 
     // MARK: - color scheme
     func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
+        setColorScheme(.light)
+    }
+    
+    func setColorScheme(_ variant: ColorSchemeVariant) {
+        ColorScheme.default.variant = variant
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }

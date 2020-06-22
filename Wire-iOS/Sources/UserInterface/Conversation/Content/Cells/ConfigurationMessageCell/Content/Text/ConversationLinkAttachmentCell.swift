@@ -17,8 +17,10 @@
 //
 
 import UIKit
+import WireCommonComponents
+import WireDataModel
 
-class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
+final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
 
     struct Configuration {
         let attachment: LinkAttachment

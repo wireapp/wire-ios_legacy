@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireDataModel
 
 
 extension ZMConversationMessage {
@@ -73,24 +74,16 @@ extension ZMConversationMessage {
 
 extension Message {
 
-    @objc static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
+    static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
         return message.liked = liked
     }
 
-    @objc static func isLikedMessage(_ message: ZMConversationMessage) -> Bool {
+    static func isLikedMessage(_ message: ZMConversationMessage) -> Bool {
         return message.liked
     }
 
-    @objc static func hasReactions(_ message: ZMConversationMessage) -> Bool {
+    static func hasReactions(_ message: ZMConversationMessage) -> Bool {
         return message.hasReactions()
     }
 
-    @objc static func hasLikers(_ message: ZMConversationMessage) -> Bool {
-        return !message.likers().isEmpty
-    }
-
-    @objc class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
-        return message.canBeLiked
-    }
-    
 }

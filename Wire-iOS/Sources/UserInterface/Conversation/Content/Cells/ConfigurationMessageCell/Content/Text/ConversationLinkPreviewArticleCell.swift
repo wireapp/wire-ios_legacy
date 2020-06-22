@@ -17,8 +17,9 @@
 //
 
 import UIKit
+import WireDataModel
 
-class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
+final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell, ContextMenuDelegate {
 
     struct Configuration {
         let textMessageData: ZMTextMessageData
@@ -30,9 +31,9 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
     }
 
     private let articleView = ArticleView(withImagePlaceholder: true)
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 
@@ -66,8 +67,10 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
     func configure(with object: Configuration, animated: Bool) {
         configuration = object
-        articleView.configure(withTextMessageData: object.textMessageData, obfuscated: object.isObfuscated)
-        updateImageLayout(isRegular: self.traitCollection.horizontalSizeClass == .regular)
+        articleView.configure(withTextMessageData: object.textMessageData,
+                              obfuscated: object.isObfuscated)
+
+        updateImageLayout(isRegular: traitCollection.horizontalSizeClass == .regular)
     }
 
     func updateImageLayout(isRegular: Bool) {
@@ -86,11 +89,11 @@ class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 }
 
 extension ConversationLinkPreviewArticleCell: ArticleViewDelegate {
-    
+
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL) {
         url.open()
     }
-    
+
 }
 
 final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
@@ -98,9 +101,9 @@ final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCe
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
-    weak var delegate: ConversationMessageCellDelegate? 
+    weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 

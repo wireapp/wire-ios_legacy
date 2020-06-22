@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSystem
 
 struct EdgeInsets {
     let top, leading, bottom, trailing: CGFloat
@@ -67,12 +68,9 @@ struct LengthConstraints {
     }
 
     var array: [NSLayoutConstraint] {
-        return constraints.values.map{ $0 }
+        return constraints.values.map { $0 }
     }
 }
-
-
-
 
 extension UIView {
 
@@ -312,4 +310,10 @@ extension UIView {
         ]
     }
 
+}
+
+extension Sequence where Element == UIView {
+	func prepareForLayout() {
+		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+	}
 }

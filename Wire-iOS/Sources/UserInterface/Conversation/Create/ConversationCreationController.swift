@@ -20,6 +20,7 @@ import Foundation
 
 import UIKit
 import Cartography
+import WireDataModel
 
 protocol ConversationCreationValuesConfigurable: class {
     func configure(with values: ConversationCreationValues)
@@ -163,8 +164,8 @@ final class ConversationCreationController: UIViewController {
         }
     }
 
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return colorSchemeVariant == .light ? .default : .lightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
     }
 
     override public func viewDidAppear(_ animated: Bool) {

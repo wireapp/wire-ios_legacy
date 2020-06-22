@@ -1,5 +1,5 @@
 pool:
-   vmImage: 'macOS 10.14'
+   vmImage: 'macOS-10.15'
    
 trigger:
   branches:
@@ -13,14 +13,17 @@ pr:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_10.3.app
+    sudo xcode-select -switch /Applications/Xcode_11.4.1.app
     fastlane prepare 
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
 
 - script: |
-    fastlane build
+    fastlane build build_number:0 \
+                     build_type:Development \
+                     configuration:Debug \
+                     for_simulator:true
   displayName: "Build"
 
 - task: PublishBuildArtifacts@1

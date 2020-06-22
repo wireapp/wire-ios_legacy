@@ -19,13 +19,17 @@
 import XCTest
 @testable import Wire
 
-class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
+final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var featureProvider: MockAuthenticationFeatureProvider!
     var builder: AuthenticationInterfaceBuilder!
 
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
+
         featureProvider = MockAuthenticationFeatureProvider()
         builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
     }
@@ -33,6 +37,9 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     override func tearDown() {
         builder = nil
         featureProvider = nil
+
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
@@ -162,7 +169,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
         runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: false))
     }
-    
+
     func testReauthenticate_EmailAndPhone_TokenExpired() {
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
 
@@ -188,7 +195,10 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
 
     // MARK: - Helpers
 
-    private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {
+    private func runSnapshotTest(for step: AuthenticationFlowStep,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
         if let viewController = builder.makeViewController(for: step) {
             if !step.needsInterface {
                 return XCTFail("An interface was generated but we didn't expect one.", file: file, line: line)
@@ -197,7 +207,10 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
             let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
             navigationController.viewControllers = [viewController]
 
-            verify(view: navigationController.view, file: file, line: line)
+            verify(matching: navigationController,
+                   file: file,
+                   testName: testName,
+                   line: line)
         } else {
             XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }

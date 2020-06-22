@@ -18,6 +18,9 @@
 
 import Foundation
 import MessageUI
+import WireDataModel
+import UIKit
+import WireSystem
 
 /// Presents debug alerts
 final class DebugAlert {

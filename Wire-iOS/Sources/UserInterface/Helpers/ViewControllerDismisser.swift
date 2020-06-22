@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-import Foundation
-
-@objc protocol ViewControllerDismisser: class {
-    @objc(dismissViewController:completion:)
-    func dismiss(viewController: UIViewController, completion: (()->())?)
+protocol ViewControllerDismisser: class {
+    func dismiss(viewController: UIViewController, completion: Completion?)
 }

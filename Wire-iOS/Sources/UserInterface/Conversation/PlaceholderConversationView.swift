@@ -17,9 +17,11 @@
 // 
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
-@objc class PlaceholderConversationView: UIView {
-    
+final class PlaceholderConversationView: UIView {
+
     var shieldImageView: UIImageView!
 
     // MARK: - Initialization
@@ -31,7 +33,7 @@ import Foundation
         configureObservers()
         applyColorScheme(ColorScheme.default.variant)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSubviews()
@@ -61,7 +63,8 @@ import Foundation
 
     // MARK: - Colors
 
-    @objc private func updateForColorSchemeVariant() {
+    @objc
+    private func updateForColorSchemeVariant() {
         applyColorScheme(ColorScheme.default.variant)
     }
 

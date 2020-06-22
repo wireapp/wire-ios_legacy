@@ -18,6 +18,7 @@
 
 import Foundation
 import ZipArchive
+import WireSyncEngine
 
 class DocumentDelegate : NSObject, UIDocumentInteractionControllerDelegate {
     

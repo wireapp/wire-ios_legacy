@@ -20,33 +20,34 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ShareViewControllerTests: CoreDataSnapshotTestCase {
-    
+final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var groupConversation: ZMConversation!
     var sut: ShareViewController<ZMConversation, ZMMessage>!
-    
+
     override func setUp() {
         super.setUp()
-        self.groupConversation = self.createGroupConversation()
+
+        coreDataFixture = CoreDataFixture()
+
+        groupConversation = createGroupConversation()
     }
-    
+
     override func tearDown() {
-        self.groupConversation = nil
+        groupConversation = nil
         sut = nil
         disableDarkColorScheme()
+
+        coreDataFixture = nil
+
         super.tearDown()
-    }
-    
-    override var needsCaches: Bool {
-        return true
     }
 
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
-
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -59,18 +60,18 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         groupConversation.append(text: "This is a text message.")
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
         groupConversation.append(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_LocationMessage() {
         let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
         groupConversation.append(location: location)
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
         let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
         groupConversation.append(file: file)
@@ -84,12 +85,12 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         createSut()
 
         _ = sut.view // make sure view is loaded
-        
+
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        self.verifyInAllDeviceSizes(view: sut.view)
+
+        verifyInAllDeviceSizes(matching: sut)
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
         activateDarkColorScheme()
         groupConversation.append(text: "This is a text message.")
@@ -106,7 +107,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         _ = sut.view // make sure view is loaded
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        self.verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
@@ -121,7 +122,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         _ = sut.view // make sure view is loaded
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        self.verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
@@ -156,10 +157,11 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
     private func makeTestForShareViewController(file: StaticString = #file,
+                                                testName: String = #function,
                                         line: UInt = #line) {
         createSut()
 
-        verifyInAllDeviceSizes(view: sut.view, file:file, line:line)
+        verifyInAllDeviceSizes(matching: sut, file:file, testName: testName, line:line)
     }
 
 }

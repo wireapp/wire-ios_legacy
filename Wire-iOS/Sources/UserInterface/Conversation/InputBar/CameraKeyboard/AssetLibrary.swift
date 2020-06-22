@@ -30,7 +30,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
     public let synchronous: Bool
     let photoLibrary: PhotoLibraryProtocol
 
-    open var count: UInt {
+    var count: UInt {
         guard let fetch = self.fetch else {
             return 0
         }
@@ -41,7 +41,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         case outOfRange, notLoadedError
     }
     
-    open func asset(atIndex index: UInt) throws -> PHAsset {
+    func asset(atIndex index: UInt) throws -> PHAsset {
         guard let fetch = self.fetch else {
             throw AssetError.notLoadedError
         }
@@ -52,7 +52,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         return fetch.object(at: Int(index))
     }
     
-    open func refetchAssets(synchronous: Bool = false) {
+    func refetchAssets(synchronous: Bool = false) {
         guard !self.fetchingAssets else {
             return
         }
@@ -74,7 +74,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         }
     }
 
-    open func photoLibraryDidChange(_ changeInstance: PHChange) {
+    public func photoLibraryDidChange(_ changeInstance: PHChange) {
 
         guard let fetch = self.fetch else {
             return

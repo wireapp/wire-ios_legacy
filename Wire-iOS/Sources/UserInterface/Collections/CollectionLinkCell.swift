@@ -18,6 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
 final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
@@ -29,7 +32,8 @@ final class CollectionLinkCell: CollectionCell {
         articleView.imageHeight = 0
         articleView.messageLabel.numberOfLines = 1
         articleView.authorLabel.numberOfLines = 1
-        articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
+        articleView.configure(withTextMessageData: textMessageData,
+                              obfuscated: false)
         self.secureContentsView.addSubview(articleView)
         // Reconstraint the header
         self.headerView.removeFromSuperview()

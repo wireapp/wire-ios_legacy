@@ -17,13 +17,16 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
+import WireSystem
 
 final class StartUIView : UIView { }
 
 extension StartUIViewController {
     private func presentProfileViewController(for bareUser: UserType,
                                               at indexPath: IndexPath?) {
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
 
         guard let indexPath = indexPath,
             let cell = searchResultsViewController.searchResultsView?.collectionView.cellForItem(at: indexPath) else { return }
@@ -34,7 +37,7 @@ extension StartUIViewController {
                 let indexPaths = self.searchResultsViewController.searchResultsView?.collectionView.indexPathsForVisibleItems {
                 self.searchResultsViewController.searchResultsView?.collectionView.reloadItems(at: indexPaths)
             } else if self.profilePresenter.keyboardPersistedAfterOpeningProfile {
-                    self.searchHeaderViewController.tokenField.becomeFirstResponder()
+                    _ = self.searchHeaderViewController.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
         })
@@ -43,41 +46,37 @@ extension StartUIViewController {
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
 
-    private func unboxedUser(from user: UserType) -> ZMUser? {
-      return (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
-    }
-
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
                                             section: SearchResultsViewControllerSection) {
         
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = unboxedUser(from: user) {
-            delegate?.startUI(self, didSelect: [unboxed])
+        } else {
+            delegate?.startUI(self, didSelect: user)
         }
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
     
-        guard let unboxedUser = unboxedUser(from: user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
+        guard user.isConnected, !user.isBlocked else {
             return
         }
         
-        delegate?.startUI(self, didSelect: [unboxedUser])
+        delegate?.startUI(self, didSelect: user)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
         guard conversation.conversationType == .group || conversation.conversationType == .oneOnOne else { return }
 
         delegate?.startUI(self, didSelect: conversation)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnSeviceUser user: ServiceUser) {
 
         let detail = ServiceDetailViewController(serviceUser: user,
@@ -100,7 +99,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         navigationController?.pushViewController(detail, animated: true)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
@@ -132,7 +131,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
         
         GuestRoomEvent.created.track()
-        showLoadingView = true
+        isLoadingViewVisible = true
+        
         userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 

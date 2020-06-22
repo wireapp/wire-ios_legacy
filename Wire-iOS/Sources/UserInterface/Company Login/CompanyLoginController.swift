@@ -18,8 +18,11 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
+import WireTransport
+import WireSyncEngine
 
-@objc protocol CompanyLoginControllerDelegate: class {
+protocol CompanyLoginControllerDelegate: class {
 
     /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
@@ -29,15 +32,14 @@ import WireCommonComponents
     /// when performing a required task.
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
+    /// Called when the company login controller is ready to switch backend
+    func controllerDidStartBackendSwitch(_ controller: CompanyLoginController, toURL url: URL)
+    
     /// Called when the company login controller starts the company login flow.
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController)
 
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
-
-    /// Called when the company login controller updated to a different backend environment.
-    /// It will need the delegate to present the landing screen
-    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController)
 }
 
 ///
@@ -48,11 +50,11 @@ import WireCommonComponents
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
+final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
 
-    @objc weak var delegate: CompanyLoginControllerDelegate?
-
-    @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true {
+    weak var delegate: CompanyLoginControllerDelegate?
+    
+    var isAutoDetectionEnabled = true {
         didSet {
             isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
         }
@@ -64,18 +66,20 @@ import WireCommonComponents
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
-    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = true
+    static public let isCompanyLoginEnabled = true
 
     private var token: Any?
     private var pollingTimer: Timer?
     private let detector: CompanyLoginRequestDetector
     private let requester: CompanyLoginRequester
     private let flowHandler: CompanyLoginFlowHandler
+    
+    private weak var ssoAlert: UIAlertController?
 
     // MARK: - Initialization
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
-    @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
+    convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled,
             let callbackScheme = Bundle.ssoURLScheme else { return nil } // Disable on public builds
         
@@ -119,8 +123,8 @@ import WireCommonComponents
     
     private func startPollingTimer() {
         guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) {
-            [internalDetectSSOCode] _ in internalDetectSSOCode(true)
+        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { [internalDetectSSOCode] _ in
+            internalDetectSSOCode(true)
         }
     }
     
@@ -152,15 +156,22 @@ extension CompanyLoginController {
         error: UIAlertController.CompanyLoginError? = nil,
         ssoOnly: Bool = false) {
         
+        // Do not repeatly show alert if exist
+        guard ssoAlert == nil else { return }
+        
         let inputHandler = ssoOnly ? attemptLogin : parseAndHandle
         
         let alertController = UIAlertController.companyLogin(
             prefilledInput: prefilledInput,
             ssoOnly: ssoOnly,
             error: error,
-            completion: { input in input.apply(inputHandler) }
+            completion: { [weak self] input in
+                self?.ssoAlert = nil
+                input.apply(inputHandler)
+            }
         )
         
+        ssoAlert = alertController
         delegate?.controller(self, presentAlert: alertController)
     }
 
@@ -241,13 +252,14 @@ extension CompanyLoginController {
 extension CompanyLoginController {
     
     /// Fetches SSO code and starts flow automatically if code is returned on completion
-    /// Otherwise, falls back on prompting user for SSO code
-    func startAutomaticSSOFlow() {
+    /// - Parameter promptOnError: Prompt the user for SSO code if there is an error fetching code
+    func startAutomaticSSOFlow(promptOnError: Bool = true) {
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
             guard let ssoCode = result.value?.ssoCode else {
+                guard promptOnError else { return }
                 return self.displayCompanyLoginPrompt(ssoOnly: true)
             }
             self.attemptLoginWithSSOCode(ssoCode)
@@ -268,7 +280,7 @@ extension CompanyLoginController {
             guard let domainInfo = result.value else {
                 return self.presentCompanyLoginAlert(error: .domainNotRegistered)
             }
-            self.updateBackendEnvironment(with: domainInfo.configurationURL)
+            self.delegate?.controllerDidStartBackendSwitch(self, toURL: domainInfo.configurationURL)
         }
     }
     
@@ -276,7 +288,7 @@ extension CompanyLoginController {
     /// Updates backend environment to the specified url
     ///
     /// - Parameter url: backend url to switch to
-    private func updateBackendEnvironment(with url: URL) {
+    func updateBackendEnvironment(with url: URL) {
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.switchBackend(configuration: url) { [weak self] result in
             guard let `self` = self else { return }
@@ -290,7 +302,7 @@ extension CompanyLoginController {
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            self.delegate?.controllerDidUpdateBackendEnvironment(self)
+            self.startAutomaticSSOFlow(promptOnError: false)
         }
     }
 }
@@ -310,7 +322,6 @@ extension CompanyLoginController {
         detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentCompanyLoginAlert] result in
             // This might have changed in the meantime.
             guard isAutoDetectionEnabled else { return }
-            
             guard let result = result, !onlyNew || result.isNew else { return }
             presentCompanyLoginAlert(result.code, nil, true)
         }
@@ -318,7 +329,7 @@ extension CompanyLoginController {
 }
 
 // MARK: - Flow
-extension CompanyLoginController {
+extension CompanyLoginController: CompanyLoginFlowHandlerDelegate {
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
         delegate?.controllerDidStartCompanyLoginFlow(self)
         flowHandler.open(authenticationURL: url)

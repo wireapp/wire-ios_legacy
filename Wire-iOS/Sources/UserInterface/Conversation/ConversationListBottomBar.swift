@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 enum ConversationListButtonType {
     case archive, startUI, list, folder
@@ -177,7 +178,7 @@ final class ConversationListBottomBarController: UIViewController {
 
 // MARK: - Helper
 
-public extension UIView {
+extension UIView {
     
     func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 struct ConversationMessageContext: Equatable {
     let isSameSenderAsPrevious: Bool
@@ -33,6 +34,12 @@ protocol ConversationMessageSectionControllerDelegate: class {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
 }
 
+extension ZMConversationMessage {
+    var isComposite: Bool {
+        return (self as? ConversationCompositeMessage)?.isComposite == true
+    }
+}
+
 /**
  * An object that provides an interface to build list sections for a single message.
  *
@@ -47,7 +54,7 @@ protocol ConversationMessageSectionControllerDelegate: class {
 final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
-    @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
+    var cellDescriptions: [AnyConversationMessageCellDescription] = []
     
     /// The view descriptors in the order in which the tableview displays them.
     var tableViewCellDescriptions: [AnyConversationMessageCellDescription] {
@@ -57,17 +64,17 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     var context: ConversationMessageContext
     
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
-    @objc var useInvertedIndices = false
+    var useInvertedIndices = false
 
     /// The object that controls actions for the cell.
-    @objc var actionController: ConversationMessageActionController? {
+    var actionController: ConversationMessageActionController? {
         didSet {
             updateDelegates()
         }
     }
 
     /// The message that is being presented.
-    @objc var message: ZMConversationMessage {
+    var message: ZMConversationMessage {
         didSet {
             updateDelegates()
         }
@@ -117,10 +124,12 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         
         messageCellIndex = cellDescriptions.count
         
-        var contentCellDescriptions: [AnyConversationMessageCellDescription]
+        let contentCellDescriptions: [AnyConversationMessageCellDescription]
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
+        } else if message.isComposite {
+            contentCellDescriptions = addCompositeMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isImage {
@@ -167,6 +176,32 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         
         let locationCell = ConversationLocationMessageCellDescription(message: message, location: locationMessageData)
         return [AnyConversationMessageCellDescription(locationCell)]
+    }
+
+    private var addCompositeMessageCells: [AnyConversationMessageCellDescription] {
+        guard let compositeMessage = message as? ConversationCompositeMessage else { return [] }
+        
+        var cells: [AnyConversationMessageCellDescription] = []
+        
+        compositeMessage.compositeMessageData?.items.forEach() { item in
+            switch item {
+            case .text(let data):
+                let textCells = ConversationTextMessageCellDescription.cells(textMessageData: data, message: message, searchQueries: context.searchQueries)
+
+                cells = cells + textCells
+            case .button(let data):
+                
+                let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title,
+                                                                                                            state: data.state,
+                                                                                                            hasError: data.isExpired,
+                                                                                                            buttonAction: {
+                        data.touchAction()
+                    }))
+                cells.append(button)
+            }
+        }
+        
+        return cells
     }
 
     // MARK: - Composition
@@ -313,4 +348,3 @@ extension ConversationMessageSectionController: ZMUserObserver {
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
 }
-

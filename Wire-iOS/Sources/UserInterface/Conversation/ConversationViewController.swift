@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireDataModel
+import UIKit
+import WireSyncEngine
+import WireCommonComponents
 
 final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
@@ -172,8 +173,6 @@ final class ConversationViewController: UIViewController {
                     self?.conversation.connectedUser?.cancelConnectionRequest()
                 case .archive:
                     self?.conversation.isArchived = true
-                default:
-                    break
                 }
             })
             
@@ -267,18 +266,6 @@ final class ConversationViewController: UIViewController {
         openConversationList()
     }
 
-    func addParticipants(_ participants: UserSet) {
-        var newConversation: ZMConversation? = nil
-        
-        session.enqueue({
-            newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
-        }, completionHandler: { [weak self] in
-            if let newConversation = newConversation {
-                self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
-            }
-        })
-    }
-    
     private func setupContentViewController() {
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -348,15 +335,8 @@ final class ConversationViewController: UIViewController {
             dismiss(animated: true)
         }
     }
-    
-    // MARK: - UIPopoverPresentationControllerDelegate
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        if (controller.presentedViewController is AddParticipantsViewController) {
-            return .overFullScreen
-        }
-        return .fullScreen
-    }
 }
+
 //MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
@@ -432,6 +412,9 @@ extension ConversationViewController: ZMConversationObserver {
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
+        if changeInfo.deletedObjects.contains(conversation) {
+            ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
+        }
     }
     
     public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {

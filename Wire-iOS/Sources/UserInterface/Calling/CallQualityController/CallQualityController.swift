@@ -18,6 +18,8 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
+import WireCommonComponents
 
 protocol CallQualityControllerDelegate: class {
     func dismissCurrentSurveyIfNeeded()
@@ -58,11 +60,13 @@ final class CallQualityController: NSObject {
     /**
      * Whether the call quality survey can be presented.
      *
-     * We only present the call quality survey for internal users.
+     * We only present the call quality survey for internal users and if the application is in the foreground.
      */
 
     var canPresentCallQualitySurvey: Bool {
-        return Bundle.developerModeEnabled && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+        return Bundle.developerModeEnabled
+            && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+            && AppDelegate.shared.launchType != .unknown
     }
 
     // MARK: - Events
@@ -147,10 +151,9 @@ extension CallQualityController: WireCallCenterCallStateObserver {
             handleCallStart(in: conversation)
         case .terminating(let terminationReason):
             handleCallCompletion(in: conversation, reason: terminationReason, eventDate: eventDate)
-        case .incoming(_, let shouldRing, _):
-            if shouldRing {
-                delegate?.dismissCurrentSurveyIfNeeded()
-            }
+        case .incoming(_, _, _):
+            /// when call incoming, dismiss CallQuality VC in CallController.presentCall
+            break
         default:
             return
         }

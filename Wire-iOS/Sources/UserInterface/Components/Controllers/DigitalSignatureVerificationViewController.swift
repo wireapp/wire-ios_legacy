@@ -19,6 +19,7 @@
 import UIKit
 import Foundation
 import WebKit
+import WireUtilities
 
 class DigitalSignatureVerificationViewController: UIViewController {
 

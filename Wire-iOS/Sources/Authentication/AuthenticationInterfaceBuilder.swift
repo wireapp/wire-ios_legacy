@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 /**
  * A type of view controller that can be managed by an authentication coordinator.
@@ -145,6 +146,10 @@ class AuthenticationInterfaceBuilder {
         case .teamCreation(let state):
             return makeTeamCreationStepViewController(for: state)
 
+        case .switchBackend(let url):
+            let viewController = PreBackendSwitchViewController()
+            viewController.backendURL = url
+            return viewController
         default:
             return nil
         }

@@ -16,24 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Foundation
 import MobileCoreServices
 import Photos
 import FLAnimatedImage
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
-
-@objcMembers class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    static let sharedDelegate = FastTransitioningDelegate()
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return VerticalTransition(offset: -180)
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return VerticalTransition(offset: 180)
-    }
-}
 
 final class StatusBarVideoEditorController: UIVideoEditorController {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -43,21 +31,24 @@ final class StatusBarVideoEditorController: UIVideoEditorController {
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
 
-    @objc public func createCameraKeyboardViewController() {
-        guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else { return }
+    func createCameraKeyboardViewController() -> CameraKeyboardViewController {
+        guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else {
+            fatal("SplitViewController is not created")
+        }
         let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
         cameraKeyboardViewController.delegate = self
 
         self.cameraKeyboardViewController = cameraKeyboardViewController
+
+        return cameraKeyboardViewController
     }
 
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
-        if duration > ZMUserSession.shared()!.maxVideoLength() {
+        if duration > ZMUserSession.shared()!.maxVideoLength {
             let videoEditor = StatusBarVideoEditorController()
-            videoEditor.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             videoEditor.delegate = self
-            videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
+            videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = .typeMedium
 
@@ -97,11 +88,10 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                             }
                                                             })
             let confirmVideoViewController = ConfirmAssetViewController(context: context)
-            confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
 
-            self.present(confirmVideoViewController, animated: true) {
-            }
+            endEditing()
+            present(confirmVideoViewController, animated: true)
         }
     }
 
@@ -112,14 +102,16 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
 
-    @objc func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc
+    func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
 
     // MARK: - Video save callback
-    @objc func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc
+    func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             zmLog.error("Error saving video: \(error)")
         }
@@ -145,8 +137,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
 
-    @objc
-    public func showConfirmationForImage(_ imageData: Data,
+    func showConfirmationForImage(_ imageData: Data,
                                            isFromCamera: Bool,
                                            uti: String?) {
         let mediaAsset: MediaAsset
@@ -179,9 +170,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                     })
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-        confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
+        confirmImageViewController.previewTitle = conversation.displayName.localizedUppercase
 
+        endEditing()
         present(confirmImageViewController, animated: true)
     }
 
@@ -207,7 +198,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
         let videoURLAsset = AVURLAsset(url: NSURL(fileURLWithPath: inputPath) as URL)
 
-        videoURLAsset.convert(filename: filename) { URL, videoAsset, error in
+        videoURLAsset.convert(filename: filename, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { URL, videoAsset, error in
             guard let resultURL = URL, error == nil else {
                 completion(false, .none, 0)
                 return
@@ -226,10 +217,10 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
     public func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
         editor.dismiss(animated: true, completion: .none)
 
-        editor.showLoadingView = true
+        editor.isLoadingViewVisible = true
 
         self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
-            editor.showLoadingView = false
+            editor.isLoadingViewVisible = false
 
             guard let path = resultPath, success else {
                 return
@@ -239,7 +230,8 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         }
     }
 
-    @nonobjc public func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
+    func videoEditorController(_ editor: UIVideoEditorController,
+                               didFailWithError error: Error) {
         editor.dismiss(animated: true, completion: .none)
         zmLog.error("Video editor failed with error: \(error)")
     }

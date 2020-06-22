@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 struct BurstTimestampSenderMessageCellConfiguration {
     let date: Date
@@ -24,7 +25,7 @@ struct BurstTimestampSenderMessageCellConfiguration {
     let showUnreadDot: Bool
 }
 
-class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
+final class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration

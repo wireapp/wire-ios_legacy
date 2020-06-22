@@ -22,6 +22,7 @@ import MobileCoreServices
 import ImageIO
 import AVFoundation
 import CoreGraphics
+import UIKit
 
 extension URL {
     public func UTI() -> String {
@@ -33,7 +34,7 @@ extension URL {
 }
 
 extension NSURL {
-    @objc public func UTI() -> String {
+    public var UTI: String {
         return (self as URL).UTI()
     }
 }

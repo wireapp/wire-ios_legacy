@@ -17,26 +17,54 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
 
-final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
+final class ConversationTextMessageCell: UIView,
+                                         ConversationMessageCell,
+                                         TextViewInteractionDelegate {
 
     struct Configuration: Equatable {
         let attributedText: NSAttributedString
         let isObfuscated: Bool
     }
 
-    let messageTextView = LinkInteractionTextView()
+    private lazy var messageTextView: LinkInteractionTextView = {
+        let view = LinkInteractionTextView()
+
+        view.isEditable = false
+        view.isSelectable = true
+        view.backgroundColor = .clear
+        view.isScrollEnabled = false
+        view.textContainerInset = UIEdgeInsets.zero
+        view.textContainer.lineFragmentPadding = 0
+        view.isUserInteractionEnabled = true
+        view.accessibilityIdentifier = "Message"
+        view.accessibilityElementsHidden = false
+        view.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+        view.linkTextAttributes = [.foregroundColor: UIColor.accent()]
+        view.setContentHuggingPriority(.required, for: .vertical)
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
+        view.interactionDelegate = self
+
+        if #available(iOS 11.0, *) {
+            view.textDragInteraction?.isEnabled = false
+        }
+
+        return view
+    }()
+
     var isSelected: Bool = false
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var menuPresenter: ConversationMessageCellMenuPresenter?
-    
+
     var ephemeralTimerTopInset: CGFloat {
         guard let font = messageTextView.font else {
             return 0
         }
-        
+
         return font.lineHeight / 2
     }
 
@@ -50,37 +78,17 @@ final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextVi
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureSubviews()
-        configureConstraints()
+        setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureSubviews() {
-        messageTextView.isEditable = false
-        messageTextView.isSelectable = true
-        messageTextView.backgroundColor = .clear
-        messageTextView.isScrollEnabled = false
-        messageTextView.textContainerInset = UIEdgeInsets.zero
-        messageTextView.textContainer.lineFragmentPadding = 0
-        messageTextView.isUserInteractionEnabled = true
-        messageTextView.accessibilityIdentifier = "Message"
-        messageTextView.accessibilityElementsHidden = false
-        messageTextView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
-        messageTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
-        messageTextView.setContentHuggingPriority(.required, for: .vertical)
-        messageTextView.setContentCompressionResistancePriority(.required, for: .vertical)
-        messageTextView.interactionDelegate = self
-
-        if #available(iOS 11.0, *) {
-            messageTextView.textDragInteraction?.isEnabled = false
-        }
-
+    private func setup() {
         addSubview(messageTextView)
+        configureConstraints()
     }
 
     private func configureConstraints() {
@@ -119,7 +127,7 @@ final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextVi
 
     func textViewDidLongPress(_ textView: LinkInteractionTextView) {
         if !UIMenuController.shared.isMenuVisible {
-            self.menuPresenter?.showMenu()
+            menuPresenter?.showMenu()
         }
     }
 
@@ -127,14 +135,14 @@ final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextVi
 
 // MARK: - Description
 
-class ConversationTextMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationTextMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationTextMessageCell
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
@@ -157,12 +165,6 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         cell.cellView.menuPresenter = cell
         return cell
     }
-    
-    func isConfigurationEqual(with other: Any) -> Bool {
-        guard let otherDescription = other as? ConversationTextMessageCellDescription else { return false }
-        
-        return configuration == otherDescription.configuration
-    }
 }
 
 // MARK: - Factory
@@ -173,6 +175,13 @@ extension ConversationTextMessageCellDescription {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
+
+        return cells(textMessageData: textMessageData, message: message, searchQueries: searchQueries)
+    }
+
+    static func cells(textMessageData: ZMTextMessageData,
+                      message: ZMConversationMessage,
+                      searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
@@ -195,7 +204,7 @@ extension ConversationTextMessageCellDescription {
 
         // Quote
         if textMessageData.hasQuote {
-            let quotedMessage = message.textMessageData?.quote
+            let quotedMessage = textMessageData.quote
             let quoteCell = ConversationReplyCellDescription(quotedMessage: quotedMessage)
             cells.append(AnyConversationMessageCellDescription(quoteCell))
         }

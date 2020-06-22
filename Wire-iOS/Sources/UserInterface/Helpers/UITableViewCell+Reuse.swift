@@ -22,7 +22,7 @@ import UIKit
 // MARK: Cell Registration
 
 extension NSObject {
-    @objc static var zm_reuseIdentifier: String {
+    static var zm_reuseIdentifier: String {
         return NSStringFromClass(self) + "_ReuseIdentifier"
     }
 }

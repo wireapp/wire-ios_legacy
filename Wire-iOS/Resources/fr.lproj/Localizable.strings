@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "désactivée";
 
+"conversation.status.secutity_alert.default" = "Nouvelle alerte de sécurité";
+
 "conversation.status.typing" = "Écrit un message…";
 "conversation.status.typing.group" = "%@ : tape un message…";
 "conversation.status.silenced" = "En sourdine";
@@ -679,6 +681,9 @@
 "call.alert.ongoing.join.message" = "Un appel est en cours dans une autre conversation.\nJoindre cet appel raccrochera l'autre appel.";
 "call.alert.ongoing.start.button" = "Appeler quand même";
 "call.alert.ongoing.join.button" = "Répondre quand même";
+
+"call.quality.indicator.message" = "Votre relais d'appel n'est pas joignable. Cela peut affecter votre expérience d'appel.";
+"call.quality.indicator.more_info.button.text" = "Plus d'infos";
 
 // Call Actions (accessibility)
 
@@ -1157,8 +1162,8 @@
 "self.settings.advanced.title" = "Avancé";
 "self.settings.advanced.troubleshooting.title" = "Dépannage";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport d'erreur";
-"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
-"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.title" = "Outils pour débugger";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Trouver la conversation la plus récente";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide Wire à identifier les problèmes d'appel et à améliorer l'experience globale de l'application.";
 "self.settings.advanced.reset_push_token.title" = "Réinitialiser le jeton des notifications Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Si vous rencontrez des problèmes avec les notifications push, l'assistance de Wire peut vous demander de réinitialiser ce jeton.";
@@ -1375,7 +1380,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Connection Entreprise";
-"login.sso.alert.message.sso_and_email" = "Veuillez saisir votre adresse e-mail ou code SSO:";
+"login.sso.alert.message.sso_and_email" = "Veuillez entrer votre email ou votre code SSO. Si votre e-mail correspond à une installation d'entreprise de Wire, cette application se connectera à ce serveur.";
 "login.sso.alert.message.sso_only" = "Veuillez saisir votre code SSO:";
 "login.sso.alert.action" = "Se connecter";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "e-mail ou code d'accès SSO";
@@ -1394,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Cet e-mail ne peut pas être utilisé pour vous connecter. Veuillez saisir le code SSO pour continuer.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Cet e-mail est déjà lié à un autre serveur et l'application ne peut être connectée qu'à un seul serveur à la fois. Veuillez vous déconnecter de tous les comptes Wire sur cet appareil et ré-essayez de vous reconnecter.";
 "login.sso.error.alert.unknown.message" = "Veuillez réessayer plus tard.";
+"login.sso.backend_switch.title" = "Redirection...";
+"login.sso.backend_switch.subtitle" = "Vous allez être redirigé vers votre service entreprise dédié.";
+"login.sso.backend_switch.information" = "Ne saisissez vos identifiants que si vous êtes sûr d'être connecté à votre organisation.";
 
 
 // Restore In Progress Loading Titles
@@ -1509,8 +1517,8 @@
 "error.name_and_email" = "Veuillez saisir votre nom complet ainsi qu'une adresse e-mail valide";
 "error.full_name" = "Veuillez saisir votre nom complet";
 "error.email" = "Veuillez saisir une adresse e-mail valide";
-"error.input.too_long" = "Saisie trop longue";
-"error.input.too_short" = "Saisie trop courte";
+"error.input.too_long" = "Veuillez saisir un nom d'utilisateur plus court";
+"error.input.too_short" = "Veuillez saisir un nom d'utilisateur plus long";
 "error.email.invalid" = "Veuillez saisir une adresse e-mail valide";
 "error.phone.invalid" = "Veuillez saisir un numéro de téléphone valide";
 
@@ -1745,3 +1753,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";
 "account_deleted_session_expired_alert.message" = "L'application n'a pas communiqué avec le serveur depuis une longue période, ou votre session a été invalidée à distance.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "Non sélectionné";
+"button_message_cell.state.selected" = "Sélectionné";
+"button_message_cell.state.confirmed" = "Confirmé";
+
+"button_message_cell.generic_error" = "Votre réponse ne peut pas être envoyée, veuillez réessayer";

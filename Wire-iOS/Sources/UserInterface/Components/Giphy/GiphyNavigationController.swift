@@ -18,10 +18,10 @@
 
 import UIKit
 
-class GiphyNavigationController: UINavigationController {
+final class GiphyNavigationController: UINavigationController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.variant == .dark ? .lightContent : .default
+       return ColorScheme.default.statusBarStyle
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

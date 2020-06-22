@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 /**
  * The type of credentials to ask when the user is creating or
@@ -61,6 +63,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
     case companyLogin
+    case switchBackend(url: URL)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials?, context: NoHistoryContext)
@@ -91,6 +94,7 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .addEmailAndPassword: return false
         case .incrementalUserCreation: return false
         case .teamCreation(let teamState): return teamState.allowsUnwind
+        case .switchBackend: return false
         default: return true
         }
     }
@@ -111,6 +115,7 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
         case .companyLogin: return false
+        case .switchBackend: return true
 
         // Post Sign-In
         case .noHistory: return true

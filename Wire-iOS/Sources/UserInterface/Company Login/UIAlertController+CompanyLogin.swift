@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 extension UIAlertController {
 
@@ -86,8 +88,7 @@ extension UIAlertController {
         prefilledInput: String? = nil,
         ssoOnly: Bool = false,
         error: CompanyLoginError? = nil,
-        completion: @escaping (String?) -> Void
-        ) -> UIAlertController {
+        completion: @escaping (_ ssoCode: String?) -> Void) -> UIAlertController {
         
         let copy = CompanyLoginCopy(ssoOnly: ssoOnly)
         

@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import UIKit
 
 final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
 

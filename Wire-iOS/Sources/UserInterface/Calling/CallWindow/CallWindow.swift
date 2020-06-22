@@ -17,11 +17,12 @@
 //
 
 import Foundation
+import UIKit
 
 let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
 let UIWindowLevelCallOverlay: UIWindow.Level = UIWindowLevelNotification - 1
 
-final class CallWindow: PassthroughWindow {
+final class CallWindow: UIWindow {
     let callController = CallWindowRootViewController()
     
     override init(frame: CGRect) {

@@ -21,22 +21,22 @@ import UIKit
 import Foundation
 import Cartography
 
-@objcMembers public class ThreeDotsLoadingView: UIView {
+final class ThreeDotsLoadingView: UIView {
     
-    @objc let loadingAnimationKey = "loading"
-    @objc let dotRadius = 2
-    @objc let activeColor = UIColor.from(scheme: .loadingDotActive)
-    @objc let inactiveColor = UIColor.from(scheme: .loadingDotInactive)
+    let loadingAnimationKey = "loading"
+    let dotRadius = 2
+    let activeColor = UIColor.from(scheme: .loadingDotActive)
+    let inactiveColor = UIColor.from(scheme: .loadingDotInactive)
     
-    @objc let dot1 = UIView()
-    @objc let dot2 = UIView()
-    @objc let dot3 = UIView()
+    let dot1 = UIView()
+    let dot2 = UIView()
+    let dot3 = UIView()
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(dot1)
@@ -50,18 +50,18 @@ import Cartography
         NotificationCenter.default.addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func setupViews() {
+    func setupViews() {
         [dot1, dot2, dot3].forEach { (dot) in
             dot.layer.cornerRadius = CGFloat(dotRadius);
             dot.backgroundColor = inactiveColor
         }
     }
     
-    @objc func setupConstraints() {
+    func setupConstraints() {
         
         constrain(self, dot1, dot3) { container, leadingDot, trailingDot in
             leadingDot.left == container.left
@@ -82,13 +82,13 @@ import Cartography
         }
     }
     
-    public override var isHidden: Bool{
+    override var isHidden: Bool{
         didSet {
             updateLoadingAnimation()
         }
     }
     
-    @objc func updateLoadingAnimation() {
+    func updateLoadingAnimation() {
         if (isHidden) {
             stopProgressAnimation()
         } else {
@@ -96,7 +96,7 @@ import Cartography
         }
     }
     
-    @objc func startProgressAnimation() {
+    func startProgressAnimation() {
         let stepDuration = 0.350
         let colorShift = CAKeyframeAnimation(keyPath: "backgroundColor")
         colorShift.values = [activeColor.cgColor, inactiveColor.cgColor, inactiveColor.cgColor, activeColor.cgColor]
@@ -119,7 +119,7 @@ import Cartography
         dot3.layer.add(colorShift3, forKey: loadingAnimationKey)
     }
     
-    @objc func stopProgressAnimation() {
+    func stopProgressAnimation() {
         [dot1, dot2, dot3].forEach { $0.layer.removeAnimation(forKey: loadingAnimationKey) }
     }
 

@@ -18,6 +18,7 @@
 
 import Foundation
 import MediaPlayer
+import WireSyncEngine
 
 /// These enums represent the state of the current media in the player.
 
@@ -215,13 +216,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             break
         }
 
-    }
-
-    private func audioTrackStatusChanged() {
-        if avPlayer?.currentItem?.status == .failed {
-            audioTrack?.failedToLoad = true
-            state = .error
-        }
     }
 
     func setIsRemoteCommandCenterEnabled(_ enabled: Bool) {

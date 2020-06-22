@@ -18,8 +18,12 @@
 
 
 import Foundation
+import UIKit
+import WireUtilities
 
-final class ClearBackgroundNavigationController: UINavigationController {
+final class ClearBackgroundNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
     fileprivate lazy var popTransition = NavigationTransition(operation: .pop)
     
@@ -99,6 +103,18 @@ final class ClearBackgroundNavigationController: UINavigationController {
         useDefaultPopGesture = !translucentBackground
     }
     
+    // MARK: - status bar
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return topViewController
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 

@@ -17,7 +17,7 @@
 //
 
 #include "../../../Configuration/Debug.xcconfig"
-#include "Project-Base.xcconfig"
+#include "./Project-Base.xcconfig"
 
 // Architectures
 //

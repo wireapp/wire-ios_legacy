@@ -35,5 +35,7 @@
 	</array>
 	<key>get-task-allow</key>
 	<false/>
+	<key>com.apple.developer.pushkit.unrestricted-voip</key>
+	<true/>
 </dict>
 </plist>

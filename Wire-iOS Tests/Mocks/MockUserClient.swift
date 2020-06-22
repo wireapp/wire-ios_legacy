@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 
-@objcMembers
 final class MockUserClient: NSObject, UserClientType {
 
     var type: DeviceType = .permanent

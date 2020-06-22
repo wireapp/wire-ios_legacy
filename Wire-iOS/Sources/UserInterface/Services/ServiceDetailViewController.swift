@@ -16,7 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import WireSyncEngine
+import UIKit
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
@@ -24,7 +25,7 @@ extension ZMConversation {
     }
 }
 
-public struct Service {
+struct Service {
     let serviceUser: ServiceUser
     var serviceUserDetails: ServiceDetails?
     var provider: ServiceProvider?
@@ -51,7 +52,7 @@ final class ServiceDetailViewController: UIViewController {
         case addService(ZMConversation), removeService(ZMConversation), openConversation
     }
 
-    public var service: Service {
+    var service: Service {
         didSet {
             self.detailView.service = service
         }
@@ -60,9 +61,13 @@ final class ServiceDetailViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
-    public let completion: Completion?
-    public let variant: ServiceDetailVariant
+    let completion: Completion?
+    let variant: ServiceDetailVariant
     weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
@@ -143,9 +148,7 @@ final class ServiceDetailViewController: UIViewController {
     }
 
     private func createConstraints() {
-        [detailView, actionButton].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [detailView, actionButton].prepareForLayout()
 
         detailView.fitInSuperview(with: EdgeInsets(margin: 16), exclude: [.top, .bottom])
 
@@ -168,13 +171,13 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
-    @objc(backButtonTapped:)
-    public func backButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func backButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.popViewController(animated: true)
     }
 
-    @objc(dismissButtonTapped:)
-    public func dismissButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func dismissButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.dismiss(animated: true, completion: { [weak self] in
             self?.completion?(nil)
         })

@@ -16,9 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
-
+import WireCommonComponents
+import UIKit
 
 /**
  * Top-level structure overview:
@@ -43,7 +43,7 @@ protocol SettingsCellDescriptorType: class {
     var title: String {get}
     var identifier: String? {get}
     var group: SettingsGroupCellDescriptorType? {get}
-    
+
     func select(_: SettingsPropertyValue?)
     func featureCell(_: SettingsCellType)
 }
@@ -52,8 +52,7 @@ func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> 
     if let leftID = left.identifier,
         let rightID = right.identifier {
             return leftID == rightID
-    }
-    else {
+    } else {
         return left == right
     }
 }
@@ -129,14 +128,14 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     var footer: String? {
         return footerGenerator()
     }
-    
+
     let headerGenerator: () -> String?
     let footerGenerator: () -> String?
-    
+
     convenience init(cellDescriptors: [SettingsCellDescriptorType], header: String? = .none, footer: String? = .none, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .none) {
         self.init(cellDescriptors: cellDescriptors, headerGenerator: { return header }, footerGenerator: { return footer}, visibilityAction: visibilityAction)
     }
-    
+
     init(cellDescriptors: [SettingsCellDescriptorType], headerGenerator: @escaping () -> String?, footerGenerator: @escaping () -> String?, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .none) {
         self.cellDescriptors = cellDescriptors
         self.headerGenerator = headerGenerator
@@ -145,8 +144,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
     }
 }
 
-
-class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
+final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
     let title: String
@@ -154,19 +152,19 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
     let icon: StyleKitIcon?
-    
+
     let previewGenerator: PreviewGeneratorType?
-    
+
     weak var group: SettingsGroupCellDescriptorType?
-    
+
     var visibleItems: [SettingsSectionDescriptorType] {
         return self.items.filter {
             $0.visible
         }
     }
-    
+
     weak var viewController: UIViewController?
-    
+
     init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil) {
         self.items = items
         self.title = title
@@ -175,7 +173,7 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
         self.previewGenerator = previewGenerator
         self.icon = icon
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let previewGenerator = self.previewGenerator {
@@ -184,14 +182,14 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
         }
         cell.icon = self.icon
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
-        if let navigationController = self.viewController?.navigationController,
-           let controllerToPush = self.generateViewController() {
+        if let navigationController = viewController?.navigationController,
+           let controllerToPush = generateViewController() {
             navigationController.pushViewController(controllerToPush, animated: true)
         }
     }
-    
+
     func generateViewController() -> UIViewController? {
         return SettingsTableViewController(group: self)
     }

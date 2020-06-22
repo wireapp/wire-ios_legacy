@@ -17,10 +17,10 @@
 //
 
 import Foundation
+import UIKit
 
 extension UpsideDownTableView {
     
-    @objc(scrollToBottomAnimated:)
     func scrollToBottom(animated: Bool) {
         // upside-down tableview's bottom is rightside-up tableview's top
         super.scrollToTop(animated: animated)

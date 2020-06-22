@@ -18,6 +18,7 @@
 
 import Foundation
 import avs
+import WireSyncEngine
 
 
 // The AVS library consists of several components, those are:

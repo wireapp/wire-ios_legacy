@@ -16,6 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import UIKit
+import WireSyncEngine
+import WireCommonComponents
+
 extension UIViewController {
 
     func showAlert(for error: LocalizedError, handler: AlertActionHandler? = nil) {
@@ -24,7 +28,7 @@ extension UIViewController {
                                                     okActionHandler: handler), animated: true)
 
     }
-    
+
     func showAlert(for error: Error, handler: AlertActionHandler? = nil) {
         let nsError: NSError = error as NSError
         var message = ""

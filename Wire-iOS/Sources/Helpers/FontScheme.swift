@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum FontTextStyle: String {
     case largeTitle  = "largeTitle"
@@ -90,22 +91,6 @@ extension UIFont {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
         } else {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
-        }
-    }
-    
-    @objc public var classySystemFontName: String {
-        get {
-            let weightSpecifier = { () -> String in 
-                guard #available(iOSApplicationExtension 8.2, *),
-                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits) as? NSDictionary,
-                    let floatWeight = traits[UIFontDescriptor.TraitKey.weight] as? NSNumber else {
-                        return ""
-                }
-                
-                return "-\(FontWeight(weight: UIFont.Weight(rawValue: CGFloat(floatWeight.floatValue))).rawValue.capitalized)"
-            }()
-            
-            return "System\(weightSpecifier) \(self.pointSize)"
         }
     }
 }
@@ -232,7 +217,7 @@ final class FontScheme {
         return mapping
     }
     
-    @objc public convenience init(contentSizeCategory: UIContentSizeCategory) {
+    convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
     

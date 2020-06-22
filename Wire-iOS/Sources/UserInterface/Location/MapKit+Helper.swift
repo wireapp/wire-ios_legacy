@@ -18,6 +18,7 @@
 
 
 import MapKit
+import WireDataModel
 
 extension CLLocationCoordinate2D {
     

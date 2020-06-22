@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 /**
  * Valid response actions for authentication events.
@@ -50,6 +52,7 @@ enum AuthenticationCoordinatorAction {
     case startLoginFlow(AuthenticationLoginRequest)
     case setUserName(String)
     case setUserPassword(String)
+    case updateBackendEnvironment(url: URL)
     case startCompanyLogin(code: UUID?)
     case startSSOFlow
     case startBackupFlow

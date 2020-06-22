@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 
 private let log = ZMSLog(tag: "Mentions")
@@ -49,7 +50,7 @@ extension Mention {
         return URL(string: "\(Mention.mentionScheme)://location/\(range.location)")!
     }
     
-    @objc var location: Int {
+    var location: Int {
         return range.location
     }
 }

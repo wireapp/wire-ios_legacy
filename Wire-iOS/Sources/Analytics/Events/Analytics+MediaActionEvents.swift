@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import WireDataModel
+import WireSyncEngine
 
 let conversationMediaCompleteActionEventName = "contributed"
 
@@ -32,7 +34,7 @@ fileprivate extension ZMConversation {
 
 extension Analytics {
 
-    @objc func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
+    func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
         attributes["action"] = action.attributeValue
 

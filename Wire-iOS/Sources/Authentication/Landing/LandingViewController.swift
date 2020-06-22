@@ -17,8 +17,11 @@
 //
 
 import UIKit
+import WireSystem
+import WireTransport
+import WireSyncEngine
 
-@objc protocol LandingViewControllerDelegate {
+protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
@@ -41,7 +44,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
     static let headlineFont = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     static let semiboldFont = FontSpec(.large, .semibold).font!
-    static let regularFont = FontSpec(.normal, .regular).font!
 
     static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
@@ -60,11 +62,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
-
-    // MARK: - Adaptive Constraints
-
-    private var loginHintAlignTop: NSLayoutConstraint!
-    private var loginButtonAlignBottom: NSLayoutConstraint!
 
     // MARK: - UI Elements
 
@@ -253,7 +250,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .compatibleDarkContent
     }
 
     func configure(with featureProvider: AuthenticationFeatureProvider) {
@@ -426,20 +423,6 @@ final class LandingViewController: AuthenticationStepViewController {
         logoView.accessibilityTraits.insert(.header)
     }
 
-    private static let createAccountButtonTitle: NSAttributedString = {
-        let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        return title + subtitle
-    }()
-
-    private static let createTeamButtonTitle: NSAttributedString = {
-        let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        return title + subtitle
-    }()
-
     override func accessibilityPerformEscape() -> Bool {
         guard SessionManager.shared?.firstAuthenticatedAccount != nil else {
             return false
@@ -451,7 +434,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - Button tapped target
     
-    @objc public func showCustomBackendLink(_ sender: AnyObject!) {
+    @objc
+    func showCustomBackendLink(_ sender: AnyObject!) {
         let backendTitle = BackendEnvironment.shared.title
         let jsonURL = customBackendSubtitleLabel.text?.lowercased() ?? ""
         let alert = UIAlertController(title: "landing.custom_backend.more_info.alert.title".localized(args: backendTitle), message: "\(jsonURL)", preferredStyle: .alert)
@@ -460,30 +444,30 @@ final class LandingViewController: AuthenticationStepViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
+    @objc func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
-    @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
+    @objc func createTeamButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
-    @objc public func loginButtonTapped(_ sender: AnyObject!) {
+    @objc func loginButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
     }
     
-    @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
+    @objc func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
     
-    @objc public func ssoLoginButtonTapped(_ sender: AnyObject!) {
+    @objc func ssoLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseSSOLogin()
     }
     
-    @objc public func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }

@@ -19,6 +19,9 @@
 
 import Foundation
 import avs
+import WireSystem
+import WireSyncEngine
+import WireCommonComponents
 
 enum MediaManagerSound: String {
     case outgoingKnockSound = "ping_from_me"
@@ -49,7 +52,6 @@ extension AVSMediaManager {
         stopSound(sound.rawValue)
     }
 
-    @objc
     func playKnockSound() {
         play(sound: .outgoingKnockSound)
     }
@@ -91,7 +93,6 @@ extension AVSMediaManager {
         mediaManager.registerMedia(fromConfiguration: AVSMediaManager.MediaManagerSoundConfig, inDirectory: audioDir)
     }
     
-    @objc
     func configureSounds() {
         configureDefaultSounds()
         configureCustomSounds()
@@ -120,11 +121,11 @@ extension AVSMediaManager {
         let name = property.propertyName.rawValue
         let value = property.rawValue()
         if let stringValue = value as? String {
-            self.updateCustomSoundForName(name, propertyValue: stringValue)
+            updateCustomSoundForName(name, propertyValue: stringValue)
         }
     }
     
-    @objc func updateCustomSoundForName(_ propertyName: String, propertyValue: String?) {
+    func updateCustomSoundForName(_ propertyName: String, propertyValue: String?) {
         let value = propertyValue
         
         let soundValue = value == .none ? .none : ZMSound(rawValue: value!)

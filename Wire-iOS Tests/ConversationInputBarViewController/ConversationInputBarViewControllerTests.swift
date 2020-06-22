@@ -16,66 +16,73 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
 @testable import Wire
 
+final class ConversationInputBarViewControllerTests: XCTestCase {
 
-final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
+    var coreDataFixture: CoreDataFixture!
 
     var sut: ConversationInputBarViewController!
 
     override func setUp() {
         super.setUp()
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        coreDataFixture = CoreDataFixture()
+
+        sut = ConversationInputBarViewController(conversation: coreDataFixture.otherUserConversation)
+
         sut.loadViewIfNeeded()
     }
 
     override func tearDown() {
         sut = nil
+
+        coreDataFixture = nil
         super.tearDown()
     }
 
-    func testNormalState(){
-        verifyInAllPhoneWidths(view: sut.view)
-        verifyInAllTabletWidths(view: sut.view)
+    func testNormalState() {
+        verifyInAllPhoneWidths(matching: sut.view)
+        verifyInWidths(matching: sut.view,
+                       widths: tabletWidths(), snapshotBackgroundColor: .white)
+
     }
 }
 
 // MARK: - Typing indication
 extension ConversationInputBarViewControllerTests {
-    func testTypingIndicationIsShown(){
+    func testTypingIndicationIsShown() {
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
-        if let typingIndicatorView = sut.typingIndicatorView {
-            typingIndicatorView.typingUsers = [otherUser]
-            typingIndicatorView.setHidden(false, animated: false)
-        }
+        sut.typingIndicatorView.typingUsers = [coreDataFixture.otherUser]
+        sut.typingIndicatorView.setHidden(false, animated: false)
 
         // THEN
-        verifyInAllPhoneWidths(view: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 }
 
 // MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
-    func testEphemeralIndicatorButton(){
+    func testEphemeralIndicatorButton() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
-    func testEphemeralTimeNone(){
+    func testEphemeralTimeNone() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(.none)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(.none)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime10Second() {
@@ -83,12 +90,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(10)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(10)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime5Minutes() {
@@ -96,12 +103,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(300)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(300)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime2Hours() {
@@ -109,12 +116,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(7200)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(7200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime3Days() {
@@ -122,25 +129,25 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(259200)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(259200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
 
-    func testEphemeralTime4Weeks(){
+    func testEphemeralTime4Weeks() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(2419200)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralModeWhenTyping() {
@@ -148,24 +155,21 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(2419200)
+        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         let shortText = "Lorem ipsum dolor"
         sut.inputBar.textView.text = shortText
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(matching: sut.view)
     }
-}
 
 // MARK: - file action sheet
-
-extension ConversationInputBarViewControllerTests {
 
     func testUploadFileActionSheet() {
         let alert: UIAlertController = sut.createDocUploadActionSheet()
 
-        verifyAlertController(alert)
+        verify(matching: alert)
     }
 }

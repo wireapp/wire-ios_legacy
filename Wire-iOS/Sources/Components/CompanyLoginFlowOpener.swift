@@ -19,6 +19,8 @@
 import Foundation
 import SafariServices
 import AuthenticationServices
+import UIKit
+import WireSyncEngine
 
 protocol CompanyLoginFlowHandlerDelegate: class {
     /// Called when the user cancels the company login flow.
@@ -29,7 +31,7 @@ protocol CompanyLoginFlowHandlerDelegate: class {
  * Handles opening URLs to validate company login authentication.
  */
 
-class CompanyLoginFlowHandler {
+final class CompanyLoginFlowHandler {
 
     /// The delegate of the flow handler.
     weak var delegate: CompanyLoginFlowHandlerDelegate?

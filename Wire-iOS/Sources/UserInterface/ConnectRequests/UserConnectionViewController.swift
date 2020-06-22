@@ -18,6 +18,8 @@
 
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 enum IncomingConnectionAction: UInt {
     case ignore, accept

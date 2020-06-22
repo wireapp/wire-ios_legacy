@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
 
+"conversation.status.secutity_alert.default" = "New security alert";
+
 "conversation.status.typing" = "Kirjoittaa viestiä…";
 "conversation.status.typing.group" = "%@ kirjoittaa viestiä…";
 "conversation.status.silenced" = "Mykistetty";
@@ -680,6 +682,9 @@
 "call.alert.ongoing.start.button" = "Soita kuitenkin";
 "call.alert.ongoing.join.button" = "Join anyway";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Incoming call from %@";
@@ -989,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
-"self.settings.account_picture_group.theme" = "Tumma teema";
+"self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire antaa jokaiselle laitteelle yksilöllisen sormenjäljen. Vertaa niitä ja varmenna laitteesi ja keskustelusi.";
 "self.settings.device_details.reset_session.subtitle" = "Jos sormenjäljet eivät täsmää, nollaa istunto luodaksesi uudet salausavaimet molemmille osapuolille.";
@@ -1375,7 +1380,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Kirjaudu sisään";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
@@ -1394,6 +1399,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
 "login.sso.error.alert.unknown.message" = "Yritä myöhemmin uudelleen.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
 // Restore In Progress Loading Titles
@@ -1509,8 +1517,8 @@
 "error.name_and_email" = "Syötä koko nimesi ja voimassa oleva sähköpostiosoite";
 "error.full_name" = "Kirjoita koko nimesi";
 "error.email" = "Anna kelvollinen sähköpostiosoite";
-"error.input.too_long" = "Teksti on liian pitkä";
-"error.input.too_short" = "Teksti on liian lyhyt";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Anna kelvollinen sähköpostiosoite";
 "error.phone.invalid" = "Syötä voimassa oleva puhelinnumero";
 
@@ -1745,3 +1753,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";

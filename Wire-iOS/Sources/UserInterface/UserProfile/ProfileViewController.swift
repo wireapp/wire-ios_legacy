@@ -16,9 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-
 import UIKit
+import WireDataModel
 
 private let zmLog = ZMSLog(tag: "ProfileViewController")
 
@@ -50,7 +49,6 @@ extension ZMConversationType {
 final class ProfileViewController: UIViewController {
     let viewModel: ProfileViewControllerViewModel
     weak var viewControllerDismisser: ViewControllerDismisser?
-    weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
     private let profileFooterView: ProfileFooterView = ProfileFooterView()
     private let incomingRequestFooter: IncomingRequestFooterView = IncomingRequestFooterView()
@@ -99,6 +97,13 @@ final class ProfileViewController: UIViewController {
     required init(viewModel: ProfileViewControllerViewModel) {
         self.viewModel = viewModel
         super.init(nibName:nil, bundle:nil)
+
+        let user = viewModel.bareUser
+
+        if user.isTeamMember {
+            user.refreshData()
+            user.refreshMembership()
+        }
     }
     
     
@@ -107,17 +112,13 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func requestDismissal(withCompletion completion: @escaping () -> ()) {
-        viewControllerDismisser?.dismiss(viewController: self, completion: completion)
-    }
-    
     // MARK: - Header
     private func setupHeader() {
         let userNameDetailViewModel = viewModel.makeUserNameDetailViewModel()
         usernameDetailsView.configure(with: userNameDetailViewModel)
         view.addSubview(usernameDetailsView)
         
-        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
+        updateTitleView()
         
         profileTitleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
@@ -491,6 +492,10 @@ extension ProfileViewController: TabBarControllerDelegate {
 }
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
+    func updateTitleView() {
+        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
+    }
+    
     func updateShowVerifiedShield() {
         profileTitleView.showVerifiedShield = viewModel.shouldShowVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
     }

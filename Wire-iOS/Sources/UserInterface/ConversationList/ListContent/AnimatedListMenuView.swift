@@ -17,11 +17,12 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate final class MenuDotView: UIView {
     init() {
         super.init(frame: .zero)
-        
+
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2
     }
@@ -50,7 +51,7 @@ final class AnimatedListMenuView: UIView {
     private let leftDotView: MenuDotView = MenuDotView()
     private let centerDotView: MenuDotView = MenuDotView()
     private let rightDotView: MenuDotView = MenuDotView()
-    
+
     private var initialConstraintsCreated = false
     private var centerToRightDistanceConstraint: NSLayoutConstraint?
     private var leftToCenterDistanceConstraint: NSLayoutConstraint?
@@ -62,7 +63,7 @@ final class AnimatedListMenuView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        [leftDotView, centerDotView, rightDotView].forEach() {
+        [leftDotView, centerDotView, rightDotView].forEach {
             addSubview($0)
         }
     }
@@ -98,7 +99,7 @@ final class AnimatedListMenuView: UIView {
         let dotViews = [leftDotView, centerDotView, rightDotView]
 
         dotViews.forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
-        self.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
 
         centerToRightDistanceConstraint = centerDotView.rightAnchor.constraint(equalTo: rightDotView.leftAnchor, constant: centerToRightDistance(forProgress: progress))
 

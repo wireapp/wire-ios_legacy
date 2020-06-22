@@ -19,6 +19,12 @@
 import XCTest
 @testable import Wire
 
+extension Message {
+    static func dayFormatter(date: Date) -> DateFormatter {
+        return date.olderThanOneWeekdateFormatter
+    }
+}
+
 extension XCTestCase {
     /// change the locale of the DateFormatter for snapshot
     /// Notice: this method changes WRDateFormatter's static formatters, call resetDayFormatter in tearDown() to reset the changes

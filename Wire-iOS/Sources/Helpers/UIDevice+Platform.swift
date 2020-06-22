@@ -20,7 +20,7 @@ import UIKit
 
 extension UIDevice {
 
-    @objc static var isSimulator: Bool {
+    static var isSimulator: Bool {
         #if (arch(i386) || arch(x86_64))
             return true
         #else

@@ -20,7 +20,6 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
-@objcMembers
 final class MockMessageFactory: NSObject {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
@@ -119,6 +118,11 @@ final class MockMessageFactory: NSObject {
         let message = MockMessageFactory.messageTemplate()
 
         message.backingLocationMessageData = MockLocationMessageData()
+        return message
+    }
+
+    class var compositeMessage: MockMessage {
+        let message = MockMessageFactory.messageTemplate()
         return message
     }
 

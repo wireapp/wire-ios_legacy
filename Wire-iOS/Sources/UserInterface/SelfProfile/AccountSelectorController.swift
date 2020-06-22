@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Cartography
+import WireSyncEngine
 
 final class AccountSelectorController: UIViewController {
     private var accountsView = AccountSelectorView()

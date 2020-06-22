@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 ///TODO: remove public after MockUser is convert to Swift
 public final class ImageCache<T : AnyObject> {

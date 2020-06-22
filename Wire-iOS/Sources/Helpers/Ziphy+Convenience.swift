@@ -18,6 +18,7 @@
 
 import Foundation
 import Ziphy
+import WireSyncEngine
 
 extension ZiphyClient {
 

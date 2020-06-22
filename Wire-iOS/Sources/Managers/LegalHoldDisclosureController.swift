@@ -17,12 +17,14 @@
 //
 
 import UIKit
+import WireSyncEngine
+import WireDataModel
 
 /**
  * An object that coordinates disclosing the legal hold state to the user.
  */
 
-@objc class LegalHoldDisclosureController: NSObject, ZMUserObserver {
+final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
 
     enum DisclosureState: Equatable {
         /// No legal hold status is being disclosed.

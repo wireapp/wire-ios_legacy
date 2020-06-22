@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ServiceDetailView: UIView {
     private let serviceView: ServiceView
@@ -61,7 +62,7 @@ final class ServiceDetailView: UIView {
     }
 
     private func createConstraints() {
-        [self, serviceView, descriptionTextView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        [self, serviceView, descriptionTextView].prepareForLayout()
 
         serviceView.fitInSuperview(exclude: [.bottom])
 

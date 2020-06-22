@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 public class GuestIndicator: UIImageView, Themeable {
     

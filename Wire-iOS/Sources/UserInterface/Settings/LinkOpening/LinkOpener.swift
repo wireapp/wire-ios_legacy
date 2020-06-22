@@ -16,29 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import SafariServices
+import WireSystem
+import UIKit
 
 private let log = ZMSLog(tag: "link opening")
 
+extension URL {
 
-public extension NSURL {
-
-    @discardableResult @objc func open() -> Bool {
-        return (self as URL).open()
-    }
-
-}
-
-public extension URL {
-
-    @discardableResult func open() -> Bool {
+    @discardableResult
+    func open() -> Bool {
         let opened = openAsTweet() || openAsLink()
         if opened {
             return true
-        }
-        else {
+        } else {
             log.debug("Did not open \"\(self)\" in a twitter application or third party browser.")
             guard UIApplication.shared.canOpenURL(self) else { return false }
             UIApplication.shared.open(self)
@@ -56,7 +48,7 @@ public extension URL {
 
 extension NSURL {
 
-    @objc func openInApp(aboveViewController viewController: UIViewController) {
+    func openInApp(aboveViewController viewController: UIViewController) {
         (self as URL).openInApp(above: viewController)
     }
 
@@ -64,7 +56,7 @@ extension NSURL {
 
 protocol LinkOpeningOption {
     associatedtype ApplicationOptionEnum: RawRepresentable where ApplicationOptionEnum.RawValue == Int
-    
+
     static var allOptions: [Self] { get }
     var isAvailable: Bool { get }
     var displayString: String { get }
@@ -72,9 +64,8 @@ protocol LinkOpeningOption {
 
     static var storedPreference: ApplicationOptionEnum { get }
     static var settingKey: SettingKey { get }
-    static var defaultPreference: ApplicationOptionEnum  { get }
+    static var defaultPreference: ApplicationOptionEnum { get }
 }
-
 
 extension LinkOpeningOption {
 
@@ -83,7 +74,7 @@ extension LinkOpeningOption {
             let openingOption: ApplicationOptionEnum = ApplicationOptionEnum.init(rawValue: openingRawValue) {
             return openingOption
         }
-        
+
         return defaultPreference
     }
 
@@ -96,7 +87,6 @@ extension LinkOpeningOption {
     }
 
 }
-
 
 extension UIApplication {
 

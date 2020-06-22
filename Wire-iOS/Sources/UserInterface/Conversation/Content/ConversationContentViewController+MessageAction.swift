@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 extension ConversationContentViewController {
     // MARK: - EditMessages
@@ -104,10 +107,7 @@ extension ConversationContentViewController {
             openSketch(for: message, in: .draw)
         case .sketchEmoji:
             openSketch(for: message, in: .emoji)
-        case .sketchText:
-            // Not implemented yet
-            break
-        case .like:
+        case .like, .unlike:
             // The new liked state, the value is flipped
             let updatedLikedState = !Message.isLikedMessage(message)
             guard let indexPath = dataSource.topIndexPath(for: message) else { return }
@@ -133,7 +133,7 @@ extension ConversationContentViewController {
         case .forward:
             showForwardFor(message: message, from: view)
         case .showInConversation:
-            scroll(to: message) { cell in
+            scroll(to: message) { _ in
                 self.dataSource.highlight(message: message)
             }
         case .copy:
@@ -146,7 +146,7 @@ extension ConversationContentViewController {
             delegate?.conversationContentViewController(self, didTriggerReplyingTo: message)
         case .openQuote:
             if let quote = message.textMessageData?.quote {
-                scroll(to: quote) { cell in
+                scroll(to: quote) { _ in
                     self.dataSource.highlight(message: quote)
                 }
             }
@@ -180,11 +180,13 @@ extension ConversationContentViewController {
 // MARK: - SignatureObserver
 extension ConversationContentViewController: SignatureObserver {
     func willReceiveSignatureURL() {
-        showLoadingView = true
+//        showLoadingView = true
+        navigationController?.isLoadingViewVisible = true
     }
     
     func didReceiveSignatureURL(_ url: URL) {
-        showLoadingView = false
+//        showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         presentDigitalSignatureVerification(with: url)
     }
     
@@ -197,7 +199,8 @@ extension ConversationContentViewController: SignatureObserver {
     }
     
     func didFailSignature(errorType: SignatureStatus.ErrorYpe) {
-        showLoadingView = false
+//        showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         isDigitalSignatureVerificationShown
             ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert(errorType: errorType)
             })

@@ -19,17 +19,17 @@
 import UIKit
 import WireCanvas
 import Cartography
+import WireCommonComponents
 
-@objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
+protocol CanvasViewControllerDelegate : class {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 
-@objc public enum CanvasViewControllerEditMode : UInt {
+enum CanvasViewControllerEditMode : UInt {
     case draw
     case emoji
 }
 
-@objcMembers
 final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
@@ -76,6 +76,8 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         
         canvas.delegate = self
         canvas.backgroundColor = UIColor.white
+        canvas.isAccessibilityElement = true
+        canvas.accessibilityIdentifier = "canvas"
         
         emojiKeyboardViewController.delegate = self
     

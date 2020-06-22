@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireDataModel
+import WireCommonComponents
 
 extension UserType {
 

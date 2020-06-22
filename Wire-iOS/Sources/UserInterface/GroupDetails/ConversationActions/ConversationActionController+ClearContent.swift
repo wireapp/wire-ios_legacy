@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum ClearContentResult {
     case delete(leave: Bool), cancel

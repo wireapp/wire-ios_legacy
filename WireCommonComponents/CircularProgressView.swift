@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 public class CircularProgressView: UIView {
     
@@ -44,30 +45,36 @@ public class CircularProgressView: UIView {
     fileprivate func setupShapeLayer() {
         self.createPath()
         self.shapeLayer.lineWidth = CGFloat(lineWidth)
-        self.shapeLayer.lineCap = .square
+        self.shapeLayer.lineCap = lineCap
         self.shapeLayer.strokeStart = 0.0
         self.shapeLayer.strokeEnd = CGFloat(self.progress)
         self.shapeLayer.fillColor = UIColor.clear.cgColor
         self.shapeLayer.strokeColor = self.tintColor.cgColor
     }
     
-    override open func didMoveToWindow() {
+    override public func didMoveToWindow() {
         updateSpinningAnimation()
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
-            self.shapeLayer.strokeColor = self.tintColor.cgColor
+            shapeLayer.strokeColor = tintColor.cgColor
         }
     }
     
-    @objc open var lineWidth : Float = 2 {
+    public var lineCap: CAShapeLayerLineCap = .square {
         didSet {
             setNeedsLayout()
         }
     }
     
-    @objc open var deterministic : Bool = true {
+    public var lineWidth : Float = 2 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    public var deterministic : Bool = true {
         didSet {
             updateSpinningAnimation()
         }
@@ -81,7 +88,7 @@ public class CircularProgressView: UIView {
         return CAShapeLayer.self
     }
     
-    @objc open var shapeLayer: CAShapeLayer {
+    var shapeLayer: CAShapeLayer {
         get {
             if let shapeLayer = self.layer as? CAShapeLayer {
                 return shapeLayer
@@ -90,9 +97,9 @@ public class CircularProgressView: UIView {
         }
     }
     
-    @objc open fileprivate(set) var progress : Float = 0.0
+    fileprivate(set) var progress : Float = 0.0
         
-    @objc open func setProgress(_ progress: Float, animated: Bool) {
+    public func setProgress(_ progress: Float, animated: Bool) {
         self.progress = progress
         
         if (animated) {
@@ -114,14 +121,14 @@ public class CircularProgressView: UIView {
         CATransaction.setDisableActions(false)
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
-        self.setupShapeLayer()
+        setupShapeLayer()
     }
     
-    /// pragma mark - Spinning animation
+    // MARK: - Spinning animation
     
-    @objc let SpinningAnimationKey = "com.wire.animations.spin"
+    let SpinningAnimationKey = "com.wire.animations.spin"
     
     fileprivate func updateSpinningAnimation() {
         if !deterministic {

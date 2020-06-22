@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
 fileprivate enum Item {
     case supportedValue(MessageDestructionTimeoutValue)
@@ -42,7 +44,8 @@ extension ZMConversation {
     }
 }
 
-final class ConversationTimeoutOptionsViewController: UIViewController {
+final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     fileprivate let conversation: ZMConversation
     fileprivate var items: [Item] = []
@@ -166,7 +169,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     
     private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
         let item = CancelableItem(delay: 0.4) { [weak self] in
-            self?.showLoadingView = true
+            self?.isLoadingViewVisible = true
         }
 
         self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
@@ -175,7 +178,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
             }
             
             item.cancel()
-            self.showLoadingView = false
+            self.isLoadingViewVisible = false
 
             if case .failure(let error) = result {
                 self.handle(error: error)

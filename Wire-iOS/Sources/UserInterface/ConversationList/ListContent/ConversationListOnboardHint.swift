@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 final class ConversationListOnboardingHint: UIView {
     
@@ -54,9 +55,7 @@ final class ConversationListOnboardingHint: UIView {
     }
     
     private func createConstraints() {
-        [arrowView, messageLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [arrowView, messageLabel].prepareForLayout()
         
         let margin: CGFloat = 24
 

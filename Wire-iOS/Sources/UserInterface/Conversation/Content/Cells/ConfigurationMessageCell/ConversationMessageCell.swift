@@ -18,6 +18,7 @@
 
 import UIKit
 import WireUtilities
+import WireDataModel
 
 
 protocol ConversationMessageCellDelegate: MessageActionResponder {
@@ -34,7 +35,7 @@ protocol ConversationMessageCellDelegate: MessageActionResponder {
  * A generic view that displays conversation contents.
  */
 
-protocol ConversationMessageCell {
+protocol ConversationMessageCell: class {
     /// The object that contains the configuration of the view.
     associatedtype Configuration
 
@@ -191,8 +192,8 @@ extension ConversationMessageCellDescription {
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueConversationCell(with: self, for: indexPath)
-        cell.cellView.delegate = self.delegate
-        cell.cellView.message = self.message
+        cell.cellView.delegate = delegate
+        cell.cellView.message = message
         cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
@@ -200,24 +201,42 @@ extension ConversationMessageCellDescription {
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
-        adapterCell.cellView.configure(with: self.configuration, animated: animated)
+        adapterCell.cellView.configure(with: configuration, animated: animated)
         
         if cell.isVisible {
             _ = message?.startSelfDestructionIfNeeded()
         }
     }
     
+    
+    /// Default implementation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type
     func isConfigurationEqual(with other: Any) -> Bool {
         return type(of: self) == type(of: other)
     }
     
 }
 
+extension ConversationMessageCellDescription where View.Configuration : Equatable {
+    
+    /// Default implementation of isConfigurationEqual
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type, and configures are equal
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherConfig = (other as? Self)?.configuration else { return false }
+        
+        return configuration == otherConfig
+    }
+}
+
 /**
  * A type erased box containing a conversation message cell description.
  */
 
-@objc class AnyConversationMessageCellDescription: NSObject {
+class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let viewGenerator: () -> UIView
     private let registrationBlock: (UITableView) -> Void
@@ -276,11 +295,11 @@ extension ConversationMessageCellDescription {
         _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
     }
     
-    @objc var instance: AnyObject {
+    var instance: AnyObject {
         return instanceGetter()
     }
 
-    @objc var baseType: AnyClass {
+    var baseType: AnyClass {
         return baseTypeGetter()
     }
 
@@ -289,26 +308,26 @@ extension ConversationMessageCellDescription {
         set { _delegate.setter(newValue) }
     }
 
-    @objc var message: ZMConversationMessage? {
+    var message: ZMConversationMessage? {
         get { return _message.getter() }
         set { _message.setter(newValue) }
     }
 
-    @objc var actionController: ConversationMessageActionController? {
+    var actionController: ConversationMessageActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
     }
     
-    @objc var topMargin: Float {
+    var topMargin: Float {
         get { return _topMargin.getter() }
         set { _topMargin.setter(newValue) }
     }
 
-    @objc var containsHighlightableContent: Bool {
+    var containsHighlightableContent: Bool {
         return _containsHighlightableContent.getter()
     }
     
-    @objc var showEphemeralTimer: Bool {
+    var showEphemeralTimer: Bool {
         get { return _showEphemeralTimer.getter() }
         set { _showEphemeralTimer.setter(newValue) }
     }
@@ -332,7 +351,6 @@ extension ConversationMessageCellDescription {
         configureBlock(cell, animated)
     }
 
-    @objc(registerInTableView:)
     func register(in tableView: UITableView) {
         registrationBlock(tableView)
     }

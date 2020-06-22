@@ -70,8 +70,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         return imageView
     }()
 
-    var netObserver = ShareExtensionNetworkObserver()
-
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
@@ -113,12 +111,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupAppCenterIfNeeded()
-        navigationController?.view.backgroundColor = .white
         updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +132,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black).downscaling(to: iconSize))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: UIColor.Wire.primaryLabel).downscaling(to: iconSize))
     }
 
     private var authenticatedAccounts: [Account] {
@@ -221,9 +217,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
 
-        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, urlCompletionHandler: { (url, error) in
+        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            guard let url = url, url.isFileURL else { return }
+            guard let url = url as? URL, url.isFileURL else { return }
 
             let filename = url.lastPathComponent
             let separator = self.textView.text.isEmpty ? "" : "\n"
@@ -274,18 +270,26 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
             case .conversationDidDegrade((let users, let strategyChoice)):
                 self.extensionActivity?.markConversationDidDegrade()
-                self.conversationDidDegrade(
-                    change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
-                    callback: strategyChoice
-                )
+                if let conversation = postContent.target {
+                    self.conversationDidDegrade(
+                        change: ConversationDegradationInfo(conversation: conversation, users: users),
+                        callback: strategyChoice)
+                }
             case .timedOut:
                 self.popConfigurationViewController()
                 
-                let title = "share_extension.timeout.title".localized
-                let message = "share_extension.timeout.message".localized
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                let alert = UIAlertController.alertWithOKButton(title: "share_extension.timeout.title".localized, message: "share_extension.timeout.message".localized)
+                
+                self.present(alert, animated: true)
+                
+            case .error(let error):
+                if let errorDescription = (error as? UnsentSendableError )?.errorDescription {
+                    let alert = UIAlertController.alertWithOKButton(title: nil, message: errorDescription)
+                    
+                    self.present(alert, animated: true) {
+                        self.popConfigurationViewController()
+                    }
+                }
             }
         }
     }
@@ -327,10 +331,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.Wire.secondaryLabel)
 
                 case .remoteURL(let url):
-                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.Wire.secondaryLabel)
                     self.fetchWebsitePreview(for: url)
                 }
 
@@ -411,9 +415,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             try recreateSharingSession(account: account)
         } catch let error as SharingSession.InitializationError {
             guard error == .loggedOut else { return }
-            let alert = UIAlertController(title: "share_extension.logged_out.title".localized,
-                                          message: "share_extension.logged_out.message".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "share_extension.general.ok".localized, style: .default, handler: nil))
+            
+            let alert = UIAlertController.alertWithOKButton(title: "share_extension.logged_out.title".localized, message: "share_extension.logged_out.message".localized)
+
             self.present(alert, animated: true)
             return
         } catch { //any other error

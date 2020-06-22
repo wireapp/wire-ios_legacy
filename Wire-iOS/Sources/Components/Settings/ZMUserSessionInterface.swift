@@ -16,19 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import WireSyncEngine
 
-@objc
-protocol ZMUserSessionInterface: NSObjectProtocol {
+protocol ZMUserSessionInterface: class {
     
-    @objc(performChanges:)
     func perform(_ changes: @escaping () -> ())
     
-    @objc(enqueueChanges:)
     func enqueue(_ changes: @escaping () -> ())
     
-    @objc(enqueueChanges:completionHandler:)
-    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)!)
+    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?)
 
     var isNotificationContentHidden : Bool { get set }
 }

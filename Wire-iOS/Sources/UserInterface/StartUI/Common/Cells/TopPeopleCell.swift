@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireSyncEngine
 
-class TopPeopleCell: UICollectionViewCell {
+final class TopPeopleCell: UICollectionViewCell {
 
     // MARK: - Properties
 
@@ -52,7 +53,6 @@ class TopPeopleCell: UICollectionViewCell {
     private var conversationImageViewSize: NSLayoutConstraint?
     private var initialConstraintsCreated = false
 
-
     // MARK: - Life Cycle
 
     override init(frame: CGRect) {
@@ -69,7 +69,6 @@ class TopPeopleCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     // MARK: - Methods
 
@@ -97,9 +96,7 @@ class TopPeopleCell: UICollectionViewCell {
 
     override func updateConstraints() {
         if !initialConstraintsCreated {
-            [contentView, badgeUserImageView, avatarContainer, conversationImageView, nameLabel].forEach() {
-                $0.translatesAutoresizingMaskIntoConstraints = false
-            }
+            [contentView, badgeUserImageView, avatarContainer, conversationImageView, nameLabel].prepareForLayout()
 
             var constraints: [NSLayoutConstraint] = []
 

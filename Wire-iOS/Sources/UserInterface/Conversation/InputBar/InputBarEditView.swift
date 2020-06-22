@@ -17,17 +17,19 @@
 //
 
 import Cartography
+import WireCommonComponents
+import UIKit
 
-@objc public enum EditButtonType: UInt {
+enum EditButtonType {
     case undo, confirm, cancel
 }
 
-@objc protocol InputBarEditViewDelegate: class {
+protocol InputBarEditViewDelegate: class {
     func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
 
-public final class InputBarEditView: UIView {
+final class InputBarEditView: UIView {
     private static var iconButtonTemplate: IconButton {
         let iconButton = IconButton()
         iconButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
@@ -43,13 +45,13 @@ public final class InputBarEditView: UIView {
     
     weak var delegate: InputBarEditViewDelegate?
     
-    public init() {
+    init() {
         super.init(frame: .zero)
         configureViews()
         createConstraints()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

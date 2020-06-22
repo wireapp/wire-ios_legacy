@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ZMConversationMessage {
     public func isFileDownloaded() -> Bool {

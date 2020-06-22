@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-class EmailLinkVerificationStepDescription: AuthenticationStepDescription {
+final class EmailLinkVerificationStepDescription: AuthenticationStepDescription {
 
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
@@ -36,7 +37,7 @@ class EmailLinkVerificationStepDescription: AuthenticationStepDescription {
 
 }
 
-class EmailLinkVerificationMainView: NSObject, ViewDescriptor, ValueSubmission {
+final class EmailLinkVerificationMainView: NSObject, ViewDescriptor, ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true

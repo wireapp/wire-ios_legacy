@@ -18,6 +18,7 @@
 
 import Foundation
 import WireUtilities
+import UIKit
 
 class TextFieldValidator {
     

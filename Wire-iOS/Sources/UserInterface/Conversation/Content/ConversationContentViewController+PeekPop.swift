@@ -18,11 +18,14 @@
 
 import Foundation
 import SafariServices
+import UIKit
+import WireDataModel
 
 private var lastPreviewURL: URL?
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 
         let cellLocation = view.convert(location, to: tableView)
@@ -40,12 +43,15 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         lastPreviewURL = nil
         var controller: UIViewController?
 
+        // Preview an URL
         if message.isText, cell.selectionView is ArticleView, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
             lastPreviewURL = url
             controller = BrowserViewController(url: url)
         } else if message.isImage {
+            // Preview an image
             controller = messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         } else if message.isLocation {
+            // Preview a location
             controller = LocationPreviewController(message: message, actionResponder: self)
         }
 
@@ -53,6 +59,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         return controller
     }
 
+    @available(iOS, introduced: 9.0, deprecated: 13.0, renamed: "UIContextMenuInteraction")
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
 
         // If the previewed item is an image, show the previously hidden controls.

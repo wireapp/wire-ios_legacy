@@ -17,7 +17,10 @@
 //
 
 
-import Foundation
+import UIKit
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 final class ZClientViewController: UIViewController {
     private(set) var conversationRootViewController: UIViewController?
@@ -71,19 +74,12 @@ final class ZClientViewController: UIViewController {
             "media": "external "
             ])
         
-        
-        setupAddressBookHelper()
-        
         if let appGroupIdentifier = Bundle.main.appGroupIdentifier,
             let remoteIdentifier = ZMUser.selfUser().remoteIdentifier {
             let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
             
             let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
             analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
-        }
-        
-        if let userSession = ZMUserSession.shared() {
-            networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
         
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
@@ -234,7 +230,6 @@ final class ZClientViewController: UIViewController {
     }
     
     // MARK: - Singleton
-    @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
         return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }
@@ -262,15 +257,15 @@ final class ZClientViewController: UIViewController {
     }
     
     @discardableResult
-    private func pushContentViewController(_ viewController: UIViewController?,
-                                           focusOnView focus: Bool,
-                                           animated: Bool,
-                                           completion: Completion?) -> Bool {
+    private func pushContentViewController(_ viewController: UIViewController? = nil,
+                                           focusOnView focus: Bool = false,
+                                           animated: Bool = false,
+                                           completion: Completion? = nil) -> Bool {
         conversationRootViewController = viewController
-        wireSplitViewController.setRight(conversationRootViewController, animated: animated, completion: completion)
+        wireSplitViewController.setRightViewController(conversationRootViewController, animated: animated, completion: completion)
         
         if focus {
-            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated, completion: nil)
+            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated)
         }
         
         return true
@@ -282,7 +277,7 @@ final class ZClientViewController: UIViewController {
     
     func loadPlaceholderConversationController(animated: Bool, completion: @escaping Completion) {
         currentConversation = nil
-        pushContentViewController(nil, focusOnView: false, animated: animated, completion: completion)
+        pushContentViewController(animated: animated, completion: completion)
     }
     
     /// Load and optionally show a conversation, but don't change the list selection.  This is the place to put
@@ -322,7 +317,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = nil
         
         let inbox = ConnectRequestsViewController()
-        pushContentViewController(inbox, focusOnView: focus, animated: animated, completion: nil)
+        pushContentViewController(inbox, focusOnView: focus, animated: animated)
     }
     
     /// Open the user clients detail screen
@@ -374,9 +369,7 @@ final class ZClientViewController: UIViewController {
         if ringingCallConversation != nil {
             dismissAction()
         } else {
-            minimizeCallOverlay(animated: true, withCompletion: {
-                dismissAction()
-            })
+            minimizeCallOverlay(animated: true, withCompletion: dismissAction)
         }
     }
     
@@ -393,7 +386,7 @@ final class ZClientViewController: UIViewController {
         let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
         
         // Need to reload conversation to apply color scheme changes
-        pushContentViewController(currentConversationViewController, focusOnView: false, animated: false, completion: nil)
+        pushContentViewController(currentConversationViewController)
     }
     
     @objc
@@ -477,26 +470,20 @@ final class ZClientViewController: UIViewController {
         GroupConversationCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = ColorScheme.default.color(named: .textForeground, variant: .light)
-    }
-    
-    // MARK: - Adressbook Upload
-    
-    private func uploadAddressBookIfNeeded() {
-        // We should not even try to access address book when in a team
-        guard ZMUser.selfUser().hasTeam == false else { return }
         
-        let addressBookDidBecomeGranted = AddressBookHelper.sharedHelper.accessStatusDidChangeToGranted
-        AddressBookHelper.sharedHelper.startRemoteSearch(!addressBookDidBecomeGranted)
-        AddressBookHelper.sharedHelper.persistCurrentAccessStatus()
+        
+        let labelColor: UIColor
+        if #available(iOS 13.0, *) {
+            labelColor = .label
+        } else {
+            labelColor = ColorScheme.default.color(named: .textForeground, variant: .light)
+        }
+
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = labelColor
     }
 
     // MARK: - Setup methods
     
-    private func setupAddressBookHelper() {
-        AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
-    }
-
     func transitionToList(animated: Bool, completion: Completion?) {
         transitionToList(animated: animated,
                          leftViewControllerRevealed: true,
@@ -712,7 +699,6 @@ final class ZClientViewController: UIViewController {
     // MARK: - Application State
     @objc
     private func applicationWillEnterForeground(_ notification: Notification?) {
-        uploadAddressBookIfNeeded()
         trackShareExtensionEventsIfNeeded()
     }
     
@@ -728,12 +714,8 @@ final class ZClientViewController: UIViewController {
 
 }
 
-//MARK: - ZMNetworkAvailabilityObserver
-
-extension ZClientViewController: ZMNetworkAvailabilityObserver {
-    public func didChangeAvailability(newState: ZMNetworkState) {
-        if newState == .online && UIApplication.shared.applicationState == .active {
-            uploadAddressBookIfNeeded()
-        }
+extension ZClientViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        setNeedsStatusBarAppearanceUpdate()
     }
 }

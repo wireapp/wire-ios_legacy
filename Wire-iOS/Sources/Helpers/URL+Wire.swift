@@ -17,10 +17,12 @@
 //
 
 import Foundation
+import WireSystem
+import WireTransport
 
 private let zmLog = ZMSLog(tag: "URL")
 
-@objc enum TeamSource: Int {
+enum TeamSource: Int {
     case onboarding, settings
     
     var parameterValue: String {
@@ -163,7 +165,7 @@ extension URL {
     static var wr_askSupport: URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
-
+    
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }
@@ -176,22 +178,15 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "privacy/error-2")
     }
 
-    static var wr_createTeam: URL {
-        return BackendEnvironment.websiteLink(path: "create-team?pk_campaign=client&pk_kwd=ios")
-    }
-
     static var wr_createTeamFeatures: URL {
         return BackendEnvironment.websiteLink(path: "teams/learnmore")
-    }
-
-    static var wr_manageTeam: URL {
-        return BackendEnvironment.teamsLink(path: "login?pk_campaign=client&pk_kwd=ios")
     }
 
     static var wr_emailInUseLearnMore: URL {
         return BackendEnvironment.websiteLink(path: "support/email-in-use")
     }
 
+    
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
@@ -205,7 +200,7 @@ extension URL {
 
 extension NSURL {
 
-    @objc static var wr_fingerprintLearnMoreURL: NSURL {
+    static var wr_fingerprintLearnMoreURL: NSURL {
         return URL.wr_fingerprintLearnMore as NSURL
     }
 
