@@ -37,7 +37,7 @@ class URL_WireTests: XCTestCase {
         super.tearDown()
     }
     
-    /*
+    
     func testThatWebsiteURLsAreLoadedCorrectly() {
         let websiteURL = URL(string: "https://wire.com")!
         XCTAssertEqual(be.websiteURL, websiteURL)
@@ -67,7 +67,7 @@ class URL_WireTests: XCTestCase {
         XCTAssertEqual(be.accountsURL, accountsURL)
         XCTAssertEqual(URL.wr_passwordReset, accountsURL.appendingPathComponent("forgot"))
     }
-    
+    /*
     func testThatTeamURLsAreLoadedCorrectly() {
         let teamsURL = URL(string: "https://teams.wire.com")!
         XCTAssertEqual(be.teamsURL, teamsURL)
