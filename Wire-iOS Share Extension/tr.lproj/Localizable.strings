@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "TAMAM";
+"general.ok" = "TAMAM";
+
 "share_extension.conversation_selection.account" = "Hesap:";
 "share_extension.conversation_selection.title" = "Konuşma:";
 "share_extension.send_button.title" = "Gönder";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "İnternet Bağlantısı Yok";
 "share_extension.not_signed_in.title" = "Bir şey paylaşabilmek için Wire'a giriş yapmanız gerekir";
 "share_extension.not_signed_in.close_button" = "Kapat";
+
 "share_extension.timeout.title" = "Bağlantı zaman aşımına uğradı.";
 "share_extension.timeout.message" = "İnternet bağlantınızı kontrol edin ve tekrar deneyin. Ekleriniz konuşmaya kaydedildi.";
+
+"content.file.too_big" = "En fazla %@ dosya yükleyebilirsin";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 "share_extension.logged_out.title" = "Bu hesaptan çıkış yaptınız.";
 "share_extension.logged_out.message" = "Lütfen başka bir hesap seçin.";

@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Informações Pessoais";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire dá uma impressão digital única a cada dispositivo. Compare-os e verifique seus dispositivos e conversas.";
 "self.settings.device_details.reset_session.subtitle" = "Se as impressões digitais não corresponderem, redefina a sessão para gerar novas chaves de criptografia em ambos os lados.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Botão Enviar";
 "self.settings.popular_demand.send_button.footer" = "Desabilite para enviar através da tecla return.";
 "self.settings.popular_demand.dark_mode.footer" = "Alternar entre tema escuro e claro.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir com";

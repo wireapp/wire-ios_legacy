@@ -682,7 +682,7 @@
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
 
-"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.message" = "Ihr Anrufrelais ist nicht erreichbar. Dies kann Ihr Gespräch beeinträchtigen.";
 "call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
 // Call Actions (accessibility)
@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Persönliche Informationen";
 
-"self.settings.account_picture_group.theme" = "Dunkler Hintergrund";
+"self.settings.account_picture_group.theme" = "Hintergrund";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gibt jedem Gerät einen einzigartigen Fingerabdruck. Vergleiche diese und verifiziere deine Geräte und Unterhaltungen.";
 "self.settings.device_details.reset_session.subtitle" = "Falls die Fingerabdrücke nicht übereinstimmen, setze die Session zurück um neue Verschlüsselungs-Schlüssel auf beiden Seiten zu erstellen.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Senden Taste";
 "self.settings.popular_demand.send_button.footer" = "Deaktivieren, um Nachrichten mit der Enter-Taste zu senden.";
 "self.settings.popular_demand.dark_mode.footer" = "Zwischen dunklem und hellem Hintergrund wechseln.";
+
+// dark theme
+"dark_theme.option.dark" = "Dunkel";
+"dark_theme.option.light" = "Hell";
+"dark_theme.option.system" = " Mit Systemeinstellungen synchronisieren";
 
 // Open in
 "self.settings.external_apps.header" = "Öffnen mit";

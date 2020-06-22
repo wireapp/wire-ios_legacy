@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "Verstanden";
+
 "share_extension.conversation_selection.account" = "Konto:";
 "share_extension.conversation_selection.title" = "Unterhaltung:";
 "share_extension.send_button.title" = "Senden";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Keine Internet Verbindung";
 "share_extension.not_signed_in.title" = "Um teilen zu können musst du dich zuerst in der Wire App einloggen";
 "share_extension.not_signed_in.close_button" = "Schließen";
+
 "share_extension.timeout.title" = "Zeitüberschreitung beim Verbindungsversuch.";
 "share_extension.timeout.message" = "Überprüfen Sie ihre Internetverbindung und versuchen Sie es erneut. Der Anhang wurde in der Unterhaltung gespeichert.";
+
+"content.file.too_big" = "Sie können Dateien bis zu %@ senden";
+"content.file.unsupported_attachment" = "Nicht unterstützter Anhang";
+"share_extension.error.conversation_does_not_exist.message" = "Bitte wählen Sie eine Unterhaltung zum Teilen aus";
+
 "share_extension.privacy_security.lock_app.description" = "Wire entsperren";
 "share_extension.logged_out.title" = "Du wurdest von diesem Gerät abgemeldet.";
 "share_extension.logged_out.message" = "Bitte wähle ein anderes Konto.";
