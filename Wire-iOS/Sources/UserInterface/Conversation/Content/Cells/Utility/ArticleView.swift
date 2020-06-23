@@ -21,10 +21,6 @@ import WireLinkPreview
 import WireCommonComponents
 import WireDataModel
 
-protocol LinkViewDelegate: class {
-    func linkViewWantsToOpenURL(_ articleView: UIView, url: URL)
-}
-
 final class ArticleView: UIView {
 
     // MARK: - Styling
@@ -208,8 +204,7 @@ final class ArticleView: UIView {
     }
 
     private func openURL() {
-        guard let url = linkPreview?.openableURL else { return }
-        delegate?.linkViewWantsToOpenURL(self, url: url as URL)
+        delegate?.linkViewWantsToOpenURL(self)
     }
 }
 
@@ -220,8 +215,7 @@ extension ArticleView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
 
-        guard let linkPreview = linkPreview,
-            let url = linkPreview.openableURL else {
+        guard let url = delegate?.url else {
             return nil
         }
 
@@ -232,7 +226,7 @@ extension ArticleView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.delegate?.makeContextMenu(title: linkPreview.originalURLString, view: self)
+                                            return self.delegate?.makeContextMenu(title: url.absoluteString, view: self)
         })
     }
 

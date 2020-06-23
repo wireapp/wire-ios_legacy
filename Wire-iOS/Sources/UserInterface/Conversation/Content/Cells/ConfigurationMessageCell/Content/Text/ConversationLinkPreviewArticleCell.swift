@@ -89,9 +89,12 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell,
 }
 
 extension ConversationLinkPreviewArticleCell: LinkViewDelegate {
-
-    func linkViewWantsToOpenURL(_ articleView: UIView, url: URL) {
-        url.open()
+    var url: URL? {
+        return configuration?.textMessageData.linkPreview?.openableURL
+    }
+    
+    func linkViewWantsToOpenURL(_ articleView: UIView) {
+        url?.open()
     }
 
 }

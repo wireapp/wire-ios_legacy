@@ -42,11 +42,7 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
     weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
-    var currentAttachment: LinkAttachment? {
-        didSet {
-            attachmentView.url = currentAttachment?.permalink
-        }
-    }
+    var currentAttachment: LinkAttachment?
     var heightRatioConstraint: NSLayoutConstraint?
 
     // MARK: - Initialization
@@ -140,11 +136,13 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
 }
 
 extension ConversationLinkAttachmentCell: LinkViewDelegate {
-    func linkViewWantsToOpenURL(_ articleView: UIView, url: URL) {
-        url.open()
+    var url: URL? {
+        return currentAttachment?.permalink
     }
     
-    
+    func linkViewWantsToOpenURL(_ articleView: UIView) {
+        url?.open()
+    }
 }
 
 final class ConversationLinkAttachmentCellDescription: ConversationMessageCellDescription {

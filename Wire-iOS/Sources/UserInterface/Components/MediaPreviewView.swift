@@ -27,14 +27,11 @@ final class MediaPreviewView: RoundedView {
     let previewImageView = ImageResourceView()
     let overlayView = UIView()
         
-    /// url for context menu preview
-    var url: URL?
-
     weak var delegate: (ContextMenuDelegate & LinkViewDelegate)?
 
     // MARK: - Initialization
 
-    init() {        
+    init() {
         super.init(frame: .zero)
         setupSubviews()
         setupLayout()
@@ -118,7 +115,7 @@ final class MediaPreviewView: RoundedView {
 extension MediaPreviewView: UIContextMenuInteractionDelegate {
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        guard let url = url else {
+        guard let url = delegate?.url else {
             return nil
         }
 
@@ -136,9 +133,8 @@ extension MediaPreviewView: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {
-        guard let url = self.url else { return }
         animator.addCompletion {
-            self.delegate?.linkViewWantsToOpenURL(self, url: url)
+            self.delegate?.linkViewWantsToOpenURL(self)
         }
     }
 }
