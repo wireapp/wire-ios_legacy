@@ -21,8 +21,8 @@ import WireLinkPreview
 import WireCommonComponents
 import WireDataModel
 
-protocol ArticleViewDelegate: class {
-    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
+protocol LinkViewDelegate: class {
+    func linkViewWantsToOpenURL(_ articleView: UIView, url: URL)
 }
 
 final class ArticleView: UIView {
@@ -50,7 +50,7 @@ final class ArticleView: UIView {
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
-    weak var delegate: (ArticleViewDelegate & ContextMenuDelegate)?
+    weak var delegate: (LinkViewDelegate & ContextMenuDelegate)?
 
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -209,7 +209,7 @@ final class ArticleView: UIView {
 
     private func openURL() {
         guard let url = linkPreview?.openableURL else { return }
-        delegate?.articleViewWantsToOpenURL(self, url: url as URL)
+        delegate?.linkViewWantsToOpenURL(self, url: url as URL)
     }
 }
 
