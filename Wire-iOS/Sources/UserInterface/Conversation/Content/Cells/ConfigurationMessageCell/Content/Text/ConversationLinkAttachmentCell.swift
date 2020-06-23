@@ -139,10 +139,6 @@ extension ConversationLinkAttachmentCell: LinkViewDelegate {
     var url: URL? {
         return currentAttachment?.permalink
     }
-
-    func linkViewWantsToOpenURL(_ view: UIView) {
-        url?.open()
-    }
 }
 
 final class ConversationLinkAttachmentCellDescription: ConversationMessageCellDescription {

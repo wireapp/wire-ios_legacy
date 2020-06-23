@@ -92,11 +92,6 @@ extension ConversationLinkPreviewArticleCell: LinkViewDelegate {
     var url: URL? {
         return configuration?.textMessageData.linkPreview?.openableURL
     }
-
-    func linkViewWantsToOpenURL(_ view: UIView) {
-        url?.open()
-    }
-
 }
 
 final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
