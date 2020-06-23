@@ -56,7 +56,7 @@ class DirectorySectionController: SearchSectionController {
         
         cell.configure(with: user, hideIconView: true)
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
-        cell.guestIconView.isHidden = true
+        cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
         cell.connectButton.isHidden = false
         cell.connectButton.tag = indexPath.row
