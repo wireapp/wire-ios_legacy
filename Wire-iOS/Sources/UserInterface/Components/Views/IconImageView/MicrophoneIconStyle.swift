@@ -18,38 +18,31 @@
 
 import Foundation
 import WireCommonComponents
-import WireDataModel
 
-enum UserTypeIconState: IconImageState {
-    case guest
-    case external
-    case member
-    
+enum MicrophoneIconStyle: IconImageStyle {
+    case muted
+    case unmuted
+    case active
+    case hidden
+
     var icon: StyleKitIcon? {
         switch self {
-        case .guest:
-            return .guest
-        case .external:
-            return .externalPartner
-        case .member:
+        case .muted:
+            return .microphoneWithStrikethrough
+        case .unmuted, .active:
+            return .microphone
+        case .hidden:
             return .none
         }
     }
 }
 
-extension UserTypeIconState {
-    init(conversation: ZMConversation?, user: UserType, hideIconView: Bool) {
-        if user.isExternalPartner {
-            self = .external
-        } else if let conversation = conversation {
-            self = !user.isGuest(in: conversation) || user.isSelfUser ? .member : .guest
+extension MicrophoneIconStyle {
+    init(isMuted: Bool) {
+        if isMuted {
+            self = .muted
         } else {
-            self = !ZMUser.selfUser().isTeamMember
-                || user.isTeamMember
-                || user.isServiceUser
-                || hideIconView
-                ? .member
-                : .guest
+            self = .unmuted
         }
     }
 }

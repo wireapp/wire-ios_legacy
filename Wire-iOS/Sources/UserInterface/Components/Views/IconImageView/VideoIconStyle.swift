@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 import WireSyncEngine
 
-enum VideoIconState: IconImageState {
+enum VideoIconStyle: IconImageStyle {
     case video
     case screenshare
     case hidden
@@ -37,7 +37,7 @@ enum VideoIconState: IconImageState {
     }
 }
 
-extension VideoIconState {
+extension VideoIconStyle {
     init(_ state: WireSyncEngine.CallParticipantState) {
         switch state {
         case .connected(videoState: let videoState):

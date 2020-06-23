@@ -51,7 +51,7 @@ fileprivate extension VoiceChannel {
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
-                    .callParticipant(user: $0.user, videoState: VideoIconState($0.state))
+                    .callParticipant(user: $0.user, videoIconStyle: VideoIconStyle($0.state))
                 })
                
             } else if let remoteParticipant = conversation?.connectedUser {
