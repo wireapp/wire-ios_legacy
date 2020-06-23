@@ -19,13 +19,6 @@
 import UIKit
 import WireCommonComponents
 
-//protocol IconImageViewProtocol: UIImageView {
-//    func set(state: IconImageState)
-//    func set(iconSize size: StyleKitIcon.Size, color: UIColor)
-//    var size: StyleKitIcon.Size { get }
-//    var color: UIColor { get }
-//}
-
 protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
 }
