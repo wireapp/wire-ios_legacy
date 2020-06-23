@@ -214,20 +214,7 @@ final class ArticleView: UIView {
 extension ArticleView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-
-        guard let url = delegate?.url else {
-            return nil
-        }
-
-        let previewProvider: UIContextMenuContentPreviewProvider = {
-            return BrowserViewController(url: url)
-        }
-
-        return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: previewProvider,
-                                          actionProvider: { _ in
-                                            return self.delegate?.makeContextMenu(title: url.absoluteString, view: self)
-        })
+        return delegate?.linkPreviewContextMenu(view: self)
     }
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,

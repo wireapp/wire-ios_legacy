@@ -21,5 +21,5 @@ import UIKit
 
 protocol LinkViewDelegate: class {
     var url: URL? { get }
-    func linkViewWantsToOpenURL(_ articleView: UIView)
+    func linkViewWantsToOpenURL(_ view: UIView)
 }

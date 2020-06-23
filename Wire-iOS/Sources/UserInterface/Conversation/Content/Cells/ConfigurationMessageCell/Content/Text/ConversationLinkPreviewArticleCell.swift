@@ -93,7 +93,7 @@ extension ConversationLinkPreviewArticleCell: LinkViewDelegate {
         return configuration?.textMessageData.linkPreview?.openableURL
     }
     
-    func linkViewWantsToOpenURL(_ articleView: UIView) {
+    func linkViewWantsToOpenURL(_ view: UIView) {
         url?.open()
     }
 

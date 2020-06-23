@@ -140,7 +140,7 @@ extension ConversationLinkAttachmentCell: LinkViewDelegate {
         return currentAttachment?.permalink
     }
     
-    func linkViewWantsToOpenURL(_ articleView: UIView) {
+    func linkViewWantsToOpenURL(_ view: UIView) {
         url?.open()
     }
 }
