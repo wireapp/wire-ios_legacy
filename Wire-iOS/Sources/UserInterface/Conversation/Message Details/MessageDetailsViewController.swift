@@ -99,7 +99,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
 
     init(message: ZMConversationMessage, preferredDisplayMode: MessageDetailsDisplayMode) {
         self.message = message
-        self.dataSource = MessageDetailsDataSource(message: message)
+        dataSource = MessageDetailsDataSource(message: message)
 
         // Setup the appropriate view controllers
         switch dataSource.displayMode {
@@ -128,6 +128,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
         self.modalPresentationStyle = .formSheet
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -213,13 +214,20 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
 
     // MARK: - Top Bar
 
+    private func dismiss() {
+        weak var presentingViewController = self.presentingViewController
+        dismiss(animated: true) {
+            presentingViewController?.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     override func accessibilityPerformEscape() -> Bool {
-        dismiss(animated: true, completion: nil)
+        dismiss()
         return true
     }
 
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
-        dismiss(animated: true, completion: nil)
+        dismiss()
     }
 
     override var shouldAutorotate: Bool {

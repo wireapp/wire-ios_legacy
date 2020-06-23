@@ -159,7 +159,8 @@ final class ModalTopBar: UIView {
         subtitleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
-    @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {
+    @objc
+    fileprivate func dismissButtonTapped(_ sender: IconButton) {
         delegate?.modelTopBarWantsToBeDismissed(self)
     }
 

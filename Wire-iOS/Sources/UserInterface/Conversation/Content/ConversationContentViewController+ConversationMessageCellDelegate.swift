@@ -81,6 +81,8 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
 
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
         parent?.present(messageDetailsViewController, animated: true)
+        
+        messageDetailsViewController.presentationController?.delegate = parent as? UIAdaptivePresentationControllerDelegate
     }
 
     func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView) {
