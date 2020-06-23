@@ -26,7 +26,7 @@ import WireCommonComponents
 //    var color: UIColor { get }
 //}
 
-protocol IconImageState {
+protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
 }
 
@@ -34,8 +34,8 @@ class IconImageView: UIImageView {
     private(set) var size: StyleKitIcon.Size = .tiny
     private(set) var color: UIColor = UIColor.from(scheme: .iconGuest)
     
-    func set(state: IconImageState) {
-        guard let icon = state.icon else {
+    func set(style: IconImageStyle) {
+        guard let icon = style.icon else {
             isHidden = true; return
         }
         isHidden = false
