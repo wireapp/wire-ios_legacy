@@ -40,8 +40,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let subtitleLabel = UILabel()
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
-    let guestIconView = UIImageView()
-    let externalUserIconView = UIImageView()
+    let userTypeIconView = IconImageView()
     let verifiedIconView = UIImageView()
     let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
@@ -87,7 +86,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         
         UIView.performWithoutAnimation {
             hidesSubtitle = false
-            externalUserIconView.isHidden = true
+            userTypeIconView.isHidden = true
             verifiedIconView.isHidden = true
             videoIconView.isHidden = true
             microphoneIconView.isHidden = true
@@ -102,9 +101,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func setUp() {
         super.setUp()
 
-        guestIconView.setUpIconImageView(accessibilityIdentifier: "img.guest")
         videoIconView.setUpIconImageView(accessibilityIdentifier: "img.video")
-        externalUserIconView.setUpIconImageView(accessibilityIdentifier: "img.externalUser")
+        userTypeIconView.setUpIconImageView(accessibilityIdentifier: "img.userType")
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")
@@ -136,7 +134,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
-        iconStackView = UIStackView(arrangedSubviews: [externalUserIconView, verifiedIconView, guestIconView, microphoneIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
+        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, userTypeIconView, microphoneIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 16
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -187,9 +185,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         let iconColor = UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant)
         
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        
-        externalUserIconView.setIcon(.externalPartner, size: .tiny, color: iconColor)
-        guestIconView.setIcon(.guest, size: .tiny, color: iconColor)
+
+        userTypeIconView.set(iconSize: .tiny, color: iconColor)
         microphoneIconView.set(iconSize: .tiny, color: iconColor)
         videoIconView.set(iconSize: .tiny, color: iconColor)
         
@@ -232,14 +229,10 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatar.user = user
         updateTitleLabel()
 
-        if let conversation = conversation {
-            guestIconView.isHidden = !user.isGuest(in: conversation) || user.isSelfUser
-        } else {
-            guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
-        }
+        let style = UserTypeIconStyle(conversation: conversation, user: user, hideIconView: hideIconView)
+        userTypeIconView.set(style: style)
 
         verifiedIconView.isHidden = !user.isVerified
-        externalUserIconView.isHidden = !user.isExternalPartner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
             subtitleLabel.isHidden = false
