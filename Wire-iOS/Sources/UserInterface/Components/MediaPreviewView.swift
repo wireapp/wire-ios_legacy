@@ -26,7 +26,7 @@ final class MediaPreviewView: RoundedView {
     let providerImageView = UIImageView()
     let previewImageView = ImageResourceView()
     let overlayView = UIView()
-        
+
     weak var delegate: (ContextMenuDelegate & LinkViewDelegate)?
 
     // MARK: - Initialization
@@ -35,7 +35,7 @@ final class MediaPreviewView: RoundedView {
         super.init(frame: .zero)
         setupSubviews()
         setupLayout()
-        
+
         if #available(iOS 13.0, *) {
             addInteraction(UIContextMenuInteraction(delegate: self))
         }
@@ -113,11 +113,11 @@ final class MediaPreviewView: RoundedView {
 
 @available(iOS 13.0, *)
 extension MediaPreviewView: UIContextMenuInteractionDelegate {
-    
+
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return delegate?.linkPreviewContextMenu(view: self)
     }
-    
+
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {

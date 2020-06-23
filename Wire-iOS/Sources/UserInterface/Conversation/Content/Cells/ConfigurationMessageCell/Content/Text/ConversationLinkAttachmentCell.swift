@@ -29,17 +29,17 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
 
     lazy var attachmentView: MediaPreviewView = {
         let view = MediaPreviewView()
-        
+
         if #available(iOS 13.0, *) {
             view.delegate = self
             view.isUserInteractionEnabled = true
         }
-        
+
         return view
     }()
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
     var currentAttachment: LinkAttachment?
@@ -139,7 +139,7 @@ extension ConversationLinkAttachmentCell: LinkViewDelegate {
     var url: URL? {
         return currentAttachment?.permalink
     }
-    
+
     func linkViewWantsToOpenURL(_ view: UIView) {
         url?.open()
     }
@@ -152,7 +152,7 @@ final class ConversationLinkAttachmentCellDescription: ConversationMessageCellDe
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 
