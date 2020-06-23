@@ -45,6 +45,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let verifiedIconView = UIImageView()
     let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
+    let microphoneIconView = IconImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
@@ -89,6 +90,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             externalUserIconView.isHidden = true
             verifiedIconView.isHidden = true
             videoIconView.isHidden = true
+            microphoneIconView.isHidden = true
             connectButton.isHidden = true
             accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
@@ -134,7 +136,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
-        iconStackView = UIStackView(arrangedSubviews: [externalUserIconView, verifiedIconView, guestIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
+        iconStackView = UIStackView(arrangedSubviews: [externalUserIconView, verifiedIconView, guestIconView, microphoneIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 16
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -188,6 +190,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         
         externalUserIconView.setIcon(.externalPartner, size: .tiny, color: iconColor)
         guestIconView.setIcon(.guest, size: .tiny, color: iconColor)
+        microphoneIconView.set(iconSize: .tiny, color: iconColor)
         videoIconView.set(iconSize: .tiny, color: iconColor)
         
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
