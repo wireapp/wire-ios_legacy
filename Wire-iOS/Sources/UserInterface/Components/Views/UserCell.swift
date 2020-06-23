@@ -43,7 +43,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let guestIconView = UIImageView()
     let externalUserIconView = UIImageView()
     let verifiedIconView = UIImageView()
-    let videoIconView = UIImageView()
+    let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
@@ -186,9 +186,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         
-        videoIconView.setIcon(.videoCall, size: .tiny, color: iconColor)
         externalUserIconView.setIcon(.externalPartner, size: .tiny, color: iconColor)
         guestIconView.setIcon(.guest, size: .tiny, color: iconColor)
+        videoIconView.set(iconSize: .tiny, color: iconColor)
         
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
