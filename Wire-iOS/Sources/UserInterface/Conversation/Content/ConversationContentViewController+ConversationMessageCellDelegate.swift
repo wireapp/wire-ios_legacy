@@ -80,9 +80,10 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     }
 
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController) {
-        parent?.present(messageDetailsViewController, animated: true)
+        let parent = self.parent
         
         messageDetailsViewController.presentationController?.delegate = parent as? UIAdaptivePresentationControllerDelegate
+        parent?.present(messageDetailsViewController, animated: true)
     }
 
     func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView) {
