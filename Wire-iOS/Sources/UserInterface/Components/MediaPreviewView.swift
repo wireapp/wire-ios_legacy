@@ -27,7 +27,7 @@ final class MediaPreviewView: RoundedView {
     let previewImageView = ImageResourceView()
     let overlayView = UIView()
 
-    weak var delegate: (ContextMenuDelegate & LinkViewDelegate)?
+    weak var delegate: ContextMenuLinkViewDelegate?
 
     // MARK: - Initialization
 

@@ -46,7 +46,7 @@ final class ArticleView: UIView {
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
-    weak var delegate: (LinkViewDelegate & ContextMenuDelegate)?
+    weak var delegate: ContextMenuLinkViewDelegate?
 
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
