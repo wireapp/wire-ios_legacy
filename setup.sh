@@ -42,27 +42,29 @@ XCODE_VERSION=( ${version//./ } )
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."
-carthage bootstrap --platform ios
+carthage bootstrap --platform ios &
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh
+./Scripts/download-avs.sh &
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh "$@"
-echo ""
-
-echo "ℹ️  Doing additional postprocessing..."
-./Scripts/postprocess.sh
+./Scripts/download-assets.sh "$@" &
 echo ""
 
 echo "ℹ️  [CodeGen] Update StyleKit Icons..."
-swift run --package-path Scripts/updateStylekit
+swift run --package-path Scripts/updateStylekit &
 echo ""
 
 echo "ℹ️  Update Licenses File..."
-swift run --package-path ./Scripts/updateLicenses
+swift run --package-path ./Scripts/updateLicenses &
+echo ""
+
+wait
+
+echo "ℹ️  Doing additional postprocessing..."
+./Scripts/postprocess.sh
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
