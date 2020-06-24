@@ -17,8 +17,6 @@
 //
 
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 enum ChangeEmailFlowType {
@@ -103,21 +101,28 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         setupViews()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         observerToken = userProfile?.add(observer: self)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _ = emailCell.textField.becomeFirstResponder()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillDisappear(animated)
         observerToken = nil
     }
     
-    func setupViews() {
+    private func setupViews() {
         title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
