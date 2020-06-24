@@ -156,8 +156,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         }
         hasCreatedInitialConstraints = true
 
-        [itemView, menuDotsView, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
-
+        [itemView, menuDotsView, menuView].prepareForLayout()
 
         itemView.fitInSuperview()
 

@@ -104,7 +104,7 @@ final class EmptySearchResultsView: UIView {
         stackView.alignment = .center
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        [iconView, statusLabel, actionButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [iconView, statusLabel, actionButton].prepareForLayout()
         [iconView, statusLabel, actionButton].forEach(stackView.addArrangedSubview)
         
         addSubview(stackView)

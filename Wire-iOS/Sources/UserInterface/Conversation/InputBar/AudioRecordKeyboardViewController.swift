@@ -220,7 +220,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
          self.bottomToolbar,
          self.topContainer,
          self.topSeparator
-        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        ].prepareForLayout()
         
         NSLayoutConstraint.activate([
             topContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),

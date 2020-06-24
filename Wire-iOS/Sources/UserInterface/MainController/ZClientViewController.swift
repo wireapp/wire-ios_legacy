@@ -17,9 +17,7 @@
 //
 
 
-import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import avs
 import WireCommonComponents
@@ -714,4 +712,10 @@ final class ZClientViewController: UIViewController {
         }
     }
 
+}
+
+extension ZClientViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }

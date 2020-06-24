@@ -160,9 +160,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
 
     private func createConstraints() {
-        [arrowIconImageView, titleLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [arrowIconImageView, titleLabel].prepareForLayout()
 
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 

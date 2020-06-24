@@ -38,6 +38,7 @@
 
 "content.file.too_big" = "You can send files up to %@";
 "content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
 
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
@@ -49,4 +50,3 @@
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
 "meta.degraded.cancel_sending_button" = "Do not send";
 "meta.degraded.send_anyway_button" = "Send anyway";
-

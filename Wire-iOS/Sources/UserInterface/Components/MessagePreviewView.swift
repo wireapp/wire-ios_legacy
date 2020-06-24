@@ -113,8 +113,8 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
         
-        allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        allViews.forEach(self.addSubview)
+        allViews.prepareForLayout()
+        allViews.forEach(addSubview)
     }
     
     private func setupConstraints() {
@@ -248,7 +248,7 @@ final class MessagePreviewView: UIView, Themeable {
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         }
         
-        allViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        allViews.prepareForLayout()
         allViews.forEach(self.addSubview)
     }
     

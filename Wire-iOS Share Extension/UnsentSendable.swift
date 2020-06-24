@@ -33,18 +33,23 @@ enum UnsentSendableError: Error {
 
     // The attachment is over file size limitation
     case fileSizeTooBig
+
+    // the target conversation does not exist anymore
+    case conversationDoesNotExist
 }
 
 extension UnsentSendableError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .fileSizeTooBig:
-            
+
             let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(AccountManager.fileSizeLimitInBytes), countStyle: .binary)
 
             return String(format: "content.file.too_big".localized, maxSizeString)
         case .unsupportedAttachment:
             return "content.file.unsupported_attachment".localized
+        case .conversationDoesNotExist:
+            return "share_extension.error.conversation_not_exist.message".localized
         }
     }
 }
@@ -111,7 +116,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
         if let attachment = self.attachment, attachment.hasURL {
 
-            self.attachment?.fetchURL(completion: { (url) in
+            self.attachment?.fetchURL(completion: { (_) in
                 completion()
             })
         } else {
@@ -140,7 +145,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         let longestDimension: CGFloat = 1024
 
         // note: this doesn't seem to have any effect, but perhaps it's an iOS bug that will be fixed...
-        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
+        let options = [NSItemProviderPreferredImageSizeKey: NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
 
         // app extensions have severely limited memory resources & risk termination if they are too greedy. In order to
         // minimize memory consumption we must downscale the images being shared. Standard image scaling methods that
@@ -233,7 +238,6 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     weakSelf.error = .fileSizeTooBig
                     return completion()
                 }
-
                 weakSelf.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
         } else if typePass {

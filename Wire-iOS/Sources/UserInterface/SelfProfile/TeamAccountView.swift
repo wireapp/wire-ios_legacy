@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -30,7 +29,6 @@ final class TeamAccountView: AccountView {
     private let imageView: TeamImageView
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
-
 
     override init?(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) {
 
@@ -74,9 +72,7 @@ final class TeamAccountView: AccountView {
 
     private func createConstraints() {
         let inset: CGFloat = CGFloat.TeamAccountView.imageInset
-        [imageView, imageViewContainer].forEach(){
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [imageView, imageViewContainer].prepareForLayout()
 
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
@@ -100,13 +96,11 @@ final class TeamAccountView: AccountView {
         let dotSize: CGFloat = 9
         let dotInset: CGFloat = 2
 
-        [dotView, imageViewContainer].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [dotView, imageViewContainer].prepareForLayout()
 
         NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -dotInset),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: dotInset),
-                                      
+
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
             ])
@@ -118,7 +112,7 @@ extension TeamAccountView: TeamObserver {
         if changeInfo.imageDataChanged {
             changeInfo.team.requestImage()
         }
-        
+
         guard let content = changeInfo.team.teamImageViewContent else { return }
 
         imageView.content = content

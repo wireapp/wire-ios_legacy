@@ -73,7 +73,7 @@ final class TeamMemberInviteHeaderView: UIView {
     }
     
     private func createConstraints() {
-        [stackView, bottomSpacerView].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
+        [stackView, bottomSpacerView].prepareForLayout()
         stackView.fitInSuperview()
 
         bottomSpacerViewHeightConstraint = bottomSpacerView.heightAnchor.constraint(equalToConstant: 0)

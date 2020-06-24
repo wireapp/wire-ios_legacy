@@ -39,18 +39,18 @@ final class IncomingConnectionView: UIView {
     private let acceptButton = Button(style: .full)
     private let ignoreButton = Button(style: .empty)
 
-    public var user: ZMUser {
+    var user: ZMUser {
         didSet {
             self.setupLabelText()
             self.userImageView.user = self.user
         }
     }
 
-    public typealias UserAction = (ZMUser) -> Void
-    public var onAccept: UserAction?
-    public var onIgnore: UserAction?
+    typealias UserAction = (ZMUser) -> Void
+    var onAccept: UserAction?
+    var onIgnore: UserAction?
 
-    public init(user: ZMUser) {
+    init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
 
@@ -60,7 +60,7 @@ final class IncomingConnectionView: UIView {
         self.createConstraints()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "確認";
+"general.ok" = "確認";
+
 "share_extension.conversation_selection.account" = "帳戶：";
 "share_extension.conversation_selection.title" = "對話：";
 "share_extension.send_button.title" = "發送";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "沒有網路連線";
 "share_extension.not_signed_in.title" = "您在登錄Wire後才可以使用分享功能";
 "share_extension.not_signed_in.close_button" = "關閉";
+
 "share_extension.timeout.title" = "連線逾時。";
 "share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
+
+"content.file.too_big" = "您可以發送最大%@的檔案。";
+"content.file.unsupported_attachment" = "不支援的附件";
+"share_extension.error.conversation_does_not_exist.message" = "請選擇要共享的對話";
+
 "share_extension.privacy_security.lock_app.description" = "解鎖Wire";
 "share_extension.logged_out.title" = "您已登出此帳戶。";
 "share_extension.logged_out.message" = "請選擇另一帳戶";

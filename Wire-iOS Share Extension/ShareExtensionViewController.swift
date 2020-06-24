@@ -270,10 +270,11 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
             case .conversationDidDegrade((let users, let strategyChoice)):
                 self.extensionActivity?.markConversationDidDegrade()
-                self.conversationDidDegrade(
-                    change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
-                    callback: strategyChoice
-                )
+                if let conversation = postContent.target {
+                    self.conversationDidDegrade(
+                        change: ConversationDegradationInfo(conversation: conversation, users: users),
+                        callback: strategyChoice)
+                }
             case .timedOut:
                 self.popConfigurationViewController()
                 
