@@ -136,7 +136,15 @@ final class UserCellTests: ZMSnapshotTestCase {
     func testUserInsideOngoingVideoCall() {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: user, sendsVideo: true)
+            let config = CallParticipantsCellConfiguration.callParticipant(user: user, videoIconStyle: .video)
+            cell.configure(with: config, variant: .dark)
+        }))
+    }
+    
+    func testUserScreenSharingInsideOngoingVideoCall() {
+        let user = MockUser.mockUsers()[0]
+        verifyInAllColorSchemes(view: cell({ (cell) in
+            let config = CallParticipantsCellConfiguration.callParticipant(user: user, videoIconStyle: .screenshare)
             cell.configure(with: config, variant: .dark)
         }))
     }
