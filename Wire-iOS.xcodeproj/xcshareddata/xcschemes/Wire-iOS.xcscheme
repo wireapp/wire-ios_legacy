@@ -54,6 +54,9 @@
                   Identifier = "AppLockPresenterTests/testThatItVerifiesPasswordWithCorrectMessageWhenNeeded()">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewObfuscated()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -85,6 +88,9 @@
                </Test>
                <Test
                   Identifier = "ContactsViewControllerSnapshotTests/testForContactsAndIndexSectionBarAreShown()">
+               </Test>
+               <Test
+                  Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
                </Test>
                <Test
                   Identifier = "GroupDetailsFooterViewTests/testForAllPhoneWidths()">
@@ -133,6 +139,9 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
+               </Test>
+               <Test
+                  Identifier = "TeamMetadataRefresherTests/test_it_refreshes_if_timeout_expired()">
                </Test>
                <Test
                   Identifier = "TypingIndicatorViewSnapshotTests/testThatLabelAndLineAreShownWhenAnimated()">
