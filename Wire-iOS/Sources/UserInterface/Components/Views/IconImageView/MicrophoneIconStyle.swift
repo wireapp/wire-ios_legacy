@@ -46,3 +46,15 @@ extension MicrophoneIconStyle {
         }
     }
 }
+
+class MicrophoneIconImageView: IconImageView {
+    override func set(style: IconImageStyle) {
+        super.set(style: style)
+        guard
+            let style = style as? MicrophoneIconStyle,
+            case style = MicrophoneIconStyle.active else {
+                return
+        }
+        tintColor = .green
+    }
+}
