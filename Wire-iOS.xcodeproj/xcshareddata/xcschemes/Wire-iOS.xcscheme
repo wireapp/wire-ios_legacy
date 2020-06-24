@@ -90,6 +90,9 @@
                   Identifier = "ContactsViewControllerSnapshotTests/testForContactsAndIndexSectionBarAreShown()">
                </Test>
                <Test
+                  Identifier = "ContactsViewControllerSnapshotTests/testForContactsWithoutSections()">
+               </Test>
+               <Test
                   Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
                </Test>
                <Test
@@ -97,6 +100,12 @@
                </Test>
                <Test
                   Identifier = "GroupDetailsFooterViewTests/testForPartnerRoleWithNoAddParticipantsButton()">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForOptionsForNonTeamUser()">
                </Test>
                <Test
                   Identifier = "LandingViewControllerSnapshotTests/testForInitState()">
