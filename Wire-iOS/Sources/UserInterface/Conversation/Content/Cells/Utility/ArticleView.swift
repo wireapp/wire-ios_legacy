@@ -21,10 +21,6 @@ import WireLinkPreview
 import WireCommonComponents
 import WireDataModel
 
-protocol ArticleViewDelegate: class {
-    func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
-}
-
 final class ArticleView: UIView {
 
     // MARK: - Styling
@@ -50,7 +46,7 @@ final class ArticleView: UIView {
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
-    weak var delegate: (ArticleViewDelegate & ContextMenuDelegate)?
+    weak var delegate: ContextMenuLinkViewDelegate?
 
     init(withImagePlaceholder imagePlaceholder: Bool) {
         super.init(frame: .zero)
@@ -208,8 +204,7 @@ final class ArticleView: UIView {
     }
 
     private func openURL() {
-        guard let url = linkPreview?.openableURL else { return }
-        delegate?.articleViewWantsToOpenURL(self, url: url as URL)
+        delegate?.linkViewWantsToOpenURL(self)
     }
 }
 
@@ -219,21 +214,7 @@ final class ArticleView: UIView {
 extension ArticleView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-
-        guard let linkPreview = linkPreview,
-            let url = linkPreview.openableURL else {
-            return nil
-        }
-
-        let previewProvider: UIContextMenuContentPreviewProvider = {
-            return BrowserViewController(url: url)
-        }
-
-        return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: previewProvider,
-                                          actionProvider: { _ in
-                                            return self.delegate?.makeContextMenu(title: linkPreview.originalURLString, view: self)
-        })
+        return delegate?.linkPreviewContextMenu(view: self)
     }
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
