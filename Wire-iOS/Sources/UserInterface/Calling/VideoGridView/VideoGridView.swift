@@ -90,7 +90,6 @@ final class VideoGridViewController: UIViewController {
     private var gridVideoStreams: [Stream] = []
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
-    private let muteIndicatorView = MuteIndicatorView()
     private let networkConditionView = NetworkConditionIndicatorView()
     fileprivate let mediaManager: AVSMediaManagerInterface
 
@@ -109,7 +108,6 @@ final class VideoGridViewController: UIViewController {
                 delay: 0,
                 options: [.curveEaseInOut, .beginFromCurrentState],
                 animations: {
-                    self.muteIndicatorView.alpha = self.isCovered ? 0.0 : 1.0
                     self.networkConditionView.alpha = self.isCovered ? 0.0 : 1.0
             },
                 completion: nil
@@ -120,11 +118,6 @@ final class VideoGridViewController: UIViewController {
     func displayIndicatorViewsIfNeeded() {
         networkConditionView.networkQuality = configuration.networkQuality
         networkConditionView.isHidden = shouldHideNetworkCondition
-        muteIndicatorView.isHidden = shouldHideMuteIndicator
-    }
-
-    var shouldHideMuteIndicator: Bool {
-        return isCovered || !configuration.isMuted
     }
 
     var shouldHideNetworkCondition: Bool {
@@ -161,7 +154,6 @@ final class VideoGridViewController: UIViewController {
         view.addSubview(gridView)
         addToSelf(thumbnailViewController)
 
-        view.addSubview(muteIndicatorView)
         view.addSubview(networkConditionView)
 
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
@@ -171,12 +163,7 @@ final class VideoGridViewController: UIViewController {
         gridView.fitInSuperview()
         [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
 
-        constrain(view, muteIndicatorView, networkConditionView) { view, muteIndicatorView, networkConditionView in
-            let bottomOffset: CGFloat = UIScreen.safeArea.bottom + (UIScreen.hasNotch ? 8 : 24)
-            
-            muteIndicatorView.centerX == view.centerX
-            muteIndicatorView.bottom == view.bottom - bottomOffset
-            muteIndicatorView.height == CGFloat.MuteIndicator.containerHeight
+        constrain(view, networkConditionView) { view, networkConditionView in
             networkConditionView.centerX == view.centerX
             networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
         }
