@@ -463,7 +463,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, iconStyle: .video)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
@@ -592,12 +592,34 @@ struct CallInfoTestFixture {
         )
     }
 
+    var groupVideoEstablishedScreenSharing: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, iconStyle: .screenshare)),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            variant: .light,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal
+        )
+    }
+    
     var groupVideoEstablishedPoorConnection: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, iconStyle: .video)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
@@ -619,7 +641,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, iconStyle: .video)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
@@ -642,7 +664,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, iconStyle: .video)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
