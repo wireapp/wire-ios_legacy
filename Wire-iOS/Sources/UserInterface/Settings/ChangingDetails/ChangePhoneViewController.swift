@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireUtilities
 import WireSyncEngine
 
 struct ChangePhoneNumberState {
@@ -77,6 +76,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -89,6 +89,12 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
+        
+        if let cell = tableView.visibleCells.first(where: {
+            $0 is PhoneNumberInputCell
+        }) as? PhoneNumberInputCell {
+            _ = cell.phoneInputView.becomeFirstResponder()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -119,7 +125,8 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         }
     }
 
-    @objc func saveButtonTapped() {
+    @objc
+    private func saveButtonTapped() {
         if let newNumber = state.updatedNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)

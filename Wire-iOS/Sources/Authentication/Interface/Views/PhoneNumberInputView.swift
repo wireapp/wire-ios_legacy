@@ -76,11 +76,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         configureValidation()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
-        configureValidation()
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureSubviews() {
