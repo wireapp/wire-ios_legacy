@@ -93,6 +93,9 @@
                   Identifier = "ContactsViewControllerSnapshotTests/testForContactsWithoutSections()">
                </Test>
                <Test
+                  Identifier = "ConversationListViewControllerTests">
+               </Test>
+               <Test
                   Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
                </Test>
                <Test

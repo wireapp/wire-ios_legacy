@@ -61,7 +61,7 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForContactsWithoutSections() {
+    func testForContactsWithoutSections() { ///TODO: failed for tint color
         // Given
         sut.dataSource.ungroupedSearchResults = SwiftMockLoader.mockUsers()
 
