@@ -84,9 +84,13 @@ extension CGSize {
     }
 }
 
+extension Notification.Name {
+    static let videoGridVisibilityChanged = Notification.Name(rawValue: "VideoGridVisibilityChanged")
+}
 
 final class VideoGridViewController: UIViewController {
-
+    static let isCoveredKey = "isCovered"
+    
     private var gridVideoStreams: [Stream] = []
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
@@ -102,6 +106,8 @@ final class VideoGridViewController: UIViewController {
     /// Update view visibility when this view controller is covered or not
     var isCovered: Bool = true {
         didSet {
+            NotificationCenter.default.post(name: .videoGridVisibilityChanged, object: nil, userInfo: [VideoGridViewController.isCoveredKey: isCovered])
+            
             displayIndicatorViewsIfNeeded()
             UIView.animate(
                 withDuration: 0.2,
@@ -109,9 +115,7 @@ final class VideoGridViewController: UIViewController {
                 options: [.curveEaseInOut, .beginFromCurrentState],
                 animations: {
                     self.networkConditionView.alpha = self.isCovered ? 0.0 : 1.0
-            },
-                completion: nil
-            )
+            })
         }
     }
 
