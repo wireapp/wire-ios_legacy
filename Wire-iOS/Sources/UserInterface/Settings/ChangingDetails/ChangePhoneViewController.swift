@@ -85,11 +85,11 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         super.viewWillAppear(animated)
         observerToken = userProfile?.add(observer: self)
     }
-        
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
-        
+
         showKeyboardIfNeeded()
     }
 
@@ -194,7 +194,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
                 self.navigationController?.isLoadingViewVisible = true
-                })            
+                })
             present(alert, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
