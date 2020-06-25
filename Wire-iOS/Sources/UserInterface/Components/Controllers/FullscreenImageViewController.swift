@@ -580,14 +580,22 @@ final class FullscreenImageViewController: UIViewController {
         setSelectedByMenu(true, animated: true)
     }
 
+    private func hideMenu() {
+        if #available(iOS 13.0, *) {
+            UIMenuController.shared.hideMenu()
+        } else {
+            UIMenuController.shared.isMenuVisible = false
+        }
+    }
+    
     @objc
     func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }
 
-        UIMenuController.shared.isMenuVisible = false
-
+        hideMenu()
+        
         /// Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
         guard scrollView.minimumZoomScale != scrollView.maximumZoomScale else {
             return
@@ -773,7 +781,7 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
 
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         setSelectedByMenu(false, animated: false)
-        UIMenuController.shared.isMenuVisible = false
+        hideMenu()
 
         centerScrollViewContent()
     }
