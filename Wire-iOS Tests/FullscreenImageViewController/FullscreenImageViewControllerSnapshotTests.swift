@@ -20,8 +20,7 @@
 import XCTest
 @testable import Wire
 
-///TODO: test for darkened
-final class FullscreenImageViewControllerSnapshotTests: XCTestCase {
+final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: FullscreenImageViewController!
 
@@ -38,13 +37,13 @@ final class FullscreenImageViewControllerSnapshotTests: XCTestCase {
     func testThatVeryLargeImageIsLoadedToImageView(){
         sut = createFullscreenImageViewControllerForTest(imageFileName: "20000x20000.gif")
 
-        verify(matching: sut)
+        verify(view: sut.view)
     }
 
     func testThatSmallImageIsCenteredInTheScreen(){
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
 
-        verify(matching: sut)
+        verify(view: sut.view)
     }
 
     func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
@@ -55,7 +54,7 @@ final class FullscreenImageViewControllerSnapshotTests: XCTestCase {
         doubleTap(fullscreenImageViewController: sut)
 
         // THEN
-        verify(matching: sut)
+        verify(view: sut.view)
     }
     
     func testThatImageIsDarkenWhenSelectedByMenu() {
@@ -63,7 +62,6 @@ final class FullscreenImageViewControllerSnapshotTests: XCTestCase {
         
         sut.setSelectedByMenu(true, animated: false)
         
-        verify(matching: sut)
+        verify(view: sut.view)
     }
-
 }
