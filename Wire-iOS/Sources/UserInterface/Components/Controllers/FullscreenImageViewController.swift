@@ -501,7 +501,9 @@ final class FullscreenImageViewController: UIViewController {
         if selected {
             // do not add more then one layer
             if let highlightLayer = highlightLayer {
-                guard imageView?.layer.sublayers?.contains(highlightLayer) == false else { return }
+                guard imageView?.layer.sublayers?.contains(highlightLayer) == false else {
+                    return
+                }
             }
             
             let layer = CALayer()
@@ -522,17 +524,23 @@ final class FullscreenImageViewController: UIViewController {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
                 blackLayerClosure()
         } else {
+            
+            let removeLayerClosure: Completion = {
+                self.highlightLayer?.removeFromSuperlayer()
+                self.highlightLayer = nil
+            }
+            
             if animated {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: {
                     self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
                 }) { finished in
                     if finished {
-                        self.highlightLayer?.removeFromSuperlayer()
+                        removeLayerClosure()
                     }
                 }
             } else {
                 highlightLayer?.backgroundColor = UIColor.clear.cgColor
-                highlightLayer?.removeFromSuperlayer()
+                removeLayerClosure()
             }
         }
     }
