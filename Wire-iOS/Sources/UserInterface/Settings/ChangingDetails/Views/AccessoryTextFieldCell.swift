@@ -21,7 +21,7 @@ import UIKit
 
 final class AccessoryTextFieldCell: UITableViewCell {
 
-    let textField: AccessoryTextField = AccessoryTextField()
+    let textField = AccessoryTextField()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -85,21 +85,23 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         super.viewWillAppear(animated)
         observerToken = userProfile?.add(observer: self)
     }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
         
-        if let cell = tableView.visibleCells.first(where: {
-            $0 is PhoneNumberInputCell
-        }) as? PhoneNumberInputCell {
-            _ = cell.phoneInputView.becomeFirstResponder()
-        }
+        showKeyboardIfNeeded()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         observerToken = nil
+    }
+
+    fileprivate func showKeyboardIfNeeded() {
+        _ = (tableView.visibleCells.first(where: {
+            $0 is PhoneNumberInputCell
+        }) as? PhoneNumberInputCell)?.phoneInputView.becomeFirstResponder()
     }
 
     fileprivate func setupViews() {
