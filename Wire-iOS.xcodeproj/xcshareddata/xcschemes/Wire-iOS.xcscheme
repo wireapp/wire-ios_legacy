@@ -93,6 +93,9 @@
                   Identifier = "ContactsViewControllerSnapshotTests/testForContactsWithoutSections()">
                </Test>
                <Test
+                  Identifier = "ContactsViewControllerSnapshotTests/testForNoContacts()">
+               </Test>
+               <Test
                   Identifier = "ConversationListViewControllerTests">
                </Test>
                <Test
