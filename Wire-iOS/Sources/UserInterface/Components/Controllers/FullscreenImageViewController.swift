@@ -495,7 +495,7 @@ final class FullscreenImageViewController: UIViewController {
     // MARK: - Gesture Handling
     private let fadeAnimationDuration: TimeInterval = 0.33
 
-    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
         if selected {
@@ -613,7 +613,7 @@ final class FullscreenImageViewController: UIViewController {
             let zoomRect = CGRect(x: point.x - zoomLength / 2, y: point.y - zoomLength / 2, width: zoomLength, height: zoomLength)
             let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
 
-            scrollView.zoom(to: finalRect ?? .zero, animated: true)
+            scrollView.zoom(to: finalRect ?? .zero, animated: false)
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }

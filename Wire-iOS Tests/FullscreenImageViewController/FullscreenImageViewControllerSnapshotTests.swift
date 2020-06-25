@@ -57,4 +57,13 @@ final class FullscreenImageViewControllerSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
+    
+    func testThatImageIsDarkenWhenSelectedByMenu() {
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
+        
+        sut.setSelectedByMenu(true, animated: false)
+        
+        verify(matching: sut)
+    }
+
 }
