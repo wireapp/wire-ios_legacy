@@ -496,13 +496,24 @@ final class FullscreenImageViewController: UIViewController {
     private let fadeAnimationDuration: TimeInterval = 0.33
 
     private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+        ///TODO: UIMenu does not work after updated to iOS 13 SDK. Disable this visual mask for now
+        if #available(iOS 13.0, *) {
+            return
+        }
+        
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
         if selected {
-            guard imageView?.layer.sublayers == nil else { return }
+            // do not add more then one layer
+            if let highlightLayer = highlightLayer {
+                guard imageView?.layer.sublayers?.contains(highlightLayer) == false else { return }
+            }
             
             let layer = CALayer()
             layer.backgroundColor = UIColor.clear.cgColor
-            layer.frame = CGRect(x: 0, y: 0, width: (imageView?.frame.size.width ?? 0) / scrollView.zoomScale, height: (imageView?.frame.size.height ?? 0) / scrollView.zoomScale)
+            layer.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: (imageView?.frame.size.width ?? 0) / scrollView.zoomScale,
+                                 height: (imageView?.frame.size.height ?? 0) / scrollView.zoomScale)
             imageView?.layer.insertSublayer(layer, at: 0)
             
             let blackLayerClosure: Completion = {
@@ -511,11 +522,9 @@ final class FullscreenImageViewController: UIViewController {
 
             highlightLayer = layer
 
-            if animated {
-                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure)
-            } else {
+            animated ?
+                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
                 blackLayerClosure()
-            }
         } else {
             if animated {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: {
@@ -548,11 +557,19 @@ final class FullscreenImageViewController: UIViewController {
 
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
-
-        if let imageView = imageView {
-            menuController.setTargetRect(imageView.bounds, in: imageView)
+        
+        ///TODO: menu not shown on iOS 13.4 simulator/device.
+        if #available(iOS 13.0, *) {
+            if let imageView = imageView {
+                let frame = imageView.frame
+                menuController.showMenu(from: imageView, rect: frame)
+            }
+        } else {
+            if let imageView = imageView {
+                menuController.setTargetRect(imageView.bounds, in: imageView)
+            }
+            menuController.setMenuVisible(true, animated: true)
         }
-        menuController.setMenuVisible(true, animated: true)
         setSelectedByMenu(true, animated: true)
     }
 
