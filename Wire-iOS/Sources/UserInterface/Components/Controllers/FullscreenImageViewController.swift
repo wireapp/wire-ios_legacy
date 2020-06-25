@@ -496,10 +496,6 @@ final class FullscreenImageViewController: UIViewController {
     private let fadeAnimationDuration: TimeInterval = 0.33
 
     private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        ///TODO: UIMenu does not work after updated to iOS 13 SDK. Disable this visual mask for now
-        if #available(iOS 13.0, *) {
-            return
-        }
         
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
         if selected {
@@ -558,8 +554,11 @@ final class FullscreenImageViewController: UIViewController {
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
         
-        ///TODO: menu not shown on iOS 13.4 simulator/device.
         if #available(iOS 13.0, *) {
+            view.window?.makeKey()
+            view.window?.becomeFirstResponder()
+            becomeFirstResponder()
+            
             if let imageView = imageView {
                 let frame = imageView.frame
                 menuController.showMenu(from: imageView, rect: frame)
