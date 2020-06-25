@@ -20,37 +20,22 @@ import Foundation
 import UIKit
 import avs
 
-
-final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
+final class SelfVideoPreviewView: BaseVideoPreviewView {
     
     private let previewView = AVSVideoPreview()
-    
-    let stream: Stream
-    
-    init(stream: Stream) {
-        self.stream = stream
         
-        super.init(frame: .zero)
-        
-        setupViews()
-        createConstraints()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     deinit {
         stopCapture()
     }
     
-    private func setupViews() {
+    override func setupViews() {
         previewView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(previewView)
+        super.setupViews()
     }
     
-    private func createConstraints() {
+    override func createConstraints() {
+        super.createConstraints()
         previewView.fitInSuperview()
     }
 
