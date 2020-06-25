@@ -20,17 +20,6 @@ import Foundation
 import UIKit
 import avs
 
-protocol AVSIdentifierProvider {
-    var stream: Stream { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-    
-    var stream: Stream {
-        return Stream(userId: UUID(uuidString: userid)!, clientId: clientid)
-    }
-    
-}
 
 final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     
