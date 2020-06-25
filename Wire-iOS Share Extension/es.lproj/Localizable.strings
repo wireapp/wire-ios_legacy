@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Cuenta:";
 "share_extension.conversation_selection.title" = "Chat:";
 "share_extension.send_button.title" = "Enviar";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "No hay conexión a Internet";
 "share_extension.not_signed_in.title" = "Para compartir contenidos debes registrarte en Wire";
 "share_extension.not_signed_in.close_button" = "Cerrar";
+
 "share_extension.timeout.title" = "La conexión expiró.";
 "share_extension.timeout.message" = "Verifica la conexión a Internet e intenta nuevamente. Los archivos adjuntos se guardaron en la conversación.";
+
+"content.file.too_big" = "Puedes enviar archivos de hasta %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
 "share_extension.logged_out.message" = "Please choose another account.";

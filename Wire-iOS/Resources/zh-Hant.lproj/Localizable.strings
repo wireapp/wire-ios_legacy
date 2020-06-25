@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "個人資訊";
 
-"self.settings.account_picture_group.theme" = "暗色系主題";
+"self.settings.account_picture_group.theme" = "主題";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire為每個設備設置了一個獨特的指紋。您可以透過指紋比對來驗證您的設備和聊天室。";
 "self.settings.device_details.reset_session.subtitle" = "如果設備指紋比對結果不吻合，請重設工作階段以產生兩方新的加密金鎖。";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "發送按鍵";
 "self.settings.popular_demand.send_button.footer" = "停用按輸入鍵發送信息功能。";
 "self.settings.popular_demand.dark_mode.footer" = "切換暗或亮畫面主題";
+
+// dark theme
+"dark_theme.option.dark" = "暗色";
+"dark_theme.option.light" = "亮色";
+"dark_theme.option.system" = "與系統同步";
 
 // Open in
 "self.settings.external_apps.header" = "開啟";

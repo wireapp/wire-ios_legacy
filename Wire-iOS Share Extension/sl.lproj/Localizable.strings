@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "V redu";
+"general.ok" = "V redu";
+
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Pogovor:";
 "share_extension.send_button.title" = "Pošlji";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Ni spletne povezave";
 "share_extension.not_signed_in.title" = "Preden lahko karkoli delite, se morate prijaviti v Wire";
 "share_extension.not_signed_in.close_button" = "Zapri";
+
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+
+"content.file.too_big" = "Lahko pošljete zbirke do %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Odkleni Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
 "share_extension.logged_out.message" = "Please choose another account.";

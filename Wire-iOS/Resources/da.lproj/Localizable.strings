@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire giver hver enhed et unikt fingeraftryk. Sammenlign dem og verificer dine enheder og samtaler.";
 "self.settings.device_details.reset_session.subtitle" = "Hvis fingeraftrykkene ikke stemmer overens, nulstil sessionen for at generere nye krypteringsnøgler hos begge parter.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Send Knap";
 "self.settings.popular_demand.send_button.footer" = "Deaktiver for at sende via returtasten.";
 "self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Åbn med";

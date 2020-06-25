@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "موافق";
+"general.ok" = "موافق";
+
 "share_extension.conversation_selection.account" = "الحساب:";
 "share_extension.conversation_selection.title" = "المُحادثة:";
 "share_extension.send_button.title" = "إرسال";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "لا يوجد اتصال بالإنترنت";
 "share_extension.not_signed_in.title" = "لِج لـ Wire لتستطيع مشاركة أي شيء";
 "share_extension.not_signed_in.close_button" = "إغلاق";
+
 "share_extension.timeout.title" = "انتهت مهلة الاتصال.";
 "share_extension.timeout.message" = "تحقق من اتّصالك بالإنترنت ثم حاول مجددًا. المرفقات حفظت في المحادثة.";
+
+"content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 "share_extension.logged_out.title" = "سُجِّل خروجك من هذا الحساب.";
 "share_extension.logged_out.message" = "يُرجى اختيار حساب آخر.";

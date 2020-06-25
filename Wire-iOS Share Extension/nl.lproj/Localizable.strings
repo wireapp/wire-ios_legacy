@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Gesprek:";
 "share_extension.send_button.title" = "Stuur";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Geen verbinding met internet";
 "share_extension.not_signed_in.title" = "Je moet bij Wire ingelogd zijn voordat je iets kan delen";
 "share_extension.not_signed_in.close_button" = "Sluiten";
+
 "share_extension.timeout.title" = "Er is een time-out in de verbinding met de server.";
 "share_extension.timeout.message" = "Controleer je internet connectie en probeer opniew. De bijlagen zijn opgeslagen in de conversatie.";
+
+"content.file.too_big" = "U kunt bestanden versturen tot %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Ontgrendel Wire";
 "share_extension.logged_out.title" = "Je account is uitgelogd.";
 "share_extension.logged_out.message" = "Kies alstublieft een ander account.";

@@ -27,14 +27,22 @@ final class MediaPreviewView: RoundedView {
     let previewImageView = ImageResourceView()
     let overlayView = UIView()
 
+    weak var delegate: ContextMenuLinkViewDelegate?
+
     // MARK: - Initialization
 
     init() {
         super.init(frame: .zero)
         setupSubviews()
         setupLayout()
+
+        if #available(iOS 13.0, *) {
+            addInteraction(UIContextMenuInteraction(delegate: self))
+        }
+
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -99,4 +107,22 @@ final class MediaPreviewView: RoundedView {
         ])
     }
 
+}
+
+// MARK: - UIContextMenuInteractionDelegate
+
+@available(iOS 13.0, *)
+extension MediaPreviewView: UIContextMenuInteractionDelegate {
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return delegate?.linkPreviewContextMenu(view: self)
+    }
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            self.delegate?.linkViewWantsToOpenURL(self)
+        }
+    }
 }
