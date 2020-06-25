@@ -18,7 +18,6 @@
 import Foundation
 import FLAnimatedImage
 import UIKit
-import WireSystem
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -494,6 +493,45 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     // MARK: - Gesture Handling
+    private let fadeAnimationDuration: TimeInterval = 0.33
+
+    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+        zmLog.debug("Setting selected: \(selected) animated: \(animated)")
+        if selected {
+            guard imageView?.layer.sublayers == nil else { return }
+            
+            let layer = CALayer()
+            layer.backgroundColor = UIColor.clear.cgColor
+            layer.frame = CGRect(x: 0, y: 0, width: (imageView?.frame.size.width ?? 0) / scrollView.zoomScale, height: (imageView?.frame.size.height ?? 0) / scrollView.zoomScale)
+            imageView?.layer.insertSublayer(layer, at: 0)
+            
+            let blackLayerClosure: Completion = {
+                self.highlightLayer?.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
+            }
+
+            highlightLayer = layer
+
+            if animated {
+                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure)
+            } else {
+                blackLayerClosure()
+            }
+        } else {
+            if animated {
+                UIView.animate(withDuration: fadeAnimationDuration, animations: {
+                    self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
+                }) { finished in
+                    if finished {
+                        self.highlightLayer?.removeFromSuperlayer()
+                    }
+                }
+            } else {
+                highlightLayer?.backgroundColor = UIColor.clear.cgColor
+                highlightLayer?.removeFromSuperlayer()
+            }
+        }
+    }
+
     @objc
     private func didTapBackground(_ tapper: UITapGestureRecognizer?) {
         isShowingChrome = !isShowingChrome
@@ -640,40 +678,7 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
     override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return actionController
     }
-
-    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        zmLog.debug("Setting selected: \(selected) animated: \(animated)")
-        if selected {
-
-            let highlightLayer = CALayer()
-            highlightLayer.backgroundColor = UIColor.clear.cgColor
-            highlightLayer.frame = CGRect(x: 0, y: 0, width: (imageView?.frame.size.width ?? 0.0) / scrollView.zoomScale, height: (imageView?.frame.size.height ?? 0.0) / scrollView.zoomScale)
-            imageView?.layer.insertSublayer(highlightLayer, at: 0)
-
-            if animated {
-                UIView.animate(withDuration: 0.33, animations: {
-                    self.highlightLayer?.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
-                })
-            } else {
-                highlightLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
-            }
-            self.highlightLayer = highlightLayer
-        } else {
-            if animated {
-                UIView.animate(withDuration: 0.33, animations: {
-                    self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
-                }) { finished in
-                    if finished {
-                        self.highlightLayer?.removeFromSuperlayer()
-                    }
-                }
-            } else {
-                highlightLayer?.backgroundColor = UIColor.clear.cgColor
-                highlightLayer?.removeFromSuperlayer()
-            }
-        }
-    }
-
+    
     @objc
     private func menuDidHide(_ notification: Notification?) {
         NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
