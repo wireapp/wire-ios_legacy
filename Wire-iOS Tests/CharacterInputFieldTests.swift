@@ -64,7 +64,7 @@ final class CharacterInputFieldTests: XCTestCase {
     }
     
     func testThatItSupportsPaste() {
-        XCTAssertTrue(sut.canPerformAction(#selector(UIControl.paste(_:)), withSender: nil))
+        XCTAssert(sut.canPerformAction(#selector(UIControl.paste(_:)), withSender: nil))
     }
 
     func testThatItIgnoresInputWhenDelegateSaysItShouldNotAcceptInput() {
