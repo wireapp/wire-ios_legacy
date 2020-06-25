@@ -123,6 +123,9 @@
                   Identifier = "SettingsTableViewControllerSnapshotTests/testForOptionsGroup()">
                </Test>
                <Test
+                  Identifier = "ShareDestinationCellTests">
+               </Test>
+               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
