@@ -87,6 +87,9 @@
                   Identifier = "ConfirmAssetViewControllerTests/testThatItRendersTheAssetViewControllerWithPortraitImage()">
                </Test>
                <Test
+                  Identifier = "ContactsViewControllerSnapshotTests">
+               </Test>
+               <Test
                   Identifier = "ContactsViewControllerSnapshotTests/testForContactsAndIndexSectionBarAreShown()">
                </Test>
                <Test
@@ -97,6 +100,9 @@
                </Test>
                <Test
                   Identifier = "ConversationListViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
                   Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
