@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class DestructionCountdownViewTests: ZMSnapshotTestCase {
+final class DestructionCountdownViewTests: ZMSnapshotTestCase {
 
     var sut: DestructionCountdownView!
 

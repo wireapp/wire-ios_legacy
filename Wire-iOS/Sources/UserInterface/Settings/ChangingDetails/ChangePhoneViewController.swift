@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireUtilities
 import WireSyncEngine
 
 struct ChangePhoneNumberState {
@@ -77,6 +76,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -85,15 +85,23 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         super.viewWillAppear(animated)
         observerToken = userProfile?.add(observer: self)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
+
+        showKeyboardIfNeeded()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         observerToken = nil
+    }
+
+    fileprivate func showKeyboardIfNeeded() {
+        _ = (tableView.visibleCells.first(where: {
+            $0 is PhoneNumberInputCell
+        }) as? PhoneNumberInputCell)?.phoneInputView.becomeFirstResponder()
     }
 
     fileprivate func setupViews() {
@@ -119,7 +127,8 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         }
     }
 
-    @objc func saveButtonTapped() {
+    @objc
+    private func saveButtonTapped() {
         if let newNumber = state.updatedNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
@@ -185,7 +194,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
                 self.navigationController?.isLoadingViewVisible = true
-                })            
+                })
             present(alert, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
