@@ -26,6 +26,12 @@ import avs
 struct Stream: Equatable {
     let userId: UUID
     let clientId: String
+    let participantName: String?
+    
+    static func == (lhs: Stream, rhs: Stream) -> Bool {
+        return lhs.userId == rhs.userId
+            && lhs.clientId == rhs.clientId
+    }
 }
 
 struct VideoStream: Equatable {
@@ -60,12 +66,13 @@ extension ZMEditableUser {
     var selfStream: Stream {
         guard let selfUser = ZMUser.selfUser(),
               let userId = selfUser.remoteIdentifier,
-              let clientId = selfUser.selfClient()?.remoteIdentifier
+              let clientId = selfUser.selfClient()?.remoteIdentifier,
+              let name = selfUser.name
         else {
             fatal("Could not create self user stream which should always exist")
         }
         
-        return Stream(userId: userId, clientId: clientId)
+        return Stream(userId: userId, clientId: clientId, participantName: name + "user_cell.title.you_suffix".localized)
     }
     
 }
