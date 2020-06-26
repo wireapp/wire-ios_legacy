@@ -185,10 +185,15 @@ final class ZClientViewController: UIViewController {
     
     // MARK: Status bar
     private var child: UIViewController? {
-        if nil != topOverlayViewController {
-            return topOverlayViewController
-        } else if traitCollection.horizontalSizeClass == .compact {
-            return presentedViewController ?? wireSplitViewController
+        // for iOS 13, only child of this VC can be use for childForStatusBar
+        if #available(iOS 13.0, *) {
+            return topOverlayViewController ?? wireSplitViewController
+        } else {
+            if nil != topOverlayViewController {
+                return topOverlayViewController
+            } else if traitCollection.horizontalSizeClass == .compact {
+                return presentedViewController ?? wireSplitViewController
+            }
         }
         
         return nil
