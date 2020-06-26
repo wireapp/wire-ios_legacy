@@ -35,17 +35,17 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     fileprivate(set) var sessionManager: SessionManager?
     fileprivate(set) var quickActionsManager: QuickActionsManager?
-    
+
     fileprivate var sessionManagerCreatedSessionObserverToken: Any?
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
-    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    fileprivate var soundEventListeners = [UUID: SoundEventListener]()
 
     fileprivate(set) var visibleViewController: UIViewController? {
         didSet {
             visibleViewController?.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    
+
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []

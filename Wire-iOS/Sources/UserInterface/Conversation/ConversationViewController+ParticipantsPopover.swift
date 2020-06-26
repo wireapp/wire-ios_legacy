@@ -33,10 +33,10 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
 
 extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        if (controller.presentedViewController is AddParticipantsViewController) {
+        if controller.presentedViewController is AddParticipantsViewController {
             return .overFullScreen
         }
-        
+
         if #available(iOS 13, *) {
             return .formSheet
         } else {

@@ -22,7 +22,6 @@ import UIKit
 
 extension MessagePresenter {
 
-
     /// return a view controller for viewing image messge
     ///
     /// - Parameters:
@@ -33,7 +32,7 @@ extension MessagePresenter {
     func imagesViewController(for message: ZMConversationMessage,
                                     actionResponder: MessageActionResponder,
                                     isPreviewing: Bool) -> UIViewController {
-        
+
         guard let conversation = message.conversation else {
             fatal("Message has no conversation.")
         }
@@ -43,9 +42,9 @@ extension MessagePresenter {
         }
 
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
-        
+
         let collection = AssetCollectionWrapper(conversation: conversation, matchingCategories: [imagesCategoryMatch])
-        
+
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
         imagesController.isPreviewing = isPreviewing
 
@@ -57,19 +56,17 @@ extension MessagePresenter {
             imagesController.preferredContentSize = preferredContentSize
         }
 
-        if (UIDevice.current.userInterfaceIdiom == .phone) {
-            imagesController.modalPresentationStyle = .fullScreen;
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            imagesController.modalPresentationStyle = .fullScreen
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
         } else {
             imagesController.modalPresentationStyle = .overFullScreen
         }
         imagesController.modalTransitionStyle = .crossDissolve
 
-        
-
         let closeButton = CollectionsView.closeButton()
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)
-        
+
         imagesController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
         imagesController.messageActionDelegate = actionResponder
         imagesController.swipeToDismiss = true
@@ -83,7 +80,7 @@ extension MessagePresenter {
             return imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
         }
     }
-    
+
     @objc
     private func closeImagesButtonPressed(_ sender: AnyObject!) {
         modalTargetController?.dismiss(animated: true)

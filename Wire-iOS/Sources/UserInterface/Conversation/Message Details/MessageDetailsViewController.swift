@@ -19,7 +19,6 @@
 import UIKit
 import WireDataModel
 
-
 /**
  * A view controller wrapping the message details.
  */
@@ -135,7 +134,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-    
+
     // MARK: - Configuration
 
     override func viewDidLoad() {
@@ -184,7 +183,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
             container.view.topAnchor.constraint(equalTo: topBar.bottomAnchor),
             container.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             container.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            container.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
@@ -219,13 +218,13 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
     }
 
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
-        dismiss(animated: true  )
+        dismiss(animated: true)
     }
 
     override var shouldAutorotate: Bool {
         return false
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
