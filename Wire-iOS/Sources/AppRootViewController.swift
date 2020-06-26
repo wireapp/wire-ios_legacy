@@ -40,11 +40,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController? {
-        didSet {
-            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    public fileprivate(set) var visibleViewController: UIViewController?
     
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder

@@ -37,11 +37,7 @@ final class ZClientViewController: UIViewController {
     var userObserverToken: Any?
     
     private let topOverlayContainer: UIView = UIView()
-    private var topOverlayViewController: UIViewController? {
-        didSet {
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    private var topOverlayViewController: UIViewController? 
     private var contentTopRegularConstraint: NSLayoutConstraint!
     private var contentTopCompactConstraint: NSLayoutConstraint!
     // init value = false which set to true, set to false after data usage permission dialog is displayed
