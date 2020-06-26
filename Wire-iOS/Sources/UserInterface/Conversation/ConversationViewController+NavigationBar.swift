@@ -166,16 +166,13 @@ extension ConversationViewController {
             collections.delegate = self
 
             collections.onDismiss = { [weak self] _ in
-
                 guard let weakSelf = self else {
                     return
                 }
 
-                weakSelf.collectionController?.dismiss(animated: true) {
-                    weakSelf.setNeedsStatusBarAppearanceUpdate()
-                }
+                weakSelf.collectionController?.dismiss(animated: true)
             }
-            self.collectionController = collections
+            collectionController = collections
         } else {
             collectionController?.refetchCollection()
         }
@@ -183,8 +180,6 @@ extension ConversationViewController {
         collectionController?.shouldTrackOnNextOpen = true
 
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
-
-        navigationController.presentationController?.delegate = ZClientViewController.shared
 
         ZClientViewController.shared?.present(navigationController, animated: true)
     }

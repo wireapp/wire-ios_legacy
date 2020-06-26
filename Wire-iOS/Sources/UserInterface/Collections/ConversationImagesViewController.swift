@@ -130,8 +130,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.createPageController()
-        self.createControlsBar()
+        createPageController()
+        createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
 

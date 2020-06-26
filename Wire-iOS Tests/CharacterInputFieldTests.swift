@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
+final class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
     var shouldAccept = true
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool {
         return shouldAccept
@@ -201,12 +201,15 @@ final class CharacterInputFieldTests: XCTestCase {
     }
 }
 
-final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
+final class CharacterInputFieldScreenshotTests: XCTestCase {
     var sut: CharacterInputField! = nil
     
     override func setUp() {
         super.setUp()
-        sut = CharacterInputField(maxLength: 8, characterSet: CharacterSet.decimalDigits, size: CGSize(width: 375, height: 56))
+        let size = CGSize(width: 375, height: 56)
+        sut = CharacterInputField(maxLength: 8, characterSet: CharacterSet.decimalDigits, size: size)
+        
+        sut.frame = CGRect(origin: .zero, size: size)
     }
     
     override func tearDown() {
@@ -217,7 +220,7 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
     
     func testDefaultState() {
         // then
-        verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testFocusedState() {
@@ -228,7 +231,7 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
         sut.becomeFirstResponder()
         
         // then
-        verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testFocusedDeFocusedState() {
@@ -240,7 +243,7 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
         sut.resignFirstResponder()
         
         // then
-        verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testOneCharacterState() {
@@ -248,7 +251,7 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
         sut.insertText("1")
         
         // then
-        verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testAllCharactersEnteredState() {
@@ -256,26 +259,6 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
         sut.insertText("12345678")
         
         // then
-        verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
 }
-
-fileprivate extension UIView {
-    func snapshotView() -> UIView {
-        let topView = UIApplication.shared.keyWindow!.rootViewController!.view!
-        topView.addSubview(self)
-        translatesAutoresizingMaskIntoConstraints = false
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            topView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            topView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
-        layer.speed = 0
-        setNeedsLayout()
-        layoutIfNeeded()
-        return self
-    }
-}
-

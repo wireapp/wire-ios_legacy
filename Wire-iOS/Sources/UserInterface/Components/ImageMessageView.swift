@@ -21,7 +21,7 @@ import Cartography
 import WireDataModel
 import FLAnimatedImage
 
-final public class ImageMessageView: UIView {
+final class ImageMessageView: UIView {
     
     private let imageView = FLAnimatedImageView()
     private let userImageView = UserImageView(size: .tiny)
@@ -36,7 +36,8 @@ final public class ImageMessageView: UIView {
         self.createViews()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -153,7 +154,7 @@ final public class ImageMessageView: UIView {
         self.updateForImage()
     }
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         
         self.updateImageLayout()

@@ -33,19 +33,19 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     let callWindow: CallWindow
     let overlayWindow: NotificationWindow
 
-    public fileprivate(set) var sessionManager: SessionManager?
-    public fileprivate(set) var quickActionsManager: QuickActionsManager?
-    
+    fileprivate(set) var sessionManager: SessionManager?
+    fileprivate(set) var quickActionsManager: QuickActionsManager?
+
     fileprivate var sessionManagerCreatedSessionObserverToken: Any?
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
-    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    fileprivate var soundEventListeners = [UUID: SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController? {
+    fileprivate(set) var visibleViewController: UIViewController? {
         didSet {
             visibleViewController?.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    
+
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []
@@ -79,7 +79,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         mainWindow.frame.size = size
@@ -156,14 +156,14 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.frame = mainWindow.bounds
     }
 
     
-    public func launch(with launchOptions: LaunchOptions) {
+    func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
@@ -400,7 +400,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         type(of: self).configureAppearance()
     }
 
-    public func performWhenAuthenticated(_ block : @escaping () -> Void) {
+    func performWhenAuthenticated(_ block : @escaping () -> Void) {
         if appStateController.appState == .authenticated(completedRegistration: false) {
             block()
         } else {

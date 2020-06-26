@@ -37,11 +37,7 @@ final class ZClientViewController: UIViewController {
     var userObserverToken: Any?
     
     private let topOverlayContainer: UIView = UIView()
-    private var topOverlayViewController: UIViewController? {
-        didSet {
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    private var topOverlayViewController: UIViewController? 
     private var contentTopRegularConstraint: NSLayoutConstraint!
     private var contentTopCompactConstraint: NSLayoutConstraint!
     // init value = false which set to true, set to false after data usage permission dialog is displayed
@@ -185,10 +181,15 @@ final class ZClientViewController: UIViewController {
     
     // MARK: Status bar
     private var child: UIViewController? {
-        if nil != topOverlayViewController {
-            return topOverlayViewController
-        } else if traitCollection.horizontalSizeClass == .compact {
-            return presentedViewController ?? wireSplitViewController
+        // for iOS 13, only child of this VC can be use for childForStatusBar
+        if #available(iOS 13.0, *) {
+            return topOverlayViewController ?? wireSplitViewController
+        } else {
+            if nil != topOverlayViewController {
+                return topOverlayViewController
+            } else if traitCollection.horizontalSizeClass == .compact {
+                return presentedViewController ?? wireSplitViewController
+            }
         }
         
         return nil
@@ -531,7 +532,7 @@ final class ZClientViewController: UIViewController {
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                        updateSplitViewTopConstraint()
+                updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {
@@ -710,12 +711,5 @@ final class ZClientViewController: UIViewController {
         events?.forEach() {
             Analytics.shared().tag($0)
         }
-    }
-
-}
-
-extension ZClientViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
-        setNeedsStatusBarAppearanceUpdate()
     }
 }
