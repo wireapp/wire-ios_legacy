@@ -30,3 +30,11 @@ extension UIView {
         becomeFirstResponder()
     }
 }
+
+extension UIViewController {
+    
+    func prepareShowingMenu() {
+        view.prepareShowingMenu()
+        becomeFirstResponder()
+    }
+}

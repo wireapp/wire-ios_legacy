@@ -562,7 +562,7 @@ final class FullscreenImageViewController: UIViewController {
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
         
-        view.prepareShowingMenu()
+        prepareShowingMenu()
 
         if #available(iOS 13.0, *) {
 
