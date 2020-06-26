@@ -51,9 +51,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "ArticleViewTests/testArticleViewObfuscated()">
-               </Test>
-               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
