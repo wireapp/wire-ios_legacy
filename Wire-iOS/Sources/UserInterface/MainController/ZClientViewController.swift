@@ -532,7 +532,7 @@ final class ZClientViewController: UIViewController {
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                        updateSplitViewTopConstraint()
+                updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {

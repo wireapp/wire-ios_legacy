@@ -74,10 +74,7 @@ extension MessagePresenter {
         imagesController.messageActionDelegate = actionResponder
         imagesController.swipeToDismiss = true
         imagesController.dismissAction = { [weak self] completion in
-            guard let `self` = self else {
-                return
-            }
-            self.modalTargetController?.dismiss(animated: true, completion: completion)
+            self?.modalTargetController?.dismiss(animated: true, completion: completion)
         }
 
         if isPreviewing {
@@ -87,7 +84,8 @@ extension MessagePresenter {
         }
     }
     
-    @objc func closeImagesButtonPressed(_ sender: AnyObject!) {
-        modalTargetController?.dismiss(animated: true, completion: .none)
+    @objc
+    private func closeImagesButtonPressed(_ sender: AnyObject!) {
+        modalTargetController?.dismiss(animated: true)
     }
 }
