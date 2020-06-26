@@ -88,12 +88,3 @@ final class AccessoryTextFieldTests: XCTestCase {
         verify(matching: sut)
     }
 }
-
-fileprivate extension UIView {
-    func snapshotView() -> UIView {
-        self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
-        return self
-    }
-}
