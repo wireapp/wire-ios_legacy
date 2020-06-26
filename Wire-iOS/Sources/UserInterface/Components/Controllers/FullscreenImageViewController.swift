@@ -495,11 +495,25 @@ final class FullscreenImageViewController: UIViewController {
     // MARK: - Gesture Handling
     private let fadeAnimationDuration: TimeInterval = 0.33
 
-    func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    private var isImageViewHightlighted: Bool {
+        if let highlightLayer = highlightLayer,
+            imageView?.layer.sublayers?.contains(highlightLayer) == true {
+            return true
+        }
         
+        return false
+    }
+    
+    func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
+        
+        
         if selected {
-            // do not add more then one layer
+            
+            guard !isImageViewHightlighted else {
+                return
+            }
+            
             if let highlightLayer = highlightLayer {
                 guard imageView?.layer.sublayers?.contains(highlightLayer) == false else {
                     return
