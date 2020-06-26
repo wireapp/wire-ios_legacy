@@ -714,9 +714,3 @@ final class ZClientViewController: UIViewController {
     }
 
 }
-
-extension ZClientViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
-        setNeedsStatusBarAppearanceUpdate()
-    }
-}

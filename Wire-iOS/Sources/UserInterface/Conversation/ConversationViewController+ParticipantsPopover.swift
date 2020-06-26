@@ -43,10 +43,6 @@ extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
             return .fullScreen
         }
     }
-
-    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
-        setNeedsStatusBarAppearanceUpdate()
-    }
 }
 
 extension ConversationViewController: ViewControllerDismisser {
