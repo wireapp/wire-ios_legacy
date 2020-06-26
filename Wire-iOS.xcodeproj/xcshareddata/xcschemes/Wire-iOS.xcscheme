@@ -63,12 +63,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ConfirmAssetViewControllerTests/testThatItRendersTheAssetViewControllerWithLandscapeImage()">
-               </Test>
-               <Test
-                  Identifier = "ConfirmAssetViewControllerTests/testThatItRendersTheAssetViewControllerWithPortraitImage()">
-               </Test>
-               <Test
                   Identifier = "ContactsViewControllerSnapshotTests">
                </Test>
                <Test
