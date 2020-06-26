@@ -63,15 +63,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ButtonTests/testForLongTitleCanBeWrapped()">
-               </Test>
-               <Test
-                  Identifier = "ButtonTests/testForStyleChangedToEmpty()">
-               </Test>
-               <Test
-                  Identifier = "ButtonTests/testForStyleChangedToFull()">
-               </Test>
-               <Test
                   Identifier = "ConfirmAssetViewControllerTests/testThatItRendersTheAssetViewControllerWithLandscapeImage()">
                </Test>
                <Test
