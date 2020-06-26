@@ -51,9 +51,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AppLockPresenterTests/testThatItVerifiesPasswordWithCorrectMessageWhenNeeded()">
-               </Test>
-               <Test
                   Identifier = "ArticleViewTests/testArticleViewObfuscated()">
                </Test>
                <Test

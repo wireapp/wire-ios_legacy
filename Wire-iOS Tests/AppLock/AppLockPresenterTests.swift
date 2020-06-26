@@ -251,7 +251,7 @@ final class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertNil(userInterface.requestPasswordMessage)
     }
-    ///TODO: fail when parallel
+
     func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
         //given
         appLockInteractor._isAuthenticationNeeded = true
@@ -449,6 +449,6 @@ extension AppLockPresenterTests {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.5)
+        wait(for: [expectation], timeout: 5)
     }
 }
