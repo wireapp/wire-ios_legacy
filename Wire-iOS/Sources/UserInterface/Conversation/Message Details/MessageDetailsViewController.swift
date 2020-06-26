@@ -214,12 +214,12 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
     // MARK: - Top Bar
 
     override func accessibilityPerformEscape() -> Bool {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
         return true
     }
 
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true  )
     }
 
     override var shouldAutorotate: Bool {
