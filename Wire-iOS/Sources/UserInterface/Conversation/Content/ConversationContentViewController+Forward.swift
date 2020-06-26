@@ -173,9 +173,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> Void in
             weak var presentingViewController = shareController.presentingViewController
 
-            presentingViewController?.dismiss(animated: true) {
-                presentingViewController?.setNeedsStatusBarAppearanceUpdate()
-            }
+            presentingViewController?.dismiss(animated: true)
         }
 
         (presenter ?? self).present(keyboardAvoiding, animated: true)

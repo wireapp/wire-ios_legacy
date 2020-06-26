@@ -78,7 +78,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         self.showPreview = showPreview
         self.allowsMultipleSelection = allowsMultipleSelection
         super.init(nibName: nil, bundle: nil)
-        self.transitioningDelegate = self
+        transitioningDelegate = self
         
         let messagePreviewAppearance = MessagePreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
         messagePreviewAppearance.colorSchemeVariant = .light
@@ -95,10 +95,11 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
                                                name: UIResponder.keyboardDidChangeFrameNotification,
                                                object: nil)
 
-        self.createViews()
-        self.createConstraints()
+        createViews()
+        createConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -147,7 +148,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     
     @objc
     func onCloseButtonPressed(sender: AnyObject?) {
-        self.onDismiss?(self, false)
+        onDismiss?(self, false)
     }
     
     @objc
