@@ -54,7 +54,7 @@ class DirectorySectionController: SearchSectionController {
         let user = suggestions[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
-        cell.configure(with: user, hideIconView: true)
+        cell.configure(with: user, hideGuestIcon: true)
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true

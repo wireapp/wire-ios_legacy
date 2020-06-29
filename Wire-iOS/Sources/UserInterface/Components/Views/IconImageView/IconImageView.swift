@@ -21,6 +21,13 @@ import WireCommonComponents
 
 protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
+    var tintColor: UIColor? { get }
+}
+
+extension IconImageStyle {
+    var tintColor: UIColor? {
+        return nil
+    }
 }
 
 class IconImageView: UIImageView {
@@ -31,8 +38,14 @@ class IconImageView: UIImageView {
         guard let icon = style.icon else {
             isHidden = true; return
         }
+        
         isHidden = false
         self.setIcon(icon, size: size, color: color)
+      
+        guard let color = style.tintColor else {
+            return
+        }
+        tintColor = color
     }
     
     func set(iconSize size: StyleKitIcon.Size, color: UIColor) {

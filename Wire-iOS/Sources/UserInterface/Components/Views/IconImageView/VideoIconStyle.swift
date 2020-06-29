@@ -38,18 +38,17 @@ enum VideoIconStyle: IconImageStyle {
 }
 
 extension VideoIconStyle {
-    init(_ state: WireSyncEngine.CallParticipantState) {
+    init(state: VideoState?) {
+        guard let state = state else {
+            self = .hidden
+            return
+        }
         switch state {
-        case .connected(videoState: let videoState):
-            switch videoState {
-            case .screenSharing:
-                self = .screenshare
-            case .started, .paused, .badConnection:
-                self = .video
-            case .stopped:
-                self = .hidden
-            }
-        default:
+        case .screenSharing:
+            self = .screenshare
+        case .started, .paused, .badConnection:
+            self = .video
+        case .stopped:
             self = .hidden
         }
     }
