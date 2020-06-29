@@ -51,7 +51,9 @@ fileprivate extension VoiceChannel {
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
-                    .callParticipant(user: $0.user, videoIconStyle: VideoIconStyle($0.state))
+                    .callParticipant(user: $0.user,
+                                     videoIconStyle: VideoIconStyle(state: $0.state.videoState),
+                                     microphoneIconStyle: MicrophoneIconStyle(state: $0.state.microphoneState))
                 })
                
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -217,8 +219,26 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: let state) where state.isSending: return true
+        case .connected(videoState: let state, _) where state.isSending: return true
         default: return false
+        }
+    }
+    
+    var videoState: VideoState? {
+        switch self {
+        case .connected(videoState: let state, _):
+            return state
+        default:
+            return nil
+        }
+    }
+    
+    var microphoneState: MicrophoneState? {
+        switch self {
+        case .connected(_, microphoneState: let state):
+            return state
+        default:
+            return nil
         }
     }
 }

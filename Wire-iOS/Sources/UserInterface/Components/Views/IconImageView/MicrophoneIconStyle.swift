@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import WireSyncEngine
 
 enum MicrophoneIconStyle: IconImageStyle {
     case muted
@@ -35,26 +36,28 @@ enum MicrophoneIconStyle: IconImageStyle {
             return .none
         }
     }
-}
-
-extension MicrophoneIconStyle {
-    init(isMuted: Bool) {
-        if isMuted {
-            self = .muted
-        } else {
-            self = .unmuted
+    
+    var tintColor: UIColor? {
+        switch self {
+        case .active:
+            return .green
+        default:
+            return nil
         }
     }
 }
 
-class MicrophoneIconImageView: IconImageView {
-    override func set(style: IconImageStyle) {
-        super.set(style: style)
-        guard
-            let style = style as? MicrophoneIconStyle,
-            case style = MicrophoneIconStyle.active else {
-                return
+extension MicrophoneIconStyle {
+    init(state: MicrophoneState?) {
+        guard let state = state else {
+            self = .hidden
+            return
         }
-        tintColor = .green
+        switch state {
+        case .unmuted:
+            self = .unmuted
+        case .muted:
+            self = .muted
+        }
     }
 }

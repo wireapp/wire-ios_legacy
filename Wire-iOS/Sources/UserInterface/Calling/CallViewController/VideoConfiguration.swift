@@ -72,8 +72,11 @@ extension VoiceChannel {
     var participantsActiveVideoStreams: [VideoStream] {
         return participants.compactMap { participant in
             switch participant.state {
-            case .connected(let videoState) where videoState != .stopped:
-                let stream = Stream(userId: participant.user.remoteIdentifier, clientId: participant.clientId)
+            case .connected(let videoState, let microphoneState) where videoState != .stopped:
+                let stream = Stream(userId: participant.user.remoteIdentifier,
+                                    clientId: participant.clientId,
+                                    participantName: participant.user.name,
+                                    microphoneState: microphoneState)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil
