@@ -38,7 +38,7 @@ final class GroupDetailsFooterViewTests: XCTestCase, CoreDataFixtureTestHelper {
         super.tearDown()
     }
 
-    func testForAllPhoneWidths(){ ///TODO: color scheme
+    func testForAllPhoneWidths(){
         teamTest {
             sut = GroupDetailsFooterView()
             verifyInAllPhoneWidths(matching: sut)
