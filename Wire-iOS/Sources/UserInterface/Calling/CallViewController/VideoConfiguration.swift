@@ -56,22 +56,25 @@ extension VoiceChannel {
     }
     
     func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
+        let streamsExcludingSelf = participantsStreams.filter { $0.stream != selfStream?.stream }
+
         guard let selfStream = selfStream else {
-            return (nil, participantsStreams)
+            return (nil, streamsExcludingSelf)
         }
         
-        if 1 == participantsStreams.count {
-            return (selfStream, participantsStreams)
+        if 1 == streamsExcludingSelf.count {
+            return (selfStream, streamsExcludingSelf)
         } else {
-            return (nil, [selfStream] + participantsStreams)
+            return (nil, [selfStream] + streamsExcludingSelf)
         }
     }
     
     var participantsActiveVideoStreams: [VideoStream] {
         return participants.compactMap { participant in
             switch participant.state {
-            case .connected(let videoState, let clientId) where videoState != .stopped:
-                return .init(stream: Stream(userId: participant.user.remoteIdentifier, clientId: clientId), isPaused: videoState == .paused)
+            case .connected(let videoState) where videoState != .stopped:
+                let stream = Stream(userId: participant.user.remoteIdentifier, clientId: participant.clientId)
+                return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil
             }

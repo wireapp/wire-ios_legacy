@@ -128,7 +128,6 @@
 		16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */; };
 		16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */; };
 		16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEE2099DFEB008A5718 /* CallParticipantsViewController.swift */; };
-		16A94AF4209A1A67008A5718 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AF3209A1A67008A5718 /* GridView.swift */; };
 		16A94AF6209B04A5008A5718 /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AF5209B04A5008A5718 /* GridViewTests.swift */; };
 		16A94AF8209B5334008A5718 /* VideoGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AF7209B5334008A5718 /* VideoGridView.swift */; };
 		16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AFA209C553A008A5718 /* CallViewController.swift */; };
@@ -412,6 +411,7 @@
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
 		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
 		6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903723AA8D480081802B /* AppLockPresenterTests.swift */; };
+		6330FCC2249264C900E40B06 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6330FCC1249264C900E40B06 /* GridView.swift */; };
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
 		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
 		6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */; };
@@ -419,6 +419,8 @@
 		636AD79C23A91A57004A3050 /* AppLockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79B23A91A57004A3050 /* AppLockInteractor.swift */; };
 		636B716C23C39D6700B624D6 /* AppLockViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636B716923C39D0600B624D6 /* AppLockViewControllerSnapshotTests.swift */; };
 		636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */; };
+		6372AAA72492719100C5F307 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372AAA62492719100C5F307 /* GridCell.swift */; };
+		6372AAAA249A4F2600C5F307 /* Int+Even.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372AAA9249A4F2600C5F307 /* Int+Even.swift */; };
 		63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */; };
 		63F65EFB2464444B00534A69 /* TimedCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EF92464426200534A69 /* TimedCircularProgressView.swift */; };
 		63F65EFD2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EFC2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift */; };
@@ -1648,7 +1650,6 @@
 		16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllParticipantsCell.swift; sourceTree = "<group>"; };
 		16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsViewTests.swift; sourceTree = "<group>"; };
 		16A94AEE2099DFEB008A5718 /* CallParticipantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsViewController.swift; sourceTree = "<group>"; };
-		16A94AF3209A1A67008A5718 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		16A94AF5209B04A5008A5718 /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
 		16A94AF7209B5334008A5718 /* VideoGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridView.swift; sourceTree = "<group>"; };
 		16A94AFA209C553A008A5718 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
@@ -1950,6 +1951,7 @@
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
 		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
 		6306903723AA8D480081802B /* AppLockPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenterTests.swift; sourceTree = "<group>"; };
+		6330FCC1249264C900E40B06 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
 		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
 		6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+CompanyLogin.swift"; sourceTree = "<group>"; };
@@ -1957,6 +1959,8 @@
 		636AD79B23A91A57004A3050 /* AppLockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractor.swift; sourceTree = "<group>"; };
 		636B716923C39D0600B624D6 /* AppLockViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilderTests.swift; sourceTree = "<group>"; };
+		6372AAA62492719100C5F307 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		6372AAA9249A4F2600C5F307 /* Int+Even.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Even.swift"; sourceTree = "<group>"; };
 		63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewController.swift; sourceTree = "<group>"; };
 		63F65EF92464426200534A69 /* TimedCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedCircularProgressView.swift; sourceTree = "<group>"; };
 		63F65EFC2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PreBackendSwitch.swift"; sourceTree = "<group>"; };
@@ -3256,8 +3260,9 @@
 			isa = PBXGroup;
 			children = (
 				F1B5D54C2182096B00986911 /* NetworkConditionIndicatorView.swift */,
-				16A94AF3209A1A67008A5718 /* GridView.swift */,
 				16A94AF7209B5334008A5718 /* VideoGridView.swift */,
+				6330FCC1249264C900E40B06 /* GridView.swift */,
+				6372AAA62492719100C5F307 /* GridCell.swift */,
 				BF79B0FD20A99762001BF4FE /* VideoPreviewView.swift */,
 				BF79B0FB20A98B60001BF4FE /* SelfVideoPreviewView.swift */,
 				EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */,
@@ -5059,6 +5064,7 @@
 				546B17632417A3D70091F4B3 /* CIContext+Shared.swift */,
 				EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */,
 				EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */,
+				6372AAA9249A4F2600C5F307 /* Int+Even.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7416,7 +7422,6 @@
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */,
 				16DD6E95228304B70090A74C /* LegalHoldDetailsViewController.swift in Sources */,
-				16A94AF4209A1A67008A5718 /* GridView.swift in Sources */,
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,
 				F15650E621DD14B300210504 /* TransformLabel.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
@@ -7428,6 +7433,7 @@
 				BF52C1601CB25FE70037331F /* ArchivedListViewModel.swift in Sources */,
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
+				6372AAAA249A4F2600C5F307 /* Int+Even.swift in Sources */,
 				160D6923212C814200096EAD /* CallController.swift in Sources */,
 				5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */,
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift in Sources */,
@@ -7553,6 +7559,7 @@
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				5501FFCD22B399F30050D8FC /* UserInputRequest+LegalHold.swift in Sources */,
 				16814844228D89EC0069F16F /* UserClientListViewController.swift in Sources */,
+				6330FCC2249264C900E40B06 /* GridView.swift in Sources */,
 				5E8C38AE212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift in Sources */,
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
 				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
@@ -7759,6 +7766,7 @@
 				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
 				EF883F2E215144B800B440CC /* Analytics+OptOut.swift in Sources */,
 				5EF4A6E220F3C4A300A9EF22 /* GiphyCollectionViewCell.swift in Sources */,
+				6372AAA72492719100C5F307 /* GridCell.swift in Sources */,
 				EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */,
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
 				F12EAF73214FB6FF00B00AD9 /* MentionsHandler.swift in Sources */,
