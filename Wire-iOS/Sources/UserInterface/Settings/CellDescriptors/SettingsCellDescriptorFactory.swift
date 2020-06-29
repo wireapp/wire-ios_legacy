@@ -363,9 +363,7 @@ class SettingsCellDescriptorFactory {
     func helpSection() -> SettingsCellDescriptorType {
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
-//            let test = try! self.createSharingSession()
-            return nil
-//            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
+            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
@@ -581,45 +579,4 @@ class SettingsCellDescriptorFactory {
 
         controller.present(alert, animated: true)
     }
-}
-
-extension SettingsCellDescriptorFactory: UpdateEventProcessor {
-//    public func createSharingSession() throws -> SharingSession? {
-//        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-//            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
-////            let hostBundleIdentifier = Bundle.main.hostBundleIdentifier
-//            else { return nil}
-//        print(applicationGroupIdentifier)
-//        print(accountIdentifier)
-////        let applicationGroupIdentifier = "group.com.wearezeta.zclient-alpha"
-////        let accountIdentifier = UUID(uuidString: "58A2C906-9AF7-405C-9A3C-49B32650150B")!
-//        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
-//                                   accountIdentifier: accountIdentifier,
-////                                   hostBundleIdentifier: hostBundleIdentifier,
-//                                   environment: BackendEnvironment.shared,
-//                                   analytics: nil,
-//                                   eventProcessor: self)
-//    }
-    
-    private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        let account = AccountManager(sharedDirectory: sharedContainerURL)
-        print(account.selectedAccount?.userIdentifier)
-        return account
-    }
-    
-    public func process(updateEvents: [ZMUpdateEvent], ignoreBuffer: Bool) {
-    //        if ignoreBuffer || isReadyToProcessEvents {
-    //            consume(updateEvents: updateEvents)
-    //        } else {
-    //            Logging.eventProcessing.info("Buffering \(updateEvents.count) event(s)")
-    //            updateEvents.forEach(eventsBuffer.addUpdateEvent)
-    //        }
-        }
-        
-}
-
-public class MyTest1 {
-    
 }

@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "067BBBEB247E5FAE00D73407"
+               BlueprintIdentifier = "067BBBFA247E693400D73407"
                BuildableName = "Wire Notification Service Extension.appex"
                BlueprintName = "Wire Notification Service Extension"
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
@@ -57,8 +57,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.wearezeta.zclient-alpha"
+         RemotePath = "/var/containers/Bundle/Application/7277E2C2-3D9C-44E8-98A0-2AD0F8A5E7E0/Wire.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F42C537199244A700288E4D"
@@ -66,7 +70,7 @@
             BlueprintName = "Wire-iOS"
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

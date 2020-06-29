@@ -29,7 +29,7 @@ public class NotificationService: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-//        let test = try! self.createSharingSession()
+        let test = try! self.createSharingSession()
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
@@ -48,25 +48,20 @@ public class NotificationService: UNNotificationServiceExtension {
         }
     }
 
-//    public func createSharingSession() throws -> SharingSession? {
-////        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-//////        let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
-////            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
-////        else { return nil}
-//        print(Bundle.main.applicationGroupIdentifier)
-//        print(accountManager?.selectedAccount?.userIdentifier)
-//        let applicationGroupIdentifier = "group.com.wearezeta.zclient-alpha"
-//        let accountIdentifier = UUID(uuidString: "58A2C906-9AF7-405C-9A3C-49B32650150B")!
-//        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
-//                              accountIdentifier: accountIdentifier,
-//                              environment: BackendEnvironment.shared,
-//                              analytics: nil,
-//                              eventProcessor: self)
-//    }
-//
+    public func createSharingSession() throws -> SharingSession? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
+//        let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
+            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
+        else { return nil}
+        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
+                              accountIdentifier: accountIdentifier,
+                              environment: BackendEnvironment.shared,
+                              analytics: nil,
+                              eventProcessor: self)
+    }
+
     private var accountManager: AccountManager? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-//        let applicationGroupIdentifier = "com.wearezeta.zclient-alpha"
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
         let account = AccountManager(sharedDirectory: sharedContainerURL)
         return account
