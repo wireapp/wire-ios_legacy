@@ -66,9 +66,6 @@
                   Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
                </Test>
                <Test
-                  Identifier = "GroupDetailsFooterViewTests/testForAllPhoneWidths()">
-               </Test>
-               <Test
                   Identifier = "GroupDetailsFooterViewTests/testForPartnerRoleWithNoAddParticipantsButton()">
                </Test>
                <Test

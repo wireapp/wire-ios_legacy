@@ -28,6 +28,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
 	override func setUp() {
 		super.setUp()
+        Settings.shared.reset()
 
         coreDataFixture = CoreDataFixture()
 
