@@ -26,8 +26,8 @@ protocol ContextMenuDelegate: class {
     func makeContextMenu(title: String, view: UIView) -> UIMenu
 }
 
+@available(iOS 13.0, *)
 extension ContextMenuDelegate {
-    @available(iOS 13.0, *)
     func makeContextMenu(title: String, view: UIView) -> UIMenu {
         let actions = actionController(view: view)?.allMessageMenuElements() ?? []
 
@@ -45,4 +45,24 @@ extension ContextMenuDelegate {
                                                    view: view)
     }
 
+}
+
+@available(iOS 13.0, *)
+extension ContextMenuDelegate where Self: LinkViewDelegate {
+    func linkPreviewContextMenu(view: UIView) -> UIContextMenuConfiguration? {
+        guard let url = url else {
+            return nil
+        }
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            return BrowserViewController(url: url)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { _ in
+                                            return self.makeContextMenu(title: url.absoluteString, view: view)
+        })
+
+    }
 }

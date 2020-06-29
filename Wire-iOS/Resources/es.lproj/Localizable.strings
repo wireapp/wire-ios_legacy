@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Información Personal";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire proporciona a cada dispositivo una huella digital única. Compara las huellas digitales para verificar dispositivos y chats.";
 "self.settings.device_details.reset_session.subtitle" = "Si no coinciden las huellas digitales, reinicia la sesión para generar nuevas claves de cifrado en ambos lados.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Botón de enviar";
 "self.settings.popular_demand.send_button.footer" = "Deshabilitar esta opción para enviar mensajes con la tecla 'Enviar' del teclado.";
 "self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Abrir con";
