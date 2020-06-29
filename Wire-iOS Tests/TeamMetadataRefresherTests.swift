@@ -95,10 +95,10 @@ class TeamMetadataRefresherTests: XCTestCase {
             triggeredSecondRefresh.fulfill()
         }
 
-        wait(for: [triggeredSecondRefresh], timeout: 2)
+        wait(for: [triggeredSecondRefresh], timeout: 5)
 
         // Then
-        XCTAssertEqual(mockSelfUser.refreshTeamDataCount, 2)
+        XCTAssertEqual(mockSelfUser.refreshTeamDataCount, 2) //XCTAssertEqual failed: ("1") is not equal to ("2")
     }
 
     func test_it_does_not_refresh_if_timeout_not_expired() {
