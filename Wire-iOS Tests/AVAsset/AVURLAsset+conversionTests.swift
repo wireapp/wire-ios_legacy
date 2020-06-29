@@ -46,7 +46,7 @@ final class AVURLAsset_conversionTests: XCTestCase {
                                                 expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3) { error in
+        waitForExpectations(timeout: 6) { error in
             XCTAssertNil(error)
         }
     }
