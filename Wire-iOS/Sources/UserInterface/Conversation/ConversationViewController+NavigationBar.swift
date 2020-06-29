@@ -239,6 +239,8 @@ extension ZMConversation {
     var canStartVideoCall: Bool {
         guard !isCallOngoing else { return false }
 
+        guard !(type(of: self).callCenterConfiguration.useConferenceCalling) else { return true }
+
         if self.conversationType == .oneOnOne {
             return true
         }

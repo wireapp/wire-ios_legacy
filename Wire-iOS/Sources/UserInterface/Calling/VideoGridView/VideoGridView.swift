@@ -25,7 +25,7 @@ import avs
 
 struct Stream: Equatable {
     let userId: UUID
-    let clientId: String?
+    let clientId: String
 }
 
 struct VideoStream: Equatable {
@@ -70,7 +70,7 @@ extension ZMEditableUser {
     
 }
 
-fileprivate extension CGSize {
+extension CGSize {
     static let floatingPreviewSmall = CGSize(width: 108, height: 144)
     static let floatingPreviewLarge = CGSize(width: 150, height: 200)
     
@@ -183,7 +183,7 @@ final class VideoGridViewController: UIViewController {
     }
 
     public func switchFillMode(location: CGPoint) {
-        for view in gridView.gridSubviews {
+        for view in gridView.videoStreamViews {
             let convertedRect = self.view.convert(view.frame, from: view.superview)
             if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
                 videoPreviewView.switchFillMode()
@@ -265,7 +265,7 @@ final class VideoGridViewController: UIViewController {
         gridView.layoutDirection = newAxis
     }
 
-    private func gridAxis(for traitCollection: UITraitCollection) -> NSLayoutConstraint.Axis {
+    private func gridAxis(for traitCollection: UITraitCollection) -> UICollectionView.ScrollDirection {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
         case (.pad, .regular, true): return .horizontal
@@ -323,7 +323,7 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func streamView(for stream: Stream) -> UIView? {
-        return gridView.gridSubviews.first {
+        return gridView.videoStreamViews.first {
             ($0 as? AVSIdentifierProvider)?.stream == stream
         }
     }
