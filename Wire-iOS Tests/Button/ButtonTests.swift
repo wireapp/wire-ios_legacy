@@ -30,7 +30,7 @@ final class ButtonTests: XCTestCase {
         sut = nil
     }
 
-    func testForLongTitleCanBeWrapped() {
+    func testForLongTitleCanBeWrapped() {///TODO: fail on CI? fix accent color to blue
         //GIVEN
         sut.titleLabel?.lineBreakMode = .byWordWrapping
         sut.titleLabel?.numberOfLines = 0
