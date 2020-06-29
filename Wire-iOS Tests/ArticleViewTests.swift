@@ -69,6 +69,10 @@ final class ArticleViewTests: XCTestCase {
 
     var sut: ArticleView!
 
+    override func setUp() {
+        accentColor = .strongBlue
+    }
+
     override func tearDown() {
 
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()

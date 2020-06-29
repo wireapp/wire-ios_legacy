@@ -24,6 +24,7 @@ final class ButtonTests: XCTestCase {
 
     override func setUp() {
         sut = Button(style: .empty)
+        accentColor = .strongBlue
     }
 
     override func tearDown() {
