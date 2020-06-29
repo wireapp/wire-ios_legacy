@@ -60,9 +60,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ConversationListViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
@@ -85,9 +82,6 @@
                </Test>
                <Test
                   Identifier = "LegalHoldAlertFactoryTests/testThatItCanCreateLegalHoldDeactivatedAlert()">
-               </Test>
-               <Test
-                  Identifier = "SettingsTableViewControllerSnapshotTests/testForOptionsGroup()">
                </Test>
                <Test
                   Identifier = "ShareDestinationCellTests">
