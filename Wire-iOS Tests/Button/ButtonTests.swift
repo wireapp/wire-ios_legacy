@@ -23,15 +23,15 @@ final class ButtonTests: XCTestCase {
     var sut: Wire.Button!
 
     override func setUp() {
-        sut = Button(style: .empty)
         accentColor = .strongBlue
+        sut = Button(style: .empty)
     }
 
     override func tearDown() {
         sut = nil
     }
 
-    func testForLongTitleCanBeWrapped() {///TODO: fail on CI? fix accent color to blue
+    func testForLongTitleCanBeWrapped() {
         //GIVEN
         sut.titleLabel?.lineBreakMode = .byWordWrapping
         sut.titleLabel?.numberOfLines = 0

@@ -29,7 +29,7 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
         ColorScheme.default.variant = .dark
         sut = ContactsViewController()
         sut.view.backgroundColor = .black
-        XCTestCase.accentColor = .strongBlue
+        accentColor = .strongBlue
     }
 
     override func tearDown() {
@@ -61,7 +61,7 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForContactsWithoutSections() { ///TODO: failed for tint color
+    func testForContactsWithoutSections() {
         // Given
         sut.dataSource.ungroupedSearchResults = SwiftMockLoader.mockUsers()
 
