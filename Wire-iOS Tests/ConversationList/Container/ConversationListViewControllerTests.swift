@@ -35,6 +35,9 @@ final class ConversationListViewControllerTests: XCTestCase {
         let selfUser = MockUserType.createSelfUser(name: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", inTeam: UUID())
         let account = Account.mockAccount(imageData: mockImageData)
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser, conversationListType: MockConversationList.self)
+        
+        accentColor = .strongBlue
+        
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
 
