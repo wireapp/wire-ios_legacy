@@ -109,7 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PerformanceDebugger.shared.start()
         return true
     }
-    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print(token)
+    }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         ZMSLog.switchCurrentLogToPrevious()
         
@@ -130,6 +133,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
+        
+        
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.alert,UIUserNotificationType.badge, UIUserNotificationType.sound]
+        let pushNotificationSettings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
+
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
         
         return true
     }
