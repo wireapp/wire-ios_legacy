@@ -104,9 +104,6 @@
                <Test
                   Identifier = "TeamMetadataRefresherTests/test_it_refreshes_if_timeout_expired()">
                </Test>
-               <Test
-                  Identifier = "TypingIndicatorViewSnapshotTests/testThatLabelAndLineAreShownWhenAnimated()">
-               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
