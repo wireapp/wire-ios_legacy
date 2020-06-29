@@ -19,25 +19,29 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
+final class GroupDetailsFooterViewTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var sut: GroupDetailsFooterView!
+    var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
         super.setUp()
-        SelfUser.provider = selfUserProvider
+        coreDataFixture = CoreDataFixture()
+        SelfUser.provider = coreDataFixture.selfUserProvider
+        ColorScheme.default.variant = .light
     }
     
     override func tearDown() {
         sut = nil
+        coreDataFixture = nil
         SelfUser.provider = nil
         super.tearDown()
     }
 
-    func testForAllPhoneWidths(){
+    func testForAllPhoneWidths(){ ///TODO: color scheme
         teamTest {
             sut = GroupDetailsFooterView()
-            verifyInAllPhoneWidths(view: sut)
+            verifyInAllPhoneWidths(matching: sut)
         }
     }
 
@@ -49,7 +53,7 @@ final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
             sut = GroupDetailsFooterView()
             sut.update(for: groupConversation)
 
-            verifyInAllPhoneWidths(view: sut)
+            verifyInAllPhoneWidths(matching: sut)
         }
     }
 }
