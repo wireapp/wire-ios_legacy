@@ -63,9 +63,6 @@
                   Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
-                  Identifier = "LegalHoldAlertFactoryTests/testThatItCanCreateLegalHoldDeactivatedAlert()">
-               </Test>
-               <Test
                   Identifier = "ShareDestinationCellTests">
                </Test>
                <Test
