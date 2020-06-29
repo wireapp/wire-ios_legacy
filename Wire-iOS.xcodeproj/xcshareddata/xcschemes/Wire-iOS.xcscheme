@@ -60,9 +60,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ContactsViewControllerSnapshotTests/testForNoContacts()">
-               </Test>
-               <Test
                   Identifier = "ConversationListViewControllerTests">
                </Test>
                <Test
