@@ -19,12 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-        snapshotBackgroundColor = .black
-    }
+final class ChangeEmailViewControllerTests: XCTestCase {
 
     func testForChangingExistingEmail() {
         // GIVEN
@@ -36,7 +31,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
-        verify(view: viewController.view)
+        verify(matching: viewController)
     }
 
     func testForAddingEmail() {
@@ -49,7 +44,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
-        verify(view: viewController.view)
+        verify(matching: viewController)
     }
 
 }

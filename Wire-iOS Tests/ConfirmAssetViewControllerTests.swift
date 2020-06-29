@@ -26,6 +26,7 @@ final class ConfirmAssetViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        ColorScheme.default.variant = .light
     }
 
     override func tearDown() {
@@ -33,7 +34,7 @@ final class ConfirmAssetViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatItRendersTheAssetViewControllerWithLandscapeImage() { //TODO: dark?
+    func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
         sut = ConfirmAssetViewController(context: ConfirmAssetViewController.Context(asset: .image(mediaAsset: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))))
 
         accentColor = .strongLimeGreen
