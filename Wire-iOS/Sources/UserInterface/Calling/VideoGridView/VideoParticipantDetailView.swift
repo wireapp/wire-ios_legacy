@@ -29,7 +29,7 @@ final class VideoParticipantDetailsView: UIView {
     )
     
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    private let microphoneIconView = MicrophoneIconImageView()
+    private let microphoneIconView = IconImageView()
     
     var name: String? {
         didSet {

@@ -27,6 +27,7 @@ struct Stream: Equatable {
     let userId: UUID
     let clientId: String
     let participantName: String?
+    let microphoneState: MicrophoneState?
     
     static func == (lhs: Stream, rhs: Stream) -> Bool {
         return lhs.userId == rhs.userId
@@ -72,7 +73,7 @@ extension ZMEditableUser {
             fatal("Could not create self user stream which should always exist")
         }
         
-        return Stream(userId: userId, clientId: clientId, participantName: name + "user_cell.title.you_suffix".localized)
+        return Stream(userId: userId, clientId: clientId, participantName: name + "user_cell.title.you_suffix".localized, microphoneState: .unmuted)
     }
     
 }

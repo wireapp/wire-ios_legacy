@@ -27,7 +27,10 @@ protocol AVSIdentifierProvider {
 extension AVSVideoView: AVSIdentifierProvider {
     
     var stream: Stream {
-        return Stream(userId: UUID(uuidString: userid)!, clientId: clientid, participantName: nil)
+        return Stream(userId: UUID(uuidString: userid)!,
+                      clientId: clientid,
+                      participantName: nil,
+                      microphoneState: .unmuted)
     }
 }
 
@@ -42,6 +45,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         super.init(frame: .zero)
         
         userDetailsView.name = stream.participantName
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
         setupViews()
         createConstraints()
         
