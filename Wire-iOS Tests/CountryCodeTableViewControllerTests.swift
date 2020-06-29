@@ -19,12 +19,13 @@
 import XCTest
 @testable import Wire
 
-final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
+final class CountryCodeTableViewControllerTests: XCTestCase {
     
     var sut: CountryCodeTableViewController!
     
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
         sut = CountryCodeTableViewController()
         sut.viewDidLoad()
     }
@@ -34,7 +35,7 @@ final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForWirestanAppearInFirstRow(){
-        verify(view: sut.view)
+    func testForWirestanAppearInFirstRow() {
+        verify(matching: sut)
     }
 }
