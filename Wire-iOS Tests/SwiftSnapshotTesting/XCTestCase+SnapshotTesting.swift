@@ -173,6 +173,7 @@ extension XCTestCase {
 
         // Prevent showing cursor
         value.setEditing(false, animated: false)
+        value.resignFirstResponder()
 
         // workaround for UIAlertController with actionSheet style crashes for invalid size
         if value.preferredStyle == .actionSheet {
