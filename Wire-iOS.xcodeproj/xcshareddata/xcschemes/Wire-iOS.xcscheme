@@ -63,9 +63,6 @@
                   Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
-                  Identifier = "CountryCodeTableViewControllerTests/testForWirestanAppearInFirstRow()">
-               </Test>
-               <Test
                   Identifier = "GroupDetailsFooterViewTests/testForPartnerRoleWithNoAddParticipantsButton()">
                </Test>
                <Test
