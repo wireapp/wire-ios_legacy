@@ -27,7 +27,6 @@ final class CountryCodeTableViewControllerTests: XCTestCase {
         super.setUp()
         accentColor = .strongBlue
         sut = CountryCodeTableViewController()
-        sut.viewDidLoad()
     }
     
     override func tearDown() {
@@ -36,6 +35,6 @@ final class CountryCodeTableViewControllerTests: XCTestCase {
     }
 
     func testForWirestanAppearInFirstRow() {
-        verify(matching: sut)
+        verify(matching: sut.wrapInNavigationController())
     }
 }
