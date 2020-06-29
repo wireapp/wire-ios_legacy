@@ -21,28 +21,30 @@ import XCTest
 
 final class ChangeEmailViewControllerTests: XCTestCase {
 
-    func testForChangingExistingEmail() {
-        // GIVEN
+    private func createSut(emailAddress: String?) -> UIViewController{
         let mockUser = MockUserType.createSelfUser(name: "User")
-        mockUser.emailAddress = "user@example.com"
+        mockUser.emailAddress = emailAddress
 
-        // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
+        
+        viewController.view.backgroundColor = .black
+        
+        return viewController
+    }
+    
+    func testForChangingExistingEmail() {
+        // GIVEN & WHEN
+        let viewController = createSut(emailAddress: "user@example.com")
 
         // THEN
         verify(matching: viewController)
     }
 
     func testForAddingEmail() {
-        // GIVEN
-        let mockUser = MockUserType.createSelfUser(name: "User")
-        mockUser.emailAddress = nil
-
-        // WHEN
-        let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
-
+        // GIVEN & WHEN
+        let viewController = createSut(emailAddress: nil)
+        
         // THEN
         verify(matching: viewController)
     }
