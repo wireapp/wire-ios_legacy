@@ -38,7 +38,7 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
     
-    func testForAlertWithError() { ///TODO: test on CI?
+    func testForAlertWithError() {
         sut = UIAlertController.companyLogin(error: .unknown) {_  in}
         verify(matching: sut)
     }
