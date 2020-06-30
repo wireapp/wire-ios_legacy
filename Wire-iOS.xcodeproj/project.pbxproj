@@ -3203,8 +3203,9 @@
 			isa = PBXGroup;
 			children = (
 				06FF86F224AA208100F517F8 /* Wire-iOS Notification Extension.entitlements */,
-				067BBBFD247E693400D73407 /* NotificationService.swift */,
 				067BBBFF247E693400D73407 /* Info.plist */,
+				06FF871724AA428F00F517F8 /* Supporting Files */,
+				067BBBFD247E693400D73407 /* NotificationService.swift */,
 			);
 			path = "Wire Notification Service Extension";
 			sourceTree = "<group>";
@@ -3217,6 +3218,13 @@
 				06FF86F124AA1C3900F517F8 /* Notification-Extension-Debug.xcconfig */,
 			);
 			path = "Notification Extension";
+			sourceTree = "<group>";
+		};
+		06FF871724AA428F00F517F8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		160D691E212C78C700096EAD /* CallQualityController */ = {
