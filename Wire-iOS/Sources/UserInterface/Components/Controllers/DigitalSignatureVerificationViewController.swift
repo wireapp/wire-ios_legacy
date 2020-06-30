@@ -21,16 +21,16 @@ import Foundation
 import WebKit
 import WireUtilities
 
+// MARK: - Error states
+public enum DigitalSignatureVerificationError: Error {
+    case postCodeRetry
+    case authenticationFailed
+    case otherError
+}
+
 class DigitalSignatureVerificationViewController: UIViewController {
 
     typealias DigitalSignatureCompletion = ((_ result: VoidResult) -> Void)
-    
-    // MARK: - Error states
-    private enum VerificationError: Error {
-        case postCodeRetry
-        case authenticationFailed
-        case internalServerError
-    }
     
     // MARK: - Private Property
     private var completion: DigitalSignatureCompletion?
@@ -111,6 +111,7 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     }
     
     func parseVerificationURL(_ url: URL) -> VoidResult? {
+        print("VerificationURL: \(url.absoluteString)")
         let urlComponents = URLComponents(string: url.absoluteString)
         let postCode = urlComponents?.queryItems?
             .first(where: { $0.name == "postCode" })
@@ -121,9 +122,9 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
         case "sas-success":
             return .success
         case "sas-error-authentication-failed":
-             return .failure(VerificationError.authenticationFailed)
+             return .failure(DigitalSignatureVerificationError.authenticationFailed)
         default:
-            return .failure(VerificationError.internalServerError)
+            return .failure(DigitalSignatureVerificationError.otherError)
         }
     }
 }
