@@ -56,7 +56,7 @@ class CallInfoConfigurationTests: XCTestCase {
     }
     
     func mockCallParticipants(count: Int, state: CallParticipantState) -> [CallParticipant] {
-        return (MockUser.mockUsers()[0..<count]).map({ CallParticipant(user: $0, state: state) })
+        return (MockUser.mockUsers()[0..<count]).map({ CallParticipant(user: $0, clientId: "123", state: state) })
     }
     
     // MARK: - OneToOne Audio
@@ -399,7 +399,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped))
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -410,6 +410,8 @@ class CallInfoConfigurationTests: XCTestCase {
     
     func testGroupAudioEstablishedNonTeamUser() {
         // given
+        ZMConversation.callCenterConfiguration = .init()
+
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
@@ -425,7 +427,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped))
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -443,7 +445,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started))
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -454,6 +456,8 @@ class CallInfoConfigurationTests: XCTestCase {
     
     func testGroupAudioEstablishedLargeGroup() {
         // given
+        ZMConversation.callCenterConfiguration = .init()
+        
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
         
@@ -468,7 +472,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .stopped))
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -581,7 +585,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = selfUser
         mockVoiceChannel.mockIsVideoCall = true
         mockVoiceChannel.videoState = .started
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started))
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front, sortTimestamps: .init())
@@ -601,7 +605,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
         mockVoiceChannel.mockInitiator = otherUser
         mockVoiceChannel.mockIsVideoCall = true
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started))
 
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -619,7 +623,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: false)
         mockVoiceChannel.mockInitiator = otherUser
         mockVoiceChannel.mockIsVideoCall = false
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started))
 
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())
@@ -638,7 +642,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockInitiator = otherUser
         mockVoiceChannel.mockIsVideoCall = true
-        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started, clientId: "123"))
+        mockVoiceChannel.mockParticipants = mockCallParticipants(count: fixture.groupSize.rawValue, state: .connected(videoState: .started))
 
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front, sortTimestamps: .init())

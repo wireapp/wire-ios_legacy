@@ -44,6 +44,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
+            ZMConversation.callCenterConfiguration = .init()
+
             let actionAddMember = Action.insertNewObject(in: uiMOC)
             actionAddMember.name = "add_conversation_member"
             
@@ -64,6 +66,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
         teamTest {
+            ZMConversation.callCenterConfiguration = .init()
+
             selfUser.membership?.setTeamRole(.partner)
             sut = GroupDetailsViewController(conversation: groupConversation)
             verify(matching: sut)
@@ -72,6 +76,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     
     func testForOptionsForTeamUserInTeamConversation() {
         // GIVEN
+        ZMConversation.callCenterConfiguration = .init()
+
         let actionAddMember = Action.insertNewObject(in: uiMOC)
         actionAddMember.name = "add_conversation_member"
         
@@ -102,6 +108,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     
     func testForOptionsForTeamUserInTeamConversation_Partner() {
         teamTest {
+            ZMConversation.callCenterConfiguration = .init()
+
             selfUser.membership?.setTeamRole(.partner)
             groupConversation.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
@@ -152,6 +160,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     
     func testForOptionsForTeamUserInTeamConversation_Admins() {
         // GIVEN
+        ZMConversation.callCenterConfiguration = .init()
+        
         let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
         let actionAddMember = Action.insertNewObject(in: uiMOC)
         actionAddMember.name = "add_conversation_member"
