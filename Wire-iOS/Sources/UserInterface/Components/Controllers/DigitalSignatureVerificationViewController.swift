@@ -111,7 +111,6 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     }
     
     func parseVerificationURL(_ url: URL) -> VoidResult? {
-        print("VerificationURL: \(url.absoluteString)")
         let urlComponents = URLComponents(string: url.absoluteString)
         let postCode = urlComponents?.queryItems?
             .first(where: { $0.name == "postCode" })
