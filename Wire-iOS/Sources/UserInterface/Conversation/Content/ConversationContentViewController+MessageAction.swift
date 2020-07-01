@@ -210,11 +210,16 @@ extension ConversationContentViewController: SignatureObserver {
             switch result {
             case .success:
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-                    self?.dataSource.selectedMessage?
-                        .fileMessageData?.retrievePDFSignature()
+                    self?.retriveSignature()
                 }
-            case .failure:
-                self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert(errorType: .retrieveFailed)
+            case let .failure(error):
+                self?.dismissDigitalSignatureVerification(completion: {
+                    if case DigitalSignatureVerificationError.otherError = error {
+                        self?.retriveSignature()
+                        return
+                    }
+                    
+                    self?.presentDigitalSignatureErrorAlert(errorType: .retrieveFailed)
                 })
             }
         }
@@ -222,6 +227,13 @@ extension ConversationContentViewController: SignatureObserver {
         present(navigationController, animated: true, completion: { [weak self] in
             self?.isDigitalSignatureVerificationShown =  true
         })
+    }
+    
+    private func retriveSignature() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            self?.dataSource.selectedMessage?
+                .fileMessageData?.retrievePDFSignature()
+        }
     }
     
     private func presentDigitalSignatureErrorAlert(errorType: SignatureStatus.ErrorYpe) {
