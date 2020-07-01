@@ -363,7 +363,9 @@ class SettingsCellDescriptorFactory {
     func helpSection() -> SettingsCellDescriptorType {
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
-            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
+            let test = try! self.createSharingSession()
+            return nil
+//            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
@@ -578,5 +580,29 @@ class SettingsCellDescriptorFactory {
                                       alertAction: .ok(style: .cancel))
 
         controller.present(alert, animated: true)
+    }
+}
+
+extension SettingsCellDescriptorFactory: UpdateEventProcessor {
+public func createSharingSession() throws -> SharingSession? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
+//        let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
+            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
+        else { return nil}
+        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
+                              accountIdentifier: accountIdentifier,
+                              environment: BackendEnvironment.shared,
+                              analytics: nil,
+                              eventProcessor: self)
+    }
+
+    private var accountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        let account = AccountManager(sharedDirectory: sharedContainerURL)
+        return account
+    }
+    
+     public func process(updateEvents: [ZMUpdateEvent], ignoreBuffer: Bool) {
     }
 }
