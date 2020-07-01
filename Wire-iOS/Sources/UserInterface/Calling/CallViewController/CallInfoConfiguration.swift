@@ -32,7 +32,7 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    func accessoryType(using timestamps: CallParticipantTimestamps) -> CallInfoViewControllerAccessoryType {
+    func accessoryType() -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
@@ -50,7 +50,7 @@ fileprivate extension VoiceChannel {
             }
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
-                return .participantsList(sortedConnectedParticipants(using: timestamps).map {
+                return .participantsList(sortedConnectedParticipants().map {
                     .callParticipant(user: $0.user, sendsVideo: $0.state.isSendingVideo)
                 })
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -154,7 +154,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        sortTimestamps: CallParticipantTimestamps,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
         ) {
         self.permissions = permissions
@@ -162,7 +161,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         self.mediaManager = mediaManager
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
-        accessoryType = voiceChannel.accessoryType(using: sortTimestamps)
+        accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
         canAccept = voiceChannel.canAccept
@@ -245,9 +244,9 @@ fileprivate extension VoiceChannel {
         return participants.filter { $0.state.isConnected }
     }
 
-    func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [CallParticipant] {
+    func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            timestamps[lhs] > timestamps[rhs]
+            lhs.user.name < rhs.user.name
         }
     }
 
