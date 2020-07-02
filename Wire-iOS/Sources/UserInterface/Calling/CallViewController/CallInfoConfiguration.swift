@@ -52,8 +52,8 @@ fileprivate extension VoiceChannel {
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
                     .callParticipant(user: $0.user,
-                                     videoIconStyle: VideoIconStyle(state: $0.state.videoState),
-                                     microphoneIconStyle: MicrophoneIconStyle(state: $0.state.microphoneState))
+                                     videoState: $0.state.videoState,
+                                     microphoneState: $0.state.microphoneState)
                 })
                
             } else if let remoteParticipant = conversation?.connectedUser {
