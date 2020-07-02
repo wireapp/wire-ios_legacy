@@ -40,12 +40,8 @@ class IconImageView: UIImageView {
         }
         
         isHidden = false
+        let color = style.tintColor ?? self.color
         self.setIcon(icon, size: size, color: color)
-      
-        guard let color = style.tintColor else {
-            return
-        }
-        tintColor = color
     }
     
     func set(iconSize size: StyleKitIcon.Size, color: UIColor) {
