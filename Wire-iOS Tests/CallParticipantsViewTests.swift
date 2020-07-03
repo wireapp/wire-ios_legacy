@@ -33,16 +33,18 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
+
     static func participants(count participantCount: Int,
-                             videoState: VideoState? = nil,
-                             microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
-        var rows: [CallParticipantsCellConfiguration] = []
-        
-        for index in 0..<participantCount {
-            rows.append(.callParticipant(user: MockUser.mockUsers()[index], videoState: videoState, microphoneState: microphoneState))
+                                 videoState: VideoState? = nil,
+                                 microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
+        return (0..<participantCount)
+            .lazy
+            .map { MockUser.mockUsers()[$0] }
+            .sorted { $0.name < $1.name }
+            .map { CallParticipantsCellConfiguration.callParticipant(user: $0,
+                                                                     videoState: videoState,
+                                                                     microphoneState: microphoneState)
         }
-        
-        return rows
     }
     
     func testCallParticipants_Overflowing_Light() {
