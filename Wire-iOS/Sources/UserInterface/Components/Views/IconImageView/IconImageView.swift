@@ -33,18 +33,46 @@ extension IconImageStyle {
 class IconImageView: UIImageView {
     private(set) var size: StyleKitIcon.Size = .tiny
     private(set) var color: UIColor = UIColor.from(scheme: .iconGuest)
+    private(set) var style: IconImageStyle?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        image = UIImage()
+    }
     
-    func set(style: IconImageStyle) {
-        guard let icon = style.icon else {
-            isHidden = true; return
+    convenience init() {
+        self.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func set(style: IconImageStyle? = nil,
+             size: StyleKitIcon.Size? = nil,
+             color: UIColor? = nil) {
+        // save size and color if needed
+        set(size: size, color: color)
+        
+        guard
+            let style = style ?? self.style,
+            let icon = style.icon
+        else {
+            isHidden = true
+            return
         }
         
         isHidden = false
         let color = style.tintColor ?? self.color
-        self.setIcon(icon, size: size, color: color)
+        self.setIcon(icon, size: self.size, color: color)
+        self.style = style
     }
     
-    func set(iconSize size: StyleKitIcon.Size, color: UIColor) {
+    private func set(size: StyleKitIcon.Size?, color: UIColor?) {
+        guard let size = size, let color = color else {
+            return
+        }
+        
         self.size = size
         self.color = color
     }

@@ -186,10 +186,10 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
 
-        userTypeIconView.set(iconSize: .tiny, color: iconColor)
-        microphoneIconView.set(iconSize: .tiny, color: iconColor)
-        videoIconView.set(iconSize: .tiny, color: iconColor)
-        
+        userTypeIconView.set(size: .tiny, color: iconColor)
+        microphoneIconView.set(size: .tiny, color: iconColor)
+        videoIconView.set(size: .tiny, color: iconColor)
+
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
