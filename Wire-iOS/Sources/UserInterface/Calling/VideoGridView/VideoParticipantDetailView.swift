@@ -47,7 +47,6 @@ final class VideoParticipantDetailsView: UIView {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        nameLabel.text = "Eric Logstone (You)"
     }
     
     @available(*, unavailable)

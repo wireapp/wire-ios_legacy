@@ -35,7 +35,12 @@ extension AVSVideoView: AVSIdentifierProvider {
 }
 
 class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
-    var stream: Stream
+    var stream: Stream {
+        didSet {
+            userDetailsView.name = stream.participantName
+            userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        }
+    }
     
     let userDetailsView = VideoParticipantDetailsView()
     
@@ -43,9 +48,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         self.stream = stream
         
         super.init(frame: .zero)
-        
-        userDetailsView.name = stream.participantName
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+
         setupViews()
         createConstraints()
         

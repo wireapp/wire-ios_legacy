@@ -23,15 +23,19 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
+struct StreamIdentifier: Equatable {
+    let userId: UUID
+    let clientId: String
+}
+
 struct Stream: Equatable {
     let userId: UUID
     let clientId: String
     let participantName: String?
     let microphoneState: MicrophoneState?
     
-    static func == (lhs: Stream, rhs: Stream) -> Bool {
-        return lhs.userId == rhs.userId
-            && lhs.clientId == rhs.clientId
+    var streamId: StreamIdentifier {
+        return StreamIdentifier(userId: userId, clientId: clientId)
     }
 }
 
@@ -76,6 +80,17 @@ extension ZMEditableUser {
         return Stream(userId: userId, clientId: clientId, participantName: name + "user_cell.title.you_suffix".localized, microphoneState: .unmuted)
     }
     
+    var selfStreamId: StreamIdentifier {
+        
+        guard let selfUser = ZMUser.selfUser(),
+              let userId = selfUser.remoteIdentifier,
+              let clientId = selfUser.selfClient()?.remoteIdentifier
+        else {
+            fatal("Could not create self user stream which should always exist")
+        }
+        
+        return StreamIdentifier(userId: userId, clientId: clientId)
+    }
 }
 
 extension CGSize {
@@ -194,39 +209,45 @@ final class VideoGridViewController: UIViewController {
     func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
-        let selfStream = ZMUser.selfUser().selfStream
-        let selfInGrid = configuration.videoStreams.contains { $0.stream == selfStream }
-        let selfInFloatingOverlay = nil != configuration.floatingVideoStream
-        let isShowingSelf = selfInGrid || selfInFloatingOverlay
-
-        // Create self preview if there is none but we should show it
-        if isShowingSelf && nil == selfPreviewView {
-            selfPreviewView = SelfVideoPreviewView(stream: selfStream)
-            selfPreviewView?.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        // It's important to remove remove the existing preview view before moving it to the grid/floating location
-        if selfInGrid {
-            updateFloatingVideo(with: configuration.floatingVideoStream)
-            updateVideoGrid(with: configuration.videoStreams)
-        } else {
-            updateVideoGrid(with: configuration.videoStreams)
-            updateFloatingVideo(with: configuration.floatingVideoStream)
-        }
-
-        // Clear self preview we we shouldn't show it anymore
-        if !isShowingSelf, let _ = selfPreviewView {
-            selfPreviewView = nil
-        }
-
+        updateSelfPreview()
+        
+        updateFloatingVideo(with: configuration.floatingVideoStream)
+        
+        updateVideoGrid(with: configuration.videoStreams)
+        
         displayIndicatorViewsIfNeeded()
         
-        // Update grid view axis
         updateGridViewAxis()
-
+        
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
-
+    
+    private func updateSelfPreview() {
+        guard
+            let selfStreamId = ZMUser.selfUser()?.selfStreamId,
+            let selfStream = stream(with: selfStreamId) else {
+            return
+        }
+        
+        if selfPreviewView == nil {
+            selfPreviewView = SelfVideoPreviewView(stream: selfStream)
+        }
+        
+        if selfPreviewView?.stream != selfStream {
+            selfPreviewView?.stream = selfStream
+        }
+    }
+    
+    private func stream(with streamId: StreamIdentifier) -> Stream? {
+        var stream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })?.stream
+        
+        if stream == nil && configuration.floatingVideoStream?.stream.streamId == streamId {
+            stream = configuration.floatingVideoStream?.stream
+        }
+        
+        return stream
+    }
+    
     private func updateFloatingVideo(with state: VideoStream?) {
         // No stream, remove floating video if there is any
         guard let state = state else {
@@ -292,7 +313,9 @@ final class VideoGridViewController: UIViewController {
 
     private func updatePausedStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            (streamView(for: $0.stream) as? VideoPreviewView)?.isPaused = $0.isPaused
+            let view = (streamView(for: $0.stream) as? VideoPreviewView)
+            view?.isPaused = $0.isPaused
+            view?.stream = $0.stream
         }
     }
 
@@ -300,7 +323,7 @@ final class VideoGridViewController: UIViewController {
         Log.calling.debug("Adding video stream: \(stream)")
 
         let view: UIView = {
-            if stream == ZMUser.selfUser()?.selfStream, let previewView = selfPreviewView {
+            if stream.streamId == ZMUser.selfUser()?.selfStream.streamId, let previewView = selfPreviewView {
                 return previewView
             } else {
                 return VideoPreviewView(stream: stream)
@@ -323,7 +346,7 @@ final class VideoGridViewController: UIViewController {
 
     private func streamView(for stream: Stream) -> UIView? {
         return gridView.videoStreamViews.first {
-            ($0 as? AVSIdentifierProvider)?.stream == stream
+            ($0 as? AVSIdentifierProvider)?.stream.streamId == stream.streamId
         }
     }
 
