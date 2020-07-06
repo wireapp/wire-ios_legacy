@@ -71,10 +71,7 @@ extension MessagePresenter {
         imagesController.messageActionDelegate = actionResponder
         imagesController.swipeToDismiss = true
         imagesController.dismissAction = { [weak self] completion in
-            guard let `self` = self else {
-                return
-            }
-            self.modalTargetController?.dismiss(animated: true, completion: completion)
+            self?.modalTargetController?.dismiss(animated: true, completion: completion)
         }
 
         return isPreviewing ? imagesController : imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)

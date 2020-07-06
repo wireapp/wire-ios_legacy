@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Samtale:";
 "share_extension.send_button.title" = "Send";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Ingen internetforbindelse";
 "share_extension.not_signed_in.title" = "Du skal logge på Wire, før du kan dele noget";
 "share_extension.not_signed_in.close_button" = "Luk";
+
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+
+"content.file.too_big" = "Du kan sende filer op til %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Åben Wire";
 "share_extension.logged_out.title" = "You've been logged out from this account.";
 "share_extension.logged_out.message" = "Please choose another account.";

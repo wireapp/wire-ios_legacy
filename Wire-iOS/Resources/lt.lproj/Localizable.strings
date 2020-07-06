@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Asmeninė informacija";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire kiekvienam įrenginiui suteikia unikalų kontrolinį kodą. Palyginkite juos ir patvirtinkite savo įrenginius ir pokalbius.";
 "self.settings.device_details.reset_session.subtitle" = "Jeigu kontroliniai kodai nesutampa, atstatykite seansą, kad abiejose pusėse būtų sugeneruoti nauji šifravimo raktai.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Siuntimo mygtukas";
 "self.settings.popular_demand.send_button.footer" = "Išjungti siuntimą „Enter“ klavišu.";
 "self.settings.popular_demand.dark_mode.footer" = "Perjungti tarp tamsios ir šviesios temų.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Atverti naudojant";

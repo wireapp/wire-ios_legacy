@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Особисті дані";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Тема";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire присвоює кожному пристроєві унікальний ідентифікатор. Порівняйте їх, щоб зверифікувати ваші пристрої та розмови.";
 "self.settings.device_details.reset_session.subtitle" = "Якщо ідентифікатори не збігаються, виконайте скидання сесії, щоб згенерувати нові ключі шифрування з обидвох сторін.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Кнопка \"Надіслати\"";
 "self.settings.popular_demand.send_button.footer" = "Вимкнути надсилання через клавішу \"Ввід\".";
 "self.settings.popular_demand.dark_mode.footer" = "Переключитися між темною та світлою темами.";
+
+// dark theme
+"dark_theme.option.dark" = "Темна";
+"dark_theme.option.light" = "Світла";
+"dark_theme.option.system" = "Синхронізувати з системними налаштуваннями";
 
 // Open in
 "self.settings.external_apps.header" = "Відкрити за допомогою";

@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
 
 enum MessageAction: CaseIterable {
     case
@@ -122,6 +123,55 @@ enum MessageAction: CaseIterable {
             return nil
         }
     }
+    
+    @available(iOS 13.0, *)
+    func systemIcon() -> UIImage? {
+        return imageSystemName().flatMap(UIImage.init(systemName:))
+    }
+    
+    @available(iOS 13.0, *)
+    private func imageSystemName() -> String? {
+        let imageName: String?
+        switch self {
+        case .copy:
+            imageName = "doc.on.doc"
+        case .reply:
+            imageName = "arrow.uturn.left"
+        case .openDetails:
+            imageName = "info.circle"
+        case .edit:
+            imageName = "pencil"
+        case .delete:
+            imageName = "trash"
+        case .save:
+            imageName = "arrow.down.to.line"
+        case .cancel:
+            imageName = "xmark"
+        case .download:
+            imageName = "chevron.down"
+        case .forward:
+            imageName = "square.and.arrow.up"
+        case .like:
+            imageName = "suit.heart"
+        case .unlike:
+            imageName = "suit.heart.fill"
+        case .resend:
+            imageName = "arrow.clockwise"
+        case .showInConversation:
+            imageName = "eye.fill"
+        case .sketchDraw:
+            imageName = "scribble"
+        case .sketchEmoji:
+            imageName = "smiley.fill"
+        case .present,
+             .openQuote:
+            // no icon for present and openQuote
+            imageName = nil
+        }
+        
+        return imageName
+    }
+
 
     var selector: Selector? {
         switch self {

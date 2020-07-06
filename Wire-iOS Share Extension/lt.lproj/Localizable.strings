@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "GERAI";
+"general.ok" = "GERAI";
+
 "share_extension.conversation_selection.account" = "Paskyra:";
 "share_extension.conversation_selection.title" = "Pokalbis:";
 "share_extension.send_button.title" = "Siųsti";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Nėra interneto ryšio";
 "share_extension.not_signed_in.title" = "Prieš galėdami ką nors bendrinti, turite prisijungti prie Wire";
 "share_extension.not_signed_in.close_button" = "Užverti";
+
 "share_extension.timeout.title" = "Susijungimui skirtas laikas pasibaigė.";
 "share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
+
+"content.file.too_big" = "Siunčiamų failų dydis negali viršyti %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Atrakinti „Wire“";
 "share_extension.logged_out.title" = "Buvote atjungti nuo šios paskyros.";
 "share_extension.logged_out.message" = "Pasirinkite kitą paskyrą.";

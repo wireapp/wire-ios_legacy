@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Konto:";
 "share_extension.conversation_selection.title" = "Vestlus:";
 "share_extension.send_button.title" = "Saada";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Ühendus puudub";
 "share_extension.not_signed_in.title" = "Enne jagamist logi Wire’sse sisse";
 "share_extension.not_signed_in.close_button" = "Sulge";
+
 "share_extension.timeout.title" = "Ühendus aegus.";
 "share_extension.timeout.message" = "Kontrollige internetiühendust ja proovige uuesti. Saadetu on vestlusesse salvestatud.";
+
+"content.file.too_big" = "Saad saata faile suurusega %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Tee lukust lahti";
 "share_extension.logged_out.title" = "Sind on sellelt kontolt välja logitud.";
 "share_extension.logged_out.message" = "Palun vali teine konto.";

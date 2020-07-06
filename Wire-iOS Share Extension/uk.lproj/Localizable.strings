@@ -20,7 +20,8 @@
 
 
 
-"share_extension.general.ok" = "OK";
+"general.ok" = "OK";
+
 "share_extension.conversation_selection.account" = "Акаунт:";
 "share_extension.conversation_selection.title" = "Розмова:";
 "share_extension.send_button.title" = "Надіслати";
@@ -31,8 +32,14 @@
 "share_extension.no_internet_connection.title" = "Відстунє з'єднання з Інтернетом";
 "share_extension.not_signed_in.title" = "Ви повинні увійти в Wire, щоб поділитися чим-небудь";
 "share_extension.not_signed_in.close_button" = "Закрити";
+
 "share_extension.timeout.title" = "Перевищено термін очікування з’єднання.";
 "share_extension.timeout.message" = "Перевірте підключення до Інтернету і повторіть спробу. Вкладення були збережені в розмові.";
+
+"content.file.too_big" = "Ви можете надсилати файли до %@";
+"content.file.unsupported_attachment" = "Непідтримуване вкладення";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
 "share_extension.privacy_security.lock_app.description" = "Розблокувати Wire";
 "share_extension.logged_out.title" = "Ви вийшли з цього акаунту.";
 "share_extension.logged_out.message" = "Будь ласка, оберіть інший акаунт.";

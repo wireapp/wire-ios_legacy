@@ -19,25 +19,26 @@
 import UIKit
 
 final class RequestPasswordController {
-    
+
     typealias Callback = (_ password: String?) -> ()
-    
+
     enum RequestPasswordContext {
         case removeDevice
         case logout
         case unlock(message: String)
     }
-    
+
     var alertController: UIAlertController
-    
+
     private let callback: Callback
     private weak var okAction: UIAlertAction?
     weak var passwordTextField: UITextField?
 
-    init(context: RequestPasswordContext, callback: @escaping Callback) {
+    init(context: RequestPasswordContext,
+         callback: @escaping Callback) {
 
         self.callback = callback
-        
+
         let okTitle: String = "general.ok".localized
         let cancelTitle: String = "general.cancel".localized
         let title: String
@@ -71,19 +72,19 @@ final class RequestPasswordController {
                 textField.textContentType = .password
             }
             textField.addTarget(self, action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)), for: .editingChanged)
-            
+
             self.passwordTextField = textField
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: okActionStyle) { [weak self] action in
+        let okAction = UIAlertAction(title: okTitle, style: okActionStyle) { [weak self] _ in
             if let passwordField = self?.alertController.textFields?[0] {
                 self?.callback(passwordField.text)
             }
         }
 
         okAction.isEnabled = false
-        
-        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [weak self] action in
+
+        let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [weak self] _ in
             self?.callback(nil)
         }
 
