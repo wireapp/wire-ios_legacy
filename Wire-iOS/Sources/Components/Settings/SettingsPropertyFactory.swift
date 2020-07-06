@@ -372,6 +372,18 @@ final class SettingsPropertyFactory {
                         }
             })
             
+        case .encryptMessagesAtRest:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let value = ZMUserSession.shared()?.encryptMessagesAtRest ?? false
+                    return SettingsPropertyValue(value)
+            },
+                setAction: { (_, value) in
+                    guard case .number(let enabled) = value else { return }
+                    ZMUserSession.shared()?.encryptMessagesAtRest = enabled.boolValue
+            })
+            
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)
