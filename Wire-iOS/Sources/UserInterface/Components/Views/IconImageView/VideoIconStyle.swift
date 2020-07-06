@@ -30,7 +30,7 @@ enum VideoIconStyle: IconImageStyle {
         case .hidden:
             return .none
         case .screenshare:
-            return .videoCall
+            return .screenshare
         case .video:
             return .videoCall
         }

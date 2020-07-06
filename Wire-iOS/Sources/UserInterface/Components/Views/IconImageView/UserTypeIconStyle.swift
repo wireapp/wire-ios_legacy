@@ -38,7 +38,7 @@ enum UserTypeIconStyle: IconImageStyle {
 }
 
 extension UserTypeIconStyle {
-    init(conversation: ZMConversation?, user: UserType, hideGuestIcon: Bool) {
+    init(conversation: ZMConversation?, user: UserType) {
         if user.isExternalPartner {
             self = .external
         } else if let conversation = conversation {
@@ -47,7 +47,6 @@ extension UserTypeIconStyle {
             self = !ZMUser.selfUser().isTeamMember
                 || user.isTeamMember
                 || user.isServiceUser
-                || hideGuestIcon
                 ? .member
                 : .guest
         }

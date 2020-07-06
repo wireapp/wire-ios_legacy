@@ -186,10 +186,10 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
 
-        userTypeIconView.set(iconSize: .tiny, color: iconColor)
-        microphoneIconView.set(iconSize: .tiny, color: iconColor)
-        videoIconView.set(iconSize: .tiny, color: iconColor)
-        
+        userTypeIconView.set(size: .tiny, color: iconColor)
+        microphoneIconView.set(size: .tiny, color: iconColor)
+        videoIconView.set(size: .tiny, color: iconColor)
+
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
@@ -214,8 +214,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     
     func configure(with user: UserType,
                    subtitle overrideSubtitle: NSAttributedString? = nil,
-                   conversation: ZMConversation? = nil,
-                   hideGuestIcon: Bool = false) {
+                   conversation: ZMConversation? = nil) {
         
         let subtitle: NSAttributedString?
         if overrideSubtitle == nil {
@@ -229,7 +228,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatar.user = user
         updateTitleLabel()
 
-        let style = UserTypeIconStyle(conversation: conversation, user: user, hideGuestIcon: hideGuestIcon)
+        let style = UserTypeIconStyle(conversation: conversation, user: user)
         userTypeIconView.set(style: style)
 
         verifiedIconView.isHidden = !user.isVerified
