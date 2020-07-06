@@ -354,8 +354,8 @@ final class ConversationSystemMessageCellDescription {
             
             /// only display invite user cell for team members
             if SelfUser.current.isTeamMember,
-               selfCanAddUsers(conversation: conversation),
-               isOpenGroup(conversation: conversation) {
+               conversation.selfCanAddUsers,
+               conversation.isOpenGroup {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
             }
             
@@ -368,15 +368,16 @@ final class ConversationSystemMessageCellDescription {
 
         return []
     }
-    
-    private static func isOpenGroup(conversation: ZMConversation) -> Bool {
-        return conversation.conversationType == .group && conversation.allowGuests
+}
+
+private extension ZMConversation {
+    var isOpenGroup: Bool {
+        return conversationType == .group && allowGuests
     }
 
-    private static func selfCanAddUsers(conversation: ZMConversation) -> Bool {
-        return ZMUser.selfUser()?.canAddUser(to: conversation) ?? false
+    var selfCanAddUsers: Bool {
+        return SelfUser.current.canAddUser(to: self)
     }
-
 }
 
 // MARK: - Descriptions
