@@ -352,10 +352,10 @@ final class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
             
-            let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
-            let selfCanAddUsers = ZMUser.selfUser()?.canAddUser(to: conversation) ?? false
-            
-            if selfCanAddUsers && isOpenGroup {
+            /// only display invite user cell for team members
+            if SelfUser.current.isTeamMember,
+               selfCanAddUsers(conversation: conversation),
+               isOpenGroup(conversation: conversation) {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
             }
             
@@ -367,6 +367,14 @@ final class ConversationSystemMessageCellDescription {
         }
 
         return []
+    }
+    
+    private static func isOpenGroup(conversation: ZMConversation) -> Bool {
+        return conversation.conversationType == .group && conversation.allowGuests
+    }
+
+    private static func selfCanAddUsers(conversation: ZMConversation) -> Bool {
+        return ZMUser.selfUser()?.canAddUser(to: conversation) ?? false
     }
 
 }
