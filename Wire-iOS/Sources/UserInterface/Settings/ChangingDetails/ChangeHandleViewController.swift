@@ -158,11 +158,11 @@ struct HandleChangeState {
     }
 
     private static var allowedCharacters: CharacterSet = {
-        return CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz_").union(.decimalDigits)
+        return CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz_-.").union(.decimalDigits)
     }()
 
     private static var allowedLength: CountableClosedRange<Int> {
-        return 2...21
+        return 2...256
     }
 
     /// Validates the passed in handle and updates the state if
