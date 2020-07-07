@@ -72,7 +72,9 @@ final class VideoParticipantDetailsView: UIView {
             nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: microphoneIconView.trailingAnchor, constant: 4),
             microphoneIconView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            microphoneIconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
+            microphoneIconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            microphoneIconView.widthAnchor.constraint(equalToConstant: 16),
+            microphoneIconView.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
 }
