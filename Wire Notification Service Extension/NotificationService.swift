@@ -27,12 +27,13 @@ public class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
+    var sharingSession: NotificationSession?
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        let test = try! self.createSharingSession()
+        sharingSession = try! self.createSharingSession()
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
+
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
             bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
@@ -48,16 +49,14 @@ public class NotificationService: UNNotificationServiceExtension {
         }
     }
 
-    public func createSharingSession() throws -> SharingSession? {
+    public func createSharingSession() throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-//        let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
             let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
         else { return nil}
-        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
+        return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                               accountIdentifier: accountIdentifier,
                               environment: BackendEnvironment.shared,
-                              analytics: nil,
-                              eventProcessor: self)
+                              analytics: nil)
     }
 
     private var accountManager: AccountManager? {
@@ -66,49 +65,50 @@ public class NotificationService: UNNotificationServiceExtension {
         let account = AccountManager(sharedDirectory: sharedContainerURL)
         return account
     }
+    
 }
 
-extension NotificationService: UpdateEventProcessor {
-    public func process(updateEvents: [ZMUpdateEvent], ignoreBuffer: Bool) {
-//        if ignoreBuffer || isReadyToProcessEvents {
-//            consume(updateEvents: updateEvents)
-//        } else {
-//            Logging.eventProcessing.info("Buffering \(updateEvents.count) event(s)")
-//            updateEvents.forEach(eventsBuffer.addUpdateEvent)
-//        }
-    }
-    
-//    public func consume(updateEvents: [ZMUpdateEvent]) {
-//        eventDecoder.processEvents(updateEvents) { [weak self] (decryptedUpdateEvents) in
-//            guard let `self` = self else { return }
-//
-//            let date = Date()
-//            let fetchRequest = prefetchRequest(updateEvents: decryptedUpdateEvents)
-//            let prefetchResult = syncMOC.executeFetchRequestBatchOrAssert(fetchRequest)
-//
-//            Logging.eventProcessing.info("Consuming: [\n\(decryptedUpdateEvents.map({ "\tevent: \(ZMUpdateEvent.eventTypeString(for: $0.type) ?? "Unknown")" }).joined(separator: "\n"))\n]")
-//
-//            for event in decryptedUpdateEvents {
-//                for eventConsumer in self.eventConsumers {
-//                    eventConsumer.processEvents([event], liveEvents: true, prefetchResult: prefetchResult)
-//                }
-//                self.eventProcessingTracker?.registerEventProcessed()
-//            }
-//            localNotificationDispatcher?.processEvents(decryptedUpdateEvents, liveEvents: true, prefetchResult: nil)
-//
-//            if let messages = fetchRequest.noncesToFetch as? Set<UUID>,
-//                let conversations = fetchRequest.remoteIdentifiersToFetch as? Set<UUID> {
-//                let confirmationMessages = ZMConversation.confirmDeliveredMessages(messages, in: conversations, with: syncMOC)
-//                for message in confirmationMessages {
-//                    self.applicationStatusDirectory?.deliveryConfirmation.needsToConfirmMessage(message.nonce!)
-//                }
-//            }
-//
-//            syncMOC.saveOrRollback()
-//
-//            Logging.eventProcessing.debug("Events processed in \(-date.timeIntervalSinceNow): \(self.eventProcessingTracker?.debugDescription ?? "")")
-//
-//        }
-//
+//extension NotificationService: UpdateEventProcessor {
+//    public func process(updateEvents: [ZMUpdateEvent], ignoreBuffer: Bool) {
+////        if ignoreBuffer || isReadyToProcessEvents {
+////            consume(updateEvents: updateEvents)
+////        } else {
+////            Logging.eventProcessing.info("Buffering \(updateEvents.count) event(s)")
+////            updateEvents.forEach(eventsBuffer.addUpdateEvent)
+////        }
 //    }
-}
+//
+//    public func consume(updateEvents: [ZMUpdateEvent]) {
+////        eventDecoder.processEvents(updateEvents) { [weak self] (decryptedUpdateEvents) in
+////            guard let `self` = self else { return }
+////
+////            let date = Date()
+////            let fetchRequest = prefetchRequest(updateEvents: decryptedUpdateEvents)
+////            let prefetchResult = syncMOC.executeFetchRequestBatchOrAssert(fetchRequest)
+////
+////            Logging.eventProcessing.info("Consuming: [\n\(decryptedUpdateEvents.map({ "\tevent: \(ZMUpdateEvent.eventTypeString(for: $0.type) ?? "Unknown")" }).joined(separator: "\n"))\n]")
+////
+////            for event in decryptedUpdateEvents {
+////                for eventConsumer in self.eventConsumers {
+////                    eventConsumer.processEvents([event], liveEvents: true, prefetchResult: prefetchResult)
+////                }
+////                self.eventProcessingTracker?.registerEventProcessed()
+////            }
+////            localNotificationDispatcher?.processEvents(decryptedUpdateEvents, liveEvents: true, prefetchResult: nil)
+////
+////            if let messages = fetchRequest.noncesToFetch as? Set<UUID>,
+////                let conversations = fetchRequest.remoteIdentifiersToFetch as? Set<UUID> {
+////                let confirmationMessages = ZMConversation.confirmDeliveredMessages(messages, in: conversations, with: syncMOC)
+////                for message in confirmationMessages {
+////                    self.applicationStatusDirectory?.deliveryConfirmation.needsToConfirmMessage(message.nonce!)
+////                }
+////            }
+////
+////            syncMOC.saveOrRollback()
+////
+////            Logging.eventProcessing.debug("Events processed in \(-date.timeIntervalSinceNow): \(self.eventProcessingTracker?.debugDescription ?? "")")
+////
+////        }
+////
+//    }
+//}

@@ -584,16 +584,14 @@ class SettingsCellDescriptorFactory {
 }
 
 extension SettingsCellDescriptorFactory: UpdateEventProcessor {
-public func createSharingSession() throws -> SharingSession? {
+public func createSharingSession() throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-//        let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
             let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
         else { return nil}
-        return  try SharingSession(applicationGroupIdentifier: applicationGroupIdentifier,
+        return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                               accountIdentifier: accountIdentifier,
                               environment: BackendEnvironment.shared,
-                              analytics: nil,
-                              eventProcessor: self)
+                              analytics: nil)
     }
 
     private var accountManager: AccountManager? {
