@@ -37,8 +37,7 @@ extension AVSVideoView: AVSIdentifierProvider {
 class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
-            userDetailsView.name = stream.participantName
-            userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+           updateUserDetails()
         }
     }
     
@@ -51,6 +50,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
 
         setupViews()
         createConstraints()
+        updateUserDetails()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -62,6 +62,11 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func updateUserDetails() {
+        userDetailsView.name = stream.participantName
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
     }
     
     func setupViews() {
