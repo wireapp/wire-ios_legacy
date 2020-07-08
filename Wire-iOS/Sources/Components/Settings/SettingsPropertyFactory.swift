@@ -320,7 +320,21 @@ final class SettingsPropertyFactory {
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-        
+
+        case .customAppLock:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    return SettingsPropertyValue(CustomAppLock.isActive) ///TODO:
+            },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let customAppLock):
+                        CustomAppLock.isActive = customAppLock.boolValue ///TODO:
+                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+
         case .callingConstantBitRate:
             return SettingsBlockProperty(
                 propertyName: propertyName,

@@ -16,7 +16,6 @@
 //
 
 import Foundation
-import WireSystem
 import WireSyncEngine
 import avs
 import WireCommonComponents

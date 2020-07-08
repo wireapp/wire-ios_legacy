@@ -173,6 +173,8 @@ extension SettingsCellDescriptorFactory {
 
         cellDescriptors.append(byPopularDemandDarkThemeSection)
 
+        //MARK: system lock app
+        
         let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
         lockApp.settingsProperty.enabled = !AppLock.rules.forceAppLock
         let section = SettingsSectionDescriptor(cellDescriptors: [lockApp],
@@ -180,6 +182,18 @@ extension SettingsCellDescriptorFactory {
                                                 footerGenerator: { return SettingsCellDescriptorFactory.appLockSectionSubtitle },
                                                 visibilityAction: { _ in return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) })
         cellDescriptors.append(section)
+        
+        //MARK: custom app lock
+
+        let customAppLock = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.customAppLock))
+        customAppLock.settingsProperty.enabled = !CustomAppLock.rules.forceCustomAppLock
+        let customAppLockSection = SettingsSectionDescriptor(cellDescriptors: [customAppLock],
+                                                headerGenerator: { return nil },
+                                                footerGenerator: { return "self.settings.privacy_security.app_lock.subtitle.lock_description".localized },
+                                                visibilityAction: { _ in return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) }) ///TODO visibilityAction should also consider feature flag?
+        cellDescriptors.append(customAppLockSection)
+
+        //MARK: link preview
 
         let linkPreviewDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews), inverse: true)
         let linkPreviewSection = SettingsSectionDescriptor(

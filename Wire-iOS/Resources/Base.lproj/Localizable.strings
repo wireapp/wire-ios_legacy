@@ -1146,6 +1146,9 @@
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
 
+"self.settings.privacy_security.app_lock" = "App lock";
+"self.settings.privacy_security.app_lock.subtitle.lock_description" = "TODO: App lock with custom passphrase when biometric unlock failed. ";
+
 "self.settings.privacy_security.lock_app.description" = "Unlock Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";

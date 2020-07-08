@@ -247,8 +247,12 @@ extension SettingsPropertyName {
             return "Calling protocol"
         case .enableBatchCollections:
             return "Use AssetCollectionBatched"
+            
         case .lockApp:
             return "self.settings.privacy_security.lock_app".localized
+        case .customAppLock:
+            return "self.settings.privacy_security.app_lock".localized
+            
         case .callingConstantBitRate:
             return "self.settings.vbr.title".localized
         case .disableLinkPreviews:

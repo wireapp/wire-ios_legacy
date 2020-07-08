@@ -78,6 +78,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case enableBatchCollections = "EnableBatchCollections"
 
     case lockApp = "lockApp"
+    case customAppLock = "appLock"
 
     case readReceiptsEnabled = "readReceiptsEnabled"
     
