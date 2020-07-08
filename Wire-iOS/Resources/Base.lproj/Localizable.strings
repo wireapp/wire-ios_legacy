@@ -359,6 +359,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
 "image.add_sketch" = "Add a sketch";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Edit image";
 
 // Camera access
@@ -1026,7 +1027,7 @@
 
 "self.settings.account_section.handle.change.title" = "Username";
 "self.settings.account_section.handle.change.save" = "Save";
-"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and _ only.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Already taken";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Unable to set username";

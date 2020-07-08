@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,25 +16,40 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
+import WireCommonComponents
 import WireSyncEngine
 
-extension VideoState {
-
-    var toggledState: VideoState {
-        return isSending ? .stopped : .started
-    }
+enum VideoIconStyle: IconImageStyle {
+    case video
+    case screenshare
+    case hidden
     
-    var isSending: Bool {
+    var icon: StyleKitIcon? {
         switch self {
-        case .started, .paused, .badConnection, .screenSharing: return true
-        case .stopped: return false
+        case .hidden:
+            return .none
+        case .screenshare:
+            return .screenshare
+        case .video:
+            return .videoCall
         }
     }
-    
-    var isPaused: Bool {
-        switch self {
-        case .paused: return true
-        default: return false
+}
+
+extension VideoIconStyle {
+    init(state: VideoState?) {
+        guard let state = state else {
+            self = .hidden
+            return
+        }
+        switch state {
+        case .screenSharing:
+            self = .screenshare
+        case .started, .paused, .badConnection:
+            self = .video
+        case .stopped:
+            self = .hidden
         }
     }
 }
