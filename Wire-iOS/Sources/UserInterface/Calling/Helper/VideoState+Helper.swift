@@ -37,5 +37,4 @@ extension VideoState {
         default: return false
         }
     }
-
 }

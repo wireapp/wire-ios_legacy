@@ -107,9 +107,10 @@ final class ConversationMessageActionController {
             return message.canBeResent
         case .showInConversation:
             return context == .collection
+        case .sketchDraw,
+             .sketchEmoji:
+            return message.isImage
         case .present,
-             .sketchDraw,
-             .sketchEmoji,
              .openQuote:
             return false
         }
