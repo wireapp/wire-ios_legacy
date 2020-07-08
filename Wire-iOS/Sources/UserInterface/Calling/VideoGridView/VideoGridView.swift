@@ -174,22 +174,6 @@ final class VideoGridViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func updateState() {
-        Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
-
-        updateSelfPreview()
-        
-        updateFloatingVideo(with: configuration.floatingVideoStream)
-        
-        updateVideoGrid(with: configuration.videoStreams)
-        
-        displayIndicatorViewsIfNeeded()
-        
-        updateGridViewAxis()
-        
-        Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
-    }
 }
 
 // MARK: - Setup
@@ -231,6 +215,22 @@ extension VideoGridViewController {
 
 // MARK: - Grid Update
 extension VideoGridViewController {
+    private func updateState() {
+        Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
+        
+        updateSelfPreview()
+        
+        updateFloatingVideo(with: configuration.floatingVideoStream)
+        
+        updateVideoGrid(with: configuration.videoStreams)
+        
+        displayIndicatorViewsIfNeeded()
+        
+        updateGridViewAxis()
+        
+        Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
+    }
+    
     private func updateSelfPreview() {
         guard
             let selfStreamId = ZMUser.selfUser()?.selfStreamId,
