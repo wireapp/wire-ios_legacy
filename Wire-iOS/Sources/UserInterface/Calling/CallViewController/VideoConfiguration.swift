@@ -21,13 +21,11 @@ import WireSyncEngine
 struct VideoConfiguration: VideoGridConfiguration {
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
-    let isMuted: Bool
     let networkQuality: NetworkQuality
 
-    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManagerInterface, isOverlayVisible: Bool) {
+    init(voiceChannel: VoiceChannel) {
         floatingVideoStream = voiceChannel.videoStreamArrangment.preview
         videoStreams = voiceChannel.videoStreamArrangment.grid
-        isMuted = mediaManager.isMicrophoneMuted && !isOverlayVisible
         networkQuality = voiceChannel.networkQuality
     }
 }
@@ -35,37 +33,52 @@ struct VideoConfiguration: VideoGridConfiguration {
 extension VoiceChannel {
     
     private var selfStream: VideoStream? {
+        guard
+            let selfUser = ZMUser.selfUser(),
+            let userId = selfUser.remoteIdentifier,
+            let clientId = selfUser.selfClient()?.remoteIdentifier,
+            let name = selfUser.name
+        else {
+            return nil
+        }
+        
+        let stream = Stream(userId: userId, clientId: clientId, participantName: name, microphoneState: .unmuted)
+        
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
-            return .init(stream: ZMUser.selfUser().selfStream, isPaused: false)
+            return .init(stream: stream, isPaused: false)
         case (_, .paused):
-            return .init(stream: ZMUser.selfUser().selfStream, isPaused: true)
+            return .init(stream: stream, isPaused: true)
         case (_, .stopped):
             return nil
         }
     }
     
+    private var selfStreamId: StreamIdentifier? {
+        return ZMUser.selfUser()?.selfStreamId
+    }
+    
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
-        return arrangeVideoStreams(for: selfStream, participantsStreams: participantsActiveVideoStreams)
+        return arrangeVideoStreams(participantsStreams: participantsActiveVideoStreams)
     }
     
     private var isEstablished: Bool {
         return state == .established
     }
     
-    func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
-        let streamsExcludingSelf = participantsStreams.filter { $0.stream != selfStream?.stream }
-
-        guard let selfStream = selfStream else {
-            return (nil, streamsExcludingSelf)
+    func arrangeVideoStreams(participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
+        guard let selfStream = participantsStreams.first(where: { $0.stream.streamId == selfStreamId }) else {
+            return (nil, participantsStreams)
         }
         
+        let streamsExcludingSelf = participantsStreams.filter { $0.stream.streamId != selfStreamId }
+
         if 1 == streamsExcludingSelf.count {
             return (selfStream, streamsExcludingSelf)
         } else {
-            return (nil, [selfStream] + streamsExcludingSelf)
+            return (nil, participantsStreams)
         }
     }
     

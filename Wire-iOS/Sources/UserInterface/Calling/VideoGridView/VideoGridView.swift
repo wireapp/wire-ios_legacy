@@ -47,7 +47,6 @@ struct VideoStream: Equatable {
 protocol VideoGridConfiguration {
     var floatingVideoStream: VideoStream? { get }
     var videoStreams: [VideoStream] { get }
-    var isMuted: Bool { get }
     var networkQuality: NetworkQuality { get }
 }
 
@@ -60,26 +59,12 @@ extension VideoGridConfiguration {
     func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
-            isMuted == other.isMuted &&
             networkQuality == other.networkQuality
     }
     
 }
 
 extension ZMEditableUser {
-    
-    var selfStream: Stream {
-        guard let selfUser = ZMUser.selfUser(),
-              let userId = selfUser.remoteIdentifier,
-              let clientId = selfUser.selfClient()?.remoteIdentifier,
-              let name = selfUser.name
-        else {
-            fatal("Could not create self user stream which should always exist")
-        }
-        
-        return Stream(userId: userId, clientId: clientId, participantName: name + "user_cell.title.you_suffix".localized, microphoneState: .unmuted)
-    }
-    
     var selfStreamId: StreamIdentifier {
         
         guard let selfUser = ZMUser.selfUser(),
@@ -255,7 +240,7 @@ extension VideoGridViewController {
         }
 
         // We only support the self preview in the floating overlay
-        guard state.stream == ZMUser.selfUser()?.selfStream else {
+        guard state.stream.streamId == ZMUser.selfUser()?.selfStreamId else {
             return Log.calling.error("Invalid operation: Non self preview in overlay")
         }
 
@@ -268,8 +253,12 @@ extension VideoGridViewController {
     
     private func updateVideoGrid(with videoStreams: [VideoStream]) {
         let streams = videoStreams.map { $0.stream }
-        let removed = gridVideoStreams.filter { !streams.contains($0) }
-        let added = streams.filter { !gridVideoStreams.contains($0) }
+        let streamIds = streams.map { $0.streamId }
+        
+        let currentStreamIds = gridVideoStreams.map { $0.streamId }
+        
+        let removed = gridVideoStreams.filter { !streamIds.contains($0.streamId) }
+        let added = streams.filter { !currentStreamIds.contains($0.streamId) }
 
         removed.forEach(removeStream)
         added.forEach(addStream)
@@ -289,7 +278,7 @@ extension VideoGridViewController {
         Log.calling.debug("Adding video stream: \(stream)")
 
         let view: UIView = {
-            if stream.streamId == ZMUser.selfUser()?.selfStream.streamId, let previewView = selfPreviewView {
+            if stream.streamId == ZMUser.selfUser()?.selfStreamId, let previewView = selfPreviewView {
                 return previewView
             } else {
                 return VideoPreviewView(stream: stream)
