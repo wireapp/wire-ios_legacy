@@ -61,24 +61,27 @@ extension VoiceChannel {
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
-        return arrangeVideoStreams(participantsStreams: participantsActiveVideoStreams)
+        let activeVideoStreams = participantsActiveVideoStreams
+        let activeSelfStream = activeVideoStreams.first(where: { $0.stream.streamId == selfStreamId })
+        
+        return arrangeVideoStreams(for: activeSelfStream ?? selfStream, participantsStreams: activeVideoStreams)
     }
     
     private var isEstablished: Bool {
         return state == .established
     }
     
-    func arrangeVideoStreams(participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
-        guard let selfStream = participantsStreams.first(where: { $0.stream.streamId == selfStreamId }) else {
-            return (nil, participantsStreams)
-        }
-        
+    func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
         let streamsExcludingSelf = participantsStreams.filter { $0.stream.streamId != selfStreamId }
+
+        guard let selfStream = selfStream else {
+            return (nil, streamsExcludingSelf)
+        }
 
         if 1 == streamsExcludingSelf.count {
             return (selfStream, streamsExcludingSelf)
         } else {
-            return (nil, participantsStreams)
+            return (nil, [selfStream] + streamsExcludingSelf)
         }
     }
     
