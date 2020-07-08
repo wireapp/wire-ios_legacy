@@ -109,13 +109,28 @@ extension AppLockPresenter {
         userInterface?.presentRequestPasswordController(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
-                guard let password = password, !password.isEmpty else {
-                    self.authenticationState = .cancelled
-                    self.setContents(dimmed: true, withReauth: true)
-                    return
+                
+                if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+                    guard let password = password, !password.isEmpty else {
+                        self.authenticationState = .cancelled
+                        self.setContents(dimmed: true, withReauth: true)
+                        
+                        ///TODO: wipe go to forgot password screen
+                        return
+                    }
+                    self.userInterface?.setSpinner(animating: true)
+
+                    self.appLockInteractorInput.verify(customPasscode: password)
+                } else {
+                    guard let password = password, !password.isEmpty else {
+                        self.authenticationState = .cancelled
+                        self.setContents(dimmed: true, withReauth: true)
+                        return
+                    }
+                    self.userInterface?.setSpinner(animating: true)
+
+                    self.appLockInteractorInput.verify(password: password)
                 }
-                self.userInterface?.setSpinner(animating: true)
-                self.appLockInteractorInput.verify(password: password)
             }
         }
     }

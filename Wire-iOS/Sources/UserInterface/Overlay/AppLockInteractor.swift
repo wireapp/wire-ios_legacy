@@ -25,6 +25,7 @@ protocol AppLockInteractorInput: class {
     var isAuthenticationNeeded: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
+    func verify(customPasscode: String)
     func appStateDidTransition(to newState: AppState)
 }
 
@@ -65,6 +66,16 @@ extension AppLockInteractor: AppLockInteractorInput {
         }
     }
     
+    func verify(customPasscode: String) {
+        // TODO: ALWAYS PASS NOW! check with custom pass code
+        let result: VerifyPasswordResult = .validated
+        
+        notifyPasswordVerified(with: result)
+        if case .validated = result {
+            appLock.persistBiometrics()
+        }
+    }
+
     func verify(password: String) {
         userSession?.verify(password: password) { [weak self] result in
             guard let `self` = self else { return }

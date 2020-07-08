@@ -26,6 +26,7 @@ final class RequestPasswordController {
         case removeDevice
         case logout
         case unlock(message: String)
+        case unlockWithCustomCode
     }
 
     var alertController: UIAlertController
@@ -39,8 +40,8 @@ final class RequestPasswordController {
 
         self.callback = callback
 
-        let okTitle: String = "general.ok".localized
-        let cancelTitle: String = "general.cancel".localized
+        var okTitle: String = "general.ok".localized
+        var cancelTitle: String = "general.cancel".localized
         let title: String
         let message: String
         let placeholder: String
@@ -62,6 +63,14 @@ final class RequestPasswordController {
             message = unlockMessage
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .default
+        case .unlockWithCustomCode:
+            //TODO: text copy
+            title = "Application is locked due to inactivity"
+            message = "Please enter your Application lock password to Unlock the application"
+            placeholder = "Passphrase"
+            okActionStyle = .default
+            okTitle = "unlock"
+            cancelTitle = "Forgot lock password?"
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

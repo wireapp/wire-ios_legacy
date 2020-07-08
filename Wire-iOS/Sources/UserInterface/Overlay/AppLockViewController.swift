@@ -19,6 +19,7 @@
 import Cartography
 import WireSyncEngine
 import UIKit
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -88,9 +89,18 @@ final class AppLockViewController: UIViewController {
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
-        let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
+        
+        let context: RequestPasswordController.RequestPasswordContext
+        
+        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+            context = .unlockWithCustomCode
+        } else {
+            context = .unlock(message: message.localized)
+        }
+        
+        let passwordController = RequestPasswordController(context: context, callback: callback)
         self.passwordController = passwordController
-        self.present(passwordController.alertController, animated: true, completion: nil)
+        present(passwordController.alertController, animated: true)
     }
 
     func setSpinner(animating: Bool) {
