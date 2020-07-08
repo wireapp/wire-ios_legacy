@@ -74,11 +74,7 @@ extension MessagePresenter {
             self?.modalTargetController?.dismiss(animated: true, completion: completion)
         }
 
-        if isPreviewing {
-            return imagesController
-        } else {
-            return imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
-        }
+        return isPreviewing ? imagesController : imagesController.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
     }
 
     @objc

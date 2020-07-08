@@ -38,6 +38,7 @@ final class SettingsClientViewController: UIViewController,
                                           UserClientObserver,
                                           ClientColorVariantProtocol,
                                           SpinnerCapable {
+        
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
@@ -135,7 +136,6 @@ final class SettingsClientViewController: UIViewController,
             }
         }
     }
-
     
     fileprivate func createTableView() {
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
@@ -307,8 +307,9 @@ final class SettingsClientViewController: UIViewController,
             }
 
             removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
-                                                        controller: self,
-                                                        credentials: credentials, completion: completion)
+                                                    delegate: self,
+                                                    credentials: credentials,
+                                                    completion: completion)
                 
 
             removalObserver?.startRemoval()
@@ -392,6 +393,18 @@ final class SettingsClientViewController: UIViewController,
             self.present(alert, animated: true, completion: .none)
             self.resetSessionPending = false
         }
+    }
+}
+
+//MARK: - ClientRemovalObserverDelegate
+
+extension SettingsClientViewController: ClientRemovalObserverDelegate {
+    func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {
+        isLoadingViewVisible = isVisible
+    }
+    
+    func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
+        present(viewControllerToPresent, animated: true)
     }
 }
 
