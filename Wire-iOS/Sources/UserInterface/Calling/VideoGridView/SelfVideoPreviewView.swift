@@ -38,6 +38,15 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.createConstraints()
         previewView.fitInSuperview()
     }
+    
+    override func updateUserDetails() {
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        
+        guard let name = stream.participantName else {
+            return
+        }
+        userDetailsView.name = name + "user_cell.title.you_suffix".localized
+    }
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
