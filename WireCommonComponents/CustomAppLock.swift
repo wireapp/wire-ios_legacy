@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 
 public struct CustomAppLockRules: Decodable { ///TODO: merge with AppLockRules?
-    public let forceCustomAppLock: Bool = false
+    public let forceCustomAppLock: Bool
     
     public static func fromBundle() -> CustomAppLockRules {
         if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),

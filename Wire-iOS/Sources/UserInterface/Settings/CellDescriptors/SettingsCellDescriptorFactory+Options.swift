@@ -185,13 +185,9 @@ extension SettingsCellDescriptorFactory {
         
         //MARK: custom app lock
 
-        let customAppLock = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.customAppLock))
-        customAppLock.settingsProperty.enabled = !CustomAppLock.rules.forceCustomAppLock
-        let customAppLockSection = SettingsSectionDescriptor(cellDescriptors: [customAppLock],
-                                                headerGenerator: { return nil },
-                                                footerGenerator: { return "self.settings.privacy_security.app_lock.subtitle.lock_description".localized },
-                                                visibilityAction: { _ in return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) }) ///TODO visibilityAction should also consider feature flag?
-        cellDescriptors.append(customAppLockSection)
+        if !CustomAppLock.rules.forceCustomAppLock {
+            cellDescriptors.append(customAppLockSection)
+        }
 
         //MARK: link preview
 
@@ -205,6 +201,18 @@ extension SettingsCellDescriptorFactory {
         cellDescriptors.append(linkPreviewSection)
 
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
+    }
+    
+    private var customAppLockSection: SettingsSectionDescriptor {
+        
+        let customAppLock = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.customAppLock))
+        //        customAppLock.settingsProperty.enabled = !CustomAppLock.rules.forceCustomAppLock
+        let section = SettingsSectionDescriptor(cellDescriptors: [customAppLock],
+                                                             headerGenerator: { return nil },
+                                                             footerGenerator: { return "self.settings.privacy_security.app_lock.subtitle.lock_description".localized },
+                                                             visibilityAction: { _ in return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) }) ///TODO visibilityAction should also consider feature flag?
+
+        return section
     }
 
     private static var appLockSectionSubtitle: String {
