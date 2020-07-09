@@ -88,7 +88,7 @@ platform :ios do
             configuration: "Debug",
             test_without_building: true,
             sdk:"iphonesimulator",
-            destination: "platform=iOS Simulator,name=iPhone 8,OS=#{ios_version}",
+            destination: "platform=iOS Simulator,name=iPhone SE (2nd generation),OS=#{ios_version}",
             code_coverage: true,
             derived_data_path: "DerivedData",
             buildlog_path: "test",
