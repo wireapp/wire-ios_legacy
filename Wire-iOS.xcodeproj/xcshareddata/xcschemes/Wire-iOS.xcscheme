@@ -91,6 +91,9 @@
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
+               <Test
+                  Identifier = "TeamMetadataRefresherTests/test_it_refreshes_if_timeout_expired()">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
