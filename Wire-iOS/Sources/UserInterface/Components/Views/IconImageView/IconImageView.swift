@@ -59,13 +59,20 @@ class IconImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var accessibilityIdentifier: String? {
+        get {
+            return style?.accesibilityIdentifier
+        }
+        set {
+            // no-op
+        }
+    }
+    
     func set(style: IconImageStyle? = nil,
              size: StyleKitIcon.Size? = nil,
              color: UIColor? = nil) {
         // save size and color if needed
         set(size: size, color: color)
-        
-        accessibilityIdentifier = style?.accesibilityIdentifier
 
         guard
             let style = style ?? self.style,
