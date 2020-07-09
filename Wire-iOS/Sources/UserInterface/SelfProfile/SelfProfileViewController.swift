@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * The first page of the user settings.
@@ -39,6 +40,7 @@ final class SelfProfileViewController: UIViewController {
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
 
+    private var requestPasswordController: RequestPasswordController?
     // MARK: - Configuration
 
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
@@ -185,6 +187,20 @@ final class SelfProfileViewController: UIViewController {
 // MARK: - SettingsPropertyFactoryDelegate
 
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+    func requestNewPassCode() {
+        // ask for new custom pass code
+        let requestPasswordController = RequestPasswordController(context: .newPasscode) { passcode in
+            guard let passcode = passcode else { return }
+            // save to keychain
+            let data = passcode.data(using: .utf8)!
+            ZMKeychain.setData(data, forAccount: SettingsPropertyName.customAppLock.rawValue)
+        }
+        self.requestPasswordController = requestPasswordController
+
+        //TODO: Presenting view controllers on detached view controllers is discouraged. the delegate should be the top VC
+        present(requestPasswordController.alertController, animated: true)
+    }
+    
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
         // topViewController is SettingsTableViewController

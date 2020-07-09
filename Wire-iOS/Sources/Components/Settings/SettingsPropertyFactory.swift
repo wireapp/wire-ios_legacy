@@ -54,6 +54,8 @@ enum SettingsPropertyError: Error {
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+    
+    func requestNewPassCode()
 }
 
 final class SettingsPropertyFactory {
@@ -325,12 +327,20 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    return SettingsPropertyValue(CustomAppLock.isActive) ///TODO:
+                    return SettingsPropertyValue(CustomAppLock.isActive)
             },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let customAppLock):
-                        CustomAppLock.isActive = customAppLock.boolValue ///TODO:
+                        let isCustomAppLockActive = customAppLock.boolValue
+                        CustomAppLock.isActive = isCustomAppLockActive
+                        
+                        if isCustomAppLockActive {
+                            self.delegate?.requestNewPassCode()
+                        } else {
+                            // clean pass code
+                            // TODO: show a confirm alert?
+                        }
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })

@@ -26,6 +26,7 @@ final class RequestPasswordController {
         case removeDevice
         case logout
         case unlock(message: String)
+        case newPasscode
     }
 
     var alertController: UIAlertController
@@ -33,11 +34,14 @@ final class RequestPasswordController {
     private let callback: Callback
     private weak var okAction: UIAlertAction?
     weak var passwordTextField: UITextField?
-
+    private weak var passwordConfirmTextField: UITextField?
+    private let context: RequestPasswordContext
+    
     init(context: RequestPasswordContext,
          callback: @escaping Callback) {
 
         self.callback = callback
+        self.context = context
 
         let okTitle: String = "general.ok".localized
         let cancelTitle: String = "general.cancel".localized
@@ -62,6 +66,12 @@ final class RequestPasswordController {
             message = unlockMessage
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .default
+        case .newPasscode:
+            //TODO: finalize text copy
+            title = "Set application lock code"
+            message = "You will use it when your app gets locked."
+            placeholder = "passphrase"
+            okActionStyle = .default
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -75,6 +85,24 @@ final class RequestPasswordController {
 
             self.passwordTextField = textField
         }
+        
+        // second text field for new pass code
+        switch context {
+        case .newPasscode:
+            alertController.addTextField { textField in
+                textField.placeholder = "repeat pass phrase"
+                textField.isSecureTextEntry = true
+                if #available(iOS 11.0, *) {
+                    textField.textContentType = .password
+                }
+
+                textField.addTarget(self, action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)), for: .editingChanged)
+
+                self.passwordConfirmTextField = textField
+            }
+        default:
+            break
+        }
 
         let okAction = UIAlertAction(title: okTitle, style: okActionStyle) { [weak self] _ in
             if let passwordField = self?.alertController.textFields?[0] {
@@ -83,7 +111,7 @@ final class RequestPasswordController {
         }
 
         okAction.isEnabled = false
-
+        
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [weak self] _ in
             self?.callback(nil)
         }
@@ -96,9 +124,14 @@ final class RequestPasswordController {
     }
 
     @objc
-    func passwordTextFieldChanged(_ textField: UITextField) {
+    private func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
 
-        okAction?.isEnabled = passwordField.text?.isEmpty == false
+        switch context {
+        case .newPasscode:
+            okAction?.isEnabled = passwordField.text?.isEmpty == false && alertController.textFields?.last?.text?.isEmpty == false
+        default:
+            okAction?.isEnabled = passwordField.text?.isEmpty == false
+        }
     }
 }
