@@ -35,15 +35,6 @@ enum UserTypeIconStyle: String, IconImageStyle {
             return .none
         }
     }
-    
-    var accesibilityIdentifier: String? {
-        switch self {
-        case .guest, .external:
-            return "img.\(rawValue)"
-        case .member:
-            return nil
-        }
-    }
 }
 
 extension UserTypeIconStyle {

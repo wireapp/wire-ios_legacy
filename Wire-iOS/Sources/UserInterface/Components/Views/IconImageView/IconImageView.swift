@@ -23,9 +23,19 @@ protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
     var tintColor: UIColor? { get }
     var accesibilityIdentifier: String? { get }
+    var accessibilityPrefix: String { get }
+    var rawValue: String { get }
 }
 
 extension IconImageStyle {
+    var accessibilityPrefix: String {
+        return "img"
+    }
+    
+    var accesibilityIdentifier: String? {
+        return "\(accessibilityPrefix).\(rawValue)"
+    }
+    
     var tintColor: UIColor? {
         return nil
     }

@@ -35,15 +35,6 @@ enum VideoIconStyle: String, IconImageStyle {
             return .videoCall
         }
     }
-    
-    var accesibilityIdentifier: String? {
-        switch self {
-        case .hidden:
-            return nil
-        case .video, .screenshare:
-            return "img.\(rawValue)"
-        }
-    }
 }
 
 extension VideoIconStyle {

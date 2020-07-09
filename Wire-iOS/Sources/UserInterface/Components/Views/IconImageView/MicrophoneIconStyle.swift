@@ -46,13 +46,8 @@ enum MicrophoneIconStyle: String, IconImageStyle {
         }
     }
     
-    var accesibilityIdentifier: String? {
-        switch self {
-        case .hidden:
-            return nil
-        case .muted, .unmuted, .active:
-            return "img.microphone.\(rawValue)"
-        }
+    var accessibilityPrefix: String {
+        return "img.microphone"
     }
 }
 
