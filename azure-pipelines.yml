@@ -34,6 +34,7 @@ steps:
   displayName: "Store build log"
 
 - script: |
+    fastlane run reset_simulator_contents
     fastlane test
   displayName: "Test"
 
