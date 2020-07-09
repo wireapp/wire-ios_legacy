@@ -206,7 +206,6 @@ extension SettingsCellDescriptorFactory {
     private var customAppLockSection: SettingsSectionDescriptor {
         
         let customAppLock = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.customAppLock))
-        //        customAppLock.settingsProperty.enabled = !CustomAppLock.rules.forceCustomAppLock
         let section = SettingsSectionDescriptor(cellDescriptors: [customAppLock],
                                                              headerGenerator: { return nil },
                                                              footerGenerator: { return "self.settings.privacy_security.app_lock.subtitle.lock_description".localized },
