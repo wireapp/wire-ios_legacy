@@ -55,6 +55,8 @@ class IconImageView: UIImageView {
         // save size and color if needed
         set(size: size, color: color)
         
+        accessibilityIdentifier = style?.accesibilityIdentifier
+
         guard
             let style = style ?? self.style,
             let icon = style.icon
@@ -66,7 +68,6 @@ class IconImageView: UIImageView {
         isHidden = false
         let color = style.tintColor ?? self.color
         self.setIcon(icon, size: self.size, color: color)
-        self.setUpIconImageView(accessibilityIdentifier: style.accesibilityIdentifier)
         self.style = style
     }
     
