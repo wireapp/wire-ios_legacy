@@ -54,6 +54,8 @@ public class CustomAppLock { ///TODO: merge with AppLock?
             guard !rules.forceCustomAppLock else { return }
             let data = (newValue ? "YES" : "NO").data(using: .utf8)!
             ZMKeychain.setData(data, forAccount: SettingsPropertyName.customAppLock.rawValue)
+            
+            ///TODO: notification?
         }
     }
 }
