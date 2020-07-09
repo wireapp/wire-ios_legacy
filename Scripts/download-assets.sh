@@ -33,7 +33,7 @@ OVERRIDES_DIR=
 usage()
 {
     echo "usage: download_assets.sh [[-c | --configuration_repo repo_url] | [-o | --override_with path] | [-b | --branch <repo branch>] | [-h | --help]]"
-    echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b master -o Configuration"
+    echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b feature/customAppLock -o Configuration"
     echo "         \$ download-assets.sh --configuration_repo https://github.com/wireapp/wire-ios-build-configuration.git"
 
 }
