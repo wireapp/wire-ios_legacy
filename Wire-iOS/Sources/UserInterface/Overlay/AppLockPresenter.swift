@@ -115,7 +115,7 @@ extension AppLockPresenter {
                         self.authenticationState = .cancelled
                         self.setContents(dimmed: true, withReauth: true)
                         
-                        ///TODO: wipe go to forgot password screen
+                        ///TODO: WIP go to forgot password screen
                         return
                     }
                     self.userInterface?.setSpinner(animating: true)
