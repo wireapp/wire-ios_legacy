@@ -34,7 +34,10 @@ final class AppLockTests: XCTestCase {
     func testThatForcedAppLockDoesntAffectSettings() {
 
         //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: true, appLockTimeout: 900)
+        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false,
+                                     useCustomCodeInsteadOfAccountPassword: false,
+                                     forceAppLock: true,
+                                     appLockTimeout: 900)
         
         //when
         XCTAssertFalse(AppLock.rules.useBiometricsOrAccountPassword)
@@ -52,7 +55,7 @@ final class AppLockTests: XCTestCase {
     func testThatAppLockAffectsSettings() {
         
         //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 10)
+        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 10)
        
         //when
         XCTAssertFalse(AppLock.rules.useBiometricsOrAccountPassword)
