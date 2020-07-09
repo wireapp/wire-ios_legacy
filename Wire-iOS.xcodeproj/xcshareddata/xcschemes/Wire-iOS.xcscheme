@@ -59,6 +59,15 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
+                  Identifier = "SelfProfileViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "SelfProfileViewControllerTests/testForAUserWithALongName()">
+               </Test>
+               <Test
+                  Identifier = "SettingsTableViewControllerSnapshotTests">
+               </Test>
+               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
