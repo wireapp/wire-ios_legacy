@@ -71,7 +71,8 @@ final class AppLockTests: XCTestCase {
     
     func testThatAppLockRulesObjectIsDecodedCorrectly() {
         //given
-        let json = "{\"forceAppLock\":true,\"appLockTimeout\":900,\"useBiometricsOrAccountPassword\":true}"
+        let json = "{\"forceAppLock\":true,\"appLockTimeout\":900,\"useBiometricsOrAccountPassword\":true,\"useCustomCodeInsteadOfAccountPassword\":false}"
+                
         //when
         let sut = AppLockRules.fromData(json.data(using: .utf8)!)
         //then
