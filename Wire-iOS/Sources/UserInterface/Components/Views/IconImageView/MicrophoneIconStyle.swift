@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 import WireSyncEngine
 
-enum MicrophoneIconStyle: IconImageStyle {
+enum MicrophoneIconStyle: String, IconImageStyle {
     case muted
     case unmuted
     case active
@@ -43,6 +43,15 @@ enum MicrophoneIconStyle: IconImageStyle {
             return .green
         default:
             return nil
+        }
+    }
+    
+    var accesibilityIdentifier: String? {
+        switch self {
+        case .hidden:
+            return nil
+        case .muted, .unmuted, .active:
+            return "img.microphone.\(rawValue)"
         }
     }
 }

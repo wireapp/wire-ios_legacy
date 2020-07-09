@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 import WireDataModel
 
-enum UserTypeIconStyle: IconImageStyle {
+enum UserTypeIconStyle: String, IconImageStyle {
     case guest
     case external
     case member
@@ -33,6 +33,15 @@ enum UserTypeIconStyle: IconImageStyle {
             return .externalPartner
         case .member:
             return .none
+        }
+    }
+    
+    var accesibilityIdentifier: String? {
+        switch self {
+        case .guest, .external:
+            return "img.\(rawValue)"
+        case .member:
+            return nil
         }
     }
 }

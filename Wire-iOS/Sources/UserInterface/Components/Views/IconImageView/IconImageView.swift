@@ -22,6 +22,7 @@ import WireCommonComponents
 protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
     var tintColor: UIColor? { get }
+    var accesibilityIdentifier: String? { get }
 }
 
 extension IconImageStyle {
@@ -65,6 +66,7 @@ class IconImageView: UIImageView {
         isHidden = false
         let color = style.tintColor ?? self.color
         self.setIcon(icon, size: self.size, color: color)
+        self.setUpIconImageView(accessibilityIdentifier: style.accesibilityIdentifier)
         self.style = style
     }
     

@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 import WireSyncEngine
 
-enum VideoIconStyle: IconImageStyle {
+enum VideoIconStyle: String, IconImageStyle {
     case video
     case screenshare
     case hidden
@@ -33,6 +33,15 @@ enum VideoIconStyle: IconImageStyle {
             return .screenshare
         case .video:
             return .videoCall
+        }
+    }
+    
+    var accesibilityIdentifier: String? {
+        switch self {
+        case .hidden:
+            return nil
+        case .video, .screenshare:
+            return "img.\(rawValue)"
         }
     }
 }
