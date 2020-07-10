@@ -49,6 +49,10 @@ enum MicrophoneIconStyle: String, IconImageStyle {
     var accessibilityPrefix: String {
         return "img.microphone"
     }
+
+    var accessibilitySuffix: String {
+        return rawValue
+    }
 }
 
 extension MicrophoneIconStyle {

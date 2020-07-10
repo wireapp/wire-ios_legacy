@@ -35,6 +35,10 @@ enum UserTypeIconStyle: String, IconImageStyle {
             return .none
         }
     }
+
+    var accessibilitySuffix: String {
+        return rawValue
+    }
 }
 
 extension UserTypeIconStyle {

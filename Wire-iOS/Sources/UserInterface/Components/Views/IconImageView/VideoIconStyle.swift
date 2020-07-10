@@ -35,6 +35,10 @@ enum VideoIconStyle: String, IconImageStyle {
             return .videoCall
         }
     }
+
+    var accessibilitySuffix: String {
+        return rawValue
+    }
 }
 
 extension VideoIconStyle {

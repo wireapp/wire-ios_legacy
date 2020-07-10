@@ -24,7 +24,7 @@ protocol IconImageStyle {
     var tintColor: UIColor? { get }
     var accessibilityIdentifier: String { get }
     var accessibilityPrefix: String { get }
-    var rawValue: String { get }
+    var accessibilitySuffix: String { get }
 }
 
 extension IconImageStyle {
@@ -33,7 +33,7 @@ extension IconImageStyle {
     }
     
     var accessibilityIdentifier: String {
-        return "\(accessibilityPrefix).\(rawValue)"
+        return "\(accessibilityPrefix).\(accessibilitySuffix)"
     }
     
     var tintColor: UIColor? {
