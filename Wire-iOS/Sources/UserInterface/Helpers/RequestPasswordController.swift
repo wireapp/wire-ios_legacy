@@ -124,7 +124,7 @@ final class RequestPasswordController {
     }
 
     @objc
-    private func passwordTextFieldChanged(_ textField: UITextField) {
+    func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
 
         switch context {
