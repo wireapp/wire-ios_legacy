@@ -71,7 +71,7 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "13.6"
+        ios_version = "13.4.1"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
@@ -88,7 +88,7 @@ platform :ios do
             configuration: "Debug",
             test_without_building: true,
             sdk:"iphonesimulator",
-            destination: "platform=iOS Simulator,name=iPhone SE (2nd generation),OS=#{ios_version}",
+            destination: "platform=iOS Simulator,name=iPhone 8,OS=#{ios_version}",
             code_coverage: true,
             derived_data_path: "DerivedData",
             buildlog_path: "test",
