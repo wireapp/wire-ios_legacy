@@ -67,8 +67,16 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func verify(customPasscode: String) {
-        // TODO: ALWAYS PASS NOW! check with custom pass code
-        let result: VerifyPasswordResult = .validated
+        
+        guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.customAppLock.rawValue),
+            data.count != 0 else {
+                return false
+        }
+        
+        return String(data: data, encoding: .utf8) == "YES"
+
+        
+        let result: VerifyPasswordResult = customPasscode  == String(data: data, encoding: .utf8) ? .validated : .denied
         
         notifyPasswordVerified(with: result)
         if case .validated = result {
