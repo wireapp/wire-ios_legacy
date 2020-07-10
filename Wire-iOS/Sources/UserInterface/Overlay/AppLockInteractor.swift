@@ -68,16 +68,17 @@ extension AppLockInteractor: AppLockInteractorInput {
     
     func verify(customPasscode: String) {
         
-        guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.customAppLock.rawValue),
-            data.count != 0 else {
-                return false
+        let result: VerifyPasswordResult
+        
+        // TODO: use enum raw value after setting PR merged
+        if let data = ZMKeychain.data(forAccount: "appLock" /*SettingsPropertyName.customAppLock.rawValue*/),
+            !data.isEmpty {
+            result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
+        } else {
+            // TODO: if no passcode stored, allow access the app?
+            result = .unknown
         }
-        
-        return String(data: data, encoding: .utf8) == "YES"
-
-        
-        let result: VerifyPasswordResult = customPasscode  == String(data: data, encoding: .utf8) ? .validated : .denied
-        
+                
         notifyPasswordVerified(with: result)
         if case .validated = result {
             appLock.persistBiometrics()
