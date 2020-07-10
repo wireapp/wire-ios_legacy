@@ -22,7 +22,7 @@ import WireCommonComponents
 protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
     var tintColor: UIColor? { get }
-    var accesibilityIdentifier: String { get }
+    var accessibilityIdentifier: String { get }
     var accessibilityPrefix: String { get }
     var rawValue: String { get }
 }
@@ -32,7 +32,7 @@ extension IconImageStyle {
         return "img"
     }
     
-    var accesibilityIdentifier: String {
+    var accessibilityIdentifier: String {
         return "\(accessibilityPrefix).\(rawValue)"
     }
     
@@ -61,7 +61,7 @@ class IconImageView: UIImageView {
     
     override var accessibilityIdentifier: String? {
         get {
-            return style?.accesibilityIdentifier
+            return style?.accessibilityIdentifier
         }
         set {
             // no-op
