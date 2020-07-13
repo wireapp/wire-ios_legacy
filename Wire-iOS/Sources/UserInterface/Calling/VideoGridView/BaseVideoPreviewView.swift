@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import avs
+import WireSyncEngine
 
 protocol AVSIdentifierProvider {
     var stream: Stream { get }
@@ -27,10 +28,10 @@ protocol AVSIdentifierProvider {
 extension AVSVideoView: AVSIdentifierProvider {
     
     var stream: Stream {
-        return Stream(userId: UUID(uuidString: userid)!,
-                      clientId: clientid,
-                      participantName: nil,
-                      microphoneState: .unmuted)
+        return Stream(
+            streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
+            participantName: nil,
+            microphoneState: .unmuted)
     }
 }
 

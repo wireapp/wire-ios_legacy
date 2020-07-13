@@ -23,20 +23,10 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
-struct StreamIdentifier: Equatable {
-    let userId: UUID
-    let clientId: String
-}
-
 struct Stream: Equatable {
-    let userId: UUID
-    let clientId: String
+    let streamId: AVSClient
     let participantName: String?
     let microphoneState: MicrophoneState?
-    
-    var streamId: StreamIdentifier {
-        return StreamIdentifier(userId: userId, clientId: clientId)
-    }
 }
 
 struct VideoStream: Equatable {
@@ -65,7 +55,7 @@ extension VideoGridConfiguration {
 }
 
 extension ZMEditableUser {
-    var selfStreamId: StreamIdentifier {
+    var selfStreamId: AVSClient {
         
         guard let selfUser = ZMUser.selfUser(),
               let userId = selfUser.remoteIdentifier,
@@ -73,8 +63,7 @@ extension ZMEditableUser {
         else {
             fatal("Could not create self user stream which should always exist")
         }
-        
-        return StreamIdentifier(userId: userId, clientId: clientId)
+        return AVSClient(userId: userId, clientId: clientId)
     }
 }
 
@@ -337,7 +326,7 @@ extension VideoGridViewController {
         }
     }
     
-    private func stream(with streamId: StreamIdentifier) -> Stream? {
+    private func stream(with streamId: AVSClient) -> Stream? {
         var stream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })?.stream
         
         if stream == nil && configuration.floatingVideoStream?.stream.streamId == streamId {

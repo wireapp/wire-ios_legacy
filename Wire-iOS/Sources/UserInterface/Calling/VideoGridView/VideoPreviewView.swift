@@ -66,8 +66,8 @@ final class VideoPreviewView: BaseVideoPreviewView {
     
     private func createPreviewView() {
         let preview = AVSVideoView()
-        preview.userid = stream.userId.transportString()
-        preview.clientid = stream.clientId
+        preview.userid = stream.streamId.userId.transportString()
+        preview.clientid = stream.streamId.clientId
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)

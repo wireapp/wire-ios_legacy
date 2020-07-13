@@ -42,7 +42,9 @@ extension VoiceChannel {
             return nil
         }
         
-        let stream = Stream(userId: userId, clientId: clientId, participantName: name, microphoneState: .unmuted)
+        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
+                            participantName: name,
+                            microphoneState: .unmuted)
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
@@ -54,7 +56,7 @@ extension VoiceChannel {
         }
     }
     
-    private var selfStreamId: StreamIdentifier? {
+    private var selfStreamId: AVSClient? {
         return ZMUser.selfUser()?.selfStreamId
     }
     
@@ -89,8 +91,9 @@ extension VoiceChannel {
         return participants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState) where videoState != .stopped:
-                let stream = Stream(userId: participant.user.remoteIdentifier,
-                                    clientId: participant.clientId,
+                let streamId = AVSClient(userId: participant.user.remoteIdentifier,
+                                          clientId: participant.clientId)
+                let stream = Stream(streamId: streamId,
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
