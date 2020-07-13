@@ -69,8 +69,11 @@ final class VideoParticipantDetailsView: UIView {
     }
     
     func createConstraints() {
-        blurView.fitInSuperview()
         NSLayoutConstraint.activate([
+            blurView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: microphoneIconView.trailingAnchor, constant: 4),
