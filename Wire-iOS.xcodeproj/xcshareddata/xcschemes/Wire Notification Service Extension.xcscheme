@@ -59,8 +59,8 @@
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
          runnableDebuggingMode = "1"
-         BundleIdentifier = "com.wearezeta.zclient-alpha"
-         RemotePath = "/var/containers/Bundle/Application/7277E2C2-3D9C-44E8-98A0-2AD0F8A5E7E0/Wire.app">
+         BundleIdentifier = "com.duolingo.DuolingoMobile"
+         RemotePath = "/var/containers/Bundle/Application/1210F0EE-7407-4BFA-A067-D95221B70EEC/DuolingoMobile.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference

@@ -1479,6 +1479,69 @@
 			remoteGlobalIDString = F1FEA14921DCEB1700790A54;
 			remoteInfo = WireCommonComponents;
 		};
+		06DE14B424B82FA4006CB6B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 549815931A43232400A7CE2E;
+			remoteInfo = "WireSyncEngine-ios";
+		};
+		06DE14B624B82FA4006CB6B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E1860C3191A649D000FE027;
+			remoteInfo = "WireSyncEngine-iOS-Tests";
+		};
+		06DE14B824B82FA4006CB6B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E186088191A56F6000FE027;
+			remoteInfo = "WireSyncEngine Test Host";
+		};
+		06FD6BBE24B604AF00E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06604294247FE76A00A5F161;
+			remoteInfo = WireNotificationEngineHost;
+		};
+		06FD6BC024B604AF00E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 067ECB3A2487A93D00701956;
+			remoteInfo = WireNotificationEngine;
+		};
+		06FD6BC224B604AF00E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 067ECB4F2487AB6000701956;
+			remoteInfo = WireNotificationEngineTests;
+		};
+		06FD6BCA24B604F100E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1669016A1D707509000FE4AF;
+			remoteInfo = WireRequestStrategy;
+		};
+		06FD6BCC24B604F100E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 166901741D707509000FE4AF;
+			remoteInfo = WireRequestStrategyTests;
+		};
+		06FD6BCE24B604F100E3B741 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F154EDC41F447B6C00CB8184;
+			remoteInfo = WireRequestStrategyTestHost;
+		};
 		168A16B11D9597C2005CFA6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1569,7 +1632,10 @@
 		067BBBFF247E693400D73407 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
+		06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../../Main/wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
+		06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireNotificationEngine.xcodeproj; path = "../../wire-ios-notification-engine/WireNotificationEngine.xcodeproj"; sourceTree = "<group>"; };
+		06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireRequestStrategy.xcodeproj; path = "../../Main/wire-ios-request-strategy/WireRequestStrategy.xcodeproj"; sourceTree = "<group>"; };
 		06FF86EF24AA1C3900F517F8 /* Notification-Extension-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Base.xcconfig"; sourceTree = "<group>"; };
 		06FF86F024AA1C3900F517F8 /* Notification-Extension-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Release.xcconfig"; sourceTree = "<group>"; };
 		06FF86F124AA1C3900F517F8 /* Notification-Extension-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -3222,6 +3288,36 @@
 				067BBBFD247E693400D73407 /* NotificationService.swift */,
 			);
 			path = "Wire Notification Service Extension";
+			sourceTree = "<group>";
+		};
+		06DE14A924B82FA4006CB6B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06DE14B524B82FA4006CB6B3 /* WireSyncEngine.framework */,
+				06DE14B724B82FA4006CB6B3 /* WireSyncEngine-iOS-Tests.xctest */,
+				06DE14B924B82FA4006CB6B3 /* WireSyncEngine Test Host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06FD6BB924B604AF00E3B741 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06FD6BBF24B604AF00E3B741 /* WireNotificationEngine.app */,
+				06FD6BC124B604AF00E3B741 /* WireNotificationEngine.framework */,
+				06FD6BC324B604AF00E3B741 /* WireNotificationEngineTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06FD6BC524B604F100E3B741 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06FD6BCB24B604F100E3B741 /* WireRequestStrategy.framework */,
+				06FD6BCD24B604F100E3B741 /* WireRequestStrategyTests.xctest */,
+				06FD6BCF24B604F100E3B741 /* WireRequestStrategyTestHost.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		06FF86EE24AA1C3900F517F8 /* Notification Extension */ = {
@@ -4961,6 +5057,9 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */,
+				06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */,
+				06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
@@ -6823,6 +6922,20 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 06FD6BB924B604AF00E3B741 /* Products */;
+					ProjectRef = 06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = 06FD6BC524B604F100E3B741 /* Products */;
+					ProjectRef = 06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */;
+				},
+				{
+					ProductGroup = 06DE14A924B82FA4006CB6B3 /* Products */;
+					ProjectRef = 06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -6833,6 +6946,72 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		06DE14B524B82FA4006CB6B3 /* WireSyncEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireSyncEngine.framework;
+			remoteRef = 06DE14B424B82FA4006CB6B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06DE14B724B82FA4006CB6B3 /* WireSyncEngine-iOS-Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "WireSyncEngine-iOS-Tests.xctest";
+			remoteRef = 06DE14B624B82FA4006CB6B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06DE14B924B82FA4006CB6B3 /* WireSyncEngine Test Host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "WireSyncEngine Test Host.app";
+			remoteRef = 06DE14B824B82FA4006CB6B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BBF24B604AF00E3B741 /* WireNotificationEngine.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WireNotificationEngine.app;
+			remoteRef = 06FD6BBE24B604AF00E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BC124B604AF00E3B741 /* WireNotificationEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireNotificationEngine.framework;
+			remoteRef = 06FD6BC024B604AF00E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BC324B604AF00E3B741 /* WireNotificationEngineTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireNotificationEngineTests.xctest;
+			remoteRef = 06FD6BC224B604AF00E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BCB24B604F100E3B741 /* WireRequestStrategy.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireRequestStrategy.framework;
+			remoteRef = 06FD6BCA24B604F100E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BCD24B604F100E3B741 /* WireRequestStrategyTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireRequestStrategyTests.xctest;
+			remoteRef = 06FD6BCC24B604F100E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		06FD6BCF24B604F100E3B741 /* WireRequestStrategyTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WireRequestStrategyTestHost.app;
+			remoteRef = 06FD6BCE24B604F100E3B741 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		067BBBF9247E693400D73407 /* Resources */ = {
@@ -7018,7 +7197,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
@@ -7026,7 +7205,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WireImages.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCryptobox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireProtos.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireRequestStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireLinkPreview.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireShareEngine.framework",
@@ -7043,7 +7222,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/HTMLString.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftProtobuf.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/DifferenceKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireNotificationEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireNotificationEngine.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
