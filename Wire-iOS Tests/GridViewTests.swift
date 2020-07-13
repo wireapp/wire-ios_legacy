@@ -17,101 +17,117 @@
 //
 
 import Foundation
+import SnapshotTesting
+import XCTest
 @testable import Wire
 
-class GridViewTests: ZMSnapshotTestCase {
+class GridViewTests: XCTestCase {
     
     var sut: GridView!
-    
-    var view1: UIView!
-    var view2: UIView!
-    var view3: UIView!
-    var view4: UIView!
+    var views: [UIView]!
     
     override func setUp() {
         super.setUp()
-
-        view1 = UIView()
-        view1.backgroundColor = .red
-        view2 = UIView()
-        view2.backgroundColor = .blue
-        view3 = UIView()
-        view3.backgroundColor = .green
-        view4 = UIView()
-        view4.backgroundColor = .yellow
+        let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
+        
+        let colors: [UIColor] = [
+            .red,
+            .blue,
+            .cyan,
+            .brown,
+            .orange,
+            .green,
+            .yellow,
+            .magenta,
+            .purple,
+            .systemPink,
+            .systemTeal,
+            .gray
+        ]
+        
+        views = [UIView]()
+        for index in 0...11 {
+            let view = UIView(frame: frame)
+            view.backgroundColor = colors[index]
+            views.append(view)
+        }
         
         sut = GridView()
-        snapshotBackgroundColor = .darkGray
+        sut.frame = frame
     }
     
     override func tearDown() {
         sut = nil
-        view1 = nil
-        view2 = nil
-        view3 = nil
-        view4 = nil
+        views = nil
         super.tearDown()
     }
     
-    func testOneView() {
+    func appendViews(_ amount: Int) {
+        guard amount > 0 else { return }
+        
+        for index in 0...amount-1 {
+            sut.append(view: views[index])
+        }
+    }
+    
+    func testGrid(withAmount amount: Int,
+                  file: StaticString = #file,
+                  testName: String = #function,
+                  line: UInt = #line) {
         // Given
-        sut.append(view: view1)
+        appendViews(amount)
         
         // Then
-        verifyInIPhoneSize(view: sut)
+        verify(matching: sut, file: file, testName: testName, line: line)
+    }
+    
+    func testOneView() {
+        testGrid(withAmount: 1)
     }
     
     func testTwoViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 2)
     }
     
     func testThreeViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 3)
     }
     
     func testFourViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.append(view: view4)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 4)
+    }
+
+    func testSixViews() {
+        testGrid(withAmount: 6)
+    }
+    
+    func testEightViews() {
+        testGrid(withAmount: 8)
+    }
+    
+    func testTenViews() {
+        testGrid(withAmount: 10)
+    }
+    
+    func testTwelveViews() {
+        testGrid(withAmount: 12)
     }
     
     func testThreeViewsAfterRemovingTopView() {
         // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.append(view: view4)
-        sut.remove(view: view1)
+        appendViews(4)
+        sut.remove(view: views[0])
         
         // Then
-        verifyInIPhoneSize(view: sut)
+        verify(matching: sut)
     }
     
     func testTwoViewsAfterRemovingBottomView() {
         // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.remove(view: view2)
+        appendViews(3)
+        sut.remove(view: views[2])
         
         // Then
-        verifyInIPhoneSize(view: sut)
+        verify(matching: sut)
     }
-    
 }

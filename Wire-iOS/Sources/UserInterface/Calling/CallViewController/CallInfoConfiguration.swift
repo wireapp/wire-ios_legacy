@@ -32,7 +32,7 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    func accessoryType(using timestamps: CallParticipantTimestamps) -> CallInfoViewControllerAccessoryType {
+    func accessoryType() -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
@@ -50,9 +50,12 @@ fileprivate extension VoiceChannel {
             }
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
-                return .participantsList(sortedConnectedParticipants(using: timestamps).map {
-                    .callParticipant(user: $0.user, sendsVideo: $0.state.isSendingVideo)
+                return .participantsList(sortedConnectedParticipants().map {
+                    .callParticipant(user: $0.user,
+                                     videoState: $0.state.videoState,
+                                     microphoneState: $0.state.microphoneState)
                 })
+               
             } else if let remoteParticipant = conversation?.connectedUser {
                 return .avatar(remoteParticipant)
             } else {
@@ -154,7 +157,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        sortTimestamps: CallParticipantTimestamps,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
         ) {
         self.permissions = permissions
@@ -162,7 +164,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         self.mediaManager = mediaManager
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
-        accessoryType = voiceChannel.accessoryType(using: sortTimestamps)
+        accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
         canAccept = voiceChannel.canAccept
@@ -216,8 +218,26 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: let state, clientId: _) where state.isSending: return true
+        case .connected(videoState: let state, _) where state.isSending: return true
         default: return false
+        }
+    }
+    
+    var videoState: VideoState? {
+        switch self {
+        case .connected(videoState: let state, _):
+            return state
+        default:
+            return nil
+        }
+    }
+    
+    var microphoneState: MicrophoneState? {
+        switch self {
+        case .connected(_, microphoneState: let state):
+            return state
+        default:
+            return nil
         }
     }
 }
@@ -227,7 +247,12 @@ fileprivate extension VoiceChannel {
     var canUpgradeToVideo: Bool {
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
         guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
-        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+
+        if ZMConversation.callCenterConfiguration.useConferenceCalling {
+            return true
+        } else {
+            return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+        }
     }
     
     var isAnyParticipantSendingVideo: Bool {
@@ -240,9 +265,9 @@ fileprivate extension VoiceChannel {
         return participants.filter { $0.state.isConnected }
     }
 
-    func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [CallParticipant] {
+    func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            timestamps[lhs] > timestamps[rhs]
+            lhs.user.name < rhs.user.name
         }
     }
 

@@ -17,20 +17,29 @@
 //
 
 import Foundation
-import Cartography
 import FLAnimatedImage
+import WireDataModel
 
 final class ImageResourceView: FLAnimatedImageView {
-    
+
+    // MARK: - context menu
+    weak var delegate: ContextMenuDelegate?
+    private lazy var messagePresenter: MessagePresenter = {
+        let messagePresenter = MessagePresenter(mediaPlaybackManager: nil)
+        messagePresenter.modalTargetController = AppDelegate.shared.window?.rootViewController
+
+        return messagePresenter
+    }()
+
     fileprivate var loadingView = ThreeDotsLoadingView()
-    
+
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.
     fileprivate var reuseToken = UUID()
-    fileprivate var imageResourceInternal: ImageResource? = nil
-    
-    public var imageSizeLimit: ImageSizeLimit = .deviceOptimized
-    public var imageResource: ImageResource? {
+    fileprivate var imageResourceInternal: ImageResource?
+
+    var imageSizeLimit: ImageSizeLimit = .deviceOptimized
+    var imageResource: ImageResource? {
         set {
             setImageResource(newValue)
         }
@@ -38,8 +47,10 @@ final class ImageResourceView: FLAnimatedImageView {
             return imageResourceInternal
         }
     }
-    
-    public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
+
+    func setImageResource(_ imageResource: ImageResource?,
+                          hideLoadingView: Bool = false,
+                          completion: Completion? = nil) {
         let token = UUID()
         mediaAsset = nil
 
@@ -52,16 +63,16 @@ final class ImageResourceView: FLAnimatedImageView {
             completion?()
             return
         }
-        
+
         imageResource.fetchImage(sizeLimit: imageSizeLimit, completion: { [weak self] (mediaAsset, cacheHit) in
             guard token == self?.reuseToken, let `self` = self else { return }
-            
+
             let update = {
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
                 self.mediaAsset = mediaAsset
                 completion?()
             }
-            
+
             if cacheHit || ProcessInfo.processInfo.isRunningTests {
                 update()
             } else {
@@ -69,25 +80,69 @@ final class ImageResourceView: FLAnimatedImageView {
             }
         })
     }
-    
+
     convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.loadingView.accessibilityIdentifier = "loading"
-        
+
+        loadingView.accessibilityIdentifier = "loading"
+
         addSubview(loadingView)
         
-        constrain(self, loadingView) { containerView, loadingView in
-            loadingView.center == containerView.center
+        [self, loadingView].prepareForLayout()
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+            centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)])
+
+        if #available(iOS 13.0, *) {
+            let interaction = UIContextMenuInteraction(delegate: self)
+            addInteraction(interaction)
         }
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+}
+
+// MARK: - UIContextMenuInteractionDelegate
+
+@available(iOS 13.0, *)
+extension ImageResourceView: UIContextMenuInteractionDelegate {
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+
+        let previewProvider: UIContextMenuContentPreviewProvider = {
+            guard let message = self.delegate?.message,
+                  let actionResponder = self.delegate?.delegate else {
+                    return nil
+            }
+
+            return self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: actionResponder)
+        }
+
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: { _ in
+                                            return self.delegate?.makeContextMenu(title: "conversation.input_bar.message_preview.image".localized, view: self)
+        })
+    }
+
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                                animator: UIContextMenuInteractionCommitAnimating) {
+        guard let message = delegate?.message,
+            let actionResponder = delegate?.delegate else {
+                return
+        }
+
+        animator.addCompletion {
+            self.messagePresenter.open(message, targetView: self, actionResponder: actionResponder)
+        }
+    }
 }
