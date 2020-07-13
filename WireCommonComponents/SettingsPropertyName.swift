@@ -81,6 +81,8 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
 
     case readReceiptsEnabled = "readReceiptsEnabled"
     
+    case encryptMessagesAtRest = "encryptMessagesAtRest"
+    
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
