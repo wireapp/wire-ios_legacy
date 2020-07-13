@@ -1540,6 +1540,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Something went wrong, please try again";
 "error.user.needs_credentials" = "Please verify your details and try again.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Please verify your details and try again.";
 "error.user.account_pending_activation" = "The account you are trying access is pending activation. Please verify your details.";
 "error.user.network_error" = "There seems to be a problem with your network. Please try again later.";
