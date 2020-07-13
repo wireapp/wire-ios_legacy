@@ -68,7 +68,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         
         // THEN
         XCTAssert(videoStreams.count == 1)
-        XCTAssert(videoStreams.first?.stream.userId == remoteId1)
+        XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId1)
     }
     
     func testThatWithTwoParticipantsWithoutVideoItReturnsEmpty() {
@@ -92,7 +92,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         
         // THEN
         XCTAssert(videoStreams.count == 1)
-        XCTAssert(videoStreams.first?.stream.userId == remoteId2)
+        XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId2)
     }
     
     func testThatWithTwoParticipantsWithTwoStartedVideosItReturnsTwoVideoStates() {
@@ -106,14 +106,18 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         
         // THEN
         XCTAssert(videoStreams.count == 2)
-        XCTAssert(videoStreams.contains(where: {$0.stream.userId == remoteId1}))
-        XCTAssert(videoStreams.contains(where: {$0.stream.userId == remoteId2}))
+        XCTAssert(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId1}))
+        XCTAssert(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId2}))
     }
     
     // MARK - arrangeVideoStreams
     
     func videoStreamStub() -> VideoStream {
-        return VideoStream(stream: Stream(userId: UUID(), clientId: UUID().transportString()), isPaused: false)
+        let stream = Stream(streamId: AVSClient(userId: UUID(), clientId: UUID().transportString()),
+                            participantName: nil,
+                            microphoneState: .none)
+        return VideoStream(stream: stream,
+                           isPaused: false)
     }
     
     func testThatWithoutSelfStreamItReturnsNilPreviewAndParticipantsVideoStateGrid() {
