@@ -22,16 +22,26 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 import avs
+import DifferenceKit
+
+// TODO: move to new files
 
 struct Stream: Equatable {
+
     let streamId: AVSClient
     let participantName: String?
     let microphoneState: MicrophoneState?
 }
 
-struct VideoStream: Equatable {
+struct VideoStream: Equatable, Differentiable {
+
     let stream: Stream
     let isPaused: Bool
+
+    var differenceIdentifier: AVSClient {
+        return stream.streamId
+    }
+
 }
 
 protocol VideoGridConfiguration {
@@ -86,15 +96,25 @@ extension Notification.Name {
 }
 
 // MARK: - VideoGridViewController
+
 final class VideoGridViewController: UIViewController {
+
+    // MARK: - Statics
+
     static let isCoveredKey = "isCovered"
+
+    // MARK: - Private Properties
     
-    private var gridVideoStreams: [Stream] = []
+    private var videoStreams: [VideoStream] = []
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let mediaManager: AVSMediaManagerInterface
     private var selfPreviewView: SelfVideoPreviewView?
+
+    private var viewCache = [AVSClient: UIView]()
+
+    // MARK: - Properties
 
     var previewOverlay: UIView? {
         return thumbnailViewController.contentView
@@ -132,12 +152,16 @@ final class VideoGridViewController: UIViewController {
         networkConditionView.isHidden = shouldHideNetworkCondition
     }
 
+    // MARK: - Initialization
+
     init(configuration: VideoGridConfiguration,
          mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()) {
         self.configuration = configuration
         self.mediaManager = mediaManager
 
         super.init(nibName: nil, bundle: nil)
+
+        gridView.dataSource = self
 
         setupViews()
         createConstraints()
@@ -148,10 +172,12 @@ final class VideoGridViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
 
 // MARK: - Setup
 extension VideoGridViewController {
+
     func setupViews() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -175,20 +201,24 @@ extension VideoGridViewController {
 }
 
 // MARK: - Interface
+
 extension VideoGridViewController {
+
     public func switchFillMode(location: CGPoint) {
-        for view in gridView.videoStreamViews {
-            let convertedRect = self.view.convert(view.frame, from: view.superview)
-            if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
-                videoPreviewView.switchFillMode()
-                break
-            }
-        }
+//        for view in gridView.videoStreamViews {
+//            let convertedRect = self.view.convert(view.frame, from: view.superview)
+//            if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
+//                videoPreviewView.switchFillMode()
+//                break
+//            }
+//        }
     }
 }
 
 // MARK: - Grid Update
+
 extension VideoGridViewController {
+
     private func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
         
@@ -208,8 +238,9 @@ extension VideoGridViewController {
     private func updateSelfPreview() {
         guard
             let selfStreamId = ZMUser.selfUser()?.selfStreamId,
-            let selfStream = stream(with: selfStreamId) else {
-                return
+            let selfStream = stream(with: selfStreamId)
+        else {
+            return
         }
         
         if selfPreviewView == nil {
@@ -240,19 +271,14 @@ extension VideoGridViewController {
         }
     }
     
-    private func updateVideoGrid(with videoStreams: [VideoStream]) {
-        let streams = videoStreams.map { $0.stream }
-        let streamIds = streams.map { $0.streamId }
-        
-        let currentStreamIds = gridVideoStreams.map { $0.streamId }
-        
-        let removed = gridVideoStreams.filter { !streamIds.contains($0.streamId) }
-        let added = streams.filter { !currentStreamIds.contains($0.streamId) }
+    private func updateVideoGrid(with newVideoStreams: [VideoStream]) {
+        let changeSet = StagedChangeset(source: videoStreams, target: newVideoStreams)
 
-        removed.forEach(removeStream)
-        added.forEach(addStream)
-        
+        gridView.reload(using: changeSet) { videoStreams = $0 }
+
         updateStates(with: videoStreams)
+
+        pruneCache()
     }
     
     private func updateStates(with videoStreams: [VideoStream]) {
@@ -263,34 +289,21 @@ extension VideoGridViewController {
         }
     }
 
-    private func addStream(_ stream: Stream) {
-        Log.calling.debug("Adding video stream: \(stream)")
+    private func pruneCache() {
+        let existingStreamsIds = Set(viewCache.keys)
+        let currentStreamsIds = videoStreams.map(\.stream.streamId)
 
-        let view: UIView = {
-            if stream.streamId == ZMUser.selfUser()?.selfStreamId, let previewView = selfPreviewView {
-                return previewView
-            } else {
-                return VideoPreviewView(stream: stream)
-            }
-        }()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        gridView.append(view: view)
-        gridVideoStreams.append(stream)
-    }
-
-    private func removeStream(_ stream: Stream) {
-        Log.calling.debug("Removing video stream: \(stream)")
-        guard let videoView = streamView(for: stream) else {
-            return Log.calling.debug("Failed to remove video stream \(stream) since view was not found")
+        for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
+            viewCache.removeValue(forKey: deletedStreamId)
         }
-        gridView.remove(view: videoView)
-        gridVideoStreams.firstIndex(of: stream).apply { gridVideoStreams.remove(at: $0) }
     }
+
 }
 
 // MARK: - Grid View Axis
+
 extension VideoGridViewController {
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
@@ -320,10 +333,9 @@ extension VideoGridViewController {
 
 // MARK: - Helpers
 extension VideoGridViewController {
+
     private func streamView(for stream: Stream) -> UIView? {
-        return gridView.videoStreamViews.first {
-            ($0 as? AVSIdentifierProvider)?.stream.streamId == stream.streamId
-        }
+        return viewCache[stream.streamId]
     }
     
     private func stream(with streamId: AVSClient) -> Stream? {
@@ -339,7 +351,49 @@ extension VideoGridViewController {
     private func videoConfigurationDescription() -> String {
         return """
         showing self preview: \(selfPreviewView != nil)
-        videos in grid: [\(gridVideoStreams)]\n
+        videos in grid: [\(videoStreams)]\n
         """
     }
 }
+
+// MARK: - UICollectionViewDataSource
+extension VideoGridViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return videoStreams.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCell.reuseIdentifier, for: indexPath) as? GridCell else {
+            return UICollectionViewCell()
+        }
+
+        let videoStream = videoStreams[indexPath.row]
+
+        // Check view cache
+        if let streamView = viewCache[videoStream.stream.streamId] {
+            cell.add(streamView: streamView)
+        } else {
+            let streamView: UIView = {
+                if videoStream.stream.streamId == ZMUser.selfUser()?.selfStreamId, let previewView = selfPreviewView {
+                    return previewView
+                } else {
+                    return VideoPreviewView(stream: videoStream.stream)
+                }
+            }()
+
+            viewCache[videoStream.stream.streamId] = streamView
+            cell.add(streamView: streamView)
+        }
+
+
+        return cell
+    }
+}
+
+
+
