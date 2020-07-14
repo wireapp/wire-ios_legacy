@@ -226,7 +226,8 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Called when the user or user session changes.
     func updateUser() {
-        guard let user = self.user, let initials = user.initials else {
+        guard let user = user,
+              let initials = user.initials else {
             return
         }
 
@@ -234,7 +235,9 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         setAvatar(defaultAvatar, user: user, animated: false)
 
         if let userSession = userSession as? ZMUserSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self,
+                                                   for: user,
+                                                   in: userSession)
         }
 
         updateForServiceUserIfNeeded(user)

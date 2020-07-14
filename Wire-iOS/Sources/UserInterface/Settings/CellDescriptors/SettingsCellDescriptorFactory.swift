@@ -464,7 +464,7 @@ class SettingsCellDescriptorFactory {
 
         let uiMOC = userSession.managedObjectContext
         let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
-        let allConversations = uiMOC.fetchOrAssert(request: fetchRequest)
+        let allConversations = uiMOC!.fetchOrAssert(request: fetchRequest)
         
         if let convo = allConversations.first(where: { predicate.evaluate(with: $0) }) {
             alert.message = ["Found an unread conversation:",
