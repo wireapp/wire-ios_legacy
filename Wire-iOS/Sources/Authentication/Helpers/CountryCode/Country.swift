@@ -28,6 +28,8 @@ extension String {
 final class Country: NSObject {
     let iso: String
 
+    // this property has to be marked @objc for NSPredicate key
+    @objc
     let e164: UInt
 
     class var defaultCountry: Country {
@@ -128,6 +130,7 @@ final class Country: NSObject {
 
     #endif
 
+    // this property has to be marked @objc for NSPredicate key
     @objc
     var displayName: String {
         #if WIRESTAN

@@ -144,7 +144,7 @@ extension CountryCodeTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // Update the filtered array based on the search text
         let searchText = searchController.searchBar.text
-        guard var searchResults: Array = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? Array<Any> else { return }
+        guard var searchResults: Array<Any> = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? Array<Any> else { return }
 
         // Strip out all the leading and trailing spaces
         let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
