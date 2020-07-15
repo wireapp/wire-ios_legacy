@@ -27,18 +27,19 @@ public class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
-    var sharingSession: NotificationSession?
+    var notificationSession: NotificationSession?
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        sharingSession = try! self.createSharingSession()
+        notificationSession = try! self.createNotificationSession()
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        
 
-        if let bestAttemptContent = bestAttemptContent {
-            // Modify the notification content here...
-            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
-            contentHandler(bestAttemptContent)
-        }
+//        if let bestAttemptContent = bestAttemptContent {
+//            // Modify the notification content here...
+//            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
+//            contentHandler(bestAttemptContent)
+//        }
     }
     
     public override func serviceExtensionTimeWillExpire() {
@@ -49,14 +50,15 @@ public class NotificationService: UNNotificationServiceExtension {
         }
     }
 
-    public func createSharingSession() throws -> NotificationSession? {
+    public func createNotificationSession() throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
             let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
         else { return nil}
         return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                               accountIdentifier: accountIdentifier,
                               environment: BackendEnvironment.shared,
-                              analytics: nil)
+                              analytics: nil,
+                              delegate: self)
     }
 
     private var accountManager: AccountManager? {
@@ -68,47 +70,39 @@ public class NotificationService: UNNotificationServiceExtension {
     
 }
 
-//extension NotificationService: UpdateEventProcessor {
-//    public func process(updateEvents: [ZMUpdateEvent], ignoreBuffer: Bool) {
-////        if ignoreBuffer || isReadyToProcessEvents {
-////            consume(updateEvents: updateEvents)
-////        } else {
-////            Logging.eventProcessing.info("Buffering \(updateEvents.count) event(s)")
-////            updateEvents.forEach(eventsBuffer.addUpdateEvent)
-////        }
-//    }
-//
-//    public func consume(updateEvents: [ZMUpdateEvent]) {
-////        eventDecoder.processEvents(updateEvents) { [weak self] (decryptedUpdateEvents) in
-////            guard let `self` = self else { return }
-////
-////            let date = Date()
-////            let fetchRequest = prefetchRequest(updateEvents: decryptedUpdateEvents)
-////            let prefetchResult = syncMOC.executeFetchRequestBatchOrAssert(fetchRequest)
-////
-////            Logging.eventProcessing.info("Consuming: [\n\(decryptedUpdateEvents.map({ "\tevent: \(ZMUpdateEvent.eventTypeString(for: $0.type) ?? "Unknown")" }).joined(separator: "\n"))\n]")
-////
-////            for event in decryptedUpdateEvents {
-////                for eventConsumer in self.eventConsumers {
-////                    eventConsumer.processEvents([event], liveEvents: true, prefetchResult: prefetchResult)
-////                }
-////                self.eventProcessingTracker?.registerEventProcessed()
-////            }
-////            localNotificationDispatcher?.processEvents(decryptedUpdateEvents, liveEvents: true, prefetchResult: nil)
-////
-////            if let messages = fetchRequest.noncesToFetch as? Set<UUID>,
-////                let conversations = fetchRequest.remoteIdentifiersToFetch as? Set<UUID> {
-////                let confirmationMessages = ZMConversation.confirmDeliveredMessages(messages, in: conversations, with: syncMOC)
-////                for message in confirmationMessages {
-////                    self.applicationStatusDirectory?.deliveryConfirmation.needsToConfirmMessage(message.nonce!)
-////                }
-////            }
-////
-////            syncMOC.saveOrRollback()
-////
-////            Logging.eventProcessing.debug("Events processed in \(-date.timeIntervalSinceNow): \(self.eventProcessingTracker?.debugDescription ?? "")")
-////
-////        }
-////
-//    }
-//}
+extension NotificationService: UpdateEventsDelegate {
+    public func didReceive(events: [ZMUpdateEvent], in moc: NSManagedObjectContext) {
+        
+        if let bestAttemptContent = bestAttemptContent {
+            let test = processEvents(events, liveEvents: true, prefetchResult: nil, moc: moc)
+            if let loc = test.first as? ZMLocalNotification {
+                print(loc)
+            }
+            contentHandler!(bestAttemptContent)
+        }
+    }
+}
+
+extension NotificationService {
+
+    public func processEvents(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
+        let eventsToForward = events.filter { $0.source.isOne(of: .pushNotification, .webSocket) }
+        return self.didReceive(events: eventsToForward, conversationMap: prefetchResult?.conversationsByRemoteIdentifier ?? [:], moc: moc)
+    }
+
+    func didReceive(events: [ZMUpdateEvent], conversationMap: [UUID: ZMConversation], moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
+        var localNotifications: [ZMLocalNotification?] = []
+        events.forEach { event in
+
+            var conversation: ZMConversation?
+            if let conversationID = event.conversationUUID() {
+                // Fetch the conversation here to avoid refetching every time we try to create a notification
+                conversation = conversationMap[conversationID] ?? ZMConversation.fetch(withRemoteIdentifier: conversationID, in: moc)
+            }
+            
+            let note = ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: moc)
+            localNotifications.append(note)
+        }
+        return localNotifications
+    }
+}
