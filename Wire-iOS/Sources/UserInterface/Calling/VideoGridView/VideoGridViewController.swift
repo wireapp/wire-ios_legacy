@@ -196,7 +196,11 @@ final class VideoGridViewController: UIViewController {
 
     private func updateVideoGrid(with newVideoStreams: [VideoStream]) {
         let changeSet = StagedChangeset(source: videoStreams, target: newVideoStreams)
-        gridView.reload(using: changeSet) { videoStreams = $0 }
+
+        UIView.performWithoutAnimation {
+            gridView.reload(using: changeSet) { videoStreams = $0 }
+        }
+
         updateStates(with: videoStreams)
         pruneCache()
     }
