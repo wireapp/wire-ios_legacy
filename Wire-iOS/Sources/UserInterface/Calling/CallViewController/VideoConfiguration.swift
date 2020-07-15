@@ -19,6 +19,7 @@
 import WireSyncEngine
 
 struct VideoConfiguration: VideoGridConfiguration {
+
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
@@ -31,6 +32,10 @@ struct VideoConfiguration: VideoGridConfiguration {
 }
 
 extension VoiceChannel {
+
+    private var sortedParticipants: [CallParticipant] {
+        return participants.sorted { $0.user.name?.lowercased() < $1.user.name?.lowercased() }
+    }
     
     private var selfStream: VideoStream? {
         guard
@@ -63,7 +68,7 @@ extension VoiceChannel {
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
-        let activeVideoStreams = participantsActiveVideoStreams
+        let activeVideoStreams = sortedActiveVideoStreams
         let activeSelfStream = activeVideoStreams.first(where: { $0.stream.streamId == selfStreamId })
         
         return arrangeVideoStreams(for: activeSelfStream ?? selfStream, participantsStreams: activeVideoStreams)
@@ -86,9 +91,9 @@ extension VoiceChannel {
             return (nil, [selfStream] + streamsExcludingSelf)
         }
     }
-    
-    var participantsActiveVideoStreams: [VideoStream] {
-        return participants.compactMap { participant in
+
+    var sortedActiveVideoStreams: [VideoStream] {
+        return sortedParticipants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState) where videoState != .stopped:
                 let streamId = AVSClient(userId: participant.user.remoteIdentifier,
