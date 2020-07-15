@@ -1479,6 +1479,27 @@
 			remoteGlobalIDString = F1FEA14921DCEB1700790A54;
 			remoteInfo = WireCommonComponents;
 		};
+		069BF81724BDEBB10077BF70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A4FC1CAD5DF10039E10C;
+			remoteInfo = WireDataModel;
+		};
+		069BF81924BDEBB10077BF70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A5061CAD5DF10039E10C;
+			remoteInfo = WireDataModelTests;
+		};
+		069BF81B24BDEBB10077BF70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9C9A7F31CAED9510039E10C;
+			remoteInfo = WireDataModelTestHost;
+		};
 		06DE14B424B82FA4006CB6B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */;
@@ -1630,6 +1651,7 @@
 		067BBBFB247E693400D73407 /* Wire Notification Service Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Notification Service Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		067BBBFD247E693400D73407 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		067BBBFF247E693400D73407 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireDataModel.xcodeproj; path = "../../Main/wire-ios-data-model/WireDataModel.xcodeproj"; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../../Main/wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
@@ -3288,6 +3310,16 @@
 				067BBBFD247E693400D73407 /* NotificationService.swift */,
 			);
 			path = "Wire Notification Service Extension";
+			sourceTree = "<group>";
+		};
+		069BF81224BDEBB10077BF70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				069BF81824BDEBB10077BF70 /* WireDataModel.framework */,
+				069BF81A24BDEBB10077BF70 /* WireDataModelTests.xctest */,
+				069BF81C24BDEBB10077BF70 /* WireDataModelTestHost.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		06DE14A924B82FA4006CB6B3 /* Products */ = {
@@ -5057,6 +5089,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */,
 				06DE14A824B82FA4006CB6B3 /* WireSyncEngine.xcodeproj */,
 				06FD6BC424B604F100E3B741 /* WireRequestStrategy.xcodeproj */,
 				06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */,
@@ -6924,6 +6957,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 069BF81224BDEBB10077BF70 /* Products */;
+					ProjectRef = 069BF81124BDEBB10077BF70 /* WireDataModel.xcodeproj */;
+				},
+				{
 					ProductGroup = 06FD6BB924B604AF00E3B741 /* Products */;
 					ProjectRef = 06FD6BB824B604AF00E3B741 /* WireNotificationEngine.xcodeproj */;
 				},
@@ -6948,6 +6985,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		069BF81824BDEBB10077BF70 /* WireDataModel.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireDataModel.framework;
+			remoteRef = 069BF81724BDEBB10077BF70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		069BF81A24BDEBB10077BF70 /* WireDataModelTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireDataModelTests.xctest;
+			remoteRef = 069BF81924BDEBB10077BF70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		069BF81C24BDEBB10077BF70 /* WireDataModelTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WireDataModelTestHost.app;
+			remoteRef = 069BF81B24BDEBB10077BF70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		06DE14B524B82FA4006CB6B3 /* WireSyncEngine.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -7198,7 +7256,7 @@
 			);
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
