@@ -131,7 +131,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         let videoStreams = sut.sortedActiveVideoStreams
 
         // THEN
-        let streamUserIds = videoStreams.map(\.stream.userId)
+        let streamUserIds = videoStreams.map(\.stream.streamId.userId)
         XCTAssertEqual(streamUserIds.count, 3)
         XCTAssertEqual(streamUserIds[0], remoteId2)
         XCTAssertEqual(streamUserIds[1], remoteId1)
