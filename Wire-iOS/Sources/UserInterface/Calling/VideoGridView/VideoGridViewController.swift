@@ -315,7 +315,8 @@ extension VideoGridViewController: UICollectionViewDataSource {
 extension ZMEditableUser {
     var selfStreamId: AVSClient {
 
-        guard let selfUser = ZMUser.selfUser(),
+        guard
+            let selfUser = ZMUser.selfUser(),
             let userId = selfUser.remoteIdentifier,
             let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
