@@ -18,6 +18,14 @@
 
 import UIKit
 
+/// A collection view that displays its items in a dynamic grid layout
+/// depending on the number of items.
+///
+/// In a vertical orientation the grid generally follows a 2 columns x n rows layout.
+/// There are two special cases: firstly a single item will occupy the entire grid,
+/// and secondly two items will form a 1 column x 2 rows layout. In a horizontal
+/// orientation, columns and rows and swapped.
+
 final class GridView: UICollectionView {
 
     // MARK: - Properties
@@ -62,6 +70,42 @@ final class GridView: UICollectionView {
 
 private extension GridView {
 
+    enum SegmentType {
+
+        case row
+        case column
+
+    }
+
+    enum ParticipantAmount {
+
+        case moreThanTwo
+        case twoAndLess
+
+        init(_ amount: Int) {
+            self = amount > 2 ? .moreThanTwo : .twoAndLess
+        }
+
+    }
+
+    enum SplitType {
+
+        case middleSplit
+        case proportionalSplit
+
+        init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
+            switch (layoutDirection, segmentType) {
+            case (.vertical, .row), (.horizontal, .column):
+                self = .proportionalSplit
+            case (.horizontal, .row), (.vertical, .column):
+                self = .middleSplit
+            @unknown default:
+                fatalError()
+            }
+        }
+
+    }
+
     func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
         let participantAmount = ParticipantAmount(numberOfItems)
         let splitType = SplitType(layoutDirection, segmentType)
@@ -78,40 +122,6 @@ private extension GridView {
         }
     }
 
-    enum SegmentType {
-
-        case row
-        case column
-
-    }
-    
-    enum ParticipantAmount {
-
-        case moreThanTwo
-        case twoAndLess
-        
-        init(_ amount: Int) {
-            self = amount > 2 ? .moreThanTwo : .twoAndLess
-        }
-    }
-    
-    enum SplitType {
-
-        case middleSplit
-        case proportionalSplit
-        
-        init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
-            switch (layoutDirection, segmentType) {
-            case (.vertical, .row), (.horizontal, .column):
-                self = .proportionalSplit
-            case (.horizontal, .row), (.vertical, .column):
-                self = .middleSplit
-            @unknown default:
-                fatalError()
-            }
-        }
-    }
-    
     func isOddLastRow(_ indexPath: IndexPath) -> Bool {
         let isLastRow = numberOfItems == indexPath.row + 1
         let isOdd = !numberOfItems.isEven
