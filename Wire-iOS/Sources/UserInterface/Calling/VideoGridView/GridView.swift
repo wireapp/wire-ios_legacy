@@ -76,10 +76,10 @@ private extension GridView {
     enum ParticipantAmount {
 
         case moreThanTwo
-        case twoAndLess
+        case twoOrLess
 
         init(_ amount: Int) {
-            self = amount > 2 ? .moreThanTwo : .twoAndLess
+            self = amount > 2 ? .moreThanTwo : .twoOrLess
         }
 
     }
@@ -115,9 +115,9 @@ private extension GridView {
             return numberOfItems.evenlyCeiled / 2
         case (.moreThanTwo, .middleSplit):
             return isOddLastRow(indexPath) ? 1 : 2
-        case (.twoAndLess, .proportionalSplit):
+        case (.twoOrLess, .proportionalSplit):
             return numberOfItems
-        case (.twoAndLess, .middleSplit):
+        case (.twoOrLess, .middleSplit):
             return 1
         }
     }
