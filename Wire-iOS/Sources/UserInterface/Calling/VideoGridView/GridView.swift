@@ -24,7 +24,7 @@ import UIKit
 /// In a vertical orientation the grid generally follows a 2 columns x n rows layout.
 /// There are two special cases: firstly a single item will occupy the entire grid,
 /// and secondly two items will form a 1 column x 2 rows layout. In a horizontal
-/// orientation, columns and rows and swapped.
+/// orientation, columns and rows are swapped.
 
 final class GridView: UICollectionView {
 
