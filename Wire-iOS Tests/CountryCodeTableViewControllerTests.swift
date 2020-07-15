@@ -34,6 +34,16 @@ final class CountryCodeTableViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
+    //MARK: - logic
+    func testForSearchForCountryE164CodeReturnsResult() {
+        // GIVEN & WHEN
+        let filteredResult = sut.filter(searchText: "49") as? [Country]
+        
+        //THEN
+        XCTAssertEqual(filteredResult?.first?.displayName, "Germany")
+    }
+
+    //MARK: - snapshot
     func testForWirestanAppearInFirstRow() {
         verify(matching: sut.wrapInNavigationController())
     }
