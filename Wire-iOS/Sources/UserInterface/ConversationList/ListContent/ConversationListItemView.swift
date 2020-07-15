@@ -43,7 +43,7 @@ final class ConversationListItemView: UIView {
     let titleField: UILabel = UILabel()
     let avatarView: ConversationAvatarView = ConversationAvatarView()
     lazy var rightAccessory: ConversationListAccessoryView = {
-        return ConversationListAccessoryView(mediaPlaybackManager: AppDelegate.shared.mediaPlaybackManager)
+        return ConversationListAccessoryView()
     }()
 
     var selected = false {

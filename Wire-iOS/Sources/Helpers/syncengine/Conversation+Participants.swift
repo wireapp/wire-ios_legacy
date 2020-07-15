@@ -23,9 +23,13 @@ extension ZMConversation {
     private enum NetworkError: Error {
         case offline
     }
+
+    static var callCenterConfiguration = WireCallCenterConfiguration()
     
-    static let maxVideoCallParticipants: Int = 4
-    
+    static var maxVideoCallParticipants: Int {
+        callCenterConfiguration.videoParticipantsLimit
+    }
+
     static let maxParticipants: Int = 500
     
     static var maxParticipantsExcludingSelf: Int {

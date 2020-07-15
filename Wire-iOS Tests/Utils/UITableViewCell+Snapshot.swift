@@ -27,9 +27,7 @@ enum PhoneWidth: CGFloat {
 extension UITableViewCell {
 
     func prepareForSnapshots(width: PhoneWidth = .iPhone4_7) -> UITableView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
+        
         bounds.size = systemLayoutSizeFitting(
             CGSize(width: width.rawValue, height: 0),
             withHorizontalFittingPriority: .required,

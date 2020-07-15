@@ -155,7 +155,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
         keyboardAvoiding.disabledWhenInsidePopover = true
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
-        keyboardAvoiding.modalPresentationStyle = .popover
+        keyboardAvoiding.modalPresentationCapturesStatusBarAppearance = true
 
         let presenter: PopoverPresenterViewController? = (presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
 
@@ -173,9 +173,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> Void in
             weak var presentingViewController = shareController.presentingViewController
 
-            presentingViewController?.dismiss(animated: true) {
-                presentingViewController?.setNeedsStatusBarAppearanceUpdate()
-            }
+            presentingViewController?.dismiss(animated: true)
         }
 
         (presenter ?? self).present(keyboardAvoiding, animated: true)

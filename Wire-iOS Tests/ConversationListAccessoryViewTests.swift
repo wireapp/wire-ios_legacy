@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
+final class ConversationListAccessoryViewTests: XCTestCase {
     var sut: ConversationListAccessoryView!
     
     override func setUp() {
@@ -47,70 +47,70 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
         // WHEN
         sut.icon = ConversationStatusIcon.unreadMessages(count: 3)
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsALotOfUnreadMessages() {
         // WHEN
         sut.icon = ConversationStatusIcon.unreadMessages(count: 500)
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsJoinButton() {
         // WHEN
         sut.icon = ConversationStatusIcon.activeCall(showJoin: true)
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsOngoingCallIndicator() {
         // WHEN
         sut.icon = ConversationStatusIcon.activeCall(showJoin: false)
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsMissedCall() {
         // WHEN
         sut.icon = ConversationStatusIcon.missedCall
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsMissedPing() {
         // WHEN
         sut.icon = ConversationStatusIcon.unreadPing
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsTyping() {
         // WHEN
         sut.icon = ConversationStatusIcon.typing
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsSilenced() {
         // WHEN
         sut.icon = ConversationStatusIcon.silenced
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsPlayingMedia() {
         // WHEN
         sut.icon = ConversationStatusIcon.playingMedia
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsPendingConnection() {
         // WHEN
         sut.icon = ConversationStatusIcon.pendingConnection
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItRecoversFromPreviousState() {
@@ -119,31 +119,20 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
         sut.icon = ConversationStatusIcon.typing
 
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
 
     func testThatItShowsMention() {
         // WHEN
         sut.icon = ConversationStatusIcon.mention
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
 
     func testThatItShowsReply() {
         // WHEN
         sut.icon = ConversationStatusIcon.reply
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
 }
-
-
-fileprivate extension UIView {
-    func snapshotView() -> UIView {
-        self.layer.speed = 0
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
-        return self
-    }
-}
-

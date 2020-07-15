@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,99 +16,171 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
-fileprivate extension NSLayoutConstraint.Axis{
-    var flipped: NSLayoutConstraint.Axis {
-        switch self {
-        case .horizontal: return .vertical
-        case .vertical: return .horizontal
-        @unknown default:
-            fatalError()
+/// A collection view that displays its items in a dynamic grid layout
+/// depending on the number of items.
+///
+/// In a vertical orientation the grid generally follows a 2 columns x n rows layout.
+/// There are two special cases: firstly a single item will occupy the entire grid,
+/// and secondly two items will form a 1 column x 2 rows layout. In a horizontal
+/// orientation, columns and rows are swapped.
+
+final class GridView: UICollectionView {
+
+    // MARK: - Properties
+
+    var layoutDirection: UICollectionView.ScrollDirection = .vertical {
+        didSet {
+            layout.scrollDirection = layoutDirection
+            reloadData()
         }
+    }
+
+    // MARK: - Private Properties
+
+    private let layout = UICollectionViewFlowLayout()
+
+    // MARK: - Initialization
+
+    init() {
+        super.init(frame: .zero, collectionViewLayout: layout)
+        setUp()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
+
+    private func setUp() {
+        delegate = self
+        register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
+        isScrollEnabled = false
     }
 }
 
-class GridView: UIStackView {
-    
-    let upperHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
-    let lowerHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
 
-    var layoutDirection: NSLayoutConstraint.Axis = .vertical {
-        didSet {
-            axis = layoutDirection
-            lowerHorizontalStackerView.axis = layoutDirection.flipped
-            upperHorizontalStackerView.axis = layoutDirection.flipped
+// MARK: - Segment calculation
+
+private extension GridView {
+
+    enum SegmentType {
+
+        case row
+        case column
+
+    }
+
+    enum ParticipantAmount {
+
+        case moreThanTwo
+        case twoOrLess
+
+        init(_ amount: Int) {
+            self = amount > 2 ? .moreThanTwo : .twoOrLess
+        }
+
+    }
+
+    enum SplitType {
+
+        case middleSplit
+        case proportionalSplit
+
+        init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
+            switch (layoutDirection, segmentType) {
+            case (.vertical, .row), (.horizontal, .column):
+                self = .proportionalSplit
+            case (.horizontal, .row), (.vertical, .column):
+                self = .middleSplit
+            @unknown default:
+                fatalError()
+            }
+        }
+
+    }
+
+    func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return 0
+        }
+
+        let participantAmount = ParticipantAmount(numberOfItems)
+        let splitType = SplitType(layoutDirection, segmentType)
+        
+        switch (participantAmount, splitType) {
+        case (.moreThanTwo, .proportionalSplit):
+            return numberOfItems.evenlyCeiled / 2
+        case (.moreThanTwo, .middleSplit):
+            return isOddLastRow(indexPath) ? 1 : 2
+        case (.twoOrLess, .proportionalSplit):
+            return numberOfItems
+        case (.twoOrLess, .middleSplit):
+            return 1
         }
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        lowerHorizontalStackerView.axis = .horizontal
-        upperHorizontalStackerView.axis = .horizontal
-        
-        lowerHorizontalStackerView.distribution = .fillEqually
-        upperHorizontalStackerView.distribution = .fillEqually
-        
-        self.distribution = .fillEqually
-        self.axis = .vertical
-        self.addArrangedSubview(upperHorizontalStackerView)
-        self.addArrangedSubview(lowerHorizontalStackerView)
-    }
-    
-    var gridSubviews: [UIView] {
-        return upperHorizontalStackerView.arrangedSubviews + lowerHorizontalStackerView.arrangedSubviews
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func append(view: UIView) {
-        if upperHorizontalStackerView.arrangedSubviews.count <= lowerHorizontalStackerView.arrangedSubviews.count {
-            upperHorizontalStackerView.addArrangedSubview(view)
-        } else {
-            lowerHorizontalStackerView.addArrangedSubview(view)
+
+    func isOddLastRow(_ indexPath: IndexPath) -> Bool {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return false
         }
+
+        let isLastRow = numberOfItems == indexPath.row + 1
+        let isOdd = !numberOfItems.isEven
+        return isOdd && isLastRow
+    }
+
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension GridView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxWidth = collectionView.bounds.size.width
+        let maxHeight = collectionView.bounds.size.height
         
-        updateVisibleStacksViews()
-    }
-    
-    func remove(view: UIView) {
-        if let view = upperHorizontalStackerView.arrangedSubviews.first(where: { $0 == view }) {
-            upperHorizontalStackerView.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
+        let rows = numberOfItems(in: .row, for: indexPath)
+        let columns = numberOfItems(in: .column, for: indexPath)
         
-        if let view = lowerHorizontalStackerView.arrangedSubviews.first(where: { $0 == view }) {
-            lowerHorizontalStackerView.removeArrangedSubview(view)
-            view.removeFromSuperview()
-        }
-        
-        rearrangeViews()
-        updateVisibleStacksViews()
+        let width = maxWidth / CGFloat(columns)
+        let height = maxHeight / CGFloat(rows)
+
+        return CGSize(width: width, height: height)
     }
     
-    private func reinsert(view: UIView) {
-        remove(view: view)
-        append(view: view)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int) -> UIEdgeInsets {
+
+        return .zero
     }
     
-    private func rearrangeViews() {
-        if lowerHorizontalStackerView.arrangedSubviews.isEmpty, upperHorizontalStackerView.arrangedSubviews.count > 1, let view = upperHorizontalStackerView.arrangedSubviews.last {
-            reinsert(view: view)
-        }
-        
-        if upperHorizontalStackerView.arrangedSubviews.isEmpty, lowerHorizontalStackerView.arrangedSubviews.count > 1, let view = lowerHorizontalStackerView.arrangedSubviews.last {
-            reinsert(view: view)
-        }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+
+        return .zero
     }
     
-    private func updateVisibleStacksViews() {
-        upperHorizontalStackerView.isHidden = upperHorizontalStackerView.arrangedSubviews.isEmpty
-        lowerHorizontalStackerView.isHidden = lowerHorizontalStackerView.arrangedSubviews.isEmpty
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+
+        return .zero
     }
     
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        return .zero
+    }
+
 }

@@ -19,37 +19,34 @@
 import XCTest
 @testable import Wire
 
-class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
+final class ChangeEmailViewControllerTests: XCTestCase {
 
-    override func setUp() {
-        super.setUp()
-        snapshotBackgroundColor = .black
-    }
-
-    func testForChangingExistingEmail() {
-        // GIVEN
+    private func createSut(emailAddress: String?) -> UIViewController{
         let mockUser = MockUserType.createSelfUser(name: "User")
-        mockUser.emailAddress = "user@example.com"
+        mockUser.emailAddress = emailAddress
 
-        // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
+        
+        viewController.view.backgroundColor = .black
+        
+        return viewController
+    }
+    
+    func testForChangingExistingEmail() {
+        // GIVEN & WHEN
+        let viewController = createSut(emailAddress: "user@example.com")
 
         // THEN
-        verify(view: viewController.view)
+        verify(matching: viewController)
     }
 
     func testForAddingEmail() {
-        // GIVEN
-        let mockUser = MockUserType.createSelfUser(name: "User")
-        mockUser.emailAddress = nil
-
-        // WHEN
-        let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
-
+        // GIVEN & WHEN
+        let viewController = createSut(emailAddress: nil)
+        
         // THEN
-        verify(view: viewController.view)
+        verify(matching: viewController)
     }
 
 }

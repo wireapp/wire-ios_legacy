@@ -20,12 +20,13 @@ import XCTest
 import FLAnimatedImage
 @testable import Wire
 
-final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
+final class ConfirmAssetViewControllerTests: XCTestCase {
 
     var sut: ConfirmAssetViewController!
 
     override func setUp() {
         super.setUp()
+        ColorScheme.default.variant = .light
     }
 
     override func tearDown() {
@@ -38,7 +39,8 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
         accentColor = .strongLimeGreen
         sut.previewTitle = "Matterhorn"
-        verifyInAllIPhoneSizes(view: sut.view)
+
+        verifyAllIPhoneSizes(matching: sut)
     }
 
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
@@ -46,7 +48,8 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
         accentColor = .vividRed
         sut.previewTitle = "Burger & Beer"
-        verifyInAllIPhoneSizes(view: sut.view)
+
+        verifyAllIPhoneSizes(matching: sut)
     }
 
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
@@ -54,7 +57,8 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
         accentColor = .vividRed
         sut.previewTitle = "Sea Food"
-        verifyInAllIPhoneSizes(view: sut.view)
+
+        verifyAllIPhoneSizes(matching: sut)
     }
 }
 
