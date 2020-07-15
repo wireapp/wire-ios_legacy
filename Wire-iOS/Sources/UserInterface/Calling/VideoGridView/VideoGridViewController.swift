@@ -111,13 +111,11 @@ final class VideoGridViewController: UIViewController {
     // MARK: - Public Interface
 
     public func switchFillMode(location: CGPoint) {
-        //        for view in gridView.videoStreamViews {
-        //            let convertedRect = self.view.convert(view.frame, from: view.superview)
-        //            if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
-        //                videoPreviewView.switchFillMode()
-        //                break
-        //            }
-        //        }
+        let tappedView = viewCache.values.lazy
+            .compactMap { $0 as? VideoPreviewView }
+            .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })
+
+        tappedView?.switchFillMode()
     }
 
     // MARK: - UI Update
