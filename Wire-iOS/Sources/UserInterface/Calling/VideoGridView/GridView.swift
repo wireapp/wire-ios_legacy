@@ -41,10 +41,6 @@ final class GridView: UICollectionView {
 
     private let layout = UICollectionViewFlowLayout()
 
-    private var numberOfItems: Int {
-        return dataSource?.collectionView(self, numberOfItemsInSection: 0) ?? 0
-    }
-
     // MARK: - Initialization
 
     init() {
@@ -107,6 +103,10 @@ private extension GridView {
     }
 
     func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return 0
+        }
+
         let participantAmount = ParticipantAmount(numberOfItems)
         let splitType = SplitType(layoutDirection, segmentType)
         
@@ -123,6 +123,10 @@ private extension GridView {
     }
 
     func isOddLastRow(_ indexPath: IndexPath) -> Bool {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return false
+        }
+
         let isLastRow = numberOfItems == indexPath.row + 1
         let isOdd = !numberOfItems.isEven
         return isOdd && isLastRow
