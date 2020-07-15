@@ -22,9 +22,20 @@ import WireCommonComponents
 protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
     var tintColor: UIColor? { get }
+    var accessibilityIdentifier: String { get }
+    var accessibilityPrefix: String { get }
+    var accessibilitySuffix: String { get }
 }
 
 extension IconImageStyle {
+    var accessibilityPrefix: String {
+        return "img"
+    }
+    
+    var accessibilityIdentifier: String {
+        return "\(accessibilityPrefix).\(accessibilitySuffix)"
+    }
+    
     var tintColor: UIColor? {
         return nil
     }
@@ -48,12 +59,21 @@ class IconImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var accessibilityIdentifier: String? {
+        get {
+            return style?.accessibilityIdentifier
+        }
+        set {
+            // no-op
+        }
+    }
+    
     func set(style: IconImageStyle? = nil,
              size: StyleKitIcon.Size? = nil,
              color: UIColor? = nil) {
         // save size and color if needed
         set(size: size, color: color)
-        
+
         guard
             let style = style ?? self.style,
             let icon = style.icon

@@ -17,16 +17,12 @@
 //
 
 import Foundation
-import UIKit
+import WireSyncEngine
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
+struct Stream: Equatable {
 
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
-    }
+    let streamId: AVSClient
+    let participantName: String?
+    let microphoneState: MicrophoneState?
+
 }

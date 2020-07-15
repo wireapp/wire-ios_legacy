@@ -20,49 +20,32 @@ import Foundation
 import UIKit
 import avs
 
-protocol AVSIdentifierProvider {
-    var stream: Stream { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-    
-    var stream: Stream {
-        return Stream(userId: UUID(uuidString: userid)!, clientId: clientid)
-    }
-    
-}
-
-final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
+final class SelfVideoPreviewView: BaseVideoPreviewView {
     
     private let previewView = AVSVideoPreview()
-    
-    let stream: Stream
-    
-    init(stream: Stream) {
-        self.stream = stream
         
-        super.init(frame: .zero)
-        
-        setupViews()
-        createConstraints()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     deinit {
         stopCapture()
     }
     
-    private func setupViews() {
+    override func setupViews() {
         previewView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(previewView)
+        super.setupViews()
     }
     
-    private func createConstraints() {
+    override func createConstraints() {
+        super.createConstraints()
         previewView.fitInSuperview()
+    }
+    
+    override func updateUserDetails() {
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        
+        guard let name = stream.participantName else {
+            return
+        }
+        userDetailsView.name = name + "user_cell.title.you_suffix".localized
     }
 
     override func didMoveToWindow() {
