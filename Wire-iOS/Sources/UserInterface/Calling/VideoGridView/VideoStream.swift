@@ -17,16 +17,16 @@
 //
 
 import Foundation
-import UIKit
+import WireSyncEngine
+import DifferenceKit
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
+struct VideoStream: Equatable, Differentiable {
 
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
+    let stream: Stream
+    let isPaused: Bool
+
+    var differenceIdentifier: AVSClient {
+        return stream.streamId
     }
+
 }

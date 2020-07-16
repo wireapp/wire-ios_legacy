@@ -33,10 +33,10 @@ final class AudioMessageView: UIView, TransferView {
     private weak var mediaPlaybackManager: MediaPlaybackManager?
     
     var audioTrackPlayer: AudioTrackPlayer? {
-        let audioTrackPlayer = mediaPlaybackManager?.audioTrackPlayer
-
+        let mediaManager = mediaPlaybackManager ?? AppDelegate.shared.mediaPlaybackManager
+        let audioTrackPlayer = mediaManager?.audioTrackPlayer
         audioTrackPlayer?.audioTrackPlayerDelegate = self
-        return mediaPlaybackManager?.audioTrackPlayer
+        return audioTrackPlayer
     }
 
     private let downloadProgressView = CircularProgressView()
@@ -86,7 +86,7 @@ final class AudioMessageView: UIView, TransferView {
     private var isPausedForIncomingCall: Bool
 
     
-    init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
+    init(mediaPlaybackManager: MediaPlaybackManager? = nil) {
         isPausedForIncomingCall = false
         self.mediaPlaybackManager = mediaPlaybackManager
 

@@ -59,7 +59,7 @@ final class CallViewController: UIViewController {
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: true)
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
@@ -216,7 +216,7 @@ final class CallViewController: UIViewController {
     fileprivate func updateConfiguration() {
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager)
         callInfoRootViewController.configuration = callInfoConfiguration
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
         updateAppearance()

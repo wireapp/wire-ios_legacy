@@ -26,7 +26,6 @@ private let CellReuseIdConversation = "CellId"
 final class ConversationListContentController: UICollectionViewController {
     weak var contentDelegate: ConversationListContentDelegate?
     let listViewModel: ConversationListViewModel = ConversationListViewModel()
-    private weak var mediaPlaybackManager: MediaPlaybackManager?
     private var focusOnNextSelection = false
     private var animateNextSelection = false
     private weak var scrollToMessageOnNextSelection: ZMConversationMessage?
@@ -82,8 +81,6 @@ final class ConversationListContentController: UICollectionViewController {
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.activeMediaPlayerChanged()
         }
-
-        mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
     }
 
     override func viewWillDisappear(_ animated: Bool) {
