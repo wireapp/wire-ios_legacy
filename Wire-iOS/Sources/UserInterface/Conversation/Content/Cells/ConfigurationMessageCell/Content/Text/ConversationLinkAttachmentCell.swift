@@ -20,17 +20,26 @@ import UIKit
 import WireCommonComponents
 import WireDataModel
 
-final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
+final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView, ContextMenuDelegate {
 
     struct Configuration {
         let attachment: LinkAttachment
         let thumbnailResource: ImageResource?
     }
 
-    let attachmentView = MediaPreviewView()
+    lazy var attachmentView: MediaPreviewView = {
+        let view = MediaPreviewView()
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+        if #available(iOS 13.0, *) {
+            view.delegate = self
+            view.isUserInteractionEnabled = true
+        }
+
+        return view
+    }()
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
     var currentAttachment: LinkAttachment?
@@ -44,6 +53,7 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,20 +128,27 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
 
     // MARK: - Events
 
-    @objc private func handleTapGesture() {
+    @objc
+    private func handleTapGesture() {
         currentAttachment?.permalink.open()
     }
 
 }
 
-class ConversationLinkAttachmentCellDescription: ConversationMessageCellDescription {
+extension ConversationLinkAttachmentCell: LinkViewDelegate {
+    var url: URL? {
+        return currentAttachment?.permalink
+    }
+}
+
+final class ConversationLinkAttachmentCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationLinkAttachmentCell
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 8
 

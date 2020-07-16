@@ -220,6 +220,17 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
+    
+    func testGroupVideoEstablishedScreenSharing() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedScreenSharing)
+
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
 
     func testGroupVideoEstablishedPoorConnection() {
         // given

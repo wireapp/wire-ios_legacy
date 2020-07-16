@@ -56,4 +56,15 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         // THEN
         verify(view: sut.view)
     }
+    
+    func testThatImageIsDarkenWhenSelectedByMenu() {
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
+        
+        sut.setSelectedByMenu(true, animated: false)
+        // test for tap again does not add one more layer
+        sut.setSelectedByMenu(false, animated: false)
+        sut.setSelectedByMenu(true, animated: false)
+
+        verify(view: sut.view)
+    }
 }

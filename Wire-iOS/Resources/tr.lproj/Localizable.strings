@@ -994,7 +994,7 @@
 
 "self.settings.account_personal_information_group.title" = "Kişisel Bilgiler";
 
-"self.settings.account_picture_group.theme" = "Dark Theme";
+"self.settings.account_picture_group.theme" = "Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire her cihaza kendine has bir parmak izi verir. Cihazlarınızı ve konuşmalarınızı doğrulamak için parmak izlerinizi karşılaştırın.";
 "self.settings.device_details.reset_session.subtitle" = "Parmak izleri eşleşmezse, her iki tarafta da yeni şifreleme anahtarları oluşturmak için oturumu sıfırlayın.";
@@ -1095,6 +1095,11 @@
 "self.settings.popular_demand.send_button.title" = "Gönder butonu";
 "self.settings.popular_demand.send_button.footer" = "Giriş (Enter) tuşu ile göndermeyi devre dışı bırak.";
 "self.settings.popular_demand.dark_mode.footer" = "Karanlık ve aydınlık tema arasında geçiş yapın.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
 
 // Open in
 "self.settings.external_apps.header" = "Birlikte Aç";

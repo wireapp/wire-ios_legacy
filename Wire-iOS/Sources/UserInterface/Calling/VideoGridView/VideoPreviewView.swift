@@ -20,9 +20,8 @@ import Foundation
 import UIKit
 import avs
 
-final class VideoPreviewView: UIView, AVSIdentifierProvider {
+final class VideoPreviewView: BaseVideoPreviewView {
 
-    var stream: Stream
     var isPaused = false {
         didSet {
             guard oldValue != isPaused else { return }
@@ -42,23 +41,15 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
 
     private var userHasSetFillMode: Bool = false
     private var snapshotView: UIView?
-
-    init(stream: Stream) {
-        self.stream = stream
-        
-        super.init(frame: .zero)
-        
-        setupViews()
-        createConstraints()
+    
+    override init(stream: Stream) {
+        super.init(stream: stream)
         updateState()
     }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupViews() {
+    
+    override func setupViews() {
+        super.setupViews()
+        
         [blurView, pausedLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
@@ -66,7 +57,8 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         pausedLabel.textAlignment = .center
     }
 
-    private func createConstraints() {
+    override func createConstraints() {
+        super.createConstraints()
         blurView.fitInSuperview()
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -74,13 +66,13 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     
     private func createPreviewView() {
         let preview = AVSVideoView()
-        preview.userid = stream.userId.transportString()
-        preview.clientid = stream.clientId
+        preview.userid = stream.streamId.userId.transportString()
+        preview.clientid = stream.streamId.clientId
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)
         } else {
-            addSubview(preview)
+            insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
         preview.shouldFill = true
