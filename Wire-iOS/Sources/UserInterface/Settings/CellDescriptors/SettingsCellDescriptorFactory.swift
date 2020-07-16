@@ -252,6 +252,14 @@ class SettingsCellDescriptorFactory {
             }
         }
         developerCellDescriptors.append(appendManyMessages)
+        
+        let spamWithMessages = SettingsButtonCellDescriptor(title: "Spam the top conv", isDestructive: true) { _ in
+            
+            self.requestNumber() { count in
+                self.spamWithMessages(amount: count)
+            }
+        }
+        developerCellDescriptors.append(spamWithMessages)
 
         let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
         developerCellDescriptors.append(showStatistics)
@@ -546,6 +554,23 @@ class SettingsCellDescriptorFactory {
         
         userSession.enqueue {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
+        }
+    }
+    
+    /// Sends a message that will fail to decode on every other device, on the first conversation of the list
+    func spamWithMessages(amount: Int) {
+        guard
+            let userSession = ZMUserSession.shared(),
+            let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
+            else {
+                return
+        }
+        let nonce = UUID()
+        
+        userSession.enqueue {
+            (0...amount).forEach { i in
+                conversation.append(text: "This is message number \(i), serie \(nonce)")
+            }
         }
     }
     
