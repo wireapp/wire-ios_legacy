@@ -23,7 +23,6 @@ import AppCenterCrashes
 import WireDataModel
 import WireSyncEngine
 import avs
-import WireNotificationEngine
 
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -362,7 +361,7 @@ class SettingsCellDescriptorFactory {
     
     func helpSection() -> SettingsCellDescriptorType {
         
-        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
