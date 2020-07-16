@@ -37,7 +37,6 @@ final class VideoGridViewController: UIViewController {
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let mediaManager: AVSMediaManagerInterface
-    private var selfPreviewView: SelfVideoPreviewView?
     private var viewCache = [AVSClient: UIView]()
 
     // MARK: - Properties
@@ -268,6 +267,13 @@ final class VideoGridViewController: UIViewController {
         return stream
     }
 
+    private var selfPreviewView: SelfVideoPreviewView? {
+        guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else {
+            return nil
+        }
+        return viewCache[selfStreamId] as? SelfVideoPreviewView
+    }
+    
     private func videoConfigurationDescription() -> String {
         return """
         showing self preview: \(selfPreviewView != nil)
