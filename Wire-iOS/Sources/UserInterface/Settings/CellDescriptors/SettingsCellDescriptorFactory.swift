@@ -560,6 +560,7 @@ class SettingsCellDescriptorFactory {
     /// Sends a message that will fail to decode on every other device, on the first conversation of the list
     func spamWithMessages(amount: Int) {
         guard
+            amount > 0,
             let userSession = ZMUserSession.shared(),
             let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
             else {
@@ -567,11 +568,18 @@ class SettingsCellDescriptorFactory {
         }
         let nonce = UUID()
         
-        userSession.enqueue {
-            (0...amount).forEach { i in
-                conversation.append(text: "This is message number \(i), serie \(nonce)")
+        func sendNext(count: Int) {
+            userSession.enqueue {
+                conversation.append(text: "Message #\(count+1), series \(nonce)")
             }
+            guard count + 1 < amount else { return }
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 0.4,
+                execute: { sendNext(count: count + 1) }
+            )
         }
+        
+        sendNext(count: 0)
     }
     
     private static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
