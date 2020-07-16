@@ -24,5 +24,6 @@ struct Stream: Equatable {
     let streamId: AVSClient
     let participantName: String?
     let microphoneState: MicrophoneState?
+    let videoState: VideoState?
 
 }
