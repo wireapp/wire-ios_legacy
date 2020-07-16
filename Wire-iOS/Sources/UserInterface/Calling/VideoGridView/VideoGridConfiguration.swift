@@ -27,12 +27,20 @@ protocol VideoGridConfiguration {
 
 }
 
-// Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
-// to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
-// the `VideoGridViewController` generic to work around the `Self` requirement of
-// `Equatable` which we want to avoid.
+
 extension VideoGridConfiguration {
 
+    var allStreams: [VideoStream] {
+        guard let stream = floatingVideoStream else {
+            return videoStreams
+        }
+        return videoStreams + [stream]
+    }
+    
+    // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
+    // to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
+    // the `VideoGridViewController` generic to work around the `Self` requirement of
+    // `Equatable` which we want to avoid.
     func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&

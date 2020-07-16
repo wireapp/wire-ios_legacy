@@ -214,7 +214,7 @@ final class VideoGridViewController: UIViewController {
 
     private func pruneCache() {
         let existingStreamsIds = Set(viewCache.keys)
-        let currentStreamsIds = videoStreams.map(\.stream.streamId)
+        let currentStreamsIds = configuration.allStreams.map(\.stream.streamId)
 
         for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
             viewCache.removeValue(forKey: deletedStreamId)
