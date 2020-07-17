@@ -371,7 +371,16 @@ final class SettingsPropertyFactory {
                             }
                         }
             })
-            
+        case .enableConferenceCallingBeta:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    return SettingsPropertyValue(ZMConversation.callCenterConfiguration.useConferenceCalling)
+                },
+                setAction: { _,_  in
+                    // TODO
+                }
+            )
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)
