@@ -21,19 +21,19 @@ import UIKit
 import WireSystem
 
 final class AppLockView: UIView {
-    public var onReauthRequested: (()->())?
+    var onReauthRequested: (()->())?
     
-    public let shieldViewContainer = UIView()
-    public let contentContainerView = UIView()
-    public let blurView: UIVisualEffectView!
-    public let authenticateLabel: UILabel = {
+    let shieldViewContainer = UIView()
+    let contentContainerView = UIView()
+    let blurView: UIVisualEffectView!
+    let authenticateLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
         label.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return label
     }()
-    public let authenticateButton = Button(style: .fullMonochrome)
+    let authenticateButton = Button(style: .fullMonochrome)
     
     private var contentWidthConstraint: NSLayoutConstraint!
     private var contentCenterConstraint: NSLayoutConstraint!
@@ -44,7 +44,7 @@ final class AppLockView: UIView {
         return traitEnvironment.traitCollection.horizontalSizeClass
     }
 
-    public var showReauth: Bool = false {
+    var showReauth: Bool = false {
         didSet {
             self.authenticateLabel.isHidden = !showReauth
             self.authenticateButton.isHidden = !showReauth
