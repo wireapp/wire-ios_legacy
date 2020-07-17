@@ -30,11 +30,9 @@ protocol VideoGridConfiguration {
 
 extension VideoGridConfiguration {
 
-    var allStreams: [VideoStream] {
-        guard let stream = floatingVideoStream else {
-            return videoStreams
-        }
-        return videoStreams + [stream]
+    var allStreamIds: Set<AVSClient> {
+        let streamIds = (videoStreams + [floatingVideoStream]).compactMap { $0?.stream.streamId }
+        return Set(streamIds)
     }
     
     // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
