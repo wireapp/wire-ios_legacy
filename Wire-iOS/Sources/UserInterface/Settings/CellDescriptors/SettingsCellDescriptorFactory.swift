@@ -557,7 +557,7 @@ class SettingsCellDescriptorFactory {
         }
     }
     
-    /// Sends a message that will fail to decode on every other device, on the first conversation of the list
+    /// Sends a number of messages to the top conversation in the list, in an asynchronous fashion
     func spamWithMessages(amount: Int) {
         guard
             amount > 0,
@@ -612,5 +612,4 @@ class SettingsCellDescriptorFactory {
         controller.present(alert, animated: true)
     }
 }
-
 
