@@ -20,12 +20,27 @@ import Foundation
 import UIKit
 import WireSystem
 
+extension UIView {
+    static var shieldView: UIView {
+        let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
+        
+        let nibView = loadedObjects.first as! UIView
+
+        return nibView
+    }
+
+    static var blurView: UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: .dark)
+        return UIVisualEffectView(effect: blurEffect)
+    }
+}
+
 final class AppLockView: UIView {
     var onReauthRequested: (()->())?
     
     let shieldViewContainer = UIView()
     let contentContainerView = UIView()
-    let blurView: UIVisualEffectView!
+    let blurView: UIVisualEffectView = UIView.blurView
     let authenticateLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
@@ -52,15 +67,11 @@ final class AppLockView: UIView {
     }
 
     init(authenticationType: AuthenticationType = .current) {
-        let blurEffect = UIBlurEffect(style: .dark)
-        self.blurView = UIVisualEffectView(effect: blurEffect)
         
         super.init(frame: .zero)
         
-        let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
-        
-        let nibView = loadedObjects.first as! UIView
-        shieldViewContainer.addSubview(nibView)
+        let shieldView = UIView.shieldView
+        shieldViewContainer.addSubview(shieldView)
 
         addSubview(shieldViewContainer)
         addSubview(blurView)
@@ -88,7 +99,7 @@ final class AppLockView: UIView {
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
 
-        createConstraints(nibView: nibView)
+        createConstraints(nibView: shieldView)
 
         toggleConstraints()
     }
