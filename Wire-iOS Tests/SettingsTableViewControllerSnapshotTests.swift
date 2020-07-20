@@ -110,4 +110,14 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
         verify(matching: sut)
     }
+    
+    // MARK: - advanced
+    func testForAdvancedGroup() {
+        let group = settingsCellDescriptorFactory.advancedGroup()
+        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
+        
+        sut.view.backgroundColor = .black
+        
+        verify(matching: sut)
+    }
 }
