@@ -5367,6 +5367,7 @@
 		8FC8523C199245760008B66B /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
+				A9BB638024C1DD910072143A /* CustomAppLock */,
 				8FC85247199245760008B66B /* MediaBar */,
 				8FC85255199245760008B66B /* NotificationWindowRootViewController.swift */,
 				BFBBD1EC20D9238B00BFC4AD /* NotificationWindow.swift */,
@@ -5530,6 +5531,13 @@
 				A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */,
 			);
 			path = AVAsset;
+			sourceTree = "<group>";
+		};
+		A9BB638024C1DD910072143A /* CustomAppLock */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomAppLock;
 			sourceTree = "<group>";
 		};
 		A9DA5082240FFCEB00C2F886 /* Button */ = {
