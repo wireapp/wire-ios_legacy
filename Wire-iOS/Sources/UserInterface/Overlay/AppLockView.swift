@@ -21,15 +21,17 @@ import UIKit
 import WireSystem
 
 extension UIView {
-    static var shieldView: UIView {
+    static func shieldView() -> UIView {
         let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
         
         let nibView = loadedObjects.first as! UIView
 
         return nibView
     }
+}
 
-    static var blurView: UIVisualEffectView {
+extension UIVisualEffectView {
+    static func blurView() -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: .dark)
         return UIVisualEffectView(effect: blurEffect)
     }
@@ -40,7 +42,7 @@ final class AppLockView: UIView {
     
     let shieldViewContainer = UIView()
     let contentContainerView = UIView()
-    let blurView: UIVisualEffectView = UIView.blurView
+    let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
     let authenticateLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
@@ -70,7 +72,7 @@ final class AppLockView: UIView {
         
         super.init(frame: .zero)
         
-        let shieldView = UIView.shieldView
+        let shieldView = UIView.shieldView()
         shieldViewContainer.addSubview(shieldView)
 
         addSubview(shieldViewContainer)

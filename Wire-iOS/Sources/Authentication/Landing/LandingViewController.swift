@@ -17,8 +17,6 @@
 //
 
 import UIKit
-import WireSystem
-import WireTransport
 import WireSyncEngine
 
 protocol LandingViewControllerDelegate {
@@ -27,6 +25,28 @@ protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseLogin()
     func landingViewControllerDidChooseEnterpriseLogin()
     func landingViewControllerDidChooseSSOLogin()
+}
+
+extension UIStackView {
+    static func verticalStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        return stackView
+    }
+}
+
+extension Array where Element == UIView {
+    func disableAutoresizingMaskTranslation() {
+        for view in self {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
 }
 
 /// Landing screen for choosing how to authenticate.
@@ -97,17 +117,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let buttonStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.distribution = .fillEqually
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.alignment = .fill
-        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
-        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        return stackView
-    }()
+    let buttonStackView: UIStackView = UIStackView.verticalStackView()
     
     let enterpriseLoginButton: Button = {
         let button = Button(style: .fullMonochrome, variant: .light)
@@ -291,13 +301,11 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     private func createConstraints() {
-        disableAutoresizingMaskTranslation(for: [
-            topStack,
+        [topStack,
             contentView,
             buttonStackView,
             enterpriseLoginButton,
-            messageLabel
-        ])
+            messageLabel].disableAutoresizingMaskTranslation()
         
         let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
         widthConstraint.priority = .defaultHigh
@@ -325,6 +333,7 @@ final class LandingViewController: AuthenticationStepViewController {
             buttonStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             buttonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             buttonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
             createAccountButton.heightAnchor.constraint(equalToConstant: 48),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
             loginWithEmailButton.heightAnchor.constraint(equalToConstant: 48),
@@ -341,12 +350,6 @@ final class LandingViewController: AuthenticationStepViewController {
         ])
     }
     
-    private func disableAutoresizingMaskTranslation(for views: [UIView]) {
-        for view in views {
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-
     // MARK: - Adaptivity Events
     
     private func updateLogoView() {
