@@ -81,7 +81,7 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var versionSection: SettingsSectionDescriptor {
-        let title =  "self.settings.advanced.version_technical_details.title".localized
+        let title = "self.settings.advanced.version_technical_details.title".localized
         let versionCell = SettingsButtonCellDescriptor(title: title, isDestructive: false) { _ in
             let versionInfoViewController = VersionInfoViewController()
             var superViewController = UIApplication.shared.keyWindow?.rootViewController
