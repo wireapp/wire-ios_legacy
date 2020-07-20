@@ -30,6 +30,16 @@ final class UnlockViewController: UIViewController {
         return view
     }()
     
+    let unlockButton: Button = {
+        let button = Button(style: .fullMonochrome)
+        
+        button.setTitle("unlock".localized, for: .normal)
+        
+        ///TODO: lazy add target
+        return button
+    }()
+
+    
     convenience init() {
         self.init(nibName:nil, bundle:nil)
         
@@ -43,13 +53,30 @@ final class UnlockViewController: UIViewController {
         //TODO: copy, factory
         let label = UILabel(key: "Enter Passcode to unlock Wire".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
         
+        ///TODO: multiple line
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        
         stackView.addArrangedSubview(label)
-        
-        
+
+        let hintLabel = UILabel(key: "Passcode".localized, size: .small, weight: .regular, color: .textForeground, variant: .dark)
+        stackView.addArrangedSubview(hintLabel)
+
+        ///TODO: round corner, override icon, placeholder
+        let accessoryTextField = AccessoryTextField(kind: .passcode, leftInset: 0)
+        stackView.addArrangedSubview(accessoryTextField)
+
+        let errorLabel = UILabel(key: "Incorrect passcode".localized, size: .small, weight: .regular, color: .textForeground, variant: .dark) //TODO: red, icon
+        stackView.addArrangedSubview(errorLabel)
+
+        ///TODO: keep a var
+        let linkLabel = UILabel(key: "Forgot passcode?".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark) //TODO: red, icon
+        linkLabel.textAlignment = .center
+        linkLabel.numberOfLines = 1
+        stackView.addArrangedSubview(linkLabel)
+
+        stackView.addArrangedSubview(unlockButton)
+
         createConstraints()
     }
     
@@ -68,6 +95,7 @@ final class UnlockViewController: UIViewController {
         let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
         widthConstraint.priority = .defaultHigh
         
+        let contentPadding: CGFloat = 24
         NSLayoutConstraint.activate([
             // nibView
             shieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -87,14 +115,18 @@ final class UnlockViewController: UIViewController {
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
-            contentView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
+            contentView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: contentPadding),
+            contentView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -contentPadding),
             
             // stack view
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
+            // authenticateButton
+            unlockButton.heightAnchor.constraint(equalToConstant: 40),
+            unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor), 
         ])
     }
     

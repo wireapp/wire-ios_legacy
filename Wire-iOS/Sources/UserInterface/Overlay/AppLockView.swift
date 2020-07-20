@@ -155,8 +155,7 @@ final class AppLockView: UIView {
             authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
             authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
             authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
-            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -24),
-        ])
+            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -24)])
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
