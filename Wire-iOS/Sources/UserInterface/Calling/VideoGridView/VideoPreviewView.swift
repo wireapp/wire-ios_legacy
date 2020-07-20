@@ -52,7 +52,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         
         [blurView, pausedLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)
+            insertSubview($0, belowSubview: userDetailsView)
         }
         pausedLabel.textAlignment = .center
     }
