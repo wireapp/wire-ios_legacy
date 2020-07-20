@@ -59,16 +59,15 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func evaluateAuthentication(description: String) {
-        appLock.evaluateAuthentication(description: description.localized) { [weak self] result in
+        appLock.evaluateAuthentication(scenario: authenticationScenario,
+                                       description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
-            
-            if case .granted = result, let context = AppLock.weakLAContext {
-                self.dispatchQueue.async {
+                        
+            self.dispatchQueue.async {
+                if case .granted = result {
                     try? ZMUserSession.shared()?.unlockDatabase(with: context)
                 }
-            }
-            
-            self.dispatchQueue.async {
+                
                 self.output?.authenticationEvaluated(with: result)
             }
         }
@@ -96,6 +95,16 @@ extension AppLockInteractor: AppLockInteractorInput {
 
 // MARK: - Helpers
 extension AppLockInteractor {
+    
+    private var authenticationScenario: AppLock.AuthenticationScenario {
+        if isDatabaseLocked {
+            return .databaseLock
+        } else {
+            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+                               grantAccessIfNoPasscodeIsSet: !AppLock.rules.forceAppLock)
+        }
+    }
+    
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
         self.dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
