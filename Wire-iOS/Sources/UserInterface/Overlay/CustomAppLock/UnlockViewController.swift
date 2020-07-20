@@ -20,4 +20,37 @@ import Foundation
 import UIKit
 
 final class UnlockViewController: UIViewController {
+    
+    private let shieldView = UIView.shieldView()
+    private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
+    
+    convenience init() {
+        self.init(nibName:nil, bundle:nil)
+        
+        view.addSubview(shieldView)
+        view.addSubview(blurView)
+        
+        createConstraints()
+    }
+    
+    private func createConstraints(/*nibView: UIView*/) {
+        [shieldView, blurView].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate([
+            // nibView
+            shieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            shieldView.topAnchor.constraint(equalTo: view.topAnchor),
+            shieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            shieldView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // blurView
+            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
 }
