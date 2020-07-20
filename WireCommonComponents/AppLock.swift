@@ -60,7 +60,7 @@ public class AppLock {
     }
 
     /// a weak reference to LAContext, it should be nil when evaluatePolicy is done.
-    private static weak var weakLAContext: LAContext? = nil
+    public static weak var weakLAContext: LAContext? = nil // TODO jacob make private again
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
     public class func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {

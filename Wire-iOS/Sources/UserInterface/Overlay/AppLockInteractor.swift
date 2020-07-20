@@ -53,12 +53,21 @@ class AppLockInteractor {
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
     var isAuthenticationNeeded: Bool {
-        return appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        
+        return screenLockIsActive || isDatabaseLocked
     }
     
     func evaluateAuthentication(description: String) {
         appLock.evaluateAuthentication(description: description.localized) { [weak self] result in
             guard let `self` = self else { return }
+            
+            if case .granted = result, let context = AppLock.weakLAContext {
+                self.dispatchQueue.async {
+                    try? ZMUserSession.shared()?.unlockDatabase(with: context)
+                }
+            }
+            
             self.dispatchQueue.async {
                 self.output?.authenticationEvaluated(with: result)
             }
@@ -91,6 +100,14 @@ extension AppLockInteractor {
         self.dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
         }
+    }
+    
+    private var isDatabaseLocked: Bool {
+        guard let state = appState else { return false }
+        if case AppState.authenticated(completedRegistration: _, databaseIsLocked: let isDatabaseLocked) = state {
+            return isDatabaseLocked
+        }
+        return false
     }
     
     private var isAppStateAuthenticated: Bool {
