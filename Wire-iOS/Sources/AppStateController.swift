@@ -215,7 +215,7 @@ extension AppStateController : SessionManagerDelegate {
         }
         
         databaseEncryptionObserverToken = userSession.registerDatabaseLockedHandler({ [weak self] (isDatabaseLocked) in
-            self?.isDatabaseLocked = false
+            self?.isDatabaseLocked = isDatabaseLocked
             self?.updateAppState()
         })
     }
