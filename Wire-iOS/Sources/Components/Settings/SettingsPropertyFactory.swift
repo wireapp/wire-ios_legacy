@@ -377,8 +377,10 @@ final class SettingsPropertyFactory {
                 getAction: { _ in
                     return SettingsPropertyValue(ZMConversation.callCenterConfiguration.useConferenceCalling)
                 },
-                setAction: { _,_  in
-                    // TODO
+                setAction: { _, value  in
+                    if case .bool(let enabled) = value {
+                        ZMConversation.callCenterConfiguration.useConferenceCalling = enabled
+                    }
                 }
             )
         default:
