@@ -68,11 +68,7 @@ public class AppLock {
             case .screenLock(requireBiometrics: let requireBiometrics, grantAccessIfNoPasscodeIsSet: _):
                 return requireBiometrics ? .deviceOwnerAuthenticationWithBiometrics : .deviceOwnerAuthentication
             case .databaseLock:
-                #if targetEnvironment(simulator)
-                    return .deviceOwnerAuthentication
-                #else
-                    return .deviceOwnerAuthenticationWithBiometrics
-                #endif
+                return .deviceOwnerAuthentication
                 
             }
         }
