@@ -213,11 +213,9 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         guard let passcode = accessoryTextField.text else { return }
         
         if !viewModel.unlock(passcode: passcode) {
-            //TODO: show error label
+            // show error label
             errorLabel.text = "❗Incorrect passcode".localized //TODO: leading icon
             unlockButton.isEnabled = false
-            
-            ///TODO: clean error state when removed the passcode
         }
     }
 
