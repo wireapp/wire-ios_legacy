@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,11 +21,11 @@ import SnapshotTesting
 
 final class UnlockViewControllerTests: XCTestCase {
     var sut: UnlockViewController!
-    
+
     override func setUp() {
         sut = UnlockViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
     }
@@ -35,11 +34,11 @@ final class UnlockViewControllerTests: XCTestCase {
         sut.accessoryTextField.text = "Passcode"
         sut.validationUpdated(sender: sut.accessoryTextField, error: nil)
     }
-    
+
     func testForInitState() {
         verify(matching: sut)
     }
-    
+
     func testForPasscodeFilled() {
         // GIVEN & WHEN
         fillPasscode()
@@ -47,7 +46,7 @@ final class UnlockViewControllerTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     //TODO: inject VM 
     func testForErrorState() {
         // GIVEN
@@ -55,7 +54,7 @@ final class UnlockViewControllerTests: XCTestCase {
 
         // WHEN
         sut.onUnlockButtonPressed(sender: nil)
-        
+
         // THEN
         verify(matching: sut)
     }
@@ -63,10 +62,10 @@ final class UnlockViewControllerTests: XCTestCase {
     func testForPasscodeRevealed() {
         // GIVEN
         fillPasscode()
-        
+
         // WHEN
         sut.buttonPressed(UIButton())
-        
+
         // THEN
         verify(matching: sut)
     }

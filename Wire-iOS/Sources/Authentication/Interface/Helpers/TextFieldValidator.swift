@@ -21,7 +21,7 @@ import WireUtilities
 import UIKit
 
 class TextFieldValidator {
-    
+
     var customValidator: ((String) -> ValidationError?)?
 
     enum ValidationError: Error, Equatable {
@@ -37,7 +37,7 @@ class TextFieldValidator {
         guard let text = text else {
             return nil
         }
-        
+
         if let customError = customValidator?(text) {
             return customError
         }
@@ -49,7 +49,7 @@ class TextFieldValidator {
             } else if !text.isEmail {
                 return .invalidEmail
             }
-            
+
         case .password(let isNew):
             if isNew {
                 // If the user is registering, enforce the password rules
@@ -60,7 +60,7 @@ class TextFieldValidator {
                 return text.isEmpty ? .tooShort(kind: kind) : nil
             }
 
-        case .passcode: ///TODO: new code case?
+        case .passcode:
             return text.isEmpty ? .tooShort(kind: kind) : nil
 
         case .name:
