@@ -30,7 +30,6 @@ protocol LandingViewControllerDelegate {
 extension UIStackView {
     static func verticalStackView() -> UIStackView {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.alignment = .fill
@@ -255,10 +254,11 @@ final class LandingViewController: AuthenticationStepViewController {
         
         //TODO: debug
         
-        let viewController = UnlockViewController()
+        let viewController = KeyboardAvoidingViewController(viewController: UnlockViewController())
         viewController.modalPresentationStyle = .fullScreen
         
         present(viewController, animated: false)
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -290,6 +290,8 @@ final class LandingViewController: AuthenticationStepViewController {
         contentView.addSubview(topStack)
 
         contentView.addSubview(messageLabel)
+
+        buttonStackView.distribution = .fillEqually
         buttonStackView.addArrangedSubview(createAccountButton)
         buttonStackView.addArrangedSubview(loginButton)
         buttonStackView.addArrangedSubview(loginWithEmailButton)

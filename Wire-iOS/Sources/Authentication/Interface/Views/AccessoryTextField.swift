@@ -30,6 +30,10 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
+protocol AccessoryTextFieldDelegate: class {
+    func buttonPressed(_ sender: UIButton)
+}
+
 final class AccessoryTextField: UITextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
@@ -42,6 +46,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     
     let textFieldValidator: TextFieldValidator
     weak var textFieldValidationDelegate: TextFieldValidationDelegate?
+    weak var accessoryTextFieldDelegate: AccessoryTextFieldDelegate?
     
     // MARK: - UI constants
     
@@ -79,7 +84,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         }
     }
     
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
+    @objc
+    dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
         didSet {
             applyColorScheme(colorSchemeVariant)
         }
@@ -288,8 +294,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         accessoryStack.addArrangedSubview(guidanceDot)
         accessoryStack.addArrangedSubview(confirmButton)
         
-        self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
-        self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
+        addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
         accessoryStack.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.addSubview(accessoryStack)
@@ -322,7 +328,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         return editingRect.inset(by: textInsets.directionAwareInsets)
     }
     
-    @objc func textFieldDidChange(textField: UITextField) {
+    @objc
+    func textFieldDidChange(textField: UITextField) {
         updateText(input)
     }
     
@@ -338,7 +345,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
     
     private func updateConfirmButton() {
-        if let boundTextField = self.boundTextField {
+        if let boundTextField = boundTextField {
             confirmButton.isEnabled = boundTextField.isInputValid && self.isInputValid
         } else {
             confirmButton.isEnabled = isInputValid
@@ -347,7 +354,9 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     
     // MARK: - text validation
     
-    @objc func confirmButtonTapped(button: UIButton) {
+    @objc
+    private func confirmButtonTapped(button: UIButton) {
+        accessoryTextFieldDelegate?.buttonPressed(button)
         validateInput()
     }
     

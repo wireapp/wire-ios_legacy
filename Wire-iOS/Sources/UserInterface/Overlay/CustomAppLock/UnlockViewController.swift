@@ -18,8 +18,15 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
-final class UnlockViewController: UIViewController {
+// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
+final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate {
+    final class UnlockViewModel {
+        
+    }
+    
+    private let viewModel: UnlockViewModel = UnlockViewModel()
     
     private let shieldView = UIView.shieldView()
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
@@ -38,39 +45,55 @@ final class UnlockViewController: UIViewController {
         ///TODO: lazy add target
         return button
     }()
+    
+    //TODO: mv to style file
+    private let revealIcon: StyleKitIcon = .cross //TODO: add eye with splash
+    
+    lazy var accessoryTextField: AccessoryTextField = {
+        let textField = AccessoryTextField(kind: .passcode, leftInset: 0)
+        ///TODO: round corner, override icon, placeholder
+        textField.overrideButtonIcon = revealIcon
+        textField.accessoryTextFieldDelegate = self
 
+        return textField
+    }()
+    
+    let titleLabel: UILabel = {
+        //TODO: copy
+        let label = UILabel(key: "Enter Passcode to unlock Wire".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        return label
+    }()
     
     convenience init() {
         self.init(nibName:nil, bundle:nil)
         
-        view.addSubview(shieldView)
-        view.addSubview(blurView)
+        [shieldView, blurView, contentView].forEach() {
+            view.addSubview($0)
+        }
         
-        view.addSubview(contentView)
+        stackView.distribution = .fillProportionally
         
         contentView.addSubview(stackView)
         
-        //TODO: copy, factory
-        let label = UILabel(key: "Enter Passcode to unlock Wire".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
-        
-        ///TODO: multiple line
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        stackView.addArrangedSubview(label)
+        stackView.addArrangedSubview(titleLabel)
 
         let hintLabel = UILabel(key: "Passcode".localized, size: .small, weight: .regular, color: .textForeground, variant: .dark)
         stackView.addArrangedSubview(hintLabel)
 
-        ///TODO: round corner, override icon, placeholder
-        let accessoryTextField = AccessoryTextField(kind: .passcode, leftInset: 0)
         stackView.addArrangedSubview(accessoryTextField)
 
         let errorLabel = UILabel(key: "Incorrect passcode".localized, size: .small, weight: .regular, color: .textForeground, variant: .dark) //TODO: red, icon
         stackView.addArrangedSubview(errorLabel)
 
-        ///TODO: keep a var
-        let linkLabel = UILabel(key: "Forgot passcode?".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark) //TODO: red, icon
+        ///TODO: keep a var, link
+        let linkLabel = UILabel(key: "Forgot passcode?".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
         linkLabel.textAlignment = .center
         linkLabel.numberOfLines = 1
         stackView.addArrangedSubview(linkLabel)
@@ -85,7 +108,7 @@ final class UnlockViewController: UIViewController {
         return .lightContent
     }
     
-    private func createConstraints(/*nibView: UIView*/) { ///TODO: snapshot test
+    private func createConstraints(/*nibView: UIView*/) {
         
         [shieldView,
          blurView,
@@ -130,4 +153,11 @@ final class UnlockViewController: UIViewController {
         ])
     }
     
+    // MARK: - AccessoryTextFieldDelegate
+    func buttonPressed(_ sender: UIButton) {
+        accessoryTextField.isSecureTextEntry = !accessoryTextField.isSecureTextEntry
+        
+        accessoryTextField.overrideButtonIcon = accessoryTextField.isSecureTextEntry ? revealIcon : .eye ///TODO: mv to style file
+    }
+
 }
