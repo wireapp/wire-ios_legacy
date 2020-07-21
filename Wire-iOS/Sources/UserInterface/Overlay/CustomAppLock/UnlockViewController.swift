@@ -26,9 +26,18 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     
     final class UnlockViewModel {
         
+        /// unlock with passcode
+        /// - Returns: true if succeed
+        func unlock(passcode: String) -> Bool {
+            //TODO: logic
+            return false
+        }
     }
     
-    private let viewModel: UnlockViewModel = UnlockViewModel()
+    private let viewModel: UnlockViewModel = {
+        let unlockViewModel = UnlockViewModel()
+        return unlockViewModel
+    }()
     
     private let shieldView = UIView.shieldView()
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
@@ -39,13 +48,14 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         return view
     }()
     
-    private let unlockButton: Button = {
+    private lazy var unlockButton: Button = {
         let button = Button(style: .fullMonochrome)
         
         button.setTitle("unlock".localized, for: .normal)
         button.isEnabled = false
         
-        ///TODO: lazy add target
+        button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
+
         return button
     }()
     
@@ -82,11 +92,10 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     
     private let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "123"
+        label.text = " "
         label.font = FontSpec(.small, .regular).font
         label.textColor = .red ///TODO: get form spec
 
-//        "Incorrect passcode".localized
         return label
     }()
     
@@ -187,6 +196,19 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         ])
     }
     
+    @objc
+    private func onUnlockButtonPressed(sender: AnyObject?) {
+        guard let passcode = accessoryTextField.text else { return }
+        
+        if !viewModel.unlock(passcode: passcode) {
+            //TODO: show error label
+            errorLabel.text = "Incorrect passcode".localized //TODO: leading icon 
+            unlockButton.isEnabled = false
+            
+            ///TODO: clean error state when removed the passcode
+        }
+    }
+
     // MARK: - AccessoryTextFieldDelegate
     
     func buttonPressed(_ sender: UIButton) {
