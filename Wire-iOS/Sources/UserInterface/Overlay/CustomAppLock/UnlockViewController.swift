@@ -65,6 +65,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     private lazy var accessoryTextField: AccessoryTextField = {
         let textField = AccessoryTextField(kind: .passcode,
                                            leftInset: 0,
+                                           accessoryTrailingInset: 0,
                                            cornerRadius: 4)
         textField.placeholder = "Enter your passcode".localized //TODO:
         
@@ -93,9 +94,26 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = " "
-        label.font = FontSpec(.small, .regular).font
+        label.font = FontSpec(.small, .regular).font!.withSize(10)
         label.textColor = .red ///TODO: get form spec
 
+        return label
+    }()
+    
+    private let hintLabel: UILabel = {
+        let label = UILabel()
+
+        label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
+        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+
+        let leadingMargin: CGFloat = AccessoryTextField.textHorizonalInset
+        
+        let style = NSMutableParagraphStyle()
+        style.firstLineHeadIndent = leadingMargin
+        style.headIndent = leadingMargin
+        
+        label.attributedText = NSAttributedString(string: "Passcode".localized,
+                                                  attributes: [NSAttributedString.Key.paragraphStyle: style])
         return label
     }()
     
@@ -109,13 +127,6 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         stackView.distribution = .fillProportionally
         
         contentView.addSubview(stackView)
-        
-
-        let hintLabel = UILabel()
-        hintLabel.text = "Passcode".localized
-        hintLabel.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
-        hintLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        
 
         ///TODO: keep a var, link
         let linkLabel = UILabel(key: "Forgot passcode?".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
@@ -189,6 +200,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
             accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
             accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
 
+            
             // authenticateButton
             unlockButton.heightAnchor.constraint(equalToConstant: 40),
             unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
@@ -202,7 +214,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         
         if !viewModel.unlock(passcode: passcode) {
             //TODO: show error label
-            errorLabel.text = "Incorrect passcode".localized //TODO: leading icon 
+            errorLabel.text = "❗Incorrect passcode".localized //TODO: leading icon
             unlockButton.isEnabled = false
             
             ///TODO: clean error state when removed the passcode
@@ -221,5 +233,6 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         unlockButton.isEnabled = error == nil
+        errorLabel.text = " "
     }
 }

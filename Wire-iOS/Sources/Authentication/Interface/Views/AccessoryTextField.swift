@@ -130,7 +130,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         return indicator
     }()
     
-    let accessoryStack: UIStackView = {
+    private let accessoryStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 16
@@ -140,9 +140,11 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }()
     
     let accessoryContainer = UIView()
-    
-    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    static let textHorizonalInset: CGFloat = 16
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: textHorizonalInset, bottom: 0, right: textHorizonalInset)
     let placeholderInsets: UIEdgeInsets
+    
+    let accessoryTrailingInset: CGFloat
     
     convenience override init(frame: CGRect) {
         self.init(kind: .unknown, leftInset: 8)
@@ -155,6 +157,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     ///   - cornerRadius: optional corner radius override
     init(kind: Kind = .unknown,
          leftInset: CGFloat = 8,
+         accessoryTrailingInset: CGFloat = 16,
          cornerRadius: CGFloat? = nil) {
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
@@ -168,6 +171,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         textFieldValidator = TextFieldValidator()
         
         self.kind = kind
+        self.accessoryTrailingInset = accessoryTrailingInset
         
         super.init(frame: .zero)
         self.setupTextFieldProperties()
@@ -200,6 +204,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         applyColorScheme(colorSchemeVariant)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -320,8 +325,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             accessoryStack.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
             accessoryStack.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
             accessoryStack.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: 0),
-            accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -16),
-        ])
+            accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -accessoryTrailingInset)])
     }
     
     // MARK: - custom edge insets
