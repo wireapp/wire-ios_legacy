@@ -230,14 +230,6 @@ final class LandingViewController: AuthenticationStepViewController {
             self.updateCustomBackendLabels()
             self.updateButtons()
         }
-
-        //TODO: debug
-
-        let viewController = KeyboardAvoidingViewController(viewController: UnlockViewController())
-        viewController.modalPresentationStyle = .fullScreen
-
-        present(viewController, animated: false)
-
     }
 
     override func viewDidAppear(_ animated: Bool) {

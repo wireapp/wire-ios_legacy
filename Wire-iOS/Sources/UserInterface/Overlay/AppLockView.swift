@@ -21,7 +21,7 @@ import UIKit
 import WireSystem
 
 final class AppLockView: UIView {
-    var onReauthRequested: (()->Void)?
+    var onReauthRequested: Completion?
 
     let shieldViewContainer = UIView()
     let contentContainerView = UIView()

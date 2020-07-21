@@ -57,10 +57,7 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    //TODO: mv to style file
-    private let revealIcon: StyleKitIcon = .cross //TODO: add eye with splash
-    private let passcodeTextFieldHeight: CGFloat = 40
-
+    private let revealIcon: StyleKitIcon = .cross
     lazy var accessoryTextField: AccessoryTextField = {
         let textField = AccessoryTextField(kind: .passcode,
                                            leftInset: 0,
@@ -72,7 +69,7 @@ final class UnlockViewController: UIViewController {
         textField.accessoryTextFieldDelegate = self
         textField.textFieldValidationDelegate = self
 
-        textField.heightAnchor.constraint(equalToConstant: passcodeTextFieldHeight).isActive = true
+        textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true
 
         return textField
     }()
@@ -104,7 +101,7 @@ final class UnlockViewController: UIViewController {
         label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
         label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
 
-        let leadingMargin: CGFloat = AccessoryTextField.textHorizonalInset
+        let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
 
         let style = NSMutableParagraphStyle()
         style.firstLineHeadIndent = leadingMargin
@@ -159,7 +156,7 @@ final class UnlockViewController: UIViewController {
         accessoryTextField.becomeFirstResponder()
     }
 
-    private func createConstraints(/*nibView: UIView*/) {
+    private func createConstraints() {
 
         [shieldView,
          blurView,
@@ -203,7 +200,7 @@ final class UnlockViewController: UIViewController {
             accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
 
             // authenticateButton
-            unlockButton.heightAnchor.constraint(equalToConstant: 40),
+            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
             unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
         ])

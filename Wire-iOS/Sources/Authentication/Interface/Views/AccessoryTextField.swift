@@ -113,7 +113,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         case .passcode:
             iconButton = IconButton(style: .default, variant: .light)
             iconButton.accessibilityIdentifier = "RevealButton"
-            iconButton.accessibilityLabel = "Reveal passcode".localized //TODO
+            iconButton.accessibilityLabel = "Reveal passcode".localized
         default:
             iconButton = IconButton(style: .circular, variant: .dark)
             iconButton.accessibilityIdentifier = "ConfirmButton"
@@ -140,8 +140,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }()
 
     let accessoryContainer = UIView()
-    static let textHorizonalInset: CGFloat = 16
-    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: textHorizonalInset, bottom: 0, right: textHorizonalInset)
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat.AccessoryTextField.horizonalInset, bottom: 0, right: CGFloat.AccessoryTextField.horizonalInset)
     let placeholderInsets: UIEdgeInsets
 
     let accessoryTrailingInset: CGFloat
