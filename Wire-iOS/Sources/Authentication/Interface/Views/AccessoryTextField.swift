@@ -149,9 +149,13 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
     
     /// Init with kind for keyboard style and validator type. Default is .unknown
-    ///
-    /// - Parameter kind: the type of text field
-    init(kind: Kind = .unknown, leftInset: CGFloat = 8) {
+    /// - Parameters:
+    ///   - kind: the type of text field
+    ///   - leftInset: placeholder left inset
+    ///   - cornerRadius: optional corner radius override
+    init(kind: Kind = .unknown,
+         leftInset: CGFloat = 8,
+         cornerRadius: CGFloat? = nil) {
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
             topInset = 0
@@ -182,6 +186,11 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         default:
             break
         }
+        
+        if let cornerRadius = cornerRadius {
+            layer.cornerRadius = cornerRadius
+        }
+        
         layer.masksToBounds = true
         backgroundColor = UIColor.Team.textfieldColor
         
