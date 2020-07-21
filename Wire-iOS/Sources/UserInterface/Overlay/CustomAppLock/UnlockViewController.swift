@@ -90,7 +90,7 @@ final class UnlockViewController: UIViewController {
         let label = UILabel()
         label.text = " "
         label.font = FontSpec(.small, .regular).font!.withSize(10)
-        label.textColor = .red ///TODO: get form spec, share with icon attachment
+        label.textColor = UIColor.PasscodeUnlock.error
 
         return label
     }()
@@ -212,8 +212,8 @@ final class UnlockViewController: UIViewController {
 
         if !viewModel.unlock(passcode: passcode) {
             // show error label
-            //TODO: new icon and color
-            let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: .red, iconSize: .nano)
+            //TODO: new icon
+            let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: UIColor.PasscodeUnlock.error, iconSize: .nano)
 
             errorLabel.attributedText = NSAttributedString(attachment: imageIcon) + NSAttributedString(string: "unlock.error_label".localized)
             unlockButton.isEnabled = false
