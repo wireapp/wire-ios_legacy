@@ -28,7 +28,7 @@ extension Float {
 
 extension CGFloat {
     enum PasscodeUnlock {
-        static let textFieldHeight: CGFloat = 16
+        static let textFieldHeight: CGFloat = 40
         static let buttonHeight: CGFloat = 40
     }
     
