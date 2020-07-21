@@ -1766,3 +1766,11 @@
 "button_message_cell.state.confirmed" = "confirmed";
 
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter Passcode to unlock Wire";
+"unlock.hint_label" = "Passcode";
+"unlock.link_label" = "Forgot passcode?";
+"unlock.error_label" = "Incorrect passcode";
+"unlock.submit_button.title" = "unlock";

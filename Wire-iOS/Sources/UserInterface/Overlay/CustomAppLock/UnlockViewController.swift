@@ -51,7 +51,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     private lazy var unlockButton: Button = {
         let button = Button(style: .fullMonochrome)
         
-        button.setTitle("unlock".localized, for: .normal)
+        button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
         
         button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
@@ -67,7 +67,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 4)
-        textField.placeholder = "Enter your passcode".localized //TODO:
+        textField.placeholder = "unlock.textfield.placeholder".localized
         
         textField.overrideButtonIcon = revealIcon
         textField.accessoryTextFieldDelegate = self
@@ -80,7 +80,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     
     private let titleLabel: UILabel = {
         //TODO: copy
-        let label = UILabel(key: "Enter Passcode to unlock Wire".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
         
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -95,7 +95,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         let label = UILabel()
         label.text = " "
         label.font = FontSpec(.small, .regular).font!.withSize(10)
-        label.textColor = .red ///TODO: get form spec
+        label.textColor = .red ///TODO: get form spec, share with icon attachment
 
         return label
     }()
@@ -112,8 +112,17 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         style.firstLineHeadIndent = leadingMargin
         style.headIndent = leadingMargin
         
-        label.attributedText = NSAttributedString(string: "Passcode".localized,
+        label.attributedText = NSAttributedString(string: "unlock.hint_label".localized,
                                                   attributes: [NSAttributedString.Key.paragraphStyle: style])
+        return label
+    }()
+    
+    private let linkLabel: UILabel = {
+        ///TODO: link button
+        let label = UILabel(key: "unlock.link_label".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        
         return label
     }()
     
@@ -128,15 +137,12 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         
         contentView.addSubview(stackView)
 
-        ///TODO: keep a var, link
-        let linkLabel = UILabel(key: "Forgot passcode?".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
-        linkLabel.textAlignment = .center
-        linkLabel.numberOfLines = 1
 
         [titleLabel,
          hintLabel,
          accessoryTextField,
          errorLabel,
+         SpacingView(5),
          linkLabel,
          SpacingView(25),
          unlockButton].forEach() {
@@ -214,7 +220,10 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         
         if !viewModel.unlock(passcode: passcode) {
             // show error label
-            errorLabel.text = "❗Incorrect passcode".localized //TODO: leading icon
+            //TODO: new icon and color
+            let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: .red, iconSize: .nano)
+
+            errorLabel.attributedText = NSAttributedString(attachment: imageIcon) + NSAttributedString(string: "unlock.error_label".localized)
             unlockButton.isEnabled = false
         }
     }
