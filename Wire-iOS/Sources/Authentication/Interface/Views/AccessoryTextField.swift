@@ -114,12 +114,13 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             iconButton = IconButton(style: .default, variant: .light)
             iconButton.accessibilityIdentifier = "RevealButton"
             iconButton.accessibilityLabel = "Reveal passcode".localized
+            iconButton.isEnabled = true
         default:
             iconButton = IconButton(style: .circular, variant: .dark)
             iconButton.accessibilityIdentifier = "ConfirmButton"
             iconButton.accessibilityLabel = "general.next".localized
+            iconButton.isEnabled = false
         }
-        iconButton.isEnabled = true
         return iconButton
     }()
 
