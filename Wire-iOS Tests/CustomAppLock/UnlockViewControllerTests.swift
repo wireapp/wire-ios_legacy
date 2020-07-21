@@ -31,7 +31,43 @@ final class UnlockViewControllerTests: XCTestCase {
         sut = nil
     }
 
+    private func fillPasscode() {
+        sut.accessoryTextField.text = "Passcode"
+        sut.validationUpdated(sender: sut.accessoryTextField, error: nil)
+    }
+    
     func testForInitState() {
+        verify(matching: sut)
+    }
+    
+    func testForPasscodeFilled() {
+        // GIVEN & WHEN
+        fillPasscode()
+
+        // THEN
+        verify(matching: sut)
+    }
+    
+    //TODO: inject VM 
+    func testForErrorState() {
+        // GIVEN
+        fillPasscode()
+
+        // WHEN
+        sut.onUnlockButtonPressed(sender: nil)
+        
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testForPasscodeRevealed() {
+        // GIVEN
+        fillPasscode()
+        
+        // WHEN
+        sut.buttonPressed(UIButton())
+        
+        // THEN
         verify(matching: sut)
     }
 }

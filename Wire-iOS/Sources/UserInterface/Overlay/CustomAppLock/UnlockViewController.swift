@@ -22,7 +22,7 @@ import WireCommonComponents
 
 
 // This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
-final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, TextFieldValidationDelegate {
+final class UnlockViewController: UIViewController {
     
     final class UnlockViewModel {
         
@@ -61,8 +61,9 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     
     //TODO: mv to style file
     private let revealIcon: StyleKitIcon = .cross //TODO: add eye with splash
+    private let passcodeTextFieldHeight: CGFloat = 40
     
-    private lazy var accessoryTextField: AccessoryTextField = {
+    lazy var accessoryTextField: AccessoryTextField = {
         let textField = AccessoryTextField(kind: .passcode,
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
@@ -73,13 +74,12 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         textField.accessoryTextFieldDelegate = self
         textField.textFieldValidationDelegate = self
         
-        textField.heightAnchor.constraint(equalToConstant: 40).isActive = true ///TODO: constant file
+        textField.heightAnchor.constraint(equalToConstant: passcodeTextFieldHeight).isActive = true
 
         return textField
     }()
     
     private let titleLabel: UILabel = {
-        //TODO: copy
         let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
         
         label.textAlignment = .center
@@ -121,7 +121,6 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
         ///TODO: link button
         let label = UILabel(key: "unlock.link_label".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
         label.textAlignment = .center
-        label.numberOfLines = 1
         
         return label
     }()
@@ -215,7 +214,7 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
     }
     
     @objc
-    private func onUnlockButtonPressed(sender: AnyObject?) {
+    func onUnlockButtonPressed(sender: AnyObject?) {
         guard let passcode = accessoryTextField.text else { return }
         
         if !viewModel.unlock(passcode: passcode) {
@@ -227,17 +226,21 @@ final class UnlockViewController: UIViewController, AccessoryTextFieldDelegate, 
             unlockButton.isEnabled = false
         }
     }
+}
 
-    // MARK: - AccessoryTextFieldDelegate
-    
+// MARK: - AccessoryTextFieldDelegate
+
+extension UnlockViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         accessoryTextField.isSecureTextEntry = !accessoryTextField.isSecureTextEntry
         
         accessoryTextField.overrideButtonIcon = accessoryTextField.isSecureTextEntry ? revealIcon : .eye ///TODO: mv to style file
     }
-    
-    //MARK: - TextFieldValidationDelegate
-    
+}
+
+//MARK: - TextFieldValidationDelegate
+
+extension UnlockViewController: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         unlockButton.isEnabled = error == nil
         errorLabel.text = " "
