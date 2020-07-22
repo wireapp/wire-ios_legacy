@@ -107,7 +107,7 @@ public class AppLock {
         
         let canEvaluatePolicy = context.canEvaluatePolicy(scenario.policy, error: &error)
                 
-        if scenario.supportsUserFallback && (BiometricsState.biometricsChanged(in: context)) || !canEvaluatePolicy {
+        if scenario.supportsUserFallback && (BiometricsState.biometricsChanged(in: context) || !canEvaluatePolicy) {
             callback(.needAccountPassword, context)
             return
         }
