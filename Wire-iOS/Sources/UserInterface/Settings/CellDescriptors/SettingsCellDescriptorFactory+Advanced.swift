@@ -22,7 +22,7 @@ import WireSyncEngine
 
 extension SettingsCellDescriptorFactory {
     
-    func advancedGroup() -> SettingsCellDescriptorType {
+    var advancedGroup: SettingsCellDescriptorType {
         var items = [SettingsSectionDescriptor]()
         
         items.append(contentsOf: [
