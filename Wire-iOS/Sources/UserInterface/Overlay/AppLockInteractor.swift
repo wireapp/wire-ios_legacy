@@ -53,13 +53,21 @@ class AppLockInteractor {
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
     var isAuthenticationNeeded: Bool {
-        return appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        
+        return screenLockIsActive || isDatabaseLocked
     }
     
     func evaluateAuthentication(description: String) {
-        appLock.evaluateAuthentication(description: description.localized) { [weak self] result in
+        appLock.evaluateAuthentication(scenario: authenticationScenario,
+                                       description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
+                        
             self.dispatchQueue.async {
+                if case .granted = result {
+                    try? ZMUserSession.shared()?.unlockDatabase(with: context)
+                }
+                
                 self.output?.authenticationEvaluated(with: result)
             }
         }
@@ -87,10 +95,28 @@ extension AppLockInteractor: AppLockInteractorInput {
 
 // MARK: - Helpers
 extension AppLockInteractor {
+    
+    private var authenticationScenario: AppLock.AuthenticationScenario {
+        if isDatabaseLocked {
+            return .databaseLock
+        } else {
+            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+        }
+    }
+    
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
         self.dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
         }
+    }
+    
+    private var isDatabaseLocked: Bool {
+        guard let state = appState else { return false }
+        if case AppState.authenticated(completedRegistration: _, databaseIsLocked: let isDatabaseLocked) = state {
+            return isDatabaseLocked
+        }
+        return false
     }
     
     private var isAppStateAuthenticated: Bool {
