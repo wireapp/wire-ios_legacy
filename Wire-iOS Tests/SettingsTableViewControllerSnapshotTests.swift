@@ -78,7 +78,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     // MARK: - options
     func testForOptionsGroup() {
-        let group = settingsCellDescriptorFactory.optionsGroup()
+        let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
@@ -89,7 +89,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     func testForOptionsGroupScrollToBottom() {
         setToLightTheme()
         
-        let group = settingsCellDescriptorFactory.optionsGroup()
+        let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
@@ -113,7 +113,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     
     // MARK: - advanced
     func testForAdvancedGroup() {
-        let group = settingsCellDescriptorFactory.advancedGroup()
+        let group = settingsCellDescriptorFactory.advancedGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
         
         sut.view.backgroundColor = .black
