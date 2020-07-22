@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 enum ButtonStyle: Int {
+    // background color: accent, text color: white
     case full
     case empty
     case fullMonochrome

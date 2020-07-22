@@ -134,11 +134,11 @@ final class AppLockView: UIView {
             authenticateLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
 
             // authenticateButton
-            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
-            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
+            authenticateButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
+            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
-            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
-            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -24)])
+            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

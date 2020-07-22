@@ -22,4 +22,8 @@ extension UIColor {
     enum PasscodeUnlock {
         static let error: UIColor = UIColor(rgb: (236, 121, 121))
     }
+
+    enum WipeDatabase {
+        static let buttonTitle: UIColor = UIColor(rgb: (251, 8, 7))
+    }
 }

@@ -24,8 +24,7 @@ extension UILabel {
         size: FontSize = .normal,
         weight: FontWeight = .regular,
         color: ColorSchemeColor,
-        variant: ColorSchemeVariant = ColorScheme.default.variant
-        ) {
+        variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init(frame: .zero)
         text = key.map { $0.localized }
         font = FontSpec(size, weight).font

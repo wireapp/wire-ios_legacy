@@ -75,13 +75,8 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
-
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        let label = UILabel.createTitleTable()
+        label.text = "unlock.title_label".localized
 
         return label
     }()
