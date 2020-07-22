@@ -30,4 +30,24 @@ extension UILabel {
         font = FontSpec(size, weight).font
         textColor = UIColor.from(scheme: color, variant: variant)
     }
+
+    func configMultipleLineLabel() {
+        numberOfLines = 0
+        lineBreakMode = .byWordWrapping
+        setContentCompressionResistancePriority(.required, for: .horizontal)
+        setContentCompressionResistancePriority(.required, for: .vertical)
+    }
+    
+    static func createTitleLabel() -> UILabel {
+        let label = UILabel(key: nil,
+                            size: .large,
+                            weight: .semibold,
+                            color: .textForeground,
+                            variant: .dark)
+        
+        label.textAlignment = .center
+        label.configMultipleLineLabel()
+        
+        return label
+    }
 }

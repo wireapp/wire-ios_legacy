@@ -75,7 +75,7 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleTable()
+        let label = UILabel.createTitleLabel()
         label.text = "unlock.title_label".localized
 
         return label

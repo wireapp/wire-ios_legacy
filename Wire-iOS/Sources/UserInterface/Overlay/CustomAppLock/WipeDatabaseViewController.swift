@@ -18,43 +18,29 @@
 
 import UIKit
 
-extension UILabel {
-    static func createTitleTable() -> UILabel {
-        let label = UILabel(key: nil,
-                            size: .large,
-                            weight: .semibold,
-                            color: .textForeground,
-                            variant: .dark)
-        
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        return label
-    }
-}
-
 final class WipeDatabaseViewController: UIViewController {
-
+    
     private let stackView: UIStackView = UIStackView.verticalStackView()
-
+    
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleTable()
+        let label = UILabel.createTitleLabel()
         label.text = "wipe_database.title_label".localized
         
         return label
     }()
-
+    
     private let infoLabel: UILabel = {
         let label = UILabel()
-        
-        let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) && UIFont.normalRegularFont
-        let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!
-        
-        label.attributedText = headingText + highlightText
+        label.configMultipleLineLabel()
 
+        let textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        
+        let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) && UIFont.normalRegularFont && textColor
+        let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
+        
+        label.text = " blah"
+        label.attributedText = headingText + highlightText
+        
         return label
     }()
     
@@ -68,7 +54,7 @@ final class WipeDatabaseViewController: UIViewController {
         
         return button
     }()
-
+    
     @objc
     func onConfirmButtonPressed(sender: Button?) {
         //TODO: go to next screen
@@ -78,23 +64,21 @@ final class WipeDatabaseViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
         
         [stackView,
-            confirmButton].forEach {
+         confirmButton].forEach {
             view.addSubview($0)
         }
         
         stackView.distribution = .fillProportionally
         
-//        contentView.addSubview(stackView)
-        
         [titleLabel,
-         SpacingView(45),
+         SpacingView(25),
          infoLabel].forEach {
             stackView.addArrangedSubview($0)
         }
         
         createConstraints()
     }
-
+    
     private func createConstraints() {
         
         [stackView,
@@ -109,18 +93,16 @@ final class WipeDatabaseViewController: UIViewController {
             // content view
             widthConstraint,
             stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
-//            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
-//            contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: stackViewPadding),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -stackViewPadding),
-                        
-            // authenticateButton
+            
+            // confirmButton
             confirmButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
             confirmButton.topAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
             confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             confirmButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
-
+    
 }
