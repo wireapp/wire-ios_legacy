@@ -101,8 +101,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func setUp() {
         super.setUp()
 
-        videoIconView.setUpIconImageView(accessibilityIdentifier: "img.video")
-        userTypeIconView.setUpIconImageView(accessibilityIdentifier: "img.userType")
+        userTypeIconView.setUpIconImageView()
+        microphoneIconView.setUpIconImageView()
+        videoIconView.setUpIconImageView()
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")

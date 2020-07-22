@@ -13,7 +13,7 @@ pr:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_11.6.app
+    sudo xcode-select -switch /Applications/Xcode_11.4.1.app
     fastlane prepare config_branch:feature/customAppLock
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
