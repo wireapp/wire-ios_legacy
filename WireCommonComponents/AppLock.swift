@@ -123,7 +123,9 @@ public class AppLock {
                 callback(authResult, context)
             })
         } else {
-            // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
+            // If the policy can't be evaluated automatically grant access unless app lock
+            // is a requirement to run the app. This will for example allow a user to access
+            // the app if he/she has disabled his/her passcode.
             callback(scenario.grantAccessIfPolicyCannotBeEvaluated ? .granted : .unavailable, context)
             zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
