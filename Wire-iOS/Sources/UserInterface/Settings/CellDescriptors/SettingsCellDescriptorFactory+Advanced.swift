@@ -26,7 +26,6 @@ extension SettingsCellDescriptorFactory {
         var items = [SettingsSectionDescriptor]()
         
         items.append(contentsOf: [
-            conferenceCallingSection,
             troubleshootingSection,
             debuggingToolsSection,
             pushSection,
@@ -38,14 +37,6 @@ extension SettingsCellDescriptorFactory {
             title: "self.settings.advanced.title".localized,
             icon: .settingsAdvanced
         )
-    }
-    
-    private var conferenceCallingSection: SettingsSectionDescriptor {
-        let sectionTitle = "self.settings.advanced.conference_calling.title".localized
-        let sectionSubtitle = "self.settings.advanced.conference_calling.subtitle".localized
-        let betaToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta))
-        
-        return SettingsSectionDescriptor(cellDescriptors: [betaToggle], header: sectionTitle, footer: sectionSubtitle)
     }
     
     private var troubleshootingSection: SettingsSectionDescriptor {

@@ -34,6 +34,7 @@ extension SettingsCellDescriptorFactory {
             soundAlertSection,
             callKitSection,
             VBRSection,
+            conferenceCallingSection,
             soundsSection,
             externalAppsSection,
             popularDemandSendButtonSection,
@@ -142,6 +143,16 @@ extension SettingsCellDescriptorFactory {
         )
     }
     
+    private var conferenceCallingSection: SettingsSectionDescriptor {
+        let betaToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta))
+        
+        return SettingsSectionDescriptor(
+            cellDescriptors: [betaToggle],
+            header: "self.settings.advanced.conference_calling.title".localized,
+            footer: "self.settings.advanced.conference_calling.subtitle".localized
+        )
+    }
+
     private var soundsSection: SettingsSectionDescriptorType {
 
         let callSoundProperty = settingsPropertyFactory.property(.callSoundName)
