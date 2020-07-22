@@ -101,7 +101,7 @@ extension AppLockInteractor {
             return .databaseLock
         } else {
             return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                               grantAccessIfNoPasscodeIsSet: !AppLock.rules.forceAppLock)
+                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
         }
     }
     

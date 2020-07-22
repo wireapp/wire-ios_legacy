@@ -500,7 +500,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         let scenario: AppLock.AuthenticationScenario =
             .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                        grantAccessIfNoPasscodeIsSet: !AppLock.rules.forceAppLock)
+                        grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
         
         AppLock.evaluateAuthentication(scenario: scenario,
                                        description: "share_extension.privacy_security.lock_app.description".localized)

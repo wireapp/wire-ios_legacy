@@ -60,12 +60,12 @@ public class AppLock {
     }
     
     public enum AuthenticationScenario {
-        case screenLock(requireBiometrics: Bool, grantAccessIfNoPasscodeIsSet: Bool)
+        case screenLock(requireBiometrics: Bool, grantAccessIfPolicyCannotBeEvaluated: Bool)
         case databaseLock
         
         var policy: LAPolicy {
             switch self {
-            case .screenLock(requireBiometrics: let requireBiometrics, grantAccessIfNoPasscodeIsSet: _):
+            case .screenLock(requireBiometrics: let requireBiometrics, grantAccessIfPolicyCannotBeEvaluated: _):
                 return requireBiometrics ? .deviceOwnerAuthenticationWithBiometrics : .deviceOwnerAuthentication
             case .databaseLock:
                 return .deviceOwnerAuthentication
@@ -74,15 +74,15 @@ public class AppLock {
         }
         
         var supportsUserFallback: Bool {
-            if case .screenLock(requireBiometrics: true, grantAccessIfNoPasscodeIsSet: _) = self {
+            if case .screenLock(requireBiometrics: true, grantAccessIfPolicyCannotBeEvaluated: _) = self {
                 return true
             }
             
             return false
         }
         
-        var grantAccessIfNoPasscodeIsSet: Bool {
-            if case .screenLock(requireBiometrics: _, grantAccessIfNoPasscodeIsSet: true) = self {
+        var grantAccessIfPolicyCannotBeEvaluated: Bool {
+            if case .screenLock(requireBiometrics: _, grantAccessIfPolicyCannotBeEvaluated: true) = self {
                 return true
             }
             
@@ -124,7 +124,7 @@ public class AppLock {
             })
         } else {
             // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
-            callback(scenario.grantAccessIfNoPasscodeIsSet ? .granted : .unavailable, context)
+            callback(scenario.grantAccessIfPolicyCannotBeEvaluated ? .granted : .unavailable, context)
             zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }
