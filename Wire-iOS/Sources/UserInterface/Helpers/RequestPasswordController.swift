@@ -26,6 +26,7 @@ final class RequestPasswordController {
         case removeDevice
         case logout
         case unlock(message: String)
+        case wiping
     }
 
     var alertController: UIAlertController
@@ -39,7 +40,14 @@ final class RequestPasswordController {
 
         self.callback = callback
 
-        let okTitle: String = "general.ok".localized
+        let okTitle: String
+        switch context {
+        case .wiping:
+            okTitle = "wipe_database.alert.confirm".localized
+        default:
+            okTitle = "general.ok".localized
+        }
+        
         let cancelTitle: String = "general.cancel".localized
         let title: String
         let message: String
@@ -61,6 +69,11 @@ final class RequestPasswordController {
             title = "self.settings.privacy_security.lock_app.description".localized
             message = unlockMessage
             placeholder = "self.settings.account_details.log_out.alert.password".localized
+            okActionStyle = .default
+        case .wiping:
+            title = "self.settings.privacy_security.lock_app.description".localized
+            message = "wipe_database.alert.message".localized
+            placeholder = "wipe_database.alert.placeholder".localized
             okActionStyle = .default
         }
 

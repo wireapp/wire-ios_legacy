@@ -48,7 +48,7 @@ final class WipeDatabaseViewController: UIViewController {
         let button = Button(style: .fullMonochrome)
         
         button.setTitle("wipe_database.button.title".localized(uppercased: true), for: .normal)
-        button.setTitleColor(UIColor.WipeDatabase.buttonTitle, for: .normal)
+        button.setTitleColor(UIColor.WipeDatabase.buttonTitle, for: .normal) ///TODO: test for both color schemes
         
         button.addTarget(self, action: #selector(onConfirmButtonPressed(sender:)), for: .touchUpInside)
         
@@ -57,9 +57,17 @@ final class WipeDatabaseViewController: UIViewController {
     
     @objc
     func onConfirmButtonPressed(sender: Button?) {
-        //TODO: go to next screen
+        
     }
     
+    func presentRequestPasswordController() {
+        let confirmController = RequestPasswordController(context: .wiping, callback: {confirmText in
+            ///TODO: compare
+        })
+//        self.passwordController = passwordController
+        present(confirmController.alertController, animated: true)
+    }
+
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         
