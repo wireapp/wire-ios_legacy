@@ -24,6 +24,6 @@ extension UIColor {
     }
 
     enum WipeDatabase {
-        static let buttonTitle: UIColor = UIColor(rgb: (251, 8, 7))
+        static let buttonRed: UIColor = UIColor(rgb: (251, 8, 7))
     }
 }

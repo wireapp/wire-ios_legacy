@@ -249,13 +249,16 @@ final class ColorScheme: NSObject {
     
     static let `default`: ColorScheme = ColorScheme()
 
-    func color(named: ColorSchemeColor) -> UIColor {
-        return color(named: named, variant: variant)
-    }
-    
-    func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    func color(named: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
+        let colorSchemeVariant: ColorSchemeVariant
+        if let variant = variant {
+            colorSchemeVariant = variant
+        } else {
+            colorSchemeVariant = self.variant
+        }
+        
         let colorPair = named.colorPair(accentColor: accentColor)
-        switch variant {
+        switch colorSchemeVariant {
         case .dark:
             return colorPair.dark
         case .light:
@@ -282,11 +285,7 @@ fileprivate extension ColorPair {
 
 extension UIColor {
     
-    static func from(scheme: ColorSchemeColor) -> UIColor {
-        return ColorScheme.default.color(named: scheme)
-    }
-    
-    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
 

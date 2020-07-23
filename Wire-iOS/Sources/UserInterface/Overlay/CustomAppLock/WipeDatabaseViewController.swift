@@ -34,22 +34,30 @@ final class WipeDatabaseViewController: UIViewController {
         let label = UILabel()
         label.configMultipleLineLabel()
 
-        let textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        let textColor = UIColor.from(scheme: .textForeground)
 
         let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) && UIFont.normalRegularFont && textColor
         let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
 
-        label.text = " blah"
+        label.text = " "
         label.attributedText = headingText + highlightText
 
         return label
     }()
 
     private lazy var confirmButton: Button = {
-        let button = Button(style: .fullMonochrome)
+        let button: Button
+            
+        switch ColorScheme.default.variant {
+        case .light:
+            button = Button(style: .full)
+            button.setBackgroundImageColor(UIColor.WipeDatabase.buttonRed, for: .normal)
+        case .dark:
+            button = Button(style: .fullMonochrome)
+            button.setTitleColor(UIColor.WipeDatabase.buttonRed, for: .normal)
+        }
 
         button.setTitle("wipe_database.button.title".localized(uppercased: true), for: .normal)
-        button.setTitleColor(UIColor.WipeDatabase.buttonTitle, for: .normal) ///TODO: test for both color schemes
 
         button.addTarget(self, action: #selector(onConfirmButtonPressed(sender:)), for: .touchUpInside)
 
@@ -75,6 +83,8 @@ final class WipeDatabaseViewController: UIViewController {
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 
+        view.backgroundColor = UIColor.from(scheme: .background)
+        
         [stackView,
          confirmButton].forEach {
             view.addSubview($0)

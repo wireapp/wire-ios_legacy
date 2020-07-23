@@ -128,21 +128,21 @@ extension XCTestCase {
 
     // MARK: - verify the snapshots in both dark and light scheme
 
-    func verifyInAllColorSchemes(matching: UIViewController,
+    func verifyInAllColorSchemes(createSut: () -> UIViewController,
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
-        ColorScheme.default.variant = .dark
+        ColorScheme.default.variant = .light
 
-        verify(matching: matching,
+        verify(matching: createSut(),
                named: "LightTheme",
                file: file,
                testName: testName,
                line: line)
 
-        ColorScheme.default.variant = .light
+        ColorScheme.default.variant = .dark
 
-        verify(matching: matching,
+            verify(matching: createSut(),
                named: "DarkTheme",
                file: file,
                testName: testName,

@@ -23,7 +23,6 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
     var sut: WipeDatabaseViewController!
 
     override func setUp() {
-        sut = WipeDatabaseViewController()
     }
 
     override func tearDown() {
@@ -31,11 +30,16 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
     }
 
     func testForLightAndDarkTheme() {
-        verifyInAllColorSchemes(matching: sut)
+        verifyInAllColorSchemes(createSut: {
+            return WipeDatabaseViewController()
+        })
     }
 
     func testForConfirmAlert() {
-        //GIVEN & WHEN
+        //GIVEN
+        sut = WipeDatabaseViewController()
+        
+        //WHEN
         sut.presentConfirmAlert()
 
         //THEN
