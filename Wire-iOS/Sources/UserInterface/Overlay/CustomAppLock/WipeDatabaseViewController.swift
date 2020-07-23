@@ -20,6 +20,8 @@ import UIKit
 
 final class WipeDatabaseViewController: UIViewController {
     
+    var confirmController: RequestPasswordController?
+    
     private let stackView: UIStackView = UIStackView.verticalStackView()
     
     private let titleLabel: UILabel = {
@@ -57,14 +59,15 @@ final class WipeDatabaseViewController: UIViewController {
     
     @objc
     func onConfirmButtonPressed(sender: Button?) {
-        
+        presentConfirmAlert()
     }
     
-    func presentRequestPasswordController() {
-        let confirmController = RequestPasswordController(context: .wiping, callback: {confirmText in
-            ///TODO: compare
+    func presentConfirmAlert() {
+        let confirmController = RequestPasswordController(context: .wiping, callback: { confirmText in
+            ///TODO: compare, override passwordTextFieldChanged?
+            
         })
-//        self.passwordController = passwordController
+        self.confirmController = confirmController
         present(confirmController.alertController, animated: true)
     }
 
