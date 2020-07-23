@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,89 +18,89 @@
 import UIKit
 
 final class WipeDatabaseViewController: UIViewController {
-    
+
     var confirmController: RequestPasswordController?
-    
+
     private let stackView: UIStackView = UIStackView.verticalStackView()
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel.createTitleLabel()
         label.text = "wipe_database.title_label".localized
-        
+
         return label
     }()
-    
+
     private let infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
 
         let textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        
+
         let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) && UIFont.normalRegularFont && textColor
         let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
-        
+
         label.text = " blah"
         label.attributedText = headingText + highlightText
-        
+
         return label
     }()
-    
+
     private lazy var confirmButton: Button = {
         let button = Button(style: .fullMonochrome)
-        
+
         button.setTitle("wipe_database.button.title".localized(uppercased: true), for: .normal)
         button.setTitleColor(UIColor.WipeDatabase.buttonTitle, for: .normal) ///TODO: test for both color schemes
-        
+
         button.addTarget(self, action: #selector(onConfirmButtonPressed(sender:)), for: .touchUpInside)
-        
+
         return button
     }()
-    
+
     @objc
     func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
-    
+
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
             //TODO: wipe the DB, go to next screen
             }, inputValidation: { confirmText in
                 return confirmText == "wipe_database.alert.confirm_input".localized
         })
-        
+
         self.confirmController = confirmController
         present(confirmController.alertController, animated: true)
     }
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
-        
+
         [stackView,
          confirmButton].forEach {
             view.addSubview($0)
         }
-        
+
         stackView.distribution = .fillProportionally
-        
+
         [titleLabel,
          SpacingView(25),
          infoLabel].forEach {
             stackView.addArrangedSubview($0)
         }
-        
+
         createConstraints()
     }
-    
+
     private func createConstraints() {
-        
+
         [stackView,
          confirmButton].disableAutoresizingMaskTranslation()
-        
+
         let widthConstraint = stackView.widthAnchor.constraint(equalToConstant: 375)
         widthConstraint.priority = .defaultHigh
-        
+
         let stackViewPadding: CGFloat = 46
-        
+
         NSLayoutConstraint.activate([
             // content view
             widthConstraint,
@@ -109,7 +108,7 @@ final class WipeDatabaseViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: stackViewPadding),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -stackViewPadding),
-            
+
             // confirmButton
             confirmButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
             confirmButton.topAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
@@ -117,5 +116,5 @@ final class WipeDatabaseViewController: UIViewController {
             confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             confirmButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
-    
+
 }

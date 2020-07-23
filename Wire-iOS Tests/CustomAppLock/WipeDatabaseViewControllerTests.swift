@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,23 +21,23 @@ import SnapshotTesting
 
 final class WipeDatabaseViewControllerTests: XCTestCase {
     var sut: WipeDatabaseViewController!
-    
+
     override func setUp() {
         sut = WipeDatabaseViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
     }
-    
-    func testForInitState() {
+
+    func testForLightAndDarkTheme() {
         verifyInAllColorSchemes(matching: sut)
     }
-    
+
     func testForConfirmAlert() {
         //GIVEN & WHEN
         sut.presentConfirmAlert()
-        
+
         //THEN
         verify(matching: sut.confirmController!.alertController)
     }

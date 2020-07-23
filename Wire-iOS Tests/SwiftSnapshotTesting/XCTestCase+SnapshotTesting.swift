@@ -36,7 +36,7 @@ extension ViewImageConfig: Hashable {
     }
 }
 
-/// MARK: - snapshoting all iPhone sizes
+// MARK: - snapshoting all iPhone sizes
 extension XCTestCase {
     /// snapshot file name suffixs
     static let phoneConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
@@ -64,9 +64,9 @@ extension XCTestCase {
     }
 
     func verifyInAllDeviceSizes(matching value: UIViewController,
-                              file: StaticString = #file,
-                              testName: String = #function,
-                              line: UInt = #line) {
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
 
         let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
 
@@ -132,24 +132,21 @@ extension XCTestCase {
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
-        if var themeable = matching as? Themeable {
-            themeable.colorSchemeVariant = .light
-            
-            verify(matching: matching,
-                   named: "LightTheme",
-                   file: file,
-                   testName: testName,
-                   line: line)
-            themeable.colorSchemeVariant = .dark
-            
-            verify(matching: matching,
-                   named: "DarkTheme",
-                   file: file,
-                   testName: testName,
-                   line: line)
-        } else {
-            XCTFail("View doesn't support Themable protocol")
-        }
+        ColorScheme.default.variant = .dark
+
+        verify(matching: matching,
+               named: "LightTheme",
+               file: file,
+               testName: testName,
+               line: line)
+
+        ColorScheme.default.variant = .light
+
+        verify(matching: matching,
+               named: "DarkTheme",
+               file: file,
+               testName: testName,
+               line: line)
     }
 
     func verifyInAllColorSchemes(matching: UIView,
@@ -328,7 +325,7 @@ extension XCTestCase {
     func resetColorScheme() {
         setColorScheme(.light)
     }
-    
+
     func setColorScheme(_ variant: ColorSchemeVariant) {
         ColorScheme.default.variant = variant
         NSAttributedString.invalidateMarkdownStyle()
