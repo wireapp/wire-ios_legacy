@@ -148,20 +148,20 @@ final class ArticleViewTests: XCTestCase {
     // MARK: - Tests
 
     @available(iOS 13.0, *)
-    func testContextMenuIsCreatedWithDeleteItem() {
-        // GIVEN
-        sut = ArticleView(withImagePlaceholder: true)
-        let mockArticleViewDelegate = MockArticleViewDelegate()
-        sut.delegate = mockArticleViewDelegate
-
-        // WHEN
-        let menu = sut.delegate?.makeContextMenu(title: "test", view: sut)
-
-        // THEN
-        let children = menu!.children
-        XCTAssertEqual(children.count, 1)
-        XCTAssertEqual(children.first?.title, "Delete")
-    }
+//    func testContextMenuIsCreatedWithDeleteItem() {
+//        // GIVEN
+//        sut = ArticleView(withImagePlaceholder: true)
+//        let mockArticleViewDelegate = MockArticleViewDelegate()
+//        sut.delegate = mockArticleViewDelegate
+//
+//        // WHEN
+//        let menu = sut.delegate?.makeContextMenu(title: "test", view: sut)
+//
+//        // THEN
+//        let children = menu!.children
+//        XCTAssertEqual(children.count, 1)
+//        XCTAssertEqual(children.first?.title, "Delete")
+//    }
 
     // MARK: - Snapshot Tests
 
