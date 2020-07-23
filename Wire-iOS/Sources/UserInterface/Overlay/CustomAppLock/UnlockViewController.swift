@@ -73,10 +73,15 @@ final class UnlockViewController: UIViewController {
 
         return textField
     }()
-
+  
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleLabel(variant: .dark)
-        label.text = "unlock.title_label".localized
+        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
 
         return label
     }()
@@ -208,11 +213,7 @@ final class UnlockViewController: UIViewController {
 
     @objc
     private func onWipeButtonPressed(sender: AnyObject?) {
-        // push wipe screen
-
-        let wipeDatabaseViewController = WipeDatabaseViewController()
-
-        navigationController?.pushViewController(wipeDatabaseViewController, animated: true)
+        //TODO push wipe screen
     }
 
     @objc
