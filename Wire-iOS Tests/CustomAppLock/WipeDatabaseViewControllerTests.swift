@@ -32,6 +32,14 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
     }
     
     func testForInitState() {
-        verify(matching: sut)
+        verifyInAllColorSchemes(matching: sut)
+    }
+    
+    func testForConfirmAlert() {
+        //GIVEN & WHEN
+        sut.presentConfirmAlert()
+        
+        //THEN
+        verify(matching: sut.confirmController!.alertController)
     }
 }

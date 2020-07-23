@@ -128,6 +128,30 @@ extension XCTestCase {
 
     // MARK: - verify the snapshots in both dark and light scheme
 
+    func verifyInAllColorSchemes(matching: UIViewController,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
+        if var themeable = matching as? Themeable {
+            themeable.colorSchemeVariant = .light
+            
+            verify(matching: matching,
+                   named: "LightTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
+            themeable.colorSchemeVariant = .dark
+            
+            verify(matching: matching,
+                   named: "DarkTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
+        } else {
+            XCTFail("View doesn't support Themable protocol")
+        }
+    }
+
     func verifyInAllColorSchemes(matching: UIView,
                                  file: StaticString = #file,
                                  testName: String = #function,
