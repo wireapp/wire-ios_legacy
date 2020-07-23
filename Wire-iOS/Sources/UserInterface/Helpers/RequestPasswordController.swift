@@ -31,14 +31,19 @@ final class RequestPasswordController {
 
     var alertController: UIAlertController
 
+    typealias InputValidation = (String?) -> Bool
+    
     private let callback: Callback
+    private let inputValidation: InputValidation?
     private weak var okAction: UIAlertAction?
     weak var passwordTextField: UITextField?
 
     init(context: RequestPasswordContext,
-         callback: @escaping Callback) {
+         callback: @escaping Callback,
+         inputValidation: InputValidation? = nil) {
 
         self.callback = callback
+        self.inputValidation = inputValidation
 
         let okTitle: String
         switch context {
@@ -111,7 +116,11 @@ final class RequestPasswordController {
     @objc
     func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
-
+        
         okAction?.isEnabled = passwordField.text?.isEmpty == false
+
+        if let inputValidation = inputValidation {
+            okAction?.isEnabled = inputValidation(passwordField.text)
+        }
     }
 }

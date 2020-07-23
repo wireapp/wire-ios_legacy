@@ -1789,3 +1789,4 @@
 "wipe_database.alert.message" = "Write 'Confirm' to verify you want to delete all data in this device.";
 "wipe_database.alert.placeholder" = "Write 'Confirm'";
 "wipe_database.alert.confirm" = "Confirm";
+"wipe_database.alert.confirm_input" = "Confirm";

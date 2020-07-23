@@ -63,10 +63,12 @@ final class WipeDatabaseViewController: UIViewController {
     }
     
     func presentConfirmAlert() {
-        let confirmController = RequestPasswordController(context: .wiping, callback: { confirmText in
-            ///TODO: compare, override passwordTextFieldChanged?
-            
+        let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
+            //TODO: wipe the DB, go to next screen
+            }, inputValidation: { confirmText in
+                return confirmText == "wipe_database.alert.confirm_input".localized
         })
+        
         self.confirmController = confirmController
         present(confirmController.alertController, animated: true)
     }
