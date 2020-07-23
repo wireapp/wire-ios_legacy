@@ -252,6 +252,14 @@ class SettingsCellDescriptorFactory {
             }
         }
         developerCellDescriptors.append(appendManyMessages)
+        
+        let spamWithMessages = SettingsButtonCellDescriptor(title: "Spam the top conv", isDestructive: true) { _ in
+            
+            self.requestNumber() { count in
+                self.spamWithMessages(amount: count)
+            }
+        }
+        developerCellDescriptors.append(spamWithMessages)
 
         let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
         developerCellDescriptors.append(showStatistics)
@@ -549,6 +557,31 @@ class SettingsCellDescriptorFactory {
         }
     }
     
+    /// Sends a number of messages to the top conversation in the list, in an asynchronous fashion
+    func spamWithMessages(amount: Int) {
+        guard
+            amount > 0,
+            let userSession = ZMUserSession.shared(),
+            let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
+            else {
+                return
+        }
+        let nonce = UUID()
+        
+        func sendNext(count: Int) {
+            userSession.enqueue {
+                conversation.append(text: "Message #\(count+1), series \(nonce)")
+            }
+            guard count + 1 < amount else { return }
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 0.4,
+                execute: { sendNext(count: count + 1) }
+            )
+        }
+        
+        sendNext(count: 0)
+    }
+    
     private static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
         ZMUserSession.shared()?.syncManagedObjectContext.performGroupedBlock {
             ZMUserSession.shared()?.requestSlowSync()
@@ -579,5 +612,4 @@ class SettingsCellDescriptorFactory {
         controller.present(alert, animated: true)
     }
 }
-
 
