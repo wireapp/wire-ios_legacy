@@ -107,12 +107,17 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private let linkLabel: UILabel = {
-        ///TODO: link button
-        let label = UILabel(key: "unlock.link_label".localized, size: .medium, weight: .medium, color: .textForeground, variant: .dark)
-        label.textAlignment = .center
+    private let wipeButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = FontSpec(.medium, .medium).font!
+        
+        button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+        
+        button.setTitle("unlock.link_label".localized, for: .normal)
 
-        return label
+        button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
+
+        return button
     }()
 
     convenience init() {
@@ -131,7 +136,7 @@ final class UnlockViewController: UIViewController {
          accessoryTextField,
          errorLabel,
          SpacingView(5),
-         linkLabel,
+         wipeButton,
          SpacingView(25),
          unlockButton].forEach {
             stackView.addArrangedSubview($0)
@@ -199,6 +204,16 @@ final class UnlockViewController: UIViewController {
             unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
         ])
+    }
+
+    
+    @objc
+    private func onWipeButtonPressed(sender: AnyObject?) {
+        // push wipe screen
+        
+        let wipeDatabaseViewController = WipeDatabaseViewController()
+        
+        navigationController?.pushViewController(wipeDatabaseViewController, animated: true)
     }
 
     @objc
