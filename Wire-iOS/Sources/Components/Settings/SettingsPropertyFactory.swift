@@ -375,11 +375,15 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    return SettingsPropertyValue(ZMConversation.callCenterConfiguration.useConferenceCalling)
+                    let value: Bool =
+                            Settings.shared[.conferenceCalling]
+                            ?? SessionManager.shared?.useConferenceCalling
+                            ?? false
+                    return SettingsPropertyValue(value)
                 },
                 setAction: { _, value  in
                     if case .number(let enabled) = value {
-                        ZMConversation.callCenterConfiguration.useConferenceCalling = enabled.boolValue
+                        Settings.shared[.conferenceCalling] = enabled.boolValue
                     }
                 }
             )
