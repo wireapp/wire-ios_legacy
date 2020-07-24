@@ -20,7 +20,7 @@ import Foundation
 import WireUtilities
 import UIKit
 
-class TextFieldValidator {
+final class TextFieldValidator {
 
     var customValidator: ((String) -> ValidationError?)?
 
@@ -61,6 +61,7 @@ class TextFieldValidator {
             }
 
         case .passcode:
+            // If the user is unlocking, we do not require any format
             return text.isEmpty ? .tooShort(kind: kind) : nil
 
         case .name:
