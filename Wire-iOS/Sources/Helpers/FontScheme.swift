@@ -24,7 +24,7 @@ public enum FontTextStyle: String {
     case inputText   = "inputText"
 }
 
-public enum FontSize: String {
+enum FontSize: String {
     case large  = "large"
     case normal = "normal"
     case medium = "medium"
@@ -96,7 +96,7 @@ extension UIFont {
 }
 
 public struct FontSpec: Hashable {
-    public let size: FontSize
+    let size: FontSize
     public let weight: FontWeight?
     public let fontTextStyle: FontTextStyle?
 
@@ -107,7 +107,7 @@ public struct FontSpec: Hashable {
     ///   - size: a FontSize enum
     ///   - weight: a FontWeight enum, if weight == nil, then apply the default value .light
     ///   - fontTextStyle: FontTextStyle enum value, if fontTextStyle == nil, then apply the default style.
-    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
+    init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
         self.size = size
         self.weight = weight
         self.fontTextStyle = fontTextStyle
