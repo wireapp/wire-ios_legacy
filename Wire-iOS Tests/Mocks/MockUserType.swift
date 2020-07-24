@@ -118,6 +118,8 @@ class MockUserType: NSObject, UserType, Decodable {
         return teamIdentifier != nil
     }
 
+    var hasDigitalSignatureEnabled: Bool = false
+    
     var teamName: String? = nil
 
     var teamRole: TeamRole = .none

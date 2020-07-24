@@ -427,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
 
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ started a conversation with %@";
@@ -564,6 +570,7 @@
 "content.message.go_to_conversation" = "Reveal";
 "content.message.forward.to" = "Search…";
 "content.message.open" = "Open";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
 "content.message.details" = "Details";
