@@ -1793,6 +1793,8 @@
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 "wipe_database.button.title" = "I want to wipe the database";
 
+// Wipe database alert
+
 "wipe_database.alert.description" = "Confirm wiping";
 "wipe_database.alert.message" = "Write 'Confirm' to verify you want to delete all data in this device.";
 "wipe_database.alert.placeholder" = "Write 'Confirm'";

@@ -19,22 +19,20 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
+protocol UnlockUserInterface: class {
+}
+
+extension UnlockViewController: UnlockUserInterface {
+    
+}
+
+/// UnlockViewController
+/// 
+/// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
 final class UnlockViewController: UIViewController {
 
-    final class UnlockViewModel {
-
-        /// unlock with passcode
-        /// - Returns: true if succeed
-        func unlock(passcode: String) -> Bool {
-            //TODO: logic
-            return false
-        }
-    }
-
-    private let viewModel: UnlockViewModel = {
-        let unlockViewModel = UnlockViewModel()
-        return unlockViewModel
+    private lazy var presenter: UnlockPresenter = {
+        return UnlockPresenter(userInterface: self)
     }()
 
     private let shieldView = UIView.shieldView()
@@ -73,10 +71,15 @@ final class UnlockViewController: UIViewController {
 
         return textField
     }()
-
+  
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleLabel(variant: .dark)
-        label.text = "unlock.title_label".localized
+        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
 
         return label
     }()
@@ -110,9 +113,8 @@ final class UnlockViewController: UIViewController {
     private let wipeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = FontSpec(.medium, .medium).font!
-        
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
-        
+
         button.setTitle("unlock.link_label".localized, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
@@ -206,7 +208,6 @@ final class UnlockViewController: UIViewController {
         ])
     }
 
-    
     @objc
     private func onWipeButtonPressed(sender: AnyObject?) {
         // push wipe screen
@@ -220,7 +221,7 @@ final class UnlockViewController: UIViewController {
     func onUnlockButtonPressed(sender: AnyObject?) {
         guard let passcode = accessoryTextField.text else { return }
 
-        if !viewModel.unlock(passcode: passcode) {
+        if !presenter.unlock(passcode: passcode) {
             // show error label
             //TODO: new icon
             let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: UIColor.PasscodeUnlock.error, iconSize: .nano)
