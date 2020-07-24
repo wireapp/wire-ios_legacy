@@ -277,7 +277,11 @@ class SettingsCellDescriptorFactory {
         let title = "self.settings.advanced.debugging_tools.title".localized
         
         let findUnreadConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
-        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadConversationButton,])], title: title)
+        let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
+        let debuggingToolsGroup = SettingsGroupCellDescriptor(items:
+            [SettingsSectionDescriptor(cellDescriptors:[
+                findUnreadConversationButton,
+                shareCryptobox])], title: title)
         return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
     }
     
