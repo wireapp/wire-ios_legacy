@@ -1776,6 +1776,15 @@
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
 
 // Custom app lock
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "Create memorable passcode";
+"create_passcode.title_label" = "Create a Passcode";
+"create_passcode.info_label" = "It will unlock your app to use Wire. Make it memorable, If you forget this passcode ";
+"create_passcode.info_label.highlight" = "it cannot be recovered.";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - unlock
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter Passcode to unlock Wire";
 "unlock.hint_label" = "Passcode";

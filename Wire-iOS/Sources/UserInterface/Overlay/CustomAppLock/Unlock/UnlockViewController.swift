@@ -40,9 +40,7 @@ final class UnlockViewController: UIViewController {
 
     private let stackView: UIStackView = UIStackView.verticalStackView()
 
-    private let contentView: UIView = { let view = UIView()
-        return view
-    }()
+    private let contentView: UIView = UIView()
 
     private lazy var unlockButton: Button = {
         let button = Button(style: .fullMonochrome)
@@ -55,7 +53,6 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    private let revealIcon: StyleKitIcon = .cross
     lazy var accessoryTextField: AccessoryTextField = {
         let textField = AccessoryTextField(kind: .passcode,
                                            leftInset: 0,
@@ -63,7 +60,7 @@ final class UnlockViewController: UIViewController {
                                            cornerRadius: 4)
         textField.placeholder = "unlock.textfield.placeholder".localized
 
-        textField.overrideButtonIcon = revealIcon
+        textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
         textField.accessoryTextFieldDelegate = self
         textField.textFieldValidationDelegate = self
 
@@ -199,10 +196,11 @@ final class UnlockViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
+            // text field
             accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
             accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
 
-            // authenticateButton
+            // unlock Button
             unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
             unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
@@ -235,7 +233,7 @@ extension UnlockViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         accessoryTextField.isSecureTextEntry = !accessoryTextField.isSecureTextEntry
 
-        accessoryTextField.overrideButtonIcon = accessoryTextField.isSecureTextEntry ? revealIcon : .eye ///TODO: mv to style file
+        accessoryTextField.overrideButtonIcon = accessoryTextField.isSecureTextEntry ? StyleKitIcon.AppLock.reveal : .eye ///TODO: mv to style file
     }
 }
 

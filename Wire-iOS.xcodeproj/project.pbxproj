@@ -767,6 +767,7 @@
 		A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */; };
 		A96E802C24CADA5F0010CD80 /* UnlockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */; };
 		A96E802E24CADB8F0010CD80 /* UnlockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */; };
+		A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */; };
 		A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D22410016B00BE6EF7 /* SpinnerButton.swift */; };
 		A97017D6241004A600BE6EF7 /* SpinnerButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
@@ -800,6 +801,7 @@
 		A9C7BEC0237C0FFB005D676A /* ColorSchemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C7BEBF237C0FFB005D676A /* ColorSchemeTests.swift */; };
 		A9C80F8424A629C3004D248F /* UIView+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C80F8324A629C2004D248F /* UIView+Menu.swift */; };
 		A9C9D35E23E84EA20098CACC /* MediaPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */; };
+		A9CBBEBA24CED5C9006543D4 /* StyleKitIcon+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEB924CED5C9006543D4 /* StyleKitIcon+Const.swift */; };
 		A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF5F57242B98B300920877 /* NetworkStatus.swift */; };
 		A9CF740E24891498007A11DC /* Settings+Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF740D24891498007A11DC /* Settings+Reset.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
@@ -2366,6 +2368,7 @@
 		A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockInteractor.swift; sourceTree = "<group>"; };
 		A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPresenter.swift; sourceTree = "<group>"; };
+		A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewController.swift; sourceTree = "<group>"; };
 		A97017D22410016B00BE6EF7 /* SpinnerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButton.swift; sourceTree = "<group>"; };
 		A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButtonTests.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
@@ -2398,6 +2401,7 @@
 		A9C7BEBF237C0FFB005D676A /* ColorSchemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSchemeTests.swift; sourceTree = "<group>"; };
 		A9C80F8324A629C2004D248F /* UIView+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Menu.swift"; sourceTree = "<group>"; };
 		A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegate.swift; sourceTree = "<group>"; };
+		A9CBBEB924CED5C9006543D4 /* StyleKitIcon+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyleKitIcon+Const.swift"; sourceTree = "<group>"; };
 		A9CF5F57242B98B300920877 /* NetworkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 		A9CF740D24891498007A11DC /* Settings+Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Reset.swift"; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -4249,6 +4253,7 @@
 				871BC18E1D34F8F800DF0793 /* MediaAsset.swift */,
 				A98CD44D24C74C9F00EAC484 /* UIColor+Const.swift */,
 				EFBCC9122154FF18006AAB70 /* CGFloat+Const.swift */,
+				A9CBBEB924CED5C9006543D4 /* StyleKitIcon+Const.swift */,
 				06C412AB238FCAA80018866F /* Int+Const.swift */,
 				871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */,
 				EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */,
@@ -5525,6 +5530,24 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		A96E802F24CB2A760010CD80 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		A96E803024CB2A850010CD80 /* Unlock */ = {
+			isa = PBXGroup;
+			children = (
+				A9E5725324C5F28D00CBE0D7 /* UnlockViewController.swift */,
+				A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */,
+				A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */,
+			);
+			path = Unlock;
+			sourceTree = "<group>";
+		};
 		A97284092384245F00AFEFC6 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
@@ -5552,9 +5575,8 @@
 		A9BB638024C1DD910072143A /* CustomAppLock */ = {
 			isa = PBXGroup;
 			children = (
-				A9E5725324C5F28D00CBE0D7 /* UnlockViewController.swift */,
-				A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */,
-				A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */,
+				A96E803024CB2A850010CD80 /* Unlock */,
+				A96E802F24CB2A760010CD80 /* Setup */,
 			);
 			path = CustomAppLock;
 			sourceTree = "<group>";
@@ -7065,6 +7087,7 @@
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
 				A9C80F8424A629C3004D248F /* UIView+Menu.swift in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
+				A9CBBEBA24CED5C9006543D4 /* StyleKitIcon+Const.swift in Sources */,
 				87240380215B8EBA0094363B /* Collection+MentionSearch.swift in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
@@ -7799,6 +7822,7 @@
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
 				EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */,
+				A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
