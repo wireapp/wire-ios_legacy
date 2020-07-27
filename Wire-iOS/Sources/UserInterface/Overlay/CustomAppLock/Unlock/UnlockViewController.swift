@@ -23,7 +23,7 @@ protocol UnlockUserInterface: class {
 }
 
 extension UnlockViewController: UnlockUserInterface {
-    
+
 }
 
 /// UnlockViewController
@@ -59,10 +59,10 @@ final class UnlockViewController: UIViewController {
 
         return textField
     }()
-  
+
     private let titleLabel: UILabel = {
         let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
-        
+
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

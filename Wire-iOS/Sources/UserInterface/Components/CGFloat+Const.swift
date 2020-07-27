@@ -31,11 +31,11 @@ extension CGFloat {
         static let textFieldHeight: CGFloat = 40
         static let buttonHeight: CGFloat = 40
     }
-    
+
     enum AccessoryTextField {
         static let horizonalInset: CGFloat = 16
     }
-    
+
     enum SpinnerButton {
         static let contentInset: CGFloat = 16
         static let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue

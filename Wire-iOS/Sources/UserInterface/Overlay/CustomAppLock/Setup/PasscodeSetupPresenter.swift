@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,34 +20,34 @@ import Foundation
 final class PasscodeSetupPresenter {
     private weak var userInterface: PasscodeSetupUserInterface?
     private var interactorInput: PasscodeSetupInteractorInput
-    
+
     convenience init(userInterface: PasscodeSetupUserInterface) {
         let interactor = PasscodeSetupInteractor()
         self.init(userInterface: userInterface, interactorInput: interactor)
         interactor.output = self
     }
-    
+
     init(userInterface: PasscodeSetupUserInterface,
          interactorInput: PasscodeSetupInteractorInput) {
         self.userInterface = userInterface
         self.interactorInput = interactorInput
     }
-    
+
     func validate(error: TextFieldValidator.ValidationError?) {
         interactorInput.validate(error: error)
     }
-    
+
 }
 
 // MARK: - InteractorOutput
 
 extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
     private func resetValidationLabels(passed: Bool) {
-        ErrorReason.allCases.forEach() { errorReason in
+        ErrorReason.allCases.forEach { errorReason in
             userInterface?.setValidationLabelsState(errorReason: errorReason, passed: passed)
         }
     }
-    
+
     func passcodeValidated(result: PasscodeValidationResult) {
         switch result {
         case .accepted:
@@ -56,7 +55,7 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
             resetValidationLabels(passed: true)
         case .error(let errorReasons):
             userInterface?.createButtonEnabled = false
-            
+
             // reset: if the passcode is too short, set all other as not passed
             let passed: Bool
             if errorReasons == [.tooShort] {
@@ -64,13 +63,13 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
             } else {
                 passed = true
             }
-            
+
             resetValidationLabels(passed: passed)
-            
-            errorReasons.forEach() { errorReason in
+
+            errorReasons.forEach { errorReason in
               userInterface?.setValidationLabelsState(errorReason: errorReason, passed: false)
             }
         }
     }
-    
+
 }

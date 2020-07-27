@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,30 +21,30 @@ import SnapshotTesting
 
 final class PasscodeSetupViewControllerTests: XCTestCase {
     var sut: PasscodeSetupViewController!
-    
+
     override func setUp() {
         sut = PasscodeSetupViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
     }
-    
+
     private func fillPasscode() {
         sut.passcodeTextField.text = "P@ssc0de"
         sut.validationUpdated(sender: sut.passcodeTextField, error: nil)
     }
-    
+
     func testForInitState() {
         verify(matching: sut)
     }
-    
+
     func testForPasscodePassed() {
         // GIVEN
         fillPasscode()
 
         // WHEN
-        ErrorReason.allCases.forEach() {
+        ErrorReason.allCases.forEach {
             sut.setValidationLabelsState(errorReason: $0, passed: true)
         }
 

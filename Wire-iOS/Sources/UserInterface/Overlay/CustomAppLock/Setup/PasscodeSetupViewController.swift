@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -26,38 +25,38 @@ protocol PasscodeSetupUserInterface: class {
 }
 
 final class PasscodeSetupViewController: UIViewController {
-    
+
     private lazy var presenter: PasscodeSetupPresenter = {
         return PasscodeSetupPresenter(userInterface: self)
     }()
 
     private let stackView: UIStackView = UIStackView.verticalStackView()
-    
+
     private let contentView: UIView = UIView()
-    
+
     private lazy var createButton: Button = {
         let button = Button(style: .full)
-        
+
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
-        
+
         button.addTarget(self, action: #selector(onCreateCodeButtonPressed(sender:)), for: .touchUpInside)
-        
+
         return button
     }()
-    
+
     lazy var passcodeTextField: AccessoryTextField = {
-            
+
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
-        
+
         return textField
     }()
 
     private let titleLabel: UILabel = {
         let label = UILabel.createTitleLabel()
         label.text = "create_passcode.title_label".localized
-        
+
         return label
     }()
 
@@ -67,41 +66,40 @@ final class PasscodeSetupViewController: UIViewController {
         label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground)
-        
+
         let headingText =  NSAttributedString(string: "create_passcode.info_label".localized) && UIFont.normalRegularFont && textColor
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
-        
+
         label.text = " "
         label.attributedText = headingText + highlightText
-        
+
         return label
     }()
-    
-    private let validationLabels: [ErrorReason:UILabel] = {
-        
+
+    private let validationLabels: [ErrorReason: UILabel] = {
+
         let myDictionary = ErrorReason.allCases.reduce([ErrorReason: UILabel]()) { (dict, errorReason) -> [ErrorReason: UILabel] in
             var dict = dict
             dict[errorReason] = UILabel()
             return dict
         }
-        
+
         return myDictionary
     }()
 
-
     convenience init() {
         self.init(nibName: nil, bundle: nil)
-        
+
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
-        
+
         [contentView].forEach {
             view.addSubview($0)
         }
-        
+
         stackView.distribution = .fill
-        
+
         contentView.addSubview(stackView)
-        
+
         [titleLabel,
          SpacingView(24),
          infoLabel,
@@ -109,13 +107,13 @@ final class PasscodeSetupViewController: UIViewController {
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
         }
-        
-        ErrorReason.allCases.forEach() {
+
+        ErrorReason.allCases.forEach {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallRegularFont
                 label.textColor = UIColor.Team.subtitleColor
                 label.numberOfLines = 0
-                
+
                 label.attributedText = $0.descriptionWithInvalidIcon
                 stackView.addArrangedSubview(label)
             }
@@ -123,18 +121,17 @@ final class PasscodeSetupViewController: UIViewController {
 
         stackView.addArrangedSubview(createButton)
 
-        
         createConstraints()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         passcodeTextField.becomeFirstResponder()
     }
-    
+
     private func createConstraints() {
-        
+
         [contentView,
          stackView].disableAutoresizingMaskTranslation()
 
@@ -142,7 +139,7 @@ final class PasscodeSetupViewController: UIViewController {
 
         let contentPadding: CGFloat = 24
         let textFieldPadding: CGFloat = 19
-        
+
         NSLayoutConstraint.activate([
             // content view
             widthConstraint,
@@ -152,16 +149,16 @@ final class PasscodeSetupViewController: UIViewController {
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: contentPadding),
             contentView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -contentPadding),
-            
+
             // stack view
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+
             // passcode text field
             passcodeTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
             passcodeTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-            
+
             // create Button
             createButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
             createButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
@@ -172,7 +169,7 @@ final class PasscodeSetupViewController: UIViewController {
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
         //TODO
-        
+
     }
 
 }
@@ -182,7 +179,7 @@ final class PasscodeSetupViewController: UIViewController {
 extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
-        
+
         passcodeTextField.overrideButtonIcon = passcodeTextField.isSecureTextEntry ? StyleKitIcon.AppLock.reveal : .eye ///TODO: mv to style file
     }
 }
@@ -201,12 +198,12 @@ extension PasscodeSetupViewController: PasscodeSetupUserInterface {
     func setValidationLabelsState(errorReason: ErrorReason, passed: Bool) {
         validationLabels[errorReason]?.attributedText = passed ? errorReason.descriptionWithPassedIcon : errorReason.descriptionWithInvalidIcon
     }
-    
+
     var createButtonEnabled: Bool {
         get {
             return createButton.isEnabled
         }
-        
+
         set {
             createButton.isEnabled = newValue
         }

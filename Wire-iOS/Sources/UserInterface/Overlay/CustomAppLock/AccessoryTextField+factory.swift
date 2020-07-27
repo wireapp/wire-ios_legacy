@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -27,13 +26,13 @@ extension AccessoryTextField {
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 4)
-        
+
         textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
         textField.accessoryTextFieldDelegate = delegate
         textField.textFieldValidationDelegate = delegate
-        
+
         textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true
-        
+
         return textField
 
     }

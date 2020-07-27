@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,7 +18,7 @@
 import UIKit
 
 extension UIView {
-    func createContentWidthConstraint() -> NSLayoutConstraint{
+    func createContentWidthConstraint() -> NSLayoutConstraint {
         let widthConstraint = widthAnchor.constraint(equalToConstant: 375)
         widthConstraint.priority = .defaultHigh
 

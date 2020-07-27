@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,19 +20,19 @@ import Foundation
 final class UnlockPresenter {
     private weak var userInterface: UnlockUserInterface?
     private var unlockInteractorInput: UnlockInteractorInput
-    
+
     convenience init(userInterface: UnlockUserInterface) {
         let unlockInteractor = UnlockInteractor()
         self.init(userInterface: userInterface, unlockInteractorInput: unlockInteractor)
         unlockInteractor.output = self
     }
-    
+
     init(userInterface: UnlockUserInterface,
          unlockInteractorInput: UnlockInteractorInput) {
         self.userInterface = userInterface
         self.unlockInteractorInput = unlockInteractorInput
     }
-    
+
     /// unlock with passcode
     /// - Returns: true if succeed
     func unlock(passcode: String) -> Bool {

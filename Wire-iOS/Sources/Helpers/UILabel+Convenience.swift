@@ -45,10 +45,10 @@ extension UILabel {
                             weight: .semibold,
                             color: .textForeground,
                             variant: variant ?? ColorScheme.default.variant)
-        
+
         label.textAlignment = .center
         label.configMultipleLineLabel()
-        
+
         return label
     }
 }

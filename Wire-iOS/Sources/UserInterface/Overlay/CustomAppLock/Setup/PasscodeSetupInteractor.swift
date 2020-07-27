@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -25,10 +24,10 @@ enum ErrorReason: CaseIterable {
     case noUppercaseChar
     case noNumber
     case noSpecialChar
-    
+
     var message: String {
         switch self {
-            
+
         case .tooShort:
             return "create_passcode.validation.too_short".localized
         case .noLowercaseChar:
@@ -41,20 +40,20 @@ enum ErrorReason: CaseIterable {
             return "create_passcode.validation.no_number".localized
         }
     }
-    
+
     var descriptionWithInvalidIcon: NSAttributedString {
-        
+
         //TODO paint code icon
         let attributedString = NSAttributedString(string: "❌" + message)
-        
+
         return attributedString
     }
-    
+
     //TODO paint code icon
     var descriptionWithPassedIcon: NSAttributedString {
-        
+
         let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
-        
+
         return attributedString
     }
 }
@@ -74,7 +73,7 @@ protocol PasscodeSetupInteractorOutput: class {
 
 final class PasscodeSetupInteractor {
     weak var output: PasscodeSetupInteractorOutput?
-    
+
     private let passwordCharacterClasses: [PasswordCharacterClass] = [.uppercase,
                                                                       .lowercase,
                                                                       .special,
@@ -83,13 +82,13 @@ final class PasscodeSetupInteractor {
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
-    
+
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
             output?.passcodeValidated(result: .accepted)
             return
         }
-        
+
         let result: PasscodeValidationResult
         switch error {
         case .tooShort:
@@ -100,7 +99,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
                 result = .error([.tooShort])
             case .missingRequiredClasses(let passwordCharacterClass):
                 var errorReasons: Set<ErrorReason> = Set()
-                passwordCharacterClasses.forEach() {
+                passwordCharacterClasses.forEach {
                     if passwordCharacterClass.contains($0) {
                         switch $0 {
                         case .uppercase:
@@ -116,7 +115,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
                         }
                     }
                 }
-                    
+
                 result = .error(errorReasons)
             default:
                 result = .error([])
@@ -124,8 +123,8 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
         default:
             result = .error([])
         }
-       
+
         output?.passcodeValidated(result: result)
     }
-    
+
 }
