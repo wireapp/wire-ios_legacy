@@ -78,6 +78,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     // MARK: - options
     func testForOptionsGroup() {
+        Settings.shared[.chatHeadsDisabled] = false
         let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
