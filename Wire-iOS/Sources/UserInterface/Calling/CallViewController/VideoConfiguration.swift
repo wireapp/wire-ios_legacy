@@ -25,8 +25,10 @@ struct VideoConfiguration: VideoGridConfiguration {
     let networkQuality: NetworkQuality
 
     init(voiceChannel: VoiceChannel) {
-        floatingVideoStream = voiceChannel.videoStreamArrangment.preview
-        videoStreams = voiceChannel.videoStreamArrangment.grid
+        let videoStreamArrangment = voiceChannel.videoStreamArrangment
+       
+        floatingVideoStream = videoStreamArrangment.preview
+        videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
     }
 }
@@ -67,11 +69,11 @@ extension VoiceChannel {
     
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
+
+        let videoStreams = limitedSortedActiveVideoStreams
+        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
         
-        let activeVideoStreams = sortedActiveVideoStreams
-        let activeSelfStream = activeVideoStreams.first(where: { $0.stream.streamId == selfStreamId })
-        
-        return arrangeVideoStreams(for: activeSelfStream ?? selfStream, participantsStreams: activeVideoStreams)
+        return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
     }
     
     private var isEstablished: Bool {
@@ -92,6 +94,20 @@ extension VoiceChannel {
         }
     }
 
+    var limitedSortedActiveVideoStreams: [VideoStream] {
+        var videoStreams = sortedActiveVideoStreams
+        
+        // Place self stream first to avoid cutting it off
+        if let selfStreamIndex = videoStreams.firstIndex(where: { $0.stream.streamId == selfStreamId }) {
+            let stream = videoStreams.remove(at: selfStreamIndex)
+            videoStreams.insert(stream, at: 0)
+        }
+        
+        let limit = VideoCallType().videoStreamsLimit
+        
+        return Array(videoStreams.prefix(limit))
+    }
+    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
