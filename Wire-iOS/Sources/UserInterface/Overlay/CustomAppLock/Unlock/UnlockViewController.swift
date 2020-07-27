@@ -54,7 +54,7 @@ final class UnlockViewController: UIViewController {
     }()
 
     lazy var accessoryTextField: AccessoryTextField = {
-        let textField = AccessoryTextField(kind: .passcode,
+        let textField = AccessoryTextField(kind: .passcode(isNew: false),
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 4)

@@ -38,13 +38,22 @@ final class PasscodeSetupInteractor {
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func validate(error: TextFieldValidator.ValidationError?) {
-        if error == nil {
+        guard let error = error else {
             output?.passcodeValidated(result: .accepted)
-        } else {
-            ///TODO
-            output?.passcodeValidated(result: .error)
+            return
         }
         
+        switch error {
+        case .tooShort:
+            output?.passcodeValidated(result: .error)
+        case .invalidPassword(let error):
+            output?.passcodeValidated(result: .error)
+//        case .missingRequiredClasses(let passwordCharacterClass):
+//            output?.passcodeValidated(result: .error)
+        default:
+            break
+        }
+       
     }
     
 }

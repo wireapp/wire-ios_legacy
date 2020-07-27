@@ -88,7 +88,7 @@ final class PasscodeSetupViewController: UIViewController {
     
     ///TODO: factory method
     lazy var passcodeTextField: AccessoryTextField = {
-        let textField = AccessoryTextField(kind: .passcode,
+        let textField = AccessoryTextField(kind: .passcode(isNew: true),
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 4)
