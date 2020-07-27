@@ -46,19 +46,10 @@ final class PasscodeSetupViewController: UIViewController {
         return button
     }()
     
-    ///TODO: factory method
     lazy var passcodeTextField: AccessoryTextField = {
-        let textField = AccessoryTextField(kind: .passcode(isNew: true),
-                                           leftInset: 0,
-                                           accessoryTrailingInset: 0,
-                                           cornerRadius: 4)
+            
+        let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
-        
-        textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
-        textField.accessoryTextFieldDelegate = self
-        textField.textFieldValidationDelegate = self
-        
-        textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true
         
         return textField
     }()
@@ -147,10 +138,8 @@ final class PasscodeSetupViewController: UIViewController {
         [contentView,
          stackView].disableAutoresizingMaskTranslation()
 
-        //TODO: factory
-        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
-        widthConstraint.priority = .defaultHigh
-        
+        let widthConstraint = contentView.createContentWidthConstraint()
+
         let contentPadding: CGFloat = 24
         let textFieldPadding: CGFloat = 19
         

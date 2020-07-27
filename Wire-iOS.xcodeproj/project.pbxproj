@@ -807,6 +807,8 @@
 		A9CBBEBC24CF09AD006543D4 /* PasscodeSetupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */; };
 		A9CBBEBE24CF09ED006543D4 /* PasscodeSetupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */; };
 		A9CBBEC124CF31E8006543D4 /* PasscodeSetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */; };
+		A9CBBEC324CF7FF9006543D4 /* AccessoryTextField+factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */; };
+		A9CBBEC524CF81EE006543D4 /* UIView+ConstraintFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEC424CF81EE006543D4 /* UIView+ConstraintFactory.swift */; };
 		A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF5F57242B98B300920877 /* NetworkStatus.swift */; };
 		A9CF740E24891498007A11DC /* Settings+Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF740D24891498007A11DC /* Settings+Reset.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
@@ -2412,6 +2414,8 @@
 		A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupPresenter.swift; sourceTree = "<group>"; };
 		A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupInteractor.swift; sourceTree = "<group>"; };
 		A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerTests.swift; sourceTree = "<group>"; };
+		A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessoryTextField+factory.swift"; sourceTree = "<group>"; };
+		A9CBBEC424CF81EE006543D4 /* UIView+ConstraintFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConstraintFactory.swift"; sourceTree = "<group>"; };
 		A9CF5F57242B98B300920877 /* NetworkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 		A9CF740D24891498007A11DC /* Settings+Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Reset.swift"; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -5591,6 +5595,8 @@
 			children = (
 				A96E803024CB2A850010CD80 /* Unlock */,
 				A96E802F24CB2A760010CD80 /* Setup */,
+				A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */,
+				A9CBBEC424CF81EE006543D4 /* UIView+ConstraintFactory.swift */,
 			);
 			path = CustomAppLock;
 			sourceTree = "<group>";
@@ -7870,6 +7876,7 @@
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
+				A9CBBEC324CF7FF9006543D4 /* AccessoryTextField+factory.swift in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				EE88E00623FAC9EA00D24703 /* SelfUser.swift in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
@@ -8068,6 +8075,7 @@
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,
 				16616752223AAA5F00779AE3 /* SoundPreviewPlayer.swift in Sources */,
 				A904740F23CF645F00A4453A /* MediaBarViewController.swift in Sources */,
+				A9CBBEC524CF81EE006543D4 /* UIView+ConstraintFactory.swift in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
 				EF6DAD6A2150F2C400D9BA70 /* ContactsViewController+SearchHeaderViewControllerDelegate.swift in Sources */,
 				16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */,

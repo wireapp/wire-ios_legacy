@@ -54,17 +54,8 @@ final class UnlockViewController: UIViewController {
     }()
 
     lazy var accessoryTextField: AccessoryTextField = {
-        let textField = AccessoryTextField(kind: .passcode(isNew: false),
-                                           leftInset: 0,
-                                           accessoryTrailingInset: 0,
-                                           cornerRadius: 4)
+        let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
         textField.placeholder = "unlock.textfield.placeholder".localized
-
-        textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
-        textField.accessoryTextFieldDelegate = self
-        textField.textFieldValidationDelegate = self
-
-        textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true
 
         return textField
     }()
@@ -163,8 +154,7 @@ final class UnlockViewController: UIViewController {
          contentView,
          stackView].disableAutoresizingMaskTranslation()
 
-        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
-        widthConstraint.priority = .defaultHigh
+        let widthConstraint = contentView.createContentWidthConstraint()
 
         let contentPadding: CGFloat = 24
         let textFieldPadding: CGFloat = 19
