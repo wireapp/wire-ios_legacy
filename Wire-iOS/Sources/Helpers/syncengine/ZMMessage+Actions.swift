@@ -21,6 +21,18 @@ import WireDataModel
 
 extension ZMConversationMessage {
 
+    /// Whether the message can be digitally signed in.
+    var canBeDigitallySigned: Bool {
+        guard
+            SelfUser.current.phoneNumber != nil,
+            SelfUser.current.isTeamMember,
+            SelfUser.current.hasDigitalSignatureEnabled
+        else {
+            return false
+        }
+        return isPDF
+    }
+    
     /// Whether the message can be copied.
     var canBeCopied: Bool {
         return !isEphemeral && (isText || isImage || isLocation)

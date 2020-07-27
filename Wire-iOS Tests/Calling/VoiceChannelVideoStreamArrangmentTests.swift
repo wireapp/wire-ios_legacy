@@ -148,42 +148,44 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
                            isPaused: false)
     }
     
-    func testThatWithoutSelfStreamItReturnsNilPreviewAndParticipantsVideoStateGrid() {
-        // GIVEN
-        let participantVideoStreams = [videoStreamStub(), videoStreamStub()]
-        
-        // WHEN
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
-
-        // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
-        XCTAssert(videoStreamArrangement.preview == nil)
-    }
-    
-    func testThatWithSelfStreamAndOneParticipantItReturnsSelfStreamAsPreviewAndOtherParticipantsVideoStatesAsGrid() {
+    func testThatItReturnsSelfPreviewAndParticipantInGrid_OneOnOneConversation() {
         // GIVEN
         let participantVideoStreams = [videoStreamStub()]
         let selfStream = videoStreamStub()
+        sut.conversation?.conversationType = .oneOnOne
         
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
-
+        
         // THEN
         XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == selfStream)
     }
     
-    func testThatWithSelfStreamAndMultipleParticipantsItReturnsNilAsPreviewAndSelfStreamPlusOtherParticipantsVideoStatesAsGrid()  {
+    func testThatItReturnsNilPreviewAndAllParticipantsInGrid_GroupConversation() {
         // GIVEN
-        let participantVideoStreams = [videoStreamStub(), videoStreamStub()]
+        let participantVideoStreams = [videoStreamStub()]
         let selfStream = videoStreamStub()
-        let expectedStreams = [selfStream] + participantVideoStreams
-
+        sut.conversation?.conversationType = .group
+        
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
-
+        
         // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual(expectedStreams))
+        XCTAssert(videoStreamArrangement.grid.elementsEqual([selfStream] + participantVideoStreams))
+        XCTAssert(videoStreamArrangement.preview == nil)
+    }
+    
+    func testThatItReturnsNilPreviewAndParticipantInGrid_WithoutSelfStream() {
+        // GIVEN
+        let participantVideoStreams = [videoStreamStub()]
+        sut.conversation?.conversationType = .oneOnOne
+        
+        // WHEN
+        let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
+        
+        // THEN
+        XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == nil)
     }
 }

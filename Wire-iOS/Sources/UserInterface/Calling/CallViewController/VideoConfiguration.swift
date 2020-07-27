@@ -85,7 +85,7 @@ extension VoiceChannel {
             return (nil, streamsExcludingSelf)
         }
 
-        if 1 == streamsExcludingSelf.count {
+        if conversation?.conversationType == ZMConversationType.oneOnOne && streamsExcludingSelf.count == 1 {
             return (selfStream, streamsExcludingSelf)
         } else {
             return (nil, [selfStream] + streamsExcludingSelf)
