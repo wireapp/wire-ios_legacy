@@ -24,47 +24,6 @@ protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
 }
 
-///TODO: move to VM
-enum ErrorReason: CaseIterable {
-    case tooShort
-    case noLowercaseChar
-    case noUppercaseChar
-    case noNumber
-    case noSpecialChar
-    
-    var message: String {
-        switch self {
-            
-        case .tooShort:
-            return "create_passcode.validation.too_short".localized
-        case .noLowercaseChar:
-            return "create_passcode.validation.no_lowercase_char".localized
-        case .noUppercaseChar:
-            return "create_passcode.validation.no_uppercase_char".localized
-        case .noSpecialChar:
-            return "create_passcode.validation.no_special_char".localized
-        case .noNumber:
-            return "create_passcode.validation.no_number".localized
-        }
-    }
-    
-    var descriptionWithInvalidIcon: NSAttributedString {
-        
-        //TODO paint code icon
-        let attributedString = NSAttributedString(string: "❌" + message)
-        
-        return attributedString
-    }
-    
-    //TODO paint code icon
-    var descriptionWithPassedIcon: NSAttributedString {
-        
-        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
-        
-        return attributedString
-    }
-}
-
 final class PasscodeSetupViewController: UIViewController {
     
     private lazy var presenter: PasscodeSetupPresenter = {

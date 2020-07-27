@@ -44,7 +44,13 @@ final class PasscodeSetupPresenter {
 
 extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
     func passcodeValidated(result: PasscodeValidationResult) {
-        userInterface?.createButtonEnabled = result == .accepted
+        switch result {
+        case .accepted:
+            userInterface?.createButtonEnabled = true
+            ///TODO: error labels
+        case .error(_):
+            userInterface?.createButtonEnabled = false
+        }
     }
     
 }

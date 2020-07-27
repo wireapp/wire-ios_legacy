@@ -17,10 +17,51 @@
 //
 
 import Foundation
+import WireUtilities
+
+enum ErrorReason: CaseIterable {
+    case tooShort
+    case noLowercaseChar
+    case noUppercaseChar
+    case noNumber
+    case noSpecialChar
+    
+    var message: String {
+        switch self {
+            
+        case .tooShort:
+            return "create_passcode.validation.too_short".localized
+        case .noLowercaseChar:
+            return "create_passcode.validation.no_lowercase_char".localized
+        case .noUppercaseChar:
+            return "create_passcode.validation.no_uppercase_char".localized
+        case .noSpecialChar:
+            return "create_passcode.validation.no_special_char".localized
+        case .noNumber:
+            return "create_passcode.validation.no_number".localized
+        }
+    }
+    
+    var descriptionWithInvalidIcon: NSAttributedString {
+        
+        //TODO paint code icon
+        let attributedString = NSAttributedString(string: "❌" + message)
+        
+        return attributedString
+    }
+    
+    //TODO paint code icon
+    var descriptionWithPassedIcon: NSAttributedString {
+        
+        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
+        
+        return attributedString
+    }
+}
 
 enum PasscodeValidationResult {
     case accepted
-    case error
+    case error([ErrorReason])
 }
 
 protocol PasscodeSetupInteractorInput: class {
@@ -33,27 +74,57 @@ protocol PasscodeSetupInteractorOutput: class {
 
 final class PasscodeSetupInteractor {
     weak var output: PasscodeSetupInteractorOutput?
+    
+    private let passwordCharacterClasses: [PasswordCharacterClass] = [.uppercase,
+                                                                      .lowercase,
+                                                                      .special,
+                                                                      .digits]
 }
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
+    
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
             output?.passcodeValidated(result: .accepted)
             return
         }
         
+        let result: PasscodeValidationResult
         switch error {
         case .tooShort:
-            output?.passcodeValidated(result: .error)
-        case .invalidPassword(let error):
-            output?.passcodeValidated(result: .error)
-//        case .missingRequiredClasses(let passwordCharacterClass):
-//            output?.passcodeValidated(result: .error)
+            result = .error([.tooShort])
+        case .invalidPassword(let passwordValidationResult):
+            switch passwordValidationResult {
+                
+            case .missingRequiredClasses(let passwordCharacterClass):
+                var errorReasons: [ErrorReason] = []
+                passwordCharacterClasses.forEach() {
+                    if passwordCharacterClass.contains($0) {
+                        switch $0 {
+                        case .uppercase:
+                            errorReasons.append(.noUppercaseChar)
+                        case .lowercase:
+                            errorReasons.append(.noLowercaseChar)
+                        case .special:
+                            errorReasons.append(.noLowercaseChar)
+                        case .digits:
+                            errorReasons.append(.noNumber)
+                        default:
+                            break
+                        }
+                    }
+                }
+                    
+                result = .error(errorReasons)
+            default:
+                result = .error([])
+            }
         default:
-            break
+            result = .error([])
         }
        
+        output?.passcodeValidated(result: result)
     }
     
 }
