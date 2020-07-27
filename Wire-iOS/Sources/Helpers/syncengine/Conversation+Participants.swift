@@ -24,10 +24,16 @@ extension ZMConversation {
         case offline
     }
 
-    static var callCenterConfiguration = WireCallCenterConfiguration()
+    static var useConferenceCalling: Bool {
+        return Settings.shared[.conferenceCalling] == true
+    }
     
     static var maxVideoCallParticipants: Int {
-        callCenterConfiguration.videoParticipantsLimit
+        if useConferenceCalling {
+            return maxParticipants
+        } else {
+            return 4
+        }
     }
 
     static let maxParticipants: Int = 500
