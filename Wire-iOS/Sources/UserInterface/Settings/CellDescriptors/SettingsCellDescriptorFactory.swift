@@ -98,7 +98,7 @@ class SettingsCellDescriptorFactory {
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup, self.advancedGroup, self.helpSection(), self.aboutSection()]
         
         if Bundle.developerModeEnabled {
             topLevelElements.append(self.developerGroup())
@@ -164,60 +164,6 @@ class SettingsCellDescriptorFactory {
         
         return SettingsGroupCellDescriptor(items: [section], title: title, identifier: .none, previewGenerator: previewGenerator)
     }
-
-    func advancedGroup() -> SettingsCellDescriptorType {
-        var items: [SettingsSectionDescriptor] = []
-        
-        let troubleshootingSectionTitle = "self.settings.advanced.troubleshooting.title".localized
-        let troubleshootingTitle = "self.settings.advanced.troubleshooting.submit_debug.title".localized
-        let troubleshootingSectionSubtitle = "self.settings.advanced.troubleshooting.submit_debug.subtitle".localized
-        let troubleshootingButton = SettingsExternalScreenCellDescriptor(title: troubleshootingTitle) { () -> (UIViewController?) in
-            return SettingsTechnicalReportViewController()
-        }
-        
-        let troubleshootingSection = SettingsSectionDescriptor(cellDescriptors: [troubleshootingButton], header: troubleshootingSectionTitle, footer: troubleshootingSectionSubtitle)
-        
-        let pushTitle = "self.settings.advanced.reset_push_token.title".localized
-        let pushSectionSubtitle = "self.settings.advanced.reset_push_token.subtitle".localized
-        
-        let pushButton = SettingsExternalScreenCellDescriptor(title: pushTitle, isDestructive: false, presentationStyle: PresentationStyle.modal, presentationAction: { () -> (UIViewController?) in
-            ZMUserSession.shared()?.validatePushToken()
-            let alert = UIAlertController(title: "self.settings.advanced.reset_push_token_alert.title".localized, message: "self.settings.advanced.reset_push_token_alert.message".localized, preferredStyle: .alert)
-            weak var weakAlert = alert;
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (alertAction: UIAlertAction) -> Void in
-                if let alert = weakAlert {
-                    alert.dismiss(animated: true, completion: nil)
-                }
-            }));
-            return alert
-        })
-        
-        let pushSection = SettingsSectionDescriptor(cellDescriptors: [pushButton], header: .none, footer: pushSectionSubtitle)  { (_) -> (Bool) in
-            return true
-        }
-
-        let versionTitle =  "self.settings.advanced.version_technical_details.title".localized
-        let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
-            let versionInfoViewController = VersionInfoViewController()
-            var superViewController = UIApplication.shared.keyWindow?.rootViewController
-            if let presentedViewController = superViewController?.presentedViewController {
-                superViewController = presentedViewController
-                versionInfoViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                versionInfoViewController.navigationController?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            }
-            superViewController?.present(versionInfoViewController, animated: true, completion: .none)
-        }
-
-        let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
-
-        items.append(contentsOf: [troubleshootingSection, debuggingToolsSection(), pushSection, versionSection])
-        
-        return SettingsGroupCellDescriptor(
-            items: items,
-            title: "self.settings.advanced.title".localized,
-            icon: .settingsAdvanced
-        )
-    }
     
     func developerGroup() -> SettingsCellDescriptorType {
         let title = "self.settings.developer_options.title".localized
@@ -280,15 +226,7 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
-    
-    func debuggingToolsSection() -> SettingsSectionDescriptor {
-        let title = "self.settings.advanced.debugging_tools.title".localized
-        
-        let findUnreadConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
-        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadConversationButton,])], title: title)
-        return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
-    }
-    
+
     func requestNumber(_ callback: @escaping (Int)->()) {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
@@ -463,7 +401,7 @@ class SettingsCellDescriptorFactory {
     // MARK: Actions
     
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
-    private static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
+    static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
         
