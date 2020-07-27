@@ -1784,6 +1784,13 @@
 "create_passcode.info_label.highlight" = "it cannot be recovered.";
 "create_passcode.create_button.title" = "create passcode";
 
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "8 characters long";
+"create_passcode.validation.no_lowercase_char" = "1 lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "1 capital letter";
+"create_passcode.validation.no_special_char" = "1 special character";
+"create_passcode.validation.no_number" = "1 Number";
+
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter Passcode to unlock Wire";

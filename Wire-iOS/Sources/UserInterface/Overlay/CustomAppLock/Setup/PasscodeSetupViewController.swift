@@ -20,6 +20,55 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+///TODO: move to VM
+enum ErrorReason: CaseIterable {
+    case tooShort
+    case noLowercaseChar
+    case noUppercaseChar
+    case noNumber
+    case noSpecialChar
+    
+    var errorMessage: String {
+        switch self {
+            
+        case .tooShort:
+            return "create_passcode.validation.too_short"
+        case .noLowercaseChar:
+            return "create_passcode.validation.no_lowercase_char"
+        case .noUppercaseChar:
+            return "create_passcode.validation.no_uppercase_char"
+        case .noSpecialChar:
+            return "create_passcode.validation.no_special_char"
+        case .noNumber:
+            return "create_passcode.validation.no_number"
+        }
+    }
+    
+    var descriptionWithInvalidIcon: NSAttributedString {
+        
+        //TODO paint code icon
+        let crossIconTextAttachment: NSTextAttachment! = {
+            if #available(iOS 13, *) {
+                return NSTextAttachment(image: UIImage(named: "dismiss")!)
+            }
+            
+            return nil // TODO
+        }()
+        
+        let attributedString = NSAttributedString(attachment: crossIconTextAttachment) + errorMessage
+        
+        return attributedString
+    }
+    
+    //TODO paint code icon
+    var descriptionWithPassedIcon: NSAttributedString {
+        
+        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + errorMessage)
+        
+        return attributedString
+    }
+}
+
 final class PasscodeSetupViewController: UIViewController {
     private let stackView: UIStackView = UIStackView.verticalStackView()
     
