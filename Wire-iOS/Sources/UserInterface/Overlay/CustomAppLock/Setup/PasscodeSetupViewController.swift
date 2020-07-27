@@ -20,6 +20,10 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+protocol PasscodeSetupUserInterface: class {
+    var createButtonEnabled: Bool { get set }
+}
+
 ///TODO: move to VM
 enum ErrorReason: CaseIterable {
     case tooShort
@@ -28,34 +32,26 @@ enum ErrorReason: CaseIterable {
     case noNumber
     case noSpecialChar
     
-    var errorMessage: String {
+    var message: String {
         switch self {
             
         case .tooShort:
-            return "create_passcode.validation.too_short"
+            return "create_passcode.validation.too_short".localized
         case .noLowercaseChar:
-            return "create_passcode.validation.no_lowercase_char"
+            return "create_passcode.validation.no_lowercase_char".localized
         case .noUppercaseChar:
-            return "create_passcode.validation.no_uppercase_char"
+            return "create_passcode.validation.no_uppercase_char".localized
         case .noSpecialChar:
-            return "create_passcode.validation.no_special_char"
+            return "create_passcode.validation.no_special_char".localized
         case .noNumber:
-            return "create_passcode.validation.no_number"
+            return "create_passcode.validation.no_number".localized
         }
     }
     
     var descriptionWithInvalidIcon: NSAttributedString {
         
         //TODO paint code icon
-        let crossIconTextAttachment: NSTextAttachment! = {
-            if #available(iOS 13, *) {
-                return NSTextAttachment(image: UIImage(named: "dismiss")!)
-            }
-            
-            return nil // TODO
-        }()
-        
-        let attributedString = NSAttributedString(attachment: crossIconTextAttachment) + errorMessage
+        let attributedString = NSAttributedString(string: "❌" + message)
         
         return attributedString
     }
@@ -63,19 +59,24 @@ enum ErrorReason: CaseIterable {
     //TODO paint code icon
     var descriptionWithPassedIcon: NSAttributedString {
         
-        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + errorMessage)
+        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
         
         return attributedString
     }
 }
 
 final class PasscodeSetupViewController: UIViewController {
+    
+    private lazy var presenter: PasscodeSetupPresenter = {
+        return PasscodeSetupPresenter(userInterface: self)
+    }()
+
     private let stackView: UIStackView = UIStackView.verticalStackView()
     
     private let contentView: UIView = UIView()
     
     private lazy var createButton: Button = {
-        let button = Button(style: .fullMonochrome)
+        let button = Button(style: .full)
         
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
@@ -124,28 +125,53 @@ final class PasscodeSetupViewController: UIViewController {
         
         return label
     }()
+    
+    private let validationLabels: [ErrorReason:UILabel] = {
+        
+        let myDictionary = ErrorReason.allCases.reduce([ErrorReason: UILabel]()) { (dict, errorReason) -> [ErrorReason: UILabel] in
+            var dict = dict
+            dict[errorReason] = UILabel()
+            return dict
+        }
+        
+        return myDictionary
+    }()
+
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         
-        view.backgroundColor = ColorScheme.default.color(named: .background)
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
         
         [contentView].forEach {
             view.addSubview($0)
         }
         
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         
         contentView.addSubview(stackView)
         
         [titleLabel,
-         SpacingView(16),
+         SpacingView(24),
          infoLabel,
          passcodeTextField,
-         SpacingView(23),
-         createButton].forEach {
+         SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
         }
+        
+        ErrorReason.allCases.forEach() {
+            if let label = validationLabels[$0] {
+                label.font = UIFont.smallRegularFont
+                label.textColor = UIColor.Team.subtitleColor
+                label.numberOfLines = 0
+                
+                label.attributedText = $0.descriptionWithInvalidIcon
+                stackView.addArrangedSubview(label)
+            }
+        }
+
+        stackView.addArrangedSubview(createButton)
+
         
         createConstraints()
     }
@@ -215,8 +241,22 @@ extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
 
 // MARK: - TextFieldValidationDelegate
 
+// TODO: mv to VM
 extension PasscodeSetupViewController: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
+        presenter.validate(error: error)
         createButton.isEnabled = error == nil
+    }
+}
+
+extension PasscodeSetupViewController: PasscodeSetupUserInterface {
+    var createButtonEnabled: Bool {
+        get {
+            return createButton.isEnabled
+        }
+        
+        set {
+            createButton.isEnabled = newValue
+        }
     }
 }

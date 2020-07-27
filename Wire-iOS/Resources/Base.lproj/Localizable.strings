@@ -1781,14 +1781,14 @@
 "create_passcode.textfield.placeholder" = "Create memorable passcode";
 "create_passcode.title_label" = "Create a Passcode";
 "create_passcode.info_label" = "It will unlock your app to use Wire. Make it memorable, If you forget this passcode ";
-"create_passcode.info_label.highlight" = "it cannot be recovered.";
+"create_passcode.info_label.highlighted" = "it cannot be recovered.";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation
-"create_passcode.validation.too_short" = "8 characters long";
-"create_passcode.validation.no_lowercase_char" = "1 lowercase letter";
-"create_passcode.validation.no_uppercase_char" = "1 capital letter";
-"create_passcode.validation.no_special_char" = "1 special character";
+"create_passcode.validation.too_short" = "8 Characters long";
+"create_passcode.validation.no_lowercase_char" = "1 Lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "1 Capital letter";
+"create_passcode.validation.no_special_char" = "1 Special character";
 "create_passcode.validation.no_number" = "1 Number";
 
 // Custom app lock - unlock
