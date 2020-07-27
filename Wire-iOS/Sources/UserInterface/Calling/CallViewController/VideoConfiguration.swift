@@ -105,20 +105,6 @@ extension VoiceChannel {
         }
     }
 
-    var limitedSortedActiveVideoStreams: [VideoStream] {
-        var videoStreams = sortedActiveVideoStreams
-        
-        // Place self stream first to avoid cutting it off
-        if let selfStreamIndex = videoStreams.firstIndex(where: { $0.stream.streamId == selfStreamId }) {
-            let stream = videoStreams.remove(at: selfStreamIndex)
-            videoStreams.insert(stream, at: 0)
-        }
-        
-        let limit = VideoCallType().videoStreamsLimit
-        
-        return Array(videoStreams.prefix(limit))
-    }
-    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
