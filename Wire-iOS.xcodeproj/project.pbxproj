@@ -806,6 +806,7 @@
 		A9CBBEBA24CED5C9006543D4 /* StyleKitIcon+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEB924CED5C9006543D4 /* StyleKitIcon+Const.swift */; };
 		A9CBBEBC24CF09AD006543D4 /* PasscodeSetupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */; };
 		A9CBBEBE24CF09ED006543D4 /* PasscodeSetupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */; };
+		A9CBBEC124CF31E8006543D4 /* PasscodeSetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */; };
 		A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF5F57242B98B300920877 /* NetworkStatus.swift */; };
 		A9CF740E24891498007A11DC /* Settings+Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF740D24891498007A11DC /* Settings+Reset.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
@@ -2410,6 +2411,7 @@
 		A9CBBEB924CED5C9006543D4 /* StyleKitIcon+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyleKitIcon+Const.swift"; sourceTree = "<group>"; };
 		A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupPresenter.swift; sourceTree = "<group>"; };
 		A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupInteractor.swift; sourceTree = "<group>"; };
+		A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerTests.swift; sourceTree = "<group>"; };
 		A9CF5F57242B98B300920877 /* NetworkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 		A9CF740D24891498007A11DC /* Settings+Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Reset.swift"; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -5606,6 +5608,7 @@
 			isa = PBXGroup;
 			children = (
 				A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */,
+				A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */,
 			);
 			path = CustomAppLock;
 			sourceTree = "<group>";
@@ -8293,6 +8296,7 @@
 				A9C7BEC0237C0FFB005D676A /* ColorSchemeTests.swift in Sources */,
 				EE52379323F5588000D4FE79 /* MockUserType+CodingKeys.swift in Sources */,
 				EF1D80D92226D6B800BCA8D3 /* MockConversationFactory.swift in Sources */,
+				A9CBBEC124CF31E8006543D4 /* PasscodeSetupViewControllerTests.swift in Sources */,
 				87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */,
 				EFBFABAA2257948F005D83C0 /* TopPeopleCellSnapshotTests.swift in Sources */,
 				EFD4B9CB22F09C3E008CA042 /* AppLockTests.swift in Sources */,
