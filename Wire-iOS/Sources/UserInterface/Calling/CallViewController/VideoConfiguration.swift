@@ -20,6 +20,8 @@ import WireSyncEngine
 
 struct VideoConfiguration: VideoGridConfiguration {
 
+    fileprivate static let maxVideoStreams: Int = 12
+
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
@@ -33,10 +35,19 @@ struct VideoConfiguration: VideoGridConfiguration {
     }
 }
 
+extension CallParticipant {
+    var streamId: AVSClient {
+        return AVSClient(userId: user.remoteIdentifier, clientId: clientId)
+    }
+}
+
 extension VoiceChannel {
 
     private var sortedParticipants: [CallParticipant] {
-        return participants.sorted { $0.user.name?.lowercased() < $1.user.name?.lowercased() }
+        return participants.sorted {
+            $0.streamId == selfStreamId ||
+            $0.user.name?.lowercased() < $1.user.name?.lowercased()
+        }
     }
     
     private var selfStream: VideoStream? {
@@ -70,7 +81,7 @@ extension VoiceChannel {
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
 
-        let videoStreams = limitedSortedActiveVideoStreams
+        let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
         let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
         
         return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
@@ -94,27 +105,11 @@ extension VoiceChannel {
         }
     }
 
-    var limitedSortedActiveVideoStreams: [VideoStream] {
-        var videoStreams = sortedActiveVideoStreams
-        
-        // Place self stream first to avoid cutting it off
-        if let selfStreamIndex = videoStreams.firstIndex(where: { $0.stream.streamId == selfStreamId }) {
-            let stream = videoStreams.remove(at: selfStreamIndex)
-            videoStreams.insert(stream, at: 0)
-        }
-        
-        let limit = VideoCallType().videoStreamsLimit
-        
-        return Array(videoStreams.prefix(limit))
-    }
-    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState) where videoState != .stopped:
-                let streamId = AVSClient(userId: participant.user.remoteIdentifier,
-                                          clientId: participant.clientId)
-                let stream = Stream(streamId: streamId,
+                let stream = Stream(streamId: participant.streamId,
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
