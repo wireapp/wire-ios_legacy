@@ -230,7 +230,6 @@ final class PasscodeSetupViewController: UIViewController {
 
 // MARK: - AccessoryTextFieldDelegate
 
-///TODO share with Unlock VC
 extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
@@ -241,11 +240,9 @@ extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
 
 // MARK: - TextFieldValidationDelegate
 
-// TODO: mv to VM
 extension PasscodeSetupViewController: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         presenter.validate(error: error)
-        createButton.isEnabled = error == nil
     }
 }
 

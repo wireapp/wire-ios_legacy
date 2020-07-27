@@ -18,10 +18,17 @@
 
 import Foundation
 
+enum PasscodeValidationResult {
+    case accepted
+    case error
+}
+
 protocol PasscodeSetupInteractorInput: class {
+    func validate(error: TextFieldValidator.ValidationError?)
 }
 
 protocol PasscodeSetupInteractorOutput: class {
+    func passcodeValidated(result: PasscodeValidationResult)
 }
 
 final class PasscodeSetupInteractor {
@@ -30,4 +37,14 @@ final class PasscodeSetupInteractor {
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
+    func validate(error: TextFieldValidator.ValidationError?) {
+        if error == nil {
+            output?.passcodeValidated(result: .accepted)
+        } else {
+            ///TODO
+            output?.passcodeValidated(result: .error)
+        }
+        
+    }
+    
 }

@@ -35,7 +35,7 @@ final class PasscodeSetupPresenter {
     }
     
     func validate(error: TextFieldValidator.ValidationError?) {
-        userInterface?.createButtonEnabled = error == nil
+        interactorInput.validate(error: error)
     }
     
 }
@@ -43,4 +43,8 @@ final class PasscodeSetupPresenter {
 // MARK: - InteractorOutput
 
 extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
+    func passcodeValidated(result: PasscodeValidationResult) {
+        userInterface?.createButtonEnabled = result == .accepted
+    }
+    
 }
