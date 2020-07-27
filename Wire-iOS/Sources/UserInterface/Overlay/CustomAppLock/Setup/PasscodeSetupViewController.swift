@@ -22,6 +22,7 @@ import WireCommonComponents
 
 protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
+    func setValidationLabelsState(errorReason: ErrorReason, passed: Bool)
 }
 
 final class PasscodeSetupViewController: UIViewController {
@@ -205,7 +206,13 @@ extension PasscodeSetupViewController: TextFieldValidationDelegate {
     }
 }
 
+// MARK: - PasscodeSetupUserInterface
+
 extension PasscodeSetupViewController: PasscodeSetupUserInterface {
+    func setValidationLabelsState(errorReason: ErrorReason, passed: Bool) {
+        validationLabels[errorReason]?.attributedText = passed ? errorReason.descriptionWithPassedIcon : errorReason.descriptionWithInvalidIcon
+    }
+    
     var createButtonEnabled: Bool {
         get {
             return createButton.isEnabled

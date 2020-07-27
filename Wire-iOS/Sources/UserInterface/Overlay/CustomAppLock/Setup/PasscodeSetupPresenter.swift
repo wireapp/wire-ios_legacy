@@ -43,13 +43,33 @@ final class PasscodeSetupPresenter {
 // MARK: - InteractorOutput
 
 extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
+    private func resetValidationLabels(passed: Bool) {
+        ErrorReason.allCases.forEach() { errorReason in
+            userInterface?.setValidationLabelsState(errorReason: errorReason, passed: passed)
+        }
+    }
+    
     func passcodeValidated(result: PasscodeValidationResult) {
         switch result {
         case .accepted:
             userInterface?.createButtonEnabled = true
-            ///TODO: error labels
-        case .error(_):
+            resetValidationLabels(passed: true)
+        case .error(let errorReasons):
             userInterface?.createButtonEnabled = false
+            
+            // reset: if the passcode is too short, set all other as not passed
+            let passed: Bool
+            if errorReasons == [.tooShort] {
+                passed = false
+            } else {
+                passed = true
+            }
+            
+            resetValidationLabels(passed: passed)
+            
+            errorReasons.forEach() { errorReason in
+              userInterface?.setValidationLabelsState(errorReason: errorReason, passed: false)
+            }
         }
     }
     

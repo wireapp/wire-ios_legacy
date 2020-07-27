@@ -61,7 +61,7 @@ enum ErrorReason: CaseIterable {
 
 enum PasscodeValidationResult {
     case accepted
-    case error([ErrorReason])
+    case error(Set<ErrorReason>)
 }
 
 protocol PasscodeSetupInteractorInput: class {
@@ -96,20 +96,21 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
             result = .error([.tooShort])
         case .invalidPassword(let passwordValidationResult):
             switch passwordValidationResult {
-                
+            case .tooShort:
+                result = .error([.tooShort])
             case .missingRequiredClasses(let passwordCharacterClass):
-                var errorReasons: [ErrorReason] = []
+                var errorReasons: Set<ErrorReason> = Set()
                 passwordCharacterClasses.forEach() {
                     if passwordCharacterClass.contains($0) {
                         switch $0 {
                         case .uppercase:
-                            errorReasons.append(.noUppercaseChar)
+                            errorReasons.insert(.noUppercaseChar)
                         case .lowercase:
-                            errorReasons.append(.noLowercaseChar)
+                            errorReasons.insert(.noLowercaseChar)
                         case .special:
-                            errorReasons.append(.noLowercaseChar)
+                            errorReasons.insert(.noSpecialChar)
                         case .digits:
-                            errorReasons.append(.noNumber)
+                            errorReasons.insert(.noNumber)
                         default:
                             break
                         }
