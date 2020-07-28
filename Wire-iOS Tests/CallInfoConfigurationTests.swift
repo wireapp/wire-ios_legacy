@@ -410,8 +410,6 @@ class CallInfoConfigurationTests: XCTestCase {
     
     func testGroupAudioEstablishedNonTeamUser() {
         // given
-        ZMConversation.callCenterConfiguration = .init()
-
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
@@ -455,9 +453,7 @@ class CallInfoConfigurationTests: XCTestCase {
     }
     
     func testGroupAudioEstablishedLargeGroup() {
-        // given
-        ZMConversation.callCenterConfiguration = .init()
-        
+        // given        
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
         
