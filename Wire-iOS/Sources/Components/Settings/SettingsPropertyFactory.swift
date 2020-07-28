@@ -327,6 +327,7 @@ final class SettingsPropertyFactory {
 
                             let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
 
+                            let closeItem = UIBarButtonItem.createCloseItem()
                             keyboardAvoidingViewController.navigationItem.leftBarButtonItem = keyboardAvoidingViewController.navigationController?.closeItem()
 
                             
