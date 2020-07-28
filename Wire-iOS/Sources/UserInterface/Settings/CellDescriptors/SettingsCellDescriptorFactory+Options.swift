@@ -144,8 +144,11 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var conferenceCallingSection: SettingsSectionDescriptor {
-        let betaToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta))
-        
+        let betaToggle = SettingsPropertyToggleCellDescriptor(
+            settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta),
+            identifier: "Beta Toggle"
+        )
+
         return SettingsSectionDescriptor(
             cellDescriptors: [betaToggle],
             header: "self.settings.advanced.conference_calling.title".localized,
