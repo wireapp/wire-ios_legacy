@@ -107,27 +107,29 @@ class AppLockPresenter {
 
 // MARK: - Account password helper
 extension AppLockPresenter {
+    private func checkPassword(password: String) -> Bool {
+        guard !password.isEmpty else {
+            authenticationState = .cancelled
+            setContents(dimmed: true, withReauth: true)
+            return false
+        }
+        
+        userInterface?.setSpinner(animating: true)
+        
+        return true
+    }
+    
     private func requestAccountPassword(with message: String) {
         userInterface?.presentRequestPasswordController(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
-                
-                if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-                    guard let password = password, !password.isEmpty else {
-                        self.authenticationState = .cancelled
-                        return
-                    }
-                    self.userInterface?.setSpinner(animating: true)
 
+                guard let password = password,
+                      self.checkPassword(password: password) else { return }
+
+                if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
                     self.appLockInteractorInput.verify(customPasscode: password)
                 } else {
-                    guard let password = password, !password.isEmpty else {
-                        self.authenticationState = .cancelled
-                        self.setContents(dimmed: true, withReauth: true)
-                        return
-                    }
-                    self.userInterface?.setSpinner(animating: true)
-
                     self.appLockInteractorInput.verify(password: password)
                 }
             }
