@@ -53,7 +53,7 @@ final class UnlockViewControllerTests: XCTestCase {
         fillPasscode()
 
         // WHEN
-        sut.onUnlockButtonPressed(sender: nil)
+        sut.showWrongPasscodeMessage()
 
         // THEN
         verify(matching: sut)

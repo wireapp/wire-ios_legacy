@@ -217,7 +217,7 @@ final class UnlockViewController: UIViewController {
     }
 
     @objc
-    func onUnlockButtonPressed(sender: AnyObject?) {
+    private func onUnlockButtonPressed(sender: AnyObject?) {
         guard let passcode = accessoryTextField.text else { return }
 
         presenter.unlock(passcode: passcode, callback: callback)
