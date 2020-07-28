@@ -90,17 +90,14 @@ final class AppLockViewController: UIViewController {
 extension AppLockViewController: AppLockUserInterface {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
         
-        let context: RequestPasswordController.RequestPasswordContext
         
         if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-            context = .unlockWithCustomCode
+            // TODO: present unlock screen
         } else {
-            context = .unlock(message: message.localized)
+            let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
+            self.passwordController = passwordController
+            present(passwordController.alertController, animated: true)
         }
-        
-        let passwordController = RequestPasswordController(context: context, callback: callback)
-        self.passwordController = passwordController
-        present(passwordController.alertController, animated: true)
     }
 
     func setSpinner(animating: Bool) {
