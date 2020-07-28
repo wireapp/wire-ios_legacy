@@ -34,12 +34,7 @@ final class AppLockViewController: UIViewController {
 
     private var dimContents: Bool = false {
         didSet {
-            ///TODO: window is nil since it is not top window?
-            view.window?.isHidden = !dimContents ///TODO not come to here?
-
-
-//            let window = view.window
-//            let notificationsWindow = AppDelegate.shared.notificationsWindow
+            view.window?.isHidden = !dimContents
 
             if dimContents {
                 AppDelegate.shared.notificationsWindow?.makeKey()
