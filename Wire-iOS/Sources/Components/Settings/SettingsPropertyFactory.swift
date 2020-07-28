@@ -375,10 +375,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    let value: Bool =
-                            Settings.shared[.conferenceCalling]
-                            ?? SessionManager.shared?.useConferenceCalling
-                            ?? false
+                    let value: Bool = Settings.shared[.conferenceCalling] ?? false
                     return SettingsPropertyValue(value)
                 },
                 setAction: { _, value  in
