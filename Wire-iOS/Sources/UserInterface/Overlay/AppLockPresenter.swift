@@ -26,8 +26,9 @@ extension Notification.Name {
 }
 
 protocol AppLockUserInterface: class {
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback)
-    func dismissUnlockScreen(completion: Completion?)
+    func presentRequestPasswordController(with message: String,
+                                          callback: @escaping RequestPasswordController.Callback)
+    func dismissUnlockScreen()
     
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
@@ -240,7 +241,7 @@ extension AppLockPresenter {
     }
     
     private func appUnlocked() {
-        userInterface?.dismissUnlockScreen(completion: nil)
+        userInterface?.dismissUnlockScreen()
         
         authenticationState = .authenticated
         AppLock.lastUnlockedDate = Date()

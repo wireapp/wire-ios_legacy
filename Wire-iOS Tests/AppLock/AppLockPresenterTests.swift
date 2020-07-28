@@ -27,7 +27,8 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     
     var passwordInput: String?
     var requestPasswordMessage: String?
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
+    func presentRequestPasswordController(with message: String,
+                                          callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
     }

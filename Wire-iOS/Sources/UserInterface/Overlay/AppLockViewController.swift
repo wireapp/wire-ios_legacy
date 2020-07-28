@@ -92,12 +92,8 @@ final class AppLockViewController: UIViewController {
 
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
-    func dismissUnlockScreen(completion: Completion?) {
-        if let unlockScreenWrapper = unlockScreenWrapper {
-            unlockScreenWrapper.dismiss(animated: false, completion: completion)
-        } else {
-            completion?()
-        }
+    func dismissUnlockScreen() {
+        unlockScreenWrapper?.dismiss(animated: false)
     }
     
     func presentRequestPasswordController(with message: String,
