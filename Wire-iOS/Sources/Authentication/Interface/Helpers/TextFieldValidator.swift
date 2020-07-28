@@ -20,8 +20,8 @@ import Foundation
 import WireUtilities
 import UIKit
 
-class TextFieldValidator {
-    
+final class TextFieldValidator {
+
     var customValidator: ((String) -> ValidationError?)?
 
     enum ValidationError: Error, Equatable {
@@ -37,7 +37,7 @@ class TextFieldValidator {
         guard let text = text else {
             return nil
         }
-        
+
         if let customError = customValidator?(text) {
             return customError
         }
@@ -49,6 +49,7 @@ class TextFieldValidator {
             } else if !text.isEmail {
                 return .invalidEmail
             }
+
         case .password(let isNew):
             if isNew {
                 // If the user is registering, enforce the password rules
@@ -58,6 +59,10 @@ class TextFieldValidator {
                 // If the user is signing in, we do not require any format
                 return text.isEmpty ? .tooShort(kind: kind) : nil
             }
+
+        case .passcode:
+            // If the user is unlocking, we do not require any format
+            return text.isEmpty ? .tooShort(kind: kind) : nil
 
         case .name:
             /// We should ignore leading/trailing whitespace when counting the number of characters in the string
@@ -95,7 +100,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "name.guidance.tooshort".localized
             case .email:
                 return "email.guidance.tooshort".localized
-            case .password:
+            case .password, .passcode:
                 return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
@@ -108,7 +113,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "name.guidance.toolong".localized
             case .email:
                 return "email.guidance.toolong".localized
-            case .password:
+            case .password, .passcode:
                 return "password.guidance.toolong".localized
             case .unknown:
                 return "unknown.guidance.toolong".localized

@@ -27,6 +27,14 @@ extension Float {
 }
 
 extension CGFloat {
+    enum PasscodeUnlock {
+        static let textFieldHeight: CGFloat = 40
+        static let buttonHeight: CGFloat = 40
+    }
+    
+    enum AccessoryTextField {
+        static let horizonalInset: CGFloat = 16
+    }
     
     enum SpinnerButton {
         static let contentInset: CGFloat = 16

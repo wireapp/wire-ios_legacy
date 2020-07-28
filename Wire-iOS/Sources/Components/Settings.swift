@@ -65,6 +65,7 @@ enum SettingKey: String, CaseIterable {
     case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
     case callingConstantBitRate = "CallingConstantBitRate"
     case disableLinkPreviews = "DisableLinkPreviews"
+    case conferenceCalling = "ConferenceCalling"
 }
 
 /// Model object for locally stored (not in SE or AVS) user app settings
@@ -90,6 +91,8 @@ final class Settings {
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
+            case .conferenceCalling where newValue is Bool:
+                SessionManager.shared?.useConferenceCalling = newValue as! Bool
             default:
                 break
             }
