@@ -324,10 +324,11 @@ final class SettingsPropertyFactory {
 
                             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
 
-                            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = wrappedViewController.closeItem()
 
                             let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
-                            
+
+                            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = keyboardAvoidingViewController.navigationController?.closeItem()
+
                             
 
                             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
