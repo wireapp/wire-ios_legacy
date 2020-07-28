@@ -317,6 +317,14 @@ final class SettingsPropertyFactory {
                     switch value {
                     case .number(value: let lockApp):
                         AppLock.isActive = lockApp.boolValue
+                        ///TODO: create app lock screen in dark scheme
+                        
+                        if AppLock.isActive && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+                            let passcodeSetupViewController = PasscodeSetupViewController()
+                            let wrappedViewController = passcodeSetupViewController.wrapInNavigationController()
+                            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+                        }
+
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
