@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * The first page of the user settings.
@@ -195,4 +196,24 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool) {
+        
+        ///TODO: create app lock screen in dark scheme
+        if newValue && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+            let passcodeSetupViewController = PasscodeSetupViewController()
+            
+            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
+            
+            
+            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
+            
+            let closeItem = UIBarButtonItem.createCloseItem()
+            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = keyboardAvoidingViewController.navigationController?.closeItem()
+            
+            
+            
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        }
+
+    }
 }

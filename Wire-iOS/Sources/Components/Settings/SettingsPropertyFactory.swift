@@ -54,6 +54,8 @@ enum SettingsPropertyError: Error {
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+    
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool)
 }
 
 final class SettingsPropertyFactory {
@@ -316,24 +318,10 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        AppLock.isActive = lockApp.boolValue
-                        ///TODO: create app lock screen in dark scheme
+                        self.delegate?.appLockOptionDidChange(self, newValue: lockApp.boolValue)
                         
-                        if AppLock.isActive && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-                            let passcodeSetupViewController = PasscodeSetupViewController()
-
-                            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
-
-
-                            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
-
-                            let closeItem = UIBarButtonItem.createCloseItem()
-                            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = keyboardAvoidingViewController.navigationController?.closeItem()
-
-                            
-
-                            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
-                        }
+                        ///TODO: update after call back
+                        AppLock.isActive = lockApp.boolValue
 
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
