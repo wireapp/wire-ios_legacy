@@ -321,7 +321,15 @@ final class SettingsPropertyFactory {
                         
                         if AppLock.isActive && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
                             let passcodeSetupViewController = PasscodeSetupViewController()
-                            let wrappedViewController = passcodeSetupViewController.wrapInNavigationController()
+
+                            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
+
+                            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = wrappedViewController.closeItem()
+
+                            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
+                            
+                            
+
                             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
                         }
 
