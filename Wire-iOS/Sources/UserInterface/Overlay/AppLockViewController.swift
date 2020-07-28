@@ -43,6 +43,8 @@ final class AppLockViewController: UIViewController {
             }
         }
     }
+    
+    private weak var unlockViewController: UnlockViewController?
 
     static let shared = AppLockViewController()
 
@@ -88,13 +90,33 @@ final class AppLockViewController: UIViewController {
 
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
-        
+    func presentRequestPasswordController(with message: String,
+                                          callback: @escaping RequestPasswordController.Callback) {
         
         if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-            // TODO: present unlock screen
+                        
+            if unlockViewController == nil {
+                let viewController = UnlockViewController()
+
+                let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
+                keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
+                present(keyboardAvoidingViewController, animated: true)
+
+                unlockViewController = viewController
+            }
+            
+            guard let unlockViewController = unlockViewController else { return }
+            
+            if message == AuthenticationMessageKey.wrongPassword {
+                unlockViewController.showWrongPasscodeMessage()
+            }
+
+            unlockViewController.callback = callback
+            
+            
         } else {
-            let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
+            let passwordController = RequestPasswordController(context: .unlock(message: message.localized),
+                                                               callback: callback)
             self.passwordController = passwordController
             present(passwordController.alertController, animated: true)
         }

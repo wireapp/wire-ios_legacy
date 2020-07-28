@@ -50,7 +50,7 @@ enum AuthenticationState {
     }
 }
 
-private struct AuthenticationMessageKey {
+struct AuthenticationMessageKey {
     static let accountPassword = "self.settings.privacy_security.lock_password.description.unlock"
     static let wrongPassword = "self.settings.privacy_security.lock_password.description.wrong_password"
     static let wrongOfflinePassword = "self.settings.privacy_security.lock_password.description.wrong_offline_password"
@@ -113,9 +113,6 @@ extension AppLockPresenter {
                 if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
                     guard let password = password, !password.isEmpty else {
                         self.authenticationState = .cancelled
-                        self.setContents(dimmed: true, withReauth: true)
-                        
-                        ///TODO: WIP go to forgot password screen
                         return
                     }
                     self.userInterface?.setSpinner(animating: true)
