@@ -32,7 +32,7 @@ enum AccessoryViewMode: Int {
     case alwaysHide
 }
 
-class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
+final class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
     let title: String
@@ -102,7 +102,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
             controllerToShow.modalPresentationCapturesStatusBarAppearance = true
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
-            
+            ///TODO: app lock do this also?
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         }

@@ -26,6 +26,8 @@ private let zmLog = ZMSLog(tag: "UI")
 /**
  * @abstract Generates the cell that displays toggle control
  */
+
+///TODO: SettingsPropertyToggleCellDescriptor with external screen?
 final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
     let inverse: Bool
