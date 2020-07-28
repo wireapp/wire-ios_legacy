@@ -245,7 +245,7 @@ extension CallParticipantState {
 fileprivate extension VoiceChannel {
     
     var canUpgradeToVideo: Bool {
-        guard !ZMConversation.useConferenceCalling else {
+        guard !isConferenceCall else {
             return true
         }
         
