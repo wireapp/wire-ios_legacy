@@ -34,17 +34,24 @@ final class AppLockViewController: UIViewController {
 
     private var dimContents: Bool = false {
         didSet {
-            view.window?.isHidden = !dimContents
+            ///TODO: window is nil since it is not top window?
+            view.window?.isHidden = !dimContents ///TODO not come to here?
+
+
+//            let window = view.window
+//            let notificationsWindow = AppDelegate.shared.notificationsWindow
 
             if dimContents {
                 AppDelegate.shared.notificationsWindow?.makeKey()
             } else {
+                AppDelegate.shared.notificationsWindow?.isHidden = !dimContents
                 AppDelegate.shared.window?.makeKey()
             }
         }
     }
     
     private weak var unlockViewController: UnlockViewController?
+    private weak var unlockScreenWrapper: KeyboardAvoidingViewController?
 
     static let shared = AppLockViewController()
 
@@ -90,6 +97,14 @@ final class AppLockViewController: UIViewController {
 
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
+    func dismissUnlockScreen(completion: Completion?) {
+        if let unlockScreenWrapper = unlockScreenWrapper {
+            unlockScreenWrapper.dismiss(animated: false, completion: completion)
+        } else {
+            completion?()
+        }
+    }
+    
     func presentRequestPasswordController(with message: String,
                                           callback: @escaping RequestPasswordController.Callback) {
         
@@ -100,8 +115,9 @@ extension AppLockViewController: AppLockUserInterface {
 
                 let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
                 keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-                present(keyboardAvoidingViewController, animated: true)
-
+                present(keyboardAvoidingViewController, animated: false)
+                
+                unlockScreenWrapper = keyboardAvoidingViewController
                 unlockViewController = viewController
             }
             
@@ -112,8 +128,6 @@ extension AppLockViewController: AppLockUserInterface {
             }
 
             unlockViewController.callback = callback
-            
-            
         } else {
             let passwordController = RequestPasswordController(context: .unlock(message: message.localized),
                                                                callback: callback)
@@ -124,17 +138,17 @@ extension AppLockViewController: AppLockUserInterface {
 
     func setSpinner(animating: Bool) {
         if animating {
-            self.spinner.startAnimating()
+            spinner.startAnimating()
         } else {
-            self.spinner.stopAnimating()
+            spinner.stopAnimating()
         }
     }
 
     func setReauth(visible: Bool) {
-        self.lockView.showReauth = visible
+        lockView.showReauth = visible
     }
 
     func setContents(dimmed: Bool) {
-        self.dimContents = dimmed
+        dimContents = dimmed
     }
 }

@@ -27,6 +27,8 @@ extension Notification.Name {
 
 protocol AppLockUserInterface: class {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback)
+    func dismissUnlockScreen(completion: Completion?)
+    
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
@@ -155,15 +157,16 @@ extension AppLockPresenter: AppLockInteractorOutput {
             return
         }
         let authNeeded = appLockInteractorInput.isAuthenticationNeeded
+
         setContents(dimmed: result != .validated && authNeeded)
+
         switch result {
         case .validated:
             appUnlocked()
         case .denied, .unknown, .timeout:
             if authNeeded {
                 requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
-            }
-            else {
+            } else {
                 authenticationState = .needed
             }
         }
@@ -228,12 +231,15 @@ extension AppLockPresenter {
 
 // MARK: - Helpers
 extension AppLockPresenter {
-    private func setContents(dimmed: Bool, withReauth showReauth: Bool = false) {
-        self.userInterface?.setContents(dimmed: dimmed)
-        self.userInterface?.setReauth(visible: showReauth)
+    private func setContents(dimmed: Bool,
+                             withReauth showReauth: Bool = false) {
+        userInterface?.setContents(dimmed: dimmed)
+        userInterface?.setReauth(visible: showReauth)
     }
     
     private func appUnlocked() {
+        userInterface?.dismissUnlockScreen(completion: nil)
+        
         authenticationState = .authenticated
         AppLock.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
