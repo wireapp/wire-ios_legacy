@@ -194,14 +194,12 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
-            sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? configuration.callCenterConfiguration.useConferenceCalling
+            sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
         }
-
-        ZMConversation.callCenterConfiguration = configuration.callCenterConfiguration
     }
 
     func enqueueTransition(to appState: AppState, completion: (() -> Void)? = nil) {
