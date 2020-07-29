@@ -21,7 +21,7 @@ import WireCommonComponents
 
 extension AccessoryTextField {
     static func createPasscodeTextField(kind: AccessoryTextField.Kind,
-        delegate: AccessoryTextFieldDelegate & TextFieldValidationDelegate) -> AccessoryTextField {
+                                        delegate: AccessoryTextFieldDelegate & TextFieldValidationDelegate) -> AccessoryTextField {
         let textField = AccessoryTextField(kind: kind,
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
