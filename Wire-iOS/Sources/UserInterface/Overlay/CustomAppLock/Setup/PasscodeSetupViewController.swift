@@ -53,10 +53,10 @@ final class PasscodeSetupViewController: UIViewController {
         return textField
     }()
 
-    private let titleLabel: UILabel = {
-        let label = UILabel.createMultiLineCenterdLabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel.createMultiLineCenterdLabel(variant: variant)
         label.text = "create_passcode.title_label".localized
-
+        
         return label
     }()
 
@@ -124,8 +124,8 @@ final class PasscodeSetupViewController: UIViewController {
         
         PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
-                label.font = UIFont.smallRegularFont
-                label.textColor = UIColor.Team.subtitleColor
+                label.font = UIFont.smallSemiboldFont
+                label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
                 
                 label.attributedText = $0.descriptionWithInvalidIcon
