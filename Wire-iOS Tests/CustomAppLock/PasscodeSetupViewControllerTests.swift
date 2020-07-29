@@ -44,7 +44,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
         fillPasscode()
 
         // WHEN
-        ErrorReason.allCases.forEach {
+        PasscodeError.allCases.forEach {
             sut.setValidationLabelsState(errorReason: $0, passed: true)
         }
 
