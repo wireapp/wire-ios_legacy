@@ -33,7 +33,7 @@ protocol AppLockInteractorOutput: class {
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-class AppLockInteractor {
+final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests

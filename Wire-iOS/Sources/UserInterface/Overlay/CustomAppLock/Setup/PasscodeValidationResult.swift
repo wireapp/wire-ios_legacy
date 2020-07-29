@@ -18,16 +18,7 @@
 
 import Foundation
 
-protocol UnlockInteractorInput: class {
-}
-
-protocol UnlockInteractorOutput: class {
-}
-
-final class UnlockInteractor {
-    weak var output: UnlockInteractorOutput?
-}
-
-// MARK: - Interface
-extension UnlockInteractor: UnlockInteractorInput {
+enum PasscodeValidationResult {
+    case accepted
+    case error(Set<PasscodeError>)
 }
