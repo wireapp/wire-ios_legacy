@@ -253,7 +253,7 @@ fileprivate extension VoiceChannel {
             return true
         }
         
-        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else {
+        guard conversation.localParticipants.count <= ZMConversation.legacyGroupVideoParticipantLimit else {
             return false
         }
 
