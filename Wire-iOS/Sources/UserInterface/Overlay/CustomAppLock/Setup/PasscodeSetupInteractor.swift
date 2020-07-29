@@ -18,51 +18,6 @@
 import Foundation
 import WireUtilities
 
-enum ErrorReason: CaseIterable {
-    case tooShort
-    case noLowercaseChar
-    case noUppercaseChar
-    case noNumber
-    case noSpecialChar
-
-    var message: String {
-        switch self {
-
-        case .tooShort:
-            return "create_passcode.validation.too_short".localized
-        case .noLowercaseChar:
-            return "create_passcode.validation.no_lowercase_char".localized
-        case .noUppercaseChar:
-            return "create_passcode.validation.no_uppercase_char".localized
-        case .noSpecialChar:
-            return "create_passcode.validation.no_special_char".localized
-        case .noNumber:
-            return "create_passcode.validation.no_number".localized
-        }
-    }
-
-    var descriptionWithInvalidIcon: NSAttributedString {
-
-        //TODO paint code icon
-        let attributedString = NSAttributedString(string: "❌" + message)
-
-        return attributedString
-    }
-
-    //TODO paint code icon
-    var descriptionWithPassedIcon: NSAttributedString {
-
-        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
-
-        return attributedString
-    }
-}
-
-enum PasscodeValidationResult {
-    case accepted
-    case error(Set<ErrorReason>)
-}
-
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
 }
@@ -72,7 +27,7 @@ protocol PasscodeSetupInteractorOutput: class {
 }
 
 final class PasscodeSetupInteractor {
-    weak var output: PasscodeSetupInteractorOutput?
+    weak var interactorOutput: PasscodeSetupInteractorOutput?
 
     private let passwordCharacterClasses: [PasswordCharacterClass] = [.uppercase,
                                                                       .lowercase,
@@ -83,9 +38,31 @@ final class PasscodeSetupInteractor {
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
 
+    private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError>{
+        var errorReasons: Set<PasscodeError> = Set()
+        passwordCharacterClasses.forEach {
+            if missingCharacterClasses.contains($0) {
+                switch $0 {
+                case .uppercase:
+                    errorReasons.insert(.noUppercaseChar)
+                case .lowercase:
+                    errorReasons.insert(.noLowercaseChar)
+                case .special:
+                    errorReasons.insert(.noSpecialChar)
+                case .digits:
+                    errorReasons.insert(.noNumber)
+                default:
+                    break
+                }
+            }
+        }
+        
+        return errorReasons
+    }
+    
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
-            output?.passcodeValidated(result: .accepted)
+            interactorOutput?.passcodeValidated(result: .accepted)
             return
         }
 
@@ -98,25 +75,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
             case .tooShort:
                 result = .error([.tooShort])
             case .missingRequiredClasses(let passwordCharacterClass):
-                var errorReasons: Set<ErrorReason> = Set()
-                passwordCharacterClasses.forEach {
-                    if passwordCharacterClass.contains($0) {
-                        switch $0 {
-                        case .uppercase:
-                            errorReasons.insert(.noUppercaseChar)
-                        case .lowercase:
-                            errorReasons.insert(.noLowercaseChar)
-                        case .special:
-                            errorReasons.insert(.noSpecialChar)
-                        case .digits:
-                            errorReasons.insert(.noNumber)
-                        default:
-                            break
-                        }
-                    }
-                }
-
-                result = .error(errorReasons)
+                result = .error(passcodeError(from: passwordCharacterClass))
             default:
                 result = .error([])
             }
@@ -124,7 +83,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
             result = .error([])
         }
 
-        output?.passcodeValidated(result: result)
+        interactorOutput?.passcodeValidated(result: result)
     }
 
 }

@@ -24,7 +24,7 @@ final class PasscodeSetupPresenter {
     convenience init(userInterface: PasscodeSetupUserInterface) {
         let interactor = PasscodeSetupInteractor()
         self.init(userInterface: userInterface, interactorInput: interactor)
-        interactor.output = self
+        interactor.interactorOutput = self
     }
 
     init(userInterface: PasscodeSetupUserInterface,
@@ -42,8 +42,8 @@ final class PasscodeSetupPresenter {
 // MARK: - InteractorOutput
 
 extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
-    private func resetValidationLabels(passed: Bool) {
-        ErrorReason.allCases.forEach { errorReason in
+    private func resetValidationLabels(errors: Set<PasscodeError>, passed: Bool) {
+        errors.forEach { errorReason in
             userInterface?.setValidationLabelsState(errorReason: errorReason, passed: passed)
         }
     }
@@ -52,23 +52,15 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
         switch result {
         case .accepted:
             userInterface?.createButtonEnabled = true
-            resetValidationLabels(passed: true)
+            resetValidationLabels(errors: Set(PasscodeError.allCases), passed: true)
         case .error(let errorReasons):
             userInterface?.createButtonEnabled = false
 
             // reset: if the passcode is too short, set all other as not passed
-            let passed: Bool
-            if errorReasons == [.tooShort] {
-                passed = false
-            } else {
-                passed = true
-            }
+            let passed: Bool = errorReasons != [.tooShort]
 
-            resetValidationLabels(passed: passed)
-
-            errorReasons.forEach { errorReason in
-              userInterface?.setValidationLabelsState(errorReason: errorReason, passed: false)
-            }
+            resetValidationLabels(errors: Set(PasscodeError.allCases), passed: passed)
+            resetValidationLabels(errors: errorReasons, passed: false)
         }
     }
 

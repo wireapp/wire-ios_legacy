@@ -39,7 +39,7 @@ extension UILabel {
         setContentCompressionResistancePriority(.required, for: .vertical)
     }
 
-    static func createTitleLabel(variant: ColorSchemeVariant? = nil) -> UILabel {
+    static func createMultiLineCenterdLabel(variant: ColorSchemeVariant? = nil) -> UILabel {
         let label = UILabel(key: nil,
                             size: .large,
                             weight: .semibold,

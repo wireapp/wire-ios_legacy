@@ -21,7 +21,7 @@ import WireCommonComponents
 
 protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
-    func setValidationLabelsState(errorReason: ErrorReason, passed: Bool)
+    func setValidationLabelsState(errorReason: PasscodeError, passed: Bool) //TODO: one method?
 }
 
 final class PasscodeSetupViewController: UIViewController {
@@ -54,7 +54,7 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleLabel()
+        let label = UILabel.createMultiLineCenterdLabel()
         label.text = "create_passcode.title_label".localized
 
         return label
@@ -76,9 +76,9 @@ final class PasscodeSetupViewController: UIViewController {
         return label
     }()
 
-    private let validationLabels: [ErrorReason: UILabel] = {
+    private let validationLabels: [PasscodeError: UILabel] = {
 
-        let myDictionary = ErrorReason.allCases.reduce([ErrorReason: UILabel]()) { (dict, errorReason) -> [ErrorReason: UILabel] in
+        let myDictionary = PasscodeError.allCases.reduce([PasscodeError: UILabel]()) { (dict, errorReason) -> [PasscodeError: UILabel] in
             var dict = dict
             dict[errorReason] = UILabel()
             return dict
@@ -90,16 +90,20 @@ final class PasscodeSetupViewController: UIViewController {
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 
+        setupViews()
+    }
+    
+    private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
-
+        
         [contentView].forEach {
             view.addSubview($0)
         }
-
+        
         stackView.distribution = .fill
-
+        
         contentView.addSubview(stackView)
-
+        
         [titleLabel,
          SpacingView(24),
          infoLabel,
@@ -107,20 +111,20 @@ final class PasscodeSetupViewController: UIViewController {
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
         }
-
-        ErrorReason.allCases.forEach {
+        
+        PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallRegularFont
                 label.textColor = UIColor.Team.subtitleColor
                 label.numberOfLines = 0
-
+                
                 label.attributedText = $0.descriptionWithInvalidIcon
                 stackView.addArrangedSubview(label)
             }
         }
-
+        
         stackView.addArrangedSubview(createButton)
-
+        
         createConstraints()
     }
 
@@ -195,7 +199,7 @@ extension PasscodeSetupViewController: TextFieldValidationDelegate {
 // MARK: - PasscodeSetupUserInterface
 
 extension PasscodeSetupViewController: PasscodeSetupUserInterface {
-    func setValidationLabelsState(errorReason: ErrorReason, passed: Bool) {
+    func setValidationLabelsState(errorReason: PasscodeError, passed: Bool) {
         validationLabels[errorReason]?.attributedText = passed ? errorReason.descriptionWithPassedIcon : errorReason.descriptionWithInvalidIcon
     }
 
