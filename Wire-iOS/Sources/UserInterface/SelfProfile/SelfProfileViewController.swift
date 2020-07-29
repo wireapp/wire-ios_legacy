@@ -205,13 +205,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
-        ///TODO: create app lock screen in dark scheme
         if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback)
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
-            
             
             let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
             

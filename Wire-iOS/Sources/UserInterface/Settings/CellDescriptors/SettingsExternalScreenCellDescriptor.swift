@@ -102,7 +102,6 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
             controllerToShow.modalPresentationCapturesStatusBarAppearance = true
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
-            ///TODO: app lock do this also?
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         }

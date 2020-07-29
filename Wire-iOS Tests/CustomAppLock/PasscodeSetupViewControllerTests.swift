@@ -22,10 +22,6 @@ import SnapshotTesting
 final class PasscodeSetupViewControllerTests: XCTestCase {
     var sut: PasscodeSetupViewController!
 
-    override func setUp() {
-        sut = PasscodeSetupViewController()
-    }
-
     override func tearDown() {
         sut = nil
     }
@@ -36,11 +32,19 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
     }
 
     func testForInitState() {
+        sut = PasscodeSetupViewController(callback: nil, variant: nil)
+        verify(matching: sut)
+    }
+    
+
+    func testForInitStateInDarkTheme() {
+        sut = PasscodeSetupViewController(callback: nil, variant: .dark)
         verify(matching: sut)
     }
 
     func testForPasscodePassed() {
         // GIVEN
+        sut = PasscodeSetupViewController(callback: nil, variant: nil)
         fillPasscode()
 
         // WHEN

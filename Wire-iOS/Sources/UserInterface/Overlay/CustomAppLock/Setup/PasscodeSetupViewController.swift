@@ -53,19 +53,19 @@ final class PasscodeSetupViewController: UIViewController {
         return textField
     }()
 
-    private let titleLabel: UILabel = {
-        let label = UILabel.createTitleLabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel.createTitleLabel(variant: variant)
         label.text = "create_passcode.title_label".localized
 
         return label
     }()
 
-    private let infoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
         label.textAlignment = .center
 
-        let textColor = UIColor.from(scheme: .textForeground)
+        let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
         let headingText =  NSAttributedString(string: "create_passcode.info_label".localized) && UIFont.normalRegularFont && textColor
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
@@ -88,17 +88,25 @@ final class PasscodeSetupViewController: UIViewController {
     }()
     
     private var callback: ResultHandler?
+    
+    private let variant: ColorSchemeVariant
 
-    convenience init(callback: ResultHandler?) {
-        self.init(nibName: nil, bundle: nil)
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
+    required init(callback: ResultHandler?, variant: ColorSchemeVariant?) {
         self.callback = callback
+        
+        self.variant = variant ?? ColorScheme.default.variant
 
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
+        super.init(nibName: nil, bundle: nil)
 
-        [contentView].forEach {
-            view.addSubview($0)
-        }
+
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: self.variant)
+
+        view.addSubview(contentView)
 
         stackView.distribution = .fill
 
@@ -115,7 +123,7 @@ final class PasscodeSetupViewController: UIViewController {
         ErrorReason.allCases.forEach {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallRegularFont
-                label.textColor = UIColor.Team.subtitleColor
+                label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
 
                 label.attributedText = $0.descriptionWithInvalidIcon

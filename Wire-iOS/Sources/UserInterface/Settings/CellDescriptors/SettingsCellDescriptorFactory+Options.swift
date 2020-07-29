@@ -233,7 +233,6 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var appLockSection: SettingsSectionDescriptorType {
-        ///TODO: ext
         let appLockToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.lockApp))
         appLockToggle.settingsProperty.enabled = !AppLock.rules.forceAppLock
         
