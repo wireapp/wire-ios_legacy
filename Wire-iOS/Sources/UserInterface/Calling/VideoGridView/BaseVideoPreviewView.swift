@@ -80,7 +80,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([
             userDetailsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             userDetailsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8),
-            userDetailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            userDetailsView.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -8),
             userDetailsView.heightAnchor.constraint(equalToConstant: 24),
         ])
     }

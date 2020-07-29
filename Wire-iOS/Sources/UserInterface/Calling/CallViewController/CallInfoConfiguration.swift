@@ -245,14 +245,19 @@ extension CallParticipantState {
 fileprivate extension VoiceChannel {
     
     var canUpgradeToVideo: Bool {
-        guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
-        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
-
-        if ZMConversation.callCenterConfiguration.useConferenceCalling {
+        guard !isConferenceCall else {
             return true
-        } else {
-            return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
         }
+        
+        guard let conversation = conversation, conversation.conversationType != .oneOnOne else {
+            return true
+        }
+        
+        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else {
+            return false
+        }
+
+        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
     }
     
     var isAnyParticipantSendingVideo: Bool {
