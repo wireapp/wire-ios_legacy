@@ -61,7 +61,7 @@ struct AuthenticationMessageKey {
 }
 
 // MARK: - AppLockPresenter
-class AppLockPresenter {
+final class AppLockPresenter {
     private weak var userInterface: AppLockUserInterface?
     private var authenticationState: AuthenticationState
     private var appLockInteractorInput: AppLockInteractorInput

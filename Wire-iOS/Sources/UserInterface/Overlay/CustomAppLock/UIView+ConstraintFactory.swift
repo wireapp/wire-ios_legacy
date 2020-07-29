@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,18 +15,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-protocol UnlockInteractorInput: class {
-}
+extension UIView {
+    func createContentWidthConstraint() -> NSLayoutConstraint {
+        let widthConstraint = widthAnchor.constraint(equalToConstant: 375)
+        widthConstraint.priority = .defaultHigh
 
-protocol UnlockInteractorOutput: class {
-}
-
-final class UnlockInteractor {
-    weak var output: UnlockInteractorOutput?
-}
-
-// MARK: - Interface
-extension UnlockInteractor: UnlockInteractorInput {
+        return widthConstraint
+    }
 }

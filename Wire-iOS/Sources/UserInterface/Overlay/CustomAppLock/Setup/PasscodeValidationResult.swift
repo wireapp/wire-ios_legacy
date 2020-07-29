@@ -1,6 +1,5 @@
-//
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +15,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
-final class TransparentNavigationBar: DefaultNavigationBar {
-
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-
-    override func configureBackground() {
-        isTranslucent = true
-        setBackgroundImage(UIImage(), for: .default)
-        shadowImage = UIImage()
-    }
-
+enum PasscodeValidationResult {
+    case accepted
+    case error(Set<PasscodeError>)
 }

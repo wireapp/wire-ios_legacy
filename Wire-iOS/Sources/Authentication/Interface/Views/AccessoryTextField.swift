@@ -39,7 +39,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         case email
         case name(isTeam: Bool)
         case password(isNew: Bool)
-        case passcode
+        case passcode(isNew: Bool)
         case phoneNumber
         case unknown
     }

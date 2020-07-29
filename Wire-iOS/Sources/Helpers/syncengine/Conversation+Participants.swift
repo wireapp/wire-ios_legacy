@@ -29,8 +29,10 @@ extension ZMConversation {
     }
     
     static var maxVideoCallParticipants: Int {
-        return useConferenceCalling ? maxParticipants : 4
+        return useConferenceCalling ? maxParticipants : legacyGroupVideoParticipantLimit
     }
+
+    static let legacyGroupVideoParticipantLimit: Int = 4
 
     static let maxParticipants: Int = 500
     

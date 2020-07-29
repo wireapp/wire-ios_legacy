@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * The first page of the user settings.
@@ -38,6 +39,10 @@ final class SelfProfileViewController: UIViewController {
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
+
+    // MARK: - AppLock
+    private weak var appLockSetupViewController: UIViewController?
+    private var callback: ResultHandler?
 
     // MARK: - Configuration
 
@@ -185,14 +190,65 @@ final class SelfProfileViewController: UIViewController {
 // MARK: - SettingsPropertyFactoryDelegate
 
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+    private var topViewController: SpinnerCapableViewController? {
+        navigationController?.topViewController as? SpinnerCapableViewController
+    }
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
         // topViewController is SettingsTableViewController
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = true
+        topViewController?.isLoadingViewVisible = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
+        topViewController?.isLoadingViewVisible = false
     }
 
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping ResultHandler) {
+        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
+        if newValue {
+            self.callback = callback
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+            
+            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
+            
+            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
+            
+            let closeItem = UIBarButtonItem.createCloseItem()
+            closeItem.target = self
+            closeItem.action = #selector(closeTapped)
+
+            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
+            
+            
+            appLockSetupViewController = wrappedViewController
+            
+            wrappedViewController.presentationController?.delegate = self
+            
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        }
+        
+        //TODO: wipe saved passcode
+        
+    }
+
+    @objc
+    private func closeTapped() {
+        appLockSetupViewController?.dismiss(animated: true)
+        
+        appLockSetupViewControllerDismissed()
+    }
+    
+    private func appLockSetupViewControllerDismissed() {
+        callback?(false) ///TODO: need call back?
+        
+        // refresh options applock switch
+        (topViewController as? SettingsTableViewController)?.refreshData()
+    }
+}
+
+extension SelfProfileViewController: UIAdaptivePresentationControllerDelegate {
+    @available(iOS 13.0, *)
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        appLockSetupViewControllerDismissed()
+    }
 }
