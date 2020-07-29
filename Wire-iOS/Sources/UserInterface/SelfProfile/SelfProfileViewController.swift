@@ -208,7 +208,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         ///TODO: create app lock screen in dark scheme
         if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController() ///TODO: pass callback
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback)
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
@@ -228,6 +228,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
         }
+        
+        //TODO: wipe saved passcode
         
     }
 

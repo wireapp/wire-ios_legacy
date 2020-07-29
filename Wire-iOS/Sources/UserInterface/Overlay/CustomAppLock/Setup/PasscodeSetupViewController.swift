@@ -86,9 +86,13 @@ final class PasscodeSetupViewController: UIViewController {
 
         return myDictionary
     }()
+    
+    private var callback: ResultHandler?
 
-    convenience init() {
+    convenience init(callback: ResultHandler?) {
         self.init(nibName: nil, bundle: nil)
+
+        self.callback = callback
 
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
 
@@ -168,8 +172,11 @@ final class PasscodeSetupViewController: UIViewController {
 
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
-        //TODO
-
+        //TODO: save passcode, callback false if failed
+        //if !passed show error msg
+        
+        dismiss(animated: true)
+        callback?(true)
     }
 
 }
