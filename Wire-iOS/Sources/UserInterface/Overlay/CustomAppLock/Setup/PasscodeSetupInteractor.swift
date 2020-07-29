@@ -38,7 +38,7 @@ final class PasscodeSetupInteractor {
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
 
-    private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError>{
+    private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
         var errorReasons: Set<PasscodeError> = Set()
         passwordCharacterClasses.forEach {
             if missingCharacterClasses.contains($0) {
@@ -56,10 +56,10 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
                 }
             }
         }
-        
+
         return errorReasons
     }
-    
+
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
             interactorOutput?.passcodeValidated(result: .accepted)

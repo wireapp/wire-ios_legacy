@@ -35,7 +35,6 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
         sut = PasscodeSetupViewController(callback: nil)
         verify(matching: sut)
     }
-    
 
     func testForInitStateInDarkTheme() {
         sut = PasscodeSetupViewController(callback: nil, variant: .dark)

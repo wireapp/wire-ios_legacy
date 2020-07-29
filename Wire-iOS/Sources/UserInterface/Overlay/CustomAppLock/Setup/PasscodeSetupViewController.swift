@@ -56,7 +56,7 @@ final class PasscodeSetupViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
         label.text = "create_passcode.title_label".localized
-        
+
         return label
     }()
 
@@ -86,9 +86,9 @@ final class PasscodeSetupViewController: UIViewController {
 
         return myDictionary
     }()
-    
+
     private var callback: ResultHandler?
-    
+
     private let variant: ColorSchemeVariant
 
     @available(*, unavailable)
@@ -97,23 +97,23 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     required init(callback: ResultHandler?, variant: ColorSchemeVariant? = nil) {
-        self.callback = callback        
+        self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
 
         super.init(nibName: nil, bundle: nil)
 
         setupViews()
     }
-    
+
     private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: self.variant)
-        
+
         view.addSubview(contentView)
-        
+
         stackView.distribution = .fill
-        
+
         contentView.addSubview(stackView)
-        
+
         [titleLabel,
          SpacingView(24),
          infoLabel,
@@ -121,20 +121,20 @@ final class PasscodeSetupViewController: UIViewController {
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
         }
-        
+
         PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallSemiboldFont
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
-                
+
                 label.attributedText = $0.descriptionWithInvalidIcon
                 stackView.addArrangedSubview(label)
             }
         }
-        
+
         stackView.addArrangedSubview(createButton)
-        
+
         createConstraints()
     }
 
@@ -184,7 +184,7 @@ final class PasscodeSetupViewController: UIViewController {
     func onCreateCodeButtonPressed(sender: AnyObject?) {
         //TODO: save passcode, callback false if failed
         //if !passed show error msg
-        
+
         dismiss(animated: true)
         callback?(true)
     }
