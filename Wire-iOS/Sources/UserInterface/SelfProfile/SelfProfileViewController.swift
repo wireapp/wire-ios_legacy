@@ -42,6 +42,7 @@ final class SelfProfileViewController: UIViewController {
 
     // MARK: - AppLock
     private weak var appLockSetupViewController: UIViewController?
+    private var callback: ResultHandler?
 
     // MARK: - Configuration
 
@@ -199,10 +200,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
-    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool) {
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping ResultHandler) {
         
         ///TODO: create app lock screen in dark scheme
         if newValue && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+            self.callback = callback
             let passcodeSetupViewController = PasscodeSetupViewController()
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
@@ -219,6 +221,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             
             appLockSetupViewController = wrappedViewController
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+            
+//            callback(false)
         }
         
     }
@@ -226,5 +230,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     @objc
     private func closeTapped() {
         appLockSetupViewController?.dismiss(animated: true)
+        callback?(false) ///TODO: call SettingsTableViewController.refresh?
+        settingsController.refreshData() ///TODO: which?
     }
 }

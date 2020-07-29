@@ -55,7 +55,7 @@ protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
     
-    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool)
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping  ResultHandler)
 }
 
 final class SettingsPropertyFactory {
@@ -318,10 +318,11 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        self.delegate?.appLockOptionDidChange(self, newValue: lockApp.boolValue)
+                        self.delegate?.appLockOptionDidChange(self, newValue: lockApp.boolValue, callback: { result in
+                            AppLock.isActive = result
+                            ///TODO: undo UI if canceled, refresh?
+                        })
                         
-                        ///TODO: update after call back
-                        AppLock.isActive = lockApp.boolValue
 
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
