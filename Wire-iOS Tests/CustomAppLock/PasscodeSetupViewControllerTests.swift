@@ -32,7 +32,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
     }
 
     func testForInitState() {
-        sut = PasscodeSetupViewController(callback: nil, variant: nil)
+        sut = PasscodeSetupViewController(callback: nil)
         verify(matching: sut)
     }
     
@@ -44,7 +44,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
 
     func testForPasscodePassed() {
         // GIVEN
-        sut = PasscodeSetupViewController(callback: nil, variant: nil)
+        sut = PasscodeSetupViewController(callback: nil)
         fillPasscode()
 
         // WHEN

@@ -96,7 +96,7 @@ final class PasscodeSetupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required init(callback: ResultHandler?, variant: ColorSchemeVariant?) {
+    required init(callback: ResultHandler?, variant: ColorSchemeVariant? = nil) {
         self.callback = callback
         
         self.variant = variant ?? ColorScheme.default.variant
@@ -122,7 +122,7 @@ final class PasscodeSetupViewController: UIViewController {
 
         ErrorReason.allCases.forEach {
             if let label = validationLabels[$0] {
-                label.font = UIFont.smallRegularFont
+                label.font = UIFont.smallSemiboldFont
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
 
