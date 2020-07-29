@@ -190,22 +190,25 @@ final class SelfProfileViewController: UIViewController {
 // MARK: - SettingsPropertyFactoryDelegate
 
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+    private var topViewController: SpinnerCapableViewController? {
+        navigationController?.topViewController as? SpinnerCapableViewController
+    }
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
         // topViewController is SettingsTableViewController
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = true
+        topViewController?.isLoadingViewVisible = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
+        topViewController?.isLoadingViewVisible = false
     }
 
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping ResultHandler) {
-        
+        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         ///TODO: create app lock screen in dark scheme
-        if newValue && AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+        if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController()
+            let passcodeSetupViewController = PasscodeSetupViewController() ///TODO: pass callback
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
@@ -220,9 +223,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             
             
             appLockSetupViewController = wrappedViewController
-            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
             
-//            callback(false)
+            wrappedViewController.presentationController?.delegate = self
+            
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
         }
         
     }
@@ -230,7 +234,21 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     @objc
     private func closeTapped() {
         appLockSetupViewController?.dismiss(animated: true)
-        callback?(false) ///TODO: call SettingsTableViewController.refresh?
-        settingsController.refreshData() ///TODO: which?
+        
+        appLockSetupViewControllerDismissed()
+    }
+    
+    private func appLockSetupViewControllerDismissed() {
+        callback?(false) ///TODO: need call back?
+        
+        // refresh options applock switch
+        (topViewController as? SettingsTableViewController)?.refreshData()
+    }
+}
+
+extension SelfProfileViewController: UIAdaptivePresentationControllerDelegate {
+    @available(iOS 13.0, *)
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        appLockSetupViewControllerDismissed()
     }
 }
