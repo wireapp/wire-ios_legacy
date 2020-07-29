@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,9 +21,14 @@ import XCTest
 @testable import WireCommonComponents
 
 private final class AppLockUserInterfaceMock: AppLockUserInterface {
+    func dismissUnlockScreen(completion: Completion?) {
+        // no-op
+    }
+    
     var passwordInput: String?
     var requestPasswordMessage: String?
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
+    func presentRequestPasswordController(with message: String,
+                                          callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
     }
@@ -53,8 +58,14 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     }
     
     var passwordToVerify: String?
+    var customPasscodeToVerify: String?
+    
     func verify(password: String) {
-        self.passwordToVerify = password
+        passwordToVerify = password
+    }
+    
+    func verify(customPasscode: String) {
+        customPasscodeToVerify = customPasscode
     }
     
     var didCallEvaluateAuthentication: Bool = false
@@ -80,7 +91,7 @@ final class AppLockPresenterTests: XCTestCase {
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, forceAppLock: false, appLockTimeout: 1)
+        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
     }
     
     override func tearDown() {

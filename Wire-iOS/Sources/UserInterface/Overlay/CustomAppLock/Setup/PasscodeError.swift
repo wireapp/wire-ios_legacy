@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -24,11 +23,11 @@ enum PasscodeError: CaseIterable {
     case noUppercaseChar
     case noNumber
     case noSpecialChar
-    
+
     var message: String {
         let key: String
         switch self {
-            
+
         case .tooShort:
             key = "create_passcode.validation.too_short"
         case .noLowercaseChar:
@@ -40,23 +39,23 @@ enum PasscodeError: CaseIterable {
         case .noNumber:
             key = "create_passcode.validation.no_number"
         }
-        
+
         return key.localized
     }
-    
+
     var descriptionWithInvalidIcon: NSAttributedString {
-        
+
         //TODO paint code icon
         let attributedString = NSAttributedString(string: "❌" + message)
-        
+
         return attributedString
     }
-    
+
     //TODO paint code icon
     var descriptionWithPassedIcon: NSAttributedString {
-        
+
         let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
-        
+
         return attributedString
     }
 }

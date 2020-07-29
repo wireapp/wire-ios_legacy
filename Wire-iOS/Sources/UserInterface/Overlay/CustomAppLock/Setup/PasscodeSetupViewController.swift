@@ -21,7 +21,7 @@ import WireCommonComponents
 
 protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
-    func setValidationLabelsState(errorReason: PasscodeError, passed: Bool) //TODO: one method?
+    func setValidationLabelsState(errorReason: PasscodeError, passed: Bool)
 }
 
 final class PasscodeSetupViewController: UIViewController {
@@ -53,19 +53,19 @@ final class PasscodeSetupViewController: UIViewController {
         return textField
     }()
 
-    private let titleLabel: UILabel = {
-        let label = UILabel.createMultiLineCenterdLabel()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel.createMultiLineCenterdLabel(variant: variant)
         label.text = "create_passcode.title_label".localized
 
         return label
     }()
 
-    private let infoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
         label.textAlignment = .center
 
-        let textColor = UIColor.from(scheme: .textForeground)
+        let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
         let headingText =  NSAttributedString(string: "create_passcode.info_label".localized) && UIFont.normalRegularFont && textColor
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
@@ -87,23 +87,33 @@ final class PasscodeSetupViewController: UIViewController {
         return myDictionary
     }()
 
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
+    private var callback: ResultHandler?
+
+    private let variant: ColorSchemeVariant
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    required init(callback: ResultHandler?, variant: ColorSchemeVariant? = nil) {
+        self.callback = callback
+        self.variant = variant ?? ColorScheme.default.variant
+
+        super.init(nibName: nil, bundle: nil)
 
         setupViews()
     }
-    
+
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
-        
-        [contentView].forEach {
-            view.addSubview($0)
-        }
-        
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: self.variant)
+
+        view.addSubview(contentView)
+
         stackView.distribution = .fill
-        
+
         contentView.addSubview(stackView)
-        
+
         [titleLabel,
          SpacingView(24),
          infoLabel,
@@ -111,20 +121,20 @@ final class PasscodeSetupViewController: UIViewController {
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
         }
-        
+
         PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
-                label.font = UIFont.smallRegularFont
-                label.textColor = UIColor.Team.subtitleColor
+                label.font = UIFont.smallSemiboldFont
+                label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
-                
+
                 label.attributedText = $0.descriptionWithInvalidIcon
                 stackView.addArrangedSubview(label)
             }
         }
-        
+
         stackView.addArrangedSubview(createButton)
-        
+
         createConstraints()
     }
 
@@ -172,8 +182,11 @@ final class PasscodeSetupViewController: UIViewController {
 
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
-        //TODO
+        //TODO: save passcode, callback false if failed
+        //if !passed show error msg
 
+        dismiss(animated: true)
+        callback?(true)
     }
 
 }
