@@ -40,6 +40,9 @@ final class SelfProfileViewController: UIViewController {
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
 
+    // MARK: - AppLock
+    private weak var appLockSetupViewController: UIViewController?
+
     // MARK: - Configuration
 
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
@@ -205,15 +208,23 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
             
-            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController()
+            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
             
             let closeItem = UIBarButtonItem.createCloseItem()
-            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = keyboardAvoidingViewController.navigationController?.closeItem()
+            closeItem.target = self
+            closeItem.action = #selector(closeTapped)
+
+            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
             
             
-            
+            appLockSetupViewController = wrappedViewController
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
         }
+        
+    }
 
+    @objc
+    private func closeTapped() {
+        appLockSetupViewController?.dismiss(animated: true)
     }
 }
