@@ -556,48 +556,73 @@ public class WireStyleKit : NSObject {
     }
 
     @objc dynamic public class func drawIcon_microphoneWithStrikethrough_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
-
-        //// Mute Drawing
-        let mutePath = UIBezierPath()
-        mutePath.move(to: CGPoint(x: 12.82, y: 57.93))
-        mutePath.addCurve(to: CGPoint(x: 31.89, y: 64), controlPoint1: CGPoint(x: 18.16, y: 61.74), controlPoint2: CGPoint(x: 24.75, y: 64))
-        mutePath.addCurve(to: CGPoint(x: 55.98, y: 53.5), controlPoint1: CGPoint(x: 41.47, y: 64), controlPoint2: CGPoint(x: 50.07, y: 59.94))
-        mutePath.addLine(to: CGPoint(x: 50.26, y: 47.84))
-        mutePath.addLine(to: CGPoint(x: 50.26, y: 47.84))
-        mutePath.addCurve(to: CGPoint(x: 31.89, y: 56), controlPoint1: CGPoint(x: 45.82, y: 52.83), controlPoint2: CGPoint(x: 39.24, y: 56))
-        mutePath.addCurve(to: CGPoint(x: 20.03, y: 53), controlPoint1: CGPoint(x: 27.58, y: 56), controlPoint2: CGPoint(x: 23.53, y: 54.91))
-        mutePath.addLine(to: CGPoint(x: 12.82, y: 57.93))
-        mutePath.addLine(to: CGPoint(x: 12.82, y: 57.93))
-        mutePath.addLine(to: CGPoint(x: 12.82, y: 57.93))
-        mutePath.close()
-        mutePath.move(to: CGPoint(x: 47.98, y: 33.84))
-        mutePath.addCurve(to: CGPoint(x: 31.89, y: 48), controlPoint1: CGPoint(x: 47.16, y: 41.76), controlPoint2: CGPoint(x: 40.29, y: 48))
-        mutePath.addCurve(to: CGPoint(x: 27.99, y: 47.54), controlPoint1: CGPoint(x: 30.55, y: 48), controlPoint2: CGPoint(x: 29.24, y: 47.84))
-        mutePath.addLine(to: CGPoint(x: 47.98, y: 33.84))
-        mutePath.addLine(to: CGPoint(x: 47.98, y: 33.84))
-        mutePath.addLine(to: CGPoint(x: 47.98, y: 33.84))
-        mutePath.close()
-        mutePath.move(to: CGPoint(x: 48.06, y: 16.06))
-        mutePath.addLine(to: CGPoint(x: 48.06, y: 15.74))
-        mutePath.addCurve(to: CGPoint(x: 31.89, y: 0), controlPoint1: CGPoint(x: 48.06, y: 7.08), controlPoint2: CGPoint(x: 40.84, y: 0))
-        mutePath.addCurve(to: CGPoint(x: 15.73, y: 15.74), controlPoint1: CGPoint(x: 22.95, y: 0), controlPoint2: CGPoint(x: 15.73, y: 7.08))
-        mutePath.addLine(to: CGPoint(x: 15.73, y: 32.27))
-        mutePath.addCurve(to: CGPoint(x: 16.67, y: 37.57), controlPoint1: CGPoint(x: 15.73, y: 34.12), controlPoint2: CGPoint(x: 16.06, y: 35.91))
-        mutePath.addLine(to: CGPoint(x: 3.32, y: 46.71))
-        mutePath.addLine(to: CGPoint(x: 0, y: 48.99))
-        mutePath.addLine(to: CGPoint(x: 4.6, y: 55.57))
-        mutePath.addLine(to: CGPoint(x: 7.92, y: 53.29))
-        mutePath.addLine(to: CGPoint(x: 60.46, y: 17.29))
-        mutePath.addLine(to: CGPoint(x: 63.78, y: 15.01))
-        mutePath.addLine(to: CGPoint(x: 59.18, y: 8.43))
-        mutePath.addLine(to: CGPoint(x: 55.86, y: 10.71))
-        mutePath.addLine(to: CGPoint(x: 48.06, y: 16.06))
-        mutePath.addLine(to: CGPoint(x: 48.06, y: 16.06))
-        mutePath.addLine(to: CGPoint(x: 48.06, y: 16.06))
-        mutePath.close()
-        mutePath.usesEvenOddFillRule = true
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Group
+        context.saveGState()
+        context.scaleBy(x: 4, y: 4)
+        
+        
+        
+        //// Rectangle Drawing
+        
+        
+        //// Group 2
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: CGPoint(x: 7.95, y: 11.85))
+        bezierPath.addCurve(to: CGPoint(x: 6.31, y: 11.41), controlPoint1: CGPoint(x: 7.36, y: 11.85), controlPoint2: CGPoint(x: 6.82, y: 11.69))
+        bezierPath.addLine(to: CGPoint(x: 5.45, y: 12.27))
+        bezierPath.addCurve(to: CGPoint(x: 7.3, y: 12.99), controlPoint1: CGPoint(x: 6.01, y: 12.64), controlPoint2: CGPoint(x: 6.64, y: 12.89))
+        bezierPath.addLine(to: CGPoint(x: 7.3, y: 14.18))
+        bezierPath.addLine(to: CGPoint(x: 5.67, y: 14.18))
+        bezierPath.addLine(to: CGPoint(x: 5.67, y: 15.39))
+        bezierPath.addLine(to: CGPoint(x: 9.99, y: 15.39))
+        bezierPath.addLine(to: CGPoint(x: 9.99, y: 14.18))
+        bezierPath.addLine(to: CGPoint(x: 8.53, y: 14.18))
+        bezierPath.addLine(to: CGPoint(x: 8.53, y: 13))
+        bezierPath.addCurve(to: CGPoint(x: 13.12, y: 7), controlPoint1: CGPoint(x: 11.1, y: 12.66), controlPoint2: CGPoint(x: 13.12, y: 10.11))
+        bezierPath.addLine(to: CGPoint(x: 11.91, y: 7))
+        bezierPath.addCurve(to: CGPoint(x: 7.95, y: 11.85), controlPoint1: CGPoint(x: 11.9, y: 9.67), controlPoint2: CGPoint(x: 10.13, y: 11.85))
+        bezierPath.addLine(to: CGPoint(x: 7.95, y: 11.85))
+        bezierPath.close()
         color.setFill()
-        mutePath.fill()
+        bezierPath.fill()
+        
+        
+        //// Bezier 2 Drawing
+        let bezier2Path = UIBezierPath()
+        bezier2Path.move(to: CGPoint(x: 10.82, y: 7.95))
+        bezier2Path.addLine(to: CGPoint(x: 10.82, y: 6.92))
+        bezier2Path.addLine(to: CGPoint(x: 7.04, y: 10.68))
+        bezier2Path.addCurve(to: CGPoint(x: 7.94, y: 10.83), controlPoint1: CGPoint(x: 7.32, y: 10.77), controlPoint2: CGPoint(x: 7.62, y: 10.83))
+        bezier2Path.addCurve(to: CGPoint(x: 10.82, y: 7.95), controlPoint1: CGPoint(x: 9.53, y: 10.83), controlPoint2: CGPoint(x: 10.82, y: 9.54))
+        bezier2Path.close()
+        bezier2Path.move(to: CGPoint(x: 12.31, y: 2.12))
+        bezier2Path.addLine(to: CGPoint(x: 10.82, y: 3.61))
+        bezier2Path.addLine(to: CGPoint(x: 10.82, y: 3.4))
+        bezier2Path.addCurve(to: CGPoint(x: 7.94, y: 0.52), controlPoint1: CGPoint(x: 10.82, y: 1.81), controlPoint2: CGPoint(x: 9.53, y: 0.52))
+        bezier2Path.addCurve(to: CGPoint(x: 5.06, y: 3.4), controlPoint1: CGPoint(x: 6.35, y: 0.52), controlPoint2: CGPoint(x: 5.06, y: 1.81))
+        bezier2Path.addLine(to: CGPoint(x: 5.06, y: 7.95))
+        bezier2Path.addCurve(to: CGPoint(x: 5.3, y: 9.1), controlPoint1: CGPoint(x: 5.06, y: 8.36), controlPoint2: CGPoint(x: 5.15, y: 8.76))
+        bezier2Path.addLine(to: CGPoint(x: 4.69, y: 9.71))
+        bezier2Path.addCurve(to: CGPoint(x: 4, y: 6.99), controlPoint1: CGPoint(x: 4.26, y: 8.94), controlPoint2: CGPoint(x: 4, y: 7.99))
+        bezier2Path.addLine(to: CGPoint(x: 2.79, y: 6.99))
+        bezier2Path.addCurve(to: CGPoint(x: 3.81, y: 10.59), controlPoint1: CGPoint(x: 2.79, y: 8.34), controlPoint2: CGPoint(x: 3.17, y: 9.58))
+        bezier2Path.addLine(to: CGPoint(x: 1.79, y: 12.59))
+        bezier2Path.addLine(to: CGPoint(x: 2.7, y: 13.51))
+        bezier2Path.addLine(to: CGPoint(x: 13.23, y: 3.03))
+        bezier2Path.addLine(to: CGPoint(x: 12.31, y: 2.12))
+        bezier2Path.close()
+        color.setFill()
+        bezier2Path.fill()
+        
+        
+        
+        
+        
+        context.restoreGState()
     }
 
     @objc dynamic public class func drawIcon_minus_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
