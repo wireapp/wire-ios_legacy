@@ -203,7 +203,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
-    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool,
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
+                                newValue: Bool,
                                 callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         if newValue {

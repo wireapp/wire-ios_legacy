@@ -37,6 +37,9 @@ final class PasscodeSetupPresenter {
         interactorInput.validate(error: error)
     }
 
+    func storePasscode(passcode: String) {
+        interactorInput.storePasscode(passcode: passcode)
+    }
 }
 
 // MARK: - InteractorOutput
