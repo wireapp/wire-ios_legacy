@@ -29,7 +29,11 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    private var shouldFill: Bool = true
+    var shouldFill: Bool = true {
+        didSet {
+            updateFillMode()
+        }
+    }
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -68,12 +72,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
 
     // MARK: - Fill mode
     private var isScreenSharing: Bool {
-        return stream.videoState == .screenSharing ? true : false
-    }
-
-    public func switchFillMode() {
-        shouldFill = !shouldFill
-        updateFillMode()
+        return stream.videoState == .screenSharing
     }
 
     override func updateFillMode() {
