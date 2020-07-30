@@ -131,6 +131,9 @@ extension ConversationViewController {
     }
 
     private func shouldShowCollectionsButton() -> Bool {
+        if conversation.isMessagesEncrypted {
+            return false
+        }
         switch self.conversation.conversationType {
         case .group: return true
         case .oneOnOne:
