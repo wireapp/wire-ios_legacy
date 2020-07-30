@@ -1490,6 +1490,41 @@ public class WireStyleKit : NSObject {
         microphonePath.fill()
     }
 
+    @objc dynamic public class func drawIcon_screenshare_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
+        
+        //// Group
+        //// prefix__a Drawing
+        let prefix__aPath = UIBezierPath()
+        prefix__aPath.move(to: CGPoint(x: 0, y: 4))
+        prefix__aPath.addCurve(to: CGPoint(x: 4, y: 0), controlPoint1: CGPoint(x: 0, y: 1.79), controlPoint2: CGPoint(x: 1.78, y: 0))
+        prefix__aPath.addLine(to: CGPoint(x: 60, y: 0))
+        prefix__aPath.addCurve(to: CGPoint(x: 64, y: 4), controlPoint1: CGPoint(x: 62.21, y: 0), controlPoint2: CGPoint(x: 64, y: 1.79))
+        prefix__aPath.addLine(to: CGPoint(x: 64, y: 48))
+        prefix__aPath.addCurve(to: CGPoint(x: 60, y: 52), controlPoint1: CGPoint(x: 64, y: 50.21), controlPoint2: CGPoint(x: 62.22, y: 52))
+        prefix__aPath.addLine(to: CGPoint(x: 4, y: 52))
+        prefix__aPath.addCurve(to: CGPoint(x: 0, y: 48), controlPoint1: CGPoint(x: 1.79, y: 52), controlPoint2: CGPoint(x: 0, y: 50.21))
+        prefix__aPath.addLine(to: CGPoint(x: 0, y: 4))
+        prefix__aPath.close()
+        prefix__aPath.move(to: CGPoint(x: 44, y: 56))
+        prefix__aPath.addLine(to: CGPoint(x: 44, y: 64))
+        prefix__aPath.addLine(to: CGPoint(x: 20, y: 64))
+        prefix__aPath.addLine(to: CGPoint(x: 20, y: 56))
+        prefix__aPath.addLine(to: CGPoint(x: 44, y: 56))
+        prefix__aPath.close()
+        prefix__aPath.move(to: CGPoint(x: 32, y: 12))
+        prefix__aPath.addLine(to: CGPoint(x: 52, y: 28))
+        prefix__aPath.addLine(to: CGPoint(x: 36, y: 28))
+        prefix__aPath.addLine(to: CGPoint(x: 36, y: 44))
+        prefix__aPath.addLine(to: CGPoint(x: 28, y: 44))
+        prefix__aPath.addLine(to: CGPoint(x: 28, y: 28))
+        prefix__aPath.addLine(to: CGPoint(x: 12, y: 28))
+        prefix__aPath.addLine(to: CGPoint(x: 32, y: 12))
+        prefix__aPath.close()
+        prefix__aPath.usesEvenOddFillRule = true
+        color.setFill()
+        prefix__aPath.fill()
+    }
+
     @objc dynamic public class func drawIcon_paperclip_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
 
         //// Attachment Drawing
