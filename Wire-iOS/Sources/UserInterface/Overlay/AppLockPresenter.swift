@@ -26,8 +26,13 @@ extension Notification.Name {
 }
 
 protocol AppLockUserInterface: class {
-    func presentRequestPasswordController(with message: String,
-                                          callback: @escaping RequestPasswordController.Callback)
+    
+    /// present an unlock screen (for input account passcode or custom passcode)
+    /// - Parameters:
+    ///   - message: message to show on unlock UI, it should be a member of `presentRequestPasswordController`
+    ///   - callback: callback to return the inputed passcode
+    func presentUnlockScreen(with message: String,
+                             callback: @escaping RequestPasswordController.Callback)
     func dismissUnlockScreen()
     
     func setSpinner(animating: Bool)
@@ -121,7 +126,7 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
-        userInterface?.presentRequestPasswordController(with: message) { [weak self] password in
+        userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
 

@@ -88,6 +88,36 @@ final class AppLockViewController: UIViewController {
 
         self.dimContents = false
     }
+    
+    private func presentCustomPassCodeUnlockScreenIfNeeded(message: String,
+                                                           callback: @escaping RequestPasswordController.Callback) {
+        if unlockViewController == nil {
+            let viewController = UnlockViewController()
+            
+            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
+            keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
+            present(keyboardAvoidingViewController, animated: false)
+            
+            unlockScreenWrapper = keyboardAvoidingViewController
+            unlockViewController = viewController
+        }
+        
+        guard let unlockViewController = unlockViewController else { return }
+        
+        if message == AuthenticationMessageKey.wrongPassword {
+            unlockViewController.showWrongPasscodeMessage()
+        }
+        
+        unlockViewController.callback = callback
+    }
+    
+    private func presentRequestPasswordController(message: String,
+                                                  callback: @escaping RequestPasswordController.Callback) {
+        let passwordController = RequestPasswordController(context: .unlock(message: message.localized),
+                                                           callback: callback)
+        self.passwordController = passwordController
+        present(passwordController.alertController, animated: true)
+    }
 }
 
 // MARK: - AppLockManagerDelegate
@@ -96,34 +126,13 @@ extension AppLockViewController: AppLockUserInterface {
         unlockScreenWrapper?.dismiss(animated: false)
     }
     
-    func presentRequestPasswordController(with message: String,
-                                          callback: @escaping RequestPasswordController.Callback) {
+    func presentUnlockScreen(with message: String,
+                             callback: @escaping RequestPasswordController.Callback) {
         
         if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-                        
-            if unlockViewController == nil {
-                let viewController = UnlockViewController()
-
-                let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
-                keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-                present(keyboardAvoidingViewController, animated: false)
-                
-                unlockScreenWrapper = keyboardAvoidingViewController
-                unlockViewController = viewController
-            }
-            
-            guard let unlockViewController = unlockViewController else { return }
-            
-            if message == AuthenticationMessageKey.wrongPassword {
-                unlockViewController.showWrongPasscodeMessage()
-            }
-
-            unlockViewController.callback = callback
+            presentCustomPassCodeUnlockScreenIfNeeded(message: message, callback: callback)
         } else {
-            let passwordController = RequestPasswordController(context: .unlock(message: message.localized),
-                                                               callback: callback)
-            self.passwordController = passwordController
-            present(passwordController.alertController, animated: true)
+            presentRequestPasswordController(message: message, callback: callback)
         }
     }
 
