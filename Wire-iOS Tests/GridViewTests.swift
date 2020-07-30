@@ -22,77 +22,72 @@ import XCTest
 @testable import Wire
 
 class GridViewTests: XCTestCase {
-    
+
     var sut: GridView!
-    var views: [UIView]!
-    
+    var tiles = [UIView]()
+
+    let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
+
+    lazy var views: [UIView] = colors.map {
+        let view = UIView(frame: frame)
+        view.backgroundColor = $0
+        return view
+    }
+
+    let colors: [UIColor] = [
+        .red,
+        .blue,
+        .cyan,
+        .brown,
+        .orange,
+        .green,
+        .yellow,
+        .magenta,
+        .purple,
+        .systemPink,
+        .systemTeal,
+        .gray
+    ]
+
     override func setUp() {
         super.setUp()
-        let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
-        
-        let colors: [UIColor] = [
-            .red,
-            .blue,
-            .cyan,
-            .brown,
-            .orange,
-            .green,
-            .yellow,
-            .magenta,
-            .purple,
-            .systemPink,
-            .systemTeal,
-            .gray
-        ]
-        
-        views = [UIView]()
-        for index in 0...11 {
-            let view = UIView(frame: frame)
-            view.backgroundColor = colors[index]
-            views.append(view)
-        }
-        
         sut = GridView()
         sut.frame = frame
+        sut.dataSource = self
+        tiles.removeAll()
     }
-    
+
     override func tearDown() {
         sut = nil
-        views = nil
         super.tearDown()
     }
-    
-    func appendViews(_ amount: Int) {
-        guard amount > 0 else { return }
-        
-        for index in 0...amount-1 {
-            sut.append(view: views[index])
-        }
-    }
-    
+
     func testGrid(withAmount amount: Int,
                   file: StaticString = #file,
                   testName: String = #function,
                   line: UInt = #line) {
         // Given
-        appendViews(amount)
-        
+        tiles = Array(views.prefix(amount))
+        sut.reloadData()
+
         // Then
         verify(matching: sut, file: file, testName: testName, line: line)
     }
-    
+
+    // MARK: - Tests
+
     func testOneView() {
         testGrid(withAmount: 1)
     }
-    
+
     func testTwoViews() {
         testGrid(withAmount: 2)
     }
-    
+
     func testThreeViews() {
         testGrid(withAmount: 3)
     }
-    
+
     func testFourViews() {
         testGrid(withAmount: 4)
     }
@@ -100,34 +95,39 @@ class GridViewTests: XCTestCase {
     func testSixViews() {
         testGrid(withAmount: 6)
     }
-    
+
     func testEightViews() {
         testGrid(withAmount: 8)
     }
-    
+
     func testTenViews() {
         testGrid(withAmount: 10)
     }
-    
+
     func testTwelveViews() {
         testGrid(withAmount: 12)
     }
-    
-    func testThreeViewsAfterRemovingTopView() {
-        // Given
-        appendViews(4)
-        sut.remove(view: views[0])
-        
-        // Then
-        verify(matching: sut)
+
+}
+
+
+extension GridViewTests: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
-    
-    func testTwoViewsAfterRemovingBottomView() {
-        // Given
-        appendViews(3)
-        sut.remove(view: views[2])
-        
-        // Then
-        verify(matching: sut)
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tiles.count
     }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCell.reuseIdentifier, for: indexPath) as? GridCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.add(streamView: tiles[indexPath.row])
+        return cell
+    }
+
 }

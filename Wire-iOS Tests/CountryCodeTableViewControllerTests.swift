@@ -20,20 +20,30 @@ import XCTest
 @testable import Wire
 
 final class CountryCodeTableViewControllerTests: XCTestCase {
-    
+
     var sut: CountryCodeTableViewController!
-    
+
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
         sut = CountryCodeTableViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
+    // MARK: - logic
+    func testForSearchForCountryE164CodeReturnsResult() {
+        // GIVEN & WHEN
+        let filteredResult = sut.filter(searchText: "49") as? [Country]
+
+        //THEN
+        XCTAssertEqual(filteredResult?.first?.displayName, "Germany")
+    }
+
+    // MARK: - snapshot
     func testForWirestanAppearInFirstRow() {
         verify(matching: sut.wrapInNavigationController())
     }

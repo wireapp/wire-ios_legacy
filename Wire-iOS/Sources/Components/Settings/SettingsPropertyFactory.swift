@@ -54,6 +54,8 @@ enum SettingsPropertyError: Error {
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+    
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping  ResultHandler)
 }
 
 final class SettingsPropertyFactory {
@@ -316,8 +318,14 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        AppLock.isActive = lockApp.boolValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                        self.delegate?.appLockOptionDidChange(self,
+                                                              newValue: lockApp.boolValue,
+                                                              callback: { result in
+                            AppLock.isActive = result
+                        })                        
+
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
         
@@ -371,7 +379,19 @@ final class SettingsPropertyFactory {
                             }
                         }
             })
-            
+        case .enableConferenceCallingBeta:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let value: Bool = Settings.shared[.conferenceCalling] ?? false
+                    return SettingsPropertyValue(value)
+                },
+                setAction: { _, value  in
+                    if case .number(let enabled) = value {
+                        Settings.shared[.conferenceCalling] = enabled.boolValue
+                    }
+                }
+            )
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)

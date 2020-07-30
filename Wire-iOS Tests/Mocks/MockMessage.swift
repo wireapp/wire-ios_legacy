@@ -125,6 +125,10 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
+    
+    var isPDF: Bool {
+        return mimeType == "application/pdf"
+    }
 
     var v3_isImage: Bool {
         return false
@@ -143,6 +147,14 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     }
 
     func requestImagePreviewDownload() {
+        // no-op
+    }
+    
+    func signPDFDocument(observer: SignatureObserver) -> Any? {
+        return nil
+    }
+    
+    func retrievePDFSignature() {
         // no-op
     }
 }
@@ -174,6 +186,10 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
         return mimeType == "audio/x-m4a"
     }
 
+    var isPDF: Bool {
+        return mimeType == "application/pdf"
+    }
+    
     var v3_isImage: Bool {
         return false
     }
@@ -191,6 +207,14 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     }
 
     func requestImagePreviewDownload() {
+        // no-op
+    }
+    
+    func signPDFDocument(observer: SignatureObserver) -> Any? {
+        return nil
+    }
+    
+    func retrievePDFSignature() {
         // no-op
     }
 }

@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireTransport
 @testable import Wire
 
 class URL_WireTests: XCTestCase {
@@ -35,6 +36,7 @@ class URL_WireTests: XCTestCase {
         be = nil
         super.tearDown()
     }
+    
     
     func testThatWebsiteURLsAreLoadedCorrectly() {
         let websiteURL = URL(string: "https://wire.com")!
@@ -64,5 +66,12 @@ class URL_WireTests: XCTestCase {
         let accountsURL = URL(string: "https://account.wire.com")!
         XCTAssertEqual(be.accountsURL, accountsURL)
         XCTAssertEqual(URL.wr_passwordReset, accountsURL.appendingPathComponent("forgot"))
-    }    
+    }
+    /*
+    func testThatTeamURLsAreLoadedCorrectly() {
+        let teamsURL = URL(string: "https://teams.wire.com")!
+        XCTAssertEqual(be.teamsURL, teamsURL)
+        XCTAssertEqual(URL.wr_manageTeam, teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
+    }
+    */
 }

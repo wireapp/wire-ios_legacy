@@ -31,7 +31,8 @@ final class NotificationWindow: UIWindow {
         isOpaque = false
     }
     
-    @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

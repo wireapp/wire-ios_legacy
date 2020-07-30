@@ -101,8 +101,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func setUp() {
         super.setUp()
 
-        videoIconView.setUpIconImageView(accessibilityIdentifier: "img.video")
-        userTypeIconView.setUpIconImageView(accessibilityIdentifier: "img.userType")
+        userTypeIconView.setUpIconImageView()
+        microphoneIconView.setUpIconImageView()
+        videoIconView.setUpIconImageView()
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")
@@ -134,7 +135,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
-        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, userTypeIconView, microphoneIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
+        iconStackView = UIStackView(arrangedSubviews: [videoIconView, microphoneIconView, userTypeIconView, verifiedIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 16
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill

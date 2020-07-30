@@ -18,86 +18,77 @@
 
 import UIKit
 
-class GridView: UIView {
-    private let collectionView: UICollectionView
-    private let layout = UICollectionViewFlowLayout()
-    private(set) var videoStreamViews = [UIView]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
+/// A collection view that displays its items in a dynamic grid layout
+/// depending on the number of items.
+///
+/// In a vertical orientation the grid generally follows a 2 columns x n rows layout.
+/// There are two special cases: firstly a single item will occupy the entire grid,
+/// and secondly two items will form a 1 column x 2 rows layout. In a horizontal
+/// orientation, columns and rows are swapped.
+
+final class GridView: UICollectionView {
+
+    // MARK: - Properties
+
     var layoutDirection: UICollectionView.ScrollDirection = .vertical {
         didSet {
             layout.scrollDirection = layoutDirection
-            collectionView.reloadData()
+            reloadData()
         }
     }
-    
+
+    // MARK: - Private Properties
+
+    private let layout = UICollectionViewFlowLayout()
+
+    // MARK: - Initialization
+
     init() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        super.init(frame: .zero)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
-        collectionView.isScrollEnabled = false
-        addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.fitInSuperview()
+        super.init(frame: .zero, collectionViewLayout: layout)
+        setUp()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Private Methods
+
+    private func setUp() {
+        delegate = self
+        register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
+        isScrollEnabled = false
+    }
 }
 
-// MARK: - Interface
-extension GridView {
-    func append(view: UIView) {
-        videoStreamViews.append(view)
-    }
-    
-    func remove(view: UIView) {
-        videoStreamViews.firstIndex(of: view).apply { videoStreamViews.remove(at: $0) }
-    }
-}
 
 // MARK: - Segment calculation
-extension GridView {
-    private func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
-        let participantAmount = ParticipantAmount(videoStreamViews.count)
-        let splitType = SplitType(layoutDirection, segmentType)
-        
-        switch (participantAmount, splitType) {
-        case (.moreThanTwo, .proportionalSplit):
-            return videoStreamViews.count.evenlyCeiled / 2
-        case (.moreThanTwo, .middleSplit):
-            return isOddLastRow(indexPath) ? 1 : 2
-        case (.twoAndLess, .proportionalSplit):
-            return videoStreamViews.count
-        case (.twoAndLess, .middleSplit):
-            return 1
-        }
-    }
 
-    private enum SegmentType {
+private extension GridView {
+
+    enum SegmentType {
+
         case row
         case column
+
     }
-    
-    private enum ParticipantAmount {
+
+    enum ParticipantAmount {
+
         case moreThanTwo
-        case twoAndLess
-        
+        case twoOrLess
+
         init(_ amount: Int) {
-            self = amount > 2 ? .moreThanTwo : .twoAndLess
+            self = amount > 2 ? .moreThanTwo : .twoOrLess
         }
+
     }
-    
-    private enum SplitType {
+
+    enum SplitType {
+
         case middleSplit
         case proportionalSplit
-        
+
         init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
             switch (layoutDirection, segmentType) {
             case (.vertical, .row), (.horizontal, .column):
@@ -108,17 +99,45 @@ extension GridView {
                 fatalError()
             }
         }
+
     }
-    
-    private func isOddLastRow(_ indexPath: IndexPath) -> Bool {
-        let isLastRow = videoStreamViews.count == indexPath.row + 1
-        let isOdd = !videoStreamViews.count.isEven
+
+    func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return 0
+        }
+
+        let participantAmount = ParticipantAmount(numberOfItems)
+        let splitType = SplitType(layoutDirection, segmentType)
+        
+        switch (participantAmount, splitType) {
+        case (.moreThanTwo, .proportionalSplit):
+            return numberOfItems.evenlyCeiled / 2
+        case (.moreThanTwo, .middleSplit):
+            return isOddLastRow(indexPath) ? 1 : 2
+        case (.twoOrLess, .proportionalSplit):
+            return numberOfItems
+        case (.twoOrLess, .middleSplit):
+            return 1
+        }
+    }
+
+    func isOddLastRow(_ indexPath: IndexPath) -> Bool {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
+            return false
+        }
+
+        let isLastRow = numberOfItems == indexPath.row + 1
+        let isOdd = !numberOfItems.isEven
         return isOdd && isLastRow
     }
+
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension GridView: UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
@@ -132,43 +151,36 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int) -> UIEdgeInsets {
+
         return .zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+
         return .zero
     }
-}
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
 
-// MARK: - UICollectionViewDataSource
-extension GridView: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return .zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoStreamViews.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCell.reuseIdentifier, for: indexPath) as? GridCell else {
-            return UICollectionViewCell()
-        }
-        
-        let streamView = videoStreamViews[indexPath.row]
-        cell.add(streamView: streamView)
-        return cell
-    }
-}
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int) -> CGSize {
 
-// MARK: - UICollectionViewDelegate
-extension GridView: UICollectionViewDelegate {}
+        return .zero
+    }
+
+}
