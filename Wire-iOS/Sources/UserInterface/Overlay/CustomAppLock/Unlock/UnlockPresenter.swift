@@ -34,10 +34,8 @@ final class UnlockPresenter {
     }
 
     /// unlock with passcode
-    /// - Returns: true if succeed
-    func unlock(passcode: String) -> Bool {
-        //TODO: logic
-        return false
+    func unlock(passcode: String, callback: RequestPasswordController.Callback?) {
+        callback?(passcode)
     }
 }
 
