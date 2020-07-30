@@ -1489,30 +1489,50 @@ public class WireStyleKit : NSObject {
     }
 
     @objc dynamic public class func drawIcon_microphone_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
-
-        //// Microphone Drawing
-        let microphonePath = UIBezierPath()
-        microphonePath.move(to: CGPoint(x: 50.3, y: 47.84))
-        microphonePath.addLine(to: CGPoint(x: 56, y: 53.5))
-        microphonePath.addCurve(to: CGPoint(x: 32, y: 64), controlPoint1: CGPoint(x: 50.11, y: 59.94), controlPoint2: CGPoint(x: 41.55, y: 64))
-        microphonePath.addCurve(to: CGPoint(x: 8, y: 53.5), controlPoint1: CGPoint(x: 22.45, y: 64), controlPoint2: CGPoint(x: 13.89, y: 59.94))
-        microphonePath.addLine(to: CGPoint(x: 8, y: 53.5))
-        microphonePath.addLine(to: CGPoint(x: 13.7, y: 47.84))
-        microphonePath.addCurve(to: CGPoint(x: 32, y: 56), controlPoint1: CGPoint(x: 18.13, y: 52.83), controlPoint2: CGPoint(x: 24.68, y: 56))
-        microphonePath.addCurve(to: CGPoint(x: 50.3, y: 47.84), controlPoint1: CGPoint(x: 39.32, y: 56), controlPoint2: CGPoint(x: 45.87, y: 52.83))
-        microphonePath.addLine(to: CGPoint(x: 50.3, y: 47.84))
-        microphonePath.close()
-        microphonePath.move(to: CGPoint(x: 32, y: 48))
-        microphonePath.addCurve(to: CGPoint(x: 48.1, y: 32.27), controlPoint1: CGPoint(x: 40.91, y: 48), controlPoint2: CGPoint(x: 48.1, y: 40.92))
-        microphonePath.addLine(to: CGPoint(x: 48.1, y: 15.74))
-        microphonePath.addCurve(to: CGPoint(x: 32, y: 0), controlPoint1: CGPoint(x: 48.1, y: 7.08), controlPoint2: CGPoint(x: 40.91, y: 0))
-        microphonePath.addCurve(to: CGPoint(x: 15.9, y: 15.74), controlPoint1: CGPoint(x: 23.09, y: 0), controlPoint2: CGPoint(x: 15.9, y: 7.08))
-        microphonePath.addLine(to: CGPoint(x: 15.9, y: 32.27))
-        microphonePath.addCurve(to: CGPoint(x: 32, y: 48), controlPoint1: CGPoint(x: 15.9, y: 40.92), controlPoint2: CGPoint(x: 23.09, y: 48))
-        microphonePath.addLine(to: CGPoint(x: 32, y: 48))
-        microphonePath.close()
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Group
+        context.saveGState()
+        context.scaleBy(x: 4, y: 4)
+        
+        
+        
+        //// Rectangle Drawing
+        
+        
+        //// Group 2
+        //// Rectangle 2 Drawing
+        let rectangle2Path = UIBezierPath(roundedRect: CGRect(x: 5.1, y: 0.48, width: 5.8, height: 10.3), cornerRadius: 2.8)
         color.setFill()
-        microphonePath.fill()
+        rectangle2Path.fill()
+        
+        
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: CGPoint(x: 13.2, y: 6.97))
+        bezierPath.addLine(to: CGPoint(x: 11.98, y: 6.97))
+        bezierPath.addCurve(to: CGPoint(x: 8.01, y: 11.83), controlPoint1: CGPoint(x: 11.98, y: 9.65), controlPoint2: CGPoint(x: 10.2, y: 11.83))
+        bezierPath.addCurve(to: CGPoint(x: 4.04, y: 6.97), controlPoint1: CGPoint(x: 5.82, y: 11.83), controlPoint2: CGPoint(x: 4.04, y: 9.65))
+        bezierPath.addLine(to: CGPoint(x: 2.81, y: 6.97))
+        bezierPath.addCurve(to: CGPoint(x: 7.36, y: 12.96), controlPoint1: CGPoint(x: 2.81, y: 10.06), controlPoint2: CGPoint(x: 4.8, y: 12.59))
+        bezierPath.addLine(to: CGPoint(x: 7.36, y: 14.15))
+        bezierPath.addLine(to: CGPoint(x: 5.7, y: 14.15))
+        bezierPath.addLine(to: CGPoint(x: 5.7, y: 15.36))
+        bezierPath.addLine(to: CGPoint(x: 10.05, y: 15.36))
+        bezierPath.addLine(to: CGPoint(x: 10.05, y: 14.15))
+        bezierPath.addLine(to: CGPoint(x: 8.58, y: 14.15))
+        bezierPath.addLine(to: CGPoint(x: 8.58, y: 12.97))
+        bezierPath.addCurve(to: CGPoint(x: 13.2, y: 6.97), controlPoint1: CGPoint(x: 11.17, y: 12.63), controlPoint2: CGPoint(x: 13.2, y: 10.09))
+        bezierPath.close()
+        color.setFill()
+        bezierPath.fill()
+        
+        
+        
+        
+        
+        context.restoreGState()
     }
 
     @objc dynamic public class func drawIcon_screenshare_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
