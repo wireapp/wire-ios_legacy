@@ -46,7 +46,8 @@ enum KeychainAccount: String {
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) { ///TODO: return
         let data = passcode.data(using: .utf8)!
-        let ret = ZMKeychain.setData(data, forAccount: KeychainAccount.customAppLock.rawValue)
+        //TODO: error handle with setData return false
+        ZMKeychain.setData(data, forAccount: KeychainAccount.customAppLock.rawValue)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
