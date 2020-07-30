@@ -4672,16 +4672,9 @@ public class WireStyleKit : NSObject {
         context.restoreGState()
     }
 
-    @objc dynamic public class func drawIcon_eyeSlash_64pt(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 64, height: 64), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
+    @objc dynamic public class func drawIcon_eyeSlash_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
-        //// Resize to Target Frame
-        context.saveGState()
-        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 64, height: 64), target: targetFrame)
-        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
-        context.scaleBy(x: resizedFrame.width / 64, y: resizedFrame.height / 64)
-
 
         //// Color Declarations
         let fillColor8 = UIColor(red: 0.204, green: 0.220, blue: 0.231, alpha: 1.000)
@@ -4761,21 +4754,9 @@ public class WireStyleKit : NSObject {
 
         context.endTransparencyLayer()
         context.restoreGState()
-        
-        context.restoreGState()
-
     }
 
-    @objc dynamic public class func drawIcon_circleTick_64pt(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 64, height: 64), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
-        //// General Declarations
-        let context = UIGraphicsGetCurrentContext()!
-        
-        //// Resize to Target Frame
-        context.saveGState()
-        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 64, height: 64), target: targetFrame)
-        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
-        context.scaleBy(x: resizedFrame.width / 64, y: resizedFrame.height / 64)
-
+    @objc dynamic public class func drawIcon_circleTick_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -4796,21 +4777,11 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
-        
-        context.restoreGState()
-
     }
 
-    @objc dynamic public class func drawIcon_circleCross_64pt(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 64, height: 64), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
+    @objc dynamic public class func drawIcon_circleCross_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
-        //// Resize to Target Frame
-        context.saveGState()
-        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 64, height: 64), target: targetFrame)
-        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
-        context.scaleBy(x: resizedFrame.width / 64, y: resizedFrame.height / 64)
-
 
         //// Group
         context.saveGState()
@@ -4869,9 +4840,6 @@ public class WireStyleKit : NSObject {
 
         context.endTransparencyLayer()
         context.restoreGState()
-        
-        context.restoreGState()
-
     }
 
     @objc dynamic public class func drawMissedcall(accent: UIColor = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
