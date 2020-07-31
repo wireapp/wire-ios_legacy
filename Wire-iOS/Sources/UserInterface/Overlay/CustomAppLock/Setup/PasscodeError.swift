@@ -55,10 +55,10 @@ enum PasscodeError: CaseIterable {
     }
     
     var descriptionWithInvalidIcon: NSAttributedString {
-        return description(icon: .circleCross, color: UIColor(rgb: (150, 153, 156)), font: .smallRegularFont)
+        return description(icon: .circleCross, color: UIColor.CreatePasscode.errorGrey, font: .smallRegularFont)
     }
 
     var descriptionWithPassedIcon: NSAttributedString {
-        return description(icon: .circleTick, color: UIColor(rgb: (2, 193, 1)), font: .smallSemiboldFont)
+        return description(icon: .circleTick, color: UIColor.CreatePasscode.passGreen, font: .smallSemiboldFont)
     }
 }
