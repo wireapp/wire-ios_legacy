@@ -74,10 +74,11 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
+    private static let errorFont = FontSpec(.small, .light).font!.withSize(10)
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = " "
-        label.font = FontSpec(.small, .regular).font!.withSize(10)
+        label.font = errorFont
         label.textColor = UIColor.PasscodeUnlock.error
 
         return label
@@ -212,10 +213,11 @@ final class UnlockViewController: UIViewController {
     }
     
     func showWrongPasscodeMessage() {
-        //TODO: new icon
-        let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: UIColor.PasscodeUnlock.error, iconSize: .nano)
+        let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle, with: UIColor.PasscodeUnlock.error, iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize, verticalCorrection: -1, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
+
+        let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
         
-        errorLabel.attributedText = NSAttributedString(attachment: imageIcon) + NSAttributedString(string: "unlock.error_label".localized)
+        errorLabel.attributedText = NSAttributedString(attachment: textAttachment) + attributedString
         unlockButton.isEnabled = false
     }
 }

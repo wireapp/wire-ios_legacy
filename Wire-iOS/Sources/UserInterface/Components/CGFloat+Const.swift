@@ -29,6 +29,7 @@ extension Float {
 extension StyleKitIcon.Size {
     enum CreatePasscode {
         static let iconSize: StyleKitIcon.Size = 11
+        static let errorIconSize: StyleKitIcon.Size = 13
     }
 }
 
