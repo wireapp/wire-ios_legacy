@@ -114,7 +114,7 @@ final class VideoGridViewController: UIViewController {
             .compactMap { $0 as? VideoPreviewView }
             .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })
 
-        tappedView?.switchFillMode()
+        tappedView?.shouldFill.toggle()
     }
 
     // MARK: - UI Update
