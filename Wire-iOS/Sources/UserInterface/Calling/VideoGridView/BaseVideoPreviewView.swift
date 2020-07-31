@@ -31,14 +31,16 @@ extension AVSVideoView: AVSIdentifierProvider {
         return Stream(
             streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
             participantName: nil,
-            microphoneState: .unmuted)
+            microphoneState: .unmuted,
+            videoState: .none)
     }
 }
 
 class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
-           updateUserDetails()
+            updateUserDetails()
+            updateFillMode()
         }
     }
     
@@ -68,6 +70,10 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+    }
+    
+    func updateFillMode() {
+        // no-op
     }
     
     func setupViews() {
