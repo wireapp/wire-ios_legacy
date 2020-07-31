@@ -48,7 +48,7 @@ extension UIImage {
         return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
 
-    func with(insets: UIEdgeInsets, backgroundColor: UIColor?) -> UIImage? {
+    func with(insets: UIEdgeInsets, backgroundColor: UIColor? = nil) -> UIImage? {
         let newSize = CGSize(width: size.width + insets.left + insets.right, height: size.height + insets.top + insets.bottom)
 
         UIGraphicsBeginImageContextWithOptions(newSize, _: 0.0 != 0, _: 0.0)

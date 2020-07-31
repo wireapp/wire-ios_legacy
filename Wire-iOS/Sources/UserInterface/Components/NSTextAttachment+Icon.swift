@@ -21,8 +21,18 @@ import UIKit
 import WireCommonComponents
 
 extension NSTextAttachment {
-    static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: StyleKitIcon.Size = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {
-        let image = icon.makeImage(size: iconSize, color: color)
+    static func textAttachment(for icon: StyleKitIcon,
+                               with color: UIColor,
+                               iconSize: StyleKitIcon.Size = 10,
+                               verticalCorrection: CGFloat = 0,
+                               insets: UIEdgeInsets? = nil) -> NSTextAttachment {
+        let image: UIImage
+        if let insets = insets {
+            image = icon.makeImage(size: iconSize, color: color).with(insets: insets, backgroundColor: .clear)!
+        } else {
+            image = icon.makeImage(size: iconSize, color: color)
+        }
+
         let attachment = NSTextAttachment()
         attachment.image = image
         let ratio = image.size.width / image.size.height

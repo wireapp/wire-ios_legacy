@@ -26,6 +26,12 @@ extension Float {
     }
 }
 
+extension StyleKitIcon.Size {
+    enum CreatePasscode {
+        static let iconSize: StyleKitIcon.Size = 11
+    }
+}
+
 extension CGFloat {
     enum PasscodeUnlock {
         static let textFieldHeight: CGFloat = 40
