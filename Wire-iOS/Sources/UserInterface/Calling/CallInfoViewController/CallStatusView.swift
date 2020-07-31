@@ -69,6 +69,7 @@ final class CallStatusView: UIView {
     private var userEnabledCBR: Bool {
         return Settings.shared[.callingConstantBitRate] == true
     }
+    
     init(configuration: CallStatusViewInputType) {
         self.configuration = configuration
         super.init(frame: .zero)
