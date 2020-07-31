@@ -30,7 +30,7 @@ platform :ios do
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
-                config_branch = "master"
+                config_branch = "feature/CustomAppLock"
             end
 
             build = Build.new(options: options)

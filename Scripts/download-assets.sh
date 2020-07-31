@@ -26,8 +26,7 @@ cd $DIR/..
 CONFIGURATION_LOCATION=Configuration
 PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
 REPO_URL=$PUBLIC_CONFIGURATION_REPO
-#TODO: restore to master
-BRANCH=feature/customAppLock
+BRANCH=master
 
 OVERRIDES_DIR=
 
