@@ -36,4 +36,8 @@ extension AccessoryTextField {
         return textField
 
     }
+    
+    func updatePasscodeIcon() {
+        overrideButtonIcon = isSecureTextEntry ? StyleKitIcon.AppLock.reveal : StyleKitIcon.AppLock.hide
+    }
 }

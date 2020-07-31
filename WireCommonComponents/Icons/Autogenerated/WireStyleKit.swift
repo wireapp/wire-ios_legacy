@@ -4979,6 +4979,66 @@ public class WireStyleKit : NSObject {
         bezierPath.fill()
     }
 
+    @objc dynamic public class func drawIcon_eyeWithIris_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Group
+        context.saveGState()
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+        
+        //// Clip Clip 2
+        let clip2Path = UIBezierPath()
+        clip2Path.move(to: CGPoint(x: 31.79, y: 14))
+        clip2Path.addCurve(to: CGPoint(x: 0.97, y: 33), controlPoint1: CGPoint(x: 17.78, y: 14), controlPoint2: CGPoint(x: 5.81, y: 21.88))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 52), controlPoint1: CGPoint(x: 5.81, y: 44.12), controlPoint2: CGPoint(x: 17.78, y: 52))
+        clip2Path.addCurve(to: CGPoint(x: 62.62, y: 33), controlPoint1: CGPoint(x: 45.8, y: 52), controlPoint2: CGPoint(x: 57.77, y: 44.12))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 14), controlPoint1: CGPoint(x: 57.77, y: 21.88), controlPoint2: CGPoint(x: 45.8, y: 14))
+        clip2Path.close()
+        clip2Path.move(to: CGPoint(x: 31.79, y: 45.67))
+        clip2Path.addCurve(to: CGPoint(x: 17.78, y: 33), controlPoint1: CGPoint(x: 24.06, y: 45.67), controlPoint2: CGPoint(x: 17.78, y: 39.99))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 20.33), controlPoint1: CGPoint(x: 17.78, y: 26.01), controlPoint2: CGPoint(x: 24.06, y: 20.33))
+        clip2Path.addCurve(to: CGPoint(x: 45.8, y: 33), controlPoint1: CGPoint(x: 39.53, y: 20.33), controlPoint2: CGPoint(x: 45.8, y: 26.01))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 45.67), controlPoint1: CGPoint(x: 45.8, y: 39.99), controlPoint2: CGPoint(x: 39.53, y: 45.67))
+        clip2Path.close()
+        clip2Path.move(to: CGPoint(x: 31.79, y: 25.4))
+        clip2Path.addCurve(to: CGPoint(x: 23.38, y: 33), controlPoint1: CGPoint(x: 27.14, y: 25.4), controlPoint2: CGPoint(x: 23.38, y: 28.79))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 40.6), controlPoint1: CGPoint(x: 23.38, y: 37.21), controlPoint2: CGPoint(x: 27.14, y: 40.6))
+        clip2Path.addCurve(to: CGPoint(x: 40.2, y: 33), controlPoint1: CGPoint(x: 36.44, y: 40.6), controlPoint2: CGPoint(x: 40.2, y: 37.21))
+        clip2Path.addCurve(to: CGPoint(x: 31.79, y: 25.4), controlPoint1: CGPoint(x: 40.2, y: 28.79), controlPoint2: CGPoint(x: 36.44, y: 25.4))
+        clip2Path.close()
+        clip2Path.addClip()
+        
+        
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRect(x: -3, y: 13, width: 67, height: 38))
+        color.setFill()
+        rectanglePath.fill()
+        
+        
+        //// Group 2
+        context.saveGState()
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+        
+        //// Clip Clip
+        let clipPath = UIBezierPath(rect: CGRect(x: -3, y: 13, width: 67, height: 40.5))
+        clipPath.addClip()
+        
+        
+        //// Rectangle 2 Drawing
+        let rectangle2Path = UIBezierPath(rect: CGRect(x: -38.33, y: -29, width: 140.25, height: 129))
+        color.setFill()
+        rectangle2Path.fill()
+        
+        
+        context.endTransparencyLayer()
+        context.restoreGState()
+        
+        
+        context.endTransparencyLayer()
+        context.restoreGState()
+    }
+
     @objc dynamic public class func drawMissedcall(accent: UIColor = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// Color Declarations
         let accentopacity64 = accent.withAlpha(0.64)
