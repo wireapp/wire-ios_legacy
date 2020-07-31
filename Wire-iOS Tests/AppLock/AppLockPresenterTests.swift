@@ -21,14 +21,14 @@ import XCTest
 @testable import WireCommonComponents
 
 private final class AppLockUserInterfaceMock: AppLockUserInterface {
-    func dismissUnlockScreen(completion: Completion?) {
+    func dismissUnlockScreen() {
         // no-op
     }
     
     var passwordInput: String?
     var requestPasswordMessage: String?
-    func presentRequestPasswordController(with message: String,
-                                          callback: @escaping RequestPasswordController.Callback) {
+    func presentUnlockScreen(with message: String,
+                             callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
     }
@@ -59,7 +59,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
-    
+
     func verify(password: String) {
         passwordToVerify = password
     }

@@ -30,7 +30,9 @@ extension UnlockViewController: UnlockUserInterface {
 /// 
 /// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
 final class UnlockViewController: UIViewController {
-
+    
+    var callback: RequestPasswordController.Callback?
+    
     private lazy var presenter: UnlockPresenter = {
         return UnlockPresenter(userInterface: self)
     }()
@@ -203,17 +205,18 @@ final class UnlockViewController: UIViewController {
     }
 
     @objc
-    func onUnlockButtonPressed(sender: AnyObject?) {
+    private func onUnlockButtonPressed(sender: AnyObject?) {
         guard let passcode = accessoryTextField.text else { return }
 
-        if !presenter.unlock(passcode: passcode) {
-            // show error label
-            //TODO: new icon
-            let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: UIColor.PasscodeUnlock.error, iconSize: .nano)
-
-            errorLabel.attributedText = NSAttributedString(attachment: imageIcon) + NSAttributedString(string: "unlock.error_label".localized)
-            unlockButton.isEnabled = false
-        }
+        presenter.unlock(passcode: passcode, callback: callback)
+    }
+    
+    func showWrongPasscodeMessage() {
+        //TODO: new icon
+        let imageIcon = NSTextAttachment.textAttachment(for: .exclamationMark, with: UIColor.PasscodeUnlock.error, iconSize: .nano)
+        
+        errorLabel.attributedText = NSAttributedString(attachment: imageIcon) + NSAttributedString(string: "unlock.error_label".localized)
+        unlockButton.isEnabled = false
     }
 }
 
