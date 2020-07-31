@@ -228,7 +228,7 @@ extension UnlockViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         accessoryTextField.isSecureTextEntry = !accessoryTextField.isSecureTextEntry
 
-        accessoryTextField.overrideButtonIcon = accessoryTextField.isSecureTextEntry ? StyleKitIcon.AppLock.reveal : .eye
+        accessoryTextField.updatePasscodeIcon()
     }
 }
 

@@ -196,7 +196,7 @@ extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
 
-        passcodeTextField.overrideButtonIcon = passcodeTextField.isSecureTextEntry ? StyleKitIcon.AppLock.reveal : .eye
+        passcodeTextField.updatePasscodeIcon()
     }
 }
 
