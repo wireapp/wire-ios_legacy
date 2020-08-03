@@ -58,8 +58,7 @@ final class VideoParticipantDetailsView: UIView {
         layer.cornerRadius = 12
         blurView.layer.cornerRadius = 12
         
-        let color = UIColor.from(scheme: .iconGuest, variant: .dark)
-        microphoneIconView.set(size: .tiny, color: color)
+        microphoneIconView.set(size: .tiny, color: .white)
         
         [blurView, microphoneIconView, nameLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false

@@ -25,6 +25,7 @@ protocol AppLockInteractorInput: class {
     var isAuthenticationNeeded: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
+    func verify(customPasscode: String)
     func appStateDidTransition(to newState: AppState)
 }
 
@@ -33,7 +34,7 @@ protocol AppLockInteractorOutput: class {
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-class AppLockInteractor {
+final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests
@@ -65,13 +66,22 @@ extension AppLockInteractor: AppLockInteractorInput {
         }
     }
     
+    private func processVerifyResult(result: VerifyPasswordResult?) {
+        notifyPasswordVerified(with: result)
+        if case .validated = result {
+            appLock.persistBiometrics()
+        }
+    }
+    
+    func verify(customPasscode: String) {
+        // TODO: ALWAYS PASS NOW! check with custom pass code in keychain
+        let result: VerifyPasswordResult = .validated
+        processVerifyResult(result: result)
+    }
+
     func verify(password: String) {
         userSession?.verify(password: password) { [weak self] result in
-            guard let `self` = self else { return }
-            self.notifyPasswordVerified(with: result)
-            if case .validated? = result {
-                self.appLock.persistBiometrics()
-            }
+            self?.processVerifyResult(result: result)
         }
     }
     
@@ -88,7 +98,7 @@ extension AppLockInteractor: AppLockInteractorInput {
 // MARK: - Helpers
 extension AppLockInteractor {
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
-        self.dispatchQueue.async { [weak self] in
+        dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
         }
     }

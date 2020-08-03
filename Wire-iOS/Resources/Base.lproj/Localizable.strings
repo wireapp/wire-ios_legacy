@@ -1173,6 +1173,9 @@
 "self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
 
 "self.settings.advanced.title" = "Advanced";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Troubleshooting";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1777,8 +1780,21 @@
 
 // Custom app lock
 
-// Unlock
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "Create memorable passcode";
+"create_passcode.title_label" = "Create a Passcode";
+"create_passcode.info_label" = "It will unlock your app to use Wire. Make it memorable, If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it cannot be recovered.";
+"create_passcode.create_button.title" = "create passcode";
 
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "8 Characters long";
+"create_passcode.validation.no_lowercase_char" = "1 Lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "1 Capital letter";
+"create_passcode.validation.no_special_char" = "1 Special character";
+"create_passcode.validation.no_number" = "1 Number";
+
+// Custom app lock - unlock
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter Passcode to unlock Wire";
 "unlock.hint_label" = "Passcode";

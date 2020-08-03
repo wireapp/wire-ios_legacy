@@ -33,6 +33,19 @@ final class TextFieldValidator {
         case custom(String)
     }
 
+    private func validatePasscode(text: String,
+                                  kind: AccessoryTextField.Kind,
+                                  isNew: Bool) -> TextFieldValidator.ValidationError? {
+        if isNew {
+            // If the user is registering, enforce the password rules
+            let result = PasswordRuleSet.shared.validatePassword(text)
+            return result != .valid ? .invalidPassword(result) : nil
+        } else {
+            // If the user is signing in, we do not require any format
+            return text.isEmpty ? .tooShort(kind: kind) : nil
+        }
+    }
+    
     func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
             return nil
@@ -51,19 +64,9 @@ final class TextFieldValidator {
             }
 
         case .password(let isNew):
-            if isNew {
-                // If the user is registering, enforce the password rules
-                let result = PasswordRuleSet.shared.validatePassword(text)
-                return result != .valid ? .invalidPassword(result) : nil
-            } else {
-                // If the user is signing in, we do not require any format
-                return text.isEmpty ? .tooShort(kind: kind) : nil
-            }
-
-        case .passcode:
-            // If the user is unlocking, we do not require any format
-            return text.isEmpty ? .tooShort(kind: kind) : nil
-
+            return validatePasscode(text: text, kind: kind, isNew: isNew)
+        case .passcode(let isNew):
+            return validatePasscode(text: text, kind: kind, isNew: isNew)
         case .name:
             /// We should ignore leading/trailing whitespace when counting the number of characters in the string
             let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -280,8 +280,8 @@ final class LandingViewController: AuthenticationStepViewController {
             enterpriseLoginButton,
             messageLabel].disableAutoresizingMaskTranslation()
 
-        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
-        widthConstraint.priority = .defaultHigh
+        let widthConstraint = contentView.createContentWidthConstraint()
+
         NSLayoutConstraint.activate([
             // content view
             widthConstraint,

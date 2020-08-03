@@ -65,6 +65,7 @@ enum SettingKey: String, CaseIterable {
     case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
     case callingConstantBitRate = "CallingConstantBitRate"
     case disableLinkPreviews = "DisableLinkPreviews"
+    case conferenceCalling = "ConferenceCalling"
 }
 
 /// Model object for locally stored (not in SE or AVS) user app settings
@@ -72,6 +73,10 @@ final class Settings {
     // MARK: - subscript
     subscript<T>(index: SettingKey) -> T? {
         get {
+            if case .conferenceCalling = index, let overrideSetting = AutomationHelper.sharedHelper.useConferenceCalling as? T {
+               return overrideSetting
+            }
+
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {
@@ -90,6 +95,8 @@ final class Settings {
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
+            case .conferenceCalling where newValue is Bool:
+                SessionManager.shared?.useConferenceCalling = newValue as! Bool
             default:
                 break
             }
