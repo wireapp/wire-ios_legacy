@@ -42,7 +42,7 @@ final class PasscodeSetupInteractor {
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) {
-        let data = passcode.data(using: .utf8)!
+        guard let data = passcode.data(using: .utf8) else { return }
         
         try? EncryptionKeys.storePasscode(data: data)
     }
