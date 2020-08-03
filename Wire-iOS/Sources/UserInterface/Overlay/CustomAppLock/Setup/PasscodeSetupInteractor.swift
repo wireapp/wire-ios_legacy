@@ -44,10 +44,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) { ///TODO: return
         let data = passcode.data(using: .utf8)!
         
-        try EncryptionKeys.storeItem(.publicKey(account), value: publicKey)
-
-        //TODO: error handle with setData return false
-        ZMKeychain.setData(data, forAccount: KeychainAccount.customAppLock.rawValue)
+        try EncryptionKeys.storeItem(.passcode, value: data)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
