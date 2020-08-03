@@ -19,6 +19,7 @@ import Foundation
 import WireUtilities
 import WireCommonComponents
 import WireTransport
+import WireDataModel
 
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
@@ -38,14 +39,13 @@ final class PasscodeSetupInteractor {
                                                                       .digits]
 }
 
-enum KeychainAccount: String {
-    case customAppLock = "customAppLock"
-}
-
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) { ///TODO: return
         let data = passcode.data(using: .utf8)!
+        
+        try EncryptionKeys.storeItem(.publicKey(account), value: publicKey)
+
         //TODO: error handle with setData return false
         ZMKeychain.setData(data, forAccount: KeychainAccount.customAppLock.rawValue)
     }
