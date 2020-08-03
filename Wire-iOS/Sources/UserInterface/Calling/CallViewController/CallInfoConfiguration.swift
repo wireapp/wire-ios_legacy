@@ -149,6 +149,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let cameraType: CaptureDevice
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
+    let userEnabledCBR: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -157,7 +158,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
+        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
+        settings: Settings = Settings.shared
         ) {
         self.permissions = permissions
         self.cameraType = cameraType
@@ -177,6 +179,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
+        userEnabledCBR = settings[.callingConstantBitRate] == true
     }
 
     // This property has to be computed in order to return the correct call duration

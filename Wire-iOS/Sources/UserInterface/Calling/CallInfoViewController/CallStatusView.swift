@@ -19,7 +19,7 @@
 import UIKit
 
 
-protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider {
+protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
     var title: String { get }
@@ -31,6 +31,10 @@ protocol CallTypeProvider {
 
 protocol ColorVariantProvider {
     var variant: ColorSchemeVariant { get }
+}
+
+protocol CBRSettingProvider {
+    var userEnabledCBR: Bool { get }
 }
 
 extension CallStatusViewInputType {
@@ -66,9 +70,6 @@ final class CallStatusView: UIView {
         }
     }
     
-    private var userEnabledCBR: Bool {
-        return Settings.shared[.callingConstantBitRate] == true
-    }
     
     init(configuration: CallStatusViewInputType) {
         self.configuration = configuration
@@ -122,7 +123,7 @@ final class CallStatusView: UIView {
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
-        bitrateLabel.isHidden = !userEnabledCBR
+        bitrateLabel.isHidden = !configuration.userEnabledCBR
         bitrateLabel.bitRateStatus = BitRateStatus(configuration.isConstantBitRate)
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
