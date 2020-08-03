@@ -23,6 +23,14 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
     return lhs.isEqual(toConfiguration: rhs)
 }
 
+class SettingsMock: Settings {
+    var _defaults = UserDefaults()
+
+    override var defaults: UserDefaults {
+        return _defaults
+    }
+}
+
 class CallInfoConfigurationTests: XCTestCase {
     
     var mockOtherUser: MockUser!
@@ -30,6 +38,8 @@ class CallInfoConfigurationTests: XCTestCase {
     
     var selfUser: ZMUser!
     var otherUser: ZMUser!
+    
+    var settingsMock: SettingsMock!
     
     override func setUp() {
         super.setUp()
@@ -39,6 +49,8 @@ class CallInfoConfigurationTests: XCTestCase {
         
         selfUser = (mockSelfUser as Any) as? ZMUser
         otherUser = (mockOtherUser as Any) as? ZMUser
+        
+        settingsMock = SettingsMock()
     }
     
     override func tearDown() {
@@ -46,6 +58,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockOtherUser = nil
         selfUser = nil
         otherUser = nil
+        settingsMock = nil
         MockUser.setMockSelf(nil)
 
         super.tearDown()
@@ -192,8 +205,30 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockIsConstantBitRateAudioActive = true
         
+        settingsMock[.callingConstantBitRate] = true
+        
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, settings: settingsMock)
+        
+        // then
+        assertEquals(fixture.oneToOneAudioEstablishedCBR, configuration)
+    }
+    
+    func testOneToOneAudioEstablishedVBR() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+        
+        mockVoiceChannel.mockCallState = .established
+        mockVoiceChannel.mockInitiator = otherUser
+        mockVoiceChannel.mockCallDuration = 10
+        mockVoiceChannel.mockIsConstantBitRateAudioActive = false
+        
+        settingsMock[.callingConstantBitRate] = true
+        
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, settings: settingsMock)
         
         // then
         assertEquals(fixture.oneToOneAudioEstablishedCBR, configuration)
