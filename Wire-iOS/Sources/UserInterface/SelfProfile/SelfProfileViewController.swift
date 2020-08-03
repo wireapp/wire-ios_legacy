@@ -214,6 +214,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
             
             let closeItem = UIBarButtonItem.createCloseItem()
+            closeItem.tintColor = .white
+            
             closeItem.target = self
             closeItem.action = #selector(closeTapped)
 

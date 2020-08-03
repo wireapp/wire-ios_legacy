@@ -35,7 +35,7 @@ final class PasscodeSetupViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var createButton: Button = {
-        let button = Button(style: .full)
+        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
 
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
@@ -67,8 +67,18 @@ final class PasscodeSetupViewController: UIViewController {
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
-        let headingText =  NSAttributedString(string: "create_passcode.info_label".localized) && UIFont.normalRegularFont && textColor
-        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = 20
+        paragraphStyle.maximumLineHeight = 20
+        
+        let headingText =  NSAttributedString(string: "create_passcode.info_label".localized, attributes: [
+            .paragraphStyle: paragraphStyle
+        ]) && UIFont.normalRegularFont && textColor
+        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized, attributes: [
+            .paragraphStyle: paragraphStyle
+        ]) && FontSpec(.normal, .bold).font!  && textColor
+        
+        //TODO: line hgh
 
         label.text = " "
         label.attributedText = headingText + highlightText
@@ -115,8 +125,9 @@ final class PasscodeSetupViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         SpacingView(24),
+         SpacingView(10),
          infoLabel,
+         UILabel.createHintLabel(),
          passcodeTextField,
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
