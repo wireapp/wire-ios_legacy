@@ -24,7 +24,7 @@ final class WipeDatabaseViewController: UIViewController {
     private let stackView: UIStackView = UIStackView.verticalStackView()
 
     private let titleLabel: UILabel = {
-        let label = UILabel.createTitleLabel()
+        let label = UILabel.createMultiLineCenterdLabel()
         label.text = "wipe_database.title_label".localized
 
         return label
