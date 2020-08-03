@@ -109,7 +109,7 @@ final class UnlockViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         UILabel.createHintLabel(),
+         UILabel.createHintLabel(variant: .dark),
          accessoryTextField,
          errorLabel,
          SpacingView(5),

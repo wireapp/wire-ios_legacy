@@ -116,7 +116,8 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: self.variant)
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground,
+                                                         variant: variant)
 
         view.addSubview(contentView)
 
@@ -127,7 +128,7 @@ final class PasscodeSetupViewController: UIViewController {
         [titleLabel,
          SpacingView(10),
          infoLabel,
-         UILabel.createHintLabel(),
+         UILabel.createHintLabel(variant: variant),
          passcodeTextField,
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)

@@ -54,11 +54,11 @@ extension UILabel {
     
     // MARK: - passcode
     
-    static func createHintLabel() -> UILabel {
+    static func createHintLabel(variant: ColorSchemeVariant) -> UILabel {
         let label = UILabel()
         
         label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
-        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         
         let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
         
@@ -69,5 +69,5 @@ extension UILabel {
         label.attributedText = NSAttributedString(string: "passcode.hint_label".localized,
                                                   attributes: [NSAttributedString.Key.paragraphStyle: style])
         return label
-    }    
+    }
 }
