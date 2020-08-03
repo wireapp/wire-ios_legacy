@@ -226,7 +226,7 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
-
+        
     func requestNumber(_ callback: @escaping (Int)->()) {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 

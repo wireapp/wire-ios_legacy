@@ -73,6 +73,10 @@ final class Settings {
     // MARK: - subscript
     subscript<T>(index: SettingKey) -> T? {
         get {
+            if case .conferenceCalling = index, let overrideSetting = AutomationHelper.sharedHelper.useConferenceCalling as? T {
+               return overrideSetting
+            }
+
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {

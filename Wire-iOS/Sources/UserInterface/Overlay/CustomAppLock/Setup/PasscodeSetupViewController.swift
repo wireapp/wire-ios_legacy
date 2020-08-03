@@ -153,7 +153,6 @@ final class PasscodeSetupViewController: UIViewController {
         let widthConstraint = contentView.createContentWidthConstraint()
 
         let contentPadding: CGFloat = 24
-        let textFieldPadding: CGFloat = 19
 
         NSLayoutConstraint.activate([
             // content view
@@ -171,8 +170,8 @@ final class PasscodeSetupViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
             // passcode text field
-            passcodeTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
-            passcodeTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+            passcodeTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            passcodeTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
 
             // create Button
             createButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
@@ -197,7 +196,7 @@ extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
 
-        passcodeTextField.overrideButtonIcon = passcodeTextField.isSecureTextEntry ? StyleKitIcon.AppLock.reveal : .eye ///TODO: mv to style file
+        passcodeTextField.updatePasscodeIcon()
     }
 }
 

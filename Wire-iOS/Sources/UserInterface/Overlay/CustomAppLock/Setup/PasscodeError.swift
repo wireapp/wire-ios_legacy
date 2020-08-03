@@ -16,6 +16,8 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 enum PasscodeError: CaseIterable {
     case tooShort
@@ -43,19 +45,20 @@ enum PasscodeError: CaseIterable {
         return key.localized
     }
 
+    private func description(icon: StyleKitIcon, color: UIColor, font: UIFont) -> NSAttributedString {
+        let textAttachment = NSTextAttachment.textAttachment(for: icon, with: color, iconSize: StyleKitIcon.Size.CreatePasscode.iconSize, verticalCorrection: -1, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+        
+        let attributedString: NSAttributedString = NSAttributedString(string: message) && font
+        
+        return NSAttributedString(attachment:textAttachment) + attributedString
+
+    }
+    
     var descriptionWithInvalidIcon: NSAttributedString {
-
-        //TODO paint code icon
-        let attributedString = NSAttributedString(string: "❌" + message)
-
-        return attributedString
+        return description(icon: .circleCross, color: UIColor.CreatePasscode.errorGrey, font: .smallRegularFont)
     }
 
-    //TODO paint code icon
     var descriptionWithPassedIcon: NSAttributedString {
-
-        let attributedString: NSAttributedString = NSAttributedString(string: "✅" + message)
-
-        return attributedString
+        return description(icon: .circleTick, color: UIColor.CreatePasscode.passGreen, font: .smallSemiboldFont)
     }
 }
