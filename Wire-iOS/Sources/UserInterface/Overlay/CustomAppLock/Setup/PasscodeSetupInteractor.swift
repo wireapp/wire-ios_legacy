@@ -41,10 +41,10 @@ final class PasscodeSetupInteractor {
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
-    func storePasscode(passcode: String) { ///TODO: return
+    func storePasscode(passcode: String) {
         let data = passcode.data(using: .utf8)!
         
-        try EncryptionKeys.storeItem(.passcode, value: data)
+        try? EncryptionKeys.storePasscode(data: data)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
