@@ -36,7 +36,7 @@ extension ViewImageConfig: Hashable {
     }
 }
 
-/// MARK: - snapshoting all iPhone sizes
+// MARK: - snapshoting all iPhone sizes
 extension XCTestCase {
     /// snapshot file name suffixs
     static let phoneConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
@@ -64,9 +64,9 @@ extension XCTestCase {
     }
 
     func verifyInAllDeviceSizes(matching value: UIViewController,
-                              file: StaticString = #file,
-                              testName: String = #function,
-                              line: UInt = #line) {
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
 
         let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
 
@@ -127,6 +127,27 @@ extension XCTestCase {
     }
 
     // MARK: - verify the snapshots in both dark and light scheme
+
+    func verifyInAllColorSchemes(createSut: () -> UIViewController,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
+        ColorScheme.default.variant = .light
+
+        verify(matching: createSut(),
+               named: "LightTheme",
+               file: file,
+               testName: testName,
+               line: line)
+
+        ColorScheme.default.variant = .dark
+
+            verify(matching: createSut(),
+               named: "DarkTheme",
+               file: file,
+               testName: testName,
+               line: line)
+    }
 
     func verifyInAllColorSchemes(matching: UIView,
                                  file: StaticString = #file,
@@ -304,7 +325,7 @@ extension XCTestCase {
     func resetColorScheme() {
         setColorScheme(.light)
     }
-    
+
     func setColorScheme(_ variant: ColorSchemeVariant) {
         ColorScheme.default.variant = variant
         NSAttributedString.invalidateMarkdownStyle()

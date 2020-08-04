@@ -87,7 +87,6 @@ final class UnlockViewController: UIViewController {
     private let wipeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = FontSpec(.medium, .medium).font!
-
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
         button.setTitle("unlock.link_label".localized, for: .normal)
@@ -184,8 +183,8 @@ final class UnlockViewController: UIViewController {
     }
 
     @objc
-    private func onWipeButtonPressed(sender: AnyObject?) {
-        //TODO push wipe screen
+    private func onWipeButtonPressed(sender: AnyObject?) {        
+        navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
     }
 
     @objc
