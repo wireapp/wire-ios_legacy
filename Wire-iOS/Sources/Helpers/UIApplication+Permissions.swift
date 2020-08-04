@@ -86,28 +86,35 @@ extension UIApplication {
         })
     }
     
+    class func cameraPermissionAlert(with completion: @escaping () -> ()) -> UIAlertController {
+        let noVideoAlert = UIAlertController.alertWithOKButton(
+            title: "voice.alert.camera_warning.title".localized,
+            message: "NSCameraUsageDescription".infoPlistLocalized,
+            okActionHandler: { action in
+                completion()
+        })
+        
+        let actionSettings = UIAlertAction(
+            title: "general.open_settings".localized,
+            style: .default,
+            handler: { action in
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+                completion()
+        })
+        
+        noVideoAlert.addAction(actionSettings)
+        return noVideoAlert
+    }
+    
     private class func wr_warnAboutCameraPermission(withCompletion completion: @escaping () -> ()) {
         let currentResponder = UIResponder.currentFirst
         (currentResponder as? UIView)?.endEditing(true)
         
-        let noVideoAlert = UIAlertController.alertWithOKButton(title: "voice.alert.camera_warning.title".localized,
-                                                               message: "NSCameraUsageDescription".infoPlistLocalized,
-                                                               okActionHandler: { action in
-                                                                completion()
-        })
+        let alert = cameraPermissionAlert(with: completion)
         
-        let actionSettings = UIAlertAction(title: "general.open_settings".localized,
-                                           style: .default,
-                                           handler: { action in
-                                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                                UIApplication.shared.open(url, options: [:])
-                                            }
-                                            completion()
-        })
-        
-        noVideoAlert.addAction(actionSettings)
-        
-        AppDelegate.shared.window?.rootViewController?.present(noVideoAlert, animated: true)
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
     
     private class func wr_warnAboutMicrophonePermission() {
