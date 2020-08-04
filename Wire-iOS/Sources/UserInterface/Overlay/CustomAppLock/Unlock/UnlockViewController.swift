@@ -200,9 +200,7 @@ final class UnlockViewController: UIViewController {
     }
 
     @objc
-    private func onWipeButtonPressed(sender: AnyObject?) {
-        // push wipe screen
-        
+    private func onWipeButtonPressed(sender: AnyObject?) {        
         navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
     }
 
