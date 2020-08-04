@@ -19,7 +19,6 @@ import Foundation
 import WireUtilities
 import WireCommonComponents
 import WireTransport
-import WireDataModel
 
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
@@ -44,7 +43,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) {
         guard let data = passcode.data(using: .utf8) else { return }
         
-        try? EncryptionKeys.storePasscode(data: data)
+        try? Keychain.updateItem(PasscodeKeychainItem.passcode, value: data)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
