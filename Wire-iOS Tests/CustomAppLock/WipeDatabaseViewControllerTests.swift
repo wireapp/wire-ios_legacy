@@ -22,9 +22,6 @@ import SnapshotTesting
 final class WipeDatabaseViewControllerTests: XCTestCase {
     var sut: WipeDatabaseViewController!
 
-    override func setUp() {
-    }
-
     override func tearDown() {
         sut = nil
     }
