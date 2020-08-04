@@ -19,148 +19,63 @@
 import Foundation
 import UIKit
 
-final class WireLogoInfoView: UIView {
-    let contentView = UIView()
+final class WipeCompletionViewController: UIViewController {
+    let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)
 
-    let headerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
-    }()
-    
-    let progressContainerView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 40
-        view.backgroundColor = UIColor(red: 50/255, green: 54/255, blue: 57/255, alpha: 1)
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 5
-        view.layer.shadowOpacity = 0.29
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.accessibilityIdentifier = "ProgressView"
-        return view
-    }()
-    
-    let wireLogo: UIImageView = {
-        let logo = UIImageView(image: UIImage(named: "wire-logo-letter"))
-        logo.accessibilityIdentifier = "ProgressView.Logo"
-        return logo
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.large, .semibold).font!
-        label.textAlignment = .center
-        label.text = "login.sso.backend_switch.title".localized
-        label.accessibilityValue = label.text
-        label.textColor = .black
-        return label
-    }()
-    
-    let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.normal, .regular).font!
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "login.sso.backend_switch.subtitle".localized
-        label.accessibilityValue = label.text
-        label.textColor = .black
-        return label
+    private lazy var loginButton: Button = {
+        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
+        
+        button.setBackgroundImageColor(.strongBlue, for: .normal)
+        
+        button.setTitle("signin.confirm".localized(uppercased: true), for: .normal)
+        
+        button.addTarget(self, action: #selector(onLoginCodeButtonPressed(sender:)), for: .touchUpInside)
+        
+        return button
     }()
 
     init() {
-        super.init(frame: .zero)
+        super.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
         createConstraints()
     }
     
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func configureSubviews() {
-        addSubview(headerView)
-        
-        contentView.addSubview(progressContainerView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subtitleLabel)
-        
-        progressContainerView.addSubview(wireLogo)
-        
-        addSubview(contentView)
+        view.addSubview(wireLogoInfoView)
+
+        wireLogoInfoView.contentView.addSubview(loginButton)
     }
     
     private func createConstraints() {
-        [
-            headerView,
-            contentView,
-            progressContainerView,
-            wireLogo,
-//            progressView,
-            titleLabel,
-            subtitleLabel,
-//            informationLabel,
-        ].disableAutoresizingMaskTranslation()
+        [wireLogoInfoView,
+         loginButton].disableAutoresizingMaskTranslation()
         
         NSLayoutConstraint.activate([
-            // header view
-            headerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3, constant: 0),
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: topAnchor),
-            headerView.bottomAnchor.constraint(equalTo: contentView.topAnchor),
-            
-            // content view
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            // progress container view
-            progressContainerView.centerYAnchor.constraint(equalTo: contentView.topAnchor),
-            progressContainerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            progressContainerView.widthAnchor.constraint(equalToConstant: 80),
-            progressContainerView.heightAnchor.constraint(equalToConstant: 80),
-            
-            // wire logo
-            wireLogo.centerYAnchor.constraint(equalTo: progressContainerView.centerYAnchor),
-            wireLogo.centerXAnchor.constraint(equalTo: progressContainerView.centerXAnchor),
-            
-            // progress view
-//            progressView.centerXAnchor.constraint(equalTo: progressContainerView.centerXAnchor),
-//            progressView.centerYAnchor.constraint(equalTo: progressContainerView.centerYAnchor),
-//            progressView.widthAnchor.constraint(equalTo: progressContainerView.widthAnchor),
-//            progressView.heightAnchor.constraint(equalTo: progressContainerView.heightAnchor),
-            
-            // title label
-            titleLabel.topAnchor.constraint(equalTo: progressContainerView.bottomAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            // subtitle label
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 14),
-            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
-            // information label
-//            informationLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 10),
-//            informationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            informationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            wireLogoInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            wireLogoInfoView.topAnchor.constraint(equalTo: view.topAnchor),
+            wireLogoInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            wireLogoInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        
+            // log in button
+            loginButton.heightAnchor.constraint(equalToConstant: CGFloat.WipeCompletion.buttonHeight),
+
+            loginButton.bottomAnchor.constraint(equalTo: wireLogoInfoView.contentView.bottomAnchor, constant: -24),
+            loginButton.leadingAnchor.constraint(equalTo: wireLogoInfoView.contentView.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: wireLogoInfoView.contentView.trailingAnchor)
         ])
     }
 
-}
-
-extension UIView {
-    static func createWireLogoInfoView() -> UIView {
-        let contentView = UIView()
-
-        
-
-
-        return contentView
+    @objc
+    func onLoginCodeButtonPressed(sender: AnyObject?) {
+        //TODO: go to login screen
     }
-}
 
-final class WipeCompletionViewController: UIViewController {
 }

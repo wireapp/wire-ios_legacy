@@ -1818,3 +1818,9 @@
 "wipe_database.alert.placeholder" = "Write 'Delete'";
 "wipe_database.alert.confirm" = "Delete";
 "wipe_database.alert.confirm_input" = "Delete";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
