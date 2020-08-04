@@ -767,8 +767,8 @@
 		A96A21F123D5B865005B5579 /* ConversationInputBarViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */; };
 		A96A21F323D5BC25005B5579 /* UIResponder+FirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */; };
 		A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */; };
-		A96E802C24CADA5F0010CD80 /* UnlockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */; };
-		A96E802E24CADB8F0010CD80 /* UnlockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */; };
+		A96E802824C828070010CD80 /* WipeDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */; };
+		A96E802A24C846E40010CD80 /* WipeDatabaseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */; };
 		A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */; };
 		A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D22410016B00BE6EF7 /* SpinnerButton.swift */; };
 		A97017D6241004A600BE6EF7 /* SpinnerButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */; };
@@ -794,6 +794,9 @@
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
 		A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */; };
 		A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */; };
+		A9A3B1E924D823CC001AF38E /* UnlockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1E624D823CB001AF38E /* UnlockInteractor.swift */; };
+		A9A3B1EA24D823CC001AF38E /* UnlockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1E724D823CB001AF38E /* UnlockPresenter.swift */; };
+		A9A3B1EB24D823CC001AF38E /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1E824D823CB001AF38E /* UnlockViewController.swift */; };
 		A9A6506224D1857D00B6A68D /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506124D1857C00B6A68D /* TransparentNavigationBar.swift */; };
 		A9A6506424D1C2C800B6A68D /* PasscodeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506324D1C2C800B6A68D /* PasscodeError.swift */; };
 		A9A6506624D1C32300B6A68D /* PasscodeValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */; };
@@ -818,7 +821,6 @@
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
 		A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */; };
 		A9DA5084240FFD0900C2F886 /* ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5083240FFD0900C2F886 /* ButtonTests.swift */; };
-		A9E5725424C5F28D00CBE0D7 /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5725324C5F28D00CBE0D7 /* UnlockViewController.swift */; };
 		A9E5725924C6413700CBE0D7 /* UnlockViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */; };
 		A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722223C1581A00DA8240 /* ContactsViewController.swift */; };
 		A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722423C3A47B00DA8240 /* AppDelegate.swift */; };
@@ -2379,8 +2381,8 @@
 		A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Files.swift"; sourceTree = "<group>"; };
 		A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+FirstResponder.swift"; sourceTree = "<group>"; };
 		A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
-		A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockInteractor.swift; sourceTree = "<group>"; };
-		A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPresenter.swift; sourceTree = "<group>"; };
+		A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeDatabaseViewController.swift; sourceTree = "<group>"; };
+		A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeDatabaseViewControllerTests.swift; sourceTree = "<group>"; };
 		A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewController.swift; sourceTree = "<group>"; };
 		A97017D22410016B00BE6EF7 /* SpinnerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButton.swift; sourceTree = "<group>"; };
 		A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButtonTests.swift; sourceTree = "<group>"; };
@@ -2405,6 +2407,9 @@
 		A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedListMenuViewTests.swift; sourceTree = "<group>"; };
 		A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtendedBlockAnimations.swift"; sourceTree = "<group>"; };
 		A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeCompletionViewController.swift; sourceTree = "<group>"; };
+		A9A3B1E624D823CB001AF38E /* UnlockInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockInteractor.swift; sourceTree = "<group>"; };
+		A9A3B1E724D823CB001AF38E /* UnlockPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPresenter.swift; sourceTree = "<group>"; };
+		A9A3B1E824D823CB001AF38E /* UnlockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockViewController.swift; sourceTree = "<group>"; };
 		A9A6506124D1857C00B6A68D /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		A9A6506324D1C2C800B6A68D /* PasscodeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeError.swift; sourceTree = "<group>"; };
 		A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeValidationResult.swift; sourceTree = "<group>"; };
@@ -2429,7 +2434,6 @@
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerViewModel.swift; sourceTree = "<group>"; };
 		A9DA5083240FFD0900C2F886 /* ButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTests.swift; sourceTree = "<group>"; };
-		A9E5725324C5F28D00CBE0D7 /* UnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewController.swift; sourceTree = "<group>"; };
 		A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewControllerTests.swift; sourceTree = "<group>"; };
 		A9EB722223C1581A00DA8240 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		A9EB722423C3A47B00DA8240 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -5570,9 +5574,9 @@
 		A96E803024CB2A850010CD80 /* Unlock */ = {
 			isa = PBXGroup;
 			children = (
-				A9E5725324C5F28D00CBE0D7 /* UnlockViewController.swift */,
-				A96E802D24CADB8F0010CD80 /* UnlockPresenter.swift */,
-				A96E802B24CADA5F0010CD80 /* UnlockInteractor.swift */,
+				A9A3B1E624D823CB001AF38E /* UnlockInteractor.swift */,
+				A9A3B1E724D823CB001AF38E /* UnlockPresenter.swift */,
+				A9A3B1E824D823CB001AF38E /* UnlockViewController.swift */,
 			);
 			path = Unlock;
 			sourceTree = "<group>";
@@ -5613,6 +5617,7 @@
 			isa = PBXGroup;
 			children = (
 				A9A3B1F124D99FDF001AF38E /* WipeCompletion */,
+				A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */,
 				A96E803024CB2A850010CD80 /* Unlock */,
 				A96E802F24CB2A760010CD80 /* Setup */,
 				A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */,
@@ -5634,6 +5639,7 @@
 			isa = PBXGroup;
 			children = (
 				A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */,
+				A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */,
 				A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */,
 			);
 			path = CustomAppLock;
@@ -7208,7 +7214,6 @@
 				D518947B20504C6A00C095C1 /* LoadingIndicatorCell.swift in Sources */,
 				EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */,
 				167961A9203F26E600B72ACC /* SectionHeader.swift in Sources */,
-				A9E5725424C5F28D00CBE0D7 /* UnlockViewController.swift in Sources */,
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
 				F15650E321DD11D700210504 /* CABasicAnimation+Rotation.swift in Sources */,
@@ -7466,7 +7471,6 @@
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */,
 				63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */,
-				A96E802C24CADA5F0010CD80 /* UnlockInteractor.swift in Sources */,
 				D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */,
 				5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */,
 				5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */,
@@ -7647,6 +7651,7 @@
 				F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */,
 				5E9E8A9F21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift in Sources */,
 				550C63B422C36985005CE9FC /* FormattedText.swift in Sources */,
+				A9A3B1E924D823CC001AF38E /* UnlockInteractor.swift in Sources */,
 				16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */,
 				87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */,
 				BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */,
@@ -7876,7 +7881,6 @@
 				5EA73D8820D901000001D106 /* DetailsCollectionViewCell.swift in Sources */,
 				A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */,
 				EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */,
-				A96E802E24CADB8F0010CD80 /* UnlockPresenter.swift in Sources */,
 				5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */,
 				16519D8B232108EF00C9D76D /* ConversationActionController+DeleteGroup.swift in Sources */,
 				871BC2571D34F8F800DF0793 /* NavigationTransition.swift in Sources */,
@@ -7935,6 +7939,7 @@
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */,
 				EFA145F6231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift in Sources */,
+				A9A3B1EA24D823CC001AF38E /* UnlockPresenter.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */,
 				A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */,
@@ -7944,6 +7949,7 @@
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				BF1743742123060E008851CA /* AdditionalMenuItem.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */,
+				A96E802824C828070010CD80 /* WipeDatabaseViewController.swift in Sources */,
 				6328284124A110DC000748D2 /* VideoIconStyle.swift in Sources */,
 				EF1FDC7C21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
@@ -7981,6 +7987,7 @@
 				5E8FFC2B21F08D5B0052DF03 /* PhoneNumberInputCell.swift in Sources */,
 				A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */,
 				A9806A3B23E2024E00691DFE /* AudioTrackPlayer.swift in Sources */,
+				A9A3B1EB24D823CC001AF38E /* UnlockViewController.swift in Sources */,
 				5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */,
 				5E35F786218340EB00D3F4FE /* ConversationLocationMessageCell.swift in Sources */,
 				87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */,
@@ -8303,6 +8310,7 @@
 				EF18140A21B17FB3008F7DA8 /* GroupDetailsReceiptOptionsCellTests.swift in Sources */,
 				EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */,
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
+				A96E802A24C846E40010CD80 /* WipeDatabaseViewControllerTests.swift in Sources */,
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
 				EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */,
 				5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */,
