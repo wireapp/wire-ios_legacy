@@ -1780,24 +1780,25 @@
 
 // Custom app lock
 
+"passcode.hint_label" = "Passcode";
+
 // Custom app lock - create passcode
-"create_passcode.textfield.placeholder" = "Create memorable passcode";
-"create_passcode.title_label" = "Create a Passcode";
-"create_passcode.info_label" = "It will unlock your app to use Wire. Make it memorable, If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it cannot be recovered.";
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation
-"create_passcode.validation.too_short" = "8 Characters long";
-"create_passcode.validation.no_lowercase_char" = "1 Lowercase letter";
-"create_passcode.validation.no_uppercase_char" = "1 Capital letter";
-"create_passcode.validation.no_special_char" = "1 Special character";
-"create_passcode.validation.no_number" = "1 Number";
+"create_passcode.validation.too_short" = "At least 8 characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_special_char" = "A special character";
+"create_passcode.validation.no_number" = "A digit";
 
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter Passcode to unlock Wire";
-"unlock.hint_label" = "Passcode";
 "unlock.link_label" = "Access as new device";
 "unlock.error_label" = "Incorrect passcode";
 "unlock.submit_button.title" = "unlock";

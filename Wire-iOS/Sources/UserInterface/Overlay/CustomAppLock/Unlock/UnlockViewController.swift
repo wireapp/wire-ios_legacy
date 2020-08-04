@@ -84,23 +84,6 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private let hintLabel: UILabel = {
-        let label = UILabel()
-
-        label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
-        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-
-        let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
-
-        let style = NSMutableParagraphStyle()
-        style.firstLineHeadIndent = leadingMargin
-        style.headIndent = leadingMargin
-
-        label.attributedText = NSAttributedString(string: "unlock.hint_label".localized,
-                                                  attributes: [NSAttributedString.Key.paragraphStyle: style])
-        return label
-    }()
-
     private let wipeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = FontSpec(.medium, .medium).font!
@@ -126,7 +109,7 @@ final class UnlockViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         hintLabel,
+         UILabel.createHintLabel(variant: .dark),
          accessoryTextField,
          errorLabel,
          SpacingView(5),
