@@ -21,6 +21,7 @@ import MobileCoreServices
 import Down
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
@@ -59,6 +60,24 @@ final class MarkdownTextView: NextResponderTextView {
         setText(draft.text, withMentions: draft.mentions)
     }
 
+    override func canPerformAction(_ action: Selector,
+                                   withSender sender: Any?) -> Bool {
+        
+        guard let sessionManager = SessionManager.shared else {
+            return super.canPerformAction(action, withSender: sender)
+        }
+        switch action {
+        case #selector(UIResponderStandardEditActions.paste(_:)) where !sessionManager.isCopyAndPasteEnable,
+             #selector(UIResponderStandardEditActions.cut(_:)) where !sessionManager.isCopyAndPasteEnable,
+             #selector(UIResponderStandardEditActions.copy(_:)) where !sessionManager.isCopyAndPasteEnable:
+             return false
+        default:
+            //return true : this is not correct
+            return super.canPerformAction(action, withSender: sender)
+        }
+    }
+    
+    
     func setText(_ newText: String, withMentions mentions: [Mention]) {
         let mutable = NSMutableAttributedString(string: newText, attributes: currentAttributes)
 

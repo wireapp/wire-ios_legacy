@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 import WireDataModel
 
 extension ZMConversationMessage {
@@ -35,7 +36,13 @@ extension ZMConversationMessage {
     
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        return !isEphemeral && (isText || isImage || isLocation)
+        guard let sessionManager = SessionManager.shared else {
+            return false
+        }
+        
+        return sessionManager.isCopyAndPasteEnable
+            && !isEphemeral
+            && (isText || isImage || isLocation)
     }
     
     /// Whether the message can be edited.
