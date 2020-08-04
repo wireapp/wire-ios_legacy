@@ -1784,7 +1784,7 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a Passcode";
+"create_passcode.title_label" = "Create a passcode";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
 "create_passcode.info_label.highlighted" = "it can not be recovered.";
 "create_passcode.create_button.title" = "create passcode";
