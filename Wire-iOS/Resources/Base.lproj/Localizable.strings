@@ -1792,7 +1792,7 @@
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least 8 characters long";
 "create_passcode.validation.no_lowercase_char" = "A lowercase letter";
-"create_passcode.validation.no_uppercase_char" = "A uppercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
 "create_passcode.validation.no_special_char" = "A special character";
 "create_passcode.validation.no_number" = "A digit";
 
