@@ -97,9 +97,6 @@ extension SettingsColorScheme: CaseIterable {
 }
 
 extension Settings {
-    var defaults: UserDefaults {
-        return .standard
-    }
 
     var colorSchemeVariant: ColorSchemeVariant {
         guard let string: String = self[.colorScheme] else {

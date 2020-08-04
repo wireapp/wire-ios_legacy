@@ -50,6 +50,10 @@ final class CallViewController: UIViewController {
     fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
+    
+    private static var userEnabledCBR: Bool {
+        return Settings.shared[.callingConstantBitRate] == true
+    }
 
     init(voiceChannel: VoiceChannel,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
@@ -60,7 +64,7 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -214,7 +218,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         videoGridViewController.configuration = videoConfiguration
