@@ -250,12 +250,7 @@ final class ColorScheme: NSObject {
     static let `default`: ColorScheme = ColorScheme()
 
     func color(named: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
-        let colorSchemeVariant: ColorSchemeVariant
-        if let variant = variant {
-            colorSchemeVariant = variant
-        } else {
-            colorSchemeVariant = self.variant
-        }
+let colorSchemeVariant = variant ?? self.variant
         
         let colorPair = named.colorPair(accentColor: accentColor)
         switch colorSchemeVariant {
