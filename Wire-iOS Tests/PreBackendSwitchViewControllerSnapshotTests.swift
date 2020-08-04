@@ -22,12 +22,12 @@ import XCTest
 
 final class PreBackendSwitchViewControllerSnapshotTests: XCTestCase {
     var sut: PreBackendSwitchViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = PreBackendSwitchViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

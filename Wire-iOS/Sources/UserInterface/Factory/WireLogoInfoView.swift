@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,13 +20,13 @@ import UIKit
 
 final class WireLogoInfoView: UIView {
     let contentView = UIView()
-    
+
     let headerView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
     }()
-    
+
     let progressContainerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 40
@@ -39,13 +38,13 @@ final class WireLogoInfoView: UIView {
         view.accessibilityIdentifier = "ProgressView"
         return view
     }()
-    
+
     let wireLogo: UIImageView = {
         let logo = UIImageView(image: UIImage(named: "wire-logo-letter"))
         logo.accessibilityIdentifier = "ProgressView.Logo"
         return logo
     }()
-    
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = FontSpec(.large, .semibold).font!
@@ -54,7 +53,7 @@ final class WireLogoInfoView: UIView {
         label.textColor = .black
         return label
     }()
-    
+
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = FontSpec(.normal, .regular).font!
@@ -64,34 +63,34 @@ final class WireLogoInfoView: UIView {
         label.textColor = .black
         return label
     }()
-    
+
     init(title: String, subtitle: String) {
         super.init(frame: .zero)
-        
+
         titleLabel.text = title
         subtitleLabel.text = subtitle
 
         configureSubviews()
         createConstraints()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureSubviews() {
         addSubview(headerView)
-        
+
         contentView.addSubview(progressContainerView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
-        
+
         progressContainerView.addSubview(wireLogo)
-        
+
         addSubview(contentView)
     }
-    
+
     private func createConstraints() {
         [headerView,
          contentView,
@@ -99,7 +98,7 @@ final class WireLogoInfoView: UIView {
          wireLogo,
          titleLabel,
          subtitleLabel].disableAutoresizingMaskTranslation()
-        
+
         NSLayoutConstraint.activate([
             // header view
             headerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3, constant: 0),
@@ -107,31 +106,31 @@ final class WireLogoInfoView: UIView {
             headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             headerView.topAnchor.constraint(equalTo: topAnchor),
             headerView.bottomAnchor.constraint(equalTo: contentView.topAnchor),
-            
+
             // content view
             contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+
             // progress container view
             progressContainerView.centerYAnchor.constraint(equalTo: contentView.topAnchor),
             progressContainerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             progressContainerView.widthAnchor.constraint(equalToConstant: 80),
             progressContainerView.heightAnchor.constraint(equalToConstant: 80),
-            
+
             // wire logo
             wireLogo.centerYAnchor.constraint(equalTo: progressContainerView.centerYAnchor),
             wireLogo.centerXAnchor.constraint(equalTo: progressContainerView.centerXAnchor),
-            
+
             // title label
             titleLabel.topAnchor.constraint(equalTo: progressContainerView.bottomAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            
+
             // subtitle label
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 14),
             subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
     }
-    
+
 }

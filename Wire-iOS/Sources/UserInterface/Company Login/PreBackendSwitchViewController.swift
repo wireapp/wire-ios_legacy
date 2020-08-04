@@ -25,7 +25,7 @@ protocol PreBackendSwitchViewControllerDelegate {
 }
 
 final class PreBackendSwitchViewController: AuthenticationStepViewController {
-    
+
     var authenticationCoordinator: AuthenticationCoordinator?
     var backendURL: URL?
 
@@ -34,10 +34,10 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     }
 
     // MARK: - UI Styles
-    
+
     static let informationBlue = UIColor(red: 35/255, green: 145/255, blue: 211/255, alpha: 1)
     static let informationBackgroundBlue = UIColor(red: 220/255, green: 237/255, blue: 248/255, alpha: 1)
-    
+
     // MARK: - UI Elements
     let wireLogoInfoView = WireLogoInfoView(title: "login.sso.backend_switch.title".localized, subtitle: "login.sso.backend_switch.subtitle".localized)
 
@@ -50,7 +50,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
         progress.accessibilityIdentifier = "ProgressView.Timer"
         return progress
     }()
-        
+
     let informationLabel: UILabel = {
         let label = UILabel()
         label.font = FontSpec(.normal, .semibold).font!
@@ -61,17 +61,17 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
         label.accessibilityValue = label.text
         return label
     }()
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.Team.background
         navigationController?.navigationBar.barStyle = .black
-        
+
         configureSubviews()
         createConstraints()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         progressView.animate { [backendURL, delegate] in
@@ -81,32 +81,32 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
             delegate?.preBackendSwitchViewControllerDidComplete(url)
         }
     }
-    
+
     private func configureSubviews() {
         view.addSubview(wireLogoInfoView)
 
         wireLogoInfoView.contentView.addSubview(informationLabel)
-        
+
         wireLogoInfoView.progressContainerView.addSubview(progressView)
     }
-    
+
     private func createConstraints() {
         [wireLogoInfoView,
          progressView,
          informationLabel].disableAutoresizingMaskTranslation()
-        
+
         NSLayoutConstraint.activate([
             wireLogoInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wireLogoInfoView.topAnchor.constraint(equalTo: view.topAnchor),
             wireLogoInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             wireLogoInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
+
             // progress view
             progressView.centerXAnchor.constraint(equalTo: wireLogoInfoView.progressContainerView.centerXAnchor),
             progressView.centerYAnchor.constraint(equalTo: wireLogoInfoView.progressContainerView.centerYAnchor),
             progressView.widthAnchor.constraint(equalTo: wireLogoInfoView.progressContainerView.widthAnchor),
             progressView.heightAnchor.constraint(equalTo: wireLogoInfoView.progressContainerView.heightAnchor),
-            
+
             // information label
             informationLabel.topAnchor.constraint(equalTo: wireLogoInfoView.subtitleLabel.bottomAnchor, constant: 10),
             informationLabel.leadingAnchor.constraint(equalTo: wireLogoInfoView.contentView.leadingAnchor),
@@ -116,7 +116,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         // NO OP
     }
-    
+
     func displayError(_ error: Error) {
         // NO OP
     }

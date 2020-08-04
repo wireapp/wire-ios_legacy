@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -24,46 +23,46 @@ final class WipeCompletionViewController: UIViewController {
 
     private lazy var loginButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
-        
+
         button.setBackgroundImageColor(.strongBlue, for: .normal)
-        
+
         button.setTitle("signin.confirm".localized(uppercased: true), for: .normal)
-        
+
         button.addTarget(self, action: #selector(onLoginCodeButtonPressed(sender:)), for: .touchUpInside)
-        
+
         return button
     }()
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        
+
         view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
         createConstraints()
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureSubviews() {
         view.addSubview(wireLogoInfoView)
 
         wireLogoInfoView.contentView.addSubview(loginButton)
     }
-    
+
     private func createConstraints() {
         [wireLogoInfoView,
          loginButton].disableAutoresizingMaskTranslation()
-        
+
         NSLayoutConstraint.activate([
             wireLogoInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wireLogoInfoView.topAnchor.constraint(equalTo: view.topAnchor),
             wireLogoInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             wireLogoInfoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        
+
             // log in button
             loginButton.heightAnchor.constraint(equalToConstant: CGFloat.WipeCompletion.buttonHeight),
 
