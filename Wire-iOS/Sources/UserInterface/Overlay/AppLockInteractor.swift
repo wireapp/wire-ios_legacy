@@ -77,12 +77,10 @@ extension AppLockInteractor: AppLockInteractorInput {
         
         let result: VerifyPasswordResult
         
-        // TODO: use enum raw value after setting PR merged
-        if let data = ZMKeychain.data(forAccount: "appLock" /*SettingsPropertyName.customAppLock.rawValue*/),
+        if let data: Data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode),
             !data.isEmpty {
             result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
         } else {
-            // TODO: if no passcode stored, allow access the app?
             result = .unknown
         }
         
