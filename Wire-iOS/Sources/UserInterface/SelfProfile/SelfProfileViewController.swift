@@ -19,6 +19,7 @@
 import UIKit
 import WireSyncEngine
 import WireCommonComponents
+import WireUtilities
 
 /**
  * The first page of the user settings.
@@ -227,10 +228,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             wrappedViewController.presentationController?.delegate = self
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        } else {            
+            // wipe saved passcode
+            try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
         }
-        
-        //TODO: wipe saved passcode
-        
     }
 
     @objc
