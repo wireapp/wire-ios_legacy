@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-class PreBackendSwitchViewControllerSnapshotTests: XCTestCase {
+final class PreBackendSwitchViewControllerSnapshotTests: XCTestCase {
     var sut: PreBackendSwitchViewController!
     
     override func setUp() {

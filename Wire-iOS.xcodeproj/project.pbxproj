@@ -793,6 +793,7 @@
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
 		A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */; };
+		A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */; };
 		A9A6506224D1857D00B6A68D /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506124D1857C00B6A68D /* TransparentNavigationBar.swift */; };
 		A9A6506424D1C2C800B6A68D /* PasscodeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506324D1C2C800B6A68D /* PasscodeError.swift */; };
 		A9A6506624D1C32300B6A68D /* PasscodeValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */; };
@@ -2403,6 +2404,7 @@
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedListMenuViewTests.swift; sourceTree = "<group>"; };
 		A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtendedBlockAnimations.swift"; sourceTree = "<group>"; };
+		A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeCompletionViewController.swift; sourceTree = "<group>"; };
 		A9A6506124D1857C00B6A68D /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		A9A6506324D1C2C800B6A68D /* PasscodeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeError.swift; sourceTree = "<group>"; };
 		A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeValidationResult.swift; sourceTree = "<group>"; };
@@ -5591,6 +5593,14 @@
 			path = LinkOpeningOption;
 			sourceTree = "<group>";
 		};
+		A9A3B1F124D99FDF001AF38E /* WipeCompletion */ = {
+			isa = PBXGroup;
+			children = (
+				A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */,
+			);
+			path = WipeCompletion;
+			sourceTree = "<group>";
+		};
 		A9AC63DF23FC4A0E00016ABC /* AVAsset */ = {
 			isa = PBXGroup;
 			children = (
@@ -5602,6 +5612,7 @@
 		A9BB638024C1DD910072143A /* CustomAppLock */ = {
 			isa = PBXGroup;
 			children = (
+				A9A3B1F124D99FDF001AF38E /* WipeCompletion */,
 				A96E803024CB2A850010CD80 /* Unlock */,
 				A96E802F24CB2A760010CD80 /* Setup */,
 				A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */,
@@ -7627,6 +7638,7 @@
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
 				5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */,
+				A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */,
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				EF2E2F6F223BB6560038D7D9 /* NotificationWindowRootViewController.swift in Sources */,
