@@ -62,7 +62,8 @@ extension VoiceChannel {
         
         let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
                             participantName: name,
-                            microphoneState: .unmuted)
+                            microphoneState: .unmuted,
+                            videoState: videoState)
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
@@ -111,7 +112,8 @@ extension VoiceChannel {
             case .connected(let videoState, let microphoneState) where videoState != .stopped:
                 let stream = Stream(streamId: participant.streamId,
                                     participantName: participant.user.name,
-                                    microphoneState: microphoneState)
+                                    microphoneState: microphoneState,
+                                    videoState: videoState)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil

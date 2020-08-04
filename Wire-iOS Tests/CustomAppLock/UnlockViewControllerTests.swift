@@ -47,7 +47,6 @@ final class UnlockViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //TODO: inject VM 
     func testForErrorState() {
         // GIVEN
         fillPasscode()

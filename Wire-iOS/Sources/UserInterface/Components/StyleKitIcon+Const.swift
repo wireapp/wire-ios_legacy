@@ -20,6 +20,7 @@ import WireCommonComponents
 
 extension StyleKitIcon {
     enum AppLock {
-        static let reveal: StyleKitIcon = .cross
+        static let reveal: StyleKitIcon = .eyeSlash
+        static let hide: StyleKitIcon = .eyeWithIris
     }
 }
