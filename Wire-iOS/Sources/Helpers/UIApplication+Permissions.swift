@@ -87,25 +87,32 @@ extension UIApplication {
     }
     
     class func cameraPermissionAlert(with completion: @escaping () -> ()) -> UIAlertController {
-        let noVideoAlert = UIAlertController.alertWithOKButton(
+        let alert = UIAlertController(
             title: "voice.alert.camera_warning.title".localized,
             message: "NSCameraUsageDescription".infoPlistLocalized,
-            okActionHandler: { action in
+            preferredStyle: .alert
+        )
+        
+        let actionLater = UIAlertAction(
+            title: "general.later".localized,
+            style: .cancel,
+            handler: { _ in
                 completion()
         })
+        alert.addAction(actionLater)
         
         let actionSettings = UIAlertAction(
             title: "general.open_settings".localized,
             style: .default,
-            handler: { action in
+            handler: { _ in
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url, options: [:])
                 }
                 completion()
         })
+        alert.addAction(actionSettings)
         
-        noVideoAlert.addAction(actionSettings)
-        return noVideoAlert
+        return alert
     }
     
     private class func wr_warnAboutCameraPermission(withCompletion completion: @escaping () -> ()) {

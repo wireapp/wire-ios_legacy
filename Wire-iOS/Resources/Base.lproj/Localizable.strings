@@ -27,6 +27,7 @@
 "general.edit" = "Edit";
 "general.done" = "Done";
 "general.confirm" = "OK";
+"general.later" = "Later";
 "general.skip" = "Not Now";
 "general.accept" = "Accept";
 "general.decline" = "No, thanks";
@@ -363,7 +364,7 @@
 "image.edit_image" = "Edit image";
 
 // Camera access
-"camera_access.denied" = "Wire needs access to the Camera.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
@@ -651,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "You can have only one active call at a time";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wire needs access to the Microphone.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire needs access to the Camera.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Ongoing call";
