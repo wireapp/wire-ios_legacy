@@ -47,7 +47,7 @@ final class WipeDatabaseViewController: UIViewController {
 
     private lazy var confirmButton: Button = {
         let button: Button
-            
+
         switch ColorScheme.default.variant {
         case .light:
             button = Button(style: .full)
@@ -84,7 +84,7 @@ final class WipeDatabaseViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = UIColor.from(scheme: .background)
-        
+
         [stackView,
          confirmButton].forEach {
             view.addSubview($0)
