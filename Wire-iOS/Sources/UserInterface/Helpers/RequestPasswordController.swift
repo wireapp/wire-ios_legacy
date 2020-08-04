@@ -76,10 +76,10 @@ final class RequestPasswordController {
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .default
         case .wiping:
-            title = "self.settings.privacy_security.lock_app.description".localized
+            title = "wipe_database.alert.description".localized
             message = "wipe_database.alert.message".localized
             placeholder = "wipe_database.alert.placeholder".localized
-            okActionStyle = .default
+            okActionStyle = .destructive
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
