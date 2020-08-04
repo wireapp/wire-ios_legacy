@@ -52,12 +52,12 @@ extension UILabel {
         return label
     }
     
-    // MARK: - passcode
+    // MARK: - passcode label factory
     
     static func createHintLabel(variant: ColorSchemeVariant) -> UILabel {
         let label = UILabel()
         
-        label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
+        label.font = UIFont.smallRegularFont.withSize(10)
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         
         let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
