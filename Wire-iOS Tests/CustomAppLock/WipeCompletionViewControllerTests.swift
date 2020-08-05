@@ -1,4 +1,3 @@
-//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,26 +15,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import SnapshotTesting
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class PreBackendSwitchViewControllerSnapshotTests: XCTestCase {
-    var sut: PreBackendSwitchViewController!
+final class WipeCompletionViewControllerTests: XCTestCase {
+    var sut: WipeCompletionViewController!
 
     override func setUp() {
-        super.setUp()
-        sut = PreBackendSwitchViewController()
+        sut = WipeCompletionViewController()
     }
 
     override func tearDown() {
         sut = nil
-        super.tearDown()
     }
 
     func testForInitState() {
-        let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
-        navigationController.viewControllers = [sut]
-        verifyAllIPhoneSizes(matching: navigationController)
+        verify(matching: sut)
     }
 }
