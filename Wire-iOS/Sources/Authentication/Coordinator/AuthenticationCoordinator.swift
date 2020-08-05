@@ -237,7 +237,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func executeActions(_ actions: [AuthenticationCoordinatorAction]) {
         for action in actions {
-            switch action {
+            switch action {///TODO: step?
             case .showLoadingView:
                 presenter?.isLoadingViewVisible = true
 

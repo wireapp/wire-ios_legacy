@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * Handles client registration errors related to the client limit.
@@ -45,6 +46,10 @@ class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
             authenticationCredentials = credentials
         default:
             return nil
+        }
+        
+        if AppLock.rules.useCustomCodeInsteadOfAccountPassword { ///TODO: check saved and useBiometricsOrAccountPassword?
+            return [.hideLoadingView, .transition(.passcodeSetup, mode: .reset)]
         }
 
         guard let nextStep = AuthenticationFlowStep.makeClientManagementStep(from: error, credentials: authenticationCredentials, statusProvider: self.statusProvider) else {

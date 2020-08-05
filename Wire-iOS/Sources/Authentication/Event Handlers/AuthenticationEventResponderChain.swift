@@ -124,6 +124,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
 
         // clientRegistrationErrorHandlers
+        ///TODO one more step?
         registerHandler(AuthenticationClientLimitErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNoCredentialsErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNeedsReauthenticationErrorHandler(), to: &clientRegistrationErrorHandlers)
@@ -231,7 +232,8 @@ class AuthenticationEventResponderChain {
                 handler.statusProvider = nil
             }
 
-            if let responseActions = handler.handleEvent(currentStep: delegate.stateController.currentStep, context: context) {
+            if let responseActions = handler.handleEvent(currentStep: delegate.stateController.currentStep,
+                                                         context: context) {
                 lookupResult = (handler.name, responseActions)
                 break
             }

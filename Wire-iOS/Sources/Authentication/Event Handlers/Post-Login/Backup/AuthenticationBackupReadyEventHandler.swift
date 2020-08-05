@@ -24,7 +24,7 @@ import WireSyncEngine
  * Handles the notification informing the user that backups are ready to be imported.
  */
 
-class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
+final class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
@@ -56,7 +56,7 @@ class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
         let context: NoHistoryContext = existingAccount ? .loggedOut : .newDevice
         let nextStep = AuthenticationFlowStep.noHistory(credentials: authenticationCredentials, context: context)
 
-        return [.hideLoadingView, .transition(nextStep, mode: .reset)]
+        return [.hideLoadingView, .transition(nextStep, mode: .reset)]///TODO
     }
 
 }

@@ -98,6 +98,8 @@ class AuthenticationInterfaceBuilder {
         case .createCredentials(_, let credentialsFlowType):
             return makeCredentialsViewController(for: .registration(credentialsFlowType))
 
+        case .passcodeSetup:
+            return PasscodeSetupViewController(callback: nil, variant: .light)
         case .clientManagement:
             //TODO: insert app lock set up here?
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
