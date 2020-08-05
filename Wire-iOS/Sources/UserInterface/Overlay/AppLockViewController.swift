@@ -94,7 +94,7 @@ final class AppLockViewController: UIViewController {
         if unlockViewController == nil {
             let viewController = UnlockViewController()
             
-            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
+            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self))
             keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
             present(keyboardAvoidingViewController, animated: false)
             
