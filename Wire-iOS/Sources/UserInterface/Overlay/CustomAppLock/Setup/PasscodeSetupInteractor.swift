@@ -22,7 +22,7 @@ import WireTransport
 
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
-    func storePasscode(passcode: String)
+    func storePasscode(passcode: String) throws
 }
 
 protocol PasscodeSetupInteractorOutput: class {
@@ -40,10 +40,10 @@ final class PasscodeSetupInteractor {
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
-    func storePasscode(passcode: String) {
+    func storePasscode(passcode: String) throws {
         guard let data = passcode.data(using: .utf8) else { return }
 
-        try? Keychain.updateItem(PasscodeKeychainItem.passcode, value: data)
+        try Keychain.updateItem(PasscodeKeychainItem.passcode, value: data)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {

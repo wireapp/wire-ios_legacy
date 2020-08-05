@@ -194,9 +194,8 @@ final class PasscodeSetupViewController: UIViewController {
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
         guard let passcode = passcodeTextField.text else { return }
-        presenter.storePasscode(passcode: passcode)
+        presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
-        callback?(true)
     }
 
 }

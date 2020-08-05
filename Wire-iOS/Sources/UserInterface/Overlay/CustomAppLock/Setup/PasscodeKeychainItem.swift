@@ -19,7 +19,7 @@ import Foundation
 import WireUtilities
 
 enum PasscodeKeychainItem: KeychainItem {
-
+    
     case passcode
 
     var uniqueIdentifier: String {
@@ -39,7 +39,7 @@ enum PasscodeKeychainItem: KeychainItem {
         return query
     }
 
-    func queryForSetting<T>(value: T) -> [CFString: Any] {
+    func queryForSetting(value: Data) -> [CFString: Any] {
         let query: [CFString: Any]
 
         switch self {
