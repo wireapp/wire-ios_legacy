@@ -70,16 +70,15 @@ final class PasscodeSetupViewController: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = 20
         paragraphStyle.maximumLineHeight = 20
-        
+
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
-        
+
         let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && UIFont.normalRegularFont
-    
-        
+
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && FontSpec(.normal, .bold).font!
-        
+
         label.text = " "
         label.attributedText = headingText + highlightText
 

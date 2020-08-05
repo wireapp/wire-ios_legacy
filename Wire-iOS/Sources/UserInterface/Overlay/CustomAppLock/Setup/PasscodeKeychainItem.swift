@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -20,36 +19,36 @@ import Foundation
 import WireUtilities
 
 enum PasscodeKeychainItem: KeychainItem {
-    
+
     case passcode
-    
+
     var uniqueIdentifier: String {
         return "com.wire.passcode"
     }
-    
-    var queryForGettingValue: [CFString : Any] {
+
+    var queryForGettingValue: [CFString: Any] {
         let query: [CFString: Any]
-        
+
         switch self {
         case .passcode:
             query = [kSecClass: kSecClassGenericPassword,
                      kSecAttrAccount: uniqueIdentifier,
                      kSecReturnData: true]
         }
-        
+
         return query
     }
-    
+
     func queryForSetting<T>(value: T) -> [CFString: Any] {
         let query: [CFString: Any]
-        
+
         switch self {
         case .passcode:
             query = [kSecClass: kSecClassGenericPassword,
                      kSecAttrAccount: uniqueIdentifier,
                      kSecValueData: value]
         }
-        
+
         return query
     }
 }
