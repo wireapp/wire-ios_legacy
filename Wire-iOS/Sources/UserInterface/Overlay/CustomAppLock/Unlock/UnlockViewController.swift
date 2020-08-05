@@ -23,7 +23,6 @@ protocol UnlockUserInterface: class {
 }
 
 extension UnlockViewController: UnlockUserInterface {
-
 }
 
 /// UnlockViewController
