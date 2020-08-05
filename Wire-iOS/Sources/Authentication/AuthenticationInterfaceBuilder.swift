@@ -99,6 +99,7 @@ class AuthenticationInterfaceBuilder {
             return makeCredentialsViewController(for: .registration(credentialsFlowType))
 
         case .clientManagement:
+            //TODO: insert app lock set up here?
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
             let viewController = makeViewController(for: manageClientsInvitation)
             viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")

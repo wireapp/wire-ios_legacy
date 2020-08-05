@@ -142,7 +142,8 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         }
     }
 
-    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
+    func stateDidChange(_ newState: AuthenticationFlowStep,
+                        mode: AuthenticationStateController.StateChangeMode) {
         guard let presenter = self.presenter, newState.needsInterface else {
             return
         }
