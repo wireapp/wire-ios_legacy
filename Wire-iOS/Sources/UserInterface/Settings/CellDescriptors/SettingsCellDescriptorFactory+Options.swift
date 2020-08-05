@@ -360,10 +360,13 @@ extension SettingsCellDescriptorFactory {
             }
         }()
         
-        let combinedString: String = lockDescription + " " + typeKey.localized
-
-        return AppLock.rules.useCustomCodeInsteadOfAccountPassword ?
-                combinedString + " " + "self.settings.privacy_security.lock_app.subtitle.custome_app_lock_reminder".localized :
-                combinedString
+        var components = [lockDescription, typeKey.localized]
+        
+        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+            let reminderKey = "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder"
+            components.append(reminderKey.localized)
+        }
+        
+        return components.joined(separator: " ")
     }
 }
