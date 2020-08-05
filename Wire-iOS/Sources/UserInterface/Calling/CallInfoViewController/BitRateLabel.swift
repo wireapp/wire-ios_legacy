@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -15,19 +16,35 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import UIKit
 
-extension UIColor {
-    enum PasscodeUnlock {
-        static let error: UIColor = UIColor(rgb: (236, 121, 121))
+enum BitRateStatus: String {
+    case constant
+    case variable
+    
+    fileprivate var localizedUppercasedText: String {
+        return "call.status.\(rawValue)_bitrate".localized(uppercased: true)
     }
-
-    enum WipeDatabase {
-        static let buttonRed: UIColor = UIColor(rgb: (251, 8, 7))
+    
+    fileprivate var accessibilityValue: String {
+        return rawValue
     }
+    
+    init(_ isConstantBitRate: Bool) {
+        self = isConstantBitRate ? .constant : .variable
+    }
+}
 
-    enum CreatePasscode {
-        static let errorGrey: UIColor = UIColor(rgb: (150, 153, 156))
-        static let passGreen: UIColor = UIColor(rgb: (2, 193, 1))
+class BitRateLabel: UILabel {
+    var bitRateStatus: BitRateStatus? {
+        didSet {
+            updateLabel()
+        }
+    }
+    
+    private func updateLabel() {
+        text = bitRateStatus?.localizedUppercasedText
+        accessibilityValue = bitRateStatus?.accessibilityValue
     }
 }

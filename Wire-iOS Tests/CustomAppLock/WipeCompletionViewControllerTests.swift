@@ -15,19 +15,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import XCTest
+import SnapshotTesting
+@testable import Wire
 
-extension UIColor {
-    enum PasscodeUnlock {
-        static let error: UIColor = UIColor(rgb: (236, 121, 121))
+final class WipeCompletionViewControllerTests: XCTestCase {
+    var sut: WipeCompletionViewController!
+
+    override func setUp() {
+        sut = WipeCompletionViewController()
     }
 
-    enum WipeDatabase {
-        static let buttonRed: UIColor = UIColor(rgb: (251, 8, 7))
+    override func tearDown() {
+        sut = nil
     }
 
-    enum CreatePasscode {
-        static let errorGrey: UIColor = UIColor(rgb: (150, 153, 156))
-        static let passGreen: UIColor = UIColor(rgb: (2, 193, 1))
+    func testForInitState() {
+        verify(matching: sut)
     }
 }

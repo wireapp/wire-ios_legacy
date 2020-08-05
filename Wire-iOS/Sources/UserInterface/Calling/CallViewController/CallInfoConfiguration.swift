@@ -149,6 +149,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let cameraType: CaptureDevice
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
+    let userEnabledCBR: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -157,11 +158,13 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
+        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
+        userEnabledCBR: Bool
         ) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager
+        self.userEnabledCBR = userEnabledCBR
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType()

@@ -24,8 +24,7 @@ extension UILabel {
         size: FontSize = .normal,
         weight: FontWeight = .regular,
         color: ColorSchemeColor,
-        variant: ColorSchemeVariant = ColorScheme.default.variant
-        ) {
+        variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init(frame: .zero)
         text = key.map { $0.localized }
         font = FontSpec(size, weight).font
@@ -45,10 +44,28 @@ extension UILabel {
                             weight: .semibold,
                             color: .textForeground,
                             variant: variant ?? ColorScheme.default.variant)
-
         label.textAlignment = .center
         label.configMultipleLineLabel()
 
+        return label
+    }
+    
+    // MARK: - passcode label factory
+    
+    static func createHintLabel(variant: ColorSchemeVariant) -> UILabel {
+        let label = UILabel()
+        
+        label.font = UIFont.smallRegularFont.withSize(10)
+        label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        
+        let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
+        
+        let style = NSMutableParagraphStyle()
+        style.firstLineHeadIndent = leadingMargin
+        style.headIndent = leadingMargin
+        
+        label.attributedText = NSAttributedString(string: "passcode.hint_label".localized,
+                                                  attributes: [NSAttributedString.Key.paragraphStyle: style])
         return label
     }
 }

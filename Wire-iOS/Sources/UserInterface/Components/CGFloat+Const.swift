@@ -34,9 +34,14 @@ extension StyleKitIcon.Size {
 }
 
 extension CGFloat {
+    enum WipeCompletion {
+        static let buttonHeight: CGFloat = 48
+    }
+
     enum PasscodeUnlock {
         static let textFieldHeight: CGFloat = 40
         static let buttonHeight: CGFloat = 40
+        static let buttonPadding: CGFloat = 24
     }
 
     enum AccessoryTextField {
