@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
+import WireCommonComponents
 import UIKit
 import Photos
 
@@ -48,7 +48,7 @@ extension UIApplication {
         UIApplication.wr_requestVideoAccess({ granted in
             DispatchQueue.main.async(execute: {
                 if !granted {
-                    self.wr_warnAboutCameraPermission(withCompletion: {
+                    self.wr_warnAboutCameraPermission(withCompletion: { _ in
                         grantedHandler(granted)
                     })
                 } else {
@@ -86,40 +86,11 @@ extension UIApplication {
         })
     }
     
-    class func cameraPermissionAlert(with completion: @escaping () -> ()) -> UIAlertController {
-        let alert = UIAlertController(
-            title: "voice.alert.camera_warning.title".localized,
-            message: "NSCameraUsageDescription".infoPlistLocalized,
-            preferredStyle: .alert
-        )
-        
-        let actionLater = UIAlertAction(
-            title: "general.later".localized,
-            style: .cancel,
-            handler: { _ in
-                completion()
-        })
-        alert.addAction(actionLater)
-        
-        let actionSettings = UIAlertAction(
-            title: "general.open_settings".localized,
-            style: .default,
-            handler: { _ in
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url, options: [:])
-                }
-                completion()
-        })
-        alert.addAction(actionSettings)
-        
-        return alert
-    }
-    
-    private class func wr_warnAboutCameraPermission(withCompletion completion: @escaping () -> ()) {
+    private class func wr_warnAboutCameraPermission(withCompletion completion: AlertActionHandler?) {
         let currentResponder = UIResponder.currentFirst
         (currentResponder as? UIView)?.endEditing(true)
         
-        let alert = cameraPermissionAlert(with: completion)
+        let alert = UIAlertController.cameraPermissionAlert(with: completion)
         
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }

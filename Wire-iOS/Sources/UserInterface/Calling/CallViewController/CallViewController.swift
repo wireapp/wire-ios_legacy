@@ -239,7 +239,7 @@ final class CallViewController: UIViewController {
             !callInfoConfiguration.permissions.canAcceptVideoCalls
         else { return }
         
-        present(UIApplication.cameraPermissionAlert(with: {}), animated: true)
+        present(UIAlertController.cameraPermissionAlert(), animated: true)
     }
 
     fileprivate func toggleVideoState() {
