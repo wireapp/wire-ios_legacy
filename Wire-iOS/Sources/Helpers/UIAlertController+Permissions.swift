@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-extension UIAlertController {    
+extension UIAlertController {
     class func cameraPermissionAlert(with completion: AlertActionHandler? = nil) -> UIAlertController {
         return permissionAlert(
             title: "voice.alert.camera_warning.title".localized,
