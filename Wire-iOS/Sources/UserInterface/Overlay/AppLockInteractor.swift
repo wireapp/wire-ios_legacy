@@ -74,8 +74,16 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func verify(customPasscode: String) {
-        // TODO: ALWAYS PASS NOW! check with custom pass code in keychain
-        let result: VerifyPasswordResult = .validated
+        
+        let result: VerifyPasswordResult
+        
+        if let data: Data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode),
+            !data.isEmpty {
+            result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
+        } else {
+            result = .unknown
+        }
+        
         processVerifyResult(result: result)
     }
 
