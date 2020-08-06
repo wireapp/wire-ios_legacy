@@ -256,7 +256,7 @@ fileprivate extension VoiceChannel {
             return true
         }
         
-        guard conversation.localParticipants.count <= ZMConversation.legacyGroupVideoParticipantLimit else {
+        guard !isLegacyGroupVideoParticipantLimitReached else {
             return false
         }
 
@@ -291,5 +291,11 @@ fileprivate extension VoiceChannel {
         default: return false
         }
     }
-    
+}
+
+extension VoiceChannel {
+    var isLegacyGroupVideoParticipantLimitReached: Bool {
+        guard let conversation = conversation else { return false }
+        return conversation.localParticipants.count > ZMConversation.legacyGroupVideoParticipantLimit
+    }
 }
