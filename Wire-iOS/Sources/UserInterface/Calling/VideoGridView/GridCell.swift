@@ -22,6 +22,8 @@ import UIKit
 class GridCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: GridCell.self)
 
+    override var accessibilityIdentifier: String? = GridCell.reuseIdentifier
+
     func add(streamView: UIView) {
         guard !contentView.subviews.contains(streamView) else { return }
         contentView.subviews.forEach { $0.removeFromSuperview() }
