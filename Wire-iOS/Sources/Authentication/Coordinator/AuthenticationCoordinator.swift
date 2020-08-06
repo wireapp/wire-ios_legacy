@@ -30,6 +30,13 @@ import UIKit
  * or delegate call from one of the abstracted components.
  */
 
+//TODO:
+//extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
+//    func PasscodeSetupViewControllerDidComplete(_ url: URL) {
+//        executeActions([.transition(.clientManagement, mode: .replace)])
+//    }
+//}
+
 class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
 
     /// The handle to the OS log for authentication events.
@@ -80,6 +87,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object to use to start and control the company login flow.
     let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
+
+//    let passcodeSetupController = PasscodeSetupController()
 
     /// The object to use to restore backups.
     let backupRestoreController: BackupRestoreController
@@ -338,6 +347,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 setEmailCredentialsForCurrentUser(newCredentials)
             case .startPasscodeSetup:
                 startPasscodeSetup()
+            case .completePasscodeSetup:
+                break
+                //TODO: do next?
+//                startPasscodeSetup()
             }
         }
     }

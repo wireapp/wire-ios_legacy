@@ -48,9 +48,9 @@ class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
             return nil
         }
         
-        if AppLock.rules.useCustomCodeInsteadOfAccountPassword { ///TODO: check saved and useBiometricsOrAccountPassword?
-            return [.hideLoadingView, .transition(.passcodeSetup, mode: .reset)]
-        }
+//        if AppLock.rules.useCustomCodeInsteadOfAccountPassword { ///TODO: check saved and useBiometricsOrAccountPassword?
+//            return [.hideLoadingView, .transition(.passcodeSetup, mode: .reset)]
+//        }
 
         guard let nextStep = AuthenticationFlowStep.makeClientManagementStep(from: error, credentials: authenticationCredentials, statusProvider: self.statusProvider) else {
             return nil

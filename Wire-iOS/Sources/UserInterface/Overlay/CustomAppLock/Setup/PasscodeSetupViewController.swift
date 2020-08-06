@@ -33,7 +33,14 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     }
 }
 
+protocol PasscodeSetupViewControllerDelegate: class {
+    
+}
+
 final class PasscodeSetupViewController: UIViewController {
+    
+    weak var PasscodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
+
     // MARK: AuthenticationCoordinatedViewController
     weak var authenticationCoordinator: AuthenticationCoordinator?
 

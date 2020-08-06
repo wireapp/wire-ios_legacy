@@ -58,6 +58,7 @@ class AuthenticationEventResponderChain {
     enum EventType {
         case flowStart(NSError?, Int)
         case initialSyncCompleted
+        case passcodeSetupCompleted
         case backupReady(Bool)
         case clientRegistrationError(NSError, UUID)
         case clientRegistrationSuccess
@@ -89,6 +90,7 @@ class AuthenticationEventResponderChain {
 
     var flowStartHandlers: [AnyAuthenticationEventHandler<(NSError?, Int)>] = []
     var initialSyncHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var passcodeSetupHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var backupEventHandlers: [AnyAuthenticationEventHandler<Bool>] = []
     var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
     var clientRegistrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
@@ -123,8 +125,10 @@ class AuthenticationEventResponderChain {
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
 
+        // passcodeSetupHandlers
+        registerHandler(AuthenticationPasscodeSetupEventHandler(), to: &passcodeSetupHandlers)
+
         // clientRegistrationErrorHandlers
-        ///TODO one more step?
         registerHandler(AuthenticationClientLimitErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNoCredentialsErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNeedsReauthenticationErrorHandler(), to: &clientRegistrationErrorHandlers)
@@ -195,6 +199,8 @@ class AuthenticationEventResponderChain {
             handleEvent(with: flowStartHandlers, context: (error, numberOfAccounts))
         case .initialSyncCompleted:
             handleEvent(with: initialSyncHandlers, context: ())
+        case .passcodeSetupCompleted:
+            handleEvent(with: passcodeSetupHandlers, context: ())
         case .backupReady(let existingAccount):
             handleEvent(with: backupEventHandlers, context: existingAccount)
         case .clientRegistrationError(let error, let accountID):

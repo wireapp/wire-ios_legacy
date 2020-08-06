@@ -21,7 +21,7 @@ import WireCommonComponents
 import UIKit
 import WireTransport
 import WireSyncEngine
-
+//TODO: passcode copy this?
 protocol CompanyLoginControllerDelegate: class {
 
     /// The `CompanyLoginController` will never present any alerts on its own and will
