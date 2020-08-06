@@ -40,7 +40,7 @@ extension ZMConversationMessage {
             return false
         }
         
-        return sessionManager.isCopyAndPasteEnable
+        return !sessionManager.isDisabledClipboard
             && !isEphemeral
             && (isText || isImage || isLocation)
     }
@@ -128,7 +128,7 @@ extension ZMConversationMessage {
             return false
         }
         
-        if isEphemeral || !sessionManager.isCopyAndPasteEnable {
+        if isEphemeral || sessionManager.isDisabledClipboard {
             return false
         }
         

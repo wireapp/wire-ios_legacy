@@ -67,9 +67,9 @@ final class MarkdownTextView: NextResponderTextView {
             return super.canPerformAction(action, withSender: sender)
         }
         switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)) where !sessionManager.isCopyAndPasteEnable,
-             #selector(UIResponderStandardEditActions.cut(_:)) where !sessionManager.isCopyAndPasteEnable,
-             #selector(UIResponderStandardEditActions.copy(_:)) where !sessionManager.isCopyAndPasteEnable:
+        case #selector(UIResponderStandardEditActions.paste(_:)) where sessionManager.isDisabledClipboard,
+             #selector(UIResponderStandardEditActions.cut(_:)) where sessionManager.isDisabledClipboard,
+             #selector(UIResponderStandardEditActions.copy(_:)) where sessionManager.isDisabledClipboard:
              return false
         default:
             //return true : this is not correct
