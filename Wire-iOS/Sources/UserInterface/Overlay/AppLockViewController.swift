@@ -46,7 +46,7 @@ final class AppLockViewController: UIViewController {
     }
     
     private weak var unlockViewController: UnlockViewController?
-    private weak var unlockScreenWrapper: KeyboardAvoidingViewController?
+    private weak var unlockScreenWrapper: UIViewController?
 
     static let shared = AppLockViewController()
 
@@ -94,11 +94,12 @@ final class AppLockViewController: UIViewController {
         if unlockViewController == nil {
             let viewController = UnlockViewController()
             
-            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self))
-            keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-            present(keyboardAvoidingViewController, animated: false)
+            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
+            let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: false)
             
-            unlockScreenWrapper = keyboardAvoidingViewController
+            unlockScreenWrapper = navigationController
             unlockViewController = viewController
         }
         

@@ -36,7 +36,15 @@ final class PasscodeSetupPresenter {
     func validate(error: TextFieldValidator.ValidationError?) {
         interactorInput.validate(error: error)
     }
-
+    
+    func storePasscode(passcode: String, callback: ResultHandler?) {
+        do {
+            try interactorInput.storePasscode(passcode: passcode)
+            callback?(true)
+        } catch {
+            callback?(false)
+        }
+    }
 }
 
 // MARK: - InteractorOutput

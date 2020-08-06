@@ -21,6 +21,7 @@ import XCTest
 @testable import WireCommonComponents
 
 private final class AppLockUserInterfaceMock: AppLockUserInterface {
+    
     func dismissUnlockScreen() {
         // no-op
     }
