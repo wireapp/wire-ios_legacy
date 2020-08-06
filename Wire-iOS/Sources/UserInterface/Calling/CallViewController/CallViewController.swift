@@ -238,14 +238,30 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func alertVideoUnavailable() {
-        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.localParticipants.count > 4 {
-            let alert = UIAlertController.alertWithOKButton(title: "call.video.too_many.alert.title".localized,
-                                                            message: "call.video.too_many.alert.message".localized)
-
-            present(alert, animated: true)
+        guard voiceChannel.videoState == .stopped else { return }
+ 
+        if !callInfoConfiguration.permissions.canAcceptVideoCalls {
+            present(UIAlertController.cameraPermissionAlert(), animated: true)
+        } else {
+            presentLegacyAlertIfNeeded()
         }
     }
 
+    private func presentLegacyAlertIfNeeded() {
+        guard
+            !voiceChannel.isConferenceCall,
+            voiceChannel.isLegacyGroupVideoParticipantLimitReached
+        else {
+            return
+        }
+        let alert = UIAlertController.alertWithOKButton(
+            title: "call.video.too_many.alert.title".localized,
+            message: "call.video.too_many.alert.message".localized
+        )
+
+        present(alert, animated: true)
+    }
+    
     fileprivate func toggleVideoState() {
         if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { _ in
