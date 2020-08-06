@@ -121,7 +121,7 @@ indirect enum AuthenticationFlowStep: Equatable {
 
         // Post Sign-In
         case .noHistory: return true
-        case .passcodeSetup: return false
+        case .passcodeSetup: return true
         case .clientManagement: return true
         case .deleteClient: return true
         case .addEmailAndPassword: return true
