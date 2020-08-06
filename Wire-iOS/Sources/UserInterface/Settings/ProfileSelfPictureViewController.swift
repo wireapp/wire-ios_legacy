@@ -90,9 +90,13 @@ final class ProfileSelfPictureViewController: UIViewController {
     }
 
     private func addCameraButton() {
+        guard let sessionManager = SessionManager.shared else {
+            return
+        }
         
+        cameraButton.isHidden = !sessionManager.isCameraRollOnUserProfileEnabled
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
         bottomOverlayView.addSubview(cameraButton)
         
         var bottomOffset: CGFloat = 0.0
