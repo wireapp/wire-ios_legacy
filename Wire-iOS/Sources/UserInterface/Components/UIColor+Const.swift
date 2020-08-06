@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,7 +21,11 @@ extension UIColor {
     enum PasscodeUnlock {
         static let error: UIColor = UIColor(rgb: (236, 121, 121))
     }
-    
+
+    enum WipeDatabase {
+        static let buttonRed: UIColor = UIColor(rgb: (251, 8, 7))
+    }
+
     enum CreatePasscode {
         static let errorGrey: UIColor = UIColor(rgb: (150, 153, 156))
         static let passGreen: UIColor = UIColor(rgb: (2, 193, 1))

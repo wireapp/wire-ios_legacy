@@ -23,7 +23,6 @@ protocol UnlockUserInterface: class {
 }
 
 extension UnlockViewController: UnlockUserInterface {
-
 }
 
 /// UnlockViewController
@@ -45,7 +44,8 @@ final class UnlockViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var unlockButton: Button = {
-        let button = Button(style: .fullMonochrome)
+        let button = Button(style: .fullMonochrome,
+                            titleLabelFont: .smallSemiboldFont)
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
@@ -84,27 +84,9 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private let hintLabel: UILabel = {
-        let label = UILabel()
-
-        label.font = UIFont.smallRegularFont.withSize(10) ///TODO: dynamic?
-        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-
-        let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
-
-        let style = NSMutableParagraphStyle()
-        style.firstLineHeadIndent = leadingMargin
-        style.headIndent = leadingMargin
-
-        label.attributedText = NSAttributedString(string: "unlock.hint_label".localized,
-                                                  attributes: [NSAttributedString.Key.paragraphStyle: style])
-        return label
-    }()
-
     private let wipeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = FontSpec(.medium, .medium).font!
-
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
         button.setTitle("unlock.link_label".localized, for: .normal)
@@ -116,6 +98,8 @@ final class UnlockViewController: UIViewController {
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .black
 
         [shieldView, blurView, contentView].forEach {
             view.addSubview($0)
@@ -126,7 +110,7 @@ final class UnlockViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         hintLabel,
+         UILabel.createHintLabel(variant: .dark),
          accessoryTextField,
          errorLabel,
          SpacingView(5),
@@ -201,8 +185,8 @@ final class UnlockViewController: UIViewController {
     }
 
     @objc
-    private func onWipeButtonPressed(sender: AnyObject?) {
-        //TODO push wipe screen
+    private func onWipeButtonPressed(sender: AnyObject?) {        
+        navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
     }
 
     @objc

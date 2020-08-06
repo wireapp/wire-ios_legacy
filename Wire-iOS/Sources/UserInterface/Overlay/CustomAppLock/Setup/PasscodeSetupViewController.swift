@@ -35,7 +35,7 @@ final class PasscodeSetupViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var createButton: Button = {
-        let button = Button(style: .full)
+        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
 
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
@@ -67,8 +67,17 @@ final class PasscodeSetupViewController: UIViewController {
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
-        let headingText =  NSAttributedString(string: "create_passcode.info_label".localized) && UIFont.normalRegularFont && textColor
-        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = 20
+        paragraphStyle.maximumLineHeight = 20
+
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: textColor]
+
+        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && UIFont.normalRegularFont
+
+        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && FontSpec(.normal, .bold).font!
 
         label.text = " "
         label.attributedText = headingText + highlightText
@@ -107,7 +116,8 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: self.variant)
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground,
+                                                         variant: variant)
 
         view.addSubview(contentView)
 
@@ -116,8 +126,9 @@ final class PasscodeSetupViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         SpacingView(24),
+         SpacingView(10),
          infoLabel,
+         UILabel.createHintLabel(variant: variant),
          passcodeTextField,
          SpacingView(16)].forEach {
             stackView.addArrangedSubview($0)
@@ -183,9 +194,8 @@ final class PasscodeSetupViewController: UIViewController {
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
         guard let passcode = passcodeTextField.text else { return }
-        presenter.storePasscode(passcode: passcode)
+        presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
-        callback?(true)
     }
 
 }
