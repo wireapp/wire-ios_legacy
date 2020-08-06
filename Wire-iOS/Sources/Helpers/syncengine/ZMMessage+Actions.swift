@@ -124,7 +124,11 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral {
+        guard let sessionManager = SessionManager.shared else {
+            return false
+        }
+        
+        if isEphemeral || !sessionManager.isCopyAndPasteEnable {
             return false
         }
         
