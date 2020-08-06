@@ -435,6 +435,7 @@
 		6372AAAA249A4F2600C5F307 /* Int+Even.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372AAA9249A4F2600C5F307 /* Int+Even.swift */; };
 		63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */; };
 		63A5E6F624C87E0000F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */; };
+		63CD966824DC895E003AA6D0 /* AutomationHelper+ConferenceCalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CD966624DC88E9003AA6D0 /* AutomationHelper+ConferenceCalling.swift */; };
 		63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */; };
 		63F65EFB2464444B00534A69 /* TimedCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EF92464426200534A69 /* TimedCircularProgressView.swift */; };
 		63F65EFD2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EFC2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift */; };
@@ -1991,6 +1992,7 @@
 		6372AAA9249A4F2600C5F307 /* Int+Even.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Even.swift"; sourceTree = "<group>"; };
 		63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Advanced.swift"; sourceTree = "<group>"; };
 		63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+SoundAlert.swift"; sourceTree = "<group>"; };
+		63CD966624DC88E9003AA6D0 /* AutomationHelper+ConferenceCalling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+ConferenceCalling.swift"; sourceTree = "<group>"; };
 		63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewController.swift; sourceTree = "<group>"; };
 		63F65EF92464426200534A69 /* TimedCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedCircularProgressView.swift; sourceTree = "<group>"; };
 		63F65EFC2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PreBackendSwitch.swift"; sourceTree = "<group>"; };
@@ -5054,6 +5056,7 @@
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				8F5A3E9919AE2C9E00D0E9DA /* sound */,
 				8FC8512F199245760008B66B /* syncengine */,
+				63CD966624DC88E9003AA6D0 /* AutomationHelper+ConferenceCalling.swift */,
 				160FD05321085F3900C517B5 /* ImageCache.swift */,
 				EE88E00523FAC9EA00D24703 /* SelfUser.swift */,
 				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
@@ -7067,6 +7070,7 @@
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
+				63CD966824DC895E003AA6D0 /* AutomationHelper+ConferenceCalling.swift in Sources */,
 				5E8FFC0E21EE0B180052DF03 /* LayoutDirection.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,

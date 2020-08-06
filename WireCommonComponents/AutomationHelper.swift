@@ -38,15 +38,6 @@ public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
-    /// Whether Conference Calling should be used
-    public var useConferenceCalling: Bool? {
-        let key = "UseConferenceCalling"
-        guard UserDefaults.standard.object(forKey: key) != nil else {
-            return nil
-        }
-        return UserDefaults.standard.bool(forKey: key)
-    }
-    
     /// Whether AppCenter should be used
     public var useAppCenter: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
