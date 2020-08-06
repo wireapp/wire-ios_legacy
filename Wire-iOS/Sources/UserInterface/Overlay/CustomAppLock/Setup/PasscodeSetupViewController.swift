@@ -70,16 +70,15 @@ final class PasscodeSetupViewController: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = 20
         paragraphStyle.maximumLineHeight = 20
-        
+
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
-        
+
         let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && UIFont.normalRegularFont
-    
-        
+
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && FontSpec(.normal, .bold).font!
-        
+
         label.text = " "
         label.attributedText = headingText + highlightText
 
@@ -106,7 +105,8 @@ final class PasscodeSetupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required init(callback: ResultHandler?, variant: ColorSchemeVariant? = nil) {
+    required init(callback: ResultHandler?,
+                  variant: ColorSchemeVariant? = nil) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
 
@@ -193,11 +193,9 @@ final class PasscodeSetupViewController: UIViewController {
 
     @objc
     func onCreateCodeButtonPressed(sender: AnyObject?) {
-        //TODO: save passcode, callback false if failed
-        //if !passed show error msg
-
+        guard let passcode = passcodeTextField.text else { return }
+        presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
-        callback?(true)
     }
 
 }

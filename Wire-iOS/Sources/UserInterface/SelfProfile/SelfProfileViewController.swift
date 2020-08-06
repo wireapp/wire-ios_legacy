@@ -19,6 +19,7 @@
 import UIKit
 import WireSyncEngine
 import WireCommonComponents
+import WireUtilities
 
 /**
  * The first page of the user settings.
@@ -203,7 +204,9 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
-    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping ResultHandler) {
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
+                                newValue: Bool,
+                                callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         if newValue {
             self.callback = callback
@@ -227,10 +230,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             wrappedViewController.presentationController?.delegate = self
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        } else {            
+            // wipe saved passcode
+            try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
         }
-        
-        //TODO: wipe saved passcode
-        
     }
 
     @objc
