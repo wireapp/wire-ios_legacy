@@ -322,7 +322,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
-
             case .startSSOFlow:
                 startAutomaticSSOFlow()
                 
@@ -337,6 +336,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .addEmailAndPassword(let newCredentials):
                 setEmailCredentialsForCurrentUser(newCredentials)
+            case .startPasscodeSetup:
+                startPasscodeSetup()
             }
         }
     }
@@ -513,7 +514,7 @@ extension AuthenticationCoordinator {
             }
         }
     }
-
+    
     /// Sends the registration activation code.
     private func sendActivationCode(_ credentials: UnverifiedCredentials, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.isLoadingViewVisible = true
@@ -528,6 +529,12 @@ extension AuthenticationCoordinator {
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
 
+    // MARK: - passcode
+    
+    private func startPasscodeSetup() {
+        stateController.transition(to: .passcodeSetup)
+    }
+    
     // MARK: - Linear Registration
 
     /// Sets the marketing consent value for the user to be registered.
