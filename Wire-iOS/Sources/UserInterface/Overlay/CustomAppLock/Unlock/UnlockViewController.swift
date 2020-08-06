@@ -23,7 +23,6 @@ protocol UnlockUserInterface: class {
 }
 
 extension UnlockViewController: UnlockUserInterface {
-
 }
 
 /// UnlockViewController
@@ -45,7 +44,8 @@ final class UnlockViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var unlockButton: Button = {
-        let button = Button(style: .fullMonochrome)
+        let button = Button(style: .fullMonochrome,
+                            titleLabelFont: .smallSemiboldFont)
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
@@ -98,6 +98,8 @@ final class UnlockViewController: UIViewController {
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .black
 
         [shieldView, blurView, contentView].forEach {
             view.addSubview($0)
