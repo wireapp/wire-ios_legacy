@@ -96,7 +96,7 @@ extension UIApplication {
     }
     
     private class func wr_warnAboutMicrophonePermission() {
-        let alert = UIAlertController.microphonePermissionAlert()
+        let alert = UIAlertController.microphonePermissionAlert
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
     
@@ -110,7 +110,7 @@ extension UIApplication {
     }
     
     private class func wr_warnAboutPhotoLibaryDenied() {
-        let alert = UIAlertController.photoLibraryPermissionAlert()
+        let alert = UIAlertController.photoLibraryPermissionAlert
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
 }

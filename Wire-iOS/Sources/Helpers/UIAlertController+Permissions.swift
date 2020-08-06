@@ -29,23 +29,21 @@ extension UIAlertController {
         )
     }
 
-    class func microphonePermissionAlert(with completion: AlertActionHandler? = nil) -> UIAlertController {
+    class var microphonePermissionAlert: UIAlertController {
         return permissionAlert(
             title: "voice.alert.microphone_warning.title".localized,
-            message: "NSMicrophoneUsageDescription".infoPlistLocalized,
-            completion: completion
+            message: "NSMicrophoneUsageDescription".infoPlistLocalized
         )
     }
     
-    class func photoLibraryPermissionAlert(with completion: AlertActionHandler? = nil) -> UIAlertController {
+    class var photoLibraryPermissionAlert: UIAlertController {
         return permissionAlert(
             title: "library.alert.permission_warning.title".localized,
-            message: "library.alert.permission_warning.not_allowed.explaination".localized,
-            completion: completion
+            message: "library.alert.permission_warning.not_allowed.explaination".localized
         )
     }
     
-    private class func permissionAlert(title: String, message: String, completion: AlertActionHandler?) -> UIAlertController {
+    private class func permissionAlert(title: String, message: String, completion: AlertActionHandler? = nil) -> UIAlertController {
         
         let alert = UIAlertController(
             title: title,
