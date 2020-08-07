@@ -18,16 +18,37 @@
 
 import UIKit
 
-final class TransparentNavigationBar: DefaultNavigationBar {
+protocol TransparentBackgroundNavigationBar {
+    func configureTransparentBackground()
+}
 
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-
-    override func configureBackground() {
+extension TransparentBackgroundNavigationBar where Self: DefaultNavigationBar {
+    func configureTransparentBackground() {
         isTranslucent = true
         setBackgroundImage(UIImage(), for: .default)
         shadowImage = UIImage()
     }
+}
 
+final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
+
+    override var colorSchemeVariant: ColorSchemeVariant {
+        return ColorScheme.default.variant
+    }
+
+    override func configureBackground() {
+        configureTransparentBackground()
+    }
+}
+
+final class DarkBarItemTransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
+    
+    override var colorSchemeVariant: ColorSchemeVariant {
+        return .light
+    }
+    
+    override func configureBackground() {
+        configureTransparentBackground()
+    }
+    
 }

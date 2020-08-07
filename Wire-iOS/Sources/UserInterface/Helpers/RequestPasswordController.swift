@@ -85,7 +85,14 @@ final class RequestPasswordController {
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = placeholder
-            textField.isSecureTextEntry = true
+            
+            switch context {
+            case .wiping:
+                textField.isSecureTextEntry = false
+            default:
+                textField.isSecureTextEntry = true
+            }
+            
             if #available(iOS 11.0, *) {
                 textField.textContentType = .password
             }
