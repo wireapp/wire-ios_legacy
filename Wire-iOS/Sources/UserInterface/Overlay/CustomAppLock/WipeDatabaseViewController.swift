@@ -79,9 +79,7 @@ final class WipeDatabaseViewController: UIViewController {
         let wipeCompletionViewController = WipeCompletionViewController()
         wipeCompletionViewController.modalPresentationStyle = .fullScreen
         
-        let window = AppDelegate.shared.notificationsWindow
-        
-        window?.isHidden = false
+        AppDelegate.shared.notificationsWindow?.isHidden = false
         present(wipeCompletionViewController, animated: true)
     }
     
