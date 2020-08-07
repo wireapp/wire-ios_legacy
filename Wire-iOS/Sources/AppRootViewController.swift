@@ -173,6 +173,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
+        AutomationHelper.sharedHelper.overrideConferenceCallingSettingIfNeeded()
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
