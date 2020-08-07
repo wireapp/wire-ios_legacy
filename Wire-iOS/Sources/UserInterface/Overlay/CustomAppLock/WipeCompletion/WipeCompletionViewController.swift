@@ -47,6 +47,10 @@ final class WipeCompletionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     private func configureSubviews() {
         view.addSubview(wireLogoInfoView)
 
@@ -73,8 +77,9 @@ final class WipeCompletionViewController: UIViewController {
     }
 
     @objc
-    func onLoginCodeButtonPressed(sender: AnyObject?) {
-        //TODO: go to login screen
+    private func onLoginCodeButtonPressed(sender: AnyObject?) {
+        dismiss(animated: false)
+        AppDelegate.shared.notificationsWindow?.isHidden = true
     }
 
 }

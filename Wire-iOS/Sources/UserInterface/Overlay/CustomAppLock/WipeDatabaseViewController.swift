@@ -16,6 +16,8 @@
 //
 
 import UIKit
+import WireSyncEngine
+import WireUtilities
 
 final class WipeDatabaseViewController: UIViewController {
 
@@ -69,9 +71,38 @@ final class WipeDatabaseViewController: UIViewController {
         presentConfirmAlert()
     }
 
+    private func deleteAccounts() {
+        guard let sessionManager = SessionManager.shared else { return }
+
+        let accounts = sessionManager.accountManager.accounts
+        
+        accounts.forEach() { account in
+            sessionManager.delete(account: account)
+        }
+    }
+    
+    private func displayWipeCompletionScreen() {
+        let wipeCompletionViewController = WipeCompletionViewController()
+        wipeCompletionViewController.modalPresentationStyle = .fullScreen
+        
+        let window = AppDelegate.shared.notificationsWindow
+        
+        window?.isHidden = false
+        present(wipeCompletionViewController, animated: true)
+    }
+    
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
-            //TODO: wipe the DB, go to next screen
+            
+            // show WipeCompletionViewController in main window, notification window with be hidden after state changes to unauth.
+
+            
+            self?.deleteAccounts()
+            Keychain.deletePasscode()
+            ///TODO: reset passcode setting to false?
+            
+            self?.displayWipeCompletionScreen()
+
             }, inputValidation: { confirmText in
                 return confirmText == "wipe_database.alert.confirm_input".localized
         })
