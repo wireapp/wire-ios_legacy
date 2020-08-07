@@ -72,15 +72,9 @@ final class WipeDatabaseViewController: UIViewController {
     }
 
     private func deleteAccounts() {
-        guard let sessionManager = SessionManager.shared else { return }
-
-        let accounts = sessionManager.accountManager.accounts
-        
-        accounts.forEach() { account in
-            sessionManager.delete(account: account)
-        }
+        SessionManager.shared.deleteAllAccounts(reason: .databaseWipped)
     }
-    
+        
     private func displayWipeCompletionScreen() {
         let wipeCompletionViewController = WipeCompletionViewController()
         wipeCompletionViewController.modalPresentationStyle = .fullScreen
@@ -93,9 +87,6 @@ final class WipeDatabaseViewController: UIViewController {
     
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
-            
-            // show WipeCompletionViewController in main window, notification window with be hidden after state changes to unauth.
-
             
             self?.deleteAccounts()
             Keychain.deletePasscode()
