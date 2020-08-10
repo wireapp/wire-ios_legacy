@@ -79,7 +79,7 @@ final class WipeDatabaseViewController: UIViewController {
     }()
 
     @objc
-    func onConfirmButtonPressed(sender: Button?) {
+    private func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
 
