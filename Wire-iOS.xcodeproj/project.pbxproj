@@ -794,7 +794,6 @@
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
 		A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */; };
 		A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */; };
-		A9B53AAC24E15D600066FCC6 /* AppCenterDistributeResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A9B53AAB24E15D600066FCC6 /* AppCenterDistributeResources.bundle */; };
 		A9BA580D2497994D005B806B /* ContextMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */; };
 		A9C3223F23EB200F00E17311 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCell.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
@@ -2395,7 +2394,6 @@
 		A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtendedBlockAnimations.swift"; sourceTree = "<group>"; };
 		A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+conversionTests.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
-		A9B53AAB24E15D600066FCC6 /* AppCenterDistributeResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AppCenterDistributeResources.bundle; path = Carthage/Build/iOS/AppCenterDistribute.framework/AppCenterDistributeResources.bundle; sourceTree = SOURCE_ROOT; };
 		A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDelegate.swift; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
@@ -4991,7 +4989,6 @@
 		8FC85083199245760008B66B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A9B53AAB24E15D600066FCC6 /* AppCenterDistributeResources.bundle */,
 				F1B2422E219B2C9B00F7035C /* Configuration */,
 				8FC8564019924CBA0008B66B /* Localizable.strings */,
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
@@ -6810,7 +6807,6 @@
 				1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */,
 				1658D2021D3E742A00249609 /* hotping_from_them.caf in Resources */,
 				F1FDF2C421ADA3A600E037A1 /* OtherImages.xcassets in Resources */,
-				A9B53AAC24E15D600066FCC6 /* AppCenterDistributeResources.bundle in Resources */,
 				BF732A751D9C14C7003077DB /* emoji_food.plist in Resources */,
 				F1FDF2C621ADA3FA00E037A1 /* Images.xcassets in Resources */,
 				5EDD253A213FFD9700C0E254 /* Licenses.generated.plist in Resources */,
