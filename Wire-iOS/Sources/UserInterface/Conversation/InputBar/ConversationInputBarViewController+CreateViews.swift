@@ -47,6 +47,10 @@ extension ConversationInputBarViewController {
     }
 
     private func setupInputBar() {
+        gifButton.isHidden = !SecurityFlags.gifAction.isEnabled
+        videoButton.isHidden = !SecurityFlags.videoPickerAction.isEnabled
+        uploadFileButton.isHidden = !SecurityFlags.filePickerAction.isEnabled
+        
         audioButton.accessibilityIdentifier = "audioButton"
         videoButton.accessibilityIdentifier = "videoButton"
         photoButton.accessibilityIdentifier = "photoButton"

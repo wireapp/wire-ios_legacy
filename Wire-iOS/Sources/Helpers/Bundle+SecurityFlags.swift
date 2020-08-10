@@ -22,6 +22,9 @@ public enum SecurityFlags {
     case clipboard
     case saveMessage
     case profileCameraRoll
+    case gifAction
+    case videoPickerAction
+    case filePickerAction
     
     public var bundleKey: String {
         switch self {
@@ -31,6 +34,13 @@ public enum SecurityFlags {
             return "SaveMessageEnabled"
         case .profileCameraRoll:
             return "ProfileCameraRollEnabled"
+        case .gifAction:
+            return "FileGifActionEnabled"
+        case .videoPickerAction:
+            return "FileVideoActionEnabled"
+        case .filePickerAction:
+            return "FileFileActionEnabled"
+            
         }
     }
     

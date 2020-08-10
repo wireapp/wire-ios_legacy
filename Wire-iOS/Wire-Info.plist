@@ -190,5 +190,11 @@
 	<string>${SAVE_MESSAGE_ENABLED}</string>
 	<key>ProfileCameraRollEnabled</key>
 	<string>${PROFILE_CAMERA_ROLL_ENABLED}</string>
+	<key>FileGifActionEnabled</key>
+	<string>${FILE_GIF_ACTION_ENABLED}</string>
+	<key>FileVideoActionEnabled</key>
+	<string>${FILE_VIDEO_PICKER_ACTION_ENABLED}</string>
+	<key>FileFileActionEnabled</key>
+	<string>${FILE_FILE_PICKER_ACTION_ENABLED}</string>
 </dict>
 </plist>
