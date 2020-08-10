@@ -120,7 +120,7 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !FeatureFlag.save.isEnabled {
+        if isEphemeral || !FeatureFlag.saveMessage.isEnabled {
             return false
         }
         

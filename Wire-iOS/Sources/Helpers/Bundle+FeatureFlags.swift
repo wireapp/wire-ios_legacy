@@ -20,17 +20,17 @@ import Foundation
 
 public enum FeatureFlag {
   case clipboard
-  case save
+  case saveMessage
   case profileCamera
   
     public var bundleKey: String {
         switch self {
             case .clipboard:
                 return "ClipboardEnabled"
-            case .save:
+            case .saveMessage:
                 return "SaveMessageEnabled"
             case .profileCamera:
-                return "ProfileCemeraRollEnabled"
+                return "ProfileCameraRollEnabled"
         }
     }
     
