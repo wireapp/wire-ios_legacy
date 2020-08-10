@@ -18,33 +18,23 @@
 
 import Foundation
 
-extension Bundle {
-    static var clipboardEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey("ClipboardEnabled") == "1"
-    }
-    
-    static var saveMessageEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey("SaveMessageEnabled") == "1"
-    }
-    
-    static var profileCemeraRollEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey("ProfileCemeraRollEnabled") == "1"
-    }
-}
-
 public enum FeatureFlag {
   case clipboard
   case save
   case profileCamera
   
-  public var isEnabled: Bool {
-    switch self {
-      case .clipboard:
-        return Bundle.clipboardEnabled
-    case .save:
-        return Bundle.saveMessageEnabled
-    case .profileCamera:
-        return Bundle.profileCemeraRollEnabled
+    public var bundleKey: String {
+        switch self {
+            case .clipboard:
+                return "ClipboardEnabled"
+            case .save:
+                return "SaveMessageEnabled"
+            case .profileCamera:
+                return "ProfileCemeraRollEnabled"
+        }
     }
+    
+  public var isEnabled: Bool {
+    return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
   }
 }
