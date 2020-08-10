@@ -19,24 +19,32 @@
 import Foundation
 import UIKit
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        accessibilityIdentifier = GridCell.reuseIdentifier
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+enum BitRateStatus: String {
+    case constant
+    case variable
+    
+    fileprivate var localizedUppercasedText: String {
+        return "call.status.\(rawValue)_bitrate".localized(uppercased: true)
     }
     
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
+    fileprivate var accessibilityValue: String {
+        return rawValue
+    }
+    
+    init(_ isConstantBitRate: Bool) {
+        self = isConstantBitRate ? .constant : .variable
+    }
+}
+
+class BitRateLabel: UILabel {
+    var bitRateStatus: BitRateStatus? {
+        didSet {
+            updateLabel()
+        }
+    }
+    
+    private func updateLabel() {
+        text = bitRateStatus?.localizedUppercasedText
+        accessibilityValue = bitRateStatus?.accessibilityValue
     }
 }

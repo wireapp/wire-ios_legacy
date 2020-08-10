@@ -69,14 +69,10 @@ enum SettingKey: String, CaseIterable {
 }
 
 /// Model object for locally stored (not in SE or AVS) user app settings
-final class Settings {
+class Settings {
     // MARK: - subscript
     subscript<T>(index: SettingKey) -> T? {
         get {
-            if case .conferenceCalling = index, let overrideSetting = AutomationHelper.sharedHelper.useConferenceCalling as? T {
-               return overrideSetting
-            }
-
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {
@@ -135,6 +131,10 @@ final class Settings {
         return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
     }
 
+    var defaults: UserDefaults {
+        return .standard
+    }
+    
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0

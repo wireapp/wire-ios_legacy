@@ -17,26 +17,22 @@
 //
 
 import Foundation
-import UIKit
+import WireCommonComponents
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        accessibilityIdentifier = GridCell.reuseIdentifier
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+extension AutomationHelper {
+    /// Whether Conference Calling should be used
+    var useConferenceCalling: Bool? {
+        let key = "UseConferenceCalling"
+        guard UserDefaults.standard.object(forKey: key) != nil else {
+            return nil
+        }
+        return UserDefaults.standard.bool(forKey: key)
     }
     
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
+    func overrideConferenceCallingSettingIfNeeded() {
+        guard let useConferenceCalling = useConferenceCalling else {
+            return
+        }
+        Settings.shared[.conferenceCalling] = useConferenceCalling
     }
 }

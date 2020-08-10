@@ -81,6 +81,17 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
+    
+    func testOneToOneAudioEstablishedVBR() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedVBR)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
 
     @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
@@ -254,6 +265,18 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
+    func testGroupVideoEstablishedVBR() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedVBR)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
+
+    
     // MARK: - Missing Video Permissions
 
     func testGroupVideoUndeterminedVideoPermissions() {

@@ -40,7 +40,6 @@ public enum SecurityFlags {
             return "FileVideoActionEnabled"
         case .filePickerAction:
             return "FileFileActionEnabled"
-            
         }
     }
     
