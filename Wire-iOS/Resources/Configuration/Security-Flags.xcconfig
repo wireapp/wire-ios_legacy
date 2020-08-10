@@ -16,25 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
 
-public enum FeatureFlag {
-    case clipboard
-    case saveMessage
-    case profileCamera
-    
-    public var bundleKey: String {
-        switch self {
-        case .clipboard:
-            return "ClipboardEnabled"
-        case .saveMessage:
-            return "SaveMessageEnabled"
-        case .profileCamera:
-            return "ProfileCameraRollEnabled"
-        }
-    }
-    
-    public var isEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
-    }
-}
+CLIPBOARD_ENABLED=0
+SAVE_MESSAGE_ENABLED=0
+PROFILE_CAMERA_ROLL_ENABLED=0

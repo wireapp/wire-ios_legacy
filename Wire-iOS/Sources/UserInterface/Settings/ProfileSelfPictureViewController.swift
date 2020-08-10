@@ -91,7 +91,6 @@ final class ProfileSelfPictureViewController: UIViewController {
 
     private func addCameraButton() {
         
-        cameraButton.isHidden = !FeatureFlag.profileCamera.isEnabled
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)
@@ -133,6 +132,7 @@ final class ProfileSelfPictureViewController: UIViewController {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
         
+        libraryButton.isHidden = !SecurityFlags.profileCameraRoll.isEnabled
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
         libraryButton.accessibilityIdentifier = "CameraLibraryButton"

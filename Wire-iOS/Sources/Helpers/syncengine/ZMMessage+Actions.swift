@@ -36,7 +36,7 @@ extension ZMConversationMessage {
     
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        return FeatureFlag.clipboard.isEnabled
+        return SecurityFlags.clipboard.isEnabled
             && !isEphemeral
             && (isText || isImage || isLocation)
     }
@@ -120,7 +120,7 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !FeatureFlag.saveMessage.isEnabled {
+        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
             return false
         }
         

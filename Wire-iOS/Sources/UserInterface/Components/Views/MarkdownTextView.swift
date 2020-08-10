@@ -66,7 +66,7 @@ final class MarkdownTextView: NextResponderTextView {
         case #selector(UIResponderStandardEditActions.paste(_:)),
              #selector(UIResponderStandardEditActions.cut(_:)),
              #selector(UIResponderStandardEditActions.copy(_:)):
-             return FeatureFlag.clipboard.isEnabled
+             return SecurityFlags.clipboard.isEnabled
         default:
             return super.canPerformAction(action, withSender: sender)
         }
