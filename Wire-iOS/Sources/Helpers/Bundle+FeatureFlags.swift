@@ -19,22 +19,22 @@
 import Foundation
 
 public enum FeatureFlag {
-  case clipboard
-  case saveMessage
-  case profileCamera
-  
+    case clipboard
+    case saveMessage
+    case profileCamera
+    
     public var bundleKey: String {
         switch self {
-            case .clipboard:
-                return "ClipboardEnabled"
-            case .saveMessage:
-                return "SaveMessageEnabled"
-            case .profileCamera:
-                return "ProfileCameraRollEnabled"
+        case .clipboard:
+            return "ClipboardEnabled"
+        case .saveMessage:
+            return "SaveMessageEnabled"
+        case .profileCamera:
+            return "ProfileCameraRollEnabled"
         }
     }
     
-  public var isEnabled: Bool {
-    return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
-  }
+    public var isEnabled: Bool {
+        return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
+    }
 }
