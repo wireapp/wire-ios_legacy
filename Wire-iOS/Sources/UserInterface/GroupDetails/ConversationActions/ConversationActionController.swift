@@ -37,7 +37,7 @@ final class ConversationActionController {
     
     init(conversation: ZMConversation,
          target: UIViewController,
-         sourceView: UIView? = nil) {
+         sourceView: UIView?) {
         self.conversation = conversation
         self.target = target
         self.sourceView = sourceView
