@@ -85,6 +85,7 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
+        button.isEnabled = !session.encryptMessagesAtRest
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()

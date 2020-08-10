@@ -281,6 +281,7 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     let objectIdentifier: String = UUID().uuidString
     var linkAttachments: [LinkAttachment]?
     var needsLinkAttachmentsUpdate: Bool = false
+    var isSilenced: Bool = false
 
     var isSent: Bool {
         switch deliveryState {
