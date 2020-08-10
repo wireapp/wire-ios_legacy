@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 import WireDataModel
 
 extension ZMConversationMessage {
@@ -35,7 +36,9 @@ extension ZMConversationMessage {
     
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        return !isEphemeral && (isText || isImage || isLocation)
+        return SecurityFlags.clipboard.isEnabled
+            && !isEphemeral
+            && (isText || isImage || isLocation)
     }
     
     /// Whether the message can be edited.
@@ -117,7 +120,7 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral {
+        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
             return false
         }
         

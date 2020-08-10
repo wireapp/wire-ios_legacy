@@ -184,5 +184,11 @@
 	<string>${WIRE_BUNDLE_ID}</string>
 	<key>EnableDeveloperMenu</key>
 	<string>${DEVELOPER_MODE_ENABLED}</string>
+	<key>ClipboardEnabled</key>
+	<string>${CLIPBOARD_ENABLED}</string>
+	<key>SaveMessageEnabled</key>
+	<string>${SAVE_MESSAGE_ENABLED}</string>
+	<key>ProfileCameraRollEnabled</key>
+	<string>${PROFILE_CAMERA_ROLL_ENABLED}</string>
 </dict>
 </plist>
