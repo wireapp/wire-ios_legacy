@@ -46,7 +46,7 @@ extension AppDelegate {
 
         if appCenterTrackingEnabled {
             MSCrashes.setDelegate(self)
-            MSDistribute.setDelegate(self)
+//            MSDistribute.setDelegate(self)
 
             MSAppCenter.start()
 
