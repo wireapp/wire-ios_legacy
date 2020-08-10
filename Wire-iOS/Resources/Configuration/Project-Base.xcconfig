@@ -19,6 +19,7 @@
 #include "../../../Configuration/Base.xcconfig"
 #include "./Warnings.xcconfig"
 #include "./Version.xcconfig"
+#include "./Feature-Flags.xcconfig"
 
 // Architectures
 //

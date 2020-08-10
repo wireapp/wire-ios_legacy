@@ -91,6 +91,7 @@ final class ProfileSelfPictureViewController: UIViewController {
 
     private func addCameraButton() {
         
+        cameraButton.isHidden = !FeatureFlag.profileCamera.isEnabled
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)

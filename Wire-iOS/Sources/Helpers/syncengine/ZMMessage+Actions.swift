@@ -36,11 +36,7 @@ extension ZMConversationMessage {
     
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        guard let sessionManager = SessionManager.shared else {
-            return false
-        }
-        
-        return !sessionManager.isDisabledClipboard
+        return FeatureFlag.clipboard.isEnabled
             && !isEphemeral
             && (isText || isImage || isLocation)
     }
@@ -124,11 +120,7 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        guard let sessionManager = SessionManager.shared else {
-            return false
-        }
-        
-        if isEphemeral || sessionManager.isDisabledClipboard {
+        if isEphemeral || !FeatureFlag.save.isEnabled {
             return false
         }
         

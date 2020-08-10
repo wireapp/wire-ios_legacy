@@ -62,17 +62,12 @@ final class MarkdownTextView: NextResponderTextView {
 
     override func canPerformAction(_ action: Selector,
                                    withSender sender: Any?) -> Bool {
-        
-        guard let sessionManager = SessionManager.shared else {
-            return super.canPerformAction(action, withSender: sender)
-        }
         switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)) where sessionManager.isDisabledClipboard,
-             #selector(UIResponderStandardEditActions.cut(_:)) where sessionManager.isDisabledClipboard,
-             #selector(UIResponderStandardEditActions.copy(_:)) where sessionManager.isDisabledClipboard:
-             return false
+        case #selector(UIResponderStandardEditActions.paste(_:)),
+             #selector(UIResponderStandardEditActions.cut(_:)),
+             #selector(UIResponderStandardEditActions.copy(_:)):
+             return FeatureFlag.clipboard.isEnabled
         default:
-            //return true : this is not correct
             return super.canPerformAction(action, withSender: sender)
         }
     }
