@@ -277,13 +277,15 @@ final class ConversationListContentController: UICollectionViewController, Popov
         }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
-            return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+            return ConversationPreviewViewController(conversation: conversation, presentingViewController: self, sourceView: collectionView.cellForItem(at: indexPath))
         }
 
         let actionProvider: UIContextMenuActionProvider = { _ in
             let actions = conversation.listActions.map { action in
                 UIAction(title: action.title, image: nil) { _ in
-                    let actionController = ConversationActionController(conversation: conversation, target: self)
+                    let actionController = ConversationActionController(conversation: conversation,
+                                                                        target: self,
+                                                                        sourceView: collectionView.cellForItem(at: indexPath))
 
                     actionController.handleAction(action)
                 }
@@ -452,7 +454,7 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
 
         previewingContext.sourceRect = layoutAttributes.frame
 
-        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self, sourceView: collectionView.cellForItem(at: indexPath))
     }
 }
 

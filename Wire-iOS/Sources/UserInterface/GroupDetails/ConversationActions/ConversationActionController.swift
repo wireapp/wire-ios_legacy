@@ -31,13 +31,16 @@ final class ConversationActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
+    weak var sourceView: UIView?
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
     init(conversation: ZMConversation,
-         target: UIViewController) {
+         target: UIViewController,
+         sourceView: UIView? = nil) {
         self.conversation = conversation
         self.target = target
+        self.sourceView = sourceView
     }
 
     func presentMenu(from sourceView: UIView?, context: Context) {
@@ -154,7 +157,7 @@ final class ConversationActionController {
             prepare(viewController: controller, with: $0)
         }
         
-        controller.configPopover(pointToView: target.view, popoverPresenter: target as? PopoverPresenterViewController)
+        controller.configPopover(pointToView: sourceView ?? target.view, popoverPresenter: target as? PopoverPresenterViewController)
 
         target.present(controller, animated: true)
     }
