@@ -84,7 +84,7 @@ final class WipeDatabaseViewController: UIViewController {
     }
 
     private func deleteAccounts() {
-        SessionManager.shared?.deleteAllAccounts(reason: .databaseWipped)
+        SessionManager.shared?.wipeDatabase()
     }
         
     private func displayWipeCompletionScreen() {
