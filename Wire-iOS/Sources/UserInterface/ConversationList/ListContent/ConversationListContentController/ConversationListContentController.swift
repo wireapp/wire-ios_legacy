@@ -23,7 +23,11 @@ import WireDataModel
 private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
 private let CellReuseIdConversation = "CellId"
 
-final class ConversationListContentController: UICollectionViewController {
+final class ConversationListContentController: UICollectionViewController, PopoverPresenter {
+    // PopoverPresenter
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?
+
     weak var contentDelegate: ConversationListContentDelegate?
     let listViewModel: ConversationListViewModel = ConversationListViewModel()
     private var focusOnNextSelection = false
