@@ -230,9 +230,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             wrappedViewController.presentationController?.delegate = self
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
-        } else {            
-            // wipe saved passcode
-            try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
+        } else {
+            Keychain.deletePasscode()
         }
     }
 

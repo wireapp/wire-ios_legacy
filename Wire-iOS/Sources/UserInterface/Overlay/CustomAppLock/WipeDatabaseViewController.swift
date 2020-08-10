@@ -16,6 +16,8 @@
 //
 
 import UIKit
+import WireSyncEngine
+import WireUtilities
 
 final class WipeDatabaseViewController: UIViewController {
 
@@ -77,13 +79,31 @@ final class WipeDatabaseViewController: UIViewController {
     }()
 
     @objc
-    func onConfirmButtonPressed(sender: Button?) {
+    private func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
 
+    private func deleteAccounts() {
+        SessionManager.shared?.wipeDatabase()
+    }
+        
+    private func displayWipeCompletionScreen() {
+        let wipeCompletionViewController = WipeCompletionViewController()
+        wipeCompletionViewController.modalPresentationStyle = .fullScreen
+        
+        AppDelegate.shared.notificationsWindow?.isHidden = false
+        present(wipeCompletionViewController, animated: true)
+    }
+    
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
-            //TODO: wipe the DB, go to next screen
+            
+            self?.deleteAccounts()
+            Keychain.deletePasscode()
+            ///TODO: reset passcode setting to false?
+            
+            self?.displayWipeCompletionScreen()
+
             }, inputValidation: { confirmText in
                 return confirmText == "wipe_database.alert.confirm_input".localized
         })
