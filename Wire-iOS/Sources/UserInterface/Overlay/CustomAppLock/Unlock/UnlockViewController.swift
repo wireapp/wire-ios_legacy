@@ -86,7 +86,7 @@ final class UnlockViewController: UIViewController {
 
     private let wipeButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = FontSpec(.medium, .medium).font!
+        button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
         button.setTitle("unlock.link_label".localized, for: .normal)

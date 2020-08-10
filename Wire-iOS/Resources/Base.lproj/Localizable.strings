@@ -1817,8 +1817,8 @@
 // Wipe database alert
 
 "wipe_database.alert.description" = "Confirm database deletion";
-"wipe_database.alert.message" = "Write 'Delete' to verify you want to delete all data in this device.";
-"wipe_database.alert.placeholder" = "Write 'Delete'";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
 "wipe_database.alert.confirm" = "Delete";
 "wipe_database.alert.confirm_input" = "Delete";
 
