@@ -32,6 +32,8 @@ public extension MSAppCenter {
     
     static func start() {
         MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
+        
+        MSDistribute.checkForUpdate()
     }
 }
 
