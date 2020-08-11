@@ -84,16 +84,18 @@ extension ConversationInputBarViewController {
         }
         #endif
 
-        let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
-            self.presentImagePicker(with: .photoLibrary,
-                                    mediaTypes: [kUTTypeMovie as String], allowsEditing: true,
-                                    pointToView: self.videoButton.imageView)
-        }
+        if SecurityFlags.videoPickerAction.isEnabled {
+            let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
+                self.presentImagePicker(with: .photoLibrary,
+                                        mediaTypes: [kUTTypeMovie as String], allowsEditing: true,
+                                        pointToView: self.videoButton.imageView)
+            }
 
-        controller.addAction(UIAlertAction(icon: .movie,
-                                           title: "content.file.upload_video".localized,
-                                           tintColor: view.tintColor,
-                                           handler: uploadVideoHandler))
+            controller.addAction(UIAlertAction(icon: .movie,
+                                               title: "content.file.upload_video".localized,
+                                               tintColor: view.tintColor,
+                                               handler: uploadVideoHandler))
+        }
 
         let takeVideoHandler: ((UIAlertAction) -> Void) = { _ in
             self.recordVideo()
@@ -104,28 +106,29 @@ extension ConversationInputBarViewController {
                                            tintColor: view.tintColor,
                                            handler: takeVideoHandler))
 
+        if SecurityFlags.filePickerAction.isEnabled {
+            let browseHandler: ((UIAlertAction) -> Void) = { _ in
+                let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
+                documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
+                if self.isIPadRegular(),
+                    let sourceView = self.parent?.view,
+                    let pointToView = sender?.imageView {
+                    self.configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
+                }
 
-        let browseHandler: ((UIAlertAction) -> Void) = { _ in
-            let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
-            documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
-            if self.isIPadRegular(),
-                let sourceView = self.parent?.view,
-                let pointToView = sender?.imageView {
-                self.configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
+                documentPickerViewController.delegate = self
+
+                if #available(iOS 11.0, *) {
+                    documentPickerViewController.allowsMultipleSelection = true
+                }
+                
+                self.parent?.present(documentPickerViewController, animated: true)
             }
 
-            documentPickerViewController.delegate = self
-
-            if #available(iOS 11.0, *) {
-                documentPickerViewController.allowsMultipleSelection = true
-            }
-            
-            self.parent?.present(documentPickerViewController, animated: true)
+            controller.addAction(UIAlertAction(icon: .ellipsis,
+                                               title: "content.file.browse".localized, tintColor: view.tintColor,
+                                               handler: browseHandler))
         }
-
-        controller.addAction(UIAlertAction(icon: .ellipsis,
-                                           title: "content.file.browse".localized, tintColor: view.tintColor,
-                                           handler: browseHandler))
 
         controller.addAction(.cancel())
 
