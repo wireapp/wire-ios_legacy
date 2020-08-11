@@ -89,7 +89,7 @@ extension ConversationInputBarViewController {
                                     mediaTypes: [kUTTypeMovie as String], allowsEditing: true,
                                     pointToView: self.videoButton.imageView)
         }
-        
+
         controller.addAction(UIAlertAction(icon: .movie,
                                            title: "content.file.upload_video".localized,
                                            tintColor: view.tintColor,
@@ -104,6 +104,7 @@ extension ConversationInputBarViewController {
                                            tintColor: view.tintColor,
                                            handler: takeVideoHandler))
 
+
         let browseHandler: ((UIAlertAction) -> Void) = { _ in
             let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
             documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
@@ -112,16 +113,16 @@ extension ConversationInputBarViewController {
                 let pointToView = sender?.imageView {
                 self.configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
             }
-            
+
             documentPickerViewController.delegate = self
-            
+
             if #available(iOS 11.0, *) {
                 documentPickerViewController.allowsMultipleSelection = true
             }
             
             self.parent?.present(documentPickerViewController, animated: true)
         }
-        
+
         controller.addAction(UIAlertAction(icon: .ellipsis,
                                            title: "content.file.browse".localized, tintColor: view.tintColor,
                                            handler: browseHandler))
