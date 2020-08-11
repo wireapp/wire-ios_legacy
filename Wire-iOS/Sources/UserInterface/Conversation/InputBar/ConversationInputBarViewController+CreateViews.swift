@@ -35,29 +35,18 @@ extension ConversationInputBarViewController {
     }
 
     var inputBarButtons: [IconButton] {
-        return SecurityFlags.gifAction.isEnabled
-            ? [photoButton,
-               mentionButton,
-               sketchButton,
-               gifButton,
-               audioButton,
-               pingButton,
-               uploadFileButton,
-               locationButton,
-               videoButton]
-            : [photoButton,
-               mentionButton,
-               sketchButton,
-               audioButton,
-               pingButton,
-               uploadFileButton,
-               locationButton,
-               videoButton]
+        return [photoButton,
+                mentionButton,
+                sketchButton,
+                SecurityFlags.gifAction.isEnabled ? gifButton : nil,
+                audioButton,
+                pingButton,
+                SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton : nil,
+                locationButton,
+                videoButton].compactMap { $0 }
     }
 
     private func setupInputBar() {
-        gifButton.isHidden = !SecurityFlags.gifAction.isEnabled
-        
         audioButton.accessibilityIdentifier = "audioButton"
         videoButton.accessibilityIdentifier = "videoButton"
         photoButton.accessibilityIdentifier = "photoButton"
