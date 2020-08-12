@@ -58,6 +58,8 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
     
     let assetLibrary: AssetLibrary?
+    let imageManagerType: ImageManagerProtocol.Type
+    
     var collectionView: UICollectionView!
     let goBackButton = IconButton()
     let cameraRollButton = IconButton()
@@ -70,8 +72,10 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
     
     init(splitLayoutObservable: SplitLayoutObservable,
+         imageManagerType: ImageManagerProtocol.Type = PHImageManager.self,
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
+        self.imageManagerType = imageManagerType
         self.assetLibrary = SecurityFlags.keyboardCameraRoll.isEnabled ? AssetLibrary() : nil
         self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
@@ -240,7 +244,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.resizeMode = .exact
             options.isSynchronous = false
             
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+            self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
                     let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
@@ -250,7 +254,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
                     
-                    PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                    self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -271,7 +275,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.isNetworkAccessAllowed = false
             options.isSynchronous = false
             
-            PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
+            self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
                 
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
@@ -279,7 +283,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
                     
-                    PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
+                    self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -410,7 +414,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
             
-            cell.manager = PHImageManager.default()
+            cell.manager = self.imageManagerType.defaultInstance
             
             if let asset = try? assetLibrary?.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
