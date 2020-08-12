@@ -58,8 +58,6 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
     
     let assetLibrary: AssetLibrary
-    let imageManagerType: ImageManagerProtocol.Type
-    
     var collectionView: UICollectionView!
     let goBackButton = IconButton()
     let cameraRollButton = IconButton()
@@ -73,11 +71,9 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
     init(splitLayoutObservable: SplitLayoutObservable,
          assetLibrary: AssetLibrary = AssetLibrary(),
-         imageManagerType: ImageManagerProtocol.Type = PHImageManager.self,
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.assetLibrary = assetLibrary
-        self.imageManagerType = imageManagerType
         self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
@@ -245,7 +241,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.resizeMode = .exact
             options.isSynchronous = false
             
-            imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
                     let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
@@ -255,7 +251,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
                     
-                    self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                    PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: limit, height: limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -276,7 +272,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             options.isNetworkAccessAllowed = false
             options.isSynchronous = false
             
-            imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
+            PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
                 
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
@@ -284,7 +280,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                         self.isLoadingViewVisible = true
                     })
                     
-                    self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
+                    PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { data, uti, _, _ in
                         DispatchQueue.main.async(execute: {
                             self.isLoadingViewVisible = false
                         })
@@ -363,7 +359,9 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
 
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        defer { setupPhotoKeyboardAppearance() }
+        defer {
+            setupPhotoKeyboardAppearance()
+        }
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return 1
         }
@@ -410,7 +408,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
             
-            cell.manager = imageManagerType.defaultInstance
+            cell.manager = PHImageManager.default()
             
             if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset

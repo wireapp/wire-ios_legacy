@@ -33,6 +33,9 @@ final class PhotoPermissionsControllerStrategy: PhotoPermissionsController {
     }
 
     var isPhotoLibraryAuthorized: Bool {
+        guard SecurityFlags.keyboardCameraRoll.isEnabled else {
+            return false
+        }
         switch PHPhotoLibrary.authorizationStatus() {
         case .authorized: return true
         default: return false

@@ -24,6 +24,7 @@ enum SecurityFlags {
     case profileCameraRoll
     case gifAction
     case externalFilePicker
+    case keyboardCameraRoll
     
     var bundleKey: String {
         switch self {
@@ -37,6 +38,8 @@ enum SecurityFlags {
             return "FileGifActionEnabled"
         case .externalFilePicker:
             return "ExternalFilePickerEnabled"
+        case .keyboardCameraRoll:
+            return "KeyboardCameraRollEnabled"
         }
     }
     
