@@ -137,16 +137,12 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
 
     private func setupSut(permissions: PhotoPermissionsController) {
         sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
-                                           assetLibrary: mockAssetLibrary,
-                                           imageManagerType: MockImageManager.self,
                                            permissions: permissions)
     }
 
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
         sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: splitView,
-                                                      assetLibrary: mockAssetLibrary,
-                                                      imageManagerType: MockImageManager.self,
                                                       permissions: permissions)
 
         verify(matching: prepareForSnapshot())

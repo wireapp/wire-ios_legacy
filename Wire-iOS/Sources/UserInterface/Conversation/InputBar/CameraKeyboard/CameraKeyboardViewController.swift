@@ -57,7 +57,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         case camera = 0, photos = 1
     }
     
-    let assetLibrary: AssetLibrary
+    let assetLibrary: AssetLibrary?
     var collectionView: UICollectionView!
     let goBackButton = IconButton()
     let cameraRollButton = IconButton()
@@ -70,13 +70,12 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     }
     
     init(splitLayoutObservable: SplitLayoutObservable,
-         assetLibrary: AssetLibrary = AssetLibrary(),
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
-        self.assetLibrary = assetLibrary
+        self.assetLibrary = SecurityFlags.keyboardCameraRoll.isEnabled ? AssetLibrary() : nil
         self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
-        self.assetLibrary.delegate = self
+        self.assetLibrary?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
@@ -100,7 +99,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
     @objc
     private func applicationDidBecomeActive(_ notification: Notification!) {
-        self.assetLibrary.refetchAssets()
+        self.assetLibrary?.refetchAssets()
     }
     
     override func viewDidLoad() {
@@ -161,7 +160,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
         if self.viewWasHidden {
-            self.assetLibrary.refetchAssets()
+            self.assetLibrary?.refetchAssets()
         }
     }
     
@@ -375,6 +374,9 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         case .camera:
             return 1
         case .photos:
+            guard let assetLibrary = assetLibrary else {
+                return 1
+            }
             return permissions.isPhotoLibraryAuthorized ? Int(assetLibrary.count) : 1
         }
     }
@@ -410,7 +412,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             cell.manager = PHImageManager.default()
             
-            if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
+            if let asset = try? assetLibrary?.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
             }
             
@@ -464,9 +466,12 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         case .camera:
             break
         case .photos:
-            guard permissions.isPhotoLibraryAuthorized else { return }
-            
-            let asset = try! assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row))
+            guard
+                permissions.isPhotoLibraryAuthorized,
+                let asset = try? assetLibrary?.asset(atIndex: UInt((indexPath as NSIndexPath).row))
+            else {
+                return
+            }
             
             switch asset.mediaType {
             case .video:
