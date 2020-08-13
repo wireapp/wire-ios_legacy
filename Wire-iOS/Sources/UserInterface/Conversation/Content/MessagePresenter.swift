@@ -165,8 +165,12 @@ final class MessagePresenter: NSObject {
         if Message.isLocation(message) {
             openLocationMessage(message)
         } else if Message.isFileTransfer(message) {
+            guard SecurityFlags.openFilePreview.isEnabled else {
+                if Message.isVideo(message) { openFileMessage(message, targetView: targetView) }
+                return
+            }
             openFileMessage(message, targetView: targetView)
-        } else if Message.isImage(message) {
+        } else if Message.isImage(message), SecurityFlags.openFilePreview.isEnabled {
             openImageMessage(message, actionResponder: delegate)
         } else if let openableURL = message.textMessageData?.linkPreview?.openableURL {
             openableURL.open()
