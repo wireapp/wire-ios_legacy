@@ -90,7 +90,9 @@ class Settings {
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate:
-                SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
+                SessionManager.shared?.useConstantBitRateAudio = SecurityFlags.CBR.isEnabled
+                    ? true
+                    : newValue as? Bool ?? false
             case .conferenceCalling where newValue is Bool:
                 SessionManager.shared?.useConferenceCalling = newValue as! Bool
             default:
