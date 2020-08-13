@@ -27,6 +27,7 @@
 "general.edit" = "Rediger";
 "general.done" = "Færdig";
 "general.confirm" = "OK";
+"general.later" = "Senere";
 "general.skip" = "Ikke nu";
 "general.accept" = "Besvar";
 "general.decline" = "No, thanks";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuller";
 "image.add_sketch" = "Tilføj en skitse";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Rediger billede";
 
 // Camera access
-"camera_access.denied" = "Wire kræver adgang til Kameraet.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Aktiver det i Wire Indstillinger";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Vis";
 "content.message.forward.to" = "Send til…";
 "content.message.open" = "Åbn";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopiér";
 "content.message.download" = "Download";
 "content.message.details" = "Detaljer";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Kun ét opkald af gangen er muligt";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wire kræver adgang til Mikrofonen.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire kræver adgang til Kameraet.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Ongoing call";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Brugernavn";
 "self.settings.account_section.handle.change.save" = "Gem";
-"self.settings.account_section.handle.change.footer" = "Mindst to tegn. Kun a-z, 0-9 og _";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Allerede i brug";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ikke angive brugernavnet";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Dette vil slette permanent indholdet af alle dine samtaler.";
 
 "self.settings.advanced.title" = "Avanceret";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Fejlfinding";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Noget gik galt, prøv venligst igen";
 "error.user.needs_credentials" = "Bekræft dine detaljer, og prøv igen.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Bekræft dine detaljer, og prøv igen.";
 "error.user.account_pending_activation" = "Kontoen du prøver at få adgang til afventer aktivering. Bekræft venligst dine detaljer.";
 "error.user.network_error" = "Der synes at være problemer med dit netværk. Prøv igen senere.";

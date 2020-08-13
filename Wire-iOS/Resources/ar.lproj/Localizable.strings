@@ -27,6 +27,7 @@
 "general.edit" = "تعديل";
 "general.done" = "تـم";
 "general.confirm" = "موافق";
+"general.later" = "لاحقاً";
 "general.skip" = "ليس الآن";
 "general.accept" = "قبول";
 "general.decline" = "لا، شكرًا";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "موافق";
 "image_confirmer.cancel" = "إلغاء";
 "image.add_sketch" = "إضافة رسم يدوي";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "تَعديل الصورة";
 
 // Camera access
-"camera_access.denied" = "Wire يحتاج للوصول للكاميرا.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "لا يملك Wire وصولًا للكاميرا";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "تَفعيلها من إعدادات Wire";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "إظهار";
 "content.message.forward.to" = "بحث…";
 "content.message.open" = "افتح";
+"content.message.sign" = "Sign";
 "content.message.copy" = "نسخ";
 "content.message.download" = "تحميل";
 "content.message.details" = "التفاصيل";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "تستطيع إجراء مكالمة واحدة فقط في نفس الوقت";
 "voice.alert.call_in_progress.confirm" = "موافق";
 
-"voice.alert.microphone_warning.title" = "Wire يحتاج للوصول للميكرفون.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire يحتاج للوصول للكاميرا.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "انقر للعودة إلى المكالمة";
 "voice.top_overlay.accessibility_title" = "مكالمة جارية";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "إعادة الاتصال…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "معدل بت ثابت";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "المشاركون";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "مُعرّف";
 "self.settings.account_section.handle.change.save" = "حفظ";
-"self.settings.account_section.handle.change.footer" = "على الأقلّ محرفين. a–z, 0–9 و _ فقط.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "تمّ استخدامه";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "تعذَّر تعيين المُعرّف";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "سيؤدي هذا إلى محو محتوى جميع المحادثات الخاصة بك بشكل دائم.";
 
 "self.settings.advanced.title" = "متقدم";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "اكتشاف الأخطاء وإصلاحها";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "حدث خطأ ما، برجاء إعادة المحاولة";
 "error.user.needs_credentials" = "الرجاء التحقق من التفاصيل الخاصة بك وحاول مرة أخرى.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "الرجاء التحقق من التفاصيل الخاصة بك وحاول مرة أخرى.";
 "error.user.account_pending_activation" = "الحساب الذي تحاول الوصول له في انتظار التفعيل. من فضلك تحقق من التفاصيل.";
 "error.user.network_error" = "يبدو أن هناك مشكلة في شبكة اتصالك. الرجاء المحاولة مرة أخرى لاحقاً.";

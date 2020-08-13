@@ -24,7 +24,8 @@ enum SecurityFlags {
     case profileCameraRoll
     case gifAction
     case externalFilePicker
-    case avoidLinkPreview
+    case generateLinkPreviews
+    case forceConstantBitRateCalls
     
     var bundleKey: String {
         switch self {
@@ -38,8 +39,10 @@ enum SecurityFlags {
             return "FileGifActionEnabled"
         case .externalFilePicker:
             return "ExternalFilePickerEnabled"
-        case .avoidLinkPreview:
-            return "AvoidLinkPreviewEnabled"
+        case .generateLinkPreviews:
+            return "GenerateLinkPreviewEnabled"
+        case .forceConstantBitRateCalls:
+            return "ForceCBREnabled"
         }
     }
     
