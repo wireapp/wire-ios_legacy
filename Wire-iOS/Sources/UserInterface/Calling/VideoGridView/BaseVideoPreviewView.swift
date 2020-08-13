@@ -42,10 +42,17 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         }
     }
     
+    private var isCovered: Bool
+    
+    private var userDetailsAlpha: CGFloat {
+        return isCovered ? 0 : 1
+    }
+    
     let userDetailsView = VideoParticipantDetailsView()
     
-    init(stream: Stream) {
+    init(stream: Stream, isCovered: Bool) {
         self.stream = stream
+        self.isCovered = isCovered
         
         super.init(frame: .zero)
 
@@ -68,6 +75,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.alpha = userDetailsAlpha
     }
     
     func setupViews() {
@@ -89,12 +97,13 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         guard let isCovered = notification?.userInfo?[VideoGridViewController.isCoveredKey] as? Bool else {
             return
         }
+        self.isCovered = isCovered
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
             options: [.curveEaseInOut, .beginFromCurrentState],
             animations: {
-                self.userDetailsView.alpha = isCovered ? 0.0 : 1.0
+                self.userDetailsView.alpha = self.userDetailsAlpha
         })
     }
 }

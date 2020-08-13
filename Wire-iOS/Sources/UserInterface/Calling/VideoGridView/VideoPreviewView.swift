@@ -42,8 +42,9 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var userHasSetFillMode: Bool = false
     private var snapshotView: UIView?
     
-    override init(stream: Stream) {
-        super.init(stream: stream)
+    // MARK: - Initialization
+    override init(stream: Stream, isCovered: Bool) {
+        super.init(stream: stream, isCovered: isCovered)
         updateState()
     }
     

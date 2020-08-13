@@ -170,7 +170,7 @@ final class VideoGridViewController: UIViewController {
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
             view.stream = selfStream
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream)
+            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream, isCovered: isCovered)
         }
     }
 
@@ -314,7 +314,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream)
+            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered)
             viewCache[streamId] = view
             return view
         }
