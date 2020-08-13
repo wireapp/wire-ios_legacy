@@ -27,6 +27,7 @@
 "general.edit" = "編輯";
 "general.done" = "完成";
 "general.confirm" = "確認";
+"general.later" = "稍後";
 "general.skip" = "現在略過";
 "general.accept" = "同意";
 "general.decline" = "不了，謝謝";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "確認";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "加入手繪";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "編輯圖片";
 
 // Camera access
-"camera_access.denied" = "Wire需要使用相機權限。";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire無法使用相機";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "請前往手機「設定」並允許Wire使用相機權限";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube視頻預覽";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud歌曲預覽";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud歌單預覽";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "顯示";
 "content.message.forward.to" = "搜索...";
 "content.message.open" = "開啟";
+"content.message.sign" = "Sign";
 "content.message.copy" = "複製";
 "content.message.download" = "下載";
 "content.message.details" = "詳細資訊";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "您只可同時接撥一則通話";
 "voice.alert.call_in_progress.confirm" = "確認";
 
-"voice.alert.microphone_warning.title" = "Wire需要使用麥克風權限。";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire需要相機權限。";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "點擊返回通話";
 "voice.top_overlay.accessibility_title" = "通話中";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "重新連線中...";
 "call.status.terminating" = "正在掛斷...";
 "call.status.constant_bitrate" = "固定位元率";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "全部顯示 (%@)";
 "call.participants.list.title" = "參與者";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "使用者名稱";
 "self.settings.account_section.handle.change.save" = "儲存";
-"self.settings.account_section.handle.change.footer" = "至少要兩個字元，只可使用 a 到 z、0 到 9 或_。";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "已經被用了";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "無法設置使用者名稱";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "這將永久移除您的所有對話內容。";
 
 "self.settings.advanced.title" = "進階";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
 "self.settings.advanced.debugging_tools.title" = "除錯工具";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了點問題，請再試一次";
 "error.user.needs_credentials" = "請檢查您提供的資料後重試。";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "請檢查您的資訊後再重試。";
 "error.user.account_pending_activation" = "您的帳號未被啟用，請完成啟動程序。";
 "error.user.network_error" = "您的網路連線似乎有問題，請稍候再試。";
