@@ -194,6 +194,8 @@
 	<string>${FILE_GIF_ACTION_ENABLED}</string>
 	<key>ExternalFilePickerEnabled</key>
 	<string>${EXTERNAL_FILE_PICKER_ACTION_ENABLED}</string>
+	<key>GenerateLinkPreviewEnabled</key>
+	<string>${GENERATE_LINK_PREVIEW_ENABLED}</string>
 	<key>ForceCBREnabled</key>
 	<string>${FORCE_CBR_ENABLED}</string>
 	<key>OpenFilePreviewEnabled</key>

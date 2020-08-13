@@ -171,7 +171,9 @@ class Settings {
 
     static var disableLinkPreviews: Bool {
         get {
-            return ExtensionSettings.shared.disableLinkPreviews
+            return !SecurityFlags.generateLinkPreviews.isEnabled
+                ? true
+                : ExtensionSettings.shared.disableLinkPreviews
         }
         set {
             ExtensionSettings.shared.disableLinkPreviews = newValue
