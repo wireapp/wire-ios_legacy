@@ -33,7 +33,7 @@ extension SettingsCellDescriptorFactory {
             chatHeadsSection,
             soundAlertSection,
             callKitSection,
-            SecurityFlags.CBR.isEnabled ? nil : VBRSection,
+            SecurityFlags.forceConstantBitRateCalls.isEnabled ? nil : VBRSection,
             conferenceCallingSection,
             soundsSection,
             externalAppsSection,

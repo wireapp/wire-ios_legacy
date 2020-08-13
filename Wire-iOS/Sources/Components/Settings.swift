@@ -89,10 +89,8 @@ class Settings {
                 AVSMediaManager.sharedInstance().configureSounds()
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
-            case .callingConstantBitRate:
-                SessionManager.shared?.useConstantBitRateAudio = SecurityFlags.CBR.isEnabled
-                    ? true
-                    : newValue as? Bool ?? false
+            case .callingConstantBitRate where !SecurityFlags.forceConstantBitRateCalls.isEnabled:
+                SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
             case .conferenceCalling where newValue is Bool:
                 SessionManager.shared?.useConferenceCalling = newValue as! Bool
             default:

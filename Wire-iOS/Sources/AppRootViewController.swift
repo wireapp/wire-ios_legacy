@@ -195,7 +195,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = SecurityFlags.CBR.isEnabled
+            sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
                 ? true
                 : Settings.shared[.callingConstantBitRate] ?? false
             sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? false
