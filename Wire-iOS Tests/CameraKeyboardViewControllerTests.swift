@@ -261,11 +261,6 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         initialStateLayoutSizeRegularPortrait(with: permissions)
     }
 
-    func testInitialStateLayoutSizeRegularPortrait_LibraryAccessGranted() {
-        let permissions = MockPhotoPermissionsController(camera: false, library: true)
-        initialStateLayoutSizeRegularPortrait(with: permissions)
-    }
-
     func initialStateLayoutSizeRegularLandscape(with permissions: PhotoPermissionsController,
                                                 file: StaticString = #file,
                                                 testName: String = #function,
