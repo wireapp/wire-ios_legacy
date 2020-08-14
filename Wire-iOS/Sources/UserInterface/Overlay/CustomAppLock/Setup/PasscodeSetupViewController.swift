@@ -62,7 +62,14 @@ final class PasscodeSetupViewController: UIViewController {
         return label
     }()
 
+    private let isCompactLayout: Bool
+    
     private var useCompactLayout: Bool {
+        if isCompactLayout {
+            return true
+        }
+        
+        let height = view.frame.size.height
         return view.frame.size.height <= CGFloat.iPhone4Inch.height
     }
     
@@ -126,9 +133,11 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant? = nil) {
+                  variant: ColorSchemeVariant? = nil,
+                  isCompactLayout: Bool = false) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
+        self.isCompactLayout = isCompactLayout
 
         super.init(nibName: nil, bundle: nil)
 
@@ -158,7 +167,7 @@ final class PasscodeSetupViewController: UIViewController {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallSemiboldFont
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
-                label.numberOfLines = 0                
+                label.numberOfLines = 0
                 label.attributedText = $0.descriptionWithInvalidIcon
 
                 stackView.addArrangedSubview(label)

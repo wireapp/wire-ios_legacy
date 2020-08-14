@@ -32,8 +32,11 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
     }
 
     func testForInitState() {
-        sut = PasscodeSetupViewController(callback: nil)
-        verifyAllIPhoneSizes(matching: sut)
+        verifyAllIPhoneSizes(createSut: { size in
+            let vc = PasscodeSetupViewController(callback: nil,
+                                                 isCompactLayout: size.height <= CGFloat.iPhone4Inch.height)
+            return vc
+        })
     }
 
     func testForInitStateInDarkTheme() {
