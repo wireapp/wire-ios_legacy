@@ -62,24 +62,42 @@ final class PasscodeSetupViewController: UIViewController {
         return label
     }()
 
+    private var useCompactLayout: Bool {
+        return view.frame.size.height <= CGFloat.iPhone4Inch.height
+    }
+    
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
         label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        
+        let regularFont: UIFont
+        let heightFont: UIFont
+        let lineHeight: CGFloat
 
+        if useCompactLayout  {
+            regularFont = FontSpec(.small, .regular).font!
+            heightFont = FontSpec(.small, .bold).font!
+            lineHeight = 14
+        } else {
+            regularFont = UIFont.normalRegularFont
+            heightFont = FontSpec(.normal, .bold).font!
+            lineHeight = 20
+        }
+        
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = 20
-        paragraphStyle.maximumLineHeight = 20
+        paragraphStyle.minimumLineHeight = lineHeight
+        paragraphStyle.maximumLineHeight = lineHeight
 
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && UIFont.normalRegularFont
+        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && regularFont
 
-        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && FontSpec(.normal, .bold).font!
+        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && heightFont
 
         label.text = " "
         label.attributedText = headingText + highlightText
@@ -128,11 +146,11 @@ final class PasscodeSetupViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         SpacingView(10),
+         SpacingView(useCompactLayout ? 1 : 10),
          infoLabel,
          UILabel.createHintLabel(variant: variant),
          passcodeTextField,
-         SpacingView(16)].forEach {
+         SpacingView(useCompactLayout ? 2 : 16)].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -140,9 +158,9 @@ final class PasscodeSetupViewController: UIViewController {
             if let label = validationLabels[$0] {
                 label.font = UIFont.smallSemiboldFont
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
-                label.numberOfLines = 0
-
+                label.numberOfLines = 0                
                 label.attributedText = $0.descriptionWithInvalidIcon
+
                 stackView.addArrangedSubview(label)
             }
         }
