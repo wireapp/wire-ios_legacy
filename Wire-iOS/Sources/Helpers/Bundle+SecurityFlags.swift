@@ -27,6 +27,8 @@ enum SecurityFlags {
     case generateLinkPreviews
     case forceConstantBitRateCalls
     case openFilePreview
+    case customBackend
+    case shareExtension
     
     var bundleKey: String {
         switch self {
@@ -46,6 +48,10 @@ enum SecurityFlags {
             return "ForceCBREnabled"
         case .openFilePreview:
             return "OpenFilePreviewEnabled"
+        case .customBackend:
+            return "CustomBackendEnabled"
+        case .shareExtension:
+            return "ShareExtensionEnabled"
         }
     }
     
