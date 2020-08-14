@@ -46,7 +46,6 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     lazy var passcodeTextField: AccessoryTextField = {
-
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
         textField.delegate = self
