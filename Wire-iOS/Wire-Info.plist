@@ -202,5 +202,7 @@
 	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
 	<key>CustomBackendEnabled</key>
 	<string>${CUSTOM_BACKEND_ENABLED}</string>
+	<key>ShareExtensionEnabled</key>
+	<string>${SHARE_EXTENSION_ENABLED}</string>
 </dict>
 </plist>
