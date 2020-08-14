@@ -33,7 +33,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
 
     func testForInitState() {
         sut = PasscodeSetupViewController(callback: nil)
-        verify(matching: sut)
+        verifyAllIPhoneSizes(matching: sut)
     }
 
     func testForInitStateInDarkTheme() {
