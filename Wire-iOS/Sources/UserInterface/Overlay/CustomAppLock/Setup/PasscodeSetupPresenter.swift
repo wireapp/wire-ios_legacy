@@ -21,6 +21,17 @@ final class PasscodeSetupPresenter {
     private weak var userInterface: PasscodeSetupUserInterface?
     private var interactorInput: PasscodeSetupInteractorInput
 
+    private var passcodeValidationResult: PasscodeValidationResult?
+    
+    var isPasscodeValid: Bool {
+        switch passcodeValidationResult {
+        case .accepted:
+            return true
+        default:
+            return false
+        }
+    }
+    
     convenience init(userInterface: PasscodeSetupUserInterface) {
         let interactor = PasscodeSetupInteractor()
         self.init(userInterface: userInterface, interactorInput: interactor)
@@ -57,6 +68,8 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
     }
 
     func passcodeValidated(result: PasscodeValidationResult) {
+        passcodeValidationResult = result
+        
         switch result {
         case .accepted:
             userInterface?.createButtonEnabled = true
