@@ -51,6 +51,8 @@ final class PasscodeSetupViewController: UIViewController {
         textField.placeholder = "create_passcode.textfield.placeholder".localized
         textField.delegate = self
         
+        textField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        
         return textField
     }()
 
@@ -196,6 +198,12 @@ final class PasscodeSetupViewController: UIViewController {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
+    }
+    
+    @objc
+    private func textFieldDidChange(textField: UITextField) {
+        passcodeTextField.returnKeyType = presenter.isPasscodeValid ? .done : .default
+        passcodeTextField.reloadInputViews()
     }
     
     @objc

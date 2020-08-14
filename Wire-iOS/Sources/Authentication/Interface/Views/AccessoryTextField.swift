@@ -214,7 +214,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     private func setupTextFieldProperties() {
-        self.returnKeyType = .next
+        returnKeyType = .next
 
         switch kind {
         case .email:
@@ -246,7 +246,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             isSecureTextEntry = true
             accessibilityIdentifier = "PasscodeField"
             autocapitalizationType = .none
-            returnKeyType = .done
+            returnKeyType = .default
             if #available(iOS 12, *) {
                 textContentType = .newPassword
                 passwordRules = textFieldValidator.passwordRules
