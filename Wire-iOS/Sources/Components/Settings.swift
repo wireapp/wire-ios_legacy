@@ -89,7 +89,7 @@ class Settings {
                 AVSMediaManager.sharedInstance().configureSounds()
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
-            case .callingConstantBitRate:
+            case .callingConstantBitRate where !SecurityFlags.forceConstantBitRateCalls.isEnabled:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
             case .conferenceCalling where newValue is Bool:
                 SessionManager.shared?.useConferenceCalling = newValue as! Bool
@@ -171,7 +171,9 @@ class Settings {
 
     static var disableLinkPreviews: Bool {
         get {
-            return ExtensionSettings.shared.disableLinkPreviews
+            return !SecurityFlags.generateLinkPreviews.isEnabled
+                ? true
+                : ExtensionSettings.shared.disableLinkPreviews
         }
         set {
             ExtensionSettings.shared.disableLinkPreviews = newValue

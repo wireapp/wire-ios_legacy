@@ -33,14 +33,14 @@ extension SettingsCellDescriptorFactory {
             chatHeadsSection,
             soundAlertSection,
             callKitSection,
-            VBRSection,
+            SecurityFlags.forceConstantBitRateCalls.isEnabled ? nil : VBRSection,
             conferenceCallingSection,
             soundsSection,
             externalAppsSection,
             popularDemandSendButtonSection,
             popularDemandDarkThemeSection,
             appLockSection,
-            linkPreviewSection
+            SecurityFlags.generateLinkPreviews.isEnabled ? linkPreviewSection : nil
         ].compactMap { $0 }
         
         return SettingsGroupCellDescriptor(

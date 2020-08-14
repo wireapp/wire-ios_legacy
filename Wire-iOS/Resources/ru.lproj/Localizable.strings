@@ -27,6 +27,7 @@
 "general.edit" = "Редактировать";
 "general.done" = "Готово";
 "general.confirm" = "OK";
+"general.later" = "Позже";
 "general.skip" = "Не сейчас";
 "general.accept" = "Принять";
 "general.decline" = "Нет, спасибо";
@@ -299,7 +300,7 @@
 
 "conversation.input_bar.audio_message.send" = "Отправить";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Нажмите для записи\nПосле этого его можно будет %@";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Выберите фильтр выше";
 
 "conversation.call.many_participants_confirmation.title" = "Начать звонок";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отмена";
 "image.add_sketch" = "Добавить скетч";
+"image.add_emoji" = "Добавить смайлик";
 "image.edit_image" = "Редактировать изображение";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "Предварительный просмотр видео с YouTube";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "Предварительный просмотр песни c SoundCloud";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Предварительный просмотр плейлиста c SoundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "К сожалению, ваша цифровая подпись не сработала.";
+"digital_signature.alert.error.no_consent_url" = "К сожалению, форма подписи не открылась. Пожалуйста, попробуйте еще раз.";
+"digital_signature.alert.error.no_signature" = "К сожалению, ваша цифровая подпись не сработала. Пожалуйста, попробуйте еще раз.";
+"digital_signature.alert.download_necessary" = "Пожалуйста, перед тем, как подписывать документ, сохраните его и прочтите.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Показать";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
+"content.message.sign" = "Подписать";
 "content.message.copy" = "Копировать";
 "content.message.download" = "Скачать";
 "content.message.details" = "Профиль";
@@ -620,7 +629,7 @@
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
 "voice.status.cbr" = "Постоянный битрейт";
-"voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
+"voice.network_error.body" = "Для совершения вызовов вы должны быть в сети. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
 "voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
 "voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Переподключение…";
 "call.status.terminating" = "Разъединение…";
 "call.status.constant_bitrate" = "Постоянный битрейт";
+"call.status.variable_bitrate" = "Переменный битрейт";
 
 "call.participants.show_all" = "Показать все (%@)";
 "call.participants.list.title" = "Участники";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Имя пользователя";
 "self.settings.account_section.handle.change.save" = "Сохранить";
-"self.settings.account_section.handle.change.footer" = "Не менее 2 символов. Только a—z, 0—9 и _";
+"self.settings.account_section.handle.change.footer" = "Не менее 2 символов. Только a—z, 0—9 и '.', '-', '_'";
 "self.settings.account_section.handle.change.footer.unavailable" = "Уже занято";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не удается задать имя пользователя";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит контент всех ваших бесед.";
 
 "self.settings.advanced.title" = "Дополнительные настройки";
+"self.settings.advanced.conference_calling.title" = "Групповые звонки";
+"self.settings.advanced.conference_calling.subtitle" = "При включении этого параметра активируется возможность групповых аудио- и видеозвонков, что позволяет увеличить количество участников.";
+"self.settings.advanced.conference_calling.toggle" = "Бета-программа";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
 "self.settings.advanced.debugging_tools.title" = "Средства отладки";
@@ -1485,7 +1498,7 @@
 "signin.confirm" = "Войти";
 "signin.company_idp.button.title" = "Для компаний";
 
-"signin_logout.subheadline" = "Ваш сеанс истек. Вы должны войти снова, чтобы продолжить.";
+"signin_logout.subheadline" = "Ваш сеанс истек. Для продолжения вам необходимо авторизоваться повторно.";
 "signin_logout.email.subheadline" = "Ваш сеанс истек. Введите адрес электронной почты и пароль, чтобы продолжить.";
 "signin_logout.phone.subheadline" = "Ваш сеанс истек. Введите номер телефона, чтобы продолжить.";
 "signin_logout.sso.subheadline" = "Ваш сеанс истек. Войдите, используя свой корпоративный аккаунт.";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 "error.user.needs_credentials" = "Пожалуйста, проверьте ваши данные и попробуйте еще раз.";
+"error.user.domain_blocked" = "Это письмо требует приглашения от существующей команды. По вопросам получения приглашения, свяжитесь с ИТ-администраторами вашей организации.";
 "error.user.invalid_credentials" = "Пожалуйста, проверьте ваши данные и попробуйте еще раз.";
 "error.user.account_pending_activation" = "Учетная запись, к которой вы пытаетесь получить доступ, ожидает активации. Пожалуйста, проверьте ваши данные.";
 "error.user.network_error" = "Кажется, проблема в вашей сети. Пожалуйста, попробуйте позже.";

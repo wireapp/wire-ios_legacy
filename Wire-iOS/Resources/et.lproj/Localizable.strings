@@ -27,6 +27,7 @@
 "general.edit" = "Muuda";
 "general.done" = "Valmis";
 "general.confirm" = "OK";
+"general.later" = "Hiljem";
 "general.skip" = "Mitte praegu";
 "general.accept" = "Vasta";
 "general.decline" = "Tänan, ei";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Tühista";
 "image.add_sketch" = "Lisa joonistus";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Muuda profiilipilti";
 
 // Camera access
-"camera_access.denied" = "Wire vajab ligipääsu kaamerale.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire'l pole õigust kaamerat kasutada.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Lülita see sisse Wire seadetest";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Näita";
 "content.message.forward.to" = "Otsi…";
 "content.message.open" = "Ava";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopeeri";
 "content.message.download" = "Laadi alla";
 "content.message.details" = "Üksikasjad";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Sul saab olla vaid üks aktiivne kõne korraga";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wire vajab lisipääsu mikrofonile.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire vajab ligipääsu kaamerale.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Toksa, et kõnesse naasta";
 "voice.top_overlay.accessibility_title" = "Aktiivne kõne";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Ühenduse taastamine…";
 "call.status.terminating" = "Kõne lõpetamine…";
 "call.status.constant_bitrate" = "Ühtlane bitisagedus";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Näita kõik (%@)";
 "call.participants.list.title" = "Osalejad";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Kasutajanimi";
 "self.settings.account_section.handle.change.save" = "Salvesta";
-"self.settings.account_section.handle.change.footer" = "Vähemalt 2 tähemärki. Ainult a—z, 0—9 ja _.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Juba kasutusel";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Kasutajanime ei õnnestunud valida";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "See kustutab jäädavalt kõik sinu vestluste sisu.";
 
 "self.settings.advanced.title" = "Edasijõudnutele";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Veaotsing";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Midagi läks valesti, palun proovi uuesti";
 "error.user.needs_credentials" = "Kontrolli andmed üle ja proovi uuesti.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Kontrolli andmed üle ja proovi uuesti.";
 "error.user.account_pending_activation" = "Konto, mida proovid avada, ootab aktiveerimist. Palun kinnita oma andmed.";
 "error.user.network_error" = "Sinu võrguühendusega tundub olevat probleeme. Palun proovi hiljem uuesti.";
