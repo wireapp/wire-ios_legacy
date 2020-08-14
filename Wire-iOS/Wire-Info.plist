@@ -201,6 +201,6 @@
 	<key>OpenFilePreviewEnabled</key>
 	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
 	<key>CustomBackendEnabled</key>
-	<string>${CUSTOM_BACKEND_ENANBLED}</string>
+	<string>${CUSTOM_BACKEND_ENABLED}</string>
 </dict>
 </plist>
