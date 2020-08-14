@@ -62,17 +62,8 @@ final class PasscodeSetupViewController: UIViewController {
         return label
     }()
 
-    private let isCompactLayout: Bool
-    
-    private var useCompactLayout: Bool {
-        if isCompactLayout {
-            return true
-        }
+    private let useCompactLayout: Bool
         
-        let height = view.frame.size.height
-        return view.frame.size.height <= CGFloat.iPhone4Inch.height
-    }
-    
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
@@ -134,10 +125,10 @@ final class PasscodeSetupViewController: UIViewController {
 
     required init(callback: ResultHandler?,
                   variant: ColorSchemeVariant? = nil,
-                  isCompactLayout: Bool = false) {
+                  useCompactLayout: Bool) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
-        self.isCompactLayout = isCompactLayout
+        self.useCompactLayout = useCompactLayout
 
         super.init(nibName: nil, bundle: nil)
 
