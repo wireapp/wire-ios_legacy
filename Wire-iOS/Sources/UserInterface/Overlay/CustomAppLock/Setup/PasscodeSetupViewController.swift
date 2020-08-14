@@ -135,6 +135,10 @@ final class PasscodeSetupViewController: UIViewController {
         setupViews()
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground,
                                                          variant: variant)
