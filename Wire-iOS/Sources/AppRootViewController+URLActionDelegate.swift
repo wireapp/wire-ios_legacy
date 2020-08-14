@@ -62,7 +62,7 @@ extension AppRootViewController: URLActionDelegate {
             self.present(alert, animated: true, completion: nil)
             
         case .accessBackend(configurationURL: let configurationURL):
-            if SecurityFlags.custumBackend.isEnabled {
+            if SecurityFlags.customBackend.isEnabled {
                 let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
                                               message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                               preferredStyle: .alert)

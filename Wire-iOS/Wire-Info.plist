@@ -200,7 +200,7 @@
 	<string>${FORCE_CBR_ENABLED}</string>
 	<key>OpenFilePreviewEnabled</key>
 	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
-	<key>CustumBackendEnabled</key>
+	<key>CustomBackendEnabled</key>
 	<string>${CUSTOM_BACKEND_ENANBLED}</string>
 </dict>
 </plist>
