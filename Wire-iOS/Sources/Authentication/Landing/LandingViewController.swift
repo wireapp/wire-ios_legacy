@@ -262,14 +262,18 @@ final class LandingViewController: AuthenticationStepViewController {
             additionalSafeAreaInsets.top = -44
         }
 
-        customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleLabel)
-        customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleButton)
+        if SecurityFlags.custumBackend.isEnabled {
+            customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleLabel)
+            customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleButton)
 
-        customBackendStack.addArrangedSubview(customBackendTitleLabel)
-        customBackendStack.addArrangedSubview(customBackendSubtitleStack)
+            customBackendStack.addArrangedSubview(customBackendTitleLabel)
+            customBackendStack.addArrangedSubview(customBackendSubtitleStack)
+        }
 
         topStack.addArrangedSubview(logoView)
-        topStack.addArrangedSubview(customBackendStack)
+        if SecurityFlags.custumBackend.isEnabled {
+            topStack.addArrangedSubview(customBackendStack)
+        }
         contentView.addSubview(topStack)
 
         contentView.addSubview(messageLabel)

@@ -62,29 +62,31 @@ extension AppRootViewController: URLActionDelegate {
             self.present(alert, animated: true, completion: nil)
             
         case .accessBackend(configurationURL: let configurationURL):
-            let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                          message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
-                                          preferredStyle: .alert)
-            let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-                self.isLoadingViewVisible = true
-                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                    self.isLoadingViewVisible = false
-                    switch result {
-                    case let .success(environment):
-                        BackendEnvironment.shared = environment
-                    case let .failure(error):
-                        if let error = error as? LocalizedError {
-                            self.showAlert(for: error)
+            if SecurityFlags.custumBackend.isEnabled {
+                let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
+                                              message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
+                                              preferredStyle: .alert)
+                let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
+                    self.isLoadingViewVisible = true
+                    self.sessionManager?.switchBackend(configuration: configurationURL) { result in
+                        self.isLoadingViewVisible = false
+                        switch result {
+                        case let .success(environment):
+                            BackendEnvironment.shared = environment
+                        case let .failure(error):
+                            if let error = error as? LocalizedError {
+                                self.showAlert(for: error)
+                            }
                         }
                     }
                 }
+                alert.addAction(agreeAction)
+                
+                let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
+                alert.addAction(cancelAction)
+                
+                self.present(alert, animated: true, completion: nil)
             }
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
         default:
             decisionHandler(true)
         }
