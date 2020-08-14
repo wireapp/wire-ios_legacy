@@ -49,7 +49,8 @@ final class PasscodeSetupViewController: UIViewController {
 
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
-
+        textField.delegate = self
+        
         return textField
     }()
 
@@ -191,13 +192,30 @@ final class PasscodeSetupViewController: UIViewController {
         ])
     }
 
-    @objc
-    func onCreateCodeButtonPressed(sender: AnyObject?) {
+    private func storePasscode() {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
     }
+    
+    @objc
+    private func onCreateCodeButtonPressed(sender: AnyObject?) {
+        storePasscode()
+    }
 
+}
+
+// MARK: - UITextFieldDelegate
+
+extension PasscodeSetupViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard presenter.isPasscodeValid else {
+            return false
+        }
+        
+        storePasscode()
+        return true
+    }
 }
 
 // MARK: - AccessoryTextFieldDelegate

@@ -246,6 +246,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             isSecureTextEntry = true
             accessibilityIdentifier = "PasscodeField"
             autocapitalizationType = .none
+            returnKeyType = .done
             if #available(iOS 12, *) {
                 textContentType = .newPassword
                 passwordRules = textFieldValidator.passwordRules
