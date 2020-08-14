@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@ import Foundation
 import UIKit
 
 extension CGSize {
-    enum IPadPopover {
-        static let preferredContentSize: CGSize = CGSize.iPhoneSize.iPhone4Inch
-        static let pickerSize: CGSize = CGSize(width: 320, height: 275)
+    enum iPhoneSize {
+        static let iPhone4Inch: CGSize = CGSize(width: CGFloat.iPhone4Inch.width, height: CGFloat.iPhone4Inch.height)
+        static let iPhone4_7Inch: CGSize = CGSize(width: 375, height: 667)
     }
 }
