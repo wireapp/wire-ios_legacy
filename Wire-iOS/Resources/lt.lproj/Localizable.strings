@@ -27,6 +27,7 @@
 "general.edit" = "Taisa";
 "general.done" = "Baigta";
 "general.confirm" = "GERAI";
+"general.later" = "Vėliau";
 "general.skip" = "Ne dabar";
 "general.accept" = "Priimti";
 "general.decline" = "Ne, dėkui";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "GERAI";
 "image_confirmer.cancel" = "Atsisakyti";
 "image.add_sketch" = "Pridėti piešinuką";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Redaguoti nuotrauką";
 
 // Camera access
-"camera_access.denied" = "Wire reikalingas priėjimas prie kameros.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "„Wire“ neturi leidimo naudotis kamera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Įjunkite Wire nustatymuose";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "„YouTube“ vaizdo peržiūra";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "„SoundCloud“ dainos perklausa";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "„SoundCloud“ grojaraščio perklausa";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Parodyti";
 "content.message.forward.to" = "Ieškoti…";
 "content.message.open" = "Atverti";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopijuoti";
 "content.message.download" = "Atsisiųsti";
 "content.message.details" = "Išsamiau";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Vienu metu gali vykti tik vienas skambutis";
 "voice.alert.call_in_progress.confirm" = "GERAI";
 
-"voice.alert.microphone_warning.title" = "„Wire“ būtina prieiga prie mikrofono.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire reikalingas priėjimas prie kameros.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Bakstelėję grįšite į skambutį";
 "voice.top_overlay.accessibility_title" = "Vykstantis skambutis";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Jungiamasi iš naujo…";
 "call.status.terminating" = "Baigiama…";
 "call.status.constant_bitrate" = "Pastovi sparta (bitais)";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Rodyti visus (%@)";
 "call.participants.list.title" = "Dalyviai";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Naudotojo vardas";
 "self.settings.account_section.handle.change.save" = "Įrašyti";
-"self.settings.account_section.handle.change.footer" = "Bent 2 simboliai. Tik a—z, 0—9 ir _.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Jau užimtas";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Nepavyko pakeisti vartotojo vardo";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Tai negrįžtamai ištrins visą susirašinėjimų praeitį.";
 
 "self.settings.advanced.title" = "Papildomi";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Nesklandumų sprendimas";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Derinimo ataskaita";
 "self.settings.advanced.debugging_tools.title" = "Derinimo įrankiai";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Įvyko klaida, bandykite dar kartą";
 "error.user.needs_credentials" = "Patvirtinkite savo duomenis ir bandykite dar kartą.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Patvirtinkite savo duomenis ir bandykite dar kartą.";
 "error.user.account_pending_activation" = "Paskyra, prie kurios bandote prisijungti, nepatvirtinta. Patvirtinkite duomenis.";
 "error.user.network_error" = "Panašu, kad yra nesklandumų su jūsų tinklu. Bandykite dar kartą.";

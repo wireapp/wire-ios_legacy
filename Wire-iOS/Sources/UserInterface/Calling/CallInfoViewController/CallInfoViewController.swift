@@ -54,7 +54,8 @@ extension CallInfoViewControllerInput {
             isConstantBitRate == other.isConstantBitRate &&
             title == other.title &&
             cameraType == other.cameraType &&
-            networkQuality == other.networkQuality
+            networkQuality == other.networkQuality &&
+            userEnabledCBR == other.userEnabledCBR
     }
 }
 

@@ -205,7 +205,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         }
     }
     
-    func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action) {
+    func footerView(_ view: GroupDetailsFooterView,
+                    shouldPerformAction action: GroupDetailsFooterView.Action) {
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
@@ -213,7 +214,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             navigationController.modalPresentationStyle = .currentContext
             present(navigationController, animated: true)
         case .more:
-            actionController = ConversationActionController(conversation: conversation, target: self)
+            actionController = ConversationActionController(conversation: conversation,
+                                                            target: self,
+                                                            sourceView: view)
             actionController?.presentMenu(from: view, context: .details)
         }
     }

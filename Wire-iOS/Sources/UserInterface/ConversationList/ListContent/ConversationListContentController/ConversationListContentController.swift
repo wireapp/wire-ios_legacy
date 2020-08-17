@@ -23,7 +23,11 @@ import WireDataModel
 private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
 private let CellReuseIdConversation = "CellId"
 
-final class ConversationListContentController: UICollectionViewController {
+final class ConversationListContentController: UICollectionViewController, PopoverPresenter {
+    // PopoverPresenter
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?
+
     weak var contentDelegate: ConversationListContentDelegate?
     let listViewModel: ConversationListViewModel = ConversationListViewModel()
     private var focusOnNextSelection = false
@@ -273,13 +277,15 @@ final class ConversationListContentController: UICollectionViewController {
         }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
-            return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+            return ConversationPreviewViewController(conversation: conversation, presentingViewController: self, sourceView: collectionView.cellForItem(at: indexPath))
         }
 
         let actionProvider: UIContextMenuActionProvider = { _ in
             let actions = conversation.listActions.map { action in
                 UIAction(title: action.title, image: nil) { _ in
-                    let actionController = ConversationActionController(conversation: conversation, target: self)
+                    let actionController = ConversationActionController(conversation: conversation,
+                                                                        target: self,
+                                                                        sourceView: collectionView.cellForItem(at: indexPath))
 
                     actionController.handleAction(action)
                 }
@@ -448,7 +454,7 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
 
         previewingContext.sourceRect = layoutAttributes.frame
 
-        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self, sourceView: collectionView.cellForItem(at: indexPath))
     }
 }
 

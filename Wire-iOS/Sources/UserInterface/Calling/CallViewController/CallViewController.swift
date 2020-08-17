@@ -50,6 +50,10 @@ final class CallViewController: UIViewController {
     fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
+    
+    private static var userEnabledCBR: Bool {
+        return Settings.shared[.callingConstantBitRate] == true
+    }
 
     init(voiceChannel: VoiceChannel,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
@@ -60,7 +64,7 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -214,7 +218,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         videoGridViewController.configuration = videoConfiguration
@@ -234,14 +238,30 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func alertVideoUnavailable() {
-        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.localParticipants.count > 4 {
-            let alert = UIAlertController.alertWithOKButton(title: "call.video.too_many.alert.title".localized,
-                                                            message: "call.video.too_many.alert.message".localized)
-
-            present(alert, animated: true)
+        guard voiceChannel.videoState == .stopped else { return }
+ 
+        if !callInfoConfiguration.permissions.canAcceptVideoCalls {
+            present(UIAlertController.cameraPermissionAlert(), animated: true)
+        } else {
+            presentLegacyAlertIfNeeded()
         }
     }
 
+    private func presentLegacyAlertIfNeeded() {
+        guard
+            !voiceChannel.isConferenceCall,
+            voiceChannel.isLegacyGroupVideoParticipantLimitReached
+        else {
+            return
+        }
+        let alert = UIAlertController.alertWithOKButton(
+            title: "call.video.too_many.alert.title".localized,
+            message: "call.video.too_many.alert.message".localized
+        )
+
+        present(alert, animated: true)
+    }
+    
     fileprivate func toggleVideoState() {
         if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { _ in

@@ -27,6 +27,7 @@
 "general.edit" = "Uredi";
 "general.done" = "Done";
 "general.confirm" = "V redu";
+"general.later" = "Kasneje";
 "general.skip" = "Ne zdaj";
 "general.accept" = "Sprejmi";
 "general.decline" = "No, thanks";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "V redu";
 "image_confirmer.cancel" = "Prekliči";
 "image.add_sketch" = "Dodaj skico";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Uredi sliko";
 
 // Camera access
-"camera_access.denied" = "Wire potrebuje dostop do kamere.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Omogoči v nastavitvah Wire";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Razkrij";
 "content.message.forward.to" = "Išči…";
 "content.message.open" = "Odpri";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopiraj";
 "content.message.download" = "Prenos";
 "content.message.details" = "Podrobnosti";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Lahko imate aktiven le en klic";
 "voice.alert.call_in_progress.confirm" = "V redu";
 
-"voice.alert.microphone_warning.title" = "Wire potrebuje dostop do mikrofona.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire potrebuje dostop do kamere.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Trenutni klic";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Stalna bitna hitrost";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Uporabniško ime";
 "self.settings.account_section.handle.change.save" = "Shrani";
-"self.settings.account_section.handle.change.footer" = "Vsaj 2 znaka. Le a—z, 0—9, in _.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Že zasedeno";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ni mogoče nastaviti uporabniškega imena";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "To bo trajno izbrisalo vsebino vseh vaših pogovorov.";
 
 "self.settings.advanced.title" = "Napredno";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Odpravljanje napak";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Nekaj je šlo narobe, prosimo poizkusite znova";
 "error.user.needs_credentials" = "Prosimo preverite vaše podatke in poizkusite ponovno.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Prosimo preverite vaše podatke in poizkusite ponovno.";
 "error.user.account_pending_activation" = "Za račun, do katerega želite dostopati, je aktivacija v teku. Prosimo preverite vaše podatke.";
 "error.user.network_error" = "Zdi se, da je nekje težava z vašim omrežjem. Prosimo poskusite znova kasneje.";

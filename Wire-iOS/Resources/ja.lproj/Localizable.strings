@@ -27,6 +27,7 @@
 "general.edit" = "編集";
 "general.done" = "完了";
 "general.confirm" = "OK";
+"general.later" = "あとで";
 "general.skip" = "後で";
 "general.accept" = "承諾";
 "general.decline" = "不要です";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
 "image.add_sketch" = "スケッチを追加";
+"image.add_emoji" = "絵文字を追加";
 "image.edit_image" = "イメージを編集します";
 
 // Camera access
-"camera_access.denied" = "Wireはカメラへアクセスする必要が有ります";
+"camera_access.denied" = "\"Wire\"が カメラへのアクセスを求めています。";
 "video_call.camera_access.denied" = "Wire はカメラへのアクセス権を持っていません。";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Wireの設定で有効にします";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube動画 プレビュー";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud 楽曲 プレビュー";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud プレイリスト プレビュー";
+
+// Digital signature
+"digital_signature.alert.error" = "残念ながら、デジタル署名に失敗しました。";
+"digital_signature.alert.error.no_consent_url" = "申し訳ありませんが、署名フォームが開きませんでした。もう一度やり直してください。";
+"digital_signature.alert.error.no_signature" = "申し訳ありませんが、デジタル署名に失敗しました。もう一度やり直してください。";
+"digital_signature.alert.download_necessary" = "署名する前に、ドキュメントを保存してお読みください。";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "開く";
 "content.message.forward.to" = "検索...";
 "content.message.open" = "開く";
+"content.message.sign" = "署名";
 "content.message.copy" = "コピー";
 "content.message.download" = "ダウンロード";
 "content.message.details" = "詳細";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wireはマイクにアクセスする必要が有ります";
+"voice.alert.microphone_warning.title" = "\"Wire\" がマイクへのアクセスを求めています。";
 
-"voice.alert.camera_warning.title" = "Wireはカメラへのアクセスする必要が有ります";
+"voice.alert.camera_warning.title" = "\"Wire\"が カメラへのアクセスを求めています。";
 
 "voice.top_overlay.tap_to_return" = "タップして通話に戻る";
 "voice.top_overlay.accessibility_title" = "通話中";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "再接続…";
 "call.status.terminating" = "通話終了中...";
 "call.status.constant_bitrate" = "固定ビットレート";
+"call.status.variable_bitrate" = "可変ビット レート";
 
 "call.participants.show_all" = "全てを表示 (%@)";
 "call.participants.list.title" = "参加者";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "ユーザーネーム";
 "self.settings.account_section.handle.change.save" = "保存";
-"self.settings.account_section.handle.change.footer" = "少なくとも２文字。a-z, 0-9, および _ のみが利用できます。";
+"self.settings.account_section.handle.change.footer" = "最低2文字。 a-z, 0-9, '.' (ピリオド), '-' (ハイフン), '_' (アンダースコア) のみ使用できます。";
 "self.settings.account_section.handle.change.footer.unavailable" = "すでに利用されています";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "ユーザーネームを設定できません";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "すべてのあなたの会話の内容が完全に消去されます。";
 
 "self.settings.advanced.title" = "高度";
+"self.settings.advanced.conference_calling.title" = "電話会議";
+"self.settings.advanced.conference_calling.subtitle" = "オンの場合は、音声/ビデオ会議の呼び出しが有効になり、より多くの人数が参加できます。";
+"self.settings.advanced.conference_calling.toggle" = "ベータプログラム";
 "self.settings.advanced.troubleshooting.title" = "トラブルシューティング";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "デバッグ報告";
 "self.settings.advanced.debugging_tools.title" = "デバッグツール";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "問題が生じたようです。もう一度やり直してください。";
 "error.user.needs_credentials" = "詳細を確認して、もう一度やり直してください。";
+"error.user.domain_blocked" = "このメールはチームの招待が必要です。招待を受けるには組織の IT 管理者にお問い合わせください。";
 "error.user.invalid_credentials" = "詳細を確認して、もう一度やり直してください。";
 "error.user.account_pending_activation" = "アクセスをしようとしているアカウントは、ライセンス認証の保留中です。詳細をご確認ください。";
 "error.user.network_error" = "ネットワークに問題があるようです。後でもう一度お試しください。";
