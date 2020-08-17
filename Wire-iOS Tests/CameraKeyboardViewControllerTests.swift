@@ -180,21 +180,6 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfItems(inSection: 0), 1)
     }
 
-    func testThatSecondSectionContainsCameraRollElements() {
-        // given
-        let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        setupSut(permissions: permissions)
-        self.sut.delegate = self.delegateMock
-        self.prepareForSnapshot()
-
-        // when
-        let itemCell = self.sut.collectionView.cellForItem(at: IndexPath(item: 0, section: 1))
-
-        // then
-        XCTAssertTrue(itemCell is AssetCell)
-        XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
-    }
-
     private func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
                                                file: StaticString = #file,
                                                testName: String = #function,
