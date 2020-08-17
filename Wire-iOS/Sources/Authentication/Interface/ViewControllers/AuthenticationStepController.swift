@@ -185,7 +185,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     private func updateHeadlineLabelFont() {
-        headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
+        headlineLabel.font = self.view.frame.size.width > CGFloat.iPhone4Inch.width ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
 
     func setSecondaryViewHidden(_ isHidden: Bool) {

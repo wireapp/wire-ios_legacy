@@ -54,9 +54,25 @@ extension XCTestCase {
                               file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-
+        
         for(config, name) in XCTestCase.phoneConfigNames {
             verify(matching: value, as: .image(on: config), named: name,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+    
+
+    func verifyAllIPhoneSizes(createSut: (CGSize) -> UIViewController,
+                              file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+
+        for(config, name) in XCTestCase.phoneConfigNames {
+            verify(matching: createSut(config.size!),
+                   as: .image(on: config),
+                   named: name,
                    file: file,
                    testName: testName,
                    line: line)

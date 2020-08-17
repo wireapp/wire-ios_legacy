@@ -210,7 +210,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark, useCompactLayout: view.frame.size.height <= CGFloat.iPhone4Inch.height)
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
@@ -250,9 +250,24 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     }
 }
 
+// MARK: - UIAdaptivePresentationControllerDelegate
 extension SelfProfileViewController: UIAdaptivePresentationControllerDelegate {
     @available(iOS 13.0, *)
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         appLockSetupViewControllerDismissed()
     }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // more space for iPhone 4-inch to prevent keyboard hides the create passcode button
+        if view.frame.size.height <= CGFloat.iPhone4Inch.height {
+            return .fullScreen
+        } else {
+            if #available(iOS 13.0, *) {
+                return .automatic
+            } else {
+                return .none
+            }
+        }
+    }
+
 }
