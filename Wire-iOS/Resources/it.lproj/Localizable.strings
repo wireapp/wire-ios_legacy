@@ -27,6 +27,7 @@
 "general.edit" = "Modifica";
 "general.done" = "Fatto";
 "general.confirm" = "OK";
+"general.later" = "Più tardi";
 "general.skip" = "Non ora";
 "general.accept" = "Accetta";
 "general.decline" = "No, grazie";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annulla";
 "image.add_sketch" = "Aggiungi uno schizzo";
+"image.add_emoji" = "Aggiungi un emoji";
 "image.edit_image" = "Modifica immagine";
 
 // Camera access
-"camera_access.denied" = "Wire ha bisogno di accedere alla fotocamera.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire non ha accesso alla fotocamera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Abilitalo nelle impostazioni di Wire";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "Anteprima video Youtube";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "Anteprima canzone SoundCloud";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Anteprima playlist SoundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "Sfortunatamente, la tua firma digitale non è riuscita.";
+"digital_signature.alert.error.no_consent_url" = "Sfortunatamente, il modulo di firma non è stato aperto. Riprova.";
+"digital_signature.alert.error.no_signature" = "Sfortunatamente, la tua firma digitale non è riuscita. Riprova.";
+"digital_signature.alert.download_necessary" = "Salvare e leggere il documento prima di firmarlo.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
 "content.message.open" = "Apri";
+"content.message.sign" = "Firma";
 "content.message.copy" = "Copia";
 "content.message.download" = "Scarica";
 "content.message.details" = "Dettagli";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Puoi avere solo una chiamata attiva alla volta";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire ha bisogno di accedere alla fotocamera.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tocca per tornare alla chiamata";
 "voice.top_overlay.accessibility_title" = "Chiamata in corso";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Riconnessione in corso…";
 "call.status.terminating" = "In fase di chiusura…";
 "call.status.constant_bitrate" = "Bit Rate costante";
+"call.status.variable_bitrate" = "Tasso Di Bit Rate";
 
 "call.participants.show_all" = "Mostra tutti (%@)";
 "call.participants.list.title" = "Partecipanti";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Username";
 "self.settings.account_section.handle.change.save" = "Salva";
-"self.settings.account_section.handle.change.footer" = "Almeno 2 caratteri. a-z, 0-9, e solo _";
+"self.settings.account_section.handle.change.footer" = "Almeno 2 caratteri. a-z, 0-9, e solo  '.', '-', '_'";
 "self.settings.account_section.handle.change.footer.unavailable" = "E' già stato scelto";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Impossibile scegliere username";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Questo cancellerà il contenuto di tutte le tue conversazioni.";
 
 "self.settings.advanced.title" = "Avanzate";
+"self.settings.advanced.conference_calling.title" = "Chiamate conferenza";
+"self.settings.advanced.conference_calling.subtitle" = "Quando questo è attivato, le chiamate audio e video di conferenze sono abilitate, il che consente un numero maggiore di partecipanti.";
+"self.settings.advanced.conference_calling.toggle" = "Programma beta";
 "self.settings.advanced.troubleshooting.title" = "Risoluzione dei problemi";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Report di debug";
 "self.settings.advanced.debugging_tools.title" = "Strumenti di debug";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Qualcosa è andato storto, si prega di riprovare";
 "error.user.needs_credentials" = "Verifica i tuoi dati e riprova.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Verifica i tuoi dati e riprova.";
 "error.user.account_pending_activation" = "L'account a cui stai cercando di accedere è in attesa di attivazione. Verifica i dati inseriti.";
 "error.user.network_error" = "Sembra esserci un problema con la tua rete. Per favore, riprova più tardi.";
