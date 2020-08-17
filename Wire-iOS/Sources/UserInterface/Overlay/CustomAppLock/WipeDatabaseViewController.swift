@@ -16,6 +16,8 @@
 //
 
 import UIKit
+import WireSyncEngine
+import WireUtilities
 
 final class WipeDatabaseViewController: UIViewController {
 
@@ -36,8 +38,20 @@ final class WipeDatabaseViewController: UIViewController {
 
         let textColor = UIColor.from(scheme: .textForeground)
 
-        let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) && UIFont.normalRegularFont && textColor
-        let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) && FontSpec(.normal, .bold).font!  && textColor
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: textColor]
+
+        
+        let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) &&
+                                UIFont.normalRegularFont &&
+                                baseAttributes
+        let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) &&
+                                FontSpec(.normal, .bold).font! &&
+                                baseAttributes
 
         label.text = " "
         label.attributedText = headingText + highlightText
@@ -50,10 +64,10 @@ final class WipeDatabaseViewController: UIViewController {
 
         switch ColorScheme.default.variant {
         case .light:
-            button = Button(style: .full)
+            button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
             button.setBackgroundImageColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         case .dark:
-            button = Button(style: .fullMonochrome)
+            button = Button(style: .fullMonochrome, titleLabelFont: .smallSemiboldFont)
             button.setTitleColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         }
 
@@ -65,13 +79,31 @@ final class WipeDatabaseViewController: UIViewController {
     }()
 
     @objc
-    func onConfirmButtonPressed(sender: Button?) {
+    private func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
 
+    private func deleteAccounts() {
+        SessionManager.shared?.wipeDatabase()
+    }
+        
+    private func displayWipeCompletionScreen() {
+        let wipeCompletionViewController = WipeCompletionViewController()
+        wipeCompletionViewController.modalPresentationStyle = .fullScreen
+        
+        AppDelegate.shared.notificationsWindow?.isHidden = false
+        present(wipeCompletionViewController, animated: true)
+    }
+    
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
-            //TODO: wipe the DB, go to next screen
+            
+            self?.deleteAccounts()
+            Keychain.deletePasscode()
+            ///TODO: reset passcode setting to false?
+            
+            self?.displayWipeCompletionScreen()
+
             }, inputValidation: { confirmText in
                 return confirmText == "wipe_database.alert.confirm_input".localized
         })

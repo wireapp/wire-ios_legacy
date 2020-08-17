@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,24 +19,9 @@
 import Foundation
 import UIKit
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        accessibilityIdentifier = GridCell.reuseIdentifier
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
+extension CGSize {
+    enum iPhoneSize {
+        static let iPhone4Inch: CGSize = CGSize(width: CGFloat.iPhone4Inch.width, height: CGFloat.iPhone4Inch.height)
+        static let iPhone4_7Inch: CGSize = CGSize(width: 375, height: 667)
     }
 }

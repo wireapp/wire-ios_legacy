@@ -34,6 +34,11 @@ extension StyleKitIcon.Size {
 }
 
 extension CGFloat {
+    enum iPhone4Inch {
+        static let width: CGFloat = 320
+        static let height: CGFloat = 568
+    }
+
     enum WipeCompletion {
         static let buttonHeight: CGFloat = 48
     }

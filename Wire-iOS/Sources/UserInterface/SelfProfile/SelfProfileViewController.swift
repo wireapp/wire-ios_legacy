@@ -210,11 +210,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark, useCompactLayout: view.frame.size.height <= CGFloat.iPhone4Inch.height)
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
-            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
+            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
             
             let closeItem = UIBarButtonItem.createCloseItem()
             closeItem.tintColor = .white
@@ -230,9 +230,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             wrappedViewController.presentationController?.delegate = self
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
-        } else {            
-            // wipe saved passcode
-            try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
+        } else {
+            Keychain.deletePasscode()
         }
     }
 
@@ -251,9 +250,24 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     }
 }
 
+// MARK: - UIAdaptivePresentationControllerDelegate
 extension SelfProfileViewController: UIAdaptivePresentationControllerDelegate {
     @available(iOS 13.0, *)
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         appLockSetupViewControllerDismissed()
     }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // more space for iPhone 4-inch to prevent keyboard hides the create passcode button
+        if view.frame.size.height <= CGFloat.iPhone4Inch.height {
+            return .fullScreen
+        } else {
+            if #available(iOS 13.0, *) {
+                return .automatic
+            } else {
+                return .none
+            }
+        }
+    }
+
 }

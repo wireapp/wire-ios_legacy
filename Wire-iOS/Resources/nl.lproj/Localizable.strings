@@ -27,6 +27,7 @@
 "general.edit" = "Bewerken";
 "general.done" = "Klaar";
 "general.confirm" = "OK";
+"general.later" = "Later";
 "general.skip" = "Later";
 "general.accept" = "Neem op";
 "general.decline" = "Nee, bedankt";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuleer";
 "image.add_sketch" = "Voeg een tekening toe";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Bewerk afbeelding";
 
 // Camera access
-"camera_access.denied" = "Wire heeft toegang nodig tot de camera.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire heeft geen toegang to je camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Open instellingen voor Wire om toegang tot de camera te geven";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video voorvertoning";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud nummer voorvertoning";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud afspeellijst voorvertoning";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Tonen";
 "content.message.forward.to" = "Zoeken…";
 "content.message.open" = "Openen";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopiëren";
 "content.message.download" = "Download";
 "content.message.details" = "Beschrijving";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
 "voice.alert.call_in_progress.confirm" = "OK";
 
-"voice.alert.microphone_warning.title" = "Wire heeft toegang nodig tot de microfoon.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire heeft toegang nodig tot de camera.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tik om terug te keren";
 "voice.top_overlay.accessibility_title" = "Uitgaand gesprek";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Opnieuw verbinden…";
 "call.status.terminating" = "Ophangen…";
 "call.status.constant_bitrate" = "Constante Bit Rate";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Toon alle (%@)";
 "call.participants.list.title" = "Deelnemers";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Gebruikersnaam";
 "self.settings.account_section.handle.change.save" = "Opslaan";
-"self.settings.account_section.handle.change.footer" = "Ten minste 2 tekens. a—z, 0—9, and _ aleen.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Al in gebruik";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Niet mogelijk om je gebruikersnaam te registreren";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Dit verwijdert alle inhoud van al je gesprekken.";
 
 "self.settings.advanced.title" = "Geavanceerd";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Probleemoplossing";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Foutrapportage";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Er is een fout opgetreden, probeer het nogmaals";
 "error.user.needs_credentials" = "Controleer je gegevens en probeer het nogmaals.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Controleer je gegevens en probeer het nogmaals.";
 "error.user.account_pending_activation" = "Het account dat je probeert te bereiken is nog niet geactiveerd. Verifieer je gegevens.";
 "error.user.network_error" = "Er lijkt een probleem te zijn met het netwerk. Probeer het later opnieuw.";

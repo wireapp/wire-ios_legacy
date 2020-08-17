@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -17,26 +17,11 @@
 //
 
 import Foundation
-import UIKit
+import WireUtilities
 
-class GridCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: GridCell.self)
+extension Keychain {
+    static func deletePasscode() {
+        try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        accessibilityIdentifier = GridCell.reuseIdentifier
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func add(streamView: UIView) {
-        guard !contentView.subviews.contains(streamView) else { return }
-        contentView.subviews.forEach { $0.removeFromSuperview() }
-        contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
     }
 }

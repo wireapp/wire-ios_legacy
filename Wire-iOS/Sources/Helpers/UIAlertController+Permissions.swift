@@ -22,9 +22,32 @@ import WireCommonComponents
 
 extension UIAlertController {
     class func cameraPermissionAlert(with completion: AlertActionHandler? = nil) -> UIAlertController {
-        let alert = UIAlertController(
+        return permissionAlert(
             title: "voice.alert.camera_warning.title".localized,
             message: "NSCameraUsageDescription".infoPlistLocalized,
+            completion: completion
+        )
+    }
+
+    class var microphonePermissionAlert: UIAlertController {
+        return permissionAlert(
+            title: "voice.alert.microphone_warning.title".localized,
+            message: "NSMicrophoneUsageDescription".infoPlistLocalized
+        )
+    }
+    
+    class var photoLibraryPermissionAlert: UIAlertController {
+        return permissionAlert(
+            title: "library.alert.permission_warning.title".localized,
+            message: "library.alert.permission_warning.not_allowed.explaination".localized
+        )
+    }
+    
+    private class func permissionAlert(title: String, message: String, completion: AlertActionHandler? = nil) -> UIAlertController {
+        
+        let alert = UIAlertController(
+            title: title,
+            message: message,
             preferredStyle: .alert
         )
         

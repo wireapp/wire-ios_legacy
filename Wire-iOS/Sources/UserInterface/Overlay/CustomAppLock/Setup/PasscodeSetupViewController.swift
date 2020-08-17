@@ -64,10 +64,12 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     lazy var passcodeTextField: AccessoryTextField = {
-
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
-
+        textField.delegate = self
+        
+        textField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        
         return textField
     }()
 
@@ -78,24 +80,40 @@ final class PasscodeSetupViewController: UIViewController {
         return label
     }()
 
+    private let useCompactLayout: Bool
+        
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
         label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        
+        let regularFont: UIFont
+        let heightFont: UIFont
+        let lineHeight: CGFloat
 
+        if useCompactLayout  {
+            regularFont = FontSpec(.small, .regular).font!
+            heightFont = FontSpec(.small, .bold).font!
+            lineHeight = 14
+        } else {
+            regularFont = UIFont.normalRegularFont
+            heightFont = FontSpec(.normal, .bold).font!
+            lineHeight = 20
+        }
+        
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = 20
-        paragraphStyle.maximumLineHeight = 20
+        paragraphStyle.minimumLineHeight = lineHeight
+        paragraphStyle.maximumLineHeight = lineHeight
 
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && UIFont.normalRegularFont
+        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && regularFont
 
-        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && FontSpec(.normal, .bold).font!
+        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && heightFont
 
         label.text = " "
         label.attributedText = headingText + highlightText
@@ -124,13 +142,19 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant? = nil) {
+                  variant: ColorSchemeVariant? = nil,
+                  useCompactLayout: Bool) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
+        self.useCompactLayout = useCompactLayout
 
         super.init(nibName: nil, bundle: nil)
 
         setupViews()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     private func setupViews() {
@@ -144,11 +168,11 @@ final class PasscodeSetupViewController: UIViewController {
         contentView.addSubview(stackView)
 
         [titleLabel,
-         SpacingView(10),
+         SpacingView(useCompactLayout ? 1 : 10),
          infoLabel,
          UILabel.createHintLabel(variant: variant),
          passcodeTextField,
-         SpacingView(16)].forEach {
+         SpacingView(useCompactLayout ? 2 : 16)].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -157,8 +181,8 @@ final class PasscodeSetupViewController: UIViewController {
                 label.font = UIFont.smallSemiboldFont
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
-
                 label.attributedText = $0.descriptionWithInvalidIcon
+
                 stackView.addArrangedSubview(label)
             }
         }
@@ -209,13 +233,36 @@ final class PasscodeSetupViewController: UIViewController {
         ])
     }
 
-    @objc
-    func onCreateCodeButtonPressed(sender: AnyObject?) {
+    private func storePasscode() {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
         dismiss(animated: true)
     }
+    
+    @objc
+    private func textFieldDidChange(textField: UITextField) {
+        passcodeTextField.returnKeyType = presenter.isPasscodeValid ? .done : .default
+        passcodeTextField.reloadInputViews()
+    }
+    
+    @objc
+    private func onCreateCodeButtonPressed(sender: AnyObject?) {
+        storePasscode()
+    }
 
+}
+
+// MARK: - UITextFieldDelegate
+
+extension PasscodeSetupViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard presenter.isPasscodeValid else {
+            return false
+        }
+        
+        storePasscode()
+        return true
+    }
 }
 
 // MARK: - AccessoryTextFieldDelegate
