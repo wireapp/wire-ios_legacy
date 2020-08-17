@@ -210,7 +210,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
         if newValue {
             self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark, useCompactLayout: view.frame.size.height <= CGFloat.iPhone4Inch.height)
+            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             

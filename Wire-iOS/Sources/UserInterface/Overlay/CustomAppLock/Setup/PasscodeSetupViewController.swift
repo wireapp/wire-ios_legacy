@@ -139,10 +139,12 @@ final class PasscodeSetupViewController: UIViewController {
 
     required init(callback: ResultHandler?,
                   variant: ColorSchemeVariant? = nil,
-                  useCompactLayout: Bool) {
+                  useCompactLayout: Bool? = nil) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
-        self.useCompactLayout = useCompactLayout
+        
+        self.useCompactLayout = useCompactLayout ??
+                                (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
 
         super.init(nibName: nil, bundle: nil)
 

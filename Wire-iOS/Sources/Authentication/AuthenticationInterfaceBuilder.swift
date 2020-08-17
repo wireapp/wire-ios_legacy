@@ -100,7 +100,7 @@ class AuthenticationInterfaceBuilder {
 
         case .passcodeSetup:
             return PasscodeSetupViewController(callback: nil,
-                                               variant: .light, useCompactLayout: AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height) ///TODO: optional useCompactLayout
+                                               variant: .light)
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
             let viewController = makeViewController(for: manageClientsInvitation)
