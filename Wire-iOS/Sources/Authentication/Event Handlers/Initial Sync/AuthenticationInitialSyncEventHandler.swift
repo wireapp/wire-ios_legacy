@@ -57,7 +57,7 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
                 actions.append(postAction)
             }
         }
-        
+
         return actions
     }
 

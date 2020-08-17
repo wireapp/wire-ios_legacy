@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,8 +18,8 @@
 import Foundation
 
 extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
-    
+
     func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
         eventResponderChain.handleEvent(ofType: .passcodeSetupCompleted)
-    }    
+    }
 }

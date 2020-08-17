@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -18,11 +17,11 @@
 
 import Foundation
 final class AuthenticationPasscodeSetupEventHandler: AuthenticationEventHandler {
-    
+
     weak var statusProvider: AuthenticationStatusProvider?
-    
+
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
         return [postAction]
     }
-    
+
 }

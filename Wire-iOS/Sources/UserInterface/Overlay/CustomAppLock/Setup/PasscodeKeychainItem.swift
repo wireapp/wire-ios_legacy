@@ -19,7 +19,7 @@ import Foundation
 import WireUtilities
 
 enum PasscodeKeychainItem: KeychainItem {
-    
+
     case passcode
 
     var uniqueIdentifier: String {
