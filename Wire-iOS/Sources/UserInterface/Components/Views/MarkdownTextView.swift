@@ -63,15 +63,15 @@ final class MarkdownTextView: NextResponderTextView {
     override func canPerformAction(_ action: Selector,
                                    withSender sender: Any?) -> Bool {
         switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)) where !SecurityFlags.clipboard.isEnabled,
-             #selector(UIResponderStandardEditActions.cut(_:)) where !SecurityFlags.clipboard.isEnabled,
-             #selector(UIResponderStandardEditActions.copy(_:)) where !SecurityFlags.clipboard.isEnabled:
-             return SecurityFlags.clipboard.isEnabled
+        case #selector(UIResponderStandardEditActions.paste(_:)),
+             #selector(UIResponderStandardEditActions.cut(_:)),
+             #selector(UIResponderStandardEditActions.copy(_:)):
+            guard SecurityFlags.clipboard.isEnabled else { return false }
+            fallthrough
         default:
             return super.canPerformAction(action, withSender: sender)
         }
     }
-    
     
     func setText(_ newText: String, withMentions mentions: [Mention]) {
         let mutable = NSMutableAttributedString(string: newText, attributes: currentAttributes)
