@@ -42,7 +42,6 @@ class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDesc
  */
 
 class BackupRestoreStepDescription: AuthenticationStepDescription {
-//TODO: app lock after OK pressed
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String

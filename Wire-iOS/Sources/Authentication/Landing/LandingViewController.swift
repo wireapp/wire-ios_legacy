@@ -32,11 +32,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - State
 
-    weak var authenticationCoordinator: AuthenticationCoordinator? {
-        didSet {
-            
-        }
-    }
+    weak var authenticationCoordinator: AuthenticationCoordinator?
 
     var delegate: LandingViewControllerDelegate? {
         return authenticationCoordinator

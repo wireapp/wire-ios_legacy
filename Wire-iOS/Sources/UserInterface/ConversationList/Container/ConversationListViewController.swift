@@ -171,7 +171,6 @@ final class ConversationListViewController: UIViewController {
 
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
-            //TODO: passcode here?
             ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }

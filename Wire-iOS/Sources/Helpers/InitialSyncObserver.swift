@@ -50,7 +50,7 @@ final class InitialSyncObserver: NSObject, ZMInitialSyncCompletionObserver {
     
     // MARK: - ZMInitialSyncCompletionObserver
     
-    func initialSyncCompleted() { ///TODO: copy to passcode?
+    func initialSyncCompleted() {
         handleCompletedSync()
         token = nil
     }

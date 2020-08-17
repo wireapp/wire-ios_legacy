@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-///TODO: passcode delegate?
+
 extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
