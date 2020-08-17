@@ -63,9 +63,9 @@ final class MarkdownTextView: NextResponderTextView {
     override func canPerformAction(_ action: Selector,
                                    withSender sender: Any?) -> Bool {
         switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)),
-             #selector(UIResponderStandardEditActions.cut(_:)),
-             #selector(UIResponderStandardEditActions.copy(_:)):
+        case #selector(UIResponderStandardEditActions.paste(_:)) where !SecurityFlags.clipboard.isEnabled,
+             #selector(UIResponderStandardEditActions.cut(_:)) where !SecurityFlags.clipboard.isEnabled,
+             #selector(UIResponderStandardEditActions.copy(_:)) where !SecurityFlags.clipboard.isEnabled:
              return SecurityFlags.clipboard.isEnabled
         default:
             return super.canPerformAction(action, withSender: sender)
