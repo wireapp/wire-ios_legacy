@@ -494,7 +494,8 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard false == Settings.shared[.chatHeadsDisabled] else {
+        let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
+        guard !chatHeadsDisabled else {
             return false
         }
         
