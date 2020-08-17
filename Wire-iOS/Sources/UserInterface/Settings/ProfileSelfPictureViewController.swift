@@ -132,7 +132,7 @@ final class ProfileSelfPictureViewController: UIViewController {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
         
-        libraryButton.isHidden = !SecurityFlags.profileCameraRoll.isEnabled
+        libraryButton.isHidden = !SecurityFlags.cameraRoll.isEnabled
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
         libraryButton.accessibilityIdentifier = "CameraLibraryButton"
