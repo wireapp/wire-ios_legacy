@@ -21,15 +21,14 @@ import Foundation
 enum SecurityFlags {
     case clipboard
     case saveMessage
-    case profileCameraRoll
     case gifAction
     case externalFilePicker
-    case keyboardCameraRoll
     case generateLinkPreviews
     case forceConstantBitRateCalls
     case openFilePreview
     case customBackend
     case shareExtension
+    case cameraRoll
     
     var bundleKey: String {
         switch self {
@@ -37,14 +36,10 @@ enum SecurityFlags {
             return "ClipboardEnabled"
         case .saveMessage:
             return "SaveMessageEnabled"
-        case .profileCameraRoll:
-            return "ProfileCameraRollEnabled"
         case .gifAction:
             return "FileGifActionEnabled"
         case .externalFilePicker:
             return "ExternalFilePickerEnabled"
-        case .keyboardCameraRoll:
-            return "KeyboardCameraRollEnabled"
         case .generateLinkPreviews:
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:
@@ -55,6 +50,8 @@ enum SecurityFlags {
             return "CustomBackendEnabled"
         case .shareExtension:
             return "ShareExtensionEnabled"
+        case .cameraRoll:
+            return "CameraRollEnanbled"
         }
     }
     

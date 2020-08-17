@@ -76,7 +76,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.imageManagerType = imageManagerType
-        self.assetLibrary = SecurityFlags.keyboardCameraRoll.isEnabled ? AssetLibrary() : nil
+        self.assetLibrary = SecurityFlags.cameraRoll.isEnabled ? AssetLibrary() : nil
         self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary?.delegate = self

@@ -188,7 +188,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     private func writeToSavedPhotoAlbumIfNecessary(imageData: Data, isFromCamera: Bool) {
         guard isFromCamera,
-              SecurityFlags.keyboardCameraRoll.isEnabled,
+              SecurityFlags.cameraRoll.isEnabled,
               let image = UIImage(data: imageData as Data)
         else {
             return
@@ -273,7 +273,7 @@ extension ConversationInputBarViewController {
             }
         } else {
             UIApplication.wr_requestVideoAccess({ granted in
-                if SecurityFlags.keyboardCameraRoll.isEnabled {
+                if SecurityFlags.cameraRoll.isEnabled {
                     self.executeWithCameraRollPermission() { success in
                         self.mode = .camera
                         self.inputBar.textView.becomeFirstResponder()
