@@ -51,7 +51,7 @@ enum SecurityFlags {
         case .shareExtension:
             return "ShareExtensionEnabled"
         case .cameraRoll:
-            return "CameraRollEnanbled"
+            return "CameraRollEnabled"
         }
     }
     

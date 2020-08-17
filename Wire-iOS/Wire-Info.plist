@@ -202,7 +202,7 @@
 	<string>${CUSTOM_BACKEND_ENABLED}</string>
 	<key>ShareExtensionEnabled</key>
 	<string>${SHARE_EXTENSION_ENABLED}</string>
-	<key>CameraRollEnanbled</key>
+	<key>CameraRollEnabled</key>
 	<string>${CAMERA_ROLL_ENABLED}</string>
 </dict>
 </plist>
