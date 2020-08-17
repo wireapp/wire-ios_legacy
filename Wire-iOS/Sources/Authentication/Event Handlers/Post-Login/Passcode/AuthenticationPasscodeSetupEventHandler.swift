@@ -22,7 +22,7 @@ final class AuthenticationPasscodeSetupEventHandler: AuthenticationEventHandler 
     weak var statusProvider: AuthenticationStatusProvider?
     
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [isRegistered ? .completeRegistrationFlow : .completeLoginFlow]
+        return [postAction]
     }
     
 }

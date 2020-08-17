@@ -24,4 +24,14 @@ extension Keychain {
         try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
 
     }
+    
+    static func fetchPasscode() -> Data? {
+        let data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode)
+        
+        if data?.isEmpty == true {
+            return nil
+        }
+        
+        return data
+    }
 }
