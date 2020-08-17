@@ -188,8 +188,6 @@
 	<string>${CLIPBOARD_ENABLED}</string>
 	<key>SaveMessageEnabled</key>
 	<string>${SAVE_MESSAGE_ENABLED}</string>
-	<key>ProfileCameraRollEnabled</key>
-	<string>${PROFILE_CAMERA_ROLL_ENABLED}</string>
 	<key>FileGifActionEnabled</key>
 	<string>${FILE_GIF_ACTION_ENABLED}</string>
 	<key>ExternalFilePickerEnabled</key>
@@ -204,5 +202,7 @@
 	<string>${CUSTOM_BACKEND_ENABLED}</string>
 	<key>ShareExtensionEnabled</key>
 	<string>${SHARE_EXTENSION_ENABLED}</string>
+	<key>CameraRollEnabled</key>
+	<string>${CAMERA_ROLL_ENABLED}</string>
 </dict>
 </plist>
