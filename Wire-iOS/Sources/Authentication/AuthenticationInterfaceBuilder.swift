@@ -99,9 +99,9 @@ class AuthenticationInterfaceBuilder {
             return makeCredentialsViewController(for: .registration(credentialsFlowType))
 
         case .passcodeSetup:
-            return PasscodeSetupViewController(callback: nil, variant: .light)
+            return PasscodeSetupViewController(callback: nil,
+                                               variant: .light, useCompactLayout: AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height) ///TODO: optional useCompactLayout
         case .clientManagement:
-            //TODO: insert app lock set up here?
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
             let viewController = makeViewController(for: manageClientsInvitation)
             viewController.setRightItem("registration.signin.too_many_devices.sign_out_button.title".localized, withAction: .signOut(warn: true), accessibilityID: "signOutButton")

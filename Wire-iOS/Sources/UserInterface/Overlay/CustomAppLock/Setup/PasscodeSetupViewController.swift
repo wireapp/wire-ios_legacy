@@ -33,13 +33,9 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     }
 }
 
-protocol PasscodeSetupViewControllerDelegate: class {
-    
-}
-
 final class PasscodeSetupViewController: UIViewController {
     
-    weak var PasscodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
+    weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
     weak var authenticationCoordinator: AuthenticationCoordinator?
@@ -236,6 +232,8 @@ final class PasscodeSetupViewController: UIViewController {
     private func storePasscode() {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
+        
+        authenticationCoordinator?.passcodeSetupControllerDidFinish(self)
         dismiss(animated: true)
     }
     

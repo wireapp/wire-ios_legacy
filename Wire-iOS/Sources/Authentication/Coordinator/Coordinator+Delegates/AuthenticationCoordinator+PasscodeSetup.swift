@@ -18,10 +18,9 @@
 
 import Foundation
 
-extension AuthenticationCoordinator { //TODO: PasscodeSetupControllerDelegate {
+extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
     
-    func passcodeSetupControllerDidFinish(/*_ controller: PasscodeSetupController*/) {
-        self.executeActions([.completePasscodeSetup])
-    }
-    
+    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
+        eventResponderChain.handleEvent(ofType: .passcodeSetupCompleted)
+    }    
 }

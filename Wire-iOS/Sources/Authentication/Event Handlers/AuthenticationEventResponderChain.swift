@@ -125,9 +125,6 @@ class AuthenticationEventResponderChain {
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
 
-        // passcodeSetupHandlers
-        registerHandler(AuthenticationPasscodeSetupEventHandler(), to: &passcodeSetupHandlers)
-
         // clientRegistrationErrorHandlers
         registerHandler(AuthenticationClientLimitErrorHandler(), to: &clientRegistrationErrorHandlers)
         registerHandler(AuthenticationNoCredentialsErrorHandler(), to: &clientRegistrationErrorHandlers)
@@ -163,6 +160,9 @@ class AuthenticationEventResponderChain {
         registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(TeamCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
+
+        // passcodeSetupHandlers
+        registerHandler(AuthenticationPasscodeSetupEventHandler(), to: &passcodeSetupHandlers)
 
         // userProfileChangeObservers
         registerHandler(UserEmailChangeEventHandler(), to: &userProfileChangeObservers)

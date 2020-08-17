@@ -17,13 +17,12 @@
 //
 
 import Foundation
-///TODO: maybe not needed?
 final class AuthenticationPasscodeSetupEventHandler: AuthenticationEventHandler {
     
     weak var statusProvider: AuthenticationStatusProvider?
     
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-            return [/*.startPasscodeSetup*/]
+        return [isRegistered ? .completeRegistrationFlow : .completeLoginFlow]
     }
     
 }

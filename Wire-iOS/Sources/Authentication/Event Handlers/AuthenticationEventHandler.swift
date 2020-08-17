@@ -55,3 +55,9 @@ protocol AuthenticationEventHandler: class {
     func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationCoordinatorAction]?
 
 }
+
+extension AuthenticationEventHandler {
+    var isRegistered: Bool {
+        return statusProvider?.authenticatedUserWasRegisteredOnThisDevice == true
+    }
+}

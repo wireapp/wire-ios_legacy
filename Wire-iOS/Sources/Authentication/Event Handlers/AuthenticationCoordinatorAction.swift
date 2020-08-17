@@ -33,7 +33,6 @@ enum AuthenticationCoordinatorAction {
     case presentErrorAlert(AuthenticationCoordinatorErrorAlert)
     case completeBackupStep
     case startPasscodeSetup
-    case completePasscodeSetup
     case completeLoginFlow
     case completeRegistrationFlow
     case startPostLoginFlow

@@ -781,7 +781,7 @@
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
 		A97BC011241EA2660069E145 /* NSAttributedString+EnumerateAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */; };
-		A97CC15224DC6D1800A6328C /* PasscodeSetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15124DC6D1800A6328C /* PasscodeSetupController.swift */; };
+		A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */; };
 		A97CC15524DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15424DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift */; };
 		A97CC15724DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15624DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift */; };
 		A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FA6FB23B57067005257A8 /* StartUIViewController.swift */; };
@@ -2408,7 +2408,7 @@
 		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
 		A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+EnumerateAttachment.swift"; sourceTree = "<group>"; };
-		A97CC15124DC6D1800A6328C /* PasscodeSetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupController.swift; sourceTree = "<group>"; };
+		A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A97CC15424DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPasscodeSetupEventHandler.swift; sourceTree = "<group>"; };
 		A97CC15624DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PasscodeSetup.swift"; sourceTree = "<group>"; };
 		A97FA6FB23B57067005257A8 /* StartUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewController.swift; sourceTree = "<group>"; };
@@ -5601,7 +5601,7 @@
 				A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */,
 				A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */,
 				A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */,
-				A97CC15124DC6D1800A6328C /* PasscodeSetupController.swift */,
+				A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -7855,7 +7855,7 @@
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */,
 				D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */,
-				A97CC15224DC6D1800A6328C /* PasscodeSetupController.swift in Sources */,
+				A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */,
 				EEE81E9423E0467F00A1D035 /* TopPeopleLineCollectionViewController.swift in Sources */,
 				BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */,
 				5E8C38A8212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift in Sources */,

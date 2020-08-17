@@ -18,7 +18,6 @@
 
 import Foundation
 
-final class PasscodeSetupController {
-//    weak var delegate: PasscodeSetupControllerDelegate?
-
+protocol PasscodeSetupViewControllerDelegate: class {
+    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController)
 }
