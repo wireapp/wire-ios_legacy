@@ -49,9 +49,10 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
         if let nextStep = nextRegistrationStep {
             actions.append(.transition(nextStep, mode: .reset))
         } else {
-            // insert passcode step if new registered or first time login but passcode is not store.(Upgrade from pervious version)
+            // append passcode step if new registered or first time login but passcode is not store.(Upgrade from pervious version)
             if AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
-                (isRegistered || (AppLock.isActive && Keychain.fetchPasscode() == nil)) {
+               AppLock.isActive &&
+               Keychain.fetchPasscode() == nil {
                 actions.append(.startPasscodeSetup)
             } else {
                 actions.append(postAction)
