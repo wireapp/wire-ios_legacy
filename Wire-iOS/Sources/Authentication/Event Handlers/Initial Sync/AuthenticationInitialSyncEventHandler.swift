@@ -63,10 +63,3 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
     }
 
 }
-
-extension AppLock {
-    static var isCustomPassCodeNotSet: Bool {
-        return AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
-            Keychain.fetchPasscode() == nil
-    }
-}
