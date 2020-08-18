@@ -137,6 +137,12 @@ final class PasscodeSetupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
+    /// init with parameters
+    /// - Parameters:
+    ///   - callback: callback for storing passcode result.
+    ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
+    ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
     required init(callback: ResultHandler?,
                   variant: ColorSchemeVariant? = nil,
                   useCompactLayout: Bool? = nil) {
