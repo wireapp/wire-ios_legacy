@@ -45,6 +45,10 @@ extension SettingsCellDescriptorFactory {
 
         sections.append(privacySection())
 
+        if Bundle.developerModeEnabled {
+            sections.append(encryptionAtRestSection())
+        }
+
         #if !DATA_COLLECTION_DISABLED
             sections.append(personalInformationSection())
         #endif
@@ -88,11 +92,20 @@ extension SettingsCellDescriptorFactory {
             header: "self.settings.account_appearance_group.title".localized
         )
     }
+
+    // TODO: John remove warning and consult design about this setting.
+
+    func encryptionAtRestSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [encryptMessagesAtRestElement()],
+            header: "Encryption at Rest",
+            footer: "WARNING: this feature is experimental and may lead to data loss. Use at your own risk."
+        )
+    }
     
     func privacySection() -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(
-            cellDescriptors: [encryptMessagesAtRestElement(),
-                              readReceiptsEnabledElement()],
+            cellDescriptors: [readReceiptsEnabledElement()],
             header: "self.settings.privacy_section_group.title".localized,
             footer: "self.settings.privacy_section_group.subtitle".localized
         )
