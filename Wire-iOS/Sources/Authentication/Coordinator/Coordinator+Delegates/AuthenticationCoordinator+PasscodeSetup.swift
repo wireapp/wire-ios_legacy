@@ -16,21 +16,10 @@
 //
 
 import Foundation
-import WireUtilities
 
-extension Keychain {
-    static func deletePasscode() {
-        try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
+extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
 
-    }
-
-    static func fetchPasscode() -> Data? {
-        let data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode)
-
-        if data?.isEmpty == true {
-            return nil
-        }
-
-        return data
+    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
+        eventResponderChain.handleEvent(ofType: .passcodeSetupCompleted)
     }
 }

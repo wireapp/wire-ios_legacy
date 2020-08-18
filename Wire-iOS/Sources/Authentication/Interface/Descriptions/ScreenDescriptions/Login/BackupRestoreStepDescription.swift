@@ -42,7 +42,6 @@ class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDesc
  */
 
 class BackupRestoreStepDescription: AuthenticationStepDescription {
-
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String

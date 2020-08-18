@@ -16,21 +16,12 @@
 //
 
 import Foundation
-import WireUtilities
+final class AuthenticationPasscodeSetupEventHandler: AuthenticationEventHandler {
 
-extension Keychain {
-    static func deletePasscode() {
-        try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
+    weak var statusProvider: AuthenticationStatusProvider?
 
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
+        return [postAction]
     }
 
-    static func fetchPasscode() -> Data? {
-        let data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode)
-
-        if data?.isEmpty == true {
-            return nil
-        }
-
-        return data
-    }
 }

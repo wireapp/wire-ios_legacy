@@ -41,7 +41,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
 
-
     // MARK: - Event Handling Properties
 
     /**
@@ -142,7 +141,8 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         }
     }
 
-    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
+    func stateDidChange(_ newState: AuthenticationFlowStep,
+                        mode: AuthenticationStateController.StateChangeMode) {
         guard let presenter = self.presenter, newState.needsInterface else {
             return
         }
@@ -173,7 +173,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 // MARK: - Event Handling
 
 extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreatedSessionObserver {
-    
+
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
         currentPostRegistrationFields().apply(sendPostRegistrationFields)
@@ -190,7 +190,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
-        
+
         if let userSession = SessionManager.shared?.activeUserSession {
             initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
@@ -318,13 +318,12 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .updateBackendEnvironment(let url):
                 companyLoginController?.updateBackendEnvironment(with: url)
-                
+
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
-
             case .startSSOFlow:
                 startAutomaticSSOFlow()
-                
+
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
 
@@ -336,6 +335,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .addEmailAndPassword(let newCredentials):
                 setEmailCredentialsForCurrentUser(newCredentials)
+            case .startPasscodeSetup:
+                startPasscodeSetup()
             }
         }
     }
@@ -383,7 +384,6 @@ extension AuthenticationCoordinator {
 
 }
 
-
 // MARK: - Actions
 
 extension AuthenticationCoordinator {
@@ -414,7 +414,7 @@ extension AuthenticationCoordinator {
                   let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
                 fatal("No unauthenticated account to log out from")
             }
-            
+
             sessionManager.delete(account: unauthenticatedAccount)
         }
     }
@@ -527,6 +527,12 @@ extension AuthenticationCoordinator {
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
 
+    // MARK: - passcode
+
+    private func startPasscodeSetup() {
+        stateController.transition(to: .passcodeSetup)
+    }
+
     // MARK: - Linear Registration
 
     /// Sets the marketing consent value for the user to be registered.
@@ -554,7 +560,6 @@ extension AuthenticationCoordinator {
         unregisteredUser[keyPath: keyPath] = newValue
         eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
-
 
     /// Creates the user on the backend and advances the state.
     private func finishRegisteringUser() {
@@ -714,7 +719,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-
     // MARK: - Company Login
 
     var canStartCompanyLogin: Bool {
@@ -735,7 +739,7 @@ extension AuthenticationCoordinator {
             companyLoginController?.displayCompanyLoginPrompt()
         }
     }
-    
+
     /// Automatically start the SSO flow if possible
     private func startAutomaticSSOFlow() {
         companyLoginController?.startAutomaticSSOFlow()

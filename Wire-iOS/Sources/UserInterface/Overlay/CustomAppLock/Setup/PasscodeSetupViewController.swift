@@ -23,8 +23,22 @@ protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool)
 }
+extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
+}
 
 final class PasscodeSetupViewController: UIViewController {
+    
+    weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
+
+    // MARK: AuthenticationCoordinatedViewController
+    weak var authenticationCoordinator: AuthenticationCoordinator?
 
     private lazy var presenter: PasscodeSetupPresenter = {
         return PasscodeSetupPresenter(userInterface: self)
@@ -123,12 +137,20 @@ final class PasscodeSetupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    
+    /// init with parameters
+    /// - Parameters:
+    ///   - callback: callback for storing passcode result.
+    ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
+    ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
     required init(callback: ResultHandler?,
                   variant: ColorSchemeVariant? = nil,
-                  useCompactLayout: Bool) {
+                  useCompactLayout: Bool? = nil) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
-        self.useCompactLayout = useCompactLayout
+        
+        self.useCompactLayout = useCompactLayout ??
+                                (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -218,6 +240,8 @@ final class PasscodeSetupViewController: UIViewController {
     private func storePasscode() {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
+        
+        authenticationCoordinator?.passcodeSetupControllerDidFinish(self)
         dismiss(animated: true)
     }
     
