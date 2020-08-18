@@ -85,22 +85,6 @@ indirect enum AuthenticationFlowStep: Equatable {
 
     // MARK: - Properties
 
-    /// Whether the step can be unwinded.
-//    var allowsUnwind: Bool {
-//        switch self {
-//        case .landingScreen: return false
-//        case .passcodeSetup:
-//            return false
-//        case .clientManagement: return false
-//        case .noHistory: return false
-//        case .addEmailAndPassword: return false
-//        case .incrementalUserCreation: return false
-//        case .teamCreation(let teamState): return teamState.allowsUnwind
-//        case .switchBackend: return false
-//        default: return true
-//        }
-//    }
-
     /// Whether the authentication steps generates a user interface.
     var needsInterface: Bool {
         switch self {
