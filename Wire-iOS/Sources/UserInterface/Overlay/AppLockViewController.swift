@@ -137,9 +137,9 @@ extension AppLockViewController: AppLockUserInterface {
         }
     }
     
-    func presentCreatePasscodeScreen() {
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: nil, //TODO: callback,
-            variant: .dark)
+    func presentCreatePasscodeScreen(callback: ResultHandler?) {
+        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
+                                                                      variant: .dark)
         
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
         
