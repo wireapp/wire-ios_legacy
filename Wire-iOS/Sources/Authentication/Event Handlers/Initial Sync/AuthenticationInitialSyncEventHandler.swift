@@ -53,9 +53,8 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
             if AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
                Keychain.fetchPasscode() == nil &&
                (AppLock.rules.forceAppLock ||
-                AppLock.isActive)
-                {
-                actions.append(.startPasscodeSetup)
+                AppLock.isActive) {
+                actions.append(.transition(.passcodeSetup, mode: .reset))
             } else {
                 actions.append(postAction)
             }

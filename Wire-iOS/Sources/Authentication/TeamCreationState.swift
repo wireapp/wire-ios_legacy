@@ -46,13 +46,13 @@ enum TeamCreationState: Equatable {
     }
 
     /// Whether it's possible to exit this step and .
-    var allowsUnwind: Bool {
-        switch self {
-        case .setFullName: return false
-        case .inviteMembers: return false
-        default: return true
-        }
-    }
+//    var allowsUnwind: Bool {
+//        switch self {
+//        case .setFullName: return false
+//        case .inviteMembers: return false
+//        default: return true
+//        }
+//    }
 }
 
 // MARK: - State transitions
