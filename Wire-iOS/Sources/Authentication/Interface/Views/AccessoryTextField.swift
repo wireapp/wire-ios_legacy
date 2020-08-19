@@ -243,6 +243,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             keyboardType = .asciiCapable
             textContentType = nil
         case .passcode(let isNew):
+            keyboardType = .asciiCapable
             isSecureTextEntry = true
             accessibilityIdentifier = "PasscodeField"
             autocapitalizationType = .none
