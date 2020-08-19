@@ -35,7 +35,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else {
             fatal("SplitViewController is not created")
         }
-        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController)
         cameraKeyboardViewController.delegate = self
 
         self.cameraKeyboardViewController = cameraKeyboardViewController
@@ -153,12 +153,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: mediaAsset),
                                                          onConfirm: { [weak self] (editedImage: UIImage?) in
                                                                 self?.dismiss(animated: true) {
-                                                                    if isFromCamera {
-                                                                        guard let image = UIImage(data: imageData as Data) else { return }
-                                                                        let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                                                                        UIImageWriteToSavedPhotosAlbum(image, self, selector, nil)
-                                                                    }
-
+                                                                    self?.writeToSavedPhotoAlbumIfNecessary(imageData: imageData,
+                                                                                                      isFromCamera: isFromCamera)
                                                                     self?.sendController.sendMessage(withImageData: editedImage?.pngData() ?? imageData)
                                                                 }
                                                             },
@@ -188,6 +184,17 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
             }
         }
+    }
+    
+    private func writeToSavedPhotoAlbumIfNecessary(imageData: Data, isFromCamera: Bool) {
+        guard isFromCamera,
+              SecurityFlags.cameraRoll.isEnabled,
+              let image = UIImage(data: imageData as Data)
+        else {
+            return
+        }
+        let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
+        UIImageWriteToSavedPhotosAlbum(image, self, selector, nil)
     }
 
     func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval) -> Void) {
@@ -266,7 +273,12 @@ extension ConversationInputBarViewController {
             }
         } else {
             UIApplication.wr_requestVideoAccess({ granted in
-                self.executeWithCameraRollPermission() { success in
+                if SecurityFlags.cameraRoll.isEnabled {
+                    self.executeWithCameraRollPermission() { success in
+                        self.mode = .camera
+                        self.inputBar.textView.becomeFirstResponder()
+                    }
+                } else {
                     self.mode = .camera
                     self.inputBar.textView.becomeFirstResponder()
                 }

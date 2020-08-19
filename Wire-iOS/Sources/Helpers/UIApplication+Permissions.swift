@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
+import WireCommonComponents
 import UIKit
 import Photos
 
@@ -48,7 +48,7 @@ extension UIApplication {
         UIApplication.wr_requestVideoAccess({ granted in
             DispatchQueue.main.async(execute: {
                 if !granted {
-                    self.wr_warnAboutCameraPermission(withCompletion: {
+                    self.wr_warnAboutCameraPermission(withCompletion: { _ in
                         grantedHandler(granted)
                     })
                 } else {
@@ -86,70 +86,31 @@ extension UIApplication {
         })
     }
     
-    private class func wr_warnAboutCameraPermission(withCompletion completion: @escaping () -> ()) {
+    private class func wr_warnAboutCameraPermission(withCompletion completion: AlertActionHandler?) {
         let currentResponder = UIResponder.currentFirst
         (currentResponder as? UIView)?.endEditing(true)
         
-        let noVideoAlert = UIAlertController.alertWithOKButton(title: "voice.alert.camera_warning.title".localized,
-                                                               message: "NSCameraUsageDescription".infoPlistLocalized,
-                                                               okActionHandler: { action in
-                                                                completion()
-        })
+        let alert = UIAlertController.cameraPermissionAlert(with: completion)
         
-        let actionSettings = UIAlertAction(title: "general.open_settings".localized,
-                                           style: .default,
-                                           handler: { action in
-                                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                                UIApplication.shared.open(url, options: [:])
-                                            }
-                                            completion()
-        })
-        
-        noVideoAlert.addAction(actionSettings)
-        
-        AppDelegate.shared.window?.rootViewController?.present(noVideoAlert, animated: true)
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
     
     private class func wr_warnAboutMicrophonePermission() {
-        let noMicrophoneAlert = UIAlertController.alertWithOKButton(title: "voice.alert.microphone_warning.title".localized,
-                                                                    message:"NSMicrophoneUsageDescription".infoPlistLocalized,
-                                                                    okActionHandler: nil)
-        
-        let actionSettings = UIAlertAction(title: "general.open_settings".localized,
-                                           style: .default,
-                                           handler: { action in
-                                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                            }
-        })
-        
-        noMicrophoneAlert.addAction(actionSettings)
-        
-        AppDelegate.shared.window?.rootViewController?.present(noMicrophoneAlert, animated: true)
+        let alert = UIAlertController.microphonePermissionAlert
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
     
     private class func wr_warnAboutPhotoLibraryRestricted() {
-        let libraryRestrictedAlert = UIAlertController.alertWithOKButton(title:"library.alert.permission_warning.title".localized,
-                                                                         message: "library.alert.permission_warning.restrictions.explaination".localized)
+        let alert = UIAlertController.alertWithOKButton(
+            title:"library.alert.permission_warning.title".localized,
+            message: "library.alert.permission_warning.restrictions.explaination".localized
+        )
         
-        AppDelegate.shared.window?.rootViewController?.present(libraryRestrictedAlert, animated: true)
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
     
     private class func wr_warnAboutPhotoLibaryDenied() {
-        let deniedAlert = UIAlertController(title: "library.alert.permission_warning.title".localized,
-                                            message: "library.alert.permission_warning.not_allowed.explaination".localized,
-                                            alertAction: UIAlertAction.cancel())
-        
-        deniedAlert.addAction(UIAlertAction(title: "general.open_settings".localized,
-                                            style: .default,
-                                            handler: { action in
-                                                if let url = URL(string: UIApplication.openSettingsURLString) {
-                                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                                }
-        }))
-        
-        DispatchQueue.main.async(execute: {
-            AppDelegate.shared.window?.rootViewController?.present(deniedAlert, animated: true)
-        })
+        let alert = UIAlertController.photoLibraryPermissionAlert
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
 }

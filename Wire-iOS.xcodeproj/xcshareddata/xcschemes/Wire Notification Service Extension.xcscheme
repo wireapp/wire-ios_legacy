@@ -15,7 +15,11 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+<<<<<<< HEAD
                BlueprintIdentifier = "067BBBFA247E693400D73407"
+=======
+               BlueprintIdentifier = "067BBBEB247E5FAE00D73407"
+>>>>>>> refactor/notification-extension
                BuildableName = "Wire Notification Service Extension.appex"
                BlueprintName = "Wire Notification Service Extension"
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
@@ -57,12 +61,17 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
+<<<<<<< HEAD
       <RemoteRunnable
          runnableDebuggingMode = "1"
          BundleIdentifier = "com.duolingo.DuolingoMobile"
          RemotePath = "/var/containers/Bundle/Application/1210F0EE-7407-4BFA-A067-D95221B70EEC/DuolingoMobile.app">
       </RemoteRunnable>
       <MacroExpansion>
+=======
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+>>>>>>> refactor/notification-extension
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F42C537199244A700288E4D"
@@ -70,7 +79,11 @@
             BlueprintName = "Wire-iOS"
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
+<<<<<<< HEAD
       </MacroExpansion>
+=======
+      </BuildableProductRunnable>
+>>>>>>> refactor/notification-extension
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

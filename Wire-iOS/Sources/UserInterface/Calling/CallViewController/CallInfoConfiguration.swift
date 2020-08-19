@@ -149,6 +149,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let cameraType: CaptureDevice
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
+    let userEnabledCBR: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -157,11 +158,13 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
+        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
+        userEnabledCBR: Bool
         ) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager
+        self.userEnabledCBR = userEnabledCBR
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType()
@@ -245,14 +248,19 @@ extension CallParticipantState {
 fileprivate extension VoiceChannel {
     
     var canUpgradeToVideo: Bool {
-        guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
-        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
-
-        if ZMConversation.callCenterConfiguration.useConferenceCalling {
+        guard !isConferenceCall else {
             return true
-        } else {
-            return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
         }
+        
+        guard let conversation = conversation, conversation.conversationType != .oneOnOne else {
+            return true
+        }
+        
+        guard !isLegacyGroupVideoParticipantLimitReached else {
+            return false
+        }
+
+        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
     }
     
     var isAnyParticipantSendingVideo: Bool {
@@ -283,5 +291,11 @@ fileprivate extension VoiceChannel {
         default: return false
         }
     }
-    
+}
+
+extension VoiceChannel {
+    var isLegacyGroupVideoParticipantLimitReached: Bool {
+        guard let conversation = conversation else { return false }
+        return conversation.localParticipants.count > ZMConversation.legacyGroupVideoParticipantLimit
+    }
 }

@@ -81,6 +81,9 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
 
     case readReceiptsEnabled = "readReceiptsEnabled"
     
+    // Conference calling
+    case enableConferenceCallingBeta = "EnableConferenceCallingBeta"
+    
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
