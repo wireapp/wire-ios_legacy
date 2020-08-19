@@ -120,6 +120,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupTracking()
         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
         
+        if #available(iOS 12.0, *) {
+            NSDictionaryValueTransformer.register()
+        }
+        
         setupAppCenter() {
             self.rootViewController?.launch(with: launchOptions ?? [:])
         }
