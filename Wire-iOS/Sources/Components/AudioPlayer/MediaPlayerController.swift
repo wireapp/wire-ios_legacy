@@ -42,7 +42,7 @@ final class MediaPlayerController: NSObject {
             self?.playerRateChanged()
         }
     }
-    
+
     deinit {
         playerRateObserver.invalidate()
     }
