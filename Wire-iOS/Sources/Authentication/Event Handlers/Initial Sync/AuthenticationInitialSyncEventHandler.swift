@@ -50,7 +50,7 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
             actions.append(.transition(nextStep, mode: .reset))
         } else {
             // append passcode step if new registered or first time login but passcode is not store.(Upgrade from pervious version)
-            if AppLock.isCustomPassCodeNotSet &&
+            if AppLock.isCustomPasscodeNotSet &&
                (AppLock.rules.forceAppLock ||
                 AppLock.isActive) {
                 actions.append(.transition(.passcodeSetup, mode: .reset))
