@@ -21,7 +21,7 @@ import WireCommonComponents
 import WireUtilities
 
 extension AppLock {
-    static var isCustomPassCodeNotSet: Bool {
+    static var isCustomPasscodeNotSet: Bool {
         return AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
                Keychain.fetchPasscode() == nil
     }
