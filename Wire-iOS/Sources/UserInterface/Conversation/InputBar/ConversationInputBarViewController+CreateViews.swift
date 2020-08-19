@@ -38,12 +38,12 @@ extension ConversationInputBarViewController {
         return [photoButton,
                 mentionButton,
                 sketchButton,
-                gifButton,
+                SecurityFlags.gifAction.isEnabled ? gifButton : nil,
                 audioButton,
                 pingButton,
-                uploadFileButton,
+                SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton : nil,
                 locationButton,
-                videoButton]
+                videoButton].compactMap { $0 }
     }
 
     private func setupInputBar() {

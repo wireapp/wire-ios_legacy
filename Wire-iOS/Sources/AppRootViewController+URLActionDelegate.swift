@@ -26,6 +26,8 @@ extension Notification.Name {
 
 extension AppRootViewController: URLActionDelegate {
     
+    // MARK - Public Implementation
+    
     func failedToPerformAction(_ action: URLAction, error: Error) {
         if let error = error as? LocalizedError {
             showAlert(for: error)
@@ -41,58 +43,69 @@ extension AppRootViewController: URLActionDelegate {
     func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
         switch action {
         case .connectBot:
-            let alert = UIAlertController(title: "url_action.title".localized,
-                                          message: "url_action.connect_to_bot.message".localized,
-                                          preferredStyle: .alert)
-            
-            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
-                                            style: .default) { _ in
-                                                decisionHandler(true)
-            }
-            
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized,
-                                             style: .cancel) { _ in
-                                                decisionHandler(false)
-            }
-            
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
-            
+            presentConnectBotAlert(with: decisionHandler)
         case .accessBackend(configurationURL: let configurationURL):
-            let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                          message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
-                                          preferredStyle: .alert)
-            let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-                self.isLoadingViewVisible = true
-                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                    self.isLoadingViewVisible = false
-                    switch result {
-                    case let .success(environment):
-                        BackendEnvironment.shared = environment
-                    case let .failure(error):
-                        if let error = error as? LocalizedError {
-                            self.showAlert(for: error)
-                        }
-                    }
-                }
+            guard SecurityFlags.customBackend.isEnabled else {
+                return
             }
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
+            presentCustomBackendAlert(with: configurationURL)
         default:
             decisionHandler(true)
         }
         
     }
     
+    // MARK - Private Implementation
+    
     private func notifyCompanyLoginCompletion() {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
     
+    private func presentConnectBotAlert(with decisionHandler: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: "url_action.title".localized,
+                                      message: "url_action.connect_to_bot.message".localized,
+                                      preferredStyle: .alert)
+        
+        let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                                        style: .default) { _ in
+                                            decisionHandler(true)
+        }
+        
+        alert.addAction(agreeAction)
+        
+        let cancelAction = UIAlertAction(title: "general.cancel".localized,
+                                         style: .cancel) { _ in
+                                            decisionHandler(false)
+        }
+        
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func presentCustomBackendAlert(with configurationURL: URL) {
+        let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
+                                      message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
+                                      preferredStyle: .alert)
+        let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
+            self.isLoadingViewVisible = true
+            self.sessionManager?.switchBackend(configuration: configurationURL) { result in
+                self.isLoadingViewVisible = false
+                switch result {
+                case let .success(environment):
+                    BackendEnvironment.shared = environment
+                case let .failure(error):
+                    if let error = error as? LocalizedError {
+                        self.showAlert(for: error)
+                    }
+                }
+            }
+        }
+        alert.addAction(agreeAction)
+        
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 }
