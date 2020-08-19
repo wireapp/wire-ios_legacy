@@ -58,6 +58,7 @@ final class UnlockViewController: UIViewController {
     lazy var accessoryTextField: AccessoryTextField = {
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
         textField.placeholder = "unlock.textfield.placeholder".localized
+        textField.delegate = self
 
         return textField
     }()
@@ -189,11 +190,17 @@ final class UnlockViewController: UIViewController {
         navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
     }
 
+    @discardableResult
+    private func unlock() -> Bool {
+        guard let passcode = accessoryTextField.text else { return false }
+        
+        presenter.unlock(passcode: passcode, callback: callback)
+        return true
+    }
+    
     @objc
     private func onUnlockButtonPressed(sender: AnyObject?) {
-        guard let passcode = accessoryTextField.text else { return }
-
-        presenter.unlock(passcode: passcode, callback: callback)
+        unlock()
     }
     
     func showWrongPasscodeMessage() {
@@ -222,5 +229,13 @@ extension UnlockViewController: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         unlockButton.isEnabled = error == nil
         errorLabel.text = " "
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension UnlockViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return unlock()
     }
 }

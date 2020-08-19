@@ -721,6 +721,7 @@
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
 		A90F3E08249B978400429BFE /* MessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F3E07249B978400429BFE /* MessageActionTests.swift */; };
+		A9148C6D24EC26AE003458E6 /* AppLock+PasscodeExistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9148C6C24EC26AE003458E6 /* AppLock+PasscodeExistence.swift */; };
 		A9150DB523D1B6B900844185 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9150DB423D1B6B800844185 /* Analytics.swift */; };
 		A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */; };
 		A918330F2419272E00CBD0B7 /* TokenSeparatorAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330E2419272E00CBD0B7 /* TokenSeparatorAttachment.swift */; };
@@ -2358,6 +2359,7 @@
 		A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIControlState+ExpandState.swift"; path = "Wire-iOS/UIControlState+ExpandState.swift"; sourceTree = SOURCE_ROOT; };
 		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A90F3E07249B978400429BFE /* MessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageActionTests.swift; sourceTree = "<group>"; };
+		A9148C6C24EC26AE003458E6 /* AppLock+PasscodeExistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLock+PasscodeExistence.swift"; sourceTree = "<group>"; };
 		A9150DB423D1B6B800844185 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTextAttachmentTests.swift; sourceTree = "<group>"; };
 		A918330E2419272E00CBD0B7 /* TokenSeparatorAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSeparatorAttachment.swift; sourceTree = "<group>"; };
@@ -5114,6 +5116,7 @@
 		8FC85126199245760008B66B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A9148C6B24EC2685003458E6 /* AppLock */,
 				EF39BD31233E41AA00F02DDB /* FileDirectory */,
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				8F5A3E9919AE2C9E00D0E9DA /* sound */,
@@ -5537,6 +5540,14 @@
 				A90F3E07249B978400429BFE /* MessageActionTests.swift */,
 			);
 			path = ContextMenu;
+			sourceTree = "<group>";
+		};
+		A9148C6B24EC2685003458E6 /* AppLock */ = {
+			isa = PBXGroup;
+			children = (
+				A9148C6C24EC26AE003458E6 /* AppLock+PasscodeExistence.swift */,
+			);
+			path = AppLock;
 			sourceTree = "<group>";
 		};
 		A918330B241922D700CBD0B7 /* Token */ = {
@@ -8117,6 +8128,7 @@
 				879649002046EE5E00F46B4B /* BarController.swift in Sources */,
 				EEE81E9623E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift in Sources */,
 				1639A85D2265FC8800868AB9 /* UIAlertController+Availability.swift in Sources */,
+				A9148C6D24EC26AE003458E6 /* AppLock+PasscodeExistence.swift in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				5E628021221ED0A60039A8AB /* ProfileActionsFactory.swift in Sources */,
 				D5677158202B496700308448 /* CreateGroupSection.swift in Sources */,

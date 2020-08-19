@@ -136,6 +136,17 @@ extension AppLockViewController: AppLockUserInterface {
             presentRequestPasswordController(message: message, callback: callback)
         }
     }
+    
+    func presentCreatePasscodeScreen(callback: ResultHandler?) {
+        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
+                                                                      variant: .dark)
+        
+        let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
+        
+        keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
+        
+        present(keyboardAvoidingViewController, animated: false)
+    }
 
     func setSpinner(animating: Bool) {
         if animating {

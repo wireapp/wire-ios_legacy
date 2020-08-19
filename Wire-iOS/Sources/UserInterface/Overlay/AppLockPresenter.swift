@@ -35,6 +35,10 @@ protocol AppLockUserInterface: class {
                              callback: @escaping RequestPasswordController.Callback)
     func dismissUnlockScreen()
     
+    
+    /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
+    func presentCreatePasscodeScreen(callback: ResultHandler?)
+    
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
@@ -145,12 +149,21 @@ extension AppLockPresenter {
 
 // MARK: - AppLockInteractorOutput
 extension AppLockPresenter: AppLockInteractorOutput {
+    
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
         if case .needAccountPassword = result {
-            requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
+            // When upgrade form a version not support custom passcode, ask the user to create a new passcode
+            if AppLock.isCustomPasscodeNotSet {
+                userInterface?.presentCreatePasscodeScreen(callback: { _ in
+                    // user need to enter the newly created passcode after creation
+                    self.setContents(dimmed: true, withReauth: true)
+                })
+            } else {
+                requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
+            }
         }
         
         if case .granted = result {
@@ -161,7 +174,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
     func passwordVerified(with result: VerifyPasswordResult?) {
         userInterface?.setSpinner(animating: false)
         guard let result = result else {
-            self.setContents(dimmed: true, withReauth: true)
+            setContents(dimmed: true, withReauth: true)
             return
         }
         let authNeeded = appLockInteractorInput.isAuthenticationNeeded

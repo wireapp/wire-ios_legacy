@@ -34,6 +34,10 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
         callback(passwordInput)
     }
     
+    func presentCreatePasscodeScreen(callback: ResultHandler?) {
+        // no-op
+    }
+    
     var spinnerAnimating: Bool?
     func setSpinner(animating: Bool) {
         spinnerAnimating = animating

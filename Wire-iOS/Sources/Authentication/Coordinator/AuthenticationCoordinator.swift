@@ -335,8 +335,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .addEmailAndPassword(let newCredentials):
                 setEmailCredentialsForCurrentUser(newCredentials)
-            case .startPasscodeSetup:
-                startPasscodeSetup()
             }
         }
     }
@@ -525,12 +523,6 @@ extension AuthenticationCoordinator {
         presenter?.isLoadingViewVisible = true
         stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
-    }
-
-    // MARK: - passcode
-
-    private func startPasscodeSetup() {
-        stateController.transition(to: .passcodeSetup)
     }
 
     // MARK: - Linear Registration
