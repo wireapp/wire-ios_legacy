@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import UIKit
-import WireDataModel
 
 enum SearchGroup: Int {
     case people
@@ -180,7 +179,9 @@ final class SearchResultsViewController: UIViewController {
         searchDirectory?.tearDown()
     }
 
-    init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    init(userSelection: UserSelection,
+         isAddingParticipants: Bool = false,
+         shouldIncludeGuests: Bool) {
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
@@ -211,6 +212,7 @@ final class SearchResultsViewController: UIViewController {
         inviteTeamMemberSection.delegate = self
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

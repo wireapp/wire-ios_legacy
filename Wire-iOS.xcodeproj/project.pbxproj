@@ -732,6 +732,7 @@
 		A9275F5F24221AD6007CB2BC /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F5E24221AD6007CB2BC /* TextTransform.swift */; };
 		A9275F6124223AB4007CB2BC /* DynamicsProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F6024223AB4007CB2BC /* DynamicsProxy.swift */; };
 		A9275F6324223FD3007CB2BC /* CGSize+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F6224223FD2007CB2BC /* CGSize+Zoom.swift */; };
+		A92C443224EE9805006A4AB3 /* SearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92C443124EE9805006A4AB3 /* SearchResultsViewControllerTests.swift */; };
 		A92CA24924323E2600A29896 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CA24824323E2600A29896 /* Spinner.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
@@ -2343,6 +2344,7 @@
 		A9275F5E24221AD6007CB2BC /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		A9275F6024223AB4007CB2BC /* DynamicsProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicsProxy.swift; sourceTree = "<group>"; };
 		A9275F6224223FD2007CB2BC /* CGSize+Zoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Zoom.swift"; sourceTree = "<group>"; };
+		A92C443124EE9805006A4AB3 /* SearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
 		A92CA24824323E2600A29896 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -5496,6 +5498,14 @@
 			path = ZipFile;
 			sourceTree = "<group>";
 		};
+		A92C443024EE97D6006A4AB3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A92C443124EE9805006A4AB3 /* SearchResultsViewControllerTests.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		A93E6102233B870200CEA65F /* SectionHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -5575,6 +5585,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A92C443024EE97D6006A4AB3 /* Search */,
 				A90F3E06249B976200429BFE /* ContextMenu */,
 				A923F1C32428C562003F361F /* ZipFile */,
 				A918330B241922D700CBD0B7 /* Token */,
@@ -8277,6 +8288,7 @@
 				EF2A8DE9214A8B38002C9058 /* MockUser+Service.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */,
+				A92C443224EE9805006A4AB3 /* SearchResultsViewControllerTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF05948422DF07240079B8E1 /* XCTestCase+AccentColor.swift in Sources */,
 				EF17B0D0223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift in Sources */,
