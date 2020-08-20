@@ -154,12 +154,7 @@ final class SearchResultsViewController: UIViewController {
     let conversationsSection: GroupConversationsSectionController
     
     lazy var topPeopleSection: TopPeopleSectionController = {
-        if let session = ZMUserSession.shared() {
-            return TopPeopleSectionController(topConversationsDirectory: session.topConversationsDirectory)
-        } else {
-            return TopPeopleSectionController(topConversationsDirectory:nil)
-        }
-
+        return TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()?.topConversationsDirectory)
     }()
     
     let servicesSection: SearchServicesSectionController
