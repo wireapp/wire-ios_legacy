@@ -17,10 +17,9 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
-class TopPeopleSectionController : SearchSectionController {
+final class TopPeopleSectionController : SearchSectionController {
 
     fileprivate var innerCollectionView: UICollectionView!
     fileprivate let innerCollectionViewController = TopPeopleLineCollectionViewController()

@@ -27,7 +27,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     static let InitiallyShowsKeyboardConversationThreshold = 10
     
     weak var delegate: StartUIDelegate?
-    //TODO:    let selfUser: UserType
     
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
     
@@ -54,28 +53,28 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     private var emptyResultView: EmptySearchResultsView!
     
     @available(*, unavailable)
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
-    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self/*,
-         selfUser: UserType = ZMUser.selfUser()*/) {
-//        self.selfUser = selfUser
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
         self.addressBookHelperType = addressBookHelperType
         
-        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
-//        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+        groupSelector = SearchGroupSelector(style: .dark)
         
         super.init(nibName: nil, bundle: nil)
         
         configGroupSelector()
         setupViews()
     }
+    
+    deinit {
+        
+    }
 
-    ///TODO: tmp
     var searchHeader: SearchHeaderViewController {
         return self.searchHeaderViewController
     }
@@ -191,7 +190,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     }
     
     @objc
-    func onDismissPressed() {
+    private func onDismissPressed() {
         _ = searchHeader.tokenField.resignFirstResponder()
         navigationController?.dismiss(animated: true)
     }

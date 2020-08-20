@@ -127,9 +127,16 @@ extension UIViewController {
     }
 }
 
-class SearchResultsViewController : UIViewController {
+final class SearchResultsViewController: UIViewController {
 
-    var searchResultsView: SearchResultsView?
+    lazy var searchResultsView: SearchResultsView = {
+        let view = SearchResultsView()
+        view.parentViewController = self
+        
+        return view
+    }()
+    
+
     var searchDirectory: SearchDirectory!
     let userSelection: UserSelection
 
@@ -212,8 +219,6 @@ class SearchResultsViewController : UIViewController {
     }
 
     override func loadView() {
-        searchResultsView  = SearchResultsView()
-        searchResultsView?.parentViewController = self
         view = searchResultsView
     }
 
@@ -226,11 +231,11 @@ class SearchResultsViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        sectionController.collectionView = searchResultsView?.collectionView
+        sectionController.collectionView = searchResultsView.collectionView
 
         updateVisibleSections()
 
-        searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
+        searchResultsView.emptyResultContainer.isHidden = !isResultEmpty
     }
 
     @objc
@@ -242,7 +247,7 @@ class SearchResultsViewController : UIViewController {
     private func performSearch(query: String, options: SearchOptions) {
 
         pendingSearchTask?.cancel()
-        searchResultsView?.emptyResultContainer.isHidden = true
+        searchResultsView.emptyResultContainer.isHidden = true
 
         var options = options
         options.updateForSelfUserTeamRole(selfUser: ZMUser.selfUser())
@@ -274,7 +279,7 @@ class SearchResultsViewController : UIViewController {
 
     var isResultEmpty: Bool = true {
         didSet {
-            searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
+            searchResultsView.emptyResultContainer.isHidden = !isResultEmpty
         }
     }
 
