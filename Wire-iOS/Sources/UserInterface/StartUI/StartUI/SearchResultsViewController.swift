@@ -147,11 +147,11 @@ final class SearchResultsViewController: UIViewController {
     
     let userSelection: UserSelection
 
-    let sectionController: SectionCollectionViewController
-    let contactsSection: ContactsSectionController
-    let teamMemberAndContactsSection: ContactsSectionController
+    let sectionController: SectionCollectionViewController = SectionCollectionViewController()
+    let contactsSection: ContactsSectionController = ContactsSectionController()
+    let teamMemberAndContactsSection: ContactsSectionController = ContactsSectionController()
     let directorySection = DirectorySectionController()
-    let conversationsSection: GroupConversationsSectionController
+    let conversationsSection: GroupConversationsSectionController = GroupConversationsSectionController()
     
     lazy var topPeopleSection: TopPeopleSectionController = {
         return TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()?.topConversationsDirectory)
@@ -193,17 +193,13 @@ final class SearchResultsViewController: UIViewController {
         let team = ZMUser.selfUser().team
         let teamName = team?.name
 
-        sectionController = SectionCollectionViewController()
-        contactsSection = ContactsSectionController()
         contactsSection.selection = userSelection
         contactsSection.title = "peoplepicker.header.contacts_personal".localized
         contactsSection.allowsSelection = isAddingParticipants
-        teamMemberAndContactsSection = ContactsSectionController()
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection.selection = userSelection
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
         servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
-        conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
         inviteTeamMemberSection = InviteTeamMemberSection(team: team)
 

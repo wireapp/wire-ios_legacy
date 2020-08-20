@@ -30,7 +30,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
     
-    let groupSelector: SearchGroupSelector
+    let groupSelector: SearchGroupSelector = SearchGroupSelector(style: .dark)
     
     let searchResultsViewController: SearchResultsViewController = {
         let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
@@ -62,8 +62,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
     init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
         self.addressBookHelperType = addressBookHelperType
-        
-        groupSelector = SearchGroupSelector(style: .dark)
         
         super.init(nibName: nil, bundle: nil)
         
