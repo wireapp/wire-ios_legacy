@@ -22,6 +22,6 @@ import UIKit
 extension CGSize {
     enum iPhoneSize {
         static let iPhone4Inch: CGSize = CGSize(width: CGFloat.iPhone4Inch.width, height: CGFloat.iPhone4Inch.height)
-        static let iPhone4_7Inch: CGSize = CGSize(width: 375, height: 667)
+        static let iPhone4_7Inch: CGSize = CGSize(width: CGFloat.iPhone4_7Inch.width, height: CGFloat.iPhone4_7Inch.height)
     }
 }

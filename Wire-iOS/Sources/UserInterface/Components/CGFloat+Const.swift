@@ -39,6 +39,11 @@ extension CGFloat {
         static let height: CGFloat = 568
     }
 
+    enum iPhone4_7Inch {
+        static let width: CGFloat = 375
+        static let height: CGFloat = 667
+    }
+
     enum WipeCompletion {
         static let buttonHeight: CGFloat = 48
     }
