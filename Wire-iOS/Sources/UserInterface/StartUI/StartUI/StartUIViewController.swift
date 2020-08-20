@@ -69,10 +69,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         setupViews()
     }
     
-    deinit {
-        
-    }
-
     var searchHeader: SearchHeaderViewController {
         return self.searchHeaderViewController
     }
