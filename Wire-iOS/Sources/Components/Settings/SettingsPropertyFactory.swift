@@ -371,6 +371,19 @@ final class SettingsPropertyFactory {
                             }
                         }
             })
+            
+        case .encryptMessagesAtRest:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let value = ZMUserSession.shared()?.encryptMessagesAtRest ?? false
+                    return SettingsPropertyValue(value)
+            },
+                setAction: { (_, value) in
+                    guard case .number(let enabled) = value else { return }
+                    ZMUserSession.shared()?.encryptMessagesAtRest = enabled.boolValue
+            })
+            
         case .enableConferenceCallingBeta:
             return SettingsBlockProperty(
                 propertyName: propertyName,

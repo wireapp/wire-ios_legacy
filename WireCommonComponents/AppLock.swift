@@ -58,41 +58,75 @@ public class AppLock {
         /// Biometrics failed and account password is needed instead of device PIN
         case needAccountPassword
     }
+    
+    public enum AuthenticationScenario {
+        case screenLock(requireBiometrics: Bool, grantAccessIfPolicyCannotBeEvaluated: Bool)
+        case databaseLock
+        
+        var policy: LAPolicy {
+            switch self {
+            case .screenLock(requireBiometrics: let requireBiometrics, grantAccessIfPolicyCannotBeEvaluated: _):
+                return requireBiometrics ? .deviceOwnerAuthenticationWithBiometrics : .deviceOwnerAuthentication
+            case .databaseLock:
+                return .deviceOwnerAuthentication
+                
+            }
+        }
+        
+        var supportsUserFallback: Bool {
+            if case .screenLock(requireBiometrics: true, grantAccessIfPolicyCannotBeEvaluated: _) = self {
+                return true
+            }
+            
+            return false
+        }
+        
+        var grantAccessIfPolicyCannotBeEvaluated: Bool {
+            if case .screenLock(requireBiometrics: _, grantAccessIfPolicyCannotBeEvaluated: true) = self {
+                return true
+            }
+            
+            return false
+        }
+                
+    }
 
     /// a weak reference to LAContext, it should be nil when evaluatePolicy is done.
-    private static weak var weakLAContext: LAContext? = nil
+    public static weak var weakLAContext: LAContext? = nil // TODO jacob make private again
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
-    public class func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
+    public class func evaluateAuthentication(scenario: AuthenticationScenario,
+                                             description: String,
+                                             with callback: @escaping (AuthenticationResult, LAContext) -> Void) {
         guard AppLock.weakLAContext == nil else { return }
 
-        let useBiometricsOrAccountPassword = rules.useBiometricsOrAccountPassword
         let context: LAContext = LAContext()
         var error: NSError?
 
         AppLock.weakLAContext = context
         
-        let policy: LAPolicy = useBiometricsOrAccountPassword ? LAPolicy.deviceOwnerAuthenticationWithBiometrics : LAPolicy.deviceOwnerAuthentication
-        let canEvaluatePolicy = context.canEvaluatePolicy(policy, error: &error)
-        
-        if useBiometricsOrAccountPassword && (BiometricsState.biometricsChanged(in: context) || !canEvaluatePolicy) {
-            callback(.needAccountPassword)
+        let canEvaluatePolicy = context.canEvaluatePolicy(scenario.policy, error: &error)
+                
+        if scenario.supportsUserFallback && (BiometricsState.biometricsChanged(in: context) || !canEvaluatePolicy) {
+            callback(.needAccountPassword, context)
             return
         }
 
         if canEvaluatePolicy {
-            context.evaluatePolicy(policy, localizedReason: description, reply: { (success, error) -> Void in
+            context.evaluatePolicy(scenario.policy, localizedReason: description, reply: { (success, error) -> Void in
                 var authResult: AuthenticationResult = success ? .granted : .denied
             
-                if useBiometricsOrAccountPassword, let laError = error as? LAError, laError.code == .userFallback {
+                if scenario.supportsUserFallback, let laError = error as? LAError, laError.code == .userFallback {
                     authResult = .needAccountPassword
                 }
                 
-                callback(authResult)
+                callback(authResult, context)
             })
         } else {
-            // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
-            callback(rules.forceAppLock ? .unavailable : .granted)
+            // If the policy can't be evaluated automatically grant access unless app lock
+            // is a requirement to run the app. This will for example allow a user to access
+            // the app if he/she has disabled his/her passcode.
+            callback(scenario.grantAccessIfPolicyCannotBeEvaluated ? .granted : .unavailable, context)
             zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }

@@ -45,6 +45,10 @@ extension SettingsCellDescriptorFactory {
 
         sections.append(privacySection())
 
+        if Bundle.developerModeEnabled {
+            sections.append(encryptionAtRestSection())
+        }
+
         #if !DATA_COLLECTION_DISABLED
             sections.append(personalInformationSection())
         #endif
@@ -86,6 +90,16 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+
+    // TODO: John remove warning and consult design about this setting.
+
+    func encryptionAtRestSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [encryptMessagesAtRestElement()],
+            header: "Encryption at Rest",
+            footer: "WARNING: this feature is experimental and may lead to data loss. Use at your own risk."
         )
     }
     
@@ -247,9 +261,17 @@ extension SettingsCellDescriptorFactory {
     }
     
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
-        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.readReceiptsEnabled),
+        
+        
+        
+        return SettingsPropertyToggleCellDescriptor(settingsProperty:
+            self.settingsPropertyFactory.property(.readReceiptsEnabled),
                                                     inverse: false,
                                                     identifier: "ReadReceiptsSwitch")
+    }
+    
+    func encryptMessagesAtRestElement() -> SettingsCellDescriptorType {
+        return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.encryptMessagesAtRest))
     }
 
     func backUpElement() -> SettingsCellDescriptorType {
