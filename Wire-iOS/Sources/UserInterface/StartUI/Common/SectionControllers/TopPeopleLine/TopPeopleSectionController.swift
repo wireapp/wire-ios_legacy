@@ -19,13 +19,13 @@
 import Foundation
 import WireSyncEngine
 
-final class TopPeopleSectionController : SearchSectionController {
+final class TopPeopleSectionController: SearchSectionController {
 
     fileprivate var innerCollectionView: UICollectionView!
     fileprivate let innerCollectionViewController = TopPeopleLineCollectionViewController()
     fileprivate let topConversationsDirectory: TopConversationsDirectory!
-    var token : Any? = nil
-    weak var delegate : SearchSectionControllerDelegate?
+    var token: Any?
+    weak var delegate: SearchSectionControllerDelegate?
 
     init(topConversationsDirectory: TopConversationsDirectory!) {
         self.topConversationsDirectory = topConversationsDirectory

@@ -27,7 +27,7 @@ enum SearchGroup: Int {
 }
 
 extension SearchGroup {
-    
+
     var accessible: Bool {
         switch self {
         case .people:
@@ -57,7 +57,7 @@ extension SearchGroup {
 }
 
 protocol SearchResultsViewControllerDelegate: class {
-    
+
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
@@ -65,18 +65,18 @@ protocol SearchResultsViewControllerDelegate: class {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
 }
 
-public enum SearchResultsViewControllerAction : Int {
+enum SearchResultsViewControllerAction: Int {
     case createGroup
     case createGuestRoom
 }
 
-public enum SearchResultsViewControllerMode : Int {
+enum SearchResultsViewControllerMode: Int {
     case search
     case selection
     case list
 }
 
-public enum SearchResultsViewControllerSection : Int {
+enum SearchResultsViewControllerSection: Int {
     case unknown
     case topPeople
     case contacts
@@ -98,11 +98,9 @@ extension UIViewController {
             var candidate: UIViewController? = .none
             if let controller = current.navigationController {
                 candidate = controller
-            }
-            else if let controller = current.presentingViewController {
+            } else if let controller = current.presentingViewController {
                 candidate = controller
-            }
-            else if let controller = current.parent {
+            } else if let controller = current.parent {
                 candidate = controller
             }
             if let candidate = candidate {
@@ -119,8 +117,7 @@ extension UIViewController {
             if let arrowDirection = $0.popoverPresentationController?.arrowDirection,
                 arrowDirection != .unknown {
                 return true
-            }
-            else {
+            } else {
                 return false
             }
         }
@@ -132,19 +129,18 @@ final class SearchResultsViewController: UIViewController {
     lazy var searchResultsView: SearchResultsView = {
         let view = SearchResultsView()
         view.parentViewController = self
-        
+
         return view
     }()
-    
 
     private lazy var searchDirectory: SearchDirectory! = {
         guard let session = ZMUserSession.shared() else {
             return nil
         }
-        
+
         return SearchDirectory(userSession: session)
     }()
-    
+
     let userSelection: UserSelection
 
     let sectionController: SectionCollectionViewController = SectionCollectionViewController()
@@ -152,16 +148,16 @@ final class SearchResultsViewController: UIViewController {
     let teamMemberAndContactsSection: ContactsSectionController = ContactsSectionController()
     let directorySection = DirectorySectionController()
     let conversationsSection: GroupConversationsSectionController = GroupConversationsSectionController()
-    
+
     lazy var topPeopleSection: TopPeopleSectionController = {
         return TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()?.topConversationsDirectory)
     }()
-    
+
     let servicesSection: SearchServicesSectionController
     let inviteTeamMemberSection: InviteTeamMemberSection
     let createGroupSection = CreateGroupSection()
 
-    var pendingSearchTask: SearchTask? = nil
+    var pendingSearchTask: SearchTask?
     var isAddingParticipants: Bool
     var searchGroup: SearchGroup = .people {
         didSet {
@@ -169,10 +165,10 @@ final class SearchResultsViewController: UIViewController {
         }
     }
 
-    var filterConversation: ZMConversation? = nil
+    var filterConversation: ZMConversation?
     let shouldIncludeGuests: Bool
 
-    weak var delegate: SearchResultsViewControllerDelegate? = nil
+    weak var delegate: SearchResultsViewControllerDelegate?
 
     var mode: SearchResultsViewControllerMode = .search {
         didSet {
@@ -293,7 +289,7 @@ final class SearchResultsViewController: UIViewController {
     }
 
     func updateVisibleSections() {
-        var sections : [CollectionViewSectionController]
+        var sections: [CollectionViewSectionController]
         let team = ZMUser.selfUser().team
 
         switch(self.searchGroup, isAddingParticipants) {
@@ -338,7 +334,7 @@ final class SearchResultsViewController: UIViewController {
 
         var contacts = searchResult.contacts
         var teamContacts = searchResult.teamMembers
-        
+
         if let filteredParticpants = filterConversation?.localParticipants {
             contacts = contacts.filter({
                 guard let user = $0.user else {
@@ -364,8 +360,7 @@ final class SearchResultsViewController: UIViewController {
 
                 return name0.compare(name1) == .orderedAscending
             }
-        }
-        else {
+        } else {
             teamMemberAndContactsSection.contacts = teamContacts
         }
 
@@ -396,16 +391,14 @@ final class SearchResultsViewController: UIViewController {
 
 }
 
-extension SearchResultsViewController : SearchSectionControllerDelegate {
+extension SearchResultsViewController: SearchSectionControllerDelegate {
 
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: UserType, at indexPath: IndexPath) {
         if let user = user as? ZMUser {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: searchSectionController))
-        }
-        else if let service = user as? ServiceUser, service.isServiceUser {
+        } else if let service = user as? ServiceUser, service.isServiceUser {
             delegate?.searchResultsViewController(self, didTapOnSeviceUser: service)
-        }
-        else if let searchUser = user as? ZMSearchUser {
+        } else if let searchUser = user as? ZMSearchUser {
             delegate?.searchResultsViewController(self, didTapOnUser: searchUser, indexPath: indexPath, section: sectionFor(controller: searchSectionController))
         }
     }
@@ -426,13 +419,13 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
 
 }
 
-extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
+extension SearchResultsViewController: InviteTeamMemberSectionDelegate {
     func inviteSectionDidRequestTeamManagement() {
         URL.manageTeam(source: .onboarding).openInApp(above: self)
     }
 }
 
-extension SearchResultsViewController : SearchServicesSectionDelegate {
+extension SearchResultsViewController: SearchServicesSectionDelegate {
     func addServicesSectionDidRequestOpenServicesAdmin() {
         URL.manageTeam(source: .settings).openInApp(above: self)
     }
