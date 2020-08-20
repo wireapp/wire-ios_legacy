@@ -54,6 +54,8 @@ extension UIViewController {
                 message = ""
             case .needsCredentials:
                 message = "error.user.needs_credentials".localized
+            case .domainBlocked:
+                message = "error.user.domain_blocked".localized
             case .invalidCredentials:
                 message = "error.user.invalid_credentials".localized
             case .accountIsPendingActivation:

@@ -31,14 +31,16 @@ extension AVSVideoView: AVSIdentifierProvider {
         return Stream(
             streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
             participantName: nil,
-            microphoneState: .unmuted)
+            microphoneState: .unmuted,
+            videoState: .none)
     }
 }
 
 class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
-           updateUserDetails()
+            updateUserDetails()
+            updateFillMode()
         }
     }
     
@@ -70,6 +72,10 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
     }
     
+    func updateFillMode() {
+        // no-op
+    }
+    
     func setupViews() {
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
@@ -80,7 +86,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([
             userDetailsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             userDetailsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8),
-            userDetailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            userDetailsView.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -8),
             userDetailsView.heightAnchor.constraint(equalToConstant: 24),
         ])
     }
