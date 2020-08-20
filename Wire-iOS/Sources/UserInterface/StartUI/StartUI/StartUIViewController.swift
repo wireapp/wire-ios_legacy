@@ -118,8 +118,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         emptyResultView.delegate = self
         
         searchResultsViewController.mode = .list
-        searchResultsViewController.searchResultsView?.emptyResultView = self.emptyResultView
-        searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
+        searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView
+        searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
 
 
         if let team = (selfUser as? ZMUser)?.team {
@@ -151,8 +151,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         
         searchResults.delegate = self
         addToSelf(searchResults)
-        searchResults.searchResultsView?.emptyResultView = emptyResultView
-        searchResults.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
+        searchResults.searchResultsView.emptyResultView = emptyResultView
+        searchResults.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
         
         quickActionsBar.inviteButton.addTarget(self, action: #selector(inviteMoreButtonTapped(_:)), for: .touchUpInside)
         
@@ -181,9 +181,9 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     
     func updateActionBar() {
         if !searchHeader.query.isEmpty || (selfUser as? ZMUser)?.hasTeam == true {
-            searchResults.searchResultsView?.accessoryView = nil
+            searchResults.searchResultsView.accessoryView = nil
         } else {
-            searchResults.searchResultsView?.accessoryView = quickActionsBar
+            searchResults.searchResultsView.accessoryView = quickActionsBar
         }
         
         view.setNeedsLayout()

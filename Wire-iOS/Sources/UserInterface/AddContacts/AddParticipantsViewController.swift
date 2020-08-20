@@ -233,9 +233,9 @@ final class AddParticipantsViewController: UIViewController {
         addChild(searchResultsViewController)
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParent: self)
-        searchResultsViewController.searchResultsView?.emptyResultView = emptyResultView
-        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
-        searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
+        searchResultsViewController.searchResultsView.emptyResultView = emptyResultView
+        searchResultsViewController.searchResultsView.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "add_participants.list"
         
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
         view.addSubview(confirmButton)
@@ -302,7 +302,7 @@ final class AddParticipantsViewController: UIViewController {
         // Update confirm button visibility & collection view content inset
         confirmButton.isHidden = userSelection.users.isEmpty || !viewModel.showsConfirmButton
         let bottomInset = confirmButton.isHidden ? bottomMargin : confirmButtonHeight + 16 + bottomMargin
-        searchResultsViewController.searchResultsView?.collectionView.contentInset.bottom = bottomInset
+        searchResultsViewController.searchResultsView.collectionView.contentInset.bottom = bottomInset
         
         updateTitle()
         

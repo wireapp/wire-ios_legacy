@@ -25,7 +25,7 @@ final class TopPeopleSectionController : SearchSectionController {
     fileprivate let innerCollectionViewController = TopPeopleLineCollectionViewController()
     fileprivate let topConversationsDirectory: TopConversationsDirectory!
     var token : Any? = nil
-    weak var delegate : SearchSectionControllerDelegate? = nil
+    weak var delegate : SearchSectionControllerDelegate?
 
     init(topConversationsDirectory: TopConversationsDirectory!) {
         self.topConversationsDirectory = topConversationsDirectory

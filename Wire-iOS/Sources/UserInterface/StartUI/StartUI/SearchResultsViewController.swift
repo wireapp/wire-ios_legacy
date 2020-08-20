@@ -137,7 +137,14 @@ final class SearchResultsViewController: UIViewController {
     }()
     
 
-    var searchDirectory: SearchDirectory!
+    private lazy var searchDirectory: SearchDirectory! = {
+        guard let session = ZMUserSession.shared() else {
+            return nil
+        }
+        
+        return SearchDirectory(userSession: session)
+    }()
+    
     let userSelection: UserSelection
 
     let sectionController: SectionCollectionViewController
@@ -145,7 +152,16 @@ final class SearchResultsViewController: UIViewController {
     let teamMemberAndContactsSection: ContactsSectionController
     let directorySection = DirectorySectionController()
     let conversationsSection: GroupConversationsSectionController
-    let topPeopleSection: TopPeopleSectionController
+    
+    lazy var topPeopleSection: TopPeopleSectionController = {
+        if let session = ZMUserSession.shared() {
+            return TopPeopleSectionController(topConversationsDirectory: session.topConversationsDirectory)
+        } else {
+            return TopPeopleSectionController(topConversationsDirectory:nil)
+        }
+
+    }()
+    
     let servicesSection: SearchServicesSectionController
     let inviteTeamMemberSection: InviteTeamMemberSection
     let createGroupSection = CreateGroupSection()
@@ -194,12 +210,6 @@ final class SearchResultsViewController: UIViewController {
         servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
-        if let session = ZMUserSession.shared() {
-            searchDirectory = SearchDirectory(userSession: session)
-            topPeopleSection = TopPeopleSectionController(topConversationsDirectory: session.topConversationsDirectory)
-        } else {
-            topPeopleSection = TopPeopleSectionController(topConversationsDirectory:nil)
-        }
         inviteTeamMemberSection = InviteTeamMemberSection(team: team)
 
         super.init(nibName: nil, bundle: nil)
