@@ -148,6 +148,7 @@ final class WipeDatabaseViewController: UIViewController {
             widthConstraint,
             stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: stackViewPadding),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -stackViewPadding),
 
