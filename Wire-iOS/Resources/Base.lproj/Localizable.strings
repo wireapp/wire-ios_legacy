@@ -999,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Send Read Receipts";
 "self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
