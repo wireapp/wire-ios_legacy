@@ -81,6 +81,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
 
     case readReceiptsEnabled = "readReceiptsEnabled"
     
+    case encryptMessagesAtRest = "encryptMessagesAtRest"
     // Conference calling
     case enableConferenceCallingBeta = "EnableConferenceCallingBeta"
     

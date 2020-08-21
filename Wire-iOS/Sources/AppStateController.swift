@@ -49,6 +49,7 @@ final class AppStateController : NSObject {
     private(set) var lastAppState : AppState = .headless
     weak var delegate : AppStateControllerDelegate? = nil
     
+    fileprivate var isDatabaseLocked = false
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
@@ -57,6 +58,7 @@ final class AppStateController : NSObject {
     fileprivate var authenticationError : NSError?
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
+    var databaseEncryptionObserverToken: Any? = nil
 
     /// The state of authentication.
     fileprivate(set) var authenticationState: AuthenticationState = .undetermined
@@ -97,7 +99,7 @@ final class AppStateController : NSObject {
 
         switch authenticationState {
         case .loggedIn(let addedAccount):
-            return .authenticated(completedRegistration: addedAccount)
+            return .authenticated(completedRegistration: addedAccount, databaseIsLocked: isDatabaseLocked)
         case .loggedOut:
             return .unauthenticated(error: authenticationError)
         case .undetermined:
@@ -144,6 +146,7 @@ extension AppStateController : SessionManagerDelegate {
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
         authenticationError = error as NSError?
         authenticationState = .loggedOut
+        databaseEncryptionObserverToken = nil
 
         updateAppState {
             userSessionCanBeTornDown?()
@@ -190,6 +193,7 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerWillOpenAccount(_ account: Account, userSessionCanBeTornDown: @escaping () -> Void) {
+        databaseEncryptionObserverToken = nil
         loadingAccount = account
         updateAppState { 
             userSessionCanBeTornDown()
@@ -203,11 +207,17 @@ extension AppStateController : SessionManagerDelegate {
             // NOTE: we don't enter the unauthenticated state here if we are not logged in
             //       because we will receive `sessionManagerDidLogout()` with an auth error
 
+            self?.isDatabaseLocked = userSession.isDatabaseLocked
             self?.authenticationState = .loggedIn(addedAccount: false)
             self?.loadingAccount = nil
             self?.isMigrating = false
             self?.updateAppState()
         }
+        
+        databaseEncryptionObserverToken = userSession.registerDatabaseLockedHandler({ [weak self] (isDatabaseLocked) in
+            self?.isDatabaseLocked = isDatabaseLocked
+            self?.updateAppState()
+        })
     }
     
 }
