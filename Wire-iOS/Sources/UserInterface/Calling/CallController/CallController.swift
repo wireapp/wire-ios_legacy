@@ -55,7 +55,22 @@ final class CallController: NSObject {
 extension CallController: WireCallCenterCallStateObserver {
 
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
+
+        //        guard !isClientOutdated(callState: callState) else {
+        //            showUnsupportedVersionAlert()
+        //            return
+        //        }
+
         updateState()
+    }
+    
+    func isClientOutdated(callState: CallState) -> Bool {
+        switch callState {
+        case .terminating(let reason) where reason == .outdatedClient:
+            return true
+        default:
+            return false
+        }
     }
 
     func updateState() {
@@ -222,18 +237,27 @@ extension CallController: WireCallCenterCallErrorObserver {
         }
 
         type(of: self).dateOfLastErrorAlertByConversationId[conversationId] = .init()
-
-        let alertController = UIAlertController(title: "voice.call_error.unsupported_version.title".localized,
-                                                message: "voice.call_error.unsupported_version.message".localized,
-                                                preferredStyle: .alert)
-
-        alertController.addAction(UIAlertAction(title: "force.update.ok_button".localized,
-                                                style: .default,
-                                                handler: { _ in UIApplication.shared.open(URL.wr_wireAppOnItunes) }))
-
-        alertController.addAction(UIAlertAction(title: "voice.call_error.unsupported_version.dismiss".localized,
-                                                style: .default,
-                                                handler: nil))
+        showUnsupportedVersionAlert()
+    }
+    
+    private func showUnsupportedVersionAlert() {
+        let alertController = UIAlertController(
+            title: "voice.call_error.unsupported_version.title".localized,
+            message: "voice.call_error.unsupported_version.message".localized,
+            preferredStyle: .alert
+        )
+        
+        alertController.addAction(UIAlertAction(
+            title: "force.update.ok_button".localized,
+            style: .default,
+            handler: { _ in UIApplication.shared.open(URL.wr_wireAppOnItunes) }
+        ))
+        
+        alertController.addAction(UIAlertAction(
+            title: "voice.call_error.unsupported_version.dismiss".localized,
+            style: .default,
+            handler: nil
+        ))
 
         targetViewController?.present(alertController, animated: true, completion: nil)
     }

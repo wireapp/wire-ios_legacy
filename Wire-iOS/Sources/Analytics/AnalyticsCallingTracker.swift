@@ -151,6 +151,8 @@ private extension CallClosedReason {
             return "drop"
         case .rejectedElsewhere:
             return "rejected_elsewhere"
+        case .outdatedClient:
+            return "outdated_client"
             
         }
     }
