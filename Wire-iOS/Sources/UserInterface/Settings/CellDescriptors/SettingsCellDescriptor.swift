@@ -261,6 +261,8 @@ extension SettingsPropertyName {
             return "self.settings.receiveNews_and_offers.title".localized
         case .readReceiptsEnabled:
             return "self.settings.enable_read_receipts.title".localized
+        case .encryptMessagesAtRest:
+            return "self.settings.encrypt_messages_at_rest.title".localized
         case .enableConferenceCallingBeta:
             return "self.settings.advanced.conference_calling.toggle".localized
         }

@@ -371,7 +371,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatAppStateDidTransitionNotifiesInteractorWithState() {
         //given
-        let appState = AppState.authenticated(completedRegistration: true)
+        let appState = AppState.authenticated(completedRegistration: true, databaseIsLocked: false)
         //when
         sut.appStateDidTransition(notification(for: appState))
         //then
@@ -381,7 +381,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatAppStateDidTransitionToAuthenticatedAsksIfApplockIsNeeded() {
         //given
-        let appState = AppState.authenticated(completedRegistration: true)
+        let appState = AppState.authenticated(completedRegistration: true, databaseIsLocked: false)
         //when
         sut.appStateDidTransition(notification(for: appState))
         //then
