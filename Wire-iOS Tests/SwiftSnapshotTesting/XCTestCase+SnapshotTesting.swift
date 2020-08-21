@@ -148,6 +148,12 @@ extension XCTestCase {
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
+        verifyInDarkScheme(createSut: createSut,
+                           name: "DarkTheme",
+                           file: file,
+                           testName: testName,
+                           line: line)
+        
         ColorScheme.default.variant = .light
 
         verify(matching: createSut(),
@@ -155,11 +161,17 @@ extension XCTestCase {
                file: file,
                testName: testName,
                line: line)
+    }
 
+    func verifyInDarkScheme(createSut: () -> UIViewController,
+                            name: String? = nil,
+                            file: StaticString = #file,
+                            testName: String = #function,
+                            line: UInt = #line) {
         ColorScheme.default.variant = .dark
-
-            verify(matching: createSut(),
-               named: "DarkTheme",
+        
+        verify(matching: createSut(),
+               named: name,
                file: file,
                testName: testName,
                line: line)

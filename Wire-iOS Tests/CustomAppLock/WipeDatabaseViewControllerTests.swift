@@ -26,8 +26,13 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
         sut = nil
     }
 
-    func testForLightAndDarkTheme() {
-        verifyInAllColorSchemes(createSut: {
+    func testForAllScreenSizes() {
+        sut = WipeDatabaseViewController()
+        verifyInAllDeviceSizes(matching: sut)
+    }
+    
+    func testForDarkTheme() {
+        verifyInDarkScheme(createSut: {
             let navigationController = UIViewController().wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
             navigationController.pushViewController(WipeDatabaseViewController(), animated: false)
             

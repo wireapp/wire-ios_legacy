@@ -138,7 +138,7 @@ final class WipeDatabaseViewController: UIViewController {
         [stackView,
          confirmButton].disableAutoresizingMaskTranslation()
 
-        let widthConstraint = stackView.widthAnchor.constraint(equalToConstant: 375)
+        let widthConstraint = stackView.widthAnchor.constraint(equalToConstant: CGFloat.iPhone4_7Inch.width)
         widthConstraint.priority = .defaultHigh
 
         let stackViewPadding: CGFloat = 46
@@ -146,8 +146,9 @@ final class WipeDatabaseViewController: UIViewController {
         NSLayoutConstraint.activate([
             // content view
             widthConstraint,
-            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+            stackView.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat.iPhone4_7Inch.width),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: stackViewPadding),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -stackViewPadding),
 
