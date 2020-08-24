@@ -40,7 +40,8 @@ final class UnlockViewController: UIViewController {
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
 
     private let stackView: UIStackView = UIStackView.verticalStackView()
-
+    private let upperStackView = UIStackView.verticalStackView()
+    
     private let contentView: UIView = UIView()
 
     private lazy var unlockButton: Button = {
@@ -108,25 +109,35 @@ final class UnlockViewController: UIViewController {
             view.addSubview($0)
         }
 
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
+        
+        // stackview for horizonal spacing except unlockButton
+        upperStackView.distribution = .fillProportionally
 
-        stackView.isLayoutMarginsRelativeArrangement = true
-        let textFieldPadding: CGFloat = 19
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: textFieldPadding, bottom: 0, right: textFieldPadding)
+        upperStackView.isLayoutMarginsRelativeArrangement = true
+        
+        upperStackView.layoutMargins = UIEdgeInsets(top: 0,
+                                                    left: CGFloat.PasscodeUnlock.textFieldPadding,
+                                                    bottom: 0,
+                                                    right: CGFloat.PasscodeUnlock.textFieldPadding)
 
         contentView.addSubview(stackView)
-
+        
         [titleLabel,
          UILabel.createHintLabel(variant: .dark),
          accessoryTextField,
          errorLabel,
          SpacingView(5),
-         wipeButton,
+         wipeButton].forEach {
+            upperStackView.addArrangedSubview($0)
+        }
+
+        [upperStackView,
          SpacingView(25),
          unlockButton].forEach {
             stackView.addArrangedSubview($0)
         }
-
+        
         createConstraints()
     }
 
@@ -146,10 +157,8 @@ final class UnlockViewController: UIViewController {
         [shieldView,
          blurView,
          contentView,
-         stackView,
-//         titleLabel,
-//            accessoryTextField
-            ].disableAutoresizingMaskTranslation()
+         upperStackView,
+         stackView].disableAutoresizingMaskTranslation()
 
         let widthConstraint = contentView.createContentWidthConstraint()
 
@@ -182,21 +191,8 @@ final class UnlockViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            // text field
-//            accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
-//            accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-            
-            // wipeButton
-//            wipeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-
-            // titleLabel
-//            titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-//            titleLabel.widthAnchor.constraint(equalTo: accessoryTextField.widthAnchor),
-
             // unlock Button
-            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
-//            unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-//            unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight)
         ])
     }
 
