@@ -87,10 +87,12 @@ final class UnlockViewController: UIViewController {
 
     private let wipeButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
+        let font = FontSpec(.medium, .medium).font!.withSize(14) //TODO: ".SFUI-Medium"; font-weight: normal; font-style: normal; font-size: 14.00pt
+        print(font)
+        button.titleLabel?.font = font
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
-        button.setTitle("unlock.link_label".localized, for: .normal)
+        button.setTitle("unlock.wipe_button".localized, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -140,7 +142,9 @@ final class UnlockViewController: UIViewController {
         [shieldView,
          blurView,
          contentView,
-         stackView].disableAutoresizingMaskTranslation()
+         stackView,
+         titleLabel,
+            accessoryTextField].disableAutoresizingMaskTranslation()
 
         let widthConstraint = contentView.createContentWidthConstraint()
 
@@ -162,7 +166,7 @@ final class UnlockViewController: UIViewController {
 
             // content view
             widthConstraint,
-            contentView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+            contentView.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat.iPhone4_7Inch.width),
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -177,6 +181,13 @@ final class UnlockViewController: UIViewController {
             // text field
             accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
             accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+            
+            // wipeButton
+            wipeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+
+            // titleLabel
+            titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+            titleLabel.widthAnchor.constraint(equalTo: accessoryTextField.widthAnchor),
 
             // unlock Button
             unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
