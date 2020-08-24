@@ -29,6 +29,7 @@ enum SecurityFlags {
     case customBackend
     case shareExtension
     case cameraRoll
+    case backup
     
     var bundleKey: String {
         switch self {
@@ -52,6 +53,8 @@ enum SecurityFlags {
             return "ShareExtensionEnabled"
         case .cameraRoll:
             return "CameraRollEnabled"
+        case .backup:
+            return "BackupEnabled"
         }
     }
     

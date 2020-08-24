@@ -204,5 +204,7 @@
 	<string>${SHARE_EXTENSION_ENABLED}</string>
 	<key>CameraRollEnabled</key>
 	<string>${CAMERA_ROLL_ENABLED}</string>
+	<key>BackupEnabled</key>
+	<string>${BACKUP_ENABLED}</string>
 </dict>
 </plist>
