@@ -556,6 +556,10 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
             }
         }
+
+        if SecurityFlags.forceEncryptionAtRest.isEnabled && !userSession.encryptMessagesAtRest {
+            userSession.encryptMessagesAtRest = true
+        }
     }
 
     func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {

@@ -45,7 +45,7 @@ extension SettingsCellDescriptorFactory {
 
         sections.append(privacySection())
 
-        if Bundle.developerModeEnabled {
+        if Bundle.developerModeEnabled && !SecurityFlags.forceEncryptionAtRest.isEnabled {
             sections.append(encryptionAtRestSection())
         }
 

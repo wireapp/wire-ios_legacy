@@ -206,5 +206,7 @@
 	<string>${CAMERA_ROLL_ENABLED}</string>
 	<key>BackupEnabled</key>
 	<string>${BACKUP_ENABLED}</string>
+	<key>ForceEncryptionAtRest</key>
+	<string>$(FORCE_ENCRYPTION_AT_REST)</string>
 </dict>
 </plist>
