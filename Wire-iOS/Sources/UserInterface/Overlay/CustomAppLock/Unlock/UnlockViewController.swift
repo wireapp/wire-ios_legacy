@@ -110,6 +110,10 @@ final class UnlockViewController: UIViewController {
 
         stackView.distribution = .fillProportionally
 
+        stackView.isLayoutMarginsRelativeArrangement = true
+        let textFieldPadding: CGFloat = 19
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: textFieldPadding, bottom: 0, right: textFieldPadding)
+
         contentView.addSubview(stackView)
 
         [titleLabel,
@@ -143,13 +147,13 @@ final class UnlockViewController: UIViewController {
          blurView,
          contentView,
          stackView,
-         titleLabel,
-            accessoryTextField].disableAutoresizingMaskTranslation()
+//         titleLabel,
+//            accessoryTextField
+            ].disableAutoresizingMaskTranslation()
 
         let widthConstraint = contentView.createContentWidthConstraint()
 
         let contentPadding: CGFloat = 24
-        let textFieldPadding: CGFloat = 19
 
         NSLayoutConstraint.activate([
             // nibView
@@ -179,20 +183,20 @@ final class UnlockViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
             // text field
-            accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
-            accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+//            accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
+//            accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
             
             // wipeButton
-            wipeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+//            wipeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
 
             // titleLabel
-            titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-            titleLabel.widthAnchor.constraint(equalTo: accessoryTextField.widthAnchor),
+//            titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
+//            titleLabel.widthAnchor.constraint(equalTo: accessoryTextField.widthAnchor),
 
             // unlock Button
             unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
-            unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+//            unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+//            unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
         ])
     }
 
