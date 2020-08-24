@@ -21,10 +21,10 @@ import WireDataModel
 import UIKit
 import WireSyncEngine
 
-class DirectorySectionController: SearchSectionController {
+final class DirectorySectionController: SearchSectionController {
     
     var suggestions: [ZMSearchUser] = []
-    var delegate: SearchSectionControllerDelegate? = nil
+    weak var delegate: SearchSectionControllerDelegate?
     var token: AnyObject? = nil
     weak var collectionView: UICollectionView? = nil
     
