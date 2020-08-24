@@ -88,8 +88,7 @@ final class UnlockViewController: UIViewController {
 
     private let wipeButton: UIButton = {
         let button = UIButton()
-        let font = FontSpec(.medium, .medium).font!.withSize(14) //TODO: ".SFUI-Medium"; font-weight: normal; font-style: normal; font-size: 14.00pt
-        print(font)
+        let font = FontSpec(.medium, .medium).font!.withSize(14)
         button.titleLabel?.font = font
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
