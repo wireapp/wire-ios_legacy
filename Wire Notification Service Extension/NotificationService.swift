@@ -30,17 +30,12 @@ public class NotificationService: UNNotificationServiceExtension {
     var notificationSession: NotificationSession?
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        ///TODO katerina : handle the fact the session might already exist
         notificationSession = try! self.createNotificationSession()
         
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
-//        if let bestAttemptContent = bestAttemptContent {
-//            // Modify the notification content here...
-//            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
-//
-//            contentHandler(bestAttemptContent)
-//        }
     }
     
     public override func serviceExtensionTimeWillExpire() {
@@ -51,30 +46,30 @@ public class NotificationService: UNNotificationServiceExtension {
         }
     }
     
-    public func createNotificationSession() throws -> NotificationSession? {
-            guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-                let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
+    private func createNotificationSession() throws -> NotificationSession? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
+            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
             else { return nil}
-            return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
-                                  accountIdentifier: accountIdentifier,
-                                  environment: BackendEnvironment.shared,
-                                  analytics: nil,
-                                  delegate: self)
-        }
-
-        private var accountManager: AccountManager? {
-            guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-            let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-            let account = AccountManager(sharedDirectory: sharedContainerURL)
-            return account
-        }
+        return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
+                                        accountIdentifier: accountIdentifier,
+                                        environment: BackendEnvironment.shared,
+                                        analytics: nil,
+                                        delegate: self)
+    }
+    
+    private var accountManager: AccountManager? {
+        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        let account = AccountManager(sharedDirectory: sharedContainerURL)
+        return account
+    }
 
 }
 
 extension NotificationService: UpdateEventsDelegate {
     public func didReceive(events: [ZMUpdateEvent], in moc: NSManagedObjectContext) {
         if let bestAttemptContent = bestAttemptContent {
-            let localNotifications = processEvents(events, liveEvents: true, prefetchResult: nil, moc: moc).compactMap { $0 }
+            let localNotifications = didConvert(events, liveEvents: true, prefetchResult: nil, moc: moc).compactMap { $0 }
             var bodyText = ""
             var titleText = ""
             switch localNotifications.count {
@@ -83,7 +78,6 @@ extension NotificationService: UpdateEventsDelegate {
                 contentHandler!(emptyContent)
             case 1:
                 if let notification = localNotifications.first {
-                    print(notification)
                     bodyText = notification.body
                     titleText = notification.title ?? ""
                 }
@@ -92,15 +86,7 @@ extension NotificationService: UpdateEventsDelegate {
             }
             bestAttemptContent.body = bodyText
             bestAttemptContent.title = titleText
-
-
-            //            if localNotifications.count > 1 {
-            //                bestAttemptContent.body = "\(localNotifications.count) Notifications"
-            //            } else {
-            //                if let notification = localNotifications.first {
-            //                    print(notification)
-            //                }
-            //            }
+            
             contentHandler!(bestAttemptContent)
         }
     }
@@ -108,14 +94,12 @@ extension NotificationService: UpdateEventsDelegate {
 
 extension NotificationService {
 
-    public func processEvents(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
-        let eventsToForward = events.filter { $0.source.isOne(of: .pushNotification, .webSocket) }
-        return self.didConvert(events: eventsToForward, conversationMap: prefetchResult?.conversationsByRemoteIdentifier ?? [:], moc: moc)
-    }
-
-    private func didConvert(events: [ZMUpdateEvent], conversationMap: [UUID: ZMConversation], moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
+    private func didConvert(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
         var localNotifications: [ZMLocalNotification?] = []
-        events.forEach { event in
+        let conversationMap =  prefetchResult?.conversationsByRemoteIdentifier ?? [:]
+        let eventsToForward = events.filter { $0.source.isOne(of: .pushNotification, .webSocket) }
+        
+        eventsToForward.forEach { event in
             var conversation: ZMConversation?
             if let conversationID = event.conversationUUID {
                 // Fetch the conversation here to avoid refetching every time we try to create a notification
