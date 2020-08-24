@@ -249,7 +249,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             autocapitalizationType = .none
             returnKeyType = isNew ? .default : .continue
             if #available(iOS 12, *) {
-                textContentType = .newPassword
+                textContentType = isNew ? .newPassword : .password
                 passwordRules = textFieldValidator.passwordRules
             }
         }
