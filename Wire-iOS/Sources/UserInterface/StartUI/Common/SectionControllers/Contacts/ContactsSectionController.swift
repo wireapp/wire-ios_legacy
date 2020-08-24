@@ -28,7 +28,7 @@ class ContactsSectionController : SearchSectionController {
         }
     }
     var allowsSelection: Bool = false
-    weak var delegate: SearchSectionControllerDelegate? = nil
+    weak var delegate: SearchSectionControllerDelegate?
     weak var collectionView: UICollectionView? = nil
     
     deinit {
