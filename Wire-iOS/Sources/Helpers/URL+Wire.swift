@@ -33,36 +33,51 @@ enum TeamSource: Int {
     }
 }
 
+extension Bundle {
+    static func fileURL(for resource: String, with fileExtension: String) -> URL? {
+        guard let filePath = Bundle.main.url(forResource: resource, withExtension: fileExtension) else {
+            zmLog.error("Failed to get resource from bundle")
+            return nil
+        }
+        
+        return filePath
+    }
+}
+
+extension URL {
+    func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
+        let data: Data
+        do {
+            data = try Data(contentsOf: self)
+        } catch {
+            zmLog.error("Failed to load \(type) at path: \(self), error: \(error)")
+            throw error
+        }
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            return try decoder.decode(type, from: data)
+        } catch {
+            zmLog.error("Failed to parse JSON at path: \(self), error: \(error)")
+            throw error
+        }
+    }
+}
+
 struct WireUrl: Codable {
     let wireAppOnItunes: URL
     let support: URL
     let randomProfilePictureSource: URL
 
     static var shared: WireUrl! = {
-        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else {
-            zmLog.error("Failed to get URL from bundle")
-            return nil
-        }
-
-        return WireUrl(filePath: filePath)
+        return WireUrl(filePath: Bundle.fileURL(for: "url", with: "json")!)
     }()
 
     private init?(filePath: URL) {
-
-        let data: Data
         do {
-            data = try Data(contentsOf: filePath)
+            self = try filePath.decode(WireUrl.self)
         } catch {
-            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
-            return nil
-        }
-
-        let decoder = JSONDecoder()
-
-        do {
-            self = try decoder.decode(WireUrl.self, from: data)
-        } catch {
-            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
             return nil
         }
     }
