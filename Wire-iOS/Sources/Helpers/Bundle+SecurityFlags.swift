@@ -60,7 +60,7 @@ enum SecurityFlags {
         case .backup:
             return "BackupEnabled"
         case .forceEncryptionAtRest:
-            return "ForceEncryptionAtRest"
+            return "ForceEncryptionAtRestEnabled"
         }
     }
     
