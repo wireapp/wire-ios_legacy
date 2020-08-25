@@ -16,21 +16,22 @@
 //
 
 import Foundation
-import WireSystem
 
-private let zmLog = ZMSLog(tag: "Bundle")
+struct WireEmail: Codable {
+    let supportEmail: String
+    let callingSupportEmail: String
 
-extension Bundle {
-    static var developerModeEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey("EnableDeveloperMenu") == "1"
-    }
+    static var shared: WireEmail = {
+        return WireEmail(forResource: "email", withExtension: "json")!
+    }()
 
-    static func fileURL(for resource: String, with fileExtension: String) -> URL? {
-        guard let filePath = Bundle.main.url(forResource: resource, withExtension: fileExtension) else {
-            zmLog.error("Failed to get \(resource).\(fileExtension) from bundle")
+    private init?(forResource resource: String, withExtension fileExtension: String) {
+        do {
+            let fileURL = Bundle.fileURL(for: resource, with: fileExtension)!
+            self = try fileURL.decode(WireEmail.self)
+        } catch {
             return nil
         }
-
-        return filePath
     }
+
 }

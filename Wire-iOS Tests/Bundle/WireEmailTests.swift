@@ -15,22 +15,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireSystem
+import XCTest
+@testable import Wire
 
-private let zmLog = ZMSLog(tag: "Bundle")
-
-extension Bundle {
-    static var developerModeEnabled: Bool {
-        return Bundle.appMainBundle.infoForKey("EnableDeveloperMenu") == "1"
-    }
-
-    static func fileURL(for resource: String, with fileExtension: String) -> URL? {
-        guard let filePath = Bundle.main.url(forResource: resource, withExtension: fileExtension) else {
-            zmLog.error("Failed to get \(resource).\(fileExtension) from bundle")
-            return nil
-        }
-
-        return filePath
+final class WireEmailTests: XCTestCase {
+    func testThatCallingSupportEmailIsCorrect() {
+        XCTAssertEqual(WireEmail.shared.callingSupportEmail, "calling-ios@wire.com")
     }
 }
