@@ -132,7 +132,7 @@ final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
         let device = UIDevice.current.name
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
-        let mail = "\(shareWithAVS ? "calling-" : "")ios@wire.com"
+        let mail = shareWithAVS ? WireEmail.shared.callingSupportEmail : WireEmail.shared.supportEmail
         
         guard MFMailComposeViewController.canSendMail() else {
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mail, from: controller)

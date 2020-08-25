@@ -16,23 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-struct WireEmail: Codable {
-    let supportEmail: String
-    let callingSupportEmail: String    
-    
-    static var shared: WireEmail! = {
-        return WireEmail(for: "email", with: "json")
-    }()
-    
-    private init?(for resource: String, with fileExtension: String) {
-        do {
-            let fileURL = Bundle.fileURL(for: resource, with: fileExtension)!
-            self = try fileURL.decode(WireEmail.self)
-        } catch {
-            return nil
-        }
+final class WireEmailTests: XCTestCase {
+    func testThatCallingSupportEmailIsCorrect() {
+        XCTAssertEqual(WireEmail.shared.callingSupportEmail, "calling-ios@wire.com")
     }
-
 }
