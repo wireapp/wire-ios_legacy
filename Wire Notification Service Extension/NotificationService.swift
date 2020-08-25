@@ -30,12 +30,12 @@ public class NotificationService: UNNotificationServiceExtension {
     var notificationSession: NotificationSession?
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        ///TODO katerina : handle the fact the session might already exist
-        notificationSession = try! self.createNotificationSession()
+        if notificationSession == nil {
+            notificationSession = try? self.createNotificationSession()
+        }
         
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
     }
     
     public override func serviceExtensionTimeWillExpire() {
@@ -70,22 +70,21 @@ extension NotificationService: UpdateEventsDelegate {
     public func didReceive(events: [ZMUpdateEvent], in moc: NSManagedObjectContext) {
         if let bestAttemptContent = bestAttemptContent {
             let localNotifications = didConvert(events, liveEvents: true, prefetchResult: nil, moc: moc).compactMap { $0 }
-            var bodyText = ""
-            var titleText = ""
+            var alert = Alert()
             switch localNotifications.count {
             case 0:
                 let emptyContent = UNNotificationContent()
                 contentHandler!(emptyContent)
             case 1:
                 if let notification = localNotifications.first {
-                    bodyText = notification.body
-                    titleText = notification.title ?? ""
+                    alert.body = notification.body
+                    alert.title = notification.title ?? ""
                 }
             default:
-                bodyText = "\(localNotifications.count) Notifications"
+                alert.body = "\(localNotifications.count) " + "self.settings.notifications.push_notification.title".localized
             }
-            bestAttemptContent.body = bodyText
-            bestAttemptContent.title = titleText
+            bestAttemptContent.body = alert.body
+            bestAttemptContent.title = alert.title
             
             contentHandler!(bestAttemptContent)
         }
@@ -110,5 +109,10 @@ extension NotificationService {
             localNotifications.append(note)
         }
         return localNotifications
+    }
+    
+    private struct Alert {
+        var body: String = ""
+        var title: String = ""
     }
 }
