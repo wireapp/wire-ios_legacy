@@ -30,7 +30,7 @@ enum AuthenticationErrorFeedbackAction : Int {
 }
 
 /// A view controller that is managed by an authentication coordinator.
-protocol AuthenticationCoordinatedViewController {
+protocol AuthenticationCoordinatedViewController: class {
     /// The object that coordinates authentication.
     var authenticationCoordinator: AuthenticationCoordinator? { get set }
     

@@ -23,6 +23,7 @@ protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool)
 }
+
 extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         //no-op
@@ -256,6 +257,19 @@ final class PasscodeSetupViewController: UIViewController {
         storePasscode()
     }
 
+    // MARK: - keyboard avoiding
+    
+    static func createKeyboardAvoidingFullScreenView(callback: ResultHandler?,
+                                                     variant: ColorSchemeVariant? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
+        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
+                                                                      variant: variant)
+        
+        let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
+        
+        keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
+
+        return keyboardAvoidingViewController
+    }
 }
 
 // MARK: - UITextFieldDelegate

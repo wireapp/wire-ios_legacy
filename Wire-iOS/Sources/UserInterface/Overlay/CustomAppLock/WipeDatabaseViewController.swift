@@ -98,6 +98,10 @@ final class WipeDatabaseViewController: UIViewController {
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
             
+            guard confirmText == "wipe_database.alert.confirm_input".localized else {
+                return
+            }
+            
             self?.deleteAccounts()
             Keychain.deletePasscode()
             ///TODO: reset passcode setting to false?

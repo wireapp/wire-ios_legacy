@@ -99,8 +99,9 @@ class AuthenticationInterfaceBuilder {
             return makeCredentialsViewController(for: .registration(credentialsFlowType))
 
         case .passcodeSetup:
-            return PasscodeSetupViewController(callback: nil,
-                                               variant: .light)
+            return PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: nil,
+                                                                                    variant: .light)
+            
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
             let viewController = makeViewController(for: manageClientsInvitation)
