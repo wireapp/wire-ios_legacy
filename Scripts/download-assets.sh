@@ -79,7 +79,7 @@ else
     fi 
 
     echo "✅ Cloning assets from ${REPO_URL} (branch: ${BRANCH}) to path ${CONFIGURATION_LOCATION}"
-    git clone --branch feature/email-json --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
+    git clone --branch ${BRANCH} --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
 
 if [ ! -z "${OVERRIDES_DIR}" ]; then
