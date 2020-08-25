@@ -5734,6 +5734,8 @@
 				A9E674D024F40C550058FC72 /* KeyboardAvoidingAuthenticationCoordinatedViewController.swift */,
 			);
 			path = KeyboardAvoiding;
+			sourceTree = "<group>";
+		};
 		A9E674D824F519C60058FC72 /* Bundle */ = {
 			isa = PBXGroup;
 			children = (
