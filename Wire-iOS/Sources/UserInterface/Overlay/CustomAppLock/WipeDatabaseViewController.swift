@@ -98,7 +98,7 @@ final class WipeDatabaseViewController: UIViewController {
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
             
-            if confirmText != "wipe_database.alert.confirm_input".localized {
+            guard confirmText == "wipe_database.alert.confirm_input".localized else {
                 return
             }
             
