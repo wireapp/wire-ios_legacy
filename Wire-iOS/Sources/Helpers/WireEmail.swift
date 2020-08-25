@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -20,13 +19,13 @@ import Foundation
 
 struct WireEmail: Codable {
     let supportEmail: String
-    let callingSupportEmail: String    
-    
-    static var shared: WireEmail! = {
-        return WireEmail(for: "email", with: "json")
+    let callingSupportEmail: String
+
+    static var shared: WireEmail = {
+        return WireEmail(forResource: "email", withExtension: "json")!
     }()
-    
-    private init?(for resource: String, with fileExtension: String) {
+
+    private init?(forResource resource: String, withExtension fileExtension: String) {
         do {
             let fileURL = Bundle.fileURL(for: resource, with: fileExtension)!
             self = try fileURL.decode(WireEmail.self)
