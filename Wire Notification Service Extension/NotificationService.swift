@@ -24,7 +24,6 @@ import WireRequestStrategy
 import WireSyncEngine
 
 public class NotificationService: UNNotificationServiceExtension {
-
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     var notificationSession: NotificationSession?
@@ -63,7 +62,6 @@ public class NotificationService: UNNotificationServiceExtension {
         let account = AccountManager(sharedDirectory: sharedContainerURL)
         return account
     }
-
 }
 
 extension NotificationService: UpdateEventsDelegate {
@@ -91,8 +89,9 @@ extension NotificationService: UpdateEventsDelegate {
     }
 }
 
-extension NotificationService {
+// MARK: - Converting events to localNotifications
 
+extension NotificationService {
     private func didConvert(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
         var localNotifications: [ZMLocalNotification?] = []
         let conversationMap =  prefetchResult?.conversationsByRemoteIdentifier ?? [:]
@@ -104,7 +103,7 @@ extension NotificationService {
                 // Fetch the conversation here to avoid refetching every time we try to create a notification
                 conversation = conversationMap[conversationID] ?? ZMConversation.fetch(withRemoteIdentifier: conversationID, in: moc)
             }
-
+            
             let note = ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: moc)
             localNotifications.append(note)
         }
