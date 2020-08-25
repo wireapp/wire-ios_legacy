@@ -29,9 +29,9 @@ extension UnlockViewController: UnlockUserInterface {
 /// 
 /// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
 final class UnlockViewController: UIViewController {
-    
+
     var callback: RequestPasswordController.Callback?
-    
+
     private lazy var presenter: UnlockPresenter = {
         return UnlockPresenter(userInterface: self)
     }()
@@ -40,6 +40,7 @@ final class UnlockViewController: UIViewController {
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
 
     private let stackView: UIStackView = UIStackView.verticalStackView()
+    private let upperStackView = UIStackView.verticalStackView()
 
     private let contentView: UIView = UIView()
 
@@ -90,7 +91,7 @@ final class UnlockViewController: UIViewController {
         button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
-        button.setTitle("unlock.link_label".localized, for: .normal)
+        button.setTitle("unlock.wipe_button".localized, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -99,14 +100,24 @@ final class UnlockViewController: UIViewController {
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
-        
+
         view.backgroundColor = .black
 
         [shieldView, blurView, contentView].forEach {
             view.addSubview($0)
         }
 
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
+
+        // stackview for horizonal spacing except unlockButton
+        upperStackView.distribution = .fillProportionally
+
+        upperStackView.isLayoutMarginsRelativeArrangement = true
+
+        upperStackView.layoutMargins = UIEdgeInsets(top: 0,
+                                                    left: CGFloat.PasscodeUnlock.textFieldPadding,
+                                                    bottom: 0,
+                                                    right: CGFloat.PasscodeUnlock.textFieldPadding)
 
         contentView.addSubview(stackView)
 
@@ -115,7 +126,11 @@ final class UnlockViewController: UIViewController {
          accessoryTextField,
          errorLabel,
          SpacingView(5),
-         wipeButton,
+         wipeButton].forEach {
+            upperStackView.addArrangedSubview($0)
+        }
+
+        [upperStackView,
          SpacingView(25),
          unlockButton].forEach {
             stackView.addArrangedSubview($0)
@@ -140,12 +155,12 @@ final class UnlockViewController: UIViewController {
         [shieldView,
          blurView,
          contentView,
+         upperStackView,
          stackView].disableAutoresizingMaskTranslation()
 
         let widthConstraint = contentView.createContentWidthConstraint()
 
         let contentPadding: CGFloat = 24
-        let textFieldPadding: CGFloat = 19
 
         NSLayoutConstraint.activate([
             // nibView
@@ -162,7 +177,7 @@ final class UnlockViewController: UIViewController {
 
             // content view
             widthConstraint,
-            contentView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+            contentView.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat.iPhone4_7Inch.width),
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -174,40 +189,34 @@ final class UnlockViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            // text field
-            accessoryTextField.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: textFieldPadding),
-            accessoryTextField.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -textFieldPadding),
-
             // unlock Button
-            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
-            unlockButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            unlockButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight)
         ])
     }
 
     @objc
-    private func onWipeButtonPressed(sender: AnyObject?) {        
+    private func onWipeButtonPressed(sender: AnyObject?) {
         navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
     }
 
     @discardableResult
     private func unlock() -> Bool {
         guard let passcode = accessoryTextField.text else { return false }
-        
+
         presenter.unlock(passcode: passcode, callback: callback)
         return true
     }
-    
+
     @objc
     private func onUnlockButtonPressed(sender: AnyObject?) {
         unlock()
     }
-    
+
     func showWrongPasscodeMessage() {
         let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle, with: UIColor.PasscodeUnlock.error, iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize, verticalCorrection: -1, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
 
         let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
-        
+
         errorLabel.attributedText = NSAttributedString(attachment: textAttachment) + attributedString
         unlockButton.isEnabled = false
     }
