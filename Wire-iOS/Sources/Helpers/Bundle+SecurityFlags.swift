@@ -31,7 +31,7 @@ enum SecurityFlags {
     case cameraRoll
     case backup
 
-    /// Wether encryption at rest is enabled and can't be disabled.
+    /// Whether encryption at rest is enabled and can't be disabled.
     
     case forceEncryptionAtRest
     
