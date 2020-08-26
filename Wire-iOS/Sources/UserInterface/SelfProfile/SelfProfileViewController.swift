@@ -232,6 +232,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
         } else {
             Keychain.deletePasscode()
+            AppLock.isActive = false
         }
     }
 
