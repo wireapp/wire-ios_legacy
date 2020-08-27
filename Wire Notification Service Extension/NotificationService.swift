@@ -71,7 +71,7 @@ extension NotificationService: LocalNotificationsDelegate {
                 bestAttemptContent.title = alert.title
                 bestAttemptContent.body = alert.body
                 
-                contentHandler!(bestAttemptContent)
+                contentHandler?(bestAttemptContent)
             }
         } else {
             let emptyContent = UNNotificationContent()
