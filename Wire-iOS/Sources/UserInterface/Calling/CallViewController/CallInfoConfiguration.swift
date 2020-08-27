@@ -275,7 +275,7 @@ fileprivate extension VoiceChannel {
 
     func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            lhs.user.name < rhs.user.name
+            lhs.user.name?.lowercased() < rhs.user.name?.lowercased()
         }
     }
 
