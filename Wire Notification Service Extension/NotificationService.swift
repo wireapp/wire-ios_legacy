@@ -75,7 +75,7 @@ extension NotificationService: LocalNotificationsDelegate {
             }
         } else {
             let emptyContent = UNNotificationContent()
-            contentHandler!(emptyContent)
+            contentHandler?(emptyContent)
         }
     }
 }
