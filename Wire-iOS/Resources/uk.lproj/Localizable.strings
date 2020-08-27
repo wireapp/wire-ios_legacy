@@ -27,6 +27,7 @@
 "general.edit" = "Редагувати";
 "general.done" = "Готово";
 "general.confirm" = "OK";
+"general.later" = "Пізніше";
 "general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
 "image.add_sketch" = "Додати зарисовку";
+"image.add_emoji" = "Додати емодзі";
 "image.edit_image" = "Редагувати картинку";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "Попередній перегляд відео з YouTube";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "Попередній перегляд пісні в SoundCloud";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Попередній перегляд плейліста SoundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "На жаль, не вдалося поставити ваш цифровий підпис.";
+"digital_signature.alert.error.no_consent_url" = "На жаль, форма для підписування не відкрилась. Спробуйте ще раз.";
+"digital_signature.alert.error.no_signature" = "На жаль, не вдалося поставити ваш цифровий підпис. Спробуйте ще раз.";
+"digital_signature.alert.download_necessary" = "Будь ласка, збережіть і прочитайте документ, перш ніж підписувати його.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Пошук…";
 "content.message.open" = "Вiдкрити";
+"content.message.sign" = "Підписати";
 "content.message.copy" = "Скопіювати";
 "content.message.download" = "Завантажити";
 "content.message.details" = "Подробиці";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Повторне під'єднання…";
 "call.status.terminating" = "Роз'єднання…";
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
+"call.status.variable_bitrate" = "Змінний бітрейт";
 
 "call.participants.show_all" = "Показати всіх (%@)";
 "call.participants.list.title" = "Учасники";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "Нік";
 "self.settings.account_section.handle.change.save" = "Зберегти";
-"self.settings.account_section.handle.change.footer" = "Мінімум 2 символи з множини a—z, 0—9, та _.";
+"self.settings.account_section.handle.change.footer" = "Мінімум 2 символи з множини a—z, 0—9, та '.', '-', '_'.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Уже зарезервоване";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не вдалося зарезервувати нік";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Це назавжди зітре історію всіх ваших розмов.";
 
 "self.settings.advanced.title" = "Розширені налаштування";
+"self.settings.advanced.conference_calling.title" = "Конференц-дзвінки";
+"self.settings.advanced.conference_calling.subtitle" = "Якщо дана опція увімкнена, дзвінки для аудіо- та відеоконференцій можуть вмістити більшу кількість учасників.";
+"self.settings.advanced.conference_calling.toggle" = "Бета-функціональність";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Відлагоджувальний звіт";
 "self.settings.advanced.debugging_tools.title" = "Інструменти налагоджування";
@@ -1404,9 +1417,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
-"login.sso.backend_switch.title" = "Redirecting...";
-"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
-"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+"login.sso.backend_switch.title" = "Перенаправлення...";
+"login.sso.backend_switch.subtitle" = "Вас буде перенаправлено до виділеного корпоративного сервісу.";
+"login.sso.backend_switch.information" = "Надайте ваші дані тільки якщо ви впевнені, що це сторінка входу вашої організації.";
 
 
 // Restore In Progress Loading Titles
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 "error.user.needs_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
+"error.user.domain_blocked" = "Цей емейл потребує запрошення в команду. Зверніться до ІТ-адміністраторів вашої організації для отримання запрошення.";
 "error.user.invalid_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
 "error.user.account_pending_activation" = "Акаунт, який ви намагаєтесь використовувати, очікує активації. Будь ласка, перевірте ваші дані.";
 "error.user.network_error" = "Спостерігаються тимчасові проблеми з вашою мережею. Будь ласка, спробуйте знову пізніше.";

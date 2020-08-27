@@ -139,6 +139,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         photoButton.hitAreaPadding = hitAreaPadding
         photoButton.accessibilityIdentifier = "photoButton"
+        photoButton.isHidden = !SecurityFlags.cameraRoll.isEnabled
         
         emojiButton.setIcon(.emoji, size: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)

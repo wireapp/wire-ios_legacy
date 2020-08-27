@@ -82,7 +82,8 @@ extension AppDelegate {
 }
 
 extension AppDelegate: MSDistributeDelegate {
-    func distribute(_ distribute: MSDistribute!, releaseAvailableWith details: MSReleaseDetails!) -> Bool {
+    func distribute(_ distribute: MSDistribute!,
+                    releaseAvailableWith details: MSReleaseDetails!) -> Bool {
         guard let window = window else { return false }
 
         let alertController = UIAlertController(title: "Update available \(details?.shortVersion ?? "") (\(details?.version ?? ""))",
@@ -122,5 +123,4 @@ extension AppDelegate: MSCrashesDelegate {
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         crashReportUploadDone()
     }
-
 }

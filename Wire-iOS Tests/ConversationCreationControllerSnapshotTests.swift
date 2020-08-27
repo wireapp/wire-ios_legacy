@@ -51,8 +51,6 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
     }
     
     func testTeamGroupOptionsCollapsed() {
-        ZMConversation.callCenterConfiguration = .init()
-
         teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.viewDidAppear(false)
@@ -62,8 +60,6 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
     }
 
     func testTeamGroupOptionsCollapsed_dark() {
-        ZMConversation.callCenterConfiguration = .init()
-
         ColorScheme.default.variant = .dark
 
         teamTest {
@@ -75,9 +71,7 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
         }
     }
 
-    func testTeamGroupOptionsExpanded() {
-        ZMConversation.callCenterConfiguration = .init()
-        
+    func testTeamGroupOptionsExpanded() {        
         teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.optionsExpanded = true

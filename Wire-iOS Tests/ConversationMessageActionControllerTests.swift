@@ -110,5 +110,22 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
         XCTAssertFalse(supportsReply)
 
     }
+    
+    // MARK: - Copy
+
+    func testThatItShowsCopyItemForTextMessage() {
+        // GIVEN
+         let message = MockMessageFactory.textMessage(withText: "Text")!
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+        
+        
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
+        let supportsCopy = actionController.canPerformAction(#selector(ConversationMessageActionController.copyMessage))
+        
+        // THEN
+        XCTAssertTrue(supportsCopy)
+    }
 
 }

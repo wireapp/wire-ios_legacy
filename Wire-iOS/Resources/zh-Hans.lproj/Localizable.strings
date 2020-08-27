@@ -27,6 +27,7 @@
 "general.edit" = "修改";
 "general.done" = "完成";
 "general.confirm" = "好";
+"general.later" = "稍后";
 "general.skip" = "现在不要";
 "general.accept" = "接听";
 "general.decline" = "不用了，谢谢";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "添加一个手绘图";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "编辑图像";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube视频预览";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud歌曲预览";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud 播放列表预览";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
+"content.message.sign" = "Sign";
 "content.message.copy" = "复制";
 "content.message.download" = "下载";
 "content.message.details" = "详细信息";
@@ -645,7 +654,7 @@
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麦克风的权限。";
 
-"voice.alert.camera_warning.title" = "Wire需要使用相机的权限。";
+"voice.alert.camera_warning.title" = "Wire需要使用相机权限。";
 
 "voice.top_overlay.tap_to_return" = "点击返回通话";
 "voice.top_overlay.accessibility_title" = "正在呼叫";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "重连中...";
 "call.status.terminating" = "正在挂断...";
 "call.status.constant_bitrate" = "固定码率";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "全部显示 (%@)";
 "call.participants.list.title" = "参与者";
@@ -1026,7 +1036,7 @@
 
 "self.settings.account_section.handle.change.title" = "用户名";
 "self.settings.account_section.handle.change.save" = "保存";
-"self.settings.account_section.handle.change.footer" = "至少2个字符，仅可使用a—z, 0—9以及下划线。";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "已经被占用";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "无法设置您的用户名";
@@ -1165,6 +1175,9 @@
 "self.settings.privacy.clear_history.subtitle" = "这将永久删除您的所有对话内容。";
 
 "self.settings.advanced.title" = "高级";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
 "self.settings.advanced.debugging_tools.title" = "调试工具";
@@ -1539,6 +1552,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了点问题，请再试一次";
 "error.user.needs_credentials" = "用户名或密码错误，请重试。";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "请检查您提供的资料然后重试。";
 "error.user.account_pending_activation" = "您的账号尚未激活。";
 "error.user.network_error" = "您的网络好像有些问题，请稍候再试。";

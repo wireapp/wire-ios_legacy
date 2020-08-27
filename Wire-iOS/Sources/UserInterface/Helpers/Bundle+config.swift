@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -17,9 +16,21 @@
 //
 
 import Foundation
+import WireSystem
 
-extension Bundle {    
+private let zmLog = ZMSLog(tag: "Bundle")
+
+extension Bundle {
     static var developerModeEnabled: Bool {
         return Bundle.appMainBundle.infoForKey("EnableDeveloperMenu") == "1"
+    }
+
+    static func fileURL(for resource: String, with fileExtension: String) -> URL? {
+        guard let filePath = Bundle.main.url(forResource: resource, withExtension: fileExtension) else {
+            zmLog.error("Failed to get \(resource).\(fileExtension) from bundle")
+            return nil
+        }
+
+        return filePath
     }
 }

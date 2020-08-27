@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -173,6 +173,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
+        AutomationHelper.sharedHelper.overrideConferenceCallingSettingIfNeeded()
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
@@ -193,14 +195,15 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
+            sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+                ? true
+                : Settings.shared[.callingConstantBitRate] ?? false
+            sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
         }
-
-        ZMConversation.callCenterConfiguration = configuration.callCenterConfiguration
     }
 
     func enqueueTransition(to appState: AppState, completion: (() -> Void)? = nil) {
@@ -270,7 +273,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
             viewController = navigationController
 
-        case .authenticated(completedRegistration: let completedRegistration):
+        case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -403,7 +406,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 
     func performWhenAuthenticated(_ block : @escaping () -> Void) {
-        if appStateController.appState == .authenticated(completedRegistration: false) {
+        if case .authenticated = appStateController.appState {
             block()
         } else {
             authenticatedBlocks.append(block)
@@ -491,7 +494,8 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard false == Settings.shared[.chatHeadsDisabled] else {
+        let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
+        guard !chatHeadsDisabled else {
             return false
         }
         
@@ -551,6 +555,10 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
             if session == userSession {
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
             }
+        }
+
+        if SecurityFlags.forceEncryptionAtRest.isEnabled && !userSession.encryptMessagesAtRest {
+            userSession.encryptMessagesAtRest = true
         }
     }
 

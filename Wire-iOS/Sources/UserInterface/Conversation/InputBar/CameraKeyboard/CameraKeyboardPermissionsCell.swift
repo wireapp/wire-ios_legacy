@@ -62,7 +62,8 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         
         containerView.addSubview(descriptionLabel)
         
-        addSubview(containerView)
+        if SecurityFlags.cameraRoll.isEnabled { addSubview(containerView) }
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -88,7 +89,10 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
                                                   weight: UIFont.Weight.light)
         descriptionLabel.text = title.localized
         
-        createConstraints(deniedAuthorization: deniedAuthorization)
+        if SecurityFlags.cameraRoll.isEnabled {
+            createConstraints(deniedAuthorization: deniedAuthorization)
+        }
+        
     }
     
     @objc private func openSettings() {
