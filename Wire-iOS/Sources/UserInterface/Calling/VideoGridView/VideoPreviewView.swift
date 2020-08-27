@@ -133,6 +133,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     
     private func createPreviewView() {
         let preview = AVSVideoView()
+        preview.backgroundColor = .clear
         preview.userid = stream.streamId.userId.transportString()
         preview.clientid = stream.streamId.clientId
         preview.translatesAutoresizingMaskIntoConstraints = false

@@ -85,6 +85,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     }
     
     func setupViews() {
+        backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
         userDetailsView.alpha = 0.0
