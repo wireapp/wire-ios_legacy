@@ -41,6 +41,8 @@ public class NotificationService: UNNotificationServiceExtension {
     public override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
+        let emptyContent = UNNotificationContent()
+        contentHandler?(emptyContent)
     }
     
     private func createNotificationSession() throws -> NotificationSession? {
@@ -72,8 +74,10 @@ extension NotificationService: NotificationSessionDelegate {
             case 1:
                 bestAttemptContent.title = alert.title
                 bestAttemptContent.body = alert.body
+                contentHandler?(bestAttemptContent)
             default:
-                bestAttemptContent.body = "\(messageCount) " + "self.settings.notifications.push_notification.title".localized
+                bestAttemptContent.body = String(format: "push.notifications.push_notification.title".localized, messageCount)
+                contentHandler?(bestAttemptContent)
             }
         }
     }

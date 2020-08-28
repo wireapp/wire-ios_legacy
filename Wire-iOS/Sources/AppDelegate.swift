@@ -110,6 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    //TODO katerina: this method is only for debugging
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print(token)
@@ -136,10 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
         
-        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.alert,UIUserNotificationType.badge, UIUserNotificationType.sound]
-        let pushNotificationSettings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
-
-        application.registerUserNotificationSettings(pushNotificationSettings)
+        //TODO katerina: it is only for debugging
         application.registerForRemoteNotifications()
         
         return true
