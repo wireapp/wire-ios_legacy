@@ -47,6 +47,7 @@ public class NotificationService: UNNotificationServiceExtension {
     
     private func createNotificationSession() throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
+            //TODO katerina: we should look at the notification payload which should contain the userID/accountID
             let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
             else { return nil}
         return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
