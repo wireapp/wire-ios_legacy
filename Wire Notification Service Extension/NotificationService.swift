@@ -37,12 +37,10 @@ public class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
     
+    //TODO: discuss with product/design what should we display
     public override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
-            contentHandler(bestAttemptContent)
-        }
     }
     
     private func createNotificationSession() throws -> NotificationSession? {
@@ -64,18 +62,19 @@ public class NotificationService: UNNotificationServiceExtension {
     }
 }
 
-extension NotificationService: LocalNotificationsDelegate {
-    public func shouldCreateNotificationWith(_ alert: (title: String, body: String), showNotification: Bool) {
-        if showNotification {
-            if let bestAttemptContent = bestAttemptContent {
+extension NotificationService: NotificationSessionDelegate {
+    public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
+        if let bestAttemptContent = bestAttemptContent {
+            switch messageCount {
+            case 0:
+                let emptyContent = UNNotificationContent()
+                contentHandler?(emptyContent)
+            case 1:
                 bestAttemptContent.title = alert.title
                 bestAttemptContent.body = alert.body
-                
-                contentHandler?(bestAttemptContent)
+            default:
+                bestAttemptContent.body = "\(messageCount) " + "self.settings.notifications.push_notification.title".localized
             }
-        } else {
-            let emptyContent = UNNotificationContent()
-            contentHandler?(emptyContent)
         }
     }
 }
