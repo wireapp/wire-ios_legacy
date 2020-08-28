@@ -1602,7 +1602,7 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ joined Wire";
 "push.notification.new_message" = "New message";
-"push.notifications.push_notification.title" = "%d Notifications";
+"push.notifications.bundled_message.title" = "%d Notifications";
 
 //Force Update
 "force.update.title" = "Update necessary";

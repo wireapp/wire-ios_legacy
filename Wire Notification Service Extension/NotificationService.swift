@@ -77,6 +77,7 @@ extension NotificationService: NotificationSessionDelegate {
                 bestAttemptContent.body = alert.body
                 contentHandler?(bestAttemptContent)
             default:
+                bestAttemptContent.title = alert.title
                 bestAttemptContent.body = String(format: "push.notifications.push_notification.title".localized, messageCount)
                 contentHandler?(bestAttemptContent)
             }
