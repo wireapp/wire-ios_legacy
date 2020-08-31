@@ -29,6 +29,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     }
     
     override func setupViews() {
+        previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(previewView)
         super.setupViews()
