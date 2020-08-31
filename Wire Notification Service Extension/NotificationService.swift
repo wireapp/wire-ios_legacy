@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import UserNotifications
 import WireNotificationEngine
 import WireCommonComponents
@@ -78,7 +79,7 @@ extension NotificationService: NotificationSessionDelegate {
                 contentHandler?(bestAttemptContent)
             default:
                 bestAttemptContent.title = alert.title
-                bestAttemptContent.body = String(format: "push.notifications.push_notification.title".localized, messageCount)
+                bestAttemptContent.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
                 contentHandler?(bestAttemptContent)
             }
         }
