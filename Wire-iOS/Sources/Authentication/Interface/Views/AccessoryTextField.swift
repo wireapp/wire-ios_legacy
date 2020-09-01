@@ -249,12 +249,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             autocapitalizationType = .none
             returnKeyType = isNew ? .default : .continue
             if #available(iOS 12, *) {
-                if isNew {
-                    textContentType = .newPassword
-                } else {
-                    //Hack: disable auto fill passcode
-                    textContentType = .oneTimeCode
-                }
+                //Hack: disable auto fill passcode
+                textContentType = .oneTimeCode                
                 passwordRules = textFieldValidator.passwordRules
             } else {
                 textContentType = .init(rawValue: "")
