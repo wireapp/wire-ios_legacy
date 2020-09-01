@@ -30,6 +30,10 @@ enum SecurityFlags {
     case shareExtension
     case cameraRoll
     case backup
+
+    /// Whether encryption at rest is enabled and can't be disabled.
+    
+    case forceEncryptionAtRest
     
     var bundleKey: String {
         switch self {
@@ -55,6 +59,8 @@ enum SecurityFlags {
             return "CameraRollEnabled"
         case .backup:
             return "BackupEnabled"
+        case .forceEncryptionAtRest:
+            return "ForceEncryptionAtRestEnabled"
         }
     }
     

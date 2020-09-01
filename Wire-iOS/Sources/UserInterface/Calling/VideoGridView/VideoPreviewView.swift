@@ -44,15 +44,16 @@ final class VideoPreviewView: BaseVideoPreviewView {
         color: .textForeground,
         variant: .dark
     )
+
+    private var userHasSetFillMode: Bool = false
     private var snapshotView: UIView?
     
     // MARK: - Initialization
-    override init(stream: Stream) {
-        super.init(stream: stream)
+    override init(stream: Stream, isCovered: Bool) {
+        super.init(stream: stream, isCovered: isCovered)
         updateState()
     }
     
-    // MARK: - Setup
     override func setupViews() {
         super.setupViews()
         
@@ -69,18 +70,45 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
+    
+    private func createPreviewView() {
+        let preview = AVSVideoView()
+        preview.userid = stream.streamId.userId.transportString()
+        preview.clientid = stream.streamId.clientId
+        preview.translatesAutoresizingMaskIntoConstraints = false
+        if let snapshotView = snapshotView {
+            insertSubview(preview, belowSubview: snapshotView)
+        } else {
+            insertSubview(preview, belowSubview: userDetailsView)
+        }
+        preview.fitInSuperview()
+        preview.shouldFill = true
 
-    // MARK: - Fill mode
-    private var isScreenSharing: Bool {
-        return stream.videoState == .screenSharing
+        previewView = preview
     }
 
-    override func updateFillMode() {
+    public func switchFillMode() {
         guard let previewView = previewView else { return }
-        previewView.shouldFill = shouldFill && !isScreenSharing
+        userHasSetFillMode = true
+        previewView.shouldFill = !previewView.shouldFill
+    }
+    
+    private func createSnapshotView() {
+        guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
+        insertSubview(snapshotView, belowSubview: blurView)
+        snapshotView.translatesAutoresizingMaskIntoConstraints = false
+        snapshotView.fitInSuperview()
+        self.snapshotView = snapshotView
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if !userHasSetFillMode {
+            previewView?.shouldFill = (previewView?.videoSize.aspectRatio == previewView?.frame.size.aspectRatio)
+        }
     }
 
-    // MARK: - Paused state update
     private func updateState(animated: Bool = false) {
         if isPaused {
             createSnapshotView()
@@ -130,28 +158,5 @@ final class VideoPreviewView: BaseVideoPreviewView {
             }
         }
     }
-    
-    private func createPreviewView() {
-        let preview = AVSVideoView()
-        preview.userid = stream.streamId.userId.transportString()
-        preview.clientid = stream.streamId.clientId
-        preview.translatesAutoresizingMaskIntoConstraints = false
-        if let snapshotView = snapshotView {
-            insertSubview(preview, belowSubview: snapshotView)
-        } else {
-            insertSubview(preview, belowSubview: userDetailsView)
-        }
-        preview.fitInSuperview()
-        preview.shouldFill = shouldFill && !isScreenSharing
-        
-        previewView = preview
-    }
-    
-    private func createSnapshotView() {
-        guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
-        insertSubview(snapshotView, belowSubview: blurView)
-        snapshotView.translatesAutoresizingMaskIntoConstraints = false
-        snapshotView.fitInSuperview()
-        self.snapshotView = snapshotView
-    }
+
 }
