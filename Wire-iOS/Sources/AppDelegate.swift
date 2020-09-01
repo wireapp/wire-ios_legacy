@@ -112,8 +112,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //TODO katerina: this method is only for debugging
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print(token)
+        //let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        //print("Token333 : \(token)")
+        SessionManager.shared?.deviceAPNSToken = deviceToken
+        NotificationCenter.default.post(name: ZMUserSession.registerCurrentPushTokenNotificationName, object: nil)
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -136,9 +138,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
-        
-        //TODO katerina: it is only for debugging
-        application.registerForRemoteNotifications()
         
         return true
     }
