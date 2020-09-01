@@ -78,7 +78,7 @@ else
         exit -1
     fi 
 
-    echo "✅ Cloning assets from ${REPO_URL} to path ${CONFIGURATION_LOCATION}"
+    echo "✅ Cloning assets from ${REPO_URL} (branch: ${BRANCH}) to path ${CONFIGURATION_LOCATION}"
     git clone --branch ${BRANCH} --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
 
