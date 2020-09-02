@@ -8780,7 +8780,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06F3E73324EFAB1800B1083C /* Notification-Extension-Release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = EDF3JCE8BC;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				INFOPLIST_FILE = "Wire Notification Service Extension/Info.plist";
@@ -8789,7 +8789,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(WIRE_BUNDLE_ID).$(NOTIFICATION_EXTENSION_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iOS Store Notification Service Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
