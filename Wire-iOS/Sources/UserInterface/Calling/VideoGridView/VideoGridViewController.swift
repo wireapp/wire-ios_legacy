@@ -37,7 +37,7 @@ final class VideoGridViewController: UIViewController {
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let mediaManager: AVSMediaManagerInterface
-    private var viewCache = [AVSClient: UIView]()
+    private var viewCache = [AVSClient: OrientableView]()
 
     // MARK: - Properties
 
@@ -308,7 +308,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         return cell
     }
 
-    private func streamView(for videoStream: VideoStream) -> UIView {
+    private func streamView(for videoStream: VideoStream) -> OrientableView {
         let streamId = videoStream.stream.streamId
 
         if let streamView = viewCache[streamId] {

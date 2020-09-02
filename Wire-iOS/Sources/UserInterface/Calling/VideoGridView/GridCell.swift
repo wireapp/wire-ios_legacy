@@ -21,10 +21,27 @@ import UIKit
 
 class GridCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: GridCell.self)
-
+    
+    private var streamView: OrientableView?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityIdentifier = GridCell.reuseIdentifier
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        streamView?.layoutForOrientation()
+    }
+    
+    @objc func orientationDidChange() {
+        streamView?.layoutForOrientation()
     }
 
     @available(*, unavailable)
@@ -32,11 +49,11 @@ class GridCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func add(streamView: UIView) {
+    func add(streamView: OrientableView) {
         guard !contentView.subviews.contains(streamView) else { return }
         contentView.subviews.forEach { $0.removeFromSuperview() }
         contentView.addSubview(streamView)
-        streamView.translatesAutoresizingMaskIntoConstraints = false
-        streamView.fitInSuperview()
+        streamView.layoutForOrientation()
+        self.streamView = streamView
     }
 }
