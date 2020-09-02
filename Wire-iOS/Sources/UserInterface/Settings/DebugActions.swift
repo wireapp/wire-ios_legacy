@@ -21,7 +21,7 @@ import WireSyncEngine
 import AppCenterCrashes
 
 
-class DebugActions {
+enum DebugActions {
     
     /// Shows an alert with the option to copy text to the clipboard
     static func alert(
