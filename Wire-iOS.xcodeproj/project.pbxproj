@@ -8765,7 +8765,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha.extension-notification";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(WIRE_BUNDLE_ID).$(NOTIFICATION_EXTENSION_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Wire Alpha Development Notification Ext";
 				SDKROOT = iphoneos;
@@ -8787,7 +8787,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha.extension-notification";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(WIRE_BUNDLE_ID).$(NOTIFICATION_EXTENSION_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
