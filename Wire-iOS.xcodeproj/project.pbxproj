@@ -8757,7 +8757,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06F3E73224EFAB1800B1083C /* Notification-Extension-Debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "Wire Notification Service Extension/Info.plist";
@@ -8780,7 +8780,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06F3E73324EFAB1800B1083C /* Notification-Extension-Release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = EDF3JCE8BC;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				INFOPLIST_FILE = "Wire Notification Service Extension/Info.plist";
