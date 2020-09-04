@@ -37,7 +37,7 @@ final class AnalyticsProviderFactory: NSObject {
     }
   
     func analyticsProvider() -> AnalyticsProvider? {
-        if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
+        if useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         } else if AutomationHelper.sharedHelper.useAnalytics {
