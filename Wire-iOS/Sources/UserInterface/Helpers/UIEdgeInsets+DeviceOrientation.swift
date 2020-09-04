@@ -19,8 +19,8 @@
 import Foundation
 import UIKit
 
-extension UIEdgeInsets {
-    func adaptedToOrientation(_ orientation: UIDeviceOrientation = UIDevice.current.orientation) -> UIEdgeInsets {
+extension UIEdgeInsets {    
+    func adjusted(to orientation: BaseVideoPreviewView.OrientationDelta) -> UIEdgeInsets {
         let edges = [top, left, bottom, right].shifted(by: orientation.edgeInsetsShiftAmount)
         return UIEdgeInsets(top: edges[0], left: edges[1], bottom: edges[2], right: edges[3])
     }
