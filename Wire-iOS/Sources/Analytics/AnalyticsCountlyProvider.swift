@@ -42,10 +42,13 @@ final class AnalyticsCountlyProvider: NSObject, AnalyticsProvider {
 //        defaults: UserDefaults
     ) {
         
-        let config: CountlyConfig = CountlyConfig()
-        config.appKey = "YOUR_APP_KEY"
-        config.host = "https://YOUR_COUNTLY_SERVER"
-        Countly.sharedInstance().start(with: config)
+        if let countlyAppKey = Bundle.countlyAppKey,
+            let countlyHost = Bundle.countlyHost {
+            let config: CountlyConfig = CountlyConfig()
+            config.appKey = countlyAppKey
+            config.host = countlyHost
+            Countly.sharedInstance().start(with: config)
+        }
 
         super.init()
         zmLog.info("AnalyticsCountlyProvider \(self) started")

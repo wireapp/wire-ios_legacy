@@ -31,7 +31,7 @@ final class Analytics: NSObject {
     }
 
     class func loadShared(withOptedOut optedOut: Bool) {
-        //no-op
+        //TODO
     }
     
     override init() {
