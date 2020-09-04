@@ -37,6 +37,7 @@ extension AVSVideoView: AVSIdentifierProvider {
 }
 
 class BaseVideoPreviewView: UIView, OrientableViewProtocol, AVSIdentifierProvider {
+
     var stream: Stream {
         didSet {
             updateUserDetails()
@@ -94,7 +95,11 @@ class BaseVideoPreviewView: UIView, OrientableViewProtocol, AVSIdentifierProvide
     }
     
     func createConstraints() {
-        detailsConstraints = UserDetailsConstraints(view: userDetailsView, superview: self, safeAreaInsets: safeAreaInsetsOrFallback)
+        detailsConstraints = UserDetailsConstraints(
+            view: userDetailsView,
+            superview: self,
+            safeAreaInsets: safeAreaInsetsOrFallback.adjusted(for: OrientationDelta())
+        )
        
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
@@ -104,76 +109,14 @@ class BaseVideoPreviewView: UIView, OrientableViewProtocol, AVSIdentifierProvide
         guard let superview = superview else { return }
         
         let delta = OrientationDelta()
-        
-        transform = CGAffineTransform(rotationAngle: -delta.radianValue)
+        transform = CGAffineTransform(rotationAngle: delta.radians)
         frame = superview.bounds
-    
-        detailsConstraints?.adjustEdges(to: delta, safeAreaInsets: safeAreaInsetsOrFallback)
         
+        detailsConstraints?.updateEdges(with: safeAreaInsetsOrFallback.adjusted(for: delta))
+
         layoutSubviews()
     }
     
-    
-    /// Represents the orientation differential between the interface orientation (as a reference) and the device orientation
-    enum OrientationDelta {
-        case shiftedRight
-        case shiftedLeft
-        case upsideDown
-        case equal
-        case unknown
-        
-        static var rightAngleValue: CGFloat { return AngleType.right.radianValue }
-        static var leftAngleValue: CGFloat { return -AngleType.right.radianValue }
-        static var upsideDownAngleValue: CGFloat { return AngleType.straight.radianValue }
-        static var normalValue: CGFloat { return AngleType.full.radianValue }
-        
-        init(interfaceOrientation: UIInterfaceOrientation = UIApplication.shared.statusBarOrientation,
-             deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation) {
-            let angle = deviceOrientation.angle - interfaceOrientation.angle
-            self.init(angle: angle)
-        }
-        
-        init(angle: CGFloat) {
-            switch angle {
-            case OrientationDelta.upsideDownAngleValue:
-                self = .upsideDown
-            case OrientationDelta.leftAngleValue:
-                self = .shiftedLeft
-            case OrientationDelta.rightAngleValue:
-                self = .shiftedRight
-            case OrientationDelta.normalValue:
-                self = .equal
-            default:
-                self = .unknown
-            }
-        }
-        
-        var radianValue: CGFloat {
-            switch self {
-            case .upsideDown:
-                return OrientationDelta.upsideDownAngleValue
-            case .shiftedLeft:
-                return OrientationDelta.leftAngleValue
-            case .shiftedRight:
-                return OrientationDelta.rightAngleValue
-            default:
-                return OrientationDelta.normalValue
-            }
-        }
-        
-        var edgeInsetsShiftAmount: Int {
-            switch self {
-            case .shiftedLeft:
-                return 1
-            case .shiftedRight:
-                return -1
-            case .upsideDown:
-                return 2
-            default:
-                return 0
-            }
-        }
-    }
         
     // MARK: - Visibility
     @objc private func updateUserDetailsVisibility(_ notification: Notification?) {
@@ -203,64 +146,13 @@ private struct UserDetailsConstraints {
         bottom = view.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
         leading = view.leadingAnchor.constraint(equalTo: superview.leadingAnchor)
         trailing = view.trailingAnchor.constraint(lessThanOrEqualTo: superview.trailingAnchor)
-        adjustEdges(to: BaseVideoPreviewView.OrientationDelta(), safeAreaInsets: insets)
+        updateEdges(with: insets)
         NSLayoutConstraint.activate([bottom, leading, trailing])
     }
     
-    func adjustEdges(to orientation: BaseVideoPreviewView.OrientationDelta, safeAreaInsets insets: UIEdgeInsets) {
-        let orientedInsets = insets.adjusted(to: orientation)
-        
-        leading.constant = margin + orientedInsets.left
-        trailing.constant = -(margin + orientedInsets.right)
-        bottom.constant = -(margin + orientedInsets.bottom)
-    }
-}
-
-// MARK: - Helpers
-
-enum AngleType {
-    case right
-    case straight
-    case full
-    
-    var radianValue: CGFloat {
-        switch self {
-        case .right:
-            return .pi / 2
-        case .straight:
-            return .pi
-        case .full:
-            return 0
-        }
-    }
-}
-
-private extension UIDeviceOrientation {
-    var angle: CGFloat {
-        switch self {
-        case .landscapeLeft:
-            return -(.pi / 2)
-        case .landscapeRight:
-            return .pi / 2
-        case .portraitUpsideDown:
-            return .pi
-        default:
-            return 0
-        }
-    }
-}
-
-private extension UIInterfaceOrientation {
-    var angle: CGFloat {
-        switch self {
-        case .landscapeLeft:
-            return .pi / 2
-        case .landscapeRight:
-            return -(.pi / 2)
-        case .portraitUpsideDown:
-            return .pi
-        default:
-            return 0
-        }
+    func updateEdges(with insets: UIEdgeInsets) {
+        leading.constant = margin + insets.left
+        trailing.constant = -(margin + insets.right)
+        bottom.constant = -(margin + insets.bottom)
     }
 }

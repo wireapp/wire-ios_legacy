@@ -20,23 +20,8 @@ import Foundation
 import UIKit
 
 extension UIEdgeInsets {    
-    func adjusted(to orientation: BaseVideoPreviewView.OrientationDelta) -> UIEdgeInsets {
-        let edges = [top, left, bottom, right].shifted(by: orientation.edgeInsetsShiftAmount)
+    func adjusted(for delta: OrientationDelta) -> UIEdgeInsets {
+        let edges = [top, left, bottom, right].shifted(by: delta.edgeInsetsShiftAmount)
         return UIEdgeInsets(top: edges[0], left: edges[1], bottom: edges[2], right: edges[3])
-    }
-}
-
-private extension UIDeviceOrientation {
-    var edgeInsetsShiftAmount: Int {
-        switch self {
-        case .landscapeLeft:
-            return 1
-        case .landscapeRight:
-            return 3
-        case .portraitUpsideDown:
-            return 2
-        default:
-            return 0
-        }
     }
 }
