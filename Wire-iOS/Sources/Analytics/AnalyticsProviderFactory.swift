@@ -36,7 +36,7 @@ final class AnalyticsProviderFactory: NSObject {
         self.userDefaults = userDefaults
     }
   
-    public func analyticsProvider() -> AnalyticsProvider? {
+    func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
