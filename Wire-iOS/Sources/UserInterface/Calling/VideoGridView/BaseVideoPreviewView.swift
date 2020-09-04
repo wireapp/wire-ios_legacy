@@ -136,9 +136,9 @@ class BaseVideoPreviewView: UIView, OrientableViewProtocol, AVSIdentifierProvide
 
 // MARK: - User Details Constraints
 private struct UserDetailsConstraints {
-    private var bottom: NSLayoutConstraint
-    private var leading: NSLayoutConstraint
-    private var trailing: NSLayoutConstraint
+    private let bottom: NSLayoutConstraint
+    private let leading: NSLayoutConstraint
+    private let trailing: NSLayoutConstraint
     
     private let margin: CGFloat = 8
     
