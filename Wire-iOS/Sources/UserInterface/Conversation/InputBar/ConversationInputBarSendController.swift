@@ -37,7 +37,7 @@ final class ConversationInputBarSendController: NSObject {
             self.feedbackGenerator.impactOccurred()
         }, completionHandler: {
                 completionHandler?()
-            Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
         })
     }
     
@@ -49,7 +49,7 @@ final class ConversationInputBarSendController: NSObject {
             self.conversation.append(text:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
             self.conversation.draftMessage = nil
         }, completionHandler: {
-            Analytics.shared().tagMediaActionCompleted(.text, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.text, inConversation: self.conversation)
             
         })
     }
@@ -63,8 +63,8 @@ final class ConversationInputBarSendController: NSObject {
             self.conversation.append(imageFromData: data)
             self.conversation.draftMessage = nil
         }, completionHandler: {
-            Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
-            Analytics.shared().tagMediaActionCompleted(.text, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.text, inConversation: self.conversation)
         })
     }
 }

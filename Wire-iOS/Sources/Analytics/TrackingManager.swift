@@ -40,7 +40,7 @@ final class TrackingManager: NSObject, TrackingInterface {
 
     var disableCrashAndAnalyticsSharing: Bool {
         set {
-            Analytics.shared().isOptedOut = newValue
+            Analytics.shared.isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             updateAppCenterStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue

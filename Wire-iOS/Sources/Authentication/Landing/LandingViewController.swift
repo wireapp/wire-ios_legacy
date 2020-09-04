@@ -218,7 +218,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.shared().tagOpenedLandingScreen(context: "email")
+        Analytics.shared.tagOpenedLandingScreen(context: "email")
         self.view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
@@ -448,17 +448,17 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     @objc func createAccountButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared().tagOpenedUserRegistration(context: "email")
+        Analytics.shared.tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
     @objc func createTeamButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared().tagOpenedTeamCreation(context: "email")
+        Analytics.shared.tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc func loginButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared().tagOpenedLogin(context: "email")
+        Analytics.shared.tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
     }
     

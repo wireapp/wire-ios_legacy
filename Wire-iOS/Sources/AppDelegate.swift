@@ -181,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let trackingManager = TrackingManager.shared
         
         AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.loadShared(withOptedOut: trackingManager.disableCrashAndAnalyticsSharing)
+        Analytics.loadShared(with: trackingManager.disableCrashAndAnalyticsSharing)
     }
     
     @objc

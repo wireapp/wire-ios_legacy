@@ -76,7 +76,7 @@ extension ZMConversation {
             switch result {
             case .success:
                 if let serviceUser = user as? ServiceUser, user.isServiceUser {
-                    Analytics.shared().tagDidRemoveService(serviceUser)
+                    Analytics.shared.tagDidRemoveService(serviceUser)
                 }
             case .failure(let error):
                 self.showAlertForRemoval(for: error)

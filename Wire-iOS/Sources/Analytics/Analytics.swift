@@ -19,29 +19,47 @@
 import Foundation
 import WireDataModel
 
+private let zmLog = ZMSLog(tag: "Analytics")
+
 final class Analytics: NSObject {
     
     var provider: AnalyticsProvider?
+    //TODO:
 
-    private static let sharedAnalytics = Analytics()
+    //    private var callingTracker: AnalyticsCallingTracker?
+//    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
     
-    @objc
-    class func shared() -> Analytics {
-        return sharedAnalytics
-    }
+    private static var sharedAnalytics: Analytics?
+    
+    static var shared: Analytics = {
+        return sharedAnalytics!
+    }()
 
-    class func loadShared(withOptedOut optedOut: Bool) {
-        //TODO
-    }
-    
-    override init() {
-        //no-op
+    static func loadShared(with optedOut: Bool) {
+        sharedAnalytics = Analytics(optedOut: optedOut)
     }
     
     required init(optedOut: Bool) {
-        //no-op
+        zmLog.info("Analytics initWithOptedOut: \(optedOut)")
+        provider = optedOut ? nil : AnalyticsProviderFactory.shared.analyticsProvider()
+        
+        super.init()
+        
+        setupObserver()
     }
     
+    private func setupObserver() {
+         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
+    }
+    
+    @objc
+    private func userSessionDidBecomeAvailable(_ note: Notification?) {
+//        callingTracker = AnalyticsCallingTracker(analytics: self)
+        //TODO:
+//        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
+        setTeam(ZMUser.selfUser().team)
+    }
+
     func setTeam(_ team: Team?) {
         //no-op
     }
