@@ -22,7 +22,7 @@ final class PasscodeSetupPresenter {
     private var interactorInput: PasscodeSetupInteractorInput
 
     private var passcodeValidationResult: PasscodeValidationResult?
-    
+
     var isPasscodeValid: Bool {
         switch passcodeValidationResult {
         case .accepted:
@@ -31,7 +31,7 @@ final class PasscodeSetupPresenter {
             return false
         }
     }
-    
+
     convenience init(userInterface: PasscodeSetupUserInterface) {
         let interactor = PasscodeSetupInteractor()
         self.init(userInterface: userInterface, interactorInput: interactor)
@@ -47,7 +47,7 @@ final class PasscodeSetupPresenter {
     func validate(error: TextFieldValidator.ValidationError?) {
         interactorInput.validate(error: error)
     }
-    
+
     func storePasscode(passcode: String, callback: ResultHandler?) {
         do {
             try interactorInput.storePasscode(passcode: passcode)
@@ -69,7 +69,7 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
 
     func passcodeValidated(result: PasscodeValidationResult) {
         passcodeValidationResult = result
-        
+
         switch result {
         case .accepted:
             userInterface?.createButtonEnabled = true

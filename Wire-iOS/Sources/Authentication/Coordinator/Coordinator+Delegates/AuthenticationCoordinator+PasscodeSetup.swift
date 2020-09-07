@@ -18,6 +18,9 @@
 import Foundation
 
 extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
+    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
+        //no-op
+    }
 
     func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
         eventResponderChain.handleEvent(ofType: .passcodeSetupCompleted)
