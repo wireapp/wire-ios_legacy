@@ -36,7 +36,7 @@ extension AVSVideoView: AVSIdentifierProvider {
     }
 }
 
-class BaseVideoPreviewView: UIView, OrientableViewProtocol, AVSIdentifierProvider {
+class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     var stream: Stream {
         didSet {
