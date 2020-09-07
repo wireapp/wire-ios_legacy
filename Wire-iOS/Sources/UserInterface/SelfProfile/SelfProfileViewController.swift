@@ -236,7 +236,7 @@ extension SelfProfileViewController: PasscodeSetupViewControllerDelegate {
         //no-op
     }
     
-    func passcodeSetupControllerDidDismissed(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
         // refresh options applock switch
         (topViewController as? SettingsTableViewController)?.refreshData()
     }

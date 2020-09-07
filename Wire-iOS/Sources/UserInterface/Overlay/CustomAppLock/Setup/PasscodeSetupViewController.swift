@@ -294,7 +294,7 @@ final class PasscodeSetupViewController: UIViewController {
     private func appLockSetupViewControllerDismissed() {
         callback?(false)
         
-        passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidDismissed(self)
+        passcodeSetupViewControllerDelegate?.passcodeSetupControllerWasDismissed(self)
     }
 }
 

@@ -18,7 +18,7 @@
 import Foundation
 
 extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
-    func passcodeSetupControllerDidDismissed(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
         //no-op
     }
 
