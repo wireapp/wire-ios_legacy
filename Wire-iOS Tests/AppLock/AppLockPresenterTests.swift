@@ -442,7 +442,7 @@ final class AppLockPresenterTests: XCTestCase {
         
     }
 
-    func testThatAppLockDoesNotShowIfIsCustomPasscodeNotSet() {
+    func testThatAppLockDoesNotShowIfIsCustomPasscodIsSet() {
         //GIVEN
         appLockInteractor.isCustomPasscodeNotSet = false
         
