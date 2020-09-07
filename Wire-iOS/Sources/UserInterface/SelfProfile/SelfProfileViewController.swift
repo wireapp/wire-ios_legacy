@@ -42,7 +42,6 @@ final class SelfProfileViewController: UIViewController {
     private let profileHeaderViewController: ProfileHeaderViewController
 
     // MARK: - AppLock
-    private weak var appLockSetupViewController: UIViewController?
     private var callback: ResultHandler?
 
     // MARK: - Configuration
@@ -221,10 +220,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             let closeItem = passcodeSetupViewController.closeItem
 
             keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
-            
-            
-            appLockSetupViewController = wrappedViewController
-            
+                        
             wrappedViewController.presentationController?.delegate = passcodeSetupViewController
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)

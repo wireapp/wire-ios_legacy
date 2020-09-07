@@ -295,9 +295,6 @@ final class PasscodeSetupViewController: UIViewController {
         callback?(false)
         
         passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidDismissed(self)
-        
-        // refresh options applock switch
-//        (topViewController as? SettingsTableViewController)?.refreshData()
     }
 }
 
