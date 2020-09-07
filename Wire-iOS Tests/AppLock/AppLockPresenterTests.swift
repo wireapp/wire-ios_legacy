@@ -90,7 +90,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
 }
 
 final class AppLockPresenterTests: XCTestCase {
-    var sut: AppLockPresenter!
+    private var sut: AppLockPresenter!
     private var userInterface: AppLockUserInterfaceMock!
     private var appLockInteractor: AppLockInteractorMock!
     
