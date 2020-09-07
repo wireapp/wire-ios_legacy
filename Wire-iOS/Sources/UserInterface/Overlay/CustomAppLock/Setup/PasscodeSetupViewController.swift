@@ -28,14 +28,14 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         //no-op
     }
-    
+
     func displayError(_ error: Error) {
         //no-op
     }
 }
 
 final class PasscodeSetupViewController: UIViewController {
-    
+
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
@@ -64,9 +64,9 @@ final class PasscodeSetupViewController: UIViewController {
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
         textField.delegate = self
-        
+
         textField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-        
+
         return textField
     }()
 
@@ -78,19 +78,19 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private let useCompactLayout: Bool
-        
+
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
         label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        
+
         let regularFont: UIFont
         let heightFont: UIFont
         let lineHeight: CGFloat
 
-        if useCompactLayout  {
+        if useCompactLayout {
             regularFont = FontSpec(.small, .regular).font!
             heightFont = FontSpec(.small, .bold).font!
             lineHeight = 14
@@ -99,7 +99,7 @@ final class PasscodeSetupViewController: UIViewController {
             heightFont = FontSpec(.normal, .bold).font!
             lineHeight = 20
         }
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
         paragraphStyle.maximumLineHeight = lineHeight
@@ -138,7 +138,6 @@ final class PasscodeSetupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
     /// init with parameters
     /// - Parameters:
     ///   - callback: callback for storing passcode result.
@@ -149,7 +148,7 @@ final class PasscodeSetupViewController: UIViewController {
                   useCompactLayout: Bool? = nil) {
         self.callback = callback
         self.variant = variant ?? ColorScheme.default.variant
-        
+
         self.useCompactLayout = useCompactLayout ??
                                 (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
 
@@ -241,59 +240,58 @@ final class PasscodeSetupViewController: UIViewController {
     private func storePasscode() {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
-        
+
         authenticationCoordinator?.passcodeSetupControllerDidFinish(self)
         dismiss(animated: true)
     }
-    
+
     @objc
     private func textFieldDidChange(textField: UITextField) {
         passcodeTextField.returnKeyType = presenter.isPasscodeValid ? .done : .default
         passcodeTextField.reloadInputViews()
     }
-    
+
     @objc
     private func onCreateCodeButtonPressed(sender: AnyObject?) {
         storePasscode()
     }
 
     // MARK: - keyboard avoiding
-    
+
     static func createKeyboardAvoidingFullScreenView(callback: ResultHandler?,
                                                      variant: ColorSchemeVariant? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
                                                                       variant: variant)
-        
+
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
-        
+
         keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
 
         return keyboardAvoidingViewController
     }
-    
-    
-    //MARK: - close button
-    
+
+    // MARK: - close button
+
     lazy var closeItem: UIBarButtonItem = {
         let closeItem = UIBarButtonItem.createCloseItem()
         closeItem.tintColor = .white
-        
+
         closeItem.target = self
         closeItem.action = #selector(PasscodeSetupViewController.closeTapped)
-        
+
         return closeItem
     }()
-    
+
     @objc
     private func closeTapped() {
         dismiss(animated: true)
 
         appLockSetupViewControllerDismissed()
     }
-    
+
     private func appLockSetupViewControllerDismissed() {
         callback?(false)
-        
+
         passcodeSetupViewControllerDelegate?.passcodeSetupControllerWasDismissed(self)
     }
 }
@@ -305,7 +303,7 @@ extension PasscodeSetupViewController: UITextFieldDelegate {
         guard presenter.isPasscodeValid else {
             return false
         }
-        
+
         storePasscode()
         return true
     }
@@ -353,7 +351,7 @@ extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate 
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         appLockSetupViewControllerDismissed()
     }
-    
+
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         // more space for iPhone 4-inch to prevent keyboard hides the create passcode button
         if view.frame.size.height <= CGFloat.iPhone4Inch.height {
@@ -366,5 +364,5 @@ extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate 
             }
         }
     }
-    
+
 }
