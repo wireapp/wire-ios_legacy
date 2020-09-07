@@ -28,6 +28,8 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     
     var passwordInput: String?
     var requestPasswordMessage: String?
+    var presentCreatePasscodeScreenCalled: Bool = false
+    
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
@@ -35,7 +37,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
-        // no-op
+        presentCreatePasscodeScreenCalled = true
     }
     
     var spinnerAnimating: Bool?
@@ -55,6 +57,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
+    var isCustomPasscodeNotSet: Bool = false
     var _isAuthenticationNeeded: Bool = false
     var didCallIsAuthenticationNeeded: Bool = false
     var isAuthenticationNeeded: Bool {
@@ -424,6 +427,31 @@ final class AppLockPresenterTests: XCTestCase {
         sut.appStateDidTransition(notification(for: AppState.blacklisted(jailbroken: true)))
         //then
         assert(contentsDimmed: false, reauthVisibile: false)
+    }
+    
+    //MARK: - custom app lock
+    func testThatUpdateFromAnOldVersionToNewVersionSupportAppLockShowsCreatePasscodeScreen() {
+        //GIVEN
+        appLockInteractor.isCustomPasscodeNotSet = true
+        
+        //WHEN
+        sut.authenticationEvaluated(with: .needAccountPassword)
+
+        //THEN
+        XCTAssert( userInterface.presentCreatePasscodeScreenCalled)
+        
+    }
+
+    func testThatAppLockDoesNotShowIfIsCustomPasscodIsSet() {
+        //GIVEN
+        appLockInteractor.isCustomPasscodeNotSet = false
+        
+        //WHEN
+        sut.authenticationEvaluated(with: .needAccountPassword)
+        
+        //THEN
+        XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
+        
     }
 }
 

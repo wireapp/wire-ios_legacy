@@ -22,6 +22,7 @@ import WireCommonComponents
 import WireSyncEngine
 
 protocol AppLockInteractorInput: class {
+    var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -53,6 +54,10 @@ final class AppLockInteractor {
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
+    var isCustomPasscodeNotSet: Bool {
+        return AppLock.isCustomPasscodeNotSet
+    }
+    
     var isAuthenticationNeeded: Bool {
         let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
         
