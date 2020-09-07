@@ -270,6 +270,35 @@ final class PasscodeSetupViewController: UIViewController {
 
         return keyboardAvoidingViewController
     }
+    
+    
+    //MARK: - close button
+    
+    lazy var closeItem: UIBarButtonItem = {
+        let closeItem = UIBarButtonItem.createCloseItem()
+        closeItem.tintColor = .white
+        
+        closeItem.target = self
+        closeItem.action = #selector(PasscodeSetupViewController.closeTapped)
+        
+        return closeItem
+    }()
+    
+    @objc
+    private func closeTapped() {
+        dismiss(animated: true)
+
+        appLockSetupViewControllerDismissed()
+    }
+    
+    private func appLockSetupViewControllerDismissed() {
+        callback?(false)
+        
+        passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidDismissed(self)
+        
+        // refresh options applock switch
+//        (topViewController as? SettingsTableViewController)?.refreshData()
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -319,4 +348,26 @@ extension PasscodeSetupViewController: PasscodeSetupUserInterface {
             createButton.isEnabled = newValue
         }
     }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate {
+    @available(iOS 13.0, *)
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        appLockSetupViewControllerDismissed()
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // more space for iPhone 4-inch to prevent keyboard hides the create passcode button
+        if view.frame.size.height <= CGFloat.iPhone4Inch.height {
+            return .fullScreen
+        } else {
+            if #available(iOS 13.0, *) {
+                return .automatic
+            } else {
+                return .none
+            }
+        }
+    }
+    
 }

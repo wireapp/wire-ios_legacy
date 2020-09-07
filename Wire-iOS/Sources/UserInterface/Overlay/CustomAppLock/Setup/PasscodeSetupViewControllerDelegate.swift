@@ -19,4 +19,6 @@ import Foundation
 
 protocol PasscodeSetupViewControllerDelegate: class {
     func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController)
+    
+    func passcodeSetupControllerDidDismissed(_ viewController: PasscodeSetupViewController)
 }

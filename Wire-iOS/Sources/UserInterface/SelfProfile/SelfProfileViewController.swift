@@ -208,26 +208,24 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
+        
         if newValue {
             self.callback = callback
             let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+            passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
             
             let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
             
-            let closeItem = UIBarButtonItem.createCloseItem()
-            closeItem.tintColor = .white
-            
-            closeItem.target = self
-            closeItem.action = #selector(closeTapped)
+            let closeItem = passcodeSetupViewController.closeItem
 
             keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
             
             
             appLockSetupViewController = wrappedViewController
             
-            wrappedViewController.presentationController?.delegate = self
+            wrappedViewController.presentationController?.delegate = passcodeSetupViewController
             
             UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
         } else {
@@ -235,40 +233,15 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             AppLock.isActive = false
         }
     }
+}
 
-    @objc
-    private func closeTapped() {
-        appLockSetupViewController?.dismiss(animated: true)
-        
-        appLockSetupViewControllerDismissed()
+extension SelfProfileViewController: PasscodeSetupViewControllerDelegate {
+    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
+        //no-op
     }
     
-    private func appLockSetupViewControllerDismissed() {
-        callback?(false) ///TODO: need call back?
-        
+    func passcodeSetupControllerDidDismissed(_ viewController: PasscodeSetupViewController) {
         // refresh options applock switch
         (topViewController as? SettingsTableViewController)?.refreshData()
     }
-}
-
-// MARK: - UIAdaptivePresentationControllerDelegate
-extension SelfProfileViewController: UIAdaptivePresentationControllerDelegate {
-    @available(iOS 13.0, *)
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        appLockSetupViewControllerDismissed()
-    }
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        // more space for iPhone 4-inch to prevent keyboard hides the create passcode button
-        if view.frame.size.height <= CGFloat.iPhone4Inch.height {
-            return .fullScreen
-        } else {
-            if #available(iOS 13.0, *) {
-                return .automatic
-            } else {
-                return .none
-            }
-        }
-    }
-
 }

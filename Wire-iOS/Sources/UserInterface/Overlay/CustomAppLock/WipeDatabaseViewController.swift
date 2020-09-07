@@ -104,7 +104,6 @@ final class WipeDatabaseViewController: UIViewController {
             
             self?.deleteAccounts()
             Keychain.deletePasscode()
-            ///TODO: reset passcode setting to false?
             
             self?.displayWipeCompletionScreen()
 
