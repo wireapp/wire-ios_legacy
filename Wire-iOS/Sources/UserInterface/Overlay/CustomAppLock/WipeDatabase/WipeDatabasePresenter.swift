@@ -19,23 +19,42 @@ import Foundation
 
 final class WipeDatabasePresenter {
     private weak var userInterface: WipeDatabaseUserInterface?
-    private var WipeDatabaseInteractorInput: WipeDatabaseInteractorInput
+    private var interactorInput: WipeDatabaseInteractorInput
 
     convenience init(userInterface: WipeDatabaseUserInterface) {
         let interactor = WipeDatabaseInteractor()
-        self.init(userInterface: userInterface, WipeDatabaseInteractorInput: interactor)
+        self.init(userInterface: userInterface, interactorInput: interactor)
         interactor.output = self
     }
 
     init(userInterface: WipeDatabaseUserInterface,
-         WipeDatabaseInteractorInput: WipeDatabaseInteractorInput) {
+         interactorInput: WipeDatabaseInteractorInput) {
         self.userInterface = userInterface
-        self.WipeDatabaseInteractorInput = WipeDatabaseInteractorInput
+        self.interactorInput = interactorInput
     }
-
-    /// WipeDatabase with passcode
-    func WipeDatabase(passcode: String, callback: RequestPasswordController.Callback?) {
-        callback?(passcode)
+    
+    private func displayWipeCompletionScreen() {
+        userInterface?.presentWipeCompletionViewController()
+    }
+    
+    func confirmAlertCallback() -> RequestPasswordController.Callback {
+        return { [weak self] confirmText in
+            guard confirmText == "wipe_database.alert.confirm_input".localized else {
+                return
+            }
+            
+            self?.interactorInput.deleteAccounts()
+            self?.interactorInput.deletePasscode()
+            
+            self?.displayWipeCompletionScreen()
+            
+        }
+    }
+    
+    func confirmAlertInputValidation() -> RequestPasswordController.InputValidation {
+        return { confirmText in
+            return confirmText == "wipe_database.alert.confirm_input".localized
+        }
     }
 }
 

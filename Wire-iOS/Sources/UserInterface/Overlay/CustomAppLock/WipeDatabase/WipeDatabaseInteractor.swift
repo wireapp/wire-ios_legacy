@@ -16,8 +16,12 @@
 //
 
 import Foundation
+import WireSyncEngine
+import WireUtilities
 
 protocol WipeDatabaseInteractorInput: class {
+    func deleteAccounts()
+    func deletePasscode()
 }
 
 protocol WipeDatabaseInteractorOutput: class {
@@ -29,4 +33,11 @@ final class WipeDatabaseInteractor {
 
 // MARK: - Interface
 extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
+    func deleteAccounts() {
+        SessionManager.shared?.wipeDatabase()
+    }
+
+    func deletePasscode() {
+        Keychain.deletePasscode()
+    }
 }
