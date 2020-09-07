@@ -19,7 +19,17 @@ import UIKit
 import WireSyncEngine
 import WireUtilities
 
+protocol WipeDatabaseUserInterface: class {
+}
+
+extension WipeDatabaseViewController: WipeDatabaseUserInterface {
+}
+
 final class WipeDatabaseViewController: UIViewController {
+
+    private lazy var presenter: WipeDatabasePresenter = {
+        return WipeDatabasePresenter(userInterface: self)
+    }()
 
     var confirmController: RequestPasswordController?
 

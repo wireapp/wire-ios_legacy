@@ -836,6 +836,8 @@
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
 		A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */; };
 		A9DA5084240FFD0900C2F886 /* ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DA5083240FFD0900C2F886 /* ButtonTests.swift */; };
+		A9DC33EA2506865B00AB09DF /* WipeDatabaseInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC33E82506865B00AB09DF /* WipeDatabaseInteractor.swift */; };
+		A9DC33EB2506865B00AB09DF /* WipeDatabasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC33E92506865B00AB09DF /* WipeDatabasePresenter.swift */; };
 		A9E5725924C6413700CBE0D7 /* UnlockViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */; };
 		A9E674D124F40C550058FC72 /* KeyboardAvoidingAuthenticationCoordinatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E674D024F40C550058FC72 /* KeyboardAvoidingAuthenticationCoordinatedViewController.swift */; };
 		A9E674D524F508B70058FC72 /* WireEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E674D424F508B70058FC72 /* WireEmail.swift */; };
@@ -2469,6 +2471,8 @@
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerViewModel.swift; sourceTree = "<group>"; };
 		A9DA5083240FFD0900C2F886 /* ButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTests.swift; sourceTree = "<group>"; };
+		A9DC33E82506865B00AB09DF /* WipeDatabaseInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WipeDatabaseInteractor.swift; sourceTree = "<group>"; };
+		A9DC33E92506865B00AB09DF /* WipeDatabasePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WipeDatabasePresenter.swift; sourceTree = "<group>"; };
 		A9E5725624C640B900CBE0D7 /* UnlockViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewControllerTests.swift; sourceTree = "<group>"; };
 		A9E674D024F40C550058FC72 /* KeyboardAvoidingAuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingAuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A9E674D424F508B70058FC72 /* WireEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireEmail.swift; sourceTree = "<group>"; };
@@ -5701,8 +5705,8 @@
 		A9BB638024C1DD910072143A /* CustomAppLock */ = {
 			isa = PBXGroup;
 			children = (
+				A9DC33E72506863600AB09DF /* WipeDatabase */,
 				A9A3B1F124D99FDF001AF38E /* WipeCompletion */,
-				A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */,
 				A96E803024CB2A850010CD80 /* Unlock */,
 				A96E802F24CB2A760010CD80 /* Setup */,
 				A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */,
@@ -5718,6 +5722,16 @@
 				A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */,
 			);
 			path = Button;
+			sourceTree = "<group>";
+		};
+		A9DC33E72506863600AB09DF /* WipeDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				A9DC33E82506865B00AB09DF /* WipeDatabaseInteractor.swift */,
+				A9DC33E92506865B00AB09DF /* WipeDatabasePresenter.swift */,
+				A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */,
+			);
+			path = WipeDatabase;
 			sourceTree = "<group>";
 		};
 		A9E5725524C640A100CBE0D7 /* CustomAppLock */ = {
@@ -7593,6 +7607,7 @@
 				5EF7BA63221ADF5500815625 /* ProfileDetailsViewController.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
+				A9DC33EB2506865B00AB09DF /* WipeDatabasePresenter.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
 				EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */,
 				5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */,
@@ -7750,6 +7765,7 @@
 				A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */,
 				BFCCA4FE20A0A03D000A4F33 /* CallInfoRootViewController.swift in Sources */,
 				7C52F723200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift in Sources */,
+				A9DC33EA2506865B00AB09DF /* WipeDatabaseInteractor.swift in Sources */,
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
