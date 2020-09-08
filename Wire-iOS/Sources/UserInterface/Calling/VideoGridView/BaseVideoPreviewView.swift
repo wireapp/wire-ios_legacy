@@ -105,10 +105,14 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
     
     // MARK: - Orientation
-    func layoutForOrientation() {
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
+                deviceOrientation: UIDeviceOrientation)
+    {
         guard let superview = superview else { return }
         
-        let delta = OrientationDelta()
+        let delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
+                                     deviceOrientation: deviceOrientation)
+        
         transform = CGAffineTransform(rotationAngle: delta.radians)
         frame = superview.bounds
         
@@ -116,7 +120,6 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
         layoutSubviews()
     }
-    
         
     // MARK: - Visibility
     @objc private func updateUserDetailsVisibility(_ notification: Notification?) {

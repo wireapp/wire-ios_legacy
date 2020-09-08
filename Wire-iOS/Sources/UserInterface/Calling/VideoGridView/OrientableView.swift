@@ -22,5 +22,13 @@ import UIKit
 typealias OrientableView = UIView & OrientableViewProtocol
 
 protocol OrientableViewProtocol {
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation)
     func layoutForOrientation()
+}
+
+extension OrientableViewProtocol {
+    func layoutForOrientation() {
+        layout(forInterfaceOrientation: UIApplication.shared.statusBarOrientation,
+               deviceOrientation: UIDevice.current.orientation)
+    }
 }

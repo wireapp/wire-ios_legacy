@@ -83,6 +83,35 @@ class VideoPreviewViewTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
+    
+    func testOrientationUpsideDown() {
+        testOrientation(.portraitUpsideDown)
+    }
+    
+    func testOrientationLandscapeLeft() {
+        testOrientation(.landscapeLeft)
+    }
 
+    func testOrientationLandscapeRight() {
+        testOrientation(.landscapeRight)
+    }
 
+    func testOrientation(_ deviceOrientation: UIDeviceOrientation,
+                         file: StaticString = #file,
+                         testName: String = #function,
+                         line: UInt = #line)
+    {
+        // GIVEN
+        sut = createView(from: stream(muted: false), isCovered: false)
+
+        let view = UIView(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone5))
+        view.addSubview(sut)
+        
+        // WHEN
+        sut.layout(forInterfaceOrientation: .portrait, deviceOrientation: deviceOrientation)
+        
+        // THEN
+        verify(matching: view, file: file, testName: testName, line: line)
+    }
+    
 }
