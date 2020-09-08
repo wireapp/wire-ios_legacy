@@ -24,34 +24,38 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCountlyProvider: NSObject, AnalyticsProvider {
     
-    //TODO:
+    private var sessionBegun: Bool = false
+    
     var isOptedOut: Bool {
         get {
-            return false //mixpanelInstance?.hasOptedOutTracking() ?? true
+            return !sessionBegun
         }
         set {
-//            if newValue == true {
-//                mixpanelInstance?.optOutTracking()
-//            } else {
-//                mixpanelInstance?.optInTracking()
-//            }
+            if newValue {
+                Countly.sharedInstance().beginSession()
+            } else {
+                Countly.sharedInstance().endSession()
+            }
+            
+            sessionBegun = !isOptedOut
         }
     }
         
-    override init(
-//        defaults: UserDefaults
-    ) {
-        
+    override init() {
         if let countlyAppKey = Bundle.countlyAppKey,
             let countlyHost = Bundle.countlyHost {
             let config: CountlyConfig = CountlyConfig()
             config.appKey = countlyAppKey
             config.host = countlyHost
+            config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
+            config.manualSessionHandling = true
             Countly.sharedInstance().start(with: config)
         }
 
         super.init()
         zmLog.info("AnalyticsCountlyProvider \(self) started")
+
+        isOptedOut = false
     }
     
     deinit {

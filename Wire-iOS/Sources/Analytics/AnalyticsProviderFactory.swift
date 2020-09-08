@@ -45,8 +45,7 @@ final class AnalyticsProviderFactory: NSObject {
             let provider = AnalyticsCountlyProvider()
             provider.isOptedOut = false
             return provider
-        }
-        else {
+        } else {
             zmLog.info("Creating analyticsProvider: no provider")
             return nil
         }
