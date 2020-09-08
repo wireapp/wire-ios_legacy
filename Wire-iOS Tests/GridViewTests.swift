@@ -23,6 +23,7 @@ import XCTest
 
 class OrientableViewMock: OrientableView {
     func layoutForOrientation() {}
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation) {}
 }
 
 class GridViewTests: XCTestCase {
