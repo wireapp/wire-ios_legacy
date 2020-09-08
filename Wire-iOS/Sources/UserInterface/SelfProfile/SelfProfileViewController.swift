@@ -216,6 +216,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         guard newValue else {
             Keychain.deletePasscode()
             AppLock.isActive = false
+            
+            return
         }
         
         self.callback = callback
