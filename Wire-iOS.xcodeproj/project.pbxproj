@@ -5138,6 +5138,7 @@
 				EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */,
 				6372AAA9249A4F2600C5F307 /* Int+Even.swift */,
 				54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */,
+				EE997A192507A851008336D2 /* Logging.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
