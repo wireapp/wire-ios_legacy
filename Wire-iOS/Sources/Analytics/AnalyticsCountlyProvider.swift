@@ -41,7 +41,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
     }
         
-    init?(optedOut: Bool) {
+    init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
               let countlyHost = Bundle.countlyHost else { return nil }
         
@@ -54,7 +54,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
-        self.isOptedOut = optedOut
+        self.isOptedOut = false
     }
     
     deinit {

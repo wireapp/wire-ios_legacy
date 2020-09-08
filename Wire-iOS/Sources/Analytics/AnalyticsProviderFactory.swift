@@ -42,7 +42,7 @@ final class AnalyticsProviderFactory: NSObject {
             return AnalyticsConsoleProvider()
         } else if AutomationHelper.sharedHelper.useAnalytics {
             // Create & return valid provider, when available.
-            return AnalyticsCountlyProvider(optedOut: false)
+            return AnalyticsCountlyProvider()
         } else {
             zmLog.info("Creating analyticsProvider: no provider")
             return nil
