@@ -20,34 +20,26 @@ import Foundation
 import UIKit
 
 /// Represents the orientation delta between the interface orientation (as a reference) and the device orientation
-enum OrientationDelta {
-    case rotatedRight
+enum OrientationDelta: Int, CaseIterable {
+    case equal
     case rotatedLeft
     case upsideDown
-    case equal
-    case unknown
+    case rotatedRight
+    
+    static func +(lhs: OrientationDelta, rhs: OrientationDelta) -> OrientationDelta? {
+        let value = (lhs.rawValue + rhs.rawValue) % OrientationDelta.allCases.count
+        return OrientationDelta(rawValue: value)
+    }
     
     init(interfaceOrientation: UIInterfaceOrientation = UIApplication.shared.statusBarOrientation,
          deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation) {
-        let angle = deviceOrientation.rotationAngle + interfaceOrientation.rotationAngle
-        self.init(angle: angle)
-    }
-    
-    init(angle: CGFloat) {
-        switch angle {
-        case OrientationAngle.straight.radians:
-            self = .upsideDown
-        case OrientationAngle.right.radians:
-            self = .rotatedLeft
-        case -OrientationAngle.right.radians:
-            self = .rotatedRight
-        case OrientationAngle.none.radians:
+        guard let delta = deviceOrientation.deltaFromPortrait + interfaceOrientation.deltaFromPortrait else {
             self = .equal
-        default:
-            self = .unknown
+            return
         }
+        self = delta
     }
-    
+
     var radians: CGFloat {
         switch self {
         case .upsideDown:
@@ -60,7 +52,7 @@ enum OrientationDelta {
             return OrientationAngle.none.radians
         }
     }
-    
+
     var edgeInsetsShiftAmount: Int {
         switch self {
         case .rotatedLeft:
@@ -79,7 +71,6 @@ enum OrientationAngle {
     case none // 0°
     case right // 90°
     case straight // 180°
-    case full // 360°
     
     var radians: CGFloat {
         switch self {
@@ -89,39 +80,36 @@ enum OrientationAngle {
             return .pi / 2
         case .straight:
             return .pi
-        case .full:
-            return .pi * 2
         }
     }
 }
 
 private extension UIDeviceOrientation {
-    var rotationAngle: CGFloat {
+    var deltaFromPortrait: OrientationDelta {
         switch self {
         case .landscapeLeft:
-            return OrientationAngle.right.radians
+            return .rotatedLeft
         case .landscapeRight:
-            return -OrientationAngle.right.radians
+            return .rotatedRight
         case .portraitUpsideDown:
-            return OrientationAngle.straight.radians
+            return .upsideDown
         default:
-            return OrientationAngle.none.radians
+            return .equal
         }
     }
-    
 }
 
 private extension UIInterfaceOrientation {
-    var rotationAngle: CGFloat {
+    var deltaFromPortrait: OrientationDelta {
         switch self {
         case .landscapeLeft:
-            return OrientationAngle.right.radians
+            return .rotatedLeft
         case .landscapeRight:
-            return -OrientationAngle.right.radians
+            return .rotatedRight
         case .portraitUpsideDown:
-            return OrientationAngle.straight.radians
+            return .upsideDown
         default:
-            return OrientationAngle.none.radians
+            return .equal
         }
     }
 }
