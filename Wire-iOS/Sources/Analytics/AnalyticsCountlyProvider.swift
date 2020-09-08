@@ -22,7 +22,7 @@ import Countly
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-final class AnalyticsCountlyProvider: NSObject, AnalyticsProvider {
+final class AnalyticsCountlyProvider: AnalyticsProvider {
     
     private var sessionBegun: Bool = false
     
@@ -41,21 +41,20 @@ final class AnalyticsCountlyProvider: NSObject, AnalyticsProvider {
         }
     }
         
-    override init() {
-        if let countlyAppKey = Bundle.countlyAppKey,
-            let countlyHost = Bundle.countlyHost {
-            let config: CountlyConfig = CountlyConfig()
-            config.appKey = countlyAppKey
-            config.host = countlyHost
-            config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
-            config.manualSessionHandling = true
-            Countly.sharedInstance().start(with: config)
-        }
+    init?(optedOut: Bool) {
+        guard let countlyAppKey = Bundle.countlyAppKey,
+              let countlyHost = Bundle.countlyHost else { return nil }
+        
+        let config: CountlyConfig = CountlyConfig()
+        config.appKey = countlyAppKey
+        config.host = countlyHost
+        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
+        config.manualSessionHandling = true
+        Countly.sharedInstance().start(with: config)
 
-        super.init()
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
-        isOptedOut = false
+        self.isOptedOut = optedOut
     }
     
     deinit {

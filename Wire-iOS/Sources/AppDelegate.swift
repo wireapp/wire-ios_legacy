@@ -178,10 +178,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupTracking() {
         let containsConsoleAnalytics = ProcessInfo.processInfo.arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
-        let trackingManager = TrackingManager.shared
-        
         AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.loadShared(with: trackingManager.disableCrashAndAnalyticsSharing)
+        Analytics.shared = Analytics(optedOut: TrackingManager.shared.disableCrashAndAnalyticsSharing)
     }
     
     @objc

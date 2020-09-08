@@ -32,7 +32,6 @@ final class AnalyticsTests: XCTestCase {
         // do not create third party Analytics provider, we are just testing AppCenter SDK here
         AnalyticsProviderFactory.shared.useConsoleAnalytics = true
         
-        //TODO: inject a dummy  provider
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         
         // WHEN

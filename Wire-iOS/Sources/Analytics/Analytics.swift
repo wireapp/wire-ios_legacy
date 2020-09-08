@@ -29,15 +29,7 @@ final class Analytics: NSObject {
     //    private var callingTracker: AnalyticsCallingTracker?
 //    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
     
-    private static var sharedAnalytics: Analytics?
-    
-    static var shared: Analytics = {
-        return sharedAnalytics!
-    }()
-
-    static func loadShared(with optedOut: Bool) {
-        sharedAnalytics = Analytics(optedOut: optedOut)
-    }
+    static var shared: Analytics!
     
     required init(optedOut: Bool) {
         zmLog.info("Analytics initWithOptedOut: \(optedOut)")
@@ -62,6 +54,7 @@ final class Analytics: NSObject {
 
     func setTeam(_ team: Team?) {
         //no-op
+        //TODO: change id?
     }
     
     func tagEvent(_ event: String, attributes: [String : Any]) {
