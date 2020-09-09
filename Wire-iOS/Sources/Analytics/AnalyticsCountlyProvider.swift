@@ -44,7 +44,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
               !countlyAppKey.isEmpty,
-              let countlyHost = Bundle.countlyHost else { return nil }
+              let countlyHost = Bundle.countlyHost else {
+                return nil
+        }
         
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
@@ -56,6 +58,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
         self.isOptedOut = false
+        sessionBegun = true
     }
     
     deinit {
@@ -72,7 +75,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
     func flush(completion: Completion?) {
-        //TODO
+        isOptedOut = true
         completion?()
     }
 }
