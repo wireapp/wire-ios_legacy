@@ -64,9 +64,9 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - UI Elements
 
-    let contentView = UIView()
+    private let contentView = UIView()
 
-    let topStack: UIStackView = {
+    private let topStack: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -75,7 +75,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
 
-    let logoView: UIImageView = {
+    private let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
         imageView.accessibilityIdentifier = "WireLogo"
@@ -86,7 +86,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return imageView
     }()
     
-    let messageLabel: UILabel = {
+    private let messageLabel: UILabel = {
         let label = UILabel(key: "landing.welcome_message".localized,
                             size: .normal,
                             weight: .bold,
@@ -99,7 +99,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let subMessageLabel: UILabel = {
+    private let subMessageLabel: UILabel = {
         let label = UILabel(key: "landing.welcome_submessage".localized,
                             size: .normal,
                             weight: .regular,
@@ -112,7 +112,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let buttonStackView: UIStackView = {
+    private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
@@ -124,7 +124,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
     
-    let enterpriseLoginButton: Button = {
+    private let enterpriseLoginButton: Button = {
         let button = Button(style: .empty, variant: .light)
         button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
@@ -134,7 +134,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    let loginButton: Button = {
+    private let loginButton: Button = {
         let button = Button(style: .full, variant: .light)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
@@ -143,7 +143,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
     
-    let loginWithEmailButton: Button = {
+    private let loginWithEmailButton: Button = {
         let button = Button(style: .full, variant: .light)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
@@ -152,7 +152,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
     
-    let loginWithSSOButton: Button = {
+    private let loginWithSSOButton: Button = {
         let button = Button(style: .empty, variant: .light)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
@@ -161,7 +161,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    let createAccoutInfoLabel: UILabel = {
+    private let createAccoutInfoLabel: UILabel = {
         let label = UILabel(key: "landing.create_account.infotitle".localized,
                             size: .small,
                             weight: .regular,
@@ -174,7 +174,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let createAccountButton: Button = {
+    private let createAccountButton: Button = {
         let button = Button(style: .empty, variant: .light)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
@@ -185,7 +185,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    let loginButtonsStackView: UIStackView = {
+    private let loginButtonsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
         stackView.distribution = .fill
@@ -197,7 +197,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
     
-    let customBackendTitleLabel: UILabel = {
+    private let customBackendTitleLabel: UILabel = {
         let label = UILabel()
         label.accessibilityIdentifier = "ConfigurationTitle"
         label.textAlignment = .center
@@ -207,7 +207,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let customBackendSubtitleLabel: UILabel = {
+    private let customBackendSubtitleLabel: UILabel = {
         let label = UILabel()
         label.accessibilityIdentifier = "ConfigurationLink"
         label.font = FontSpec(.small, .semibold).font!
@@ -215,7 +215,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
     
-    let customBackendSubtitleButton: UIButton = {
+    private let customBackendSubtitleButton: UIButton = {
         let button = UIButton()
         button.setTitle("landing.custom_backend.more_info.button.title".localized.uppercased(), for: .normal)
         button.accessibilityIdentifier = "ShowMoreButton"
@@ -227,7 +227,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
     
-    let customBackendSubtitleStack: UIStackView = {
+    private let customBackendSubtitleStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 4
@@ -235,7 +235,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
     
-    let customBackendStack: UIStackView = {
+    private let customBackendStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -330,7 +330,7 @@ final class LandingViewController: AuthenticationStepViewController {
         
         let contentViewLeading = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
         let contentViewTrailing = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
-        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
+        let contentViewWidth = contentView.widthAnchor.constraint(equalToConstant: 375)
         
         NSLayoutConstraint.activate([
             // top stack view
@@ -341,7 +341,7 @@ final class LandingViewController: AuthenticationStepViewController {
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
             
             // content view,
-            widthConstraint,
+            contentViewWidth,
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentViewLeading,
@@ -381,17 +381,25 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccountButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -35),
         ])
         
-        if traitCollection.horizontalSizeClass == .compact {
-            widthConstraint.isActive = false
-        } else {
-            contentViewLeading.isActive = false
-            contentViewTrailing.isActive = false
-        }
+        adjustLayoutForDeviceType(with: contentViewWidth,
+                                  contentViewLeading: contentViewLeading,
+                                  contentViewTrailing: contentViewTrailing)
     }
     
     private func disableAutoresizingMaskTranslation(for views: [UIView]) {
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
+    private func adjustLayoutForDeviceType(with contentViewWidth: NSLayoutConstraint,
+                                           contentViewLeading: NSLayoutConstraint,
+                                           contentViewTrailing: NSLayoutConstraint) {
+        if traitCollection.horizontalSizeClass == .compact {
+            contentViewWidth.isActive = false
+        } else {
+            contentViewLeading.isActive = false
+            contentViewTrailing.isActive = false
         }
     }
     
