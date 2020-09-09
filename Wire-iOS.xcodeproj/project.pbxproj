@@ -1546,7 +1546,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		060256152487E47D00E060E1 /* WireNotificationEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireNotificationEngine.framework; path = Carthage/Build/iOS/WireNotificationEngine.framework; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
 		0617001423E48B66005C262D /* VerticalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTransition.swift; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
@@ -4131,7 +4130,6 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				060256152487E47D00E060E1 /* WireNotificationEngine.framework */,
 				EF2AF69D236C3DA100793FD0 /* AppCenterAuth.framework */,
 				EF2AF69C236C3DA100793FD0 /* AppCenterPush.framework */,
 				7CAB7B5D235998E200A65042 /* AppCenterData.framework */,
@@ -6715,7 +6713,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Zeta Project Germany GmbH";
 				TargetAttributes = {
