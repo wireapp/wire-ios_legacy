@@ -25,10 +25,13 @@ import AppCenterCrashes
 import AppCenterDistribute
 import WireCommonComponents
 
-final class AnalyticsTests : XCTestCase {
+final class AnalyticsTests: XCTestCase {
 
     func testThatItSetsOptOutOnAppCenter() {
         // GIVEN
+        // do not create third party Analytics provider, we are just testing AppCenter SDK here
+        AnalyticsProviderFactory.shared.useConsoleAnalytics = true
+        
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         
         // WHEN

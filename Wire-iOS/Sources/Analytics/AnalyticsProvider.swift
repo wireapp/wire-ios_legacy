@@ -31,5 +31,5 @@ protocol AnalyticsProvider: class {
     /// Force the AnalyticsProvider to process the queued data immediately
     ///
     /// - Parameter completion: an optional completion handler for when the flush has completed.
-    func flush(completion: (() -> Void)?)
+    func flush(completion: Completion?)
 }

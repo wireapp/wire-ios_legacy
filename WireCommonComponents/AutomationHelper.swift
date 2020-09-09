@@ -45,7 +45,9 @@ public final class AutomationHelper: NSObject {
     
     /// Whether analytics should be used
     public var useAnalytics: Bool {
-        return UserDefaults.standard.bool(forKey: "UseAnalytics")
+        //TODO: get it from xcconfig?
+//        return UserDefaults.standard.bool(forKey: "UseAnalytics")
+        return true
     }
     
     /// Whether to skip the first login alert

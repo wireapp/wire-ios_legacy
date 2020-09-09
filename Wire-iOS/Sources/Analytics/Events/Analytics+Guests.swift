@@ -74,6 +74,6 @@ enum GuestRoomEvent: Event {
 
 extension Event {
     func track() {
-        Analytics.shared().tag(self)
+        Analytics.shared.tag(self)
     }
 }

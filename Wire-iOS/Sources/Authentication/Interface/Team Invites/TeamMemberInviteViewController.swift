@@ -133,7 +133,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         }
         
         guard let userSession = ZMUserSession.shared() else { return }
-        Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
+        Analytics.shared.tag(TeamInviteEvent.sentInvite(.teamCreation))
         footerTextFieldView.isLoading = true
         
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
@@ -171,7 +171,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
     @objc private func didTapContinueButton(_ sender: Button) {
         let inviteResult = invitationsCount == 0 ? Analytics.InviteResult.none : Analytics.InviteResult.invited(invitesCount: invitationsCount)
 
-        Analytics.shared().tagTeamFinishedInviteStep(with: inviteResult)
+        Analytics.shared.tagTeamFinishedInviteStep(with: inviteResult)
         authenticationCoordinator?.teamInviteViewControllerDidFinish(self)
     }
 

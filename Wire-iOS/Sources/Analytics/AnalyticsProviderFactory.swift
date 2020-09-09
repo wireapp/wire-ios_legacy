@@ -36,16 +36,14 @@ final class AnalyticsProviderFactory: NSObject {
         self.userDefaults = userDefaults
     }
   
-    public func analyticsProvider() -> AnalyticsProvider? {
-        if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
+    func analyticsProvider() -> AnalyticsProvider? {
+        if useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
-        }
-        else if AutomationHelper.sharedHelper.useAnalytics {
+        } else if AutomationHelper.sharedHelper.useAnalytics {
             // Create & return valid provider, when available.
-            return nil
-        }
-        else {
+            return AnalyticsCountlyProvider()
+        } else {
             zmLog.info("Creating analyticsProvider: no provider")
             return nil
         }

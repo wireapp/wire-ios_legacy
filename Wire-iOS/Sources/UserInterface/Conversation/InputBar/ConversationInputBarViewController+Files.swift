@@ -155,7 +155,7 @@ extension ConversationInputBarViewController {
                     }
                 }
 
-                Analytics.shared().tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
 
                 completion()
             })
