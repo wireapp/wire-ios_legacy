@@ -51,15 +51,14 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
-    func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
-        
-        let printableAttributes = attributes
-        
+    func tagEvent(_ event: String,
+                  attributes: [String : Any]? = nil) {        
         var loggingDict = [String : Any]()
         
         loggingDict["event"] = event
         
-        if !printableAttributes.isEmpty {
+        if let printableAttributes = attributes,
+            !printableAttributes.isEmpty {
             var localAttributes = [String : String]()
             printableAttributes.map({ (key, value) -> (String, String) in
                 return (key, (value as AnyObject).description!)

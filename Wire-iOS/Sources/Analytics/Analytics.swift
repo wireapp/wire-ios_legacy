@@ -21,7 +21,7 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-final class Analytics: NSObject {
+final class Analytics {
     
     var provider: AnalyticsProvider?
     //TODO:
@@ -34,8 +34,6 @@ final class Analytics: NSObject {
     required init(optedOut: Bool) {
         zmLog.info("Analytics initWithOptedOut: \(optedOut)")
         provider = optedOut ? nil : AnalyticsProviderFactory.shared.analyticsProvider()
-        
-        super.init()
         
         setupObserver()
     }
@@ -57,9 +55,7 @@ final class Analytics: NSObject {
         //TODO: change id?
     }
     
-    func tagEvent(_ event: String, attributes: [String : Any]) {
-        guard let attributes = attributes as? [String : NSObject] else { return }
-        
+    func tagEvent(_ event: String, attributes: [String : Any]? = nil) {
         tagEvent(event, attributes: attributes)
     }
 
@@ -69,7 +65,7 @@ final class Analytics: NSObject {
     }
 }
 
-extension Analytics: AnalyticsType { ///TODO: update protocol
+extension Analytics: AnalyticsType {
     func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
         //no-op
     }
@@ -79,13 +75,8 @@ extension Analytics: AnalyticsType { ///TODO: update protocol
         return nil
     }
     
-    /// Record an event with no attributes
-    func tagEvent(_ event: String) { ///TODO: change DM
-        provider?.tagEvent(event, attributes: [:] as [String : NSObject])
-    }
-    
     /// Record an event with optional attributes.
-    func tagEvent(_ event: String, attributes: [String : NSObject]) {
+    func tagEvent(_ event: String, attributes: [String : NSObject]?) {
         DispatchQueue.main.async(execute: {
             self.provider?.tagEvent(event, attributes: attributes)
         })

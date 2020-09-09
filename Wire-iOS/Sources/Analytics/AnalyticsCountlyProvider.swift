@@ -66,7 +66,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
 
-    func tagEvent(_ event: String, attributes: [String : Any]) {
+    func tagEvent(_ event: String, attributes: [String : Any]? = nil) {
         //TODO: casting
         Countly.sharedInstance().recordEvent(event, segmentation:attributes as! [String : String])
     }
