@@ -67,7 +67,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     
 
     func tagEvent(_ event: String, attributes: [String : Any]) {
-        //TODO
+        //TODO: casting
+        Countly.sharedInstance().recordEvent(event, segmentation:attributes as! [String : String])
     }
     
     func setSuperProperty(_ name: String, value: Any?) {

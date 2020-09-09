@@ -69,7 +69,7 @@ final class Analytics: NSObject {
     }
 }
 
-extension Analytics: AnalyticsType {
+extension Analytics: AnalyticsType { ///TODO: update protocol
     func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
         //no-op
     }
@@ -80,12 +80,14 @@ extension Analytics: AnalyticsType {
     }
     
     /// Record an event with no attributes
-    func tagEvent(_ event: String) {
-        //no-op
+    func tagEvent(_ event: String) { ///TODO: change DM
+        provider?.tagEvent(event, attributes: [:] as [String : NSObject])
     }
     
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String : NSObject]) {
-        //no-op
+        DispatchQueue.main.async(execute: {
+            self.provider?.tagEvent(event, attributes: attributes)
+        })
     }
 }
