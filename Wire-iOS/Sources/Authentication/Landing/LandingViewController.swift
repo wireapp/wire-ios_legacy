@@ -328,6 +328,10 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccoutInfoLabel
         ])
         
+        let contentViewLeading = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
+        let contentViewTrailing = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
+        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
+        
         NSLayoutConstraint.activate([
             // top stack view
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 42),
@@ -336,11 +340,12 @@ final class LandingViewController: AuthenticationStepViewController {
             // logoView
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
             
-            // content view
+            // content view,
+            widthConstraint,
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            contentViewLeading,
+            contentViewTrailing,
             
             // message label
             messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -364,7 +369,6 @@ final class LandingViewController: AuthenticationStepViewController {
             loginWithEmailButton.heightAnchor.constraint(equalToConstant: 48),
             loginWithSSOButton.heightAnchor.constraint(equalToConstant: 48),
             
-            
             // create an label
             createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
@@ -376,6 +380,13 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccountButton.heightAnchor.constraint(equalToConstant: 24),
             createAccountButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -35),
         ])
+        
+        if traitCollection.horizontalSizeClass == .compact {
+            widthConstraint.isActive = false
+        } else {
+            contentViewLeading.isActive = false
+            contentViewTrailing.isActive = false
+        }
     }
     
     private func disableAutoresizingMaskTranslation(for views: [UIView]) {
@@ -383,7 +394,7 @@ final class LandingViewController: AuthenticationStepViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
     }
-
+    
     // MARK: - Adaptivity Events
     
     private func updateLogoView() {
