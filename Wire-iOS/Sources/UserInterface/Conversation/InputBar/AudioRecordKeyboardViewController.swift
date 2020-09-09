@@ -339,7 +339,6 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         
         switch state {
         case .ready:
-            recorder.deleteRecording()
             self.closeEffectsPicker(animated: false)
             self.recordTapGestureRecognizer.isEnabled = true
             updateTimeLabel(0)
@@ -453,6 +452,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     }
     
     @objc func redoButtonPressed(_ button: UIButton?) {
+        recorder.deleteRecording()
         self.state = .ready
     }
     
