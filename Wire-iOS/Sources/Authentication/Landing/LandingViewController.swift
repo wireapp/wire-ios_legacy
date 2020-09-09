@@ -302,7 +302,7 @@ final class LandingViewController: AuthenticationStepViewController {
             topStack.addArrangedSubview(customBackendStack)
         }
 
-        contentView.addSubview(topStack)
+        view.addSubview(topStack)
 
         contentView.addSubview(messageLabel)
         contentView.addSubview(subMessageLabel)
@@ -312,8 +312,8 @@ final class LandingViewController: AuthenticationStepViewController {
         buttonStackView.addArrangedSubview(loginWithSSOButton)
         contentView.addSubview(buttonStackView)
 
-        contentView.addSubview(createAccoutInfoLabel)
-        contentView.addSubview(createAccountButton)
+        view.addSubview(createAccoutInfoLabel)
+        view.addSubview(createAccountButton)
         view.addSubview(contentView)
     }
 
