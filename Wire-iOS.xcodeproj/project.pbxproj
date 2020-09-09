@@ -14,7 +14,6 @@
 		067BBBFE247E693400D73407 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067BBBFD247E693400D73407 /* NotificationService.swift */; };
 		067BBC02247E693400D73407 /* Wire Notification Service Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 067BBBFB247E693400D73407 /* Wire Notification Service Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		067BBC06247E6F1A00D73407 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
-		067BBC07247E6F1A00D73407 /* WireCommonComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		069311E424F9653D00D14DF5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 069311E224F9653D00D14DF5 /* Localizable.strings */; };
@@ -1528,17 +1527,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		067BBC0A247E6F1A00D73407 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				067BBC07247E6F1A00D73407 /* WireCommonComponents.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1EE85C681B5F96FC008E084B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6733,7 +6721,6 @@
 				067BBBF7247E693400D73407 /* Sources */,
 				067BBBF8247E693400D73407 /* Frameworks */,
 				067BBBF9247E693400D73407 /* Resources */,
-				067BBC0A247E6F1A00D73407 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -7111,7 +7098,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
