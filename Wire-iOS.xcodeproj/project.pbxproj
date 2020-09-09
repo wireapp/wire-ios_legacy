@@ -1557,9 +1557,6 @@
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
-		06F3E73224EFAB1800B1083C /* Notification-Extension-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Debug.xcconfig"; sourceTree = "<group>"; };
-		06F3E73324EFAB1800B1083C /* Notification-Extension-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Release.xcconfig"; sourceTree = "<group>"; };
-		06F3E73424EFAB1800B1083C /* Notification-Extension-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Base.xcconfig"; sourceTree = "<group>"; };
 		095275931B7E834400123BAF /* WireSyncEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireSyncEngine.framework; path = Carthage/Build/iOS/WireSyncEngine.framework; sourceTree = "<group>"; };
 		16030DAC21A846A200F8032E /* ConversationVideoMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVideoMessageCellTests.swift; sourceTree = "<group>"; };
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
@@ -3221,16 +3218,6 @@
 			children = (
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		06F3E73124EFA9E600B1083C /* Notification Extension */ = {
-			isa = PBXGroup;
-			children = (
-				06F3E73424EFAB1800B1083C /* Notification-Extension-Base.xcconfig */,
-				06F3E73224EFAB1800B1083C /* Notification-Extension-Debug.xcconfig */,
-				06F3E73324EFAB1800B1083C /* Notification-Extension-Release.xcconfig */,
-			);
-			path = "Notification Extension";
 			sourceTree = "<group>";
 		};
 		160D691E212C78C700096EAD /* CallQualityController */ = {
@@ -6569,7 +6556,6 @@
 				F1B24236219B2C9B00F7035C /* Project-Release.xcconfig */,
 				F1B24231219B2C9B00F7035C /* Wire-iOS */,
 				F156509521DCED3000210504 /* CommonComponents */,
-				06F3E73124EFA9E600B1083C /* Notification Extension */,
 				F1B24237219B2C9B00F7035C /* Share Extension */,
 				F114466721A2F89D00B5FEBA /* Tests */,
 			);
