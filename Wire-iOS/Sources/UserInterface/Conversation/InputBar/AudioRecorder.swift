@@ -232,9 +232,12 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public func deleteRecording() {
         currentDuration = 0
+
         if let filePath = audioRecorder?.url.path, FileManager.default.fileExists(atPath: filePath) {
             audioRecorder?.deleteRecording()
         }
+
+        state = .initializing
     }
     
     fileprivate func setupDisplayLink() {
