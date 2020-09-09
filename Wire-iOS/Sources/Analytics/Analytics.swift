@@ -21,7 +21,7 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-final class Analytics: NSObject {
+final class Analytics {
     
     var provider: AnalyticsProvider?
     //TODO:
@@ -34,8 +34,6 @@ final class Analytics: NSObject {
     required init(optedOut: Bool) {
         zmLog.info("Analytics initWithOptedOut: \(optedOut)")
         provider = optedOut ? nil : AnalyticsProviderFactory.shared.analyticsProvider()
-        
-        super.init()
         
         setupObserver()
     }

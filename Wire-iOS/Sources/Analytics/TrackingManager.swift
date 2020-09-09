@@ -18,9 +18,6 @@
 
 import Foundation
 import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
-import AppCenterDistribute
 import WireCommonComponents
 import avs
 import WireSyncEngine
@@ -40,7 +37,7 @@ final class TrackingManager: NSObject, TrackingInterface {
 
     var disableCrashAndAnalyticsSharing: Bool {
         set {
-            Analytics.shared.isOptedOut = newValue
+            Analytics.shared.isOptedOut = newValue //TODO: testing
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             updateAppCenterStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue

@@ -43,6 +43,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
+              !countlyAppKey.isEmpty,
               let countlyHost = Bundle.countlyHost else { return nil }
         
         let config: CountlyConfig = CountlyConfig()
@@ -70,7 +71,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         //TODO
     }
     
-    func flush(completion: (() -> Void)?) {
+    func flush(completion: Completion?) {
         //TODO
+        completion?()
     }
 }

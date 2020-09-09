@@ -76,7 +76,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 
-    func flush(completion: (() -> Void)?) {
+    func flush(completion: Completion?) {
         completion?()
     }
 }
