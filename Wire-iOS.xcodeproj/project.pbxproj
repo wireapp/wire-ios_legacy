@@ -412,7 +412,6 @@
 		5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
-		6305205E24FFD61800ED295A /* Array+Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305205D24FFD61700ED295A /* Array+Shift.swift */; };
 		6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */; };
 		6305206224FFEF9600ED295A /* OrientableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305206124FFEF9600ED295A /* OrientableView.swift */; };
 		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
@@ -1975,7 +1974,6 @@
 		5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+VoiceOver.swift"; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
-		6305205D24FFD61700ED295A /* Array+Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shift.swift"; sourceTree = "<group>"; };
 		6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+DeviceOrientation.swift"; sourceTree = "<group>"; };
 		6305206124FFEF9600ED295A /* OrientableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientableView.swift; sourceTree = "<group>"; };
 		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
@@ -5136,7 +5134,6 @@
 				EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */,
 				EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */,
 				6372AAA9249A4F2600C5F307 /* Int+Even.swift */,
-				6305205D24FFD61700ED295A /* Array+Shift.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7563,7 +7560,6 @@
 				5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */,
 				EF218AC720A9DDEF004977BF /* ZClientViewController+DataUsagePermissions.swift in Sources */,
 				162936BB1F470A9300D4F386 /* AppState.swift in Sources */,
-				6305205E24FFD61800ED295A /* Array+Shift.swift in Sources */,
 				EF39BD30233E418B00F02DDB /* FileManager+Directory.swift in Sources */,
 				A90E4ABC2381B26600468F31 /* Settings+ColorScheme.swift in Sources */,
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
