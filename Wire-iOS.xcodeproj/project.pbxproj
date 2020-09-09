@@ -1557,7 +1557,6 @@
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
-		06F3E73024EFA63E00B1083C /* Wire-iOS Notification Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Wire-iOS Notification Extension.entitlements"; sourceTree = "<group>"; };
 		06F3E73224EFAB1800B1083C /* Notification-Extension-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Debug.xcconfig"; sourceTree = "<group>"; };
 		06F3E73324EFAB1800B1083C /* Notification-Extension-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Release.xcconfig"; sourceTree = "<group>"; };
 		06F3E73424EFAB1800B1083C /* Notification-Extension-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Notification-Extension-Base.xcconfig"; sourceTree = "<group>"; };
@@ -3211,7 +3210,6 @@
 			isa = PBXGroup;
 			children = (
 				069311C424F95CB200D14DF5 /* Resources */,
-				06F3E73024EFA63E00B1083C /* Wire-iOS Notification Extension.entitlements */,
 				067BBBFD247E693400D73407 /* NotificationService.swift */,
 				067BBBFF247E693400D73407 /* Info.plist */,
 			);
