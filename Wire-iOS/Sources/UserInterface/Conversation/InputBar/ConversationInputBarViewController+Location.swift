@@ -48,7 +48,7 @@ extension ConversationInputBarViewController: LocationSelectionViewControllerDel
                 try self.conversation.appendLocation(with: locationData)
                 Analytics.shared().tagMediaActionCompleted(.location, inConversation: self.conversation)
             } catch {
-                // No op
+                Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
             }
         }
 
