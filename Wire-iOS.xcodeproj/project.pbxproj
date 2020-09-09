@@ -7059,7 +7059,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/HTMLString.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftProtobuf.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/DifferenceKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireNotificationEngine.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
