@@ -1257,7 +1257,7 @@
 
 "landing.header" = "Wire. Add your Account.";
 "landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
-"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in there";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
 "landing.create_account.title" = "Create a Wire personal account";
 "landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
