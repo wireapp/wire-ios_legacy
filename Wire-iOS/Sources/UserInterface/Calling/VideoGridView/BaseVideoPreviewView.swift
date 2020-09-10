@@ -36,7 +36,8 @@ extension AVSVideoView: AVSIdentifierProvider {
     }
 }
 
-class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
+class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
+
     var stream: Stream {
         didSet {
             updateUserDetails()
@@ -44,6 +45,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         }
     }
     
+    private var detailsConstraints: UserDetailsConstraints?
     private var isCovered: Bool
     
     private var userDetailsAlpha: CGFloat {
@@ -74,6 +76,7 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
@@ -92,14 +95,33 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
     }
     
     func createConstraints() {
-        NSLayoutConstraint.activate([
-            userDetailsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            userDetailsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8),
-            userDetailsView.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -8),
-            userDetailsView.heightAnchor.constraint(equalToConstant: 24),
-        ])
+        detailsConstraints = UserDetailsConstraints(
+            view: userDetailsView,
+            superview: self,
+            safeAreaInsets: safeAreaInsetsOrFallback.adjusted(for: OrientationDelta())
+        )
+       
+        NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
     
+    // MARK: - Orientation
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
+                deviceOrientation: UIDeviceOrientation)
+    {
+        guard let superview = superview else { return }
+        
+        let delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
+                                     deviceOrientation: deviceOrientation)
+        
+        transform = CGAffineTransform(rotationAngle: delta.radians)
+        frame = superview.bounds
+        
+        detailsConstraints?.updateEdges(with: safeAreaInsetsOrFallback.adjusted(for: delta))
+
+        layoutSubviews()
+    }
+        
+    // MARK: - Visibility
     @objc private func updateUserDetailsVisibility(_ notification: Notification?) {
         guard let isCovered = notification?.userInfo?[VideoGridViewController.isCoveredKey] as? Bool else {
             return
@@ -112,5 +134,28 @@ class BaseVideoPreviewView: UIView, AVSIdentifierProvider {
             animations: {
                 self.userDetailsView.alpha = self.userDetailsAlpha
         })
+    }
+}
+
+// MARK: - User Details Constraints
+private struct UserDetailsConstraints {
+    private let bottom: NSLayoutConstraint
+    private let leading: NSLayoutConstraint
+    private let trailing: NSLayoutConstraint
+    
+    private let margin: CGFloat = 8
+    
+    init(view: UIView, superview: UIView, safeAreaInsets insets: UIEdgeInsets) {
+        bottom = view.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
+        leading = view.leadingAnchor.constraint(equalTo: superview.leadingAnchor)
+        trailing = view.trailingAnchor.constraint(lessThanOrEqualTo: superview.trailingAnchor)
+        updateEdges(with: insets)
+        NSLayoutConstraint.activate([bottom, leading, trailing])
+    }
+    
+    func updateEdges(with insets: UIEdgeInsets) {
+        leading.constant = margin + insets.left
+        trailing.constant = -(margin + insets.right)
+        bottom.constant = -(margin + insets.bottom)
     }
 }
