@@ -33,8 +33,12 @@ final class ConversationInputBarSendController: NSObject {
     func sendMessage(withImageData imageData: Data, completion completionHandler: Completion? = nil) {
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
-            self.conversation.append(imageFromData:imageData)
-            self.feedbackGenerator.impactOccurred()
+            do {
+                try self.conversation.appendImage(from:imageData)
+                self.feedbackGenerator.impactOccurred()
+            } catch {
+                Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
+            }
         }, completionHandler: {
                 completionHandler?()
             Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
@@ -46,8 +50,13 @@ final class ConversationInputBarSendController: NSObject {
                          replyingTo message: ZMConversationMessage?) {
         ZMUserSession.shared()?.enqueue({
             let shouldFetchLinkPreview = !Settings.disableLinkPreviews
-            self.conversation.append(text:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
-            self.conversation.draftMessage = nil
+
+            do {
+                try self.conversation.appendText(content:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
+                self.conversation.draftMessage = nil
+            } catch {
+                Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
+            }
         }, completionHandler: {
             Analytics.shared().tagMediaActionCompleted(.text, inConversation: self.conversation)
             
@@ -58,10 +67,13 @@ final class ConversationInputBarSendController: NSObject {
         let shouldFetchLinkPreview = !Settings.disableLinkPreviews
         
         ZMUserSession.shared()?.enqueue({
-            self.conversation.append(text: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
-            
-            self.conversation.append(imageFromData: data)
-            self.conversation.draftMessage = nil
+            do {
+                try self.conversation.appendText(content: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
+                try self.conversation.appendImage(from: data)
+                self.conversation.draftMessage = nil
+            } catch {
+                Logging.messageProcessing.warn("Failed to append text message with image data. Reason: \(error.localizedDescription)")
+            }
         }, completionHandler: {
             Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
             Analytics.shared().tagMediaActionCompleted(.text, inConversation: self.conversation)

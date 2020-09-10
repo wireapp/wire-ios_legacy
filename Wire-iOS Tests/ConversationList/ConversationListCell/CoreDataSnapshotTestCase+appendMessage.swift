@@ -20,32 +20,32 @@ import Foundation
 
 extension CoreDataSnapshotTestCase {
     func appendTextMessage(to conversation: ZMConversation) {
-        let message = conversation.append(text: "test \(conversation.allMessages.count + 1)") as! ZMMessage
+        let message = try! conversation.appendText(content: "test \(conversation.allMessages.count + 1)") as! ZMMessage
         (message).sender = self.otherUser
 
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
     func appendImage(to conversation: ZMConversation) {
-        (conversation.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
+        (try! conversation.appendImage(from: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
     func appendMention(to conversation: ZMConversation) {
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (conversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        (try! conversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
     func appendReply(to conversation: ZMConversation, selfMessage: ZMMessage, text: String = "reply test") {
-        (conversation.append(text: text, replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+        (try! conversation.appendText(content: text, replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 
     func appendSelfMessage(to conversation: ZMConversation) -> ZMMessage {
-        let selfMessage = conversation.append(text: "I am a programmer") as! ZMMessage
+        let selfMessage = try! conversation.appendText(content: "I am a programmer") as! ZMMessage
         selfMessage.sender = selfUser
 
         return selfMessage

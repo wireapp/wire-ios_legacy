@@ -44,8 +44,12 @@ extension ConversationInputBarViewController {
 extension ConversationInputBarViewController: LocationSelectionViewControllerDelegate {
     func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData) {
         ZMUserSession.shared()?.enqueue {
-            self.conversation.append(location: locationData)
-            Analytics.shared().tagMediaActionCompleted(.location, inConversation: self.conversation)
+            do {
+                try self.conversation.appendLocation(with: locationData)
+                Analytics.shared().tagMediaActionCompleted(.location, inConversation: self.conversation)
+            } catch {
+                Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
+            }
         }
 
         parent?.dismiss(animated: true)
