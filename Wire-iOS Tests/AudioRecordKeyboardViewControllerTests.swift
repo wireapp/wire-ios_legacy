@@ -199,4 +199,5 @@ final class AudioRecordKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
         XCTAssertEqual(self.mockDelegate.didCancelHitCount, 1)
     }
+
 }
