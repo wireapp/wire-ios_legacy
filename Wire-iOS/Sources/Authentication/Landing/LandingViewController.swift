@@ -90,7 +90,7 @@ final class LandingViewController: AuthenticationStepViewController {
         let label = UILabel(key: "landing.welcome_message".localized,
                             size: .normal,
                             weight: .bold,
-                            color: .textForeground,
+                            color: .landingScreen,
                             variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -103,7 +103,7 @@ final class LandingViewController: AuthenticationStepViewController {
         let label = UILabel(key: "landing.welcome_submessage".localized,
                             size: .normal,
                             weight: .regular,
-                            color: .textForeground,
+                            color: .landingScreen,
                             variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -124,21 +124,26 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
     
-    private let enterpriseLoginButton: Button = {
-        let button = Button(style: .empty, variant: .light)
-        button.accessibilityIdentifier = "Enterprise Login"
-        button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.enterpriseLoginButtonTapped(_:)
-            ), for: .touchUpInside)
-        
-        return button
-    }()
-
     private let loginButton: Button = {
         let button = Button(style: .full, variant: .light)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(loginButtonTapped(_:)),
+                         for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private let enterpriseLoginButton: Button = {
+        let button = Button(style: .empty,
+                            variant: .light,
+                            titleLabelFont: .smallSemiboldFont)
+        button.accessibilityIdentifier = "Enterprise Login"
+        button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
+        button.addTarget(self,
+                         action: #selector(enterpriseLoginButtonTapped(_:)),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -147,7 +152,9 @@ final class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .full, variant: .light)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(loginButtonTapped(_:)),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -156,7 +163,9 @@ final class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .empty, variant: .light)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.ssoLoginButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(ssoLoginButtonTapped(_:)),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -165,7 +174,7 @@ final class LandingViewController: AuthenticationStepViewController {
         let label = UILabel(key: "landing.create_account.infotitle".localized,
                             size: .small,
                             weight: .regular,
-                            color: .textForeground,
+                            color: .landingScreen,
                             variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -175,12 +184,16 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
     
     private let createAccountButton: Button = {
-        let button = Button(style: .empty, variant: .light)
+        let button = Button(style: .empty,
+                            variant: .light,
+                            titleLabelFont: .smallSemiboldFont)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(createAccountButtonTapped(_:)),
+                         for: .touchUpInside)
 
         return button
     }()
@@ -223,7 +236,9 @@ final class LandingViewController: AuthenticationStepViewController {
         button.titleLabel?.font = FontSpec(.small, .semibold).font!
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
-        button.addTarget(self, action: #selector(LandingViewController.showCustomBackendLink(_:)), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(showCustomBackendLink(_:)),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -259,15 +274,16 @@ final class LandingViewController: AuthenticationStepViewController {
         updateButtons()
         updateCustomBackendLabels()
 
-        NotificationCenter.default.addObserver(
-            forName: AccountManagerDidUpdateAccountsNotificationName,
-            object: SessionManager.shared?.accountManager,
-            queue: .main) { _ in
+        NotificationCenter.default.addObserver(forName: AccountManagerDidUpdateAccountsNotificationName,
+                                               object: SessionManager.shared?.accountManager,
+                                               queue: .main) { _ in
                 self.updateBarButtonItem()
                 self.disableTrackingIfNeeded()
         }
         
-        NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification, object: nil, queue: .main) { _ in
+        NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification,
+                                               object: nil,
+                                               queue: .main) { _ in
             self.updateCustomBackendLabels()
             self.updateButtons()
         }
