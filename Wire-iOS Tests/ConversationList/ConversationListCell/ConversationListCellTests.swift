@@ -191,9 +191,9 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
     
-    func testThatItRendersConversationWithKnock() throws {
+    func testThatItRendersConversationWithKnock() {
         // when
-        let knock = try otherUserConversation.appendKnock()
+        let knock = try! otherUserConversation.appendKnock()
         (knock as! ZMClientMessage).sender = otherUser
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         
