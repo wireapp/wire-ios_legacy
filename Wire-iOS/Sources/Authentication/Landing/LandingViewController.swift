@@ -266,7 +266,15 @@ final class LandingViewController: AuthenticationStepViewController {
         self.view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
-        createConstraints()
+        
+        traitCollection.horizontalSizeClass == .compact
+            ? ()
+            : configureRegularSizeClassFont()
+        
+        traitCollection.horizontalSizeClass == .compact
+            ? createCompactSizeClassConstraints()
+            : createRegularSizeClassConstraints()
+        
         configureAccessibilityElements()
 
         updateBarButtonItem()
@@ -333,7 +341,7 @@ final class LandingViewController: AuthenticationStepViewController {
         view.addSubview(contentView)
     }
 
-    private func createConstraints() {
+    private func disableAutoresizingMaskTranslationViews() {
         disableAutoresizingMaskTranslation(for: [
             topStack,
             contentView,
@@ -343,10 +351,10 @@ final class LandingViewController: AuthenticationStepViewController {
             subMessageLabel,
             createAccoutInfoLabel
         ])
-        
-        let contentViewLeading = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
-        let contentViewTrailing = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
-        let contentViewWidth = contentView.widthAnchor.constraint(equalToConstant: 375)
+    }
+    
+    private func createCompactSizeClassConstraints() {
+        disableAutoresizingMaskTranslationViews()
         
         NSLayoutConstraint.activate([
             // top stack view
@@ -357,11 +365,10 @@ final class LandingViewController: AuthenticationStepViewController {
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
             
             // content view,
-            contentViewWidth,
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentViewLeading,
-            contentViewTrailing,
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
             // message label
             messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -396,26 +403,69 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccountButton.heightAnchor.constraint(equalToConstant: 24),
             createAccountButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -35),
         ])
+    }
+    
+    private func createRegularSizeClassConstraints() {
+        disableAutoresizingMaskTranslationViews()
         
-        adjustLayoutForDeviceType(with: contentViewWidth,
-                                  contentViewLeading: contentViewLeading,
-                                  contentViewTrailing: contentViewTrailing)
+        NSLayoutConstraint.activate([
+            // top stack view
+            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 200),
+            topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            // logoView
+            logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
+            
+            // content view,
+            contentView.widthAnchor.constraint(equalToConstant: 375),
+            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            // message label
+            messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -72),
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 72),
+            messageLabel.bottomAnchor.constraint(equalTo: subMessageLabel.topAnchor, constant: -16),
+            
+            // submessage label
+            
+            subMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -24),
+            subMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 24),
+            subMessageLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -48),
+            
+            // buttons stack view
+            buttonStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            buttonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            buttonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            enterpriseLoginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginWithEmailButton.heightAnchor.constraint(equalToConstant: 48),
+            loginWithSSOButton.heightAnchor.constraint(equalToConstant: 48),
+            
+            // create an label
+            createAccoutInfoLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 98),
+            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
+            
+            // create an button
+            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createAccountButton.heightAnchor.constraint(equalToConstant: 24),
+        ])
+    }
+    
+    private func configureRegularSizeClassFont() {
+        messageLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        subMessageLabel.font = FontSpec(.normal, .regular).font
+        createAccoutInfoLabel.font = UIFont.systemFont(ofSize: 14)
+        createAccountButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
     }
     
     private func disableAutoresizingMaskTranslation(for views: [UIView]) {
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
-    private func adjustLayoutForDeviceType(with contentViewWidth: NSLayoutConstraint,
-                                           contentViewLeading: NSLayoutConstraint,
-                                           contentViewTrailing: NSLayoutConstraint) {
-        if traitCollection.horizontalSizeClass == .compact {
-            contentViewWidth.isActive = false
-        } else {
-            contentViewLeading.isActive = false
-            contentViewTrailing.isActive = false
         }
     }
     
