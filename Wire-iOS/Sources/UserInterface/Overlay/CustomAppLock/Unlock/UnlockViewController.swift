@@ -186,7 +186,8 @@ final class UnlockViewController: UIViewController {
 
     @objc
     private func onWipeButtonPressed(sender: AnyObject?) {
-        navigationController?.pushViewController(WipeDatabaseViewController(), animated: true)
+        let wipeDatabaseViewController = WipeDatabaseWireframe().createWipeDatabaseModule()
+        navigationController?.pushViewController(wipeDatabaseViewController, animated: true)
     }
 
     @discardableResult

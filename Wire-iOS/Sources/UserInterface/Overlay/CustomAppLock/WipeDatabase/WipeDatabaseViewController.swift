@@ -18,19 +18,10 @@
 import UIKit
 
 protocol WipeDatabaseUserInterface: class {
-    func presentWipeCompletionViewController()
     func presentConfirmAlert()
 }
 
-extension WipeDatabaseViewController: WipeDatabaseUserInterface {
-    func presentWipeCompletionViewController() {
-        let wipeCompletionViewController = WipeCompletionViewController()
-        wipeCompletionViewController.modalPresentationStyle = .fullScreen
-        
-        AppDelegate.shared.notificationsWindow?.isHidden = false
-        present(wipeCompletionViewController, animated: true)
-    }
-    
+extension WipeDatabaseViewController: WipeDatabaseUserInterface {    
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping,
                                                           callback: presenter.confirmAlertCallback(),

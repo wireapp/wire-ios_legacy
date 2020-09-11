@@ -19,7 +19,7 @@
 import UIKit
 
 final class WipeDatabaseWireframe {
-    func presentWipeDatabaseModule(from presentingViewController: UIViewController) {
+    func createWipeDatabaseModule() -> WipeDatabaseViewController {
         let interactor = WipeDatabaseInteractor()
         let presenter = WipeDatabasePresenter()
         let viewController = WipeDatabaseViewController()
@@ -29,6 +29,16 @@ final class WipeDatabaseWireframe {
         presenter.interactorInput = interactor
         interactor.output = presenter
         
-        presentingViewController.present(viewController, animated: true)
+        presenter.wireframe = self
+        
+        return viewController
+    }
+    
+    func presentWipeCompletion(from presentingViewController: WipeDatabaseUserInterface?) {
+        let wipeCompletionViewController = WipeCompletionViewController()
+        wipeCompletionViewController.modalPresentationStyle = .fullScreen
+        
+        AppDelegate.shared.notificationsWindow?.isHidden = false
+        (presentingViewController as? UIViewController)?.present(wipeCompletionViewController, animated: true)
     }
 }

@@ -20,9 +20,10 @@ import Foundation
 final class WipeDatabasePresenter {
     weak var userInterface: WipeDatabaseUserInterface?
     var interactorInput: WipeDatabaseInteractorInput?
+    var wireframe: WipeDatabaseWireframe!
 
     private func displayWipeCompletionScreen() {
-        userInterface?.presentWipeCompletionViewController()
+        wireframe.presentWipeCompletion(from: userInterface)
     }
     
     func confirmAlertCallback() -> RequestPasswordController.Callback {
