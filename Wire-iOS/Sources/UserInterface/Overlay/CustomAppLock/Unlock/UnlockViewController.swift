@@ -19,22 +19,12 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol UnlockUserInterface: class {
-}
-
-extension UnlockViewController: UnlockUserInterface {
-}
-
 /// UnlockViewController
 /// 
 /// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
 final class UnlockViewController: UIViewController {
 
     var callback: RequestPasswordController.Callback?
-
-    private lazy var presenter: UnlockPresenter = {
-        return UnlockPresenter(userInterface: self)
-    }()
 
     private let shieldView = UIView.shieldView()
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
@@ -203,7 +193,7 @@ final class UnlockViewController: UIViewController {
     private func unlock() -> Bool {
         guard let passcode = accessoryTextField.text else { return false }
 
-        presenter.unlock(passcode: passcode, callback: callback)
+        callback?(passcode)
         return true
     }
 

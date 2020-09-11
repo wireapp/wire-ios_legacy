@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,17 +17,10 @@
 //
 
 import Foundation
+import WireSystem
 
-protocol UnlockInteractorInput: class {
-}
+enum Logging {
 
-protocol UnlockInteractorOutput: class {
-}
+    static let messageProcessing = ZMSLog(tag: "messageProcessing")
 
-final class UnlockInteractor {
-    weak var output: UnlockInteractorOutput?
-}
-
-// MARK: - Interface
-extension UnlockInteractor: UnlockInteractorInput {
 }

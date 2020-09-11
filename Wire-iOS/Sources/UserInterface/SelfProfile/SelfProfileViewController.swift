@@ -203,31 +203,38 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
+    
+    /// Create or delete custom passcode
+    /// - Parameters:
+    ///   - settingsPropertyFactory: caller of this delegate method
+    ///   - newValue: new value of app lock option
+    ///   - callback: callback for PasscodeSetupViewController
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
-        
-        if newValue {
-            self.callback = callback
-            let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
-            passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
-            
-            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
-            
-            let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
-            
-            let closeItem = passcodeSetupViewController.closeItem
-
-            keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
-                        
-            wrappedViewController.presentationController?.delegate = passcodeSetupViewController
-            
-            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
-        } else {
+        guard newValue else {
             Keychain.deletePasscode()
             AppLock.isActive = false
+            
+            return
         }
+        
+        self.callback = callback
+        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+        passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
+        
+        let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
+        
+        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
+        
+        let closeItem = passcodeSetupViewController.closeItem
+
+        keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
+                    
+        wrappedViewController.presentationController?.delegate = passcodeSetupViewController
+        
+        UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
     }
 }
 

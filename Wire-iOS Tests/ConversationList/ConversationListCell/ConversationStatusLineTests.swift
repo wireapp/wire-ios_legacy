@@ -56,7 +56,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusFailedToSend() {
         // GIVEN
         let sut = self.otherUserConversation!
-        let message = sut.append(text: "text") as! ZMMessage
+        let message = try! sut.appendText(content: "text") as! ZMMessage
         message.expire()
         
         // WHEN
@@ -123,7 +123,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (try! sut.appendText(content: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         markAllMessagesAsUnread(in: sut)
 
@@ -158,11 +158,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
 
-        let selfMessage = sut.append(text: "I am a programmer") as! ZMMessage
+        let selfMessage = try! sut.appendText(content: "I am a programmer") as! ZMMessage
         selfMessage.sender = selfUser
         
         for index in 1...3 {
-            (sut.append(text: "Yes, it is true \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
+            (try! sut.appendText(content: "Yes, it is true \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
         }
         sut.setPrimitiveValue(3, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
 
@@ -170,7 +170,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         // insert messages from other
         for index in 1...2 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (try! sut.appendText(content: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
 
         markAllMessagesAsUnread(in: sut)
@@ -186,11 +186,11 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (try! sut.appendText(content: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        (try! sut.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         sut.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         markAllMessagesAsUnread(in: sut)
@@ -206,7 +206,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (try! sut.appendText(content: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
@@ -371,7 +371,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         sut.setTypingUsers([otherUser])
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        (try! sut.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         
         markAllMessagesAsUnread(in: sut)
         
