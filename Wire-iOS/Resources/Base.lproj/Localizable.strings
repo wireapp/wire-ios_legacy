@@ -1184,6 +1184,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
@@ -1254,8 +1256,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
