@@ -181,7 +181,7 @@ final class AudioRecordKeyboardViewControllerTests: XCTestCase {
         // then
         XCTAssertEqual(self.sut.state, AudioRecordKeyboardViewController.State.ready)
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
-
+        XCTAssertEqual(self.audioRecorder.deleteRecordingHitCount, 1)
     }
 
     func testThatItCallsErrorDelegateCallback() {
@@ -199,4 +199,5 @@ final class AudioRecordKeyboardViewControllerTests: XCTestCase {
         XCTAssertEqual(self.mockDelegate.didStartRecordingHitCount, 1)
         XCTAssertEqual(self.mockDelegate.didCancelHitCount, 1)
     }
+
 }
