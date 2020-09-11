@@ -327,7 +327,7 @@ final class LandingViewController: AuthenticationStepViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         activateRightConstraint()
-        setConstraintsConstans()
+        setConstraintsConstants()
     }
     
     func configure(with featureProvider: AuthenticationFeatureProvider) {
@@ -372,22 +372,19 @@ final class LandingViewController: AuthenticationStepViewController {
     }
     
     private func activateRightConstraint() {
-        if traitCollection.horizontalSizeClass == .compact {
-            contentViewWidthConstraint.isActive = false
-            createAccoutInfoLabelTopConstraint.isActive = false
-            contentViewLeadingConstraint.isActive = true
-            contentViewTrailingConstraint.isActive = true
-            createAccoutButtomBottomConstraint.isActive = true
-        } else {
-            contentViewWidthConstraint.isActive = true
-            createAccoutInfoLabelTopConstraint.isActive = true
-            contentViewLeadingConstraint.isActive = false
-            contentViewTrailingConstraint.isActive = false
-            createAccoutButtomBottomConstraint.isActive = false
+        [contentViewLeadingConstraint,
+         contentViewTrailingConstraint,
+         createAccoutButtomBottomConstraint].forEach() {
+            $0.isActive = traitCollection.horizontalSizeClass == .compact
         }
+        
+        [contentViewWidthConstraint,
+         createAccoutInfoLabelTopConstraint].forEach() {
+             $0.isActive = traitCollection.horizontalSizeClass != .compact
+         }
     }
     
-    private func setConstraintsConstans() {
+    private func setConstraintsConstants() {
         topStackTopConstraint.constant = topStackTopConstraintConstant
         messageLabelLeadingConstraint.constant = -messageLabelLabelConstraintsConstant
         messageLabelTrailingConstraint.constant = messageLabelLabelConstraintsConstant
@@ -436,18 +433,18 @@ final class LandingViewController: AuthenticationStepViewController {
         
         NSLayoutConstraint.activate([
             // top stack view
-            topStackTopConstraint, // iPhone - iPad
+            topStackTopConstraint,
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             // logoView
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
             
             // content view,
-            contentViewWidthConstraint, //iPad
+            contentViewWidthConstraint,
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentViewLeadingConstraint, // iPhone
-            contentViewTrailingConstraint, // iPhone
+            contentViewLeadingConstraint,
+            contentViewTrailingConstraint,
             
             // message label
             messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -552,8 +549,6 @@ final class LandingViewController: AuthenticationStepViewController {
             messageLabel.text = "landing.welcome_message".localized
             subMessageLabel.text = "landing.welcome_submessage".localized
         case .custom(url: let url):
-            messageLabel.text = "landing.welcome_message".localized
-            subMessageLabel.text = "landing.welcome_submessage".localized
             customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
@@ -564,6 +559,7 @@ final class LandingViewController: AuthenticationStepViewController {
     private func updateButtons() {
         enterpriseLoginButton.isHidden = isCustomBackend
         loginButton.isHidden = isCustomBackend
+        createAccoutInfoLabel.isHidden = isCustomBackend
         createAccountButton.isHidden = isCustomBackend
         loginWithSSOButton.isHidden = !isCustomBackend
         loginWithEmailButton.isHidden = !isCustomBackend
