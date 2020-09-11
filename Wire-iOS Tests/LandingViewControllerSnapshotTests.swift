@@ -36,6 +36,7 @@ final class LandingViewControllerSnapshotTests: XCTestCase {
 
     func testForInitState() {
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+        navigationController.setOverrideTraitCollection(UITraitCollection(horizontalSizeClass: .compact), forChild: sut)
         navigationController.viewControllers = [sut]
         verifyInAllDeviceSizes(matching: navigationController)
     }
