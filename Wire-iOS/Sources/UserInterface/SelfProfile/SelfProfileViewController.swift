@@ -204,7 +204,9 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     }
 
     
-    /// Create or delete custom passcode
+    /// Create or delete custom passcode when appLock option did change
+    /// If custom passcode is not enabled, no action is taken
+    ///
     /// - Parameters:
     ///   - settingsPropertyFactory: caller of this delegate method
     ///   - newValue: new value of app lock option
@@ -213,6 +215,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
         guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
+        
         guard newValue else {
             Keychain.deletePasscode()
             AppLock.isActive = false

@@ -21,7 +21,6 @@ import WireUtilities
 extension Keychain {
     static func deletePasscode() {
         try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
-
     }
 
     static func fetchPasscode() -> Data? {
