@@ -258,6 +258,31 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
 
+    // MARK: - Constraints
+    
+    var topStackTopConstraint = NSLayoutConstraint()
+    var topStackTopConstraintConstant: CGFloat {
+        return traitCollection.horizontalSizeClass == .compact ? 42.0 : 200.0
+    }
+    var contentViewWidthConstraint = NSLayoutConstraint()
+    var contentViewLeadingConstraint = NSLayoutConstraint()
+    var contentViewTrailingConstraint = NSLayoutConstraint()
+    
+    var messageLabelLeadingConstraint = NSLayoutConstraint()
+    var messageLabelTrailingConstraint = NSLayoutConstraint()
+    var messageLabelLabelConstraintsConstant: CGFloat {
+        return traitCollection.horizontalSizeClass == .compact ? 0.0 : 72.0
+    }
+    
+    var subMessageLabelLeadingConstraint = NSLayoutConstraint()
+    var subMessageLabelTrailingConstraint = NSLayoutConstraint()
+    var subMessageLabelConstraintsConstant: CGFloat {
+        return traitCollection.horizontalSizeClass == .compact ? 0.0 : 24.0
+    }
+    
+    var createAccoutInfoLabelTopConstraint = NSLayoutConstraint()
+    var createAccoutButtomBottomConstraint = NSLayoutConstraint()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -266,14 +291,7 @@ final class LandingViewController: AuthenticationStepViewController {
         self.view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
-        
-        traitCollection.horizontalSizeClass == .compact
-            ? ()
-            : configureRegularSizeClassFont()
-        
-        traitCollection.horizontalSizeClass == .compact
-            ? createCompactSizeClassConstraints()
-            : createRegularSizeClassConstraints()
+        configureConstraints()
         
         configureAccessibilityElements()
 
@@ -306,6 +324,12 @@ final class LandingViewController: AuthenticationStepViewController {
         return .compatibleDarkContent
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        activateRightConstraint()
+        setConstraintsConstans()
+    }
+    
     func configure(with featureProvider: AuthenticationFeatureProvider) {
         enterpriseLoginButton.isHidden = !featureProvider.allowDirectCompanyLogin
     }
@@ -341,6 +365,36 @@ final class LandingViewController: AuthenticationStepViewController {
         view.addSubview(contentView)
     }
 
+    private func configureConstraints() {
+        disableAutoresizingMaskTranslationViews()
+        createAndAddConstraints()
+        activateRightConstraint()
+    }
+    
+    private func activateRightConstraint() {
+        if traitCollection.horizontalSizeClass == .compact {
+            contentViewWidthConstraint.isActive = false
+            createAccoutInfoLabelTopConstraint.isActive = false
+            contentViewLeadingConstraint.isActive = true
+            contentViewTrailingConstraint.isActive = true
+            createAccoutButtomBottomConstraint.isActive = true
+        } else {
+            contentViewWidthConstraint.isActive = true
+            createAccoutInfoLabelTopConstraint.isActive = true
+            contentViewLeadingConstraint.isActive = false
+            contentViewTrailingConstraint.isActive = false
+            createAccoutButtomBottomConstraint.isActive = false
+        }
+    }
+    
+    private func setConstraintsConstans() {
+        topStackTopConstraint.constant = topStackTopConstraintConstant
+        messageLabelLeadingConstraint.constant = -messageLabelLabelConstraintsConstant
+        messageLabelTrailingConstraint.constant = messageLabelLabelConstraintsConstant
+        subMessageLabelLeadingConstraint.constant = -subMessageLabelConstraintsConstant
+        subMessageLabelTrailingConstraint.constant = subMessageLabelConstraintsConstant
+    }
+    
     private func disableAutoresizingMaskTranslationViews() {
         disableAutoresizingMaskTranslation(for: [
             topStack,
@@ -353,33 +407,58 @@ final class LandingViewController: AuthenticationStepViewController {
         ])
     }
     
-    private func createCompactSizeClassConstraints() {
-        disableAutoresizingMaskTranslationViews()
+    private func createAndAddConstraints() {
+        
+        topStackTopConstraint = topStack.topAnchor.constraint(equalTo: view.safeTopAnchor,
+                                                              constant: topStackTopConstraintConstant)
+        
+        contentViewWidthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
+        contentViewLeadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                                            constant: 24)
+        contentViewTrailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                                              constant: -24)
+        
+        messageLabelLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                                              constant: -messageLabelLabelConstraintsConstant)
+        messageLabelTrailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                                                constant: messageLabelLabelConstraintsConstant)
+        
+        subMessageLabelLeadingConstraint = subMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                                                    constant: -subMessageLabelConstraintsConstant)
+        subMessageLabelTrailingConstraint = subMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                                                      constant: subMessageLabelConstraintsConstant)
+        
+        createAccoutInfoLabelTopConstraint = createAccoutInfoLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor,
+                                                                                        constant: 98)
+        
+        createAccoutButtomBottomConstraint = createAccountButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor,
+                                                                                         constant: -35)
         
         NSLayoutConstraint.activate([
             // top stack view
-            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 42),
+            topStackTopConstraint, // iPhone - iPad
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             // logoView
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
             
             // content view,
+            contentViewWidthConstraint, //iPad
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            contentViewLeadingConstraint, // iPhone
+            contentViewTrailingConstraint, // iPhone
             
             // message label
             messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            messageLabelLeadingConstraint,
+            messageLabelTrailingConstraint,
             messageLabel.bottomAnchor.constraint(equalTo: subMessageLabel.topAnchor, constant: -16),
             
             // submessage label
             
-            subMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            subMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            subMessageLabelLeadingConstraint,
+            subMessageLabelTrailingConstraint,
             subMessageLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -48),
             
             // buttons stack view
@@ -393,6 +472,7 @@ final class LandingViewController: AuthenticationStepViewController {
             loginWithSSOButton.heightAnchor.constraint(equalToConstant: 48),
             
             // create an label
+            createAccoutInfoLabelTopConstraint, // iPad
             createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
@@ -401,58 +481,7 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             createAccountButton.heightAnchor.constraint(equalToConstant: 24),
-            createAccountButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -35),
-        ])
-    }
-    
-    private func createRegularSizeClassConstraints() {
-        disableAutoresizingMaskTranslationViews()
-        
-        NSLayoutConstraint.activate([
-            // top stack view
-            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 200),
-            topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            // logoView
-            logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31),
-            
-            // content view,
-            contentView.widthAnchor.constraint(equalToConstant: 375),
-            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            // message label
-            messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -72),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 72),
-            messageLabel.bottomAnchor.constraint(equalTo: subMessageLabel.topAnchor, constant: -16),
-            
-            // submessage label
-            
-            subMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -24),
-            subMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 24),
-            subMessageLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -48),
-            
-            // buttons stack view
-            buttonStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            buttonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            buttonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            enterpriseLoginButton.heightAnchor.constraint(equalToConstant: 48),
-            loginButton.heightAnchor.constraint(equalToConstant: 48),
-            loginWithEmailButton.heightAnchor.constraint(equalToConstant: 48),
-            loginWithSSOButton.heightAnchor.constraint(equalToConstant: 48),
-            
-            // create an label
-            createAccoutInfoLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 98),
-            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
-            
-            // create an button
-            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            createAccountButton.heightAnchor.constraint(equalToConstant: 24),
+            createAccoutButtomBottomConstraint, // iPhone
         ])
     }
     
