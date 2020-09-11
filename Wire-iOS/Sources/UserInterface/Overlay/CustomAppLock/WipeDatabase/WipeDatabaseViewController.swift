@@ -16,10 +16,26 @@
 //
 
 import UIKit
-import WireSyncEngine
-import WireUtilities
+
+protocol WipeDatabaseUserInterface: class {
+    func presentConfirmAlert()
+}
+
+extension WipeDatabaseViewController: WipeDatabaseUserInterface {    
+    func presentConfirmAlert() {
+        let confirmController = RequestPasswordController(context: .wiping,
+                                                          callback: presenter.confirmAlertCallback(),
+                                                          inputValidation: presenter?.confirmAlertInputValidation())
+        
+        self.confirmController = confirmController
+        present(confirmController.alertController, animated: true)
+    }
+
+}
 
 final class WipeDatabaseViewController: UIViewController {
+
+    var presenter: WipeDatabasePresenter!
 
     var confirmController: RequestPasswordController?
 
@@ -82,39 +98,7 @@ final class WipeDatabaseViewController: UIViewController {
     private func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
-
-    private func deleteAccounts() {
-        SessionManager.shared?.wipeDatabase()
-    }
         
-    private func displayWipeCompletionScreen() {
-        let wipeCompletionViewController = WipeCompletionViewController()
-        wipeCompletionViewController.modalPresentationStyle = .fullScreen
-        
-        AppDelegate.shared.notificationsWindow?.isHidden = false
-        present(wipeCompletionViewController, animated: true)
-    }
-    
-    func presentConfirmAlert() {
-        let confirmController = RequestPasswordController(context: .wiping, callback: { [weak self] confirmText in
-            
-            guard confirmText == "wipe_database.alert.confirm_input".localized else {
-                return
-            }
-            
-            self?.deleteAccounts()
-            Keychain.deletePasscode()
-            
-            self?.displayWipeCompletionScreen()
-
-            }, inputValidation: { confirmText in
-                return confirmText == "wipe_database.alert.confirm_input".localized
-        })
-
-        self.confirmController = confirmController
-        present(confirmController.alertController, animated: true)
-    }
-
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 
