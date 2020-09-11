@@ -18,21 +18,9 @@
 import Foundation
 
 final class WipeDatabasePresenter {
-    private weak var userInterface: WipeDatabaseUserInterface?
-    private var interactorInput: WipeDatabaseInteractorInput
+    weak var userInterface: WipeDatabaseUserInterface?
+    var interactorInput: WipeDatabaseInteractorInput?
 
-    convenience init(userInterface: WipeDatabaseUserInterface) {
-        let interactor = WipeDatabaseInteractor()
-        self.init(userInterface: userInterface, interactorInput: interactor)
-        interactor.output = self
-    }
-
-    init(userInterface: WipeDatabaseUserInterface,
-         interactorInput: WipeDatabaseInteractorInput) {
-        self.userInterface = userInterface
-        self.interactorInput = interactorInput
-    }
-    
     private func displayWipeCompletionScreen() {
         userInterface?.presentWipeCompletionViewController()
     }
@@ -43,11 +31,10 @@ final class WipeDatabasePresenter {
                 return
             }
             
-            self?.interactorInput.deleteAccounts()
-            self?.interactorInput.deletePasscode()
+            self?.interactorInput?.deleteAccounts()
+            self?.interactorInput?.deletePasscode()
             
-            self?.displayWipeCompletionScreen()
-            
+            self?.displayWipeCompletionScreen()            
         }
     }
     

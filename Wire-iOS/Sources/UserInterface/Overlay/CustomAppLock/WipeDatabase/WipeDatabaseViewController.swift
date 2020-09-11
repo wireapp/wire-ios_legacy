@@ -34,7 +34,7 @@ extension WipeDatabaseViewController: WipeDatabaseUserInterface {
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping,
                                                           callback: presenter.confirmAlertCallback(),
-                                                          inputValidation: presenter.confirmAlertInputValidation())
+                                                          inputValidation: presenter?.confirmAlertInputValidation())
         
         self.confirmController = confirmController
         present(confirmController.alertController, animated: true)
@@ -44,9 +44,7 @@ extension WipeDatabaseViewController: WipeDatabaseUserInterface {
 
 final class WipeDatabaseViewController: UIViewController {
 
-    private lazy var presenter: WipeDatabasePresenter = {
-        return WipeDatabasePresenter(userInterface: self)
-    }()
+    var presenter: WipeDatabasePresenter!
 
     var confirmController: RequestPasswordController?
 
