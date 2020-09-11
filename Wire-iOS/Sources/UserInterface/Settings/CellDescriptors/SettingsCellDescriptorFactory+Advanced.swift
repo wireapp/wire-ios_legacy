@@ -85,18 +85,25 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var debuggingToolsSection: SettingsSectionDescriptor {
-        // Inner button
-        let findUnreadConversationButton = SettingsButtonCellDescriptor(
-            title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized,
-            isDestructive: false,
-            selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount
-        )
 
-        // Inner section
-        let findUnreadConversationSection = SettingsSectionDescriptor(
-            cellDescriptors:[findUnreadConversationButton]
-        )
-
+        let findUnreadConversationSection = SettingsSectionDescriptor(cellDescriptors:[
+            SettingsButtonCellDescriptor(
+                title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized,
+                isDestructive: false,
+                selectAction: DebugActions.findUnreadConversationContributingToBadgeCount
+            ),
+            SettingsButtonCellDescriptor(
+                title: "self.settings.advanced.debugging_tools.show_user_id.title".localized,
+                isDestructive: false,
+                selectAction: DebugActions.showUserId
+            ),
+            SettingsButtonCellDescriptor(
+                title: "self.settings.advanced.debugging_tools.enter_debug_command.title".localized,
+                isDestructive: false,
+                selectAction: DebugActions.enterDebugCommand
+            )
+        ])
+        
         // Inner group
         let debuggingToolsGroup = SettingsGroupCellDescriptor(
             items: [findUnreadConversationSection],
