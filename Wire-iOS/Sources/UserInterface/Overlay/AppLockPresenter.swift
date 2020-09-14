@@ -26,7 +26,19 @@ extension Notification.Name {
 }
 
 protocol AppLockUserInterface: class {
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback)
+    
+    /// present an unlock screen (for input account passcode or custom passcode)
+    /// - Parameters:
+    ///   - message: message to show on unlock UI, it should be a member of `presentRequestPasswordController`
+    ///   - callback: callback to return the inputed passcode
+    func presentUnlockScreen(with message: String,
+                             callback: @escaping RequestPasswordController.Callback)
+    func dismissUnlockScreen()
+    
+    
+    /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
+    func presentCreatePasscodeScreen(callback: ResultHandler?)
+    
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
@@ -50,7 +62,7 @@ enum AuthenticationState {
     }
 }
 
-private struct AuthenticationMessageKey {
+struct AuthenticationMessageKey {
     static let accountPassword = "self.settings.privacy_security.lock_password.description.unlock"
     static let wrongPassword = "self.settings.privacy_security.lock_password.description.wrong_password"
     static let wrongOfflinePassword = "self.settings.privacy_security.lock_password.description.wrong_offline_password"
@@ -58,7 +70,7 @@ private struct AuthenticationMessageKey {
 }
 
 // MARK: - AppLockPresenter
-class AppLockPresenter {
+final class AppLockPresenter {
     private weak var userInterface: AppLockUserInterface?
     private var authenticationState: AuthenticationState
     private var appLockInteractorInput: AppLockInteractorInput
@@ -105,17 +117,31 @@ class AppLockPresenter {
 
 // MARK: - Account password helper
 extension AppLockPresenter {
+    private func checkPassword(password: String) -> Bool {
+        guard !password.isEmpty else {
+            authenticationState = .cancelled
+            setContents(dimmed: true, withReauth: true)
+            return false
+        }
+        
+        userInterface?.setSpinner(animating: true)
+        
+        return true
+    }
+    
     private func requestAccountPassword(with message: String) {
-        userInterface?.presentRequestPasswordController(with: message) { [weak self] password in
+        userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
-                guard let password = password, !password.isEmpty else {
-                    self.authenticationState = .cancelled
-                    self.setContents(dimmed: true, withReauth: true)
-                    return
+
+                guard let password = password,
+                      self.checkPassword(password: password) else { return }
+
+                if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+                    self.appLockInteractorInput.verify(customPasscode: password)
+                } else {
+                    self.appLockInteractorInput.verify(password: password)
                 }
-                self.userInterface?.setSpinner(animating: true)
-                self.appLockInteractorInput.verify(password: password)
             }
         }
     }
@@ -123,12 +149,21 @@ extension AppLockPresenter {
 
 // MARK: - AppLockInteractorOutput
 extension AppLockPresenter: AppLockInteractorOutput {
+    
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
         if case .needAccountPassword = result {
-            requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
+            // When upgrade form a version not support custom passcode, ask the user to create a new passcode
+            if appLockInteractorInput.isCustomPasscodeNotSet {
+                userInterface?.presentCreatePasscodeScreen(callback: { _ in
+                    // user need to enter the newly created passcode after creation
+                    self.setContents(dimmed: true, withReauth: true)
+                })
+            } else {
+                requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
+            }
         }
         
         if case .granted = result {
@@ -139,19 +174,20 @@ extension AppLockPresenter: AppLockInteractorOutput {
     func passwordVerified(with result: VerifyPasswordResult?) {
         userInterface?.setSpinner(animating: false)
         guard let result = result else {
-            self.setContents(dimmed: true, withReauth: true)
+            setContents(dimmed: true, withReauth: true)
             return
         }
         let authNeeded = appLockInteractorInput.isAuthenticationNeeded
+
         setContents(dimmed: result != .validated && authNeeded)
+
         switch result {
         case .validated:
             appUnlocked()
         case .denied, .unknown, .timeout:
             if authNeeded {
                 requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
-            }
-            else {
+            } else {
                 authenticationState = .needed
             }
         }
@@ -216,12 +252,15 @@ extension AppLockPresenter {
 
 // MARK: - Helpers
 extension AppLockPresenter {
-    private func setContents(dimmed: Bool, withReauth showReauth: Bool = false) {
-        self.userInterface?.setContents(dimmed: dimmed)
-        self.userInterface?.setReauth(visible: showReauth)
+    private func setContents(dimmed: Bool,
+                             withReauth showReauth: Bool = false) {
+        userInterface?.setContents(dimmed: dimmed)
+        userInterface?.setReauth(visible: showReauth)
     }
     
     private func appUnlocked() {
+        userInterface?.dismissUnlockScreen()
+        
         authenticationState = .authenticated
         AppLock.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
