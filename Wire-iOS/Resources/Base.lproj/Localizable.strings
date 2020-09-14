@@ -670,6 +670,7 @@
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
 "call.status.variable_bitrate" = "Variable Bit Rate";
+"call.status.conference_call" = "Conference Calling";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";

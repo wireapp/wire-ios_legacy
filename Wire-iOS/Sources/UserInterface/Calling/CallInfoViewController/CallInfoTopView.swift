@@ -30,7 +30,7 @@ class CallInfoTopView: UIView {
     
     private let conferenceCallingBadge: UILabel = {
         let label = UILabel()
-        label.text = "Conference Calling".uppercased()
+        label.text = "call.status.conference_call".localized(uppercased: true)
         label.backgroundColor = .accent()
         label.layer.cornerRadius = 8.0
         label.layer.masksToBounds = true
