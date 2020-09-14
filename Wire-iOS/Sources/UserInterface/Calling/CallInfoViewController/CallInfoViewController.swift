@@ -29,6 +29,7 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
+    var isConferenceCall: Bool { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
@@ -55,7 +56,8 @@ extension CallInfoViewControllerInput {
             title == other.title &&
             cameraType == other.cameraType &&
             networkQuality == other.networkQuality &&
-            userEnabledCBR == other.userEnabledCBR
+            userEnabledCBR == other.userEnabledCBR &&
+            isConferenceCall == other.isConferenceCall
     }
 }
 
