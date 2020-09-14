@@ -214,11 +214,14 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else { return }
+        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else {
+            callback(newValue)
+            return
+        }
         
         guard newValue else {
             Keychain.deletePasscode()
-            AppLock.isActive = false
+            callback(newValue)
             
             return
         }
