@@ -24,7 +24,7 @@ protocol WipeDatabaseUserInterface: class {
 extension WipeDatabaseViewController: WipeDatabaseUserInterface {    
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping,
-                                                          callback: presenter.confirmAlertCallback(),
+                                                          callback: presenter?.confirmAlertCallback() ?? { _ in },
                                                           inputValidation: presenter?.confirmAlertInputValidation())
         
         self.confirmController = confirmController
