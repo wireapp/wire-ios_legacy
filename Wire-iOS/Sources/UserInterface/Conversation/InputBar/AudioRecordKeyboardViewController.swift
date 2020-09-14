@@ -452,6 +452,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     }
     
     @objc func redoButtonPressed(_ button: UIButton?) {
+        recorder.deleteRecording()
         self.state = .ready
     }
     
