@@ -28,6 +28,17 @@ class CallInfoTopView: UIView {
     
     weak var delegate: CallInfoTopViewDelegate?
     
+    var variant: ColorSchemeVariant? {
+        didSet {
+            minimizeButton.setIconColor(minimizeButtonColor, for: .normal)
+        }
+    }
+    
+    private var minimizeButtonColor: UIColor {
+        let variant = self.variant ?? .light
+        return UIColor.from(scheme: .textForeground, variant: variant)
+    }
+    
     private let conferenceCallingBadge: UILabel = {
         let label = UILabel()
         label.text = "call.status.conference_call".localized(uppercased: true)

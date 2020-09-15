@@ -34,6 +34,7 @@ class CallInfoErrorView: UIView {
     private let closeButton: IconButton = {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
+        button.setIconColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityIdentifier = "CallErrorCloseButton"
         button.accessibilityLabel = "general.close".localized

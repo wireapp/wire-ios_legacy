@@ -88,6 +88,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.delegate = self
         actionsView.delegate = self
         topView.delegate = self
+        topView.variant = configuration.effectiveColorVariant
     }
 
     @available(*, unavailable)
