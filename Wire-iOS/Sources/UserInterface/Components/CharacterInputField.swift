@@ -136,7 +136,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: parentSize.width > 320 ? 50 : 44, height: parentSize.height)
+            return CGSize(width: parentSize.width > CGFloat.iPhone4Inch.width ? 50 : 44, height: parentSize.height)
         }
     }
     
