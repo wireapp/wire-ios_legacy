@@ -21,7 +21,6 @@ import XCTest
 
 final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
-
     var featureProvider: MockAuthenticationFeatureProvider!
     var builder: AuthenticationInterfaceBuilder!
 
