@@ -23,6 +23,8 @@ import AppCenterCrashes
 
 enum DebugActions {
     
+    static var documentDelegate = DocumentDelegate()
+    
     /// Shows an alert with the option to copy text to the clipboard
     static func alert(
         _ message: String,
@@ -172,8 +174,28 @@ enum DebugActions {
     
     /// Accepts a debug command
     static func enterDebugCommand(_ type: SettingsCellDescriptorType) {
-        askString(title: "Debug command") { _ in
-            alert("Command not recognized")
+        
+        let completionHandler: (DebugCommandResult) -> () = { result in
+            DispatchQueue.main.async {
+                switch(result) {
+                case .failure(let error):
+                    alert("ERROR: \(error ?? "-")", title: "ERROR")
+                case .unknownCommand:
+                    alert("ERROR: command not found", title: "ERROR")
+                case .success(let info):
+                    alert(info ?? "Success", title: "Success", textToCopy: info)
+                case .successWithFile(let file):
+                    let fileController = UIDocumentInteractionController(url: file as URL)
+                    fileController.delegate = documentDelegate
+                    fileController.presentPreview(animated: true)
+                }
+            }
+        }
+        
+        askString(title: "Debug command") { string in
+            let args = string.split(separator: " ").map { String($0) }
+            ZMUserSession.shared()?.executeDebugCommand(
+                args, onComplete: completionHandler)
         }
     }
     
