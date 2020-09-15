@@ -140,11 +140,13 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
     private func createConstraints() {
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 44
         
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight),
             topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topView.heightAnchor.constraint(equalToConstant: navBarHeight),
             errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             errorView.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight),

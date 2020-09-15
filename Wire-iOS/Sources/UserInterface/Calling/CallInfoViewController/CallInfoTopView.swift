@@ -82,7 +82,6 @@ class CallInfoTopView: UIView {
     
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 44),
             conferenceCallingBadge.centerYAnchor.constraint(equalTo: centerYAnchor),
             conferenceCallingBadge.heightAnchor.constraint(equalToConstant: 16),
             conferenceCallingBadge.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
