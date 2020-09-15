@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireCommonComponents
 
 protocol CallInfoTopViewDelegate: class {
     func callInfoTopViewDidAskToMinimizeOverlay(_ callInfoTopView: UIView)
