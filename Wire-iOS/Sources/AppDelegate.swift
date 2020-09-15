@@ -96,11 +96,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelper.sharedHelper.persistBackendTypeOverrideIfNeeded(with: backendTypeOverride)
     }
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         zmLog.info("application:willFinishLaunchingWithOptions \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
         
         // Initial log line to indicate the client version and build
-        zmLog.info("Wire-ios version \(String(describing: Bundle.main.infoDictionary?["CFBundleShortVersionString"])) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
+        zmLog.info("Wire-ios version \(String(describing: Bundle.main.shortVersionString)) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
         
         // Note: if we instantiate the root view controller (& windows) any earlier,
         // the windows will not receive any info about device orientation.

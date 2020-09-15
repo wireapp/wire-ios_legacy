@@ -258,7 +258,7 @@ class SettingsCellDescriptorFactory {
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
 
-        let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let shortVersion = Bundle.main.shortVersionString ?? "Unknown"
         let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
 
         var currentYear = NSCalendar.current.component(.year, from: Date())

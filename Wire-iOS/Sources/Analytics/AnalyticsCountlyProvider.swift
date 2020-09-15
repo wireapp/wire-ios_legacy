@@ -67,9 +67,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
 
-    func tagEvent(_ event: String, attributes: [String : Any]) {
-        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
+    func tagEvent(_ event: String,
+                  attributes: [String : Any]) {
+        var convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
             attributes.map { key, value in (key, "\(value)") })
+        
+        convertedAttributes["app_name"] = "ios"
+        convertedAttributes["app_version"] = Bundle.main.shortVersionString
         
         print(convertedAttributes)
 
