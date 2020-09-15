@@ -104,7 +104,7 @@ final class CustomSpacingStackView: UIView {
     
 }
 
-fileprivate class SpacingView : UIView {
+final class SpacingView : UIView {
     
     var size : CGFloat
     
@@ -133,7 +133,7 @@ fileprivate class SpacingView : UIView {
  * A view that can contain a label with additional content insets.
  */
 
-class ContentInsetView: UIView {
+final class ContentInsetView: UIView {
     let view: UIView
 
     init(_ view: UIView, inset: UIEdgeInsets) {

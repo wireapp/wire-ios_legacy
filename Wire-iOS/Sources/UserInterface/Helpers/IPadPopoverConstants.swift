@@ -21,7 +21,7 @@ import UIKit
 
 extension CGSize {
     enum IPadPopover {
-        static let preferredContentSize: CGSize = CGSize(width: 320, height: 568)
+        static let preferredContentSize: CGSize = CGSize.iPhoneSize.iPhone4Inch
         static let pickerSize: CGSize = CGSize(width: 320, height: 275)
     }
 }

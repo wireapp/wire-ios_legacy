@@ -22,9 +22,11 @@ import WireCommonComponents
 import WireSyncEngine
 
 protocol AppLockInteractorInput: class {
+    var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
+    func verify(customPasscode: String)
     func appStateDidTransition(to newState: AppState)
 }
 
@@ -33,7 +35,7 @@ protocol AppLockInteractorOutput: class {
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-class AppLockInteractor {
+final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests
@@ -52,6 +54,10 @@ class AppLockInteractor {
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
+    var isCustomPasscodeNotSet: Bool {
+        return AppLock.isCustomPasscodeNotSet
+    }
+    
     var isAuthenticationNeeded: Bool {
         let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
         
@@ -73,13 +79,29 @@ extension AppLockInteractor: AppLockInteractorInput {
         }
     }
     
+    private func processVerifyResult(result: VerifyPasswordResult?) {
+        notifyPasswordVerified(with: result)
+        if case .validated = result {
+            appLock.persistBiometrics()
+        }
+    }
+    
+    func verify(customPasscode: String) {
+        
+        let result: VerifyPasswordResult
+        
+        if let data: Data = Keychain.fetchPasscode() {
+            result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
+        } else {
+            result = .unknown
+        }
+        
+        processVerifyResult(result: result)
+    }
+
     func verify(password: String) {
         userSession?.verify(password: password) { [weak self] result in
-            guard let `self` = self else { return }
-            self.notifyPasswordVerified(with: result)
-            if case .validated? = result {
-                self.appLock.persistBiometrics()
-            }
+            self?.processVerifyResult(result: result)
         }
     }
     
@@ -106,7 +128,7 @@ extension AppLockInteractor {
     }
     
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
-        self.dispatchQueue.async { [weak self] in
+        dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
         }
     }

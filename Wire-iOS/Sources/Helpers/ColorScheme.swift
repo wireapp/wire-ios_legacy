@@ -42,6 +42,8 @@ extension UIColor {
     static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)
     static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
+    static var graphiteDark: UIColor = UIColor(rgb:(50, 54, 57))
+      
     static var backgroundGraphite: UIColor = UIColor(rgb:(22, 24, 25))
     static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba:(22, 24, 25, 0.4))
 
@@ -128,6 +130,8 @@ enum ColorSchemeColor: Int {
     case secondaryActionDimmed
 
     case errorIndicator
+    
+    case landingScreen
 
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
         switch self {
@@ -227,6 +231,9 @@ enum ColorSchemeColor: Int {
 
         case .errorIndicator:
             return ColorPair(light: UIColor(rgb: 0xE60606), dark: UIColor(rgb: 0xFC3E37))
+            
+        case .landingScreen:
+            return ColorPair(light: .graphiteDark, dark: .white)
         }
     }
 }
@@ -249,13 +256,11 @@ final class ColorScheme: NSObject {
     
     static let `default`: ColorScheme = ColorScheme()
 
-    func color(named: ColorSchemeColor) -> UIColor {
-        return color(named: named, variant: variant)
-    }
-    
-    func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    func color(named: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
+        let colorSchemeVariant = variant ?? self.variant
+        
         let colorPair = named.colorPair(accentColor: accentColor)
-        switch variant {
+        switch colorSchemeVariant {
         case .dark:
             return colorPair.dark
         case .light:
@@ -282,11 +287,7 @@ fileprivate extension ColorPair {
 
 extension UIColor {
     
-    static func from(scheme: ColorSchemeColor) -> UIColor {
-        return ColorScheme.default.color(named: scheme)
-    }
-    
-    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
 
