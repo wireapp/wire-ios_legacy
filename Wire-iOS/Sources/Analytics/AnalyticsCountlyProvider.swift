@@ -69,16 +69,18 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String, attributes: [String : Any]) {
         //TODO: casting
-//        ["is_allow_guests": 1, "with_service": 0, "is_ephemeral": 0, "conversation_type": group, "action": location, "is_global_ephemeral": 0, "user_type": guest]
+//        ["is_global_ephemeral": "0", "conversation_type": "group", "message_action": "location", "with_service": "0", "is_ephemeral": "0", "user_type": "guest", "is_allow_guests": "1"]
         
-        //TODO:
-//        message_action
-//        message.is_reply
-//        message.mention
-//        message.is_ephemeral_message
-//        message.ephemeral_expiration
-//        conversation.ephemeral_message
-//        conversation_type
+        // DONE/disabled:
+        //        message.is_ephemeral_message
+        //        message.ephemeral_expiration
+        //        message_action
+        //        conversation_type
+        //        conversation.ephemeral_message
+        //        message.is_reply
+        //        message.mention
+        
+        
 //        conversation_size
 //        conversation.allow_guests
 //        conversation_guests

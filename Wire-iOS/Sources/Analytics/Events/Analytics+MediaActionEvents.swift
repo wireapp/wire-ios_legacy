@@ -36,7 +36,7 @@ extension Analytics {
 
     func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
-        attributes["action"] = action.attributeValue
+        attributes["message_action"] = action.attributeValue
 
         if let typeAttribute = conversation.analyticsTypeString() {
             attributes["with_service"] = conversation.includesServiceUser
