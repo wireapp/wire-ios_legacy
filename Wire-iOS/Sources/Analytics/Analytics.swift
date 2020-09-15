@@ -57,7 +57,8 @@ final class Analytics: NSObject {
         //TODO: change id?
     }
     
-    func tagEvent(_ event: String, attributes: [String : Any]) {
+    func tagEvent(_ event: String,
+                  attributes: [String : Any]) {
         guard let attributes = attributes as? [String : NSObject] else { return }
         
         tagEvent(event, attributes: attributes)

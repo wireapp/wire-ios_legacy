@@ -32,9 +32,17 @@ fileprivate extension ZMConversation {
     }
 }
 
+extension Int {
+    //TODO: test
+    func logRound(factor: Double = 6) -> Int {
+        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
+    }
+}
+
 extension Analytics {
 
-    func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
+    func tagMediaActionCompleted(_ action: ConversationMediaAction,
+                                 inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
         attributes["message_action"] = action.attributeValue
 
@@ -44,7 +52,16 @@ extension Analytics {
         }
 
         attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
-        
+
+        attributes["conversation_size"] = conversation.sortedActiveParticipants.count.logRound()
+        //TODO:
+        //        conversation_size
+        //        conversation.allow_guests
+        //        conversation_guests
+        //        conversation_guests_pro
+        //        conversation_guests_wireless
+        //        conversation_services
+
         for (key, value) in guestAttributes(in: conversation) {
             attributes[key] = value
         }

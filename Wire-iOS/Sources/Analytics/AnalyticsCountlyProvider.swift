@@ -79,9 +79,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         //        conversation.ephemeral_message
         //        message.is_reply
         //        message.mention
+        //        conversation_size
+
         
-        
-//        conversation_size
 //        conversation.allow_guests
 //        conversation_guests
 //        conversation_guests_pro
