@@ -21,8 +21,15 @@ import WireDataModel
 
 extension Analytics {
     func guestAttributes(in conversation: ZMConversation) -> [String : Any] {
+        
+        let numGuests = conversation.sortedActiveParticipants.filter({
+            $0.isGuest(in: conversation)
+            }).count
+        
         return [
-            "is_allow_guests" : conversation.allowGuests,
+            //TOOD: no need ATM
+            "conversation.allow_guests" : conversation.allowGuests,
+            "conversation_guests" : numGuests.logRound(),
             "user_type" : SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
         ]
     }

@@ -54,17 +54,12 @@ extension Analytics {
         attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
 
         attributes["conversation_size"] = conversation.sortedActiveParticipants.count.logRound()
+        attributes["conversation_services"] = conversation.sortedServiceUsers.count.logRound()
         //TODO:
-        //        conversation_size
-        //        conversation.allow_guests
-        //        conversation_guests
         //        conversation_guests_pro
         //        conversation_guests_wireless
-        //        conversation_services
 
-        for (key, value) in guestAttributes(in: conversation) {
-            attributes[key] = value
-        }
+        attributes.merge(guestAttributes(in: conversation)) { (_, new) in new }
 
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
