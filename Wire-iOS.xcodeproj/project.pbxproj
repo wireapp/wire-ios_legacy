@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0605DB92251186AF00443219 /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0605DB91251186AF00443219 /* WireNotificationEngine.framework */; };
 		061282632379C25500C1A53C /* UITextView+ReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */; };
 		0617001523E48B66005C262D /* VerticalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0617001423E48B66005C262D /* VerticalTransition.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
@@ -1577,6 +1578,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0605DB91251186AF00443219 /* WireNotificationEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireNotificationEngine.framework; path = Carthage/Build/iOS/WireNotificationEngine.framework; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
 		0617001423E48B66005C262D /* VerticalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTransition.swift; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
@@ -3215,6 +3217,7 @@
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
+				0605DB92251186AF00443219 /* WireNotificationEngine.framework in Frameworks */,
 				EECDB2542029D7DA00D0D268 /* Down.framework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
 				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
@@ -4194,6 +4197,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0605DB91251186AF00443219 /* WireNotificationEngine.framework */,
 				EF2AF69D236C3DA100793FD0 /* AppCenterAuth.framework */,
 				EF2AF69C236C3DA100793FD0 /* AppCenterPush.framework */,
 				7CAB7B5D235998E200A65042 /* AppCenterData.framework */,
@@ -7173,6 +7177,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/HTMLString.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftProtobuf.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/DifferenceKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireNotificationEngine.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
@@ -7201,6 +7206,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/HTMLString.framework/HTMLString",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftProtobuf.framework/SwiftProtobuf",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DifferenceKit.framework/DifferenceKit",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireNotificationEngine.framework/WireNotificationEngine",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -8811,6 +8817,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 			};
 			name = Debug;
 		};
@@ -8818,6 +8825,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 			};
 			name = Release;
 		};
