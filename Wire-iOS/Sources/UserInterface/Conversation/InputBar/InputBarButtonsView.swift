@@ -27,11 +27,9 @@ private struct InputBarRowConstants {
     let minimumButtonWidth: CGFloat = 56
     let buttonsBarHeight: CGFloat = 56
     let iconSize = StyleKitIcon.Size.tiny.rawValue
-    
-    fileprivate let screenWidthIPhone5: CGFloat = 320
-    
+        
     func minimumButtonWidth(forWidth width: CGFloat) -> CGFloat {
-        return width <= screenWidthIPhone5 ? minimumButtonWidthIPhone5 : minimumButtonWidth
+        return width <= CGFloat.iPhone4Inch.width ? minimumButtonWidthIPhone5 : minimumButtonWidth
     }
 }
 

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 /**
@@ -67,6 +66,7 @@ indirect enum AuthenticationFlowStep: Equatable {
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials?, context: NoHistoryContext)
+    case passcodeSetup
     case clientManagement(clients: [UserClient], credentials: ZMCredentials?)
     case deleteClient(clients: [UserClient], credentials: ZMCredentials?)
     case addEmailAndPassword
@@ -84,20 +84,6 @@ indirect enum AuthenticationFlowStep: Equatable {
     case createUser(UnregisteredUser)
 
     // MARK: - Properties
-
-    /// Whether the step can be unwinded.
-    var allowsUnwind: Bool {
-        switch self {
-        case .landingScreen: return false
-        case .clientManagement: return false
-        case .noHistory: return false
-        case .addEmailAndPassword: return false
-        case .incrementalUserCreation: return false
-        case .teamCreation(let teamState): return teamState.allowsUnwind
-        case .switchBackend: return false
-        default: return true
-        }
-    }
 
     /// Whether the authentication steps generates a user interface.
     var needsInterface: Bool {
@@ -119,6 +105,7 @@ indirect enum AuthenticationFlowStep: Equatable {
 
         // Post Sign-In
         case .noHistory: return true
+        case .passcodeSetup: return true
         case .clientManagement: return true
         case .deleteClient: return true
         case .addEmailAndPassword: return true

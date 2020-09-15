@@ -14,7 +14,7 @@ pr:
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_11.4.1.app
-    fastlane prepare 
+    fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"

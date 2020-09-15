@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,11 +21,23 @@ import XCTest
 @testable import WireCommonComponents
 
 private final class AppLockUserInterfaceMock: AppLockUserInterface {
+    
+    func dismissUnlockScreen() {
+        // no-op
+    }
+    
     var passwordInput: String?
     var requestPasswordMessage: String?
-    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
+    var presentCreatePasscodeScreenCalled: Bool = false
+    
+    func presentUnlockScreen(with message: String,
+                             callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
+    }
+    
+    func presentCreatePasscodeScreen(callback: ResultHandler?) {
+        presentCreatePasscodeScreenCalled = true
     }
     
     var spinnerAnimating: Bool?
@@ -45,6 +57,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
+    var isCustomPasscodeNotSet: Bool = false
     var _isAuthenticationNeeded: Bool = false
     var didCallIsAuthenticationNeeded: Bool = false
     var isAuthenticationNeeded: Bool {
@@ -53,8 +66,14 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     }
     
     var passwordToVerify: String?
+    var customPasscodeToVerify: String?
+
     func verify(password: String) {
-        self.passwordToVerify = password
+        passwordToVerify = password
+    }
+    
+    func verify(customPasscode: String) {
+        customPasscodeToVerify = customPasscode
     }
     
     var didCallEvaluateAuthentication: Bool = false
@@ -71,7 +90,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
 }
 
 final class AppLockPresenterTests: XCTestCase {
-    var sut: AppLockPresenter!
+    private var sut: AppLockPresenter!
     private var userInterface: AppLockUserInterfaceMock!
     private var appLockInteractor: AppLockInteractorMock!
     
@@ -80,7 +99,7 @@ final class AppLockPresenterTests: XCTestCase {
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, forceAppLock: false, appLockTimeout: 1)
+        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
     }
     
     override func tearDown() {
@@ -408,6 +427,31 @@ final class AppLockPresenterTests: XCTestCase {
         sut.appStateDidTransition(notification(for: AppState.blacklisted(jailbroken: true)))
         //then
         assert(contentsDimmed: false, reauthVisibile: false)
+    }
+    
+    //MARK: - custom app lock
+    func testThatUpdateFromAnOldVersionToNewVersionSupportAppLockShowsCreatePasscodeScreen() {
+        //GIVEN
+        appLockInteractor.isCustomPasscodeNotSet = true
+        
+        //WHEN
+        sut.authenticationEvaluated(with: .needAccountPassword)
+
+        //THEN
+        XCTAssert( userInterface.presentCreatePasscodeScreenCalled)
+        
+    }
+
+    func testThatAppLockDoesNotShowIfIsCustomPasscodIsSet() {
+        //GIVEN
+        appLockInteractor.isCustomPasscodeNotSet = false
+        
+        //WHEN
+        sut.authenticationEvaluated(with: .needAccountPassword)
+        
+        //THEN
+        XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
+        
     }
 }
 
