@@ -45,6 +45,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard let countlyAppKey = Bundle.countlyAppKey,
               !countlyAppKey.isEmpty,
               let countlyHost = Bundle.countlyHost else {
+                zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), Bundle.countlyHost = \(String(describing: Bundle.countlyHost)). Please check COUNTLY_APP_KEY & COUNTLY_HOST is set in .xcconfig file")
                 return nil
         }
         
