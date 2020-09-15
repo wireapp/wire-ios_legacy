@@ -85,7 +85,12 @@ extension Analytics: AnalyticsType {
     }
     
     /// Record an event with optional attributes.
+    /// - Parameters:
+    ///   - event: event to tag
+    ///   - attributes: attributes of the event
     func tagEvent(_ event: String, attributes: [String : NSObject]) {
-        //no-op
+        DispatchQueue.main.async(execute: {
+            self.provider?.tagEvent(event, attributes: attributes)
+        })
     }
 }
