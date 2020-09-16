@@ -45,11 +45,16 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         }
     }
     
+    private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
     private var isCovered: Bool
     
+    private var adjustedInsets: UIEdgeInsets {
+        safeAreaInsetsOrFallback.adjusted(for: delta)
+    }
+    
     private var userDetailsAlpha: CGFloat {
-        return isCovered ? 0 : 1
+        isCovered ? 0 : 1
     }
     
     let userDetailsView = VideoParticipantDetailsView()
@@ -98,26 +103,30 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         detailsConstraints = UserDetailsConstraints(
             view: userDetailsView,
             superview: self,
-            safeAreaInsets: safeAreaInsetsOrFallback.adjusted(for: OrientationDelta())
+            safeAreaInsets: adjustedInsets
         )
        
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
+
+    // MARK: - Orientation & Layout
     
-    // MARK: - Orientation
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        detailsConstraints?.updateEdges(with: adjustedInsets)
+    }
+    
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
                 deviceOrientation: UIDeviceOrientation)
     {
         guard let superview = superview else { return }
         
-        let delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
-                                     deviceOrientation: deviceOrientation)
+        delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
+                                 deviceOrientation: deviceOrientation)
         
         transform = CGAffineTransform(rotationAngle: delta.radians)
         frame = superview.bounds
         
-        detailsConstraints?.updateEdges(with: safeAreaInsetsOrFallback.adjusted(for: delta))
-
         layoutSubviews()
     }
         
