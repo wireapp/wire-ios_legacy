@@ -74,18 +74,20 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard let selfUser = SelfUser.provider?.selfUser as? ZMUser else {
             return
         }
-        
+                
         //TODO: user id generation
-        var userProperties: [String: Any] = [:]
-        
-        userProperties["user_contacts"] = "TODO"
-        userProperties["user_contacts"] = ZMConversationListDirectory().conversations(by: .contacts).count //TODO: 0 for non-team?
-        userProperties["team_team_id"] = selfUser.hasTeam
+        var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
+                                             "team_user_type": selfUser.teamRole]
+
+        userProperties["user_id"] = "TODO"
+
         if let teamSize = selfUser.team?.members.count.logRound() {
             userProperties["team_team_size"] = teamSize
+            userProperties["user_contacts"] = teamSize
+        } else {
+            userProperties["user_contacts"] = ZMConversationListDirectory().conversations(by: .contacts).count
         }
-        userProperties["team_user_type"] = selfUser.teamRole
-        
+
         let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
             userProperties.map { key, value in (key, countlyValue(rawValue: value)) })
         
