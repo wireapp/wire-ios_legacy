@@ -26,6 +26,7 @@ private let zmLog = ZMSLog(tag: "Analytics")
 final class AnalyticsCountlyProvider: AnalyticsProvider {
     
     private var sessionBegun: Bool = false
+    private var isUserSet: Bool = false
     
     var isOptedOut: Bool {
         get {
@@ -41,11 +42,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             sessionBegun = !isOptedOut
         }
     }
-        
+    
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
-              !countlyAppKey.isEmpty,
-              let countlyHost = Bundle.countlyHost else {
+            !countlyAppKey.isEmpty,
+            let countlyHost = Bundle.countlyHost else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), Bundle.countlyHost = \(String(describing: Bundle.countlyHost)). Please check COUNTLY_APP_KEY & COUNTLY_HOST is set in .xcconfig file")
                 return nil
         }
@@ -56,37 +57,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
         
-//        user_id    String        Account level generated user id for BI purpose / Raphael - sha256(user-id)
-//            user_contacts    Numeric    * Round with factor=6    Number of users contacts - rounded number to the nearest 5 on the client side
-//        team_team_id    Boolean    True; False    True - if the user is a Team member
-//        team_team_size    String        Size of the users team
-//        team_user_type    String    member; external; wireless     Role of the user in the team
-        
         Countly.sharedInstance().start(with: config)
         
-        Countly.user().set("user_id", value:"TODO")
-        
-        if let selfUser = SelfUser.provider?.selfUser as? ZMUser {
-            var userProperties: [String: Any] = [:]
-            
-            userProperties["user_contacts"] = selfUser.connection
-            userProperties["team_team_id"] = selfUser.hasTeam
-            if let teamSize = selfUser.team?.members.count.logRound() {
-                userProperties["team_team_size"] = teamSize
-            }
-            userProperties["team_user_type"] = selfUser.teamRole
-
-            let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-                userProperties.map { key, value in (key, countlyValue(rawValue: value)) })
-
-            for(key, value) in convertedAttributes {
-                Countly.user().set(key, value: value)
-            }
-        }
-        
-
         zmLog.info("AnalyticsCountlyProvider \(self) started")
-
+        
         self.isOptedOut = false
         sessionBegun = true
     }
@@ -95,7 +69,34 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
     
-
+    //TODO: call this after switched account
+    func updateUserProperties() {
+        guard let selfUser = SelfUser.provider?.selfUser as? ZMUser else {
+            return
+        }
+        
+        //TODO: user id generation
+        var userProperties: [String: Any] = [:]
+        
+        userProperties["user_contacts"] = "TODO"
+        userProperties["user_contacts"] = ZMConversationListDirectory().conversations(by: .contacts).count //TODO: 0 for non-team?
+        userProperties["team_team_id"] = selfUser.hasTeam
+        if let teamSize = selfUser.team?.members.count.logRound() {
+            userProperties["team_team_size"] = teamSize
+        }
+        userProperties["team_user_type"] = selfUser.teamRole
+        
+        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
+            userProperties.map { key, value in (key, countlyValue(rawValue: value)) })
+        
+        print(convertedAttributes)
+        
+        for(key, value) in convertedAttributes {
+            Countly.user().set(key, value: value)
+        }
+    }
+    
+    
     private func countlyValue(rawValue: Any) -> String {
         if let boolValue = rawValue as? Bool {
             return boolValue ? "True" : "False"
@@ -111,12 +112,18 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                 return "wireless"
             }
         }
-
+        
         return "\(rawValue)"
     }
-
+    
     func tagEvent(_ event: String,
                   attributes: [String : Any]) {
+        if !isUserSet {
+            updateUserProperties()
+            
+            isUserSet = true
+        }
+        
         var convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
             attributes.map { key, value in (key, countlyValue(rawValue: value)) })
         
@@ -124,7 +131,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
         
         print(convertedAttributes)
-
+        
         Countly.sharedInstance().recordEvent(event, segmentation:convertedAttributes)
     }
     
