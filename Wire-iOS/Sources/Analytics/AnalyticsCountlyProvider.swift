@@ -19,6 +19,7 @@
 import Foundation
 import WireSystem
 import Countly
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
@@ -54,7 +55,35 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.host = countlyHost
         config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
+        
+//        user_id    String        Account level generated user id for BI purpose / Raphael - sha256(user-id)
+//            user_contacts    Numeric    * Round with factor=6    Number of users contacts - rounded number to the nearest 5 on the client side
+//        team_team_id    Boolean    True; False    True - if the user is a Team member
+//        team_team_size    String        Size of the users team
+//        team_user_type    String    member; external; wireless     Role of the user in the team
+        
         Countly.sharedInstance().start(with: config)
+        
+        Countly.user().set("user_id", value:"TODO")
+        
+        if let selfUser = SelfUser.provider?.selfUser as? ZMUser {
+            var userProperties: [String: Any] = [:]
+            
+            userProperties["user_contacts"] = selfUser.connection
+            userProperties["team_team_id"] = selfUser.hasTeam
+            if let teamSize = selfUser.team?.members.count.logRound() {
+                userProperties["team_team_size"] = teamSize
+            }
+            userProperties["team_user_type"] = selfUser.teamRole
+
+            let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
+                userProperties.map { key, value in (key, countlyValue(rawValue: value)) })
+
+            for(key, value) in convertedAttributes {
+                Countly.user().set(key, value: value)
+            }
+        }
+        
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
@@ -67,10 +96,29 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
 
+    private func countlyValue(rawValue: Any) -> String {
+        if let boolValue = rawValue as? Bool {
+            return boolValue ? "True" : "False"
+        }
+        
+        if let teamRole = rawValue as? TeamRole {
+            switch teamRole {
+            case .partner:
+                return "external"
+            case .member, .admin, .owner:
+                return "member"
+            case .none:
+                return "wireless"
+            }
+        }
+
+        return "\(rawValue)"
+    }
+
     func tagEvent(_ event: String,
                   attributes: [String : Any]) {
         var convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-            attributes.map { key, value in (key, "\(value)") })
+            attributes.map { key, value in (key, countlyValue(rawValue: value)) })
         
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
