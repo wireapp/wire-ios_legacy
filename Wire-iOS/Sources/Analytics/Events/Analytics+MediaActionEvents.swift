@@ -51,16 +51,22 @@ extension Analytics {
             attributes["conversation_type"] = typeAttribute
         }
 
+        let participants = conversation.sortedActiveParticipants
+        
         attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
 
-        attributes["conversation_size"] = conversation.sortedActiveParticipants.count.logRound()
+        attributes["conversation_size"] = participants.count.logRound()
         attributes["conversation_services"] = conversation.sortedServiceUsers.count.logRound()
-        //TODO:
-        //        conversation_guests_pro
-        //        conversation_guests_wireless
+        attributes["conversation_guests_wireless"] = participants.filter({
+            $0.isWirelessUser && $0.isGuest(in: conversation)
+        }).count.logRound()
+        
+        attributes["conversation_guests_pro"] = participants.filter({
+            $0.isGuest(in: conversation) && $0.hasTeam
+        }).count.logRound()
 
         attributes.merge(guestAttributes(in: conversation)) { (_, new) in new }
-
+        
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 

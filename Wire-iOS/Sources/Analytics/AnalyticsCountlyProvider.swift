@@ -86,17 +86,24 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             userProperties["team_team_size"] = teamSize
             userProperties["user_contacts"] = teamSize
         } else {
+            ///TODO: this return 0?
             userProperties["user_contacts"] = ZMConversationListDirectory().conversations(by: .contacts).count
         }
 
-        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-            userProperties.map { key, value in (key, countlyValue(rawValue: value)) })
+        let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
         
         print(convertedAttributes)
         
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
         }
+    }
+    
+    private func convertToCountlyDictionary(dictioary: [String: Any]) -> [String: String] {
+        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
+            dictioary.map { key, value in (key, countlyValue(rawValue: value)) })
+        
+        return convertedAttributes
     }
     
     
@@ -127,8 +134,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             isUserSet = true
         }
         
-        var convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-            attributes.map { key, value in (key, countlyValue(rawValue: value)) })
+        var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
         
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
