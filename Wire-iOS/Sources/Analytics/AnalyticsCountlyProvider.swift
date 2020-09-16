@@ -76,10 +76,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
                 
         //TODO: user id generation
+        //TODO: move these to SE?
         var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
                                              "team_user_type": selfUser.teamRole]
 
-        userProperties["user_id"] = "TODO"
+        userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
 
         if let teamSize = selfUser.team?.members.count.logRound() {
             userProperties["team_team_size"] = teamSize
