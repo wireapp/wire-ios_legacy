@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-final class KeyboardAvoidingViewController: UIViewController {
+class KeyboardAvoidingViewController: UIViewController {
     
     let viewController: UIViewController
     var disabledWhenInsidePopover: Bool = false
