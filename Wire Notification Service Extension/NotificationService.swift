@@ -27,11 +27,18 @@ import WireSyncEngine
 public class NotificationService: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
-    var notificationSession: NotificationSession?
-
+    //var notificationSession: NotificationSession?
+    var notificationSessions: [UUID: NotificationSession] = [:]
+    
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        if notificationSession == nil {
-            notificationSession = try? self.createNotificationSession()
+        guard let accountIdentifier = request.content.userInfo.accountId() else {
+            return
+        }
+        
+        if let session = notificationSessions[accountIdentifier] {
+           // notificationSession = session
+        } else {
+            let notificationSession = try? self.createNotificationSession(request.content as? UNMutableNotificationContent)
         }
         
         self.contentHandler = contentHandler
@@ -46,23 +53,15 @@ public class NotificationService: UNNotificationServiceExtension {
         contentHandler?(emptyContent)
     }
     
-    private func createNotificationSession() throws -> NotificationSession? {
+    private func createNotificationSession(_ payload: UNMutableNotificationContent?) throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-            //TODO katerina: we should look at the notification payload which should contain the userID/accountID
-            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
+            let accountIdentifier = payload?.userInfo.accountId()
             else { return nil}
         return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                                         accountIdentifier: accountIdentifier,
                                         environment: BackendEnvironment.shared,
                                         analytics: nil,
                                         delegate: self)
-    }
-    
-    private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        let account = AccountManager(sharedDirectory: sharedContainerURL)
-        return account
     }
 }
 
