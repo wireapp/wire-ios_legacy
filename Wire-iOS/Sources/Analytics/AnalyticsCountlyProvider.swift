@@ -57,6 +57,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
         
+        ///TODO: ebug
+        config.enableDebug = true
+        
         Countly.sharedInstance().start(with: config)
         
         zmLog.info("AnalyticsCountlyProvider \(self) started")
@@ -91,12 +94,14 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
-        
+        //TODO: debug
         print(convertedAttributes)
         
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
         }
+        
+        Countly.user().save()
     }
     
     private func convertToCountlyDictionary(dictioary: [String: Any]) -> [String: String] {
@@ -136,6 +141,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         
         var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
         
+        //TODO: mv to constant
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
         
