@@ -1802,7 +1802,7 @@
 "create_passcode.validation.too_short" = "At least eight characters long";
 "create_passcode.validation.no_lowercase_char" = "A lowercase letter";
 "create_passcode.validation.no_uppercase_char" = "An uppercase letter";
-"create_passcode.validation.no_number" = "A digit";
+"create_passcode.validation.no_number" = "A number";
 "create_passcode.validation.no_special_char" = "A special character";
 
 // Custom app lock - unlock
