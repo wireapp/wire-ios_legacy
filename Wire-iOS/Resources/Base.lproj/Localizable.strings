@@ -1815,7 +1815,7 @@
 // Wipe database
 
 "wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can wipe the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";
