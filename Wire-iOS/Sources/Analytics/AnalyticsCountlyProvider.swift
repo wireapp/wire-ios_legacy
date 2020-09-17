@@ -28,7 +28,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private var sessionBegun: Bool = false
     private var isUserSet: Bool = false
     
-    var isOptedOut: Bool {
+    var isOptedOut: Bool = false /*{
         get {
             return !sessionBegun
         }
@@ -41,7 +41,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             
             sessionBegun = !isOptedOut
         }
-    }
+    }*/
     
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
@@ -55,16 +55,18 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.appKey = countlyAppKey
         config.host = countlyHost
         config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
-        config.manualSessionHandling = true
+//        config.manualSessionHandling = true
+        
         
         ///TODO: ebug
         config.enableDebug = true
-        
+        config.eventSendThreshold = 1
+
         Countly.sharedInstance().start(with: config)
         
         zmLog.info("AnalyticsCountlyProvider \(self) started")
         
-        self.isOptedOut = false
+        //self.isOptedOut = false
         sessionBegun = true
     }
     
