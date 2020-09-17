@@ -27,20 +27,28 @@ import WireSyncEngine
 public class NotificationService: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
-    //var notificationSession: NotificationSession?
     var notificationSessions: [UUID: NotificationSession] = [:]
     
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        var currentNotificationSession: NotificationSession?
         guard let accountIdentifier = request.content.userInfo.accountId() else {
             return
         }
         
         if let session = notificationSessions[accountIdentifier] {
-           // notificationSession = session
+            currentNotificationSession = session
         } else {
             let notificationSession = try? self.createNotificationSession(request.content as? UNMutableNotificationContent)
+            notificationSessions[accountIdentifier] = notificationSession
+            currentNotificationSession = notificationSession
         }
         
+        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isAuthenticatedUser in
+            if !isAuthenticatedUser {
+                let emptyContent = UNNotificationContent()
+                contentHandler(emptyContent)
+            }
+        }
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
