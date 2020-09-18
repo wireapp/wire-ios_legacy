@@ -309,27 +309,3 @@ enum DebugActions {
         while (currentCount > 0)
     }
 }
-
-extension DebugActions {
-    
-    /// Key used to store the debug preferences. Won't store them if the user
-    /// is not logged in.
-    var userDebugSettingsKey: String? {
-        get {
-            return ZMUserSession.shared()?
-                .selfUserClient?
-                .sessionIdentifier
-                .map { return "debug-settings-\($0)"}
-        }
-    }
-    
-    func loadDebugSettings() -> [String: Any?] {
-        guard let key = userDebugSettingsKey else { return [:] }
-        return UserDefaults.shared()?.dictionary(forKey: key) ?? [:]
-    }
-    
-    func saveDebugSettings(settings: [String: Any?]) {
-        guard let key = userDebugSettingsKey else { return }
-        UserDefaults.shared()?.set(settings, forKey: key)
-    }
-}
