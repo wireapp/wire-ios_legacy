@@ -999,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Lesebestätigungen senden";
 "self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nDies gilt nicht für Gruppen.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
 
@@ -1036,7 +1038,7 @@
 
 "self.settings.account_section.handle.change.title" = "Benutzername";
 "self.settings.account_section.handle.change.save" = "Speichern";
-"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer" = "Mindestens 2 Zeichen: nur a—z, 0—9 und '.', '-', '_'.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Bereits vergeben";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Speichern fehlgeschlagen";
@@ -1154,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Entsperren Sie mit Touch ID oder geben Sie Ihr Kennwort ein.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Entsperren Sie mit Face ID oder geben Sie Ihr Kennwort ein.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Entsperren durch Eingabe Ihres Kennworts.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Wenn Sie Ihr Kennwort vergessen haben, kann es nicht wiederhergestellt werden.";
 
 "self.settings.privacy_security.lock_app.description" = "Wire entsperren";
 "self.settings.privacy_security.lock_password.description.unlock" = "Mit Passwort entsperren.";
@@ -1182,6 +1185,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht";
 "self.settings.advanced.debugging_tools.title" = "Tools zur Fehlerbehebung";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Erste ungelesene Unterhaltung finden";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Meine Benutzer-ID anzeigen";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Befehl zur Fehlerbehebung eingeben";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Die Informationen helfen dem Support bei der Diagnose von Anrufproblemen und die App zu verbessern.";
 "self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Wenn Sie Probleme mit Push-Benachrichtigungen haben, kann der Wire Support Sie bitten, dieses Token zurückzusetzen.";
@@ -1252,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Konto hinzufügen.";
-"landing.welcome_message" = "Willkommen bei %@";
-"landing.create_account.title" = "Konto erstellen";
+"landing.welcome_message" = "Möchten Sie ein Pro- oder Enterprise-Konto für Ihr Unternehmen oder Ihre Organisation erstellen?";
+"landing.welcome_submessage" = "Leider ist das in der App nicht möglich – sobald Sie Ihr Team erstellt haben, können Sie sich hier anmelden";
+"landing.create_account.title" = "Erstellen Sie ein privates Wire-Konto";
+"landing.create_account.infotitle" = "Mit Freunden und der Familie chatten?";
 "landing.create_account.subtitle" = "Privat mit Freunden und der Familie\U00A0chatten";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Sichere Zusammenarbeit für Unternehmen, Institutionen und Organisationen";
@@ -1779,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "bestätigt";
 
 "button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Kennwort";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Passwort erstellen";
+"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
+"create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
+"create_passcode.create_button.title" = "Kennwort erstellen";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Mindestens 8 Zeichen lang";
+"create_passcode.validation.no_lowercase_char" = "Ein Kleinbuchstabe";
+"create_passcode.validation.no_uppercase_char" = "Ein Großbuchstabe";
+"create_passcode.validation.no_number" = "Eine Ziffer";
+"create_passcode.validation.no_special_char" = "Ein Sonderzeichen";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Geben Sie Ihr Kennwort ein";
+"unlock.title_label" = "Kennwort zum Entsperren eingeben";
+"unlock.wipe_button" = "Zugang als neues Gerät";
+"unlock.error_label" = "Falsches Kennwort";
+"unlock.submit_button.title" = "entsperren";
+
+// Wipe database
+
+"wipe_database.title_label" = "Zugang als neues Gerät";
+"wipe_database.info_label" = "Auf die gespeicherten Daten kann nur mit Ihrem Kennwort zugegriffen werden.\n\nWenn Sie Ihr Kennwort vergessen haben, können Sie die Datenbank löschen, um sich erneut anzumelden.\n\nDurch Löschung der Datenbank, ";
+"wipe_database.info_label.highlighted" = "werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
+
+"wipe_database.button.title" = "Ich möchte die Datenbank löschen";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Löschung der Daten bestätigen";
+"wipe_database.alert.message" = "Geben Sie \"Löschen\" ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten.";
+"wipe_database.alert.placeholder" = "\"Löschen\" eingeben";
+"wipe_database.alert.confirm" = "Löschen";
+"wipe_database.alert.confirm_input" = "Löschen";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Daten gelöscht";
+"wipe_database_completion.subtitle" = "Ihre Daten und Nachrichten wurden gelöscht. Sie können sich nun wieder anmelden.";

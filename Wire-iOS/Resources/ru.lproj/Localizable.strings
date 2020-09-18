@@ -967,7 +967,7 @@
 "self.settings.add_account.title" = "Добавить аккаунт";
 
 "self.settings.add_account.error.title" = "Активны три аккаунта";
-"self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
+"self.settings.add_account.error.message" = "Одновременно можно авторизоваться не более чем в трех аккаунтах. Выйдите из одного для добавления другого.";
 
 "self.settings.switch_account.message" = "В этой учетной записи активен вызов.\nПереключение учетных записей приведет к завершению текущего вызова.";
 "self.settings.switch_account.action" = "Все равно переключиться";
@@ -998,6 +998,8 @@
 "self.settings.privacy_section_group.title" = "Конфиденциальность";
 "self.settings.enable_read_receipts.title" = "Отправлять отчеты о прочтении";
 "self.settings.privacy_section_group.subtitle" = "При отключении этой настройки, вы не сможете видеть отчеты о прочтении от ваших собеседников.\n\nЭтот параметр не применяется к групповым беседам.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Шифровать сообщения в режиме ожидания";
 
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
@@ -1154,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте с помощью Touch ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте с помощью Face ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Если вы забудете ваш код доступа, восстановить его будет невозможно.";
 
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Разблокировать с помощью пароля.";
@@ -1182,6 +1185,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
 "self.settings.advanced.debugging_tools.title" = "Средства отладки";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Найти первую непрочитанную беседу";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Показать мой идентификатор пользователя";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Введите команду отладки";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает поддержке Wire диагностировать проблемы с вызовами и улучшать опыт использования приложения.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
@@ -1252,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
-"landing.welcome_message" = "Приветствуем вас в %@";
-"landing.create_account.title" = "Создать аккаунт";
+"landing.welcome_message" = "Хотите создать учетную запись Pro или Enterprise для своего бизнеса или организации?";
+"landing.welcome_submessage" = "К сожалению, это невозможно в приложении - как только вы создадите свою команду, вы сможете авторизоваться здесь.";
+"landing.create_account.title" = "Создать персональный аккаунт Wire";
+"landing.create_account.infotitle" = "Поболтать с друзьями и семьей?";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
@@ -1779,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "подтверждено";
 
 "button_message_cell.generic_error" = "Ваш ответ не может быть отправлен, пожалуйста, повторите попытку.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Код доступа";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Создать код доступа";
+"create_passcode.info_label" = "Он будет использоваться для разблокировки Wire. Если вы забудете этот код доступа ";
+"create_passcode.info_label.highlighted" = "восстановить его будет невозможно.";
+"create_passcode.create_button.title" = "создать код доступа";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Не менее восьми символов";
+"create_passcode.validation.no_lowercase_char" = "Строчная буква";
+"create_passcode.validation.no_uppercase_char" = "Заглавная буква";
+"create_passcode.validation.no_number" = "Цифра";
+"create_passcode.validation.no_special_char" = "Специальный символ";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Введите код доступа";
+"unlock.title_label" = "Введите код доступа для разблокировки Wire";
+"unlock.wipe_button" = "Доступ как новое устройство";
+"unlock.error_label" = "Неверный код доступа";
+"unlock.submit_button.title" = "разблокировать";
+
+// Wipe database
+
+"wipe_database.title_label" = "Доступ как новое устройство";
+"wipe_database.info_label" = "Доступ к данным, хранящимся на этом устройстве, возможен только с помощью вашего кода доступа.\n\nЕсли вы забыли свой код доступа, вы можете очистить базу данных для повторной авторизации в качестве нового устройства.\n\nПри удалении базы данных ";
+"wipe_database.info_label.highlighted" = "все локальные данные и сообщения этого аккаунта будут удалены навсегда.";
+
+"wipe_database.button.title" = "Я хочу удалить базу данных";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Подтвердить удаление базы данных";
+"wipe_database.alert.message" = "Введите 'Удалить', для подтверждения намерения удалить все данные с этого устройства.";
+"wipe_database.alert.placeholder" = "Введите 'Удалить'";
+"wipe_database.alert.confirm" = "Удалить";
+"wipe_database.alert.confirm_input" = "Удалить";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "База данных удалена";
+"wipe_database_completion.subtitle" = "Ваши данные и сообщения были удалены. Теперь вы можете повторно авторизоваться как новое устройство.";

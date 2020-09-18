@@ -429,10 +429,10 @@
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Aperçu d'une playlist SoundCloud";
 
 // Digital signature
-"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
-"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
-"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
-"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+"digital_signature.alert.error" = "Malheureusement, votre signature numérique a échoué.";
+"digital_signature.alert.error.no_consent_url" = "Malheureusement, le formulaire de signature ne s'est pas ouvert. Veuillez réessayer.";
+"digital_signature.alert.error.no_signature" = "Malheureusement, votre signature numérique a échoué. Veuillez réessayer.";
+"digital_signature.alert.download_necessary" = "Veuillez enregistrer et lire le document avant de le signer.";
 
 // New conversation participants added / removed / started system message
 
@@ -571,7 +571,7 @@
 "content.message.go_to_conversation" = "Montrer";
 "content.message.forward.to" = "Rechercher…";
 "content.message.open" = "Ouvrir";
-"content.message.sign" = "Sign";
+"content.message.sign" = "Signer";
 "content.message.copy" = "Copier";
 "content.message.download" = "Télécharger";
 "content.message.details" = "Informations";
@@ -669,7 +669,7 @@
 "call.status.reconnecting" = "Reconnexion …";
 "call.status.terminating" = "Fin de l'appel…";
 "call.status.constant_bitrate" = "Échantillonnage constant (CBR)";
-"call.status.variable_bitrate" = "Variable Bit Rate";
+"call.status.variable_bitrate" = "Débit variable";
 
 "call.participants.show_all" = "Afficher tout le monde (%@)";
 "call.participants.list.title" = "Participants";
@@ -999,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Envoyer des Accusés de Lecture";
 "self.settings.privacy_section_group.subtitle" = "Si cette option est désactivée, vous ne pourrez pas voir les accusés de lecture d'autres destinataires.\n\nCette option ne s'applique pas aux conversations de groupe.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Chiffrer les messages au repos";
+
 "self.settings.account_picture_group.picture" = "Image";
 "self.settings.account_picture_group.color" = "Couleur";
 
@@ -1154,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Déverrouiller avec Touch ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Déverrouiller avec Face ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Déverrouiller en saisissant le code.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Si oublié, votre code d'accès ne peut pas être récupéré.";
 
 "self.settings.privacy_security.lock_app.description" = "Déverrouiller Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Déverrouillez avec votre mot de passe.";
@@ -1182,6 +1185,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport d'erreur";
 "self.settings.advanced.debugging_tools.title" = "Outils pour débugger";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Trouver la conversation la plus récente";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Afficher mon identifiant";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Entrer la commande de débogage";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide Wire à identifier les problèmes d'appel et à améliorer l'experience globale de l'application.";
 "self.settings.advanced.reset_push_token.title" = "Réinitialiser le jeton des notifications Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Si vous rencontrez des problèmes avec les notifications push, l'assistance de Wire peut vous demander de réinitialiser ce jeton.";
@@ -1252,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Ajoutez votre compte.";
-"landing.welcome_message" = "Bienvenue sur %@";
-"landing.create_account.title" = "Créer un compte";
+"landing.welcome_message" = "Vous souhaitez créer un compte Pro ou Entreprise pour votre entreprise ou votre organisation ?";
+"landing.welcome_submessage" = "Cette action n'est malheureusement pas possible depuis l'application - Après avoir créé votre équipe, vous pourrez vous connecter";
+"landing.create_account.title" = "Créer un compte personnel Wire";
+"landing.create_account.infotitle" = "Avec vos amis et votre famille?";
 "landing.create_account.subtitle" = "Discussions privées avec vos groupes d’amis\U00A0et\U00A0votre\U00A0famille";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Collaboration sécurisée pour les entreprises, institutions et organisations\U00A0professionnelles";
@@ -1779,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "Confirmé";
 
 "button_message_cell.generic_error" = "Votre réponse ne peut pas être envoyée, veuillez réessayer";
+
+// Custom app lock
+
+"passcode.hint_label" = "Code d'accès";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Créer un code d'accès";
+"create_passcode.info_label" = "Il sera utilisé pour déverrouiller Wire. Si vous oubliez ce mot de passe ";
+"create_passcode.info_label.highlighted" = "Ce code d'accès ne peut pas être récupéré.";
+"create_passcode.create_button.title" = "Créer un code d'accès";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Minimum de huit caractères";
+"create_passcode.validation.no_lowercase_char" = "Une lettre minuscule";
+"create_passcode.validation.no_uppercase_char" = "Une lettre majuscule";
+"create_passcode.validation.no_number" = "Un nombre";
+"create_passcode.validation.no_special_char" = "Un caractère spécial";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Entrez votre code d'accès";
+"unlock.title_label" = "Entrez le code d'accès pour déverrouiller Wire";
+"unlock.wipe_button" = "Accéder en tant que nouvel appareil";
+"unlock.error_label" = "Code d'accès erroné";
+"unlock.submit_button.title" = "déverrouiller";
+
+// Wipe database
+
+"wipe_database.title_label" = "Accéder en tant que nouvel appareil";
+"wipe_database.info_label" = "Les données stockées sur cet appareil ne sont accessibles qu'avec votre code d'accès.\n\nSi vous avez oublié votre code d'accès, vous pouvez effacer la base de données pour vous reconnecter en tant que nouvel appareil.\n\nEn supprimant la base de données, ";
+"wipe_database.info_label.highlighted" = "toutes les données et les messages sur cet appareil pour ce compte seront supprimés définitivement.";
+
+"wipe_database.button.title" = "Je souhaite supprimer la base de données";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirmer la suppression de la base de données";
+"wipe_database.alert.message" = "Entrez 'Supprimer' pour confirmer la suppression de toutes les données sur cet appareil.";
+"wipe_database.alert.placeholder" = "Entrer 'Supprimer'";
+"wipe_database.alert.confirm" = "Supprimer";
+"wipe_database.alert.confirm_input" = "Supprimer";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Base de données supprimée";
+"wipe_database_completion.subtitle" = "Vos données et messages ont été supprimés. Vous pouvez maintenant vous reconnecter comme sur un nouvel appareil.";

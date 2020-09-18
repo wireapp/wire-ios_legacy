@@ -360,7 +360,7 @@
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "添加一个手绘图";
-"image.add_emoji" = "Add an emoji";
+"image.add_emoji" = "添加表情符号";
 "image.edit_image" = "编辑图像";
 
 // Camera access
@@ -429,7 +429,7 @@
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud 播放列表预览";
 
 // Digital signature
-"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error" = "不幸的是，您的数字签署失败。";
 "digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
 "digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
 "digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
@@ -571,7 +571,7 @@
 "content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
-"content.message.sign" = "Sign";
+"content.message.sign" = "签署";
 "content.message.copy" = "复制";
 "content.message.download" = "下载";
 "content.message.details" = "详细信息";
@@ -999,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "发送已读回执";
 "self.settings.privacy_section_group.subtitle" = "关闭后，你将无法查看他人的已读回执。\n该设定对群组聊天无效。";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
 
@@ -1154,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用触摸ID解锁或输入您的密码。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID或使用密码解锁。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "使用密码解锁";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "用您的密码解锁。";
@@ -1175,13 +1178,15 @@
 "self.settings.privacy.clear_history.subtitle" = "这将永久删除您的所有对话内容。";
 
 "self.settings.advanced.title" = "高级";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.title" = "电话会议";
 "self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
 "self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
 "self.settings.advanced.debugging_tools.title" = "调试工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一个未读对话";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助于Wire诊断通话问题，并改善整个应用体验。";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
@@ -1252,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire。添加您的帐号。";
-"landing.welcome_message" = "欢迎来到 %@";
-"landing.create_account.title" = "创建帐户";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "专业版";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
@@ -1779,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "已确认";
 
 "button_message_cell.generic_error" = "您的答案无法发送，请重试。";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "删除";
+"wipe_database.alert.confirm_input" = "删除";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
