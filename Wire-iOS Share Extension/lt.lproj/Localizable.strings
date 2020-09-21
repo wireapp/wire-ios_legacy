@@ -37,8 +37,8 @@
 "share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
 
 "content.file.too_big" = "Siunčiamų failų dydis negali viršyti %@";
-"content.file.unsupported_attachment" = "Unsupported attachment";
-"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+"content.file.unsupported_attachment" = "Nepalaikomas priedas";
+"share_extension.error.conversation_does_not_exist.message" = "Pasirinkite susirašinėjimą pasidalinimui";
 
 "share_extension.privacy_security.lock_app.description" = "Atrakinti „Wire“";
 "share_extension.logged_out.title" = "Buvote atjungti nuo šios paskyros.";
