@@ -54,13 +54,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyHost
-        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
+//        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
 //        config.manualSessionHandling = true
         
         
         ///TODO: ebug
         config.enableDebug = true
-        config.eventSendThreshold = 1
+//        config.eventSendThreshold = 1
 
         Countly.sharedInstance().start(with: config)
         
