@@ -999,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Send Read Receipts";
 "self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "Zdjęcie profilowe";
 "self.settings.account_picture_group.color" = "Kolor";
 
@@ -1154,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "Odblokuj Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
@@ -1182,6 +1185,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Zresetuj powiadomienia";
 "self.settings.advanced.reset_push_token.subtitle" = "Jeśli masz problemy z powiadomieniami, pomoc Wire może poprosić o zresetowanie powiadomień.";
@@ -1252,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
@@ -1779,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "confirmed";
 
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Usuń";
+"wipe_database.alert.confirm_input" = "Usuń";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
