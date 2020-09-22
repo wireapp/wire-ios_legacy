@@ -90,8 +90,6 @@ extension Analytics: AnalyticsType {
     ///   - event: event to tag
     ///   - attributes: attributes of the event
     func tagEvent(_ event: String, attributes: [String : NSObject]) {
-        DispatchQueue.main.async(execute: {
-            self.provider?.tagEvent(event, attributes: attributes)
-        })
+        provider?.tagEvent(event, attributes: attributes)
     }
 }

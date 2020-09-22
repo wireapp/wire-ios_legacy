@@ -76,28 +76,20 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     
     //TODO: call this after switched account
     func updateUserProperties() {
-        guard let selfUser = SelfUser.provider?.selfUser as? ZMUser else {
+        guard let selfUser = SelfUser.provider?.selfUser as? ZMUser,
+              let team = selfUser.team else {
             return
         }
                 
-        //TODO: user id generation
-        //TODO: move these to SE?
         var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
                                              "team_user_type": selfUser.teamRole]
 
         userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
 
-        if let teamSize = selfUser.team?.members.count.logRound() {
-            userProperties["team_team_size"] = teamSize
-            userProperties["user_contacts"] = teamSize
-        } else {
-            ///TODO: this return 0?
-            userProperties["user_contacts"] = ZMConversationListDirectory().conversations(by: .contacts).count
-        }
+        userProperties["team_team_size"] = team.members.count.logRound()
+        userProperties["user_contacts"] = teamSize
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
-        //TODO: debug
-        print(convertedAttributes)
         
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)

@@ -27,8 +27,6 @@ extension Analytics {
             }).count
         
         return [
-            //TOOD: no need ATM
-            "conversation.allow_guests" : conversation.allowGuests,
             "conversation_guests" : numGuests.logRound(),
             "user_type" : SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
         ]
