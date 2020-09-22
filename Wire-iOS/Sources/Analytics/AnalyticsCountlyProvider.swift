@@ -24,23 +24,25 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
+    
+    /// flag for recording session is begun
     private var sessionBegun: Bool = false
     private var isUserSet: Bool = false
 
-    var isOptedOut: Bool = false /*{
+    var isOptedOut: Bool {
         get {
             return !sessionBegun
         }
         set {
             if newValue {
-                Countly.sharedInstance().beginSession()
-            } else {
                 Countly.sharedInstance().endSession()
+            } else {
+                Countly.sharedInstance().beginSession()
             }
             
             sessionBegun = !isOptedOut
         }
-    }*/
+    }
 
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
@@ -53,18 +55,14 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyHost
-//        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
-//        config.manualSessionHandling = true
-
-        ///TODO: ebug
-        config.enableDebug = true
-//        config.eventSendThreshold = 1
+        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
+        config.manualSessionHandling = true
 
         Countly.sharedInstance().start(with: config)
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
-        //self.isOptedOut = false
+        isOptedOut = false
         sessionBegun = true
     }
 
@@ -84,7 +82,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
 
-        userProperties["team_team_size"] = team.members.count.logRound()
+        let teamSize = team.members.count.logRound()
+        userProperties["team_team_size"] = teamSize
         userProperties["user_contacts"] = teamSize
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
