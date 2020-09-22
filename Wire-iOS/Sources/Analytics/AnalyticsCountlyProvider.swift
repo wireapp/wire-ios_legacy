@@ -32,7 +32,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
-    private var isUserSet: Bool = false
 
     var isOptedOut: Bool {
         get {
@@ -44,6 +43,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                        Countly.sharedInstance().beginSession()
             
             sessionBegun = !isOptedOut
+        }
+    }
+    
+    var selfUser: SelfUserType? {
+        didSet {
+            updateUserProperties()
         }
     }
 
@@ -73,10 +78,20 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    //TODO: call this after switched account
-    func updateUserProperties() {
-        guard let selfUser = SelfUser.provider?.selfUser as? ZMUser,
-              let team = selfUser.team else {
+    private var shouldTracksEvent: Bool {
+        guard let selfUser = selfUser as? ZMUser,
+            let _ = selfUser.team else {
+                return false
+        }
+
+        return true
+    }
+    
+    /// update user properties after self user changes
+    private func updateUserProperties() {
+        guard shouldTracksEvent,
+            let selfUser = selfUser as? ZMUser,
+            let team = selfUser.team else {
             return
         }
 
@@ -126,12 +141,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
-        if !isUserSet {
-            updateUserProperties()
-
-            isUserSet = true
-        }
-
+        guard shouldTracksEvent else { return }
+        
         var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
 
         convertedAttributes["app_name"] = "ios"

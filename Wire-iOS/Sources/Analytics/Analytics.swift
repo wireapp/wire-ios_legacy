@@ -49,12 +49,17 @@ final class Analytics: NSObject {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
         //TODO:
 //        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        setTeam(ZMUser.selfUser().team)
+        selfUser = ZMUser.selfUser()
     }
 
-    func setTeam(_ team: Team?) {
-        //no-op
-        //TODO: change id?
+    var selfUser: SelfUserType?  {
+        get {
+            return provider?.selfUser
+        }
+        
+        set {
+            provider?.selfUser = newValue
+        }
     }
 
     func tagEvent(_ event: String,

@@ -44,6 +44,18 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
+    /// no-op
+    var selfUser: SelfUserType? {
+        get {
+            //no-op
+            return nil
+        }
+        
+        set {
+            //no-op
+        }
+    }
+
     private func print(loggingData data: [String: Any]) {
         if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: JSONSerialization.WritingOptions.prettyPrinted),
             let string = String(data: jsonData, encoding: .utf8) {

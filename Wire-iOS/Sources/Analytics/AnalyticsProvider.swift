@@ -20,6 +20,7 @@ import Foundation
 
 protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
+    var selfUser: SelfUserType? { get set }
 
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String: Any])
