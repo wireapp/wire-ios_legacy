@@ -32,13 +32,6 @@ fileprivate extension ZMConversation {
     }
 }
 
-extension Int {
-    //TODO: test
-    func logRound(factor: Double = 6) -> Int {
-        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
-    }
-}
-
 extension Analytics {
 
     func tagMediaActionCompleted(_ action: ConversationMediaAction,

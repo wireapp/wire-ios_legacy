@@ -22,9 +22,14 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
+extension Int {
+    func logRound(factor: Double = 6) -> Int {
+        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
+    }
+}
+
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
-    
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
     private var isUserSet: Bool = false
@@ -33,12 +38,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         get {
             return !sessionBegun
         }
+        
         set {
-            if newValue {
-                Countly.sharedInstance().endSession()
-            } else {
-                Countly.sharedInstance().beginSession()
-            }
+            newValue ? Countly.sharedInstance().endSession() :
+                       Countly.sharedInstance().beginSession()
             
             sessionBegun = !isOptedOut
         }
@@ -131,11 +134,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
 
-        //TODO: mv to constant
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
-
-        print(convertedAttributes)
 
         Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
