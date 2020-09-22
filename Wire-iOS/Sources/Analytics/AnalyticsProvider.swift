@@ -22,11 +22,10 @@ protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
 
     /// Record an event with optional attributes.
-    func tagEvent(_ event: String, attributes: [String : Any])
+    func tagEvent(_ event: String, attributes: [String: Any])
 
     /// Set a custom dimension
     func setSuperProperty(_ name: String, value: Any?)
-
 
     /// Force the AnalyticsProvider to process the queued data immediately
     ///

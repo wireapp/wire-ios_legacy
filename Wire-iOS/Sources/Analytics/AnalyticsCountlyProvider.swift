@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -24,10 +23,10 @@ import WireSyncEngine
 private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
-    
+
     private var sessionBegun: Bool = false
     private var isUserSet: Bool = false
-    
+
     var isOptedOut: Bool = false /*{
         get {
             return !sessionBegun
@@ -42,7 +41,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             sessionBegun = !isOptedOut
         }
     }*/
-    
+
     init?() {
         guard let countlyAppKey = Bundle.countlyAppKey,
             !countlyAppKey.isEmpty,
@@ -50,37 +49,36 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), Bundle.countlyHost = \(String(describing: Bundle.countlyHost)). Please check COUNTLY_APP_KEY & COUNTLY_HOST is set in .xcconfig file")
                 return nil
         }
-        
+
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyHost
 //        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
 //        config.manualSessionHandling = true
-        
-        
+
         ///TODO: ebug
         config.enableDebug = true
 //        config.eventSendThreshold = 1
 
         Countly.sharedInstance().start(with: config)
-        
+
         zmLog.info("AnalyticsCountlyProvider \(self) started")
-        
+
         //self.isOptedOut = false
         sessionBegun = true
     }
-    
+
     deinit {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
-    
+
     //TODO: call this after switched account
     func updateUserProperties() {
         guard let selfUser = SelfUser.provider?.selfUser as? ZMUser,
               let team = selfUser.team else {
             return
         }
-                
+
         var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
                                              "team_user_type": selfUser.teamRole]
 
@@ -90,27 +88,26 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         userProperties["user_contacts"] = teamSize
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
-        
+
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
         }
-        
+
         Countly.user().save()
     }
-    
+
     private func convertToCountlyDictionary(dictioary: [String: Any]) -> [String: String] {
         let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
             dictioary.map { key, value in (key, countlyValue(rawValue: value)) })
-        
+
         return convertedAttributes
     }
-    
-    
+
     private func countlyValue(rawValue: Any) -> String {
         if let boolValue = rawValue as? Bool {
             return boolValue ? "True" : "False"
         }
-        
+
         if let teamRole = rawValue as? TeamRole {
             switch teamRole {
             case .partner:
@@ -121,33 +118,33 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                 return "wireless"
             }
         }
-        
+
         return "\(rawValue)"
     }
-    
+
     func tagEvent(_ event: String,
-                  attributes: [String : Any]) {
+                  attributes: [String: Any]) {
         if !isUserSet {
             updateUserProperties()
-            
+
             isUserSet = true
         }
-        
+
         var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
-        
+
         //TODO: mv to constant
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
-        
+
         print(convertedAttributes)
-        
-        Countly.sharedInstance().recordEvent(event, segmentation:convertedAttributes)
+
+        Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
-    
+
     func setSuperProperty(_ name: String, value: Any?) {
         //TODO
     }
-    
+
     func flush(completion: Completion?) {
         isOptedOut = true
         completion?()

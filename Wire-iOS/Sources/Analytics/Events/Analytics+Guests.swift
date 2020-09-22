@@ -20,15 +20,15 @@ import Foundation
 import WireDataModel
 
 extension Analytics {
-    func guestAttributes(in conversation: ZMConversation) -> [String : Any] {
-        
+    func guestAttributes(in conversation: ZMConversation) -> [String: Any] {
+
         let numGuests = conversation.sortedActiveParticipants.filter({
             $0.isGuest(in: conversation)
             }).count
-        
+
         return [
-            "conversation_guests" : numGuests.logRound(),
-            "user_type" : SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
+            "conversation_guests": numGuests.logRound(),
+            "user_type": SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
         ]
     }
 }
@@ -39,16 +39,16 @@ protocol Event {
 }
 
 extension Analytics {
-    
+
     func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes as? [String : NSObject] ?? [:])
+        tagEvent(event.name, attributes: event.attributes as? [String: NSObject] ?? [:])
     }
-    
+
 }
 
 enum GuestLinkEvent: Event {
     case created, copied, revoked, shared
-    
+
     var name: String {
         switch self {
         case .created: return "guest_rooms.link_created"
@@ -57,22 +57,22 @@ enum GuestLinkEvent: Event {
         case .shared: return "guest_rooms.link_shared"
         }
     }
-    
-    var attributes: [AnyHashable : Any]? {
+
+    var attributes: [AnyHashable: Any]? {
         return nil
     }
 }
 
 enum GuestRoomEvent: Event {
     case created
-    
+
     var name: String {
         switch self {
         case .created: return "guest_rooms.guest_room_creation"
         }
     }
-    
-    var attributes: [AnyHashable : Any]? {
+
+    var attributes: [AnyHashable: Any]? {
         return nil
     }
 }
