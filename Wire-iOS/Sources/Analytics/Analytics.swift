@@ -24,9 +24,10 @@ private let zmLog = ZMSLog(tag: "Analytics")
 final class Analytics: NSObject {
 
     var provider: AnalyticsProvider?
-    //TODO:
 
-    //    private var callingTracker: AnalyticsCallingTracker?
+    private var callingTracker: AnalyticsCallingTracker?
+
+    //TODO:
 //    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
 
     static var shared: Analytics!
@@ -46,7 +47,7 @@ final class Analytics: NSObject {
 
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
-//        callingTracker = AnalyticsCallingTracker(analytics: self)
+        callingTracker = AnalyticsCallingTracker(analytics: self)
         //TODO:
 //        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
         setTeam(ZMUser.selfUser().team)
