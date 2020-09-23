@@ -39,7 +39,7 @@ extension SettingsCellDescriptorFactory {
             externalAppsSection,
             popularDemandSendButtonSection,
             popularDemandDarkThemeSection,
-            appLockSection,
+            SecurityFlags.forceEncryptionAtRest.isEnabled ? nil : appLockSection,
             SecurityFlags.generateLinkPreviews.isEnabled ? linkPreviewSection : nil
         ].compactMap { $0 }
         
