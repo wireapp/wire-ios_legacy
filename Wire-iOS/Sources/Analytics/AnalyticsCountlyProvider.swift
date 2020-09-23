@@ -89,39 +89,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         userProperties["team_team_size"] = teamSize
         userProperties["user_contacts"] = teamSize
 
-        let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
+        let convertedAttributes = userProperties.countlyStringValueDictionary
 
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
         }
 
         Countly.user().save()
-    }
-
-    private func convertToCountlyDictionary(dictioary: [String: Any]) -> [String: String] {
-        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-            dictioary.map { key, value in (key, countlyValue(rawValue: value)) })
-
-        return convertedAttributes
-    }
-
-    private func countlyValue(rawValue: Any) -> String {
-        if let boolValue = rawValue as? Bool {
-            return boolValue ? "True" : "False"
-        }
-
-        if let teamRole = rawValue as? TeamRole {
-            switch teamRole {
-            case .partner:
-                return "external"
-            case .member, .admin, .owner:
-                return "member"
-            case .none:
-                return "wireless"
-            }
-        }
-
-        return "\(rawValue)"
     }
 
     func tagEvent(_ event: String,
@@ -132,7 +106,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             isUserSet = true
         }
 
-        var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
+        var convertedAttributes = attributes.countlyStringValueDictionary
 
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
@@ -147,5 +121,34 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     func flush(completion: Completion?) {
         isOptedOut = true
         completion?()
+    }
+}
+
+extension Dictionary where Key == String, Value == Any {
+    
+    private func countlyValue(rawValue: Any) -> String {
+        if let boolValue = rawValue as? Bool {
+            return boolValue ? "True" : "False"
+        }
+        
+        if let teamRole = rawValue as? TeamRole {
+            switch teamRole {
+            case .partner:
+                return "external"
+            case .member, .admin, .owner:
+                return "member"
+            case .none:
+                return "wireless"
+            }
+        }
+        
+        return "\(rawValue)"
+    }
+
+    var countlyStringValueDictionary: [String: String] {
+        let convertedAttributes : [String: String] = Dictionary<String, String>(uniqueKeysWithValues:
+            map { key, value in (key, countlyValue(rawValue: value)) })
+
+        return convertedAttributes
     }
 }

@@ -83,7 +83,6 @@ extension ZMConversation {
         return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
-    //TODO: test
     var attributesForConversation: [String : Any] {
         let participants = sortedActiveParticipants
         
