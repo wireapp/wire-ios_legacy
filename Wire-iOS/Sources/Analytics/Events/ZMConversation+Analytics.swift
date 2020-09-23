@@ -46,7 +46,7 @@ extension ConversationType {
 
 extension ZMConversation {
     
-    func analyticsTypeString() -> String? {
+    var analyticsTypeString: String? {
         return ConversationType.type(self)?.analyticsTypeString
     }
         

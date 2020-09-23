@@ -55,7 +55,7 @@ extension Analytics {
     }
     
     private func attributes(for event: CallEvent, callInfo: CallInfo, conversation: ZMConversation) -> [String : Any] {
-        var attributes = attributesForConversation(conversation)
+        var attributes = conversation.attributesForConversation
         attributes.merge(attributesForUser(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForParticipants(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
@@ -122,16 +122,48 @@ extension Analytics {
         }
         return ["duration": Int(-establishedDate.timeIntervalSinceNow)]
     }
-    
-    private func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {
+}
+
+//TODO: test
+extension ZMConversation {
+    var attributesForConversation: [String : Any] {
+        let participants = sortedActiveParticipants
         
         let attributes: [String : Any] = [
-            "conversation_type": conversation.analyticsTypeString() ?? "invalid",
-            "with_service": conversation.includesServiceUser ? true : false,
-            "is_allow_guests": conversation.accessMode == ConversationAccessMode.allowGuests ? true : false
-        ]
+            "conversation_type": analyticsTypeString ?? "invalid",
+            "with_service": includesServiceUser ? true : false,
+            "is_allow_guests": accessMode == ConversationAccessMode.allowGuests ? true : false,
+            "conversation_size": participants.count.logRound(),
+            "is_global_ephemeral": hasSyncedTimeout,
+            "conversation_services": sortedServiceUsers.count.logRound(),
+            "conversation_guests_wireless": participants.filter({
+                $0.isWirelessUser && $0.isGuest(in: self)
+            }).count.logRound(),
+            "conversation_guests_pro": participants.filter({
+                $0.isGuest(in: self) && $0.hasTeam
+            }).count.logRound()]
         
-        return attributes.updated(other: guestAttributes(in: conversation))
+        return attributes.updated(other: guestAttributes)
     }
     
+    var hasSyncedTimeout: Bool {
+        if case .synced(_)? = messageDestructionTimeout {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    var guestAttributes: [String: Any] {
+        
+        let numGuests = sortedActiveParticipants.filter({
+            $0.isGuest(in: self)
+        }).count
+        
+        return [
+            "conversation_guests": numGuests.logRound(),
+            "user_type": SelfUser.current.isGuest(in: self) ? "guest" : "user"
+        ]
+    }
 }

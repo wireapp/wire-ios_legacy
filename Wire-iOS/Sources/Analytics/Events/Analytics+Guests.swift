@@ -19,20 +19,6 @@
 import Foundation
 import WireDataModel
 
-extension Analytics {
-    func guestAttributes(in conversation: ZMConversation) -> [String: Any] {
-
-        let numGuests = conversation.sortedActiveParticipants.filter({
-            $0.isGuest(in: conversation)
-            }).count
-
-        return [
-            "conversation_guests": numGuests.logRound(),
-            "user_type": SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
-        ]
-    }
-}
-
 protocol Event {
     var name: String { get }
     var attributes: [AnyHashable: Any]? { get }
