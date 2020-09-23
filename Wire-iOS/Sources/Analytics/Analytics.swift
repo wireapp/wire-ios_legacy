@@ -27,7 +27,7 @@ final class Analytics: NSObject {
     //TODO:
 
     //    private var callingTracker: AnalyticsCallingTracker?
-//    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
+    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
 
     static var shared: Analytics!
 
@@ -47,8 +47,7 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
-        //TODO:
-//        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
         setTeam(ZMUser.selfUser().team)
     }
 
