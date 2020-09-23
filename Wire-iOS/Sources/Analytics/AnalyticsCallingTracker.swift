@@ -35,14 +35,19 @@ struct CallInfo {
 extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
         // share screen tracking
-        if participants.first(where: {
-            $0.state.videoState == .screenSharing
-        }) != nil,
-            let conversationId = conversation.remoteIdentifier,
-            let callInfo = callInfos[conversationId] {
-            analytics.tag(callEvent: .screenSharing,
-                          in: conversation,
-                          callInfo: callInfo)
+
+        if let participant = participants.first(where: {
+            return $0.state.videoState == .screenSharing
+        }) {
+            screenSharingParticipantID = participant.clientId
+            screenSharingStartTime = Date()
+            
+        } else if participants.contains(where: {
+            return $0.state.videoState == .stopped &&
+                   $0.clientId == screenSharingParticipantID
+        }) {
+            screenSharingParticipantID = nil
+            screenSharingEndTime = Date()
         }
     }
 }
@@ -55,6 +60,10 @@ final class AnalyticsCallingTracker : NSObject {
     var callInfos : [UUID : CallInfo] = [:]
     var callStateObserverToken : Any?
     var callParticipantObserverToken : Any?
+
+    private var screenSharingParticipantID: String?
+    private var screenSharingStartTime: Date?
+    private var screenSharingEndTime: Date?
 
     init(analytics : Analytics) {
         self.analytics = analytics
@@ -135,6 +144,14 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
                 analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
+
+                if let start = screenSharingStartTime {
+                    analytics.tag(callEvent: .screenSharing(duration: (screenSharingEndTime ?? Date()).timeIntervalSince(start)),
+                                  in: conversation,
+                                  callInfo: callInfo)
+                    
+                    screenSharingStartTime = nil
+                }
             }
             callInfos[conversationId] = nil
             
@@ -143,6 +160,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
             
             callParticipantObserverToken = nil
+            
         default:
             break
         }

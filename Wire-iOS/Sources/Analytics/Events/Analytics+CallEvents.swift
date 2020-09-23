@@ -26,7 +26,7 @@ enum CallEvent {
          answered,
          established,
          ended(reason: String),
-         screenSharing
+         screenSharing(duration: TimeInterval)
 }
 
 extension CallEvent {
@@ -58,25 +58,33 @@ extension Analytics {
     func tag(callEvent: CallEvent,
              in conversation: ZMConversation,
              callInfo: CallInfo) {
-        tagEvent(callEvent.eventName, attributes: attributes(for: callEvent, callInfo: callInfo, conversation: conversation))
+        tagEvent(callEvent.eventName,
+                 attributes: attributes(for: callEvent, callInfo: callInfo, conversation: conversation))
     }
     
-    private func attributes(for event: CallEvent, callInfo: CallInfo, conversation: ZMConversation) -> [String : Any] {
+    private func attributes(for event: CallEvent,
+                            callInfo: CallInfo,
+                            conversation: ZMConversation) -> [String : Any] {
         var attributes = conversation.attributesForConversation
+        
         attributes.merge(attributesForUser(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForParticipants(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForVideo(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
+        
         switch event {
         case .ended(reason: let reason):
             attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
             attributes.merge(attributesForCallDuration(with: callInfo), strategy: .preferNew)
             attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
             attributes.merge(["reason" : reason], strategy: .preferNew)
-        default: break
+        case .screenSharing(let duration):
+            attributes["screen_share_direction"] = "incoming"
+            attributes["screen_share_duration"] = Int(round(duration / 5)) * 5
+        default:
+            break
         }
-        
         
         return attributes
     }
