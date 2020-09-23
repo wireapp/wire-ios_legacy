@@ -108,7 +108,7 @@ extension Analytics {
     }
     
     private func attributesForVideo(with callInfo: CallInfo) -> [String : Any] {
-        return ["call_video": callInfo.video ? true : false]
+        return ["call_video": callInfo.video]
     }
     
     private func attributesForDirection(with callInfo: CallInfo) -> [String : Any] {
@@ -135,49 +135,5 @@ extension Analytics {
             return [:]
         }
         return ["duration": Int(-establishedDate.timeIntervalSinceNow)]
-    }
-}
-
-//TODO: test, mv
-extension ZMConversation {
-    var attributesForConversation: [String : Any] {
-        let participants = sortedActiveParticipants
-        
-        let attributes: [String : Any] = [
-            "conversation_type": analyticsTypeString ?? "invalid",
-            "with_service": includesServiceUser ? true : false,
-            "is_allow_guests": accessMode == ConversationAccessMode.allowGuests ? true : false,
-            "conversation_size": participants.count.logRound(),
-            "is_global_ephemeral": hasSyncedTimeout,
-            "conversation_services": sortedServiceUsers.count.logRound(),
-            "conversation_guests_wireless": participants.filter({
-                $0.isWirelessUser && $0.isGuest(in: self)
-            }).count.logRound(),
-            "conversation_guests_pro": participants.filter({
-                $0.isGuest(in: self) && $0.hasTeam
-            }).count.logRound()]
-        
-        return attributes.updated(other: guestAttributes)
-    }
-    
-    var hasSyncedTimeout: Bool {
-        if case .synced(_)? = messageDestructionTimeout {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    var guestAttributes: [String: Any] {
-        
-        let numGuests = sortedActiveParticipants.filter({
-            $0.isGuest(in: self)
-        }).count
-        
-        return [
-            "conversation_guests": numGuests.logRound(),
-            "user_type": SelfUser.current.isGuest(in: self) ? "guest" : "user"
-        ]
     }
 }

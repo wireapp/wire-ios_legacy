@@ -34,7 +34,7 @@ struct CallInfo {
 
 extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
-        // share screen tracking
+        // record the start/end screen share timing, and tag the event when the call ends
 
         if let participant = participants.first(where: {
             return $0.state.videoState == .screenSharing
