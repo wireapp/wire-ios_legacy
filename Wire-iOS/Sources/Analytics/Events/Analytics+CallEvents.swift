@@ -33,6 +33,7 @@ extension CallEvent {
         case .answered: return "calling.joined_call"
         case .established: return "calling.established_call"
         case .ended: return "calling.ended_call"
+            //TODO: calling.screen_share
         }
     }
     
@@ -60,7 +61,7 @@ extension Analytics {
         attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForVideo(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
-        
+        //TODO: conversation_size
         switch event {
         case .ended(reason: let reason):
             attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
@@ -93,7 +94,7 @@ extension Analytics {
     }
     
     private func attributesForVideo(with callInfo: CallInfo) -> [String : Any] {
-        return ["started_as_video": callInfo.video ? true : false]
+        return ["call_video": callInfo.video ? true : false]
     }
     
     private func attributesForDirection(with callInfo: CallInfo) -> [String : Any] {
