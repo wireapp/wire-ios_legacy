@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 typealias CallParticipantsList = [CallParticipantsCellConfiguration]

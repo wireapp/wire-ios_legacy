@@ -32,6 +32,21 @@ struct CallInfo {
     let video: Bool
 }
 
+extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
+    func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
+        // share screen tracking
+        if participants.first(where: {
+            $0.state.videoState == .screenSharing
+        }) != nil,
+            let conversationId = conversation.remoteIdentifier,
+            let callInfo = callInfos[conversationId] {
+            analytics.tag(callEvent: .screenSharing,
+                          in: conversation,
+                          callInfo: callInfo)
+        }
+    }
+}
+
 final class AnalyticsCallingTracker : NSObject {
     
     private static let conversationIdKey = "conversationId"
@@ -39,7 +54,8 @@ final class AnalyticsCallingTracker : NSObject {
     let analytics : Analytics
     var callInfos : [UUID : CallInfo] = [:]
     var callStateObserverToken : Any?
-    
+    var callParticipantObserverToken : Any?
+
     init(analytics : Analytics) {
         self.analytics = analytics
         
@@ -57,7 +73,7 @@ final class AnalyticsCallingTracker : NSObject {
             }
         }
         
-        self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
     
     static func userToggledVideo(in voiceChannel: VoiceChannel) {
@@ -67,9 +83,15 @@ final class AnalyticsCallingTracker : NSObject {
     }
 }
 
+//MARK: - WireCallCenterCallStateObserver
+
 extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState,
+                             conversation: ZMConversation,
+                             caller: UserType,
+                             timestamp: Date?,
+                             previousCallState: CallState?) {
         
         let conversationId = conversation.remoteIdentifier!
         
@@ -102,6 +124,14 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                 callInfo.establishedDate = Date()
                 analytics.tag(callEvent: .established, in: conversation, callInfo: callInfo)
             }
+            
+            guard let userSession = ZMUserSession.shared() else {
+                Log.calling.error("UserSession not available when .established call")
+                return
+            }
+
+            callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
+
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
                 analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
@@ -111,6 +141,8 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             if case .inputOutputError = reason {
                 presentIOErrorAlertIfAllowed()
             }
+            
+            callParticipantObserverToken = nil
         default:
             break
         }

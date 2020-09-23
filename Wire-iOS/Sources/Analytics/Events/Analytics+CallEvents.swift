@@ -21,7 +21,12 @@ import UIKit
 import WireDataModel
 
 enum CallEvent {
-    case initiated, received, answered, established, ended(reason: String)
+    case initiated,
+         received,
+         answered,
+         established,
+         ended(reason: String),
+         screenSharing
 }
 
 extension CallEvent {
@@ -33,7 +38,7 @@ extension CallEvent {
         case .answered: return "calling.joined_call"
         case .established: return "calling.established_call"
         case .ended: return "calling.ended_call"
-            //TODO: calling.screen_share
+        case .screenSharing: return "calling.screen_share"
         }
     }
     
@@ -50,7 +55,9 @@ extension Analytics {
         tagEvent("calling.call_quality_review", attributes: attributes)
     }
     
-    func tag(callEvent: CallEvent, in conversation: ZMConversation, callInfo: CallInfo) {        
+    func tag(callEvent: CallEvent,
+             in conversation: ZMConversation,
+             callInfo: CallInfo) {
         tagEvent(callEvent.eventName, attributes: attributes(for: callEvent, callInfo: callInfo, conversation: conversation))
     }
     
@@ -61,7 +68,6 @@ extension Analytics {
         attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForVideo(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
-        //TODO: conversation_size
         switch event {
         case .ended(reason: let reason):
             attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
@@ -124,7 +130,7 @@ extension Analytics {
     }
 }
 
-//TODO: test
+//TODO: test, mv
 extension ZMConversation {
     var attributesForConversation: [String : Any] {
         let participants = sortedActiveParticipants
