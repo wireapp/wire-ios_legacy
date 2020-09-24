@@ -95,7 +95,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
              "user_contacts"].forEach() {
                 Countly.user().unSet($0)
             }
-            
                 Countly.user().set("user_id", value: (self.selfUser as? ZMUser )?.userId.uuid.zmSHA256Digest().zmHexEncodedString() ?? "")
                 
             Countly.user().save()
