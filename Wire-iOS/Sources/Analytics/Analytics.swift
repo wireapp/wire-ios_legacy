@@ -47,7 +47,7 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
-        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self) //TODO: https://github.com/wireapp/wire-ios/pull/3997/files
         setTeam(ZMUser.selfUser().team)
     }
 
