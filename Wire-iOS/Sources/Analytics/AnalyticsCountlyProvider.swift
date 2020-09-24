@@ -87,6 +87,20 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let team = selfUser.team else {
+                
+            //clean up
+            ["team_team_id",
+             "team_user_type",
+             "team_team_size",
+             "user_contacts"].forEach() {
+                Countly.user().unSet($0)
+            }
+            
+                Countly.user().set("user_id", value: (self.selfUser as? ZMUser )?.userId.uuid.zmSHA256Digest().zmHexEncodedString() ?? "")
+                
+            Countly.user().save()
+            isOptedOut = true
+                
             return
         }
 
