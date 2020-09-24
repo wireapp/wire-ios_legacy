@@ -209,54 +209,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
         return stackView
     }()
-    
-    private let customBackendTitleLabel: UILabel = {
-        let label = UILabel()
-        label.accessibilityIdentifier = "ConfigurationTitle"
-        label.textAlignment = .center
-        label.font = FontSpec(.normal, .bold).font!
-        label.textColor = UIColor.Team.textColor
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
-    
-    private let customBackendSubtitleLabel: UILabel = {
-        let label = UILabel()
-        label.accessibilityIdentifier = "ConfigurationLink"
-        label.font = FontSpec(.small, .semibold).font!
-        label.textColor = UIColor.Team.placeholderColor
-        return label
-    }()
-    
-    private let customBackendSubtitleButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("landing.custom_backend.more_info.button.title".localized.uppercased(), for: .normal)
-        button.accessibilityIdentifier = "ShowMoreButton"
-        button.setTitleColor(UIColor.Team.activeButton, for: .normal)
-        button.titleLabel?.font = FontSpec(.small, .semibold).font!
-        button.setContentHuggingPriority(.required, for: .horizontal)
-        button.setContentCompressionResistancePriority(.required, for: .horizontal)
-        button.addTarget(self,
-                         action: #selector(showCustomBackendLink(_:)),
-                         for: .touchUpInside)
-        return button
-    }()
-    
-    private let customBackendSubtitleStack: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
-        return stackView
-    }()
-    
-    private let customBackendStack: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
-        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return stackView
-    }()
 
     // MARK: - Constraints
     
@@ -341,15 +293,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
         topStack.addArrangedSubview(logoView)
         
-        if SecurityFlags.customBackend.isEnabled {
-            customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleLabel)
-            customBackendSubtitleStack.addArrangedSubview(customBackendSubtitleButton)
-
-            customBackendStack.addArrangedSubview(customBackendTitleLabel)
-            customBackendStack.addArrangedSubview(customBackendSubtitleStack)
-            topStack.addArrangedSubview(customBackendStack)
-        }
-
         view.addSubview(topStack)
 
         contentView.addSubview(messageLabel)
@@ -545,13 +488,14 @@ final class LandingViewController: AuthenticationStepViewController {
     private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging, .qaDemo, .qaDemo2:
-            customBackendStack.isHidden = true
             messageLabel.text = "landing.welcome_message".localized
             subMessageLabel.text = "landing.welcome_submessage".localized
         case .custom(url: let url):
-            customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
-            customBackendSubtitleLabel.text = url.absoluteString.uppercased()
-            customBackendStack.isHidden = false
+            guard SecurityFlags.customBackend.isEnabled else {
+                return
+            }
+            messageLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
+            subMessageLabel.text = url.absoluteString
         }
         updateLogoView()
     }
@@ -589,16 +533,6 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     // MARK: - Button tapped target
-    
-    @objc
-    func showCustomBackendLink(_ sender: AnyObject!) {
-        let backendTitle = BackendEnvironment.shared.title
-        let jsonURL = customBackendSubtitleLabel.text?.lowercased() ?? ""
-        let alert = UIAlertController(title: "landing.custom_backend.more_info.alert.title".localized(args: backendTitle), message: "\(jsonURL)", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
 
     @objc func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedUserRegistration(context: "email")
