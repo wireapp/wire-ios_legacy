@@ -49,10 +49,10 @@ final class Analytics: NSObject {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
         //TODO:
 //        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        selfUser = ZMUser.selfUser()
+        selfUser = SelfUser.current
     }
 
-    var selfUser: SelfUserType?  {
+    var selfUser: UserType?  {
         get {
             return provider?.selfUser
         }

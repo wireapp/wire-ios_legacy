@@ -46,7 +46,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
     }
     
-    var selfUser: SelfUserType? {
+    var selfUser: UserType? {
         didSet {
             updateUserProperties()
         }
@@ -79,12 +79,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     private var shouldTracksEvent: Bool {
-        guard let selfUser = selfUser as? ZMUser,
-            let _ = selfUser.team else {
-                return false
-        }
-
-        return true
+        return selfUser?.isTeamMember == true
     }
     
     /// update user properties after self user changes

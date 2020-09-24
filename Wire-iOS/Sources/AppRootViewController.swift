@@ -288,7 +288,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                     clientViewController.needToShowDataUsagePermissionDialog = true
                 }
 
-                Analytics.shared.selfUser = ZMUser.selfUser()
+                Analytics.shared.selfUser = SelfUser.current
 
                 viewController = clientViewController
             }

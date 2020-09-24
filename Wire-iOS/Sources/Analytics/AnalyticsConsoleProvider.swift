@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSystem
+import WireDataModel
 
 fileprivate let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider : NSObject {
@@ -45,7 +46,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
     }
     
     /// no-op
-    var selfUser: SelfUserType? {
+    var selfUser: UserType? {
         get {
             //no-op
             return nil
