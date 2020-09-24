@@ -168,6 +168,7 @@ public class BiometricsState {
 
 public struct AppLockRules: Decodable {
     public let useBiometricsOrAccountPassword: Bool
+    public let useCustomCodeInsteadOfAccountPassword: Bool
     public let forceAppLock: Bool
     public let appLockTimeout: UInt
     

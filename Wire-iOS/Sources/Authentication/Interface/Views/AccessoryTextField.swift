@@ -30,17 +30,23 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
+protocol AccessoryTextFieldDelegate: class {
+    func buttonPressed(_ sender: UIButton)
+}
+
 final class AccessoryTextField: UITextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)
         case password(isNew: Bool)
+        case passcode(isNew: Bool)
         case phoneNumber
         case unknown
     }
 
     let textFieldValidator: TextFieldValidator
     weak var textFieldValidationDelegate: TextFieldValidationDelegate?
+    weak var accessoryTextFieldDelegate: AccessoryTextFieldDelegate?
 
     // MARK: - UI constants
 
@@ -54,13 +60,13 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             updateLoadingState()
         }
     }
-    
+
     var kind: Kind {
         didSet {
             setupTextFieldProperties()
         }
     }
-    
+
     var overrideButtonIcon: StyleKitIcon? {
         didSet {
             updateButtonIcon()
@@ -78,7 +84,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         }
     }
 
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
+    @objc
+    dynamic var colorSchemeVariant: ColorSchemeVariant = .light {
         didSet {
             applyColorScheme(colorSchemeVariant)
         }
@@ -100,11 +107,20 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
 
     var enableConfirmButton: (() -> Bool)?
 
-    let confirmButton: IconButton = {
-        let iconButton = IconButton(style: .circular, variant: .dark)
-        iconButton.accessibilityIdentifier = "ConfirmButton"
-        iconButton.accessibilityLabel = "general.next".localized
-        iconButton.isEnabled = false
+    lazy var confirmButton: IconButton = {
+        let iconButton: IconButton
+        switch kind {
+        case .passcode:
+            iconButton = IconButton(style: .default, variant: .light)
+            iconButton.accessibilityIdentifier = "RevealButton"
+            iconButton.accessibilityLabel = "Reveal passcode".localized
+            iconButton.isEnabled = true
+        default:
+            iconButton = IconButton(style: .circular, variant: .dark)
+            iconButton.accessibilityIdentifier = "ConfirmButton"
+            iconButton.accessibilityLabel = "general.next".localized
+            iconButton.isEnabled = false
+        }
         return iconButton
     }()
 
@@ -115,7 +131,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         return indicator
     }()
 
-    let accessoryStack: UIStackView = {
+    private let accessoryStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 16
@@ -125,18 +141,24 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }()
 
     let accessoryContainer = UIView()
-
-    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat.AccessoryTextField.horizonalInset, bottom: 0, right: CGFloat.AccessoryTextField.horizonalInset)
     let placeholderInsets: UIEdgeInsets
+
+    let accessoryTrailingInset: CGFloat
 
     convenience override init(frame: CGRect) {
         self.init(kind: .unknown, leftInset: 8)
     }
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
-    ///
-    /// - Parameter kind: the type of text field
-    init(kind: Kind = .unknown, leftInset: CGFloat = 8) {
+    /// - Parameters:
+    ///   - kind: the type of text field
+    ///   - leftInset: placeholder left inset
+    ///   - cornerRadius: optional corner radius override
+    init(kind: Kind = .unknown,
+         leftInset: CGFloat = 8,
+         accessoryTrailingInset: CGFloat = 16,
+         cornerRadius: CGFloat? = nil) {
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
             topInset = 0
@@ -149,6 +171,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         textFieldValidator = TextFieldValidator()
 
         self.kind = kind
+        self.accessoryTrailingInset = accessoryTrailingInset
 
         super.init(frame: .zero)
         self.setupTextFieldProperties()
@@ -167,6 +190,11 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         default:
             break
         }
+
+        if let cornerRadius = cornerRadius {
+            layer.cornerRadius = cornerRadius
+        }
+
         layer.masksToBounds = true
         backgroundColor = UIColor.Team.textfieldColor
 
@@ -176,6 +204,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         applyColorScheme(colorSchemeVariant)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -185,7 +214,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     private func setupTextFieldProperties() {
-        self.returnKeyType = .next
+        returnKeyType = .next
 
         switch kind {
         case .email:
@@ -213,13 +242,27 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         case .unknown:
             keyboardType = .asciiCapable
             textContentType = nil
+        case .passcode(let isNew):
+            keyboardType = .asciiCapable
+            isSecureTextEntry = true
+            accessibilityIdentifier = "PasscodeField"
+            autocapitalizationType = .none
+            returnKeyType = isNew ? .default : .continue
+            if #available(iOS 12, *) {
+                //Hack: disable auto fill passcode
+                textContentType = .oneTimeCode                
+                passwordRules = textFieldValidator.passwordRules
+            } else {
+                textContentType = .init(rawValue: "")
+            }
+            
         }
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         guidanceDot.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
     }
-    
+
     private func updateLoadingState() {
         updateButtonIcon()
         let animationKey = "rotation_animation"
@@ -230,29 +273,38 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             confirmButton.layer.removeAnimation(forKey: animationKey)
         }
     }
-    
+
     private var buttonIcon: StyleKitIcon {
         return isLoading
-        ? .spinner
-        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
+            ? .spinner
+            : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
     }
-    
+
     private var iconSize: StyleKitIcon.Size {
         return isLoading ? .medium : .tiny
     }
-    
+
     private func updateButtonIcon() {
         confirmButton.setIcon(buttonIcon, size: iconSize, for: .normal)
-        
+
         if isLoading {
             confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)
             confirmButton.setBackgroundImageColor(.clear, for: .normal)
             confirmButton.setBackgroundImageColor(.clear, for: .disabled)
         } else {
-            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
-            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-            confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
-            confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
+
+            switch kind {
+            case .passcode:
+                confirmButton.setIconColor(UIColor.Team.textColor, for: .normal)
+                confirmButton.setIconColor(UIColor.Team.textColor, for: .disabled)
+                confirmButton.setBackgroundImageColor(.clear, for: .normal)
+                confirmButton.setBackgroundImageColor(.clear, for: .disabled)
+            default:
+                confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
+                confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
+                confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+                confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
+            }
         }
 
         confirmButton.adjustsImageWhenDisabled = false
@@ -262,8 +314,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         accessoryStack.addArrangedSubview(guidanceDot)
         accessoryStack.addArrangedSubview(confirmButton)
 
-        self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
-        self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
+        addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 
         accessoryStack.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.addSubview(accessoryStack)
@@ -279,8 +331,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
             accessoryStack.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
             accessoryStack.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
             accessoryStack.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: 0),
-            accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -16),
-        ])
+            accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -accessoryTrailingInset)])
     }
 
     // MARK: - custom edge insets
@@ -296,7 +347,8 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         return editingRect.inset(by: textInsets.directionAwareInsets)
     }
 
-    @objc func textFieldDidChange(textField: UITextField) {
+    @objc
+    func textFieldDidChange(textField: UITextField) {
         updateText(input)
     }
 
@@ -312,7 +364,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     private func updateConfirmButton() {
-        if let boundTextField = self.boundTextField {
+        if let boundTextField = boundTextField {
             confirmButton.isEnabled = boundTextField.isInputValid && self.isInputValid
         } else {
             confirmButton.isEnabled = isInputValid
@@ -321,7 +373,9 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
 
     // MARK: - text validation
 
-    @objc func confirmButtonTapped(button: UIButton) {
+    @objc
+    private func confirmButtonTapped(button: UIButton) {
+        accessoryTextFieldDelegate?.buttonPressed(button)
         validateInput()
     }
 
@@ -343,7 +397,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
-                                        .font: AccessoryTextField.placeholderFont]
+                                                        .font: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
 

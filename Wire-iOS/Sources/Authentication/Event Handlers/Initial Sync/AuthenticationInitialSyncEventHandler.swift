@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import WireUtilities
 
 /**
  * Handles the initial sync event.
@@ -38,9 +39,6 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
             return [.hideLoadingView]
         }
 
-        // Check the registration status
-        let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice == true
-
         // Build the list of actions
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
@@ -51,7 +49,14 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
         if let nextStep = nextRegistrationStep {
             actions.append(.transition(nextStep, mode: .reset))
         } else {
-            actions.append(isRegistered ? .completeRegistrationFlow : .completeLoginFlow)
+            // append passcode step if new registered or first time login but passcode is not store.(Upgrade from pervious version)
+            if AppLock.isCustomPasscodeNotSet &&
+               (AppLock.rules.forceAppLock ||
+                AppLock.isActive) {
+                actions.append(.transition(.passcodeSetup, mode: .reset))
+            } else {
+                actions.append(postAction)
+            }
         }
 
         return actions

@@ -54,6 +54,8 @@ enum SettingsPropertyError: Error {
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+    
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping  ResultHandler)
 }
 
 final class SettingsPropertyFactory {
@@ -316,8 +318,14 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        AppLock.isActive = lockApp.boolValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                        self.delegate?.appLockOptionDidChange(self,
+                                                              newValue: lockApp.boolValue,
+                                                              callback: { result in
+                            AppLock.isActive = result
+                        })                        
+
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
         

@@ -18,31 +18,37 @@
 
 import UIKit
 
-class AuthenticationNavigationBar: DefaultNavigationBar {
+protocol TransparentBackgroundNavigationBar {
+    func configureTransparentBackground()
+}
 
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-
-    override func configureBackground() {
+extension TransparentBackgroundNavigationBar where Self: DefaultNavigationBar {
+    func configureTransparentBackground() {
         isTranslucent = true
         setBackgroundImage(UIImage(), for: .default)
         shadowImage = UIImage()
     }
-
 }
 
-extension AuthenticationNavigationBar {
+final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
 
-    static func makeBackButton() -> IconButton {
-        let button = IconButton(style: .default)
-        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, with: .tiny, for: .normal)
-        button.setIconColor(.graphite, for: .normal)
-        button.setIconColor(.graphiteAlpha40, for: .highlighted)
-        button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
-        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        button.accessibilityIdentifier = "back"
-        return button
+    override var colorSchemeVariant: ColorSchemeVariant {
+        return ColorScheme.default.variant
     }
 
+    override func configureBackground() {
+        configureTransparentBackground()
+    }
+}
+
+final class DarkBarItemTransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
+    
+    override var colorSchemeVariant: ColorSchemeVariant {
+        return .light
+    }
+    
+    override func configureBackground() {
+        configureTransparentBackground()
+    }
+    
 }
