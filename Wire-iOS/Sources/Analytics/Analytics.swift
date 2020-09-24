@@ -47,7 +47,7 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
-        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self) //TODO: https://github.com/wireapp/wire-ios/pull/3997/files
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
         setTeam(ZMUser.selfUser().team)
     }
 
@@ -64,8 +64,8 @@ final class Analytics: NSObject {
     }
 
     // MARK: - OTREvents
-    func tagCannotDecryptMessage(withAttributes userInfo: [AnyHashable: Any]?) {
-        //no-op
+    func tagCannotDecryptMessage(withAttributes userInfo: [String: Any]) {
+        tagEvent("e2ee.failed_message_decryption", attributes: userInfo)
     }
 }
 
