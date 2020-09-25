@@ -32,27 +32,44 @@ struct CallInfo {
     let video: Bool
 }
 
+//MARK: - WireCallCenterCallParticipantObserver
+
 extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
         // record the start/end screen share timing, and tag the event when the call ends
 
+        let selfUser = SelfUser.provider?.selfUser as? ZMUser
+        
         if let participant = participants.first(where: {
             return $0.state.videoState == .screenSharing
         }) {
-            screenSharingParticipantID = participant.clientId
-            screenSharingStartTime = Date()
-            
-        } else if participants.contains(where: {
-            return $0.state.videoState == .stopped &&
-                   $0.clientId == screenSharingParticipantID
+            screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
+        } else if let screenSharedParticipant = participants.first(where: {
+            return $0.state.videoState == .stopped && ($0.user != selfUser)
+        }),
+            let screenSharingInfo = screenSharingInfos.first(where: {
+            return $0.participantClientID == screenSharedParticipant.clientId
         }) {
-            screenSharingParticipantID = nil
-            screenSharingEndTime = Date()
+            if let conversationId = conversation.remoteIdentifier,
+               let callInfo = callInfos[conversationId] {
+                analytics.tag(callEvent: .screenSharing(duration: screenSharingInfo.startTime.timeIntervalSinceNow),
+                              in: conversation,
+                              callInfo: callInfo)
+
+                screenSharingInfos.remove(screenSharingInfo)
+            }
+
         }
     }
 }
 
+private let zmLog = ZMSLog(tag: "Analytics")
+
 final class AnalyticsCallingTracker : NSObject {
+    struct ScreenSharingInfo: Hashable {
+        var participantClientID: String
+        var startTime: Date
+    }
     
     private static let conversationIdKey = "conversationId"
     
@@ -60,10 +77,7 @@ final class AnalyticsCallingTracker : NSObject {
     var callInfos : [UUID : CallInfo] = [:]
     var callStateObserverToken : Any?
     var callParticipantObserverToken : Any?
-
-    private var screenSharingParticipantID: String?
-    private var screenSharingStartTime: Date?
-    private var screenSharingEndTime: Date?
+    var screenSharingInfos: Set<ScreenSharingInfo> = []
 
     init(analytics : Analytics) {
         self.analytics = analytics
@@ -71,12 +85,13 @@ final class AnalyticsCallingTracker : NSObject {
         super.init()
         
         guard let userSession = ZMUserSession.shared() else {
-            Log.calling.error("UserSession not available when initializing \(type(of: self))")
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
             return
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UserToggledVideoInCall, object: nil, queue: nil) { [weak self] (note) in
-            if let conversationId = note.userInfo?[AnalyticsCallingTracker.conversationIdKey] as? UUID,  var callInfo = self?.callInfos[conversationId] {
+            if let conversationId = note.userInfo?[AnalyticsCallingTracker.conversationIdKey] as? UUID,
+               var callInfo = self?.callInfos[conversationId] {
                 callInfo.toggledVideo = true
                 self?.callInfos[conversationId] = callInfo
             }
@@ -144,14 +159,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
                 analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
-
-                if let start = screenSharingStartTime {
-                    analytics.tag(callEvent: .screenSharing(duration: (screenSharingEndTime ?? Date()).timeIntervalSince(start)),
-                                  in: conversation,
-                                  callInfo: callInfo)
-                    
-                    screenSharingStartTime = nil
-                }
             }
             callInfos[conversationId] = nil
             

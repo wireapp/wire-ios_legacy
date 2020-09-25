@@ -44,6 +44,15 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
         let convertedDictionary = mockConversation.attributesForConversation.countlyStringValueDictionary
         
-        XCTAssertEqual(convertedDictionary, ["conversation_guests_wireless": "0", "is_allow_guests": "False", "conversation_type": "one_to_one", "conversation_guests_pro": "0", "user_type": "user", "with_service": "False", "conversation_size": "2", "conversation_services": "0", "is_global_ephemeral": "False", "conversation_guests": "0"])
+        XCTAssertEqual(convertedDictionary, ["conversation_guests_wireless": "0",
+                                             "is_allow_guests": "False",
+                                             "conversation_type": "one_to_one",
+                                             "conversation_guests_pro": "0",
+                                             "user_type": "user",
+                                             "with_service": "False",
+                                             "conversation_size": "2",
+                                             "conversation_services": "0",
+                                             "is_global_ephemeral": "False",
+                                             "conversation_guests": "0"])
     }
 }

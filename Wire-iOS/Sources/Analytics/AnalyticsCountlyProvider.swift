@@ -58,7 +58,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyHost
-        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
 
         Countly.sharedInstance().start(with: config)
@@ -80,14 +79,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             return
         }
 
-        var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
-                                             "team_user_type": selfUser.teamRole]
-
-        userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
-
         let teamSize = team.members.count.logRound()
-        userProperties["team_team_size"] = teamSize
-        userProperties["user_contacts"] = teamSize
+
+        let userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
+                                             "team_user_type": selfUser.teamRole,
+                                             "user_id": selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString(),
+                                             "team_team_size": teamSize,
+                                             "user_contacts": teamSize]
 
         let convertedAttributes = userProperties.countlyStringValueDictionary
 
