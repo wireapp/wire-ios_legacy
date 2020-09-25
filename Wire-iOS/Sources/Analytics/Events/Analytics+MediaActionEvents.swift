@@ -26,9 +26,7 @@ extension Analytics {
                                  inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
         attributes["message_action"] = action.attributeValue
-
         attributes.merge(conversation.attributesForConversation, strategy: .preferNew)
-                
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 
