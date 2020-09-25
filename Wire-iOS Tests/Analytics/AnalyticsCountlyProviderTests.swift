@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,18 +17,11 @@
 //
 
 import Foundation
+import XCTest
+@testable import Wire
 
-protocol AnalyticsProvider: class {
-    var isOptedOut: Bool { get set }
-
-    /// Record an event with optional attributes.
-    func tagEvent(_ event: String, attributes: [String: Any])
-
-    /// Set a custom dimension
-    func setSuperProperty(_ name: String, value: Any?)
-
-    /// Force the AnalyticsProvider to process the queued data immediately
-    ///
-    /// - Parameter completion: an optional completion handler for when the flush has completed.
-    func flush(completion: Completion?)
+final class AnalyticsCountlyProviderTests: XCTestCase {
+    func testThatLogRoundedConvertNumberIntoBuckets() {
+        XCTAssertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100].map({$0.logRound()}), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 46, 91])
+    }
 }

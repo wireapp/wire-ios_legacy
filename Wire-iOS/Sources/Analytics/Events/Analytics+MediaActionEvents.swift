@@ -34,21 +34,32 @@ fileprivate extension ZMConversation {
 
 extension Analytics {
 
-    func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
+    func tagMediaActionCompleted(_ action: ConversationMediaAction,
+                                 inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
-        attributes["action"] = action.attributeValue
+        attributes["message_action"] = action.attributeValue
 
         if let typeAttribute = conversation.analyticsTypeString() {
             attributes["with_service"] = conversation.includesServiceUser
             attributes["conversation_type"] = typeAttribute
         }
 
-        attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
+        let participants = conversation.sortedActiveParticipants
         
-        for (key, value) in guestAttributes(in: conversation) {
-            attributes[key] = value
-        }
+        attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
 
+        attributes["conversation_size"] = participants.count.logRound()
+        attributes["conversation_services"] = conversation.sortedServiceUsers.count.logRound()
+        attributes["conversation_guests_wireless"] = participants.filter({
+            $0.isWirelessUser && $0.isGuest(in: conversation)
+        }).count.logRound()
+        
+        attributes["conversation_guests_pro"] = participants.filter({
+            $0.isGuest(in: conversation) && $0.hasTeam
+        }).count.logRound()
+
+        attributes.merge(guestAttributes(in: conversation)) { (_, new) in new }
+        
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 
