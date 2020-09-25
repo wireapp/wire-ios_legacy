@@ -92,10 +92,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             ["team_team_id",
              "team_user_type",
              "team_team_size",
-             "user_contacts"].forEach() {
+             "user_contacts",
+             "user_id"].forEach() {
                 Countly.user().unSet($0)
             }
-                Countly.user().set("user_id", value: (self.selfUser as? ZMUser )?.userId.uuid.zmSHA256Digest().zmHexEncodedString() ?? "")
                 
             Countly.user().save()
             isOptedOut = true
@@ -106,7 +106,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
                                              "team_user_type": selfUser.teamRole]
 
-        userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
+        userProperties["user_id"] = selfUser.userIdHash
 
         let teamSize = team.members.count.logRound()
         userProperties["team_team_size"] = teamSize
@@ -166,5 +166,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     func flush(completion: Completion?) {
         isOptedOut = true
         completion?()
+    }
+}
+
+extension UserType {
+    var userIdHash: String? {
+        get {
+            return (self as? ZMUser)?.userId.uuid.zmSHA256Digest().zmHexEncodedString()
+        }
     }
 }
