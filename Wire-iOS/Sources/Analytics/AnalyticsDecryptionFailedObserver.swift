@@ -37,12 +37,11 @@ final class AnalyticsDecryptionFailedObserver: NSObject {
     @objc
     private func messageCannotBeDecrypted(_ note: Notification?) {
         var trackingInfo: [String : Any] = [:]
-        if let deviceClass = note?.userInfo?["deviceClass"] {
-            trackingInfo["deviceClass"] = deviceClass
-        }
-        
-        if let cause = note?.userInfo?["cause"] {
-            trackingInfo["cause"] = cause
+        ["deviceClass",
+         "cause"].forEach() {
+            if let value = note?.userInfo?[$0] {
+                trackingInfo[$0] = value
+            }
         }
         
         analytics.tagCannotDecryptMessage(withAttributes: trackingInfo, conversation: note?.object as? ZMConversation)
