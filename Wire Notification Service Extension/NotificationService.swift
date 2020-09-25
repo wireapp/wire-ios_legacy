@@ -31,7 +31,7 @@ public class NotificationService: UNNotificationServiceExtension {
     
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         var currentNotificationSession: NotificationSession?
-        guard let accountIdentifier = request.content.userInfo.accountId() else {
+        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier /*request.content.userInfo.accountId()*/ else {
             return
         }
         
@@ -53,6 +53,13 @@ public class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
     
+    private var accountManager: AccountManager? {
+           guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
+           let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+           let account = AccountManager(sharedDirectory: sharedContainerURL)
+           return account
+       }
+    
     //TODO: discuss with product/design what should we display
     public override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
@@ -63,7 +70,7 @@ public class NotificationService: UNNotificationServiceExtension {
     
     private func createNotificationSession(_ payload: UNMutableNotificationContent?) throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-            let accountIdentifier = payload?.userInfo.accountId()
+            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier //payload?.userInfo.accountId()
             else { return nil}
         return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                                         accountIdentifier: accountIdentifier,
