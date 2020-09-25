@@ -45,7 +45,6 @@ final class AnalyticsDecryptionFailedObserver: NSObject {
             trackingInfo["cause"] = cause
         }
         
-        //TODO: conv info? include conv in EncryptionSessionsDirectory.appendFailedToDecryptMessage
-        analytics.tagCannotDecryptMessage(withAttributes: trackingInfo)
+        analytics.tagCannotDecryptMessage(withAttributes: trackingInfo, conversation: note?.object as? ZMConversation)
     }
 }

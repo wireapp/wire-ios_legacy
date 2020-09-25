@@ -64,7 +64,9 @@ final class Analytics: NSObject {
     }
 
     // MARK: - OTREvents
-    func tagCannotDecryptMessage(withAttributes userInfo: [String: Any]) {
+    func tagCannotDecryptMessage(withAttributes userInfo: [String: Any],
+                                 conversation: ZMConversation) {
+        conversation.attributesForConversation //TODO
         tagEvent("e2ee.failed_message_decryption", attributes: userInfo)
     }
 }
