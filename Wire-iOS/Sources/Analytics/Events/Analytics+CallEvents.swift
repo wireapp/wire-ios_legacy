@@ -122,7 +122,7 @@ extension Analytics {
         return ["duration": Int(-establishedDate.timeIntervalSinceNow)]
     }
     
-    private func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {
+    func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {
         
         let attributes: [String : Any] = [
             "conversation_type": conversation.analyticsTypeString() ?? "invalid",
