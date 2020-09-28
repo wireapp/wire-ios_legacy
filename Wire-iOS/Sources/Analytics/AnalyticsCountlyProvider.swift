@@ -86,7 +86,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func updateUserProperties() {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
-            let team = selfUser.team else {
+            let team = selfUser.team,
+            let teamID = team.remoteIdentifier else {
                 
             //clean up
             ["team_team_id",
@@ -103,14 +104,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             return
         }
 
-        var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
-                                             "team_user_type": selfUser.teamRole]
-
-        userProperties["user_id"] = selfUser.userIdHash
-
-        let teamSize = team.members.count.logRound()
-        userProperties["team_team_size"] = teamSize
-        userProperties["user_contacts"] = teamSize
+        let userProperties: [String: Any] = ["team_team_id": teamID,
+                                             "team_user_type": selfUser.teamRole,
+                                             "user_id": "TODO", ///TODO: Account level generated user id for BI purpose
+                                             "team_team_size": team.members.count,
+                                             "user_contacts": team.members.count.logRound()]
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
 
