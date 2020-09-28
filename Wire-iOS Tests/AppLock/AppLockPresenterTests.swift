@@ -64,6 +64,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
         didCallIsAuthenticationNeeded = true
         return _isAuthenticationNeeded
     }
+    var isDimmingScreenWhenInactive: Bool = true
     
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
@@ -310,7 +311,7 @@ final class AppLockPresenterTests: XCTestCase {
 
     func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
         //given
-        AppLock.isActive = true
+        appLockInteractor.isDimmingScreenWhenInactive = true
         //when
         sut.applicationWillResignActive()
         //then
@@ -319,7 +320,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatApplicationWillResignActiveDoesntDimContentsIfAppLockNotActive() {
         //given
-        AppLock.isActive = false
+        appLockInteractor.isDimmingScreenWhenInactive = false
         //when
         sut.applicationWillResignActive()
         //then
@@ -365,7 +366,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatApplicationDidEnterBackgroundDimsContentIfAppLockActive() {
         //given
-        AppLock.isActive = true
+        appLockInteractor.isDimmingScreenWhenInactive = true
         //when
         sut.applicationDidEnterBackground()
         //then
@@ -374,7 +375,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatApplicationDidEnterBackgroundDoesntDimContentsIfAppLockNotActive() {
         //given
-        AppLock.isActive = false
+        appLockInteractor.isDimmingScreenWhenInactive = false
         //when
         sut.applicationDidEnterBackground()
         //then

@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSystem
+import WireDataModel
 
 fileprivate let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider : NSObject {
@@ -44,6 +45,18 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
+    /// no-op
+    var selfUser: UserType? {
+        get {
+            //no-op
+            return nil
+        }
+        
+        set {
+            //no-op
+        }
+    }
+
     private func print(loggingData data: [String: Any]) {
         if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: JSONSerialization.WritingOptions.prettyPrinted),
             let string = String(data: jsonData, encoding: .utf8) {

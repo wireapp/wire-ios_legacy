@@ -17,9 +17,11 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
+    var selfUser: UserType? { get set }
 
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String: Any])
