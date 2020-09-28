@@ -41,12 +41,15 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 
         let selfUser = SelfUser.provider?.selfUser as? ZMUser
         
+        // When the screen sharing starts add a record to screenSharingInfos set
         if let participant = participants.first(where: { $0.state.videoState == .screenSharing }) {
             screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
         } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
                   let screenSharingInfo = screenSharingInfos.first(where: { $0.participantClientID == screenSharedParticipant.clientId }),
                   let conversationId = conversation.remoteIdentifier,
                   let callInfo = callInfos[conversationId] {
+            
+            // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
             analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
                           in: conversation,
                           callInfo: callInfo)
