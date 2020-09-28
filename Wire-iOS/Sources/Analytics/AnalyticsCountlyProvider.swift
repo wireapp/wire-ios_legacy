@@ -16,7 +16,6 @@
 //
 
 import Foundation
-import WireSystem
 import Countly
 import WireSyncEngine
 
@@ -77,6 +76,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     deinit {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
+
 
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
