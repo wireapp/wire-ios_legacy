@@ -52,7 +52,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
         }) {
             if let conversationId = conversation.remoteIdentifier,
                let callInfo = callInfos[conversationId] {
-                analytics.tag(callEvent: .screenSharing(duration: screenSharingInfo.startTime.timeIntervalSinceNow),
+                analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
                               in: conversation,
                               callInfo: callInfo)
 
