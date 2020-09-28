@@ -103,8 +103,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             return
         }
 
-        let teamSize = team.members.count.logRound()
-
         let userProperties: [String: Any] = ["team_team_id": teamID,
                                              "team_user_type": selfUser.teamRole,
                                              "user_id": "TODO", ///TODO: Account level generated user id for BI purpose
