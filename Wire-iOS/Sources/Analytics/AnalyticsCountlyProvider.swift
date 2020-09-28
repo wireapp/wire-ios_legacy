@@ -166,11 +166,3 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         completion?()
     }
 }
-
-extension UserType {
-    var userIdHash: String? {
-        get {
-            return (self as? ZMUser)?.userId.uuid.zmSHA256Digest().zmHexEncodedString()
-        }
-    }
-}
