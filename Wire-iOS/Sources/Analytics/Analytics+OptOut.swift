@@ -42,7 +42,7 @@ extension Analytics {
                 }
             } else {
                 provider = AnalyticsProviderFactory.shared.analyticsProvider()
-                setTeam(ZMUser.selfUser()?.team)
+                selfUser = SelfUser.current
                 tagEvent("settings.opted_in_tracking")
             }
         }

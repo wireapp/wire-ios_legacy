@@ -16,7 +16,6 @@
 //
 
 import Foundation
-import WireSystem
 import Countly
 import WireSyncEngine
 
@@ -32,7 +31,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
-    private var isUserSet: Bool = false
 
     var isOptedOut: Bool {
         get {
@@ -44,6 +42,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                        Countly.sharedInstance().beginSession()
             
             sessionBegun = !isOptedOut
+        }
+    }
+    
+    var selfUser: UserType? {
+        didSet {
+            updateUserProperties()
         }
     }
 
@@ -73,21 +77,38 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    //TODO: call this after switched account
-    func updateUserProperties() {
-        guard let selfUser = SelfUser.provider?.selfUser as? ZMUser,
-              let team = selfUser.team else {
+
+    private var shouldTracksEvent: Bool {
+        return selfUser?.isTeamMember == true
+    }
+    
+    /// update user properties after self user changes
+    private func updateUserProperties() {
+        guard shouldTracksEvent,
+            let selfUser = selfUser as? ZMUser,
+            let team = selfUser.team,
+            let teamID = team.remoteIdentifier else {
+                
+            //clean up
+            ["team_team_id",
+             "team_user_type",
+             "team_team_size",
+             "user_contacts",
+             "user_id"].forEach() {
+                Countly.user().unSet($0)
+            }
+                
+            Countly.user().save()
+            isOptedOut = true
+                
             return
         }
 
-        var userProperties: [String: Any] = ["team_team_id": selfUser.hasTeam,
-                                             "team_user_type": selfUser.teamRole]
-
-        userProperties["user_id"] = selfUser.userId.uuid.zmSHA256Digest().zmHexEncodedString()
-
-        let teamSize = team.members.count.logRound()
-        userProperties["team_team_size"] = teamSize
-        userProperties["user_contacts"] = teamSize
+        let userProperties: [String: Any] = ["team_team_id": teamID,
+                                             "team_user_type": selfUser.teamRole,
+                                             "user_id": "TODO", ///TODO: Account level generated user id for BI purpose
+                                             "team_team_size": team.members.count,
+                                             "user_contacts": team.members.count.logRound()]
 
         let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
 
@@ -126,12 +147,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
-        if !isUserSet {
-            updateUserProperties()
-
-            isUserSet = true
-        }
-
+        guard shouldTracksEvent else { return }
+        
         var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
 
         convertedAttributes["app_name"] = "ios"
