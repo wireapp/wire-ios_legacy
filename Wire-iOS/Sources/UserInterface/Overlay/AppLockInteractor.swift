@@ -21,9 +21,12 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 
+typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface
+
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
+    var isDimmingScreenWhenInactive: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
     func verify(customPasscode: String)
@@ -41,11 +44,11 @@ final class AppLockInteractor {
     // For tests
     var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
-    var _userSession: UserSessionVerifyPasswordInterface?
+    var _userSession: AppLockInteractorUserSession?
     
     // Workaround because accessing `ZMUserSession.shared()` crashes
     // if done at init (AppRootViewController won't be instantianted)
-    private var userSession: UserSessionVerifyPasswordInterface? {
+    private var userSession: AppLockInteractorUserSession? {
         return _userSession ?? ZMUserSession.shared()
     }
     
@@ -64,6 +67,10 @@ extension AppLockInteractor: AppLockInteractorInput {
         return screenLockIsActive || isDatabaseLocked
     }
     
+    var isDimmingScreenWhenInactive: Bool {
+        return AppLock.isActive || userSession?.encryptMessagesAtRest == true
+    }
+    
     func evaluateAuthentication(description: String) {
         appLock.evaluateAuthentication(scenario: authenticationScenario,
                                        description: description.localized) { [weak self] result, context in
@@ -71,7 +78,7 @@ extension AppLockInteractor: AppLockInteractorInput {
                         
             self.dispatchQueue.async {
                 if case .granted = result {
-                    try? ZMUserSession.shared()?.unlockDatabase(with: context)
+                    try? self.userSession?.unlockDatabase(with: context)
                 }
                 
                 self.output?.authenticationEvaluated(with: result)

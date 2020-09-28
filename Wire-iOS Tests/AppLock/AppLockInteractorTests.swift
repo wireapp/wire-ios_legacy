@@ -35,7 +35,19 @@ private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
     }
 }
 
-private final class UserSessionMock: UserSessionVerifyPasswordInterface {
+private final class UserSessionMock: AppLockInteractorUserSession {
+    var encryptMessagesAtRest: Bool = false
+    
+    var isDatabaseLocked: Bool = false
+    
+    func unlockDatabase(with context: LAContext) throws {
+        isDatabaseLocked = false
+    }
+    
+    func registerDatabaseLockedHandler(_ handler: @escaping (Bool) -> Void) -> Any {
+        return "token"
+    }
+    
     var result: VerifyPasswordResult? = .denied
     func verify(password: String, completion: @escaping (VerifyPasswordResult?) -> Void) {
         completion(result)
@@ -75,6 +87,32 @@ final class AppLockInteractorTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
+    
+    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenAppLockIsActive() {
+        //given
+        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
+        
+        //when / then
+        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
+    }
+    
+    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenEncryptionAtRestIsEnabled() {
+        //given
+        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
+        userSessionMock.encryptMessagesAtRest = true
+        
+        //when / then
+        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
+    }
+    
+    func testThatIsDimmingScreenWhenInactiveReturnsFalseWhenAppLockIsInactive() {
+        //given
+        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
+        
+        //when / then
+        XCTAssertFalse(sut.isDimmingScreenWhenInactive)
+    }
+    
     
     func testThatIsAuthenticationNeededReturnsTrueIfNeeded() {
         //given
