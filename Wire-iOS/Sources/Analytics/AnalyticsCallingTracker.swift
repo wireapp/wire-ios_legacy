@@ -150,7 +150,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
             
             guard let userSession = ZMUserSession.shared() else {
-                Log.calling.error("UserSession not available when .established call")
+                zmLog.error("UserSession not available when .established call")
                 return
             }
 
