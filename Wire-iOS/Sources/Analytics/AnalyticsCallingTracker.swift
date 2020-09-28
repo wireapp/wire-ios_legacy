@@ -32,33 +32,26 @@ struct CallInfo {
     let video: Bool
 }
 
-//MARK: - WireCallCenterCallParticipantObserver
+//MARK: - WireCallCenterCallParticipantObserver - tracking share screen
 
 extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
-    func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
+    func callParticipantsDidChange(conversation: ZMConversation,
+                                   participants: [CallParticipant]) {
         // record the start/end screen share timing, and tag the event when the call ends
 
         let selfUser = SelfUser.provider?.selfUser as? ZMUser
         
-        if let participant = participants.first(where: {
-            return $0.state.videoState == .screenSharing
-        }) {
+        if let participant = participants.first(where: { $0.state.videoState == .screenSharing }) {
             screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
-        } else if let screenSharedParticipant = participants.first(where: {
-            return $0.state.videoState == .stopped && ($0.user != selfUser)
-        }),
-            let screenSharingInfo = screenSharingInfos.first(where: {
-            return $0.participantClientID == screenSharedParticipant.clientId
-        }) {
-            if let conversationId = conversation.remoteIdentifier,
-               let callInfo = callInfos[conversationId] {
-                analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
-                              in: conversation,
-                              callInfo: callInfo)
+        } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
+                  let screenSharingInfo = screenSharingInfos.first(where: { $0.participantClientID == screenSharedParticipant.clientId }),
+                  let conversationId = conversation.remoteIdentifier,
+                  let callInfo = callInfos[conversationId] {
+            analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
+                          in: conversation,
+                          callInfo: callInfo)
 
-                screenSharingInfos.remove(screenSharingInfo)
-            }
-
+            screenSharingInfos.remove(screenSharingInfo)
         }
     }
 }
