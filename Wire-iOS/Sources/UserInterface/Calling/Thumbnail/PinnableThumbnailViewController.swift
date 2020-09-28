@@ -22,7 +22,7 @@ final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()
-    private(set) var contentView: UIView?
+    private(set) var contentView: OrientableView?
 
     // MARK: - Dynamics
 
@@ -48,11 +48,9 @@ final class PinnableThumbnailViewController: UIViewController {
         contentView = nil
     }
 
-    func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
+    func setThumbnailContentView(_ contentView: OrientableView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
         thumbnailView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.fitInSuperview()
         self.contentView = contentView
 
         self.thumbnailContentSize = contentSize
@@ -74,6 +72,12 @@ final class PinnableThumbnailViewController: UIViewController {
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         thumbnailView.addGestureRecognizer(panGestureRecognizer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -121,6 +125,12 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailContainerView.bottomAnchor.constraint(equalTo: safeBottomAnchor).isActive = true
     }
 
+    // MARK: - Orientation
+
+    @objc func orientationDidChange() {
+        contentView?.layoutForOrientation()
+    }
+    
     // MARK: - Size
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -162,7 +172,7 @@ final class PinnableThumbnailViewController: UIViewController {
         let size = thumbnailContentSize.withOrientation(UIDevice.current.orientation)
         let position = thumbnailPosition(for: size, parentSize: parentSize)
 
-        let changesBlock = { [thumbnailView, view] in
+        let changesBlock = { [contentView, thumbnailView, view] in
             thumbnailView.frame = CGRect(
                 x: position.x - size.width / 2,
                 y: position.y - size.height / 2,
@@ -171,6 +181,7 @@ final class PinnableThumbnailViewController: UIViewController {
             )
 
             view?.layoutIfNeeded()
+            contentView?.layoutForOrientation()
         }
         
         if animated {
