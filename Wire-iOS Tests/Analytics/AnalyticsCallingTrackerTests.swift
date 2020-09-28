@@ -29,7 +29,11 @@ final class AnalyticsCallingTrackerTests: XCTestCase , CoreDataFixtureTestHelper
     var mockConversation: ZMConversation!
 
     let clientId1: String = "ClientId1"
-    var callParticipant1: CallParticipant!
+    let clientId2: String = "ClientId2"
+    
+    func callParticipant(clientId: String, videoState: VideoState) -> CallParticipant {
+        return CallParticipant(user: otherUser, clientId: clientId2, state: .connected(videoState: videoState, microphoneState: .unmuted))
+    }
 
     override func setUp() {
         super.setUp()
@@ -40,9 +44,6 @@ final class AnalyticsCallingTrackerTests: XCTestCase , CoreDataFixtureTestHelper
 
         analytics = Analytics(optedOut: true)
         sut = AnalyticsCallingTracker(analytics: analytics)
-        
-        
-        callParticipant1 = CallParticipant(user: otherUser, clientId: clientId1, state: .connected(videoState: .screenSharing, microphoneState: .unmuted))
     }
     
     override func tearDown() {
@@ -50,8 +51,7 @@ final class AnalyticsCallingTrackerTests: XCTestCase , CoreDataFixtureTestHelper
         analytics = nil
         coreDataFixture = nil
         mockConversation = nil
-        callParticipant1 = nil
-        
+
         super.tearDown()
     }
 
@@ -61,17 +61,13 @@ final class AnalyticsCallingTrackerTests: XCTestCase , CoreDataFixtureTestHelper
         XCTAssert(sut.screenSharingInfos.isEmpty)
 
         //WHEN
-        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant1])
+        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant(clientId: clientId1, videoState: .screenSharing)])
 
         //THEN
         XCTAssertEqual(sut.screenSharingInfos.count, 1)
 
         //WHEN
-        let clientId2: String = "ClientId2"
-        
-        let callParticipant2 = CallParticipant(user: otherUser, clientId: clientId2, state: .connected(videoState: .screenSharing, microphoneState: .unmuted))
-
-        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant2])
+        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant(clientId: clientId2, videoState: .screenSharing)])
 
         //THEN
         XCTAssertEqual(sut.screenSharingInfos.count, 2)
@@ -82,47 +78,69 @@ final class AnalyticsCallingTrackerTests: XCTestCase , CoreDataFixtureTestHelper
         XCTAssert(sut.screenSharingInfos.isEmpty)
         
         //WHEN
-        participantStartScreenSharing()
-        participantStoppedVideo()
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
         
         //THEN
         XCTAssertEqual(sut.screenSharingInfos.count, 0)
     }
     
-    private func participantStartScreenSharing() {
-        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant1])
-    }
-    
-    private func participantStoppedVideo() {
-        let callParticipantStopped = CallParticipant(user: otherUser, clientId: clientId1, state: .connected(videoState: .stopped, microphoneState: .unmuted))
-        
-        let callInfo = CallInfo(connectingDate: Date(), establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: true)
-        sut.callInfos[mockConversation.remoteIdentifier!] = callInfo
-        
-        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipantStopped])
-
-    }
-
-    func testThatMultipleScreenShareCanBeTagged() {
+    func testThatMultipleScreenShareEventsCanBeTagged() {
         //GIVEN
         XCTAssert(sut.screenSharingInfos.isEmpty)
         
         //WHEN
-        participantStartScreenSharing()
-        participantStoppedVideo()
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
         //start screen sharing again
-        participantStartScreenSharing()
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         
         //THEN
         XCTAssertEqual(sut.screenSharingInfos.count, 1)
 
         //WHEN
-        participantStoppedVideo()
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
         //THEN
         XCTAssertEqual(sut.screenSharingInfos.count, 0)
     }
+
+    func testThatMultipleParticipantsScreenShareEventsCanBeTagged() {
+        //GIVEN
+        XCTAssert(sut.screenSharingInfos.isEmpty)
+        
+        //WHEN
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId2, videoState: .screenSharing))
+        
+        //THEN
+        XCTAssertEqual(sut.screenSharingInfos.count, 2)
+        
+        //WHEN
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
+
+        //THEN
+        XCTAssertEqual(sut.screenSharingInfos.count, 1)
+
+        //WHEN
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId2, videoState: .stopped))
+
+        //THEN
+        XCTAssertEqual(sut.screenSharingInfos.count, 0)
+    }
+
+    private func participantStartScreenSharing(callParticipant: CallParticipant) {
+        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant])
+    }
+    
+    private func participantStoppedVideo(callParticipant: CallParticipant) {
+        //insert an mock callInfo
+        let callInfo = CallInfo(connectingDate: Date(), establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: true)
+        sut.callInfos[mockConversation.remoteIdentifier!] = callInfo
+        
+        sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant])
+        
+    }
+    
 }
-
-
