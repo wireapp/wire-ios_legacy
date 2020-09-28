@@ -48,12 +48,16 @@ final class Analytics: NSObject {
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        setTeam(ZMUser.selfUser().team)
     }
 
-    func setTeam(_ team: Team?) {
-        //no-op
-        //TODO: change id?
+    var selfUser: UserType?  {
+        get {
+            return provider?.selfUser
+        }
+        
+        set {
+            provider?.selfUser = newValue
+        }
     }
 
     func tagEvent(_ event: String,
@@ -66,7 +70,6 @@ final class Analytics: NSObject {
     // MARK: - OTREvents
     func tagCannotDecryptMessage(withAttributes userInfo: [String: Any],
                                  conversation: ZMConversation?) {
-//        conversation.attributesForConversation //TODO
         tagEvent("e2ee.failed_message_decryption", attributes: userInfo)
     }
 }

@@ -27,6 +27,12 @@ import WireCommonComponents
 
 final class AnalyticsTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        let coreDataFixture = CoreDataFixture()
+        SelfUser.provider = coreDataFixture.selfUserProvider
+    }
+
     func testThatItSetsOptOutOnAppCenter() {
         // GIVEN
         // do not create third party Analytics provider, we are just testing AppCenter SDK here

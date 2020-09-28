@@ -219,7 +219,7 @@ extension AppLockPresenter {
     }
     
     @objc func applicationWillResignActive() {
-        if AppLock.isActive {
+        if appLockInteractorInput.isDimmingScreenWhenInactive {
             userInterface?.setContents(dimmed: true)
         }
     }
@@ -228,7 +228,7 @@ extension AppLockPresenter {
         if self.authenticationState == .authenticated {
             AppLock.lastUnlockedDate = Date()
         }
-        if AppLock.isActive {
+        if appLockInteractorInput.isDimmingScreenWhenInactive {
             userInterface?.setContents(dimmed: true)
         }
     }
@@ -242,8 +242,10 @@ extension AppLockPresenter {
     
         appLockInteractorInput.appStateDidTransition(to: appState)
         switch appState {
-        case .authenticated(completedRegistration: _):
-            requireAuthenticationIfNeeded()
+        case .authenticated:
+            if UIApplication.shared.applicationState == .active {
+                requireAuthenticationIfNeeded()
+            }
         default:
             setContents(dimmed: false)
         }
