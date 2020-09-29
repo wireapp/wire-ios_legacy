@@ -225,7 +225,25 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
         case .disableAnalyticsSharing:
-            break //TODO
+            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                if let tracking = self.tracking {
+                    return SettingsPropertyValue(tracking.disableAnalyticsSharing)
+                }
+                else {
+                    return SettingsPropertyValue(false)
+                }
+            }
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+                if var tracking = self.tracking {
+                    switch(value) {
+                    case .number(let number):
+                        tracking.disableAnalyticsSharing = number.boolValue
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+                }
+            }
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .disableCrashSharing:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
