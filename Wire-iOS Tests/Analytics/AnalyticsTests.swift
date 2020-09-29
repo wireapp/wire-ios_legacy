@@ -16,13 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
 @testable import Wire
-import AppCenter
-import AppCenterAnalytics
 import AppCenterCrashes
-import AppCenterDistribute
 import WireCommonComponents
 
 final class AnalyticsTests: XCTestCase {
@@ -37,25 +33,35 @@ final class AnalyticsTests: XCTestCase {
         // GIVEN
         // do not create third party Analytics provider, we are just testing AppCenter SDK here
         AnalyticsProviderFactory.shared.useConsoleAnalytics = true
-        
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = false
-        
+
+        TrackingManager.shared.disableCrashSharing = false
+
         // WHEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = true
-        
+        TrackingManager.shared.disableCrashSharing = true
+
         // THEN
         XCTAssertFalse(MSCrashes.isEnabled())
     }
-    
-    func testThatItSetsOptOutToSharedSettings() {
+
+    func testThatItSetsOptOutCrashReportToSharedSettings() {
         // GIVEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = false
+        TrackingManager.shared.disableCrashSharing = false
         // THEN
-        XCTAssertFalse(ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+        XCTAssertFalse(ExtensionSettings.shared.disableCrashSharing)
         // WHEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+        TrackingManager.shared.disableCrashSharing = true
         // THEN
-        XCTAssertTrue(ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+        XCTAssert(ExtensionSettings.shared.disableCrashSharing)
     }
-    
+
+    func testThatItSetsOptOutAnalyticsToSharedSettings() {
+        // GIVEN
+        TrackingManager.shared.disableAnalyticsSharing = false
+        // THEN
+        XCTAssertFalse(ExtensionSettings.shared.disableAnalyticsSharing)
+        // WHEN
+        TrackingManager.shared.disableAnalyticsSharing = true
+        // THEN
+        XCTAssert(ExtensionSettings.shared.disableAnalyticsSharing)
+    }
 }
