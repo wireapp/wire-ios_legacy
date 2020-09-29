@@ -21,10 +21,9 @@ import WireUtilities
 
 private enum ExtensionSettingsKey: String, CaseIterable {
 
-    case disableCrashSharing = "disableCrashSharing"
-    case disableAnalyticsSharing = "disableAnalyticsSharing"
-
-    case disableLinkPreviews = "disableLinkPreviews"
+    case disableCrashSharing
+    case disableAnalyticsSharing
+    case disableLinkPreviews
 
     private var defaultValue: Any? {
         switch self {
