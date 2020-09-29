@@ -39,11 +39,13 @@ extension ZClientViewController {
         let alertController = UIAlertController(title: "conversation_list.data_usage_permission_alert.title".localized, message: "conversation_list.data_usage_permission_alert.message".localized, preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.disagree".localized, style: .cancel, handler: { (_) in
-            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+            TrackingManager.shared.disableCrashSharing = true
+            TrackingManager.shared.disableAnalyticsSharing = true
         }))
         
         alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.agree".localized, style: .default, handler: { (_) in
-            TrackingManager.shared.disableCrashAndAnalyticsSharing = false
+            TrackingManager.shared.disableCrashSharing = false
+            TrackingManager.shared.disableAnalyticsSharing = false
         }))
         
         return alertController
