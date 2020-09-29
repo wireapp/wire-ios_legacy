@@ -653,6 +653,11 @@ extension SessionManager {
 
 final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
+
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
 }
 
 extension UIApplication {
