@@ -511,7 +511,8 @@ final class LandingViewController: AuthenticationStepViewController {
     
     private func disableTrackingIfNeeded() {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
-            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+            TrackingManager.shared.disableCrashSharing = true
+            TrackingManager.shared.disableAnalyticsSharing = true
         }
     }
 

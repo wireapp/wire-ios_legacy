@@ -26,7 +26,8 @@ import WireSyncEngine
 import WireCommonComponents
 
 protocol TrackingInterface {
-    var disableCrashAndAnalyticsSharing : Bool { get set }
+    var disableCrashSharing : Bool { get set }
+    var disableAnalyticsSharing : Bool { get set }
 }
 
 protocol AVSMediaManagerInterface {
@@ -223,10 +224,12 @@ final class SettingsPropertyFactory {
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
-        case .disableCrashAndAnalyticsSharing:
+        case .disableAnalyticsSharing:
+            break //TODO
+        case .disableCrashSharing:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
-                    return SettingsPropertyValue(tracking.disableCrashAndAnalyticsSharing)
+                    return SettingsPropertyValue(tracking.disableCrashSharing)
                 }
                 else {
                     return SettingsPropertyValue(false)
@@ -236,7 +239,7 @@ final class SettingsPropertyFactory {
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
-                        tracking.disableCrashAndAnalyticsSharing = number.boolValue
+                        tracking.disableCrashSharing = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }

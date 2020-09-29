@@ -26,9 +26,10 @@ private let settingsChangeEventPropertyValue = "new_value"
 
 extension Analytics {
     
+    ///TODO: where trigger this?
     func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
         guard let value = value.value(),
-                propertyName != SettingsPropertyName.disableCrashAndAnalyticsSharing else {
+                propertyName != SettingsPropertyName.disableAnalyticsSharing else {
             return
         }
         let attributes = [settingsChangeEventPropertyName: propertyName,

@@ -211,7 +211,7 @@ class SettingsCellDescriptorFactory {
         developerCellDescriptors.append(showStatistics)
 
         if !Analytics.shared.isOptedOut &&
-            !TrackingManager.shared.disableCrashAndAnalyticsSharing {
+            !TrackingManager.shared.disableAnalyticsSharing {
 
             let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Reset call quality survey", isDestructive: false, selectAction: DebugActions.resetCallQualitySurveyMuteFilter)
             developerCellDescriptors.append(resetSurveyMuteButton)

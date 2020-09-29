@@ -180,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let containsConsoleAnalytics = ProcessInfo.processInfo.arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
         AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.shared = Analytics(optedOut: TrackingManager.shared.disableCrashAndAnalyticsSharing)
+        Analytics.shared = Analytics(optedOut: TrackingManager.shared.disableAnalyticsSharing)
     }
     
     @objc
