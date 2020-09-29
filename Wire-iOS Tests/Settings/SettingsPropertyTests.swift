@@ -46,6 +46,8 @@ final class ZMMockAVSMediaManager: AVSMediaManagerInterface {
 }
 
 final class ZMMockTracking: TrackingInterface {
+    var disableCrashSharing : Bool = false
+    var disableAnalyticsSharing : Bool = false
     var disableCrashAndAnalyticsSharing: Bool = false
 }
 
@@ -156,7 +158,7 @@ final class SettingsPropertyTests: XCTestCase {
         
         let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
-        let property = factory.property(SettingsPropertyName.disableCrashAndAnalyticsSharing)
+        let property = factory.property(SettingsPropertyName.disableCrashSharing)
         // when & then
         try! self.saveAndCheck(property, value: true)
     }

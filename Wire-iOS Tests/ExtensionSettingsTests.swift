@@ -19,7 +19,7 @@
 import XCTest
 import WireCommonComponents
 
-class ExtensionSettingsTests: XCTestCase {
+final class ExtensionSettingsTests: XCTestCase {
 
     var defaults: UserDefaults!
     var settings: ExtensionSettings!
@@ -37,19 +37,23 @@ class ExtensionSettingsTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatItDisablesAnalyticsByDefault() {
-        XCTAssertTrue(settings.disableCrashAndAnalyticsSharing)
+    func testThatItDisablesCrashReportByDefault() {
+        XCTAssert(settings.disableCrashSharing)
+    }
+
+    func testThatItEnablesAnalyticsReportByDefault() { //TODO:
+        XCTAssertFalse(settings.disableAnalyticsSharing)
     }
 
     func testThatItHandlesAnalyticsPreferenceChange() {
-        XCTAssertTrue(settings.disableCrashAndAnalyticsSharing)
+        XCTAssert(settings.disableCrashSharing)
 
-        settings.disableCrashAndAnalyticsSharing = false
-        XCTAssertFalse(settings.disableCrashAndAnalyticsSharing)
+        settings.disableCrashSharing = false
+        XCTAssertFalse(settings.disableCrashSharing)
 
-        settings.disableCrashAndAnalyticsSharing = true
-        XCTAssertTrue(settings.disableCrashAndAnalyticsSharing)
-    }
+        settings.disableCrashSharing = true
+        XCTAssert(settings.disableCrashSharing)
+    }//TODO: ana
 
     func testThatItEnablesLinkPreviewsByDefault() {
         XCTAssertFalse(settings.disableLinkPreviews)
