@@ -33,16 +33,16 @@ final class AnalyticsTests: XCTestCase {
         // GIVEN
         // do not create third party Analytics provider, we are just testing AppCenter SDK here
         AnalyticsProviderFactory.shared.useConsoleAnalytics = true
-        
+
         TrackingManager.shared.disableCrashSharing = false
-        
+
         // WHEN
         TrackingManager.shared.disableCrashSharing = true
-        
+
         // THEN
         XCTAssertFalse(MSCrashes.isEnabled())
     }
-    
+
     func testThatItSetsOptOutCrashReportToSharedSettings() {
         // GIVEN
         TrackingManager.shared.disableCrashSharing = false
@@ -53,7 +53,7 @@ final class AnalyticsTests: XCTestCase {
         // THEN
         XCTAssert(ExtensionSettings.shared.disableCrashSharing)
     }
-    
+
     func testThatItSetsOptOutAnalyticsToSharedSettings() {
         // GIVEN
         TrackingManager.shared.disableAnalyticsSharing = false
