@@ -27,7 +27,7 @@ final class Analytics: NSObject {
     //TODO:
 
     //    private var callingTracker: AnalyticsCallingTracker?
-//    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
+    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
 
     static var shared: Analytics!
 
@@ -47,9 +47,7 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
 //        callingTracker = AnalyticsCallingTracker(analytics: self)
-        //TODO:
-//        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        selfUser = SelfUser.current
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
     }
 
     var selfUser: UserType?  {
@@ -70,8 +68,17 @@ final class Analytics: NSObject {
     }
 
     // MARK: - OTREvents
-    func tagCannotDecryptMessage(withAttributes userInfo: [AnyHashable: Any]?) {
-        //no-op
+    func tagCannotDecryptMessage(withAttributes userInfo: [String: Any],
+                                 conversation: ZMConversation?) {
+        var attributes: [String : Any]
+        if let conversation = conversation {
+            attributes = attributesForConversation(conversation)
+        } else {
+            attributes = [:]
+        }
+            
+        attributes.merge(userInfo, strategy: .preferNew)
+        tagEvent("e2ee.failed_message_decryption", attributes: attributes)
     }
 }
 
