@@ -287,8 +287,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 
                 if case .unauthenticated(_) = appStateController.lastAppState {
                     if SelfUser.current.isTeamMember {
-                      TrackingManager.shared.disableCrashSharing = true
-                      TrackingManager.shared.disableAnalyticsSharing = true
+                        TrackingManager.shared.disableCrashSharing = true
+                        TrackingManager.shared.disableAnalyticsSharing = false
                     } else {
                       clientViewController.needToShowDataUsagePermissionDialog = true
                     }
