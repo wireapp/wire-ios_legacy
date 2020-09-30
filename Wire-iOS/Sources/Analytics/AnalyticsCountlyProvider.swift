@@ -87,7 +87,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let team = selfUser.team,
-            let teamID = team.remoteIdentifier else {
+            let teamID = team.remoteIdentifier,
+            let analyticsIdentifier = selfUser.analyticsIdentifier
+        else {
                 
             //clean up
             ["team_team_id",
@@ -106,7 +108,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         let userProperties: [String: Any] = ["team_team_id": teamID,
                                              "team_user_type": selfUser.teamRole,
-                                             "user_id": "TODO", ///TODO: Account level generated user id for BI purpose
+                                             "user_id": analyticsIdentifier,
                                              "team_team_size": team.members.count,
                                              "user_contacts": team.members.count.logRound()]
 
