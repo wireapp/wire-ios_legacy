@@ -43,19 +43,19 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 
         // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
         if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
-            !screenSharingInfos.contains(where: { $0.participantClientID == participant.clientId }) {
-            screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
+            screenSharingInfos[participant.clientId] == nil {
+            screenSharingInfos[participant.clientId] = Date()
         } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
-                  let screenSharingInfo = screenSharingInfos.first(where: { $0.participantClientID == screenSharedParticipant.clientId }),
+                  let screenSharingDate = screenSharingInfos[screenSharedParticipant.clientId],
                   let conversationId = conversation.remoteIdentifier,
                   let callInfo = callInfos[conversationId] {
 
             // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
-            analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
+            analytics.tag(callEvent: .screenSharing(duration: -screenSharingDate.timeIntervalSinceNow),
                           in: conversation,
                           callInfo: callInfo)
 
-            screenSharingInfos.remove(screenSharingInfo)
+            screenSharingInfos[screenSharedParticipant.clientId] = nil
         }
     }
 }
@@ -63,10 +63,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCallingTracker: NSObject {
-    struct ScreenSharingInfo: Hashable {
-        var participantClientID: String
-        var startTime: Date
-    }
 
     private static let conversationIdKey = "conversationId"
 
@@ -74,7 +70,7 @@ final class AnalyticsCallingTracker: NSObject {
     var callInfos: [UUID: CallInfo] = [:]
     var callStateObserverToken: Any?
     var callParticipantObserverToken: Any?
-    var screenSharingInfos: Set<ScreenSharingInfo> = []
+    var screenSharingInfos: [String: Date] = [:]
 
     init(analytics: Analytics) {
         self.analytics = analytics
