@@ -61,7 +61,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
-        config.host = countlyHost
+        config.host = "https://" + countlyHost
         config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
 
