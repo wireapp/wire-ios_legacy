@@ -285,13 +285,13 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
                 clientViewController.needToShowDataUsagePermissionDialog = false
                 
-                if case .unauthenticated(_) = appStateController.lastAppState,
-                    SelfUser.current.isTeamMember {
-                    TrackingManager.shared.disableCrashSharing = false
-                    TrackingManager.shared.disableAnalyticsSharing = false
-                } else if case .unauthenticated(_) = appStateController.lastAppState,
-                    !SelfUser.current.isTeamMember {
-                    clientViewController.needToShowDataUsagePermissionDialog = true
+                if case .unauthenticated(_) = appStateController.lastAppState {
+                    if SelfUser.current.isTeamMember {
+                      TrackingManager.shared.disableCrashSharing = true
+                      TrackingManager.shared.disableAnalyticsSharing = true
+                    } else {
+                      clientViewController.needToShowDataUsagePermissionDialog = true
+                    }
                 }
 
                 Analytics.shared.selfUser = SelfUser.current
