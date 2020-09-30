@@ -136,4 +136,15 @@ extension Analytics {
         }
         return ["duration": Int(-establishedDate.timeIntervalSinceNow)]
     }
+    
+    func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {
+        
+        let attributes: [String : Any] = [
+            "conversation_type": conversation.analyticsTypeString() ?? "invalid",
+            "with_service": conversation.includesServiceUser ? true : false,
+            "is_allow_guests": conversation.accessMode == ConversationAccessMode.allowGuests ? true : false
+        ]
+        
+        return attributes.updated(other: guestAttributes(in: conversation))
+    }    
 }
