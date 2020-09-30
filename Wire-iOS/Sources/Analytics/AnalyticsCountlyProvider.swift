@@ -36,15 +36,15 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         get {
             return !sessionBegun
         }
-        
+
         set {
             newValue ? Countly.sharedInstance().endSession() :
                        Countly.sharedInstance().beginSession()
-            
+
             sessionBegun = !isOptedOut
         }
     }
-    
+
     var selfUser: UserType? {
         didSet {
             updateUserProperties()
@@ -76,11 +76,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
     }
-    
+
     /// update user properties after self user changes
     private func updateUserProperties() {
         guard shouldTracksEvent,
@@ -89,19 +88,19 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             let teamID = team.remoteIdentifier,
             let analyticsIdentifier = selfUser.analyticsIdentifier
         else {
-                
+
             //clean up
             ["team_team_id",
              "team_user_type",
              "team_team_size",
              "user_contacts",
-             "user_id"].forEach() {
+             "user_id"].forEach {
                 Countly.user().unSet($0)
             }
-                
+
             Countly.user().save()
             isOptedOut = true
-                
+
             return
         }
 
@@ -123,7 +122,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
         guard shouldTracksEvent else { return }
-        
+
         var convertedAttributes = attributes.countlyStringValueDictionary
 
         convertedAttributes["app_name"] = "ios"
@@ -143,12 +142,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    
+
     private func countlyValue(rawValue: Any) -> String {
         if let boolValue = rawValue as? Bool {
             return boolValue ? "True" : "False"
         }
-        
+
         if let teamRole = rawValue as? TeamRole {
             switch teamRole {
             case .partner:
@@ -159,12 +158,12 @@ extension Dictionary where Key == String, Value == Any {
                 return "wireless"
             }
         }
-        
+
         return "\(rawValue)"
     }
 
     var countlyStringValueDictionary: [String: String] {
-        let convertedAttributes : [String: String] = Dictionary<String, String>(uniqueKeysWithValues:
+        let convertedAttributes: [String: String] = [String: String](uniqueKeysWithValues:
             map { key, value in (key, countlyValue(rawValue: value)) })
 
         return convertedAttributes

@@ -50,11 +50,11 @@ final class Analytics: NSObject {
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
     }
 
-    var selfUser: UserType?  {
+    var selfUser: UserType? {
         get {
             return provider?.selfUser
         }
-        
+
         set {
             provider?.selfUser = newValue
         }
@@ -70,8 +70,8 @@ final class Analytics: NSObject {
     // MARK: - OTREvents
     func tagCannotDecryptMessage(withAttributes userInfo: [String: Any],
                                  conversation: ZMConversation?) {
-        var attributes: [String : Any] = conversation?.attributesForConversation ?? [:]
-            
+        var attributes: [String: Any] = conversation?.attributesForConversation ?? [:]
+
         attributes.merge(userInfo, strategy: .preferNew)
         tagEvent("e2ee.failed_message_decryption", attributes: attributes)
     }

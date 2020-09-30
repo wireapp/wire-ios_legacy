@@ -32,7 +32,7 @@ struct CallInfo {
     let video: Bool
 }
 
-//MARK: - WireCallCenterCallParticipantObserver - tracking share screen
+// MARK: - WireCallCenterCallParticipantObserver - tracking share screen
 
 extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation,
@@ -40,7 +40,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
         // record the start/end screen share timing, and tag the event when the call ends
 
         let selfUser = SelfUser.provider?.selfUser as? ZMUser
-        
+
         // When the screen sharing starts add a record to screenSharingInfos set
         if let participant = participants.first(where: { $0.state.videoState == .screenSharing }) {
             screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
@@ -48,7 +48,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
                   let screenSharingInfo = screenSharingInfos.first(where: { $0.participantClientID == screenSharedParticipant.clientId }),
                   let conversationId = conversation.remoteIdentifier,
                   let callInfo = callInfos[conversationId] {
-            
+
             // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
             analytics.tag(callEvent: .screenSharing(duration: -screenSharingInfo.startTime.timeIntervalSinceNow),
                           in: conversation,
@@ -61,30 +61,30 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-final class AnalyticsCallingTracker : NSObject {
+final class AnalyticsCallingTracker: NSObject {
     struct ScreenSharingInfo: Hashable {
         var participantClientID: String
         var startTime: Date
     }
-    
+
     private static let conversationIdKey = "conversationId"
-    
-    let analytics : Analytics
-    var callInfos : [UUID : CallInfo] = [:]
-    var callStateObserverToken : Any?
-    var callParticipantObserverToken : Any?
+
+    let analytics: Analytics
+    var callInfos: [UUID: CallInfo] = [:]
+    var callStateObserverToken: Any?
+    var callParticipantObserverToken: Any?
     var screenSharingInfos: Set<ScreenSharingInfo> = []
 
-    init(analytics : Analytics) {
+    init(analytics: Analytics) {
         self.analytics = analytics
-        
+
         super.init()
-        
+
         guard let userSession = ZMUserSession.shared() else {
             zmLog.error("UserSession not available when initializing \(type(of: self))")
             return
         }
-        
+
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UserToggledVideoInCall, object: nil, queue: nil) { [weak self] (note) in
             if let conversationId = note.userInfo?[AnalyticsCallingTracker.conversationIdKey] as? UUID,
                var callInfo = self?.callInfos[conversationId] {
@@ -92,10 +92,10 @@ final class AnalyticsCallingTracker : NSObject {
                 self?.callInfos[conversationId] = callInfo
             }
         }
-        
+
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
-    
+
     static func userToggledVideo(in voiceChannel: VoiceChannel) {
         if let conversationId = voiceChannel.conversation?.remoteIdentifier {
             NotificationCenter.default.post(name: .UserToggledVideoInCall, object: nil, userInfo: [conversationIdKey: conversationId])
@@ -103,18 +103,18 @@ final class AnalyticsCallingTracker : NSObject {
     }
 }
 
-//MARK: - WireCallCenterCallStateObserver
+// MARK: - WireCallCenterCallStateObserver
 
 extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
-    
+
     func callCenterDidChange(callState: CallState,
                              conversation: ZMConversation,
                              caller: UserType,
                              timestamp: Date?,
                              previousCallState: CallState?) {
-        
+
         let conversationId = conversation.remoteIdentifier!
-        
+
         switch callState {
         case .outgoing:
             let video = conversation.voiceChannel?.isVideoCall ?? false
@@ -137,14 +137,14 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             if var callInfo = callInfos[conversationId] {
                 defer { callInfos[conversationId] = callInfo }
                 callInfo.maximumCallParticipants = max(callInfo.maximumCallParticipants, (conversation.voiceChannel?.participants.count ?? 0) + 1)
-                
+
                 // .established is called every time a participant joins the call
                 guard callInfo.establishedDate == nil else { return }
-                
+
                 callInfo.establishedDate = Date()
                 analytics.tag(callEvent: .established, in: conversation, callInfo: callInfo)
             }
-            
+
             guard let userSession = ZMUserSession.shared() else {
                 zmLog.error("UserSession not available when .established call")
                 return
@@ -157,32 +157,32 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                 analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
             }
             callInfos[conversationId] = nil
-            
+
             if case .inputOutputError = reason {
                 presentIOErrorAlertIfAllowed()
             }
-            
+
             callParticipantObserverToken = nil
-            
+
         default:
             break
         }
-        
+
     }
-    
+
     func presentIOErrorAlertIfAllowed() {
         guard Bundle.developerModeEnabled else { return }
-        
+
         let alert = UIAlertController(title: "Calling Error", message: "AVS I/O error", alertAction: .ok(style: .cancel))
         alert.presentTopmost()
 
     }
-    
+
 }
 
 private extension CallClosedReason {
-    
-    var analyticsValue : String {
+
+    var analyticsValue: String {
         switch self {
         case .canceled:
             return "canceled"
@@ -206,8 +206,8 @@ private extension CallClosedReason {
             return "rejected_elsewhere"
         case .outdatedClient:
             return "outdated_client"
-            
+
         }
     }
-    
+
 }
