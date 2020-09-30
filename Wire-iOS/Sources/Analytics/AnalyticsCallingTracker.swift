@@ -41,8 +41,9 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 
         let selfUser = SelfUser.provider?.selfUser as? ZMUser
 
-        // When the screen sharing starts add a record to screenSharingInfos set
-        if let participant = participants.first(where: { $0.state.videoState == .screenSharing }) {
+        // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
+        if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
+            !screenSharingInfos.contains(where: { $0.participantClientID == participant.clientId }) {
             screenSharingInfos.insert(ScreenSharingInfo(participantClientID: participant.clientId, startTime: Date()))
         } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
                   let screenSharingInfo = screenSharingInfos.first(where: { $0.participantClientID == screenSharedParticipant.clientId }),

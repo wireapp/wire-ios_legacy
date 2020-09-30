@@ -30,7 +30,7 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
     let clientId2: String = "ClientId2"
 
     func callParticipant(clientId: String, videoState: VideoState) -> CallParticipant {
-        return CallParticipant(user: otherUser, clientId: clientId2, state: .connected(videoState: videoState, microphoneState: .unmuted))
+        return CallParticipant(user: otherUser, clientId: clientId, state: .connected(videoState: videoState, microphoneState: .unmuted))
     }
 
     override func setUp() {
@@ -127,6 +127,24 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
         XCTAssertEqual(sut.screenSharingInfos.count, 0)
     }
 
+    func testThatMultipleScreenShareEventsWouldNotBeTagged() {
+        //GIVEN
+        XCTAssert(sut.screenSharingInfos.isEmpty)
+        
+        //WHEN
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
+        participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
+        
+        //THEN
+        XCTAssertEqual(sut.screenSharingInfos.count, 1)
+        
+        //WHEN
+        participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
+        
+        //THEN
+        XCTAssertEqual(sut.screenSharingInfos.count, 0)        
+    }
+    
     private func participantStartScreenSharing(callParticipant: CallParticipant) {
         sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant])
     }
