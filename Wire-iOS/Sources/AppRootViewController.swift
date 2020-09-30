@@ -282,9 +282,15 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                                                                  selfUser: ZMUser.selfUser())
                 clientViewController.isComingFromRegistration = completedRegistration
 
-                /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+                /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
                 clientViewController.needToShowDataUsagePermissionDialog = false
-                if case .unauthenticated(_) = appStateController.lastAppState {
+                
+                if case .unauthenticated(_) = appStateController.lastAppState,
+                    SelfUser.current.isTeamMember {
+                    TrackingManager.shared.disableCrashSharing = false
+                    TrackingManager.shared.disableAnalyticsSharing = false
+                } else if case .unauthenticated(_) = appStateController.lastAppState,
+                    !SelfUser.current.isTeamMember {
                     clientViewController.needToShowDataUsagePermissionDialog = true
                 }
 
