@@ -32,34 +32,6 @@ struct CallInfo {
     let video: Bool
 }
 
-// MARK: - WireCallCenterCallParticipantObserver - tracking share screen
-
-extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
-    func callParticipantsDidChange(conversation: ZMConversation,
-                                   participants: [CallParticipant]) {
-        // record the start/end screen share timing, and tag the event when the call ends
-
-        let selfUser = SelfUser.provider?.selfUser as? ZMUser
-
-        // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
-        if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
-            screenSharingInfos[participant.clientId] == nil {
-            screenSharingInfos[participant.clientId] = Date()
-        } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
-                  let screenSharingDate = screenSharingInfos[screenSharedParticipant.clientId],
-                  let conversationId = conversation.remoteIdentifier,
-                  let callInfo = callInfos[conversationId] {
-
-            // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
-            analytics.tag(callEvent: .screenSharing(duration: -screenSharingDate.timeIntervalSinceNow),
-                          in: conversation,
-                          callInfo: callInfo)
-
-            screenSharingInfos[screenSharedParticipant.clientId] = nil
-        }
-    }
-}
-
 private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCallingTracker: NSObject {
@@ -70,7 +42,7 @@ final class AnalyticsCallingTracker: NSObject {
     var callInfos: [UUID: CallInfo] = [:]
     var callStateObserverToken: Any?
     var callParticipantObserverToken: Any?
-    var screenSharingInfos: [String: Date] = [:]
+    var screenSharingStartTimes: [String: Date] = [:]
 
     init(analytics: Analytics) {
         self.analytics = analytics
@@ -177,8 +149,36 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
 
 }
 
-private extension CallClosedReason {
+// MARK: - WireCallCenterCallParticipantObserver - tracking share screen
 
+extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
+    func callParticipantsDidChange(conversation: ZMConversation,
+                                   participants: [CallParticipant]) {
+        // record the start/end screen share timing, and tag the event when the call ends
+        
+        let selfUser = SelfUser.provider?.selfUser as? ZMUser
+        
+        // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
+        if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
+            screenSharingStartTimes[participant.clientId] == nil {
+            screenSharingStartTimes[participant.clientId] = Date()
+        } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user != selfUser) }),
+            let screenSharingDate = screenSharingStartTimes[screenSharedParticipant.clientId],
+            let conversationId = conversation.remoteIdentifier,
+            let callInfo = callInfos[conversationId] {
+            
+            // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
+            analytics.tag(callEvent: .screenSharing(duration: -screenSharingDate.timeIntervalSinceNow),
+                          in: conversation,
+                          callInfo: callInfo)
+            
+            screenSharingStartTimes[screenSharedParticipant.clientId] = nil
+        }
+    }
+}
+
+private extension CallClosedReason {
+    
     var analyticsValue: String {
         switch self {
         case .canceled:
@@ -203,8 +203,7 @@ private extension CallClosedReason {
             return "rejected_elsewhere"
         case .outdatedClient:
             return "outdated_client"
-
+            
         }
     }
-
 }
