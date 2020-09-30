@@ -125,7 +125,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
     
     private let loginButton: Button = {
-        let button = Button(style: .full, variant: .light)
+        let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -149,7 +149,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
     
     private let loginWithEmailButton: Button = {
-        let button = Button(style: .full, variant: .light)
+        let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -160,7 +160,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
     
     private let loginWithSSOButton: Button = {
-        let button = Button(style: .empty, variant: .light)
+        let button = Button(style: .empty, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -511,7 +511,8 @@ final class LandingViewController: AuthenticationStepViewController {
     
     private func disableTrackingIfNeeded() {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
-            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+            TrackingManager.shared.disableCrashSharing = true
+            TrackingManager.shared.disableAnalyticsSharing = true
         }
     }
 

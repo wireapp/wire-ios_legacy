@@ -21,15 +21,20 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
+class OrientableViewMock: OrientableView {
+    func layoutForOrientation() {}
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation) {}
+}
+
 class GridViewTests: XCTestCase {
 
     var sut: GridView!
-    var tiles = [UIView]()
+    var tiles = [OrientableView]()
 
     let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
 
-    lazy var views: [UIView] = colors.map {
-        let view = UIView(frame: frame)
+    lazy var views: [OrientableView] = colors.map {
+        let view = OrientableViewMock(frame: frame)
         view.backgroundColor = $0
         return view
     }
