@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 
 extension Analytics {
-    
+
     /// Opt the user out of sending analytics data
     var isOptedOut: Bool {
         get {
@@ -36,7 +36,7 @@ extension Analytics {
             if newValue {
                 tagEvent("settings.opted_out_tracking")
 
-                provider?.flush() {
+                provider?.flush {
                     self.provider?.isOptedOut = newValue
                     self.provider = nil
                 }

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,7 +20,7 @@ import WireDataModel
 
 final class AnalyticsDecryptionFailedObserver: NSObject {
     private let analytics: Analytics
-    
+
     init(analytics: Analytics) {
         self.analytics = analytics
 
@@ -33,17 +32,17 @@ final class AnalyticsDecryptionFailedObserver: NSObject {
             name: ZMConversation.failedToDecryptMessageNotificationName,
             object: nil)
     }
-    
+
     @objc
     private func messageCannotBeDecrypted(_ note: Notification?) {
-        var trackingInfo: [String : Any] = [:]
+        var trackingInfo: [String: Any] = [:]
         ["deviceClass",
-         "cause"].forEach() {
+         "cause"].forEach {
             if let value = note?.userInfo?[$0] {
                 trackingInfo[$0] = value
             }
         }
-        
+
         analytics.tagCannotDecryptMessage(withAttributes: trackingInfo, conversation: note?.object as? ZMConversation)
     }
 }

@@ -16,21 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import WireDataModel
 import WireSyncEngine
 
 let conversationMediaCompleteActionEventName = "contributed"
-
-fileprivate extension ZMConversation {
-    var hasSyncedTimeout: Bool {
-        if case .synced(_)? = self.messageDestructionTimeout {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-}
 
 extension Analytics {
 
@@ -38,28 +26,7 @@ extension Analytics {
                                  inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
         attributes["message_action"] = action.attributeValue
-
-        if let typeAttribute = conversation.analyticsTypeString() {
-            attributes["with_service"] = conversation.includesServiceUser
-            attributes["conversation_type"] = typeAttribute
-        }
-
-        let participants = conversation.sortedActiveParticipants
-        
-        attributes["is_global_ephemeral"] = conversation.hasSyncedTimeout
-
-        attributes["conversation_size"] = participants.count.logRound()
-        attributes["conversation_services"] = conversation.sortedServiceUsers.count.logRound()
-        attributes["conversation_guests_wireless"] = participants.filter({
-            $0.isWirelessUser && $0.isGuest(in: conversation)
-        }).count.logRound()
-        
-        attributes["conversation_guests_pro"] = participants.filter({
-            $0.isGuest(in: conversation) && $0.hasTeam
-        }).count.logRound()
-
-        attributes.merge(guestAttributes(in: conversation)) { (_, new) in new }
-        
+        attributes.merge(conversation.attributesForConversation, strategy: .preferNew)
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 
