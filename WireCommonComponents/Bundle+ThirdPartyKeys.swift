@@ -18,8 +18,7 @@
 
 import Foundation
 
-public extension Bundle {
-    
+public extension Bundle {    
     //MARK: - AppCenter
     static var appCenterAppId: String? {
         guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
