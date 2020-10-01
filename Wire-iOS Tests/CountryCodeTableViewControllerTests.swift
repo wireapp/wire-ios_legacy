@@ -19,22 +19,32 @@
 import XCTest
 @testable import Wire
 
-final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
-    
+final class CountryCodeTableViewControllerTests: XCTestCase {
+
     var sut: CountryCodeTableViewController!
-    
+
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
         sut = CountryCodeTableViewController()
-        sut.viewDidLoad()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForWirestanAppearInFirstRow(){
-        verify(view: sut.view)
+    // MARK: - logic
+    func testForSearchForCountryE164CodeReturnsResult() {
+        // GIVEN & WHEN
+        let filteredResult = sut.filter(searchText: "49") as? [Country]
+
+        //THEN
+        XCTAssertEqual(filteredResult?.first?.displayName, "Germany")
+    }
+
+    // MARK: - snapshot
+    func testForWirestanAppearInFirstRow() {
+        verify(matching: sut.wrapInNavigationController())
     }
 }

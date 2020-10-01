@@ -20,19 +20,16 @@ import Foundation
 import UIKit
 
 extension UINavigationController {
-    
+
     func closeItem() -> UIBarButtonItem {
-        let item = UIBarButtonItem(icon: .cross, target: self, action: #selector(closeTapped))
-        item.accessibilityIdentifier = "close"
-        item.accessibilityLabel = "general.close".localized
+        let item = UIBarButtonItem.createCloseItem()
+        item.target = self
+        item.action = #selector(closeTapped)
         return item
     }
-    
+
     @objc
     private func closeTapped() {
-        weak var presentingVC = presentingViewController
-        dismiss(animated: true) {
-            presentingVC?.setNeedsStatusBarAppearanceUpdate()
-        }
+        dismiss(animated: true)
     }
 }

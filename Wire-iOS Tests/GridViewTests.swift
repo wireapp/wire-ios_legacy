@@ -17,101 +17,122 @@
 //
 
 import Foundation
+import SnapshotTesting
+import XCTest
 @testable import Wire
 
-class GridViewTests: ZMSnapshotTestCase {
-    
+class OrientableViewMock: OrientableView {
+    func layoutForOrientation() {}
+    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation) {}
+}
+
+class GridViewTests: XCTestCase {
+
     var sut: GridView!
-    
-    var view1: UIView!
-    var view2: UIView!
-    var view3: UIView!
-    var view4: UIView!
-    
+    var tiles = [OrientableView]()
+
+    let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
+
+    lazy var views: [OrientableView] = colors.map {
+        let view = OrientableViewMock(frame: frame)
+        view.backgroundColor = $0
+        return view
+    }
+
+    let colors: [UIColor] = [
+        .red,
+        .blue,
+        .cyan,
+        .brown,
+        .orange,
+        .green,
+        .yellow,
+        .magenta,
+        .purple,
+        .systemPink,
+        .systemTeal,
+        .gray
+    ]
+
     override func setUp() {
         super.setUp()
-
-        view1 = UIView()
-        view1.backgroundColor = .red
-        view2 = UIView()
-        view2.backgroundColor = .blue
-        view3 = UIView()
-        view3.backgroundColor = .green
-        view4 = UIView()
-        view4.backgroundColor = .yellow
-        
         sut = GridView()
-        snapshotBackgroundColor = .darkGray
+        sut.frame = frame
+        sut.dataSource = self
+        tiles.removeAll()
     }
-    
+
     override func tearDown() {
         sut = nil
-        view1 = nil
-        view2 = nil
-        view3 = nil
-        view4 = nil
         super.tearDown()
     }
-    
+
+    func testGrid(withAmount amount: Int,
+                  file: StaticString = #file,
+                  testName: String = #function,
+                  line: UInt = #line) {
+        // Given
+        tiles = Array(views.prefix(amount))
+        sut.reloadData()
+
+        // Then
+        verify(matching: sut, file: file, testName: testName, line: line)
+    }
+
+    // MARK: - Tests
+
     func testOneView() {
-        // Given
-        sut.append(view: view1)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 1)
     }
-    
+
     func testTwoViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 2)
     }
-    
+
     func testThreeViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 3)
     }
-    
+
     func testFourViews() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.append(view: view4)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+        testGrid(withAmount: 4)
     }
-    
-    func testThreeViewsAfterRemovingTopView() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.append(view: view4)
-        sut.remove(view: view1)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+
+    func testSixViews() {
+        testGrid(withAmount: 6)
     }
-    
-    func testTwoViewsAfterRemovingBottomView() {
-        // Given
-        sut.append(view: view1)
-        sut.append(view: view2)
-        sut.append(view: view3)
-        sut.remove(view: view2)
-        
-        // Then
-        verifyInIPhoneSize(view: sut)
+
+    func testEightViews() {
+        testGrid(withAmount: 8)
     }
-    
+
+    func testTenViews() {
+        testGrid(withAmount: 10)
+    }
+
+    func testTwelveViews() {
+        testGrid(withAmount: 12)
+    }
+
+}
+
+
+extension GridViewTests: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tiles.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCell.reuseIdentifier, for: indexPath) as? GridCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.add(streamView: tiles[indexPath.row])
+        return cell
+    }
+
 }

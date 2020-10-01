@@ -26,8 +26,39 @@ extension Float {
     }
 }
 
+extension StyleKitIcon.Size {
+    enum CreatePasscode {
+        static let iconSize: StyleKitIcon.Size = .custom(11)
+        static let errorIconSize: StyleKitIcon.Size = .custom(13)
+    }
+}
+
 extension CGFloat {
-    
+    enum iPhone4Inch {
+        static let width: CGFloat = 320
+        static let height: CGFloat = 568
+    }
+
+    enum iPhone4_7Inch {
+        static let width: CGFloat = 375
+        static let height: CGFloat = 667
+    }
+
+    enum WipeCompletion {
+        static let buttonHeight: CGFloat = 48
+    }
+
+    enum PasscodeUnlock {
+        static let textFieldHeight: CGFloat = 40
+        static let buttonHeight: CGFloat = 40
+        static let buttonPadding: CGFloat = 24
+        static let textFieldPadding: CGFloat = 19
+    }
+
+    enum AccessoryTextField {
+        static let horizonalInset: CGFloat = 16
+    }
+
     enum SpinnerButton {
         static let contentInset: CGFloat = 16
         static let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue

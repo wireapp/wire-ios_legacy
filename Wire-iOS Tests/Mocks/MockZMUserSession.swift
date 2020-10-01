@@ -40,4 +40,6 @@ final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
     }
 
     var isNotificationContentHidden: Bool = false
+    
+    var encryptMessagesAtRest: Bool = false
 }

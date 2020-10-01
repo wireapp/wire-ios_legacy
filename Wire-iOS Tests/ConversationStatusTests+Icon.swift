@@ -42,10 +42,10 @@ class ConversationStatusTests_Icon: CoreDataSnapshotTestCase {
 
         switch messageType {
         case .text:
-            (conversation.append(text: "test") as! ZMMessage).sender = self.otherUser
+            (try! conversation.appendText(content: "test") as! ZMMessage).sender = self.otherUser
         case .mention:
             let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-            (conversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+            (try! conversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
             conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         }
         

@@ -24,7 +24,7 @@ final class GroupConversationsSectionController: SearchSectionController {
     
     var groupConversations: [ZMConversation] = []
     var title: String = ""
-    weak var delegate: SearchSectionControllerDelegate? = nil
+    weak var delegate: SearchSectionControllerDelegate?
     
     override var isHidden: Bool {
         return groupConversations.isEmpty

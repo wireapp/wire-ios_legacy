@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,19 +33,19 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     let callWindow: CallWindow
     let overlayWindow: NotificationWindow
 
-    public fileprivate(set) var sessionManager: SessionManager?
-    public fileprivate(set) var quickActionsManager: QuickActionsManager?
-    
+    fileprivate(set) var sessionManager: SessionManager?
+    fileprivate(set) var quickActionsManager: QuickActionsManager?
+
     fileprivate var sessionManagerCreatedSessionObserverToken: Any?
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
-    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    fileprivate var soundEventListeners = [UUID: SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController? {
+    fileprivate(set) var visibleViewController: UIViewController? {
         didSet {
             visibleViewController?.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    
+
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []
@@ -79,7 +79,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         mainWindow.frame.size = size
@@ -156,14 +156,14 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.frame = mainWindow.bounds
     }
 
     
-    public func launch(with launchOptions: LaunchOptions) {
+    func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
@@ -172,6 +172,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
+
+        AutomationHelper.sharedHelper.overrideConferenceCallingSettingIfNeeded()
 
         SessionManager.clearPreviousBackups()
 
@@ -193,7 +195,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
+            sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+                ? true
+                : Settings.shared[.callingConstantBitRate] ?? false
+            sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
@@ -268,7 +273,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
             viewController = navigationController
 
-        case .authenticated(completedRegistration: let completedRegistration):
+        case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -400,8 +405,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         type(of: self).configureAppearance()
     }
 
-    public func performWhenAuthenticated(_ block : @escaping () -> Void) {
-        if appStateController.appState == .authenticated(completedRegistration: false) {
+    func performWhenAuthenticated(_ block : @escaping () -> Void) {
+        if case .authenticated = appStateController.appState {
             block()
         } else {
             authenticatedBlocks.append(block)
@@ -489,7 +494,8 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard false == Settings.shared[.chatHeadsDisabled] else {
+        let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
+        guard !chatHeadsDisabled else {
             return false
         }
         
@@ -549,6 +555,10 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
             if session == userSession {
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
             }
+        }
+
+        if SecurityFlags.forceEncryptionAtRest.isEnabled && !userSession.encryptMessagesAtRest {
+            userSession.encryptMessagesAtRest = true
         }
     }
 
@@ -643,6 +653,11 @@ extension SessionManager {
 
 final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
+
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
 }
 
 extension UIApplication {

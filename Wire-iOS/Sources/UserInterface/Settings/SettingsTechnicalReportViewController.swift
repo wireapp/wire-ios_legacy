@@ -60,7 +60,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     }
     
     func sendReport(sourceView: UIView? = nil) {
-        let mailRecipient = "calling-ios@wire.com"
+        let mailRecipient = WireEmail.shared.callingSupportEmail
 
         guard MFMailComposeViewController.canSendMail() else {
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self, sourceView: sourceView)

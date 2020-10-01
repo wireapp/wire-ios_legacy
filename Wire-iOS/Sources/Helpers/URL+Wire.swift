@@ -39,30 +39,13 @@ struct WireUrl: Codable {
     let randomProfilePictureSource: URL
 
     static var shared: WireUrl! = {
-        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else {
-            zmLog.error("Failed to get URL from bundle")
-            return nil
-        }
-
-        return WireUrl(filePath: filePath)
+        return WireUrl(filePath: Bundle.fileURL(for: "url", with: "json")!)
     }()
 
     private init?(filePath: URL) {
-
-        let data: Data
         do {
-            data = try Data(contentsOf: filePath)
+            self = try filePath.decode(WireUrl.self)
         } catch {
-            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
-            return nil
-        }
-
-        let decoder = JSONDecoder()
-
-        do {
-            self = try decoder.decode(WireUrl.self, from: data)
-        } catch {
-            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
             return nil
         }
     }

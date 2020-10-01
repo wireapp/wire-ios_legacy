@@ -20,8 +20,10 @@ import Foundation
 import WireCommonComponents
 import UIKit
 
+
 enum MessageAction: CaseIterable {
     case
+    digitallySign,
     copy,
     reply,
     openDetails,
@@ -35,10 +37,10 @@ enum MessageAction: CaseIterable {
     unlike,
     resend,
     showInConversation,
-    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
-    present,
     sketchDraw,
     sketchEmoji,
+    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
+    present,
     openQuote
 
     var title: String? {
@@ -47,6 +49,8 @@ enum MessageAction: CaseIterable {
         switch self {
         case .copy:
             key = "content.message.copy"
+        case .digitallySign:
+            key = "content.message.sign"
         case .reply:
             key = "content.message.reply"
         case .openDetails:
@@ -71,9 +75,11 @@ enum MessageAction: CaseIterable {
             key = "content.message.resend"
         case .showInConversation:
             key = "content.message.go_to_conversation"
+        case .sketchDraw:
+            key = "image.add_sketch"
+        case .sketchEmoji:
+            key = "image.add_emoji"
         case .present,
-             .sketchDraw,
-             .sketchEmoji,
              .openQuote:
             key = nil
         }
@@ -119,6 +125,9 @@ enum MessageAction: CaseIterable {
         case .openQuote:
             // no icon for openQuote
             return nil
+        case .digitallySign:
+            // no icon for digitallySign
+            return nil
         }
     }
     
@@ -162,7 +171,8 @@ enum MessageAction: CaseIterable {
         case .sketchEmoji:
             imageName = "smiley.fill"
         case .present,
-             .openQuote:
+             .openQuote,
+             .digitallySign:
             // no icon for present and openQuote
             imageName = nil
         }
@@ -175,6 +185,8 @@ enum MessageAction: CaseIterable {
         switch self {
         case .copy:
             return #selector(ConversationMessageActionController.copyMessage)
+        case .digitallySign:
+            return #selector(ConversationMessageActionController.digitallySignMessage)
         case .reply:
             return #selector(ConversationMessageActionController.quoteMessage)
         case .openDetails:

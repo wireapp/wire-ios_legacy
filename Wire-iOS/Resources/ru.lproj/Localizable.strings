@@ -27,6 +27,7 @@
 "general.edit" = "Редактировать";
 "general.done" = "Готово";
 "general.confirm" = "OK";
+"general.later" = "Позже";
 "general.skip" = "Не сейчас";
 "general.accept" = "Принять";
 "general.decline" = "Нет, спасибо";
@@ -299,7 +300,7 @@
 
 "conversation.input_bar.audio_message.send" = "Отправить";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Нажмите для записи\nПосле этого его можно будет %@";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Выберите фильтр выше";
 
 "conversation.call.many_participants_confirmation.title" = "Начать звонок";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отмена";
 "image.add_sketch" = "Добавить скетч";
+"image.add_emoji" = "Добавить смайлик";
 "image.edit_image" = "Редактировать изображение";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "Предварительный просмотр видео с YouTube";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "Предварительный просмотр песни c SoundCloud";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Предварительный просмотр плейлиста c SoundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "К сожалению, ваша цифровая подпись не сработала.";
+"digital_signature.alert.error.no_consent_url" = "К сожалению, форма подписи не открылась. Пожалуйста, попробуйте еще раз.";
+"digital_signature.alert.error.no_signature" = "К сожалению, ваша цифровая подпись не сработала. Пожалуйста, попробуйте еще раз.";
+"digital_signature.alert.download_necessary" = "Пожалуйста, перед тем, как подписывать документ, сохраните его и прочтите.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Показать";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
+"content.message.sign" = "Подписать";
 "content.message.copy" = "Копировать";
 "content.message.download" = "Скачать";
 "content.message.details" = "Профиль";
@@ -620,7 +629,7 @@
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
 "voice.status.cbr" = "Постоянный битрейт";
-"voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
+"voice.network_error.body" = "Для совершения вызовов вы должны быть в сети. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
 "voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
 "voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Переподключение…";
 "call.status.terminating" = "Разъединение…";
 "call.status.constant_bitrate" = "Постоянный битрейт";
+"call.status.variable_bitrate" = "Переменный битрейт";
 
 "call.participants.show_all" = "Показать все (%@)";
 "call.participants.list.title" = "Участники";
@@ -957,7 +967,7 @@
 "self.settings.add_account.title" = "Добавить аккаунт";
 
 "self.settings.add_account.error.title" = "Активны три аккаунта";
-"self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
+"self.settings.add_account.error.message" = "Одновременно можно авторизоваться не более чем в трех аккаунтах. Выйдите из одного для добавления другого.";
 
 "self.settings.switch_account.message" = "В этой учетной записи активен вызов.\nПереключение учетных записей приведет к завершению текущего вызова.";
 "self.settings.switch_account.action" = "Все равно переключиться";
@@ -988,6 +998,8 @@
 "self.settings.privacy_section_group.title" = "Конфиденциальность";
 "self.settings.enable_read_receipts.title" = "Отправлять отчеты о прочтении";
 "self.settings.privacy_section_group.subtitle" = "При отключении этой настройки, вы не сможете видеть отчеты о прочтении от ваших собеседников.\n\nЭтот параметр не применяется к групповым беседам.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Шифровать сообщения в режиме ожидания";
 
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
@@ -1026,7 +1038,7 @@
 
 "self.settings.account_section.handle.change.title" = "Имя пользователя";
 "self.settings.account_section.handle.change.save" = "Сохранить";
-"self.settings.account_section.handle.change.footer" = "Не менее 2 символов. Только a—z, 0—9 и _";
+"self.settings.account_section.handle.change.footer" = "Не менее 2 символов. Только a—z, 0—9 и '.', '-', '_'";
 "self.settings.account_section.handle.change.footer.unavailable" = "Уже занято";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не удается задать имя пользователя";
@@ -1144,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте с помощью Touch ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте с помощью Face ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Если вы забудете ваш код доступа, восстановить его будет невозможно.";
 
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Разблокировать с помощью пароля.";
@@ -1165,10 +1178,15 @@
 "self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит контент всех ваших бесед.";
 
 "self.settings.advanced.title" = "Дополнительные настройки";
+"self.settings.advanced.conference_calling.title" = "Групповые звонки";
+"self.settings.advanced.conference_calling.subtitle" = "При включении этого параметра активируется возможность групповых аудио- и видеозвонков, что позволяет увеличить количество участников.";
+"self.settings.advanced.conference_calling.toggle" = "Бета-программа";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
 "self.settings.advanced.debugging_tools.title" = "Средства отладки";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Найти первую непрочитанную беседу";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Показать мой идентификатор пользователя";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Введите команду отладки";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает поддержке Wire диагностировать проблемы с вызовами и улучшать опыт использования приложения.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
@@ -1239,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
-"landing.welcome_message" = "Приветствуем вас в %@";
-"landing.create_account.title" = "Создать аккаунт";
+"landing.welcome_message" = "Хотите создать учетную запись Pro или Enterprise для своего бизнеса или организации?";
+"landing.welcome_submessage" = "К сожалению, это невозможно в приложении - как только вы создадите свою команду, вы сможете авторизоваться здесь.";
+"landing.create_account.title" = "Создать персональный аккаунт Wire";
+"landing.create_account.infotitle" = "Поболтать с друзьями и семьей?";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
@@ -1485,7 +1505,7 @@
 "signin.confirm" = "Войти";
 "signin.company_idp.button.title" = "Для компаний";
 
-"signin_logout.subheadline" = "Ваш сеанс истек. Вы должны войти снова, чтобы продолжить.";
+"signin_logout.subheadline" = "Ваш сеанс истек. Для продолжения вам необходимо авторизоваться повторно.";
 "signin_logout.email.subheadline" = "Ваш сеанс истек. Введите адрес электронной почты и пароль, чтобы продолжить.";
 "signin_logout.phone.subheadline" = "Ваш сеанс истек. Введите номер телефона, чтобы продолжить.";
 "signin_logout.sso.subheadline" = "Ваш сеанс истек. Войдите, используя свой корпоративный аккаунт.";
@@ -1539,6 +1559,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 "error.user.needs_credentials" = "Пожалуйста, проверьте ваши данные и попробуйте еще раз.";
+"error.user.domain_blocked" = "Это письмо требует приглашения от существующей команды. По вопросам получения приглашения, свяжитесь с ИТ-администраторами вашей организации.";
 "error.user.invalid_credentials" = "Пожалуйста, проверьте ваши данные и попробуйте еще раз.";
 "error.user.account_pending_activation" = "Учетная запись, к которой вы пытаетесь получить доступ, ожидает активации. Пожалуйста, проверьте ваши данные.";
 "error.user.network_error" = "Кажется, проблема в вашей сети. Пожалуйста, попробуйте позже.";
@@ -1765,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "подтверждено";
 
 "button_message_cell.generic_error" = "Ваш ответ не может быть отправлен, пожалуйста, повторите попытку.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Код доступа";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Создать код доступа";
+"create_passcode.info_label" = "Он будет использоваться для разблокировки Wire. Если вы забудете этот код доступа ";
+"create_passcode.info_label.highlighted" = "восстановить его будет невозможно.";
+"create_passcode.create_button.title" = "создать код доступа";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Не менее восьми символов";
+"create_passcode.validation.no_lowercase_char" = "Строчная буква";
+"create_passcode.validation.no_uppercase_char" = "Заглавная буква";
+"create_passcode.validation.no_number" = "Цифра";
+"create_passcode.validation.no_special_char" = "Специальный символ";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Введите код доступа";
+"unlock.title_label" = "Введите код доступа для разблокировки Wire";
+"unlock.wipe_button" = "Доступ как новое устройство";
+"unlock.error_label" = "Неверный код доступа";
+"unlock.submit_button.title" = "разблокировать";
+
+// Wipe database
+
+"wipe_database.title_label" = "Доступ как новое устройство";
+"wipe_database.info_label" = "Доступ к данным, хранящимся на этом устройстве, возможен только с помощью вашего кода доступа.\n\nЕсли вы забыли свой код доступа, вы можете очистить базу данных для повторной авторизации в качестве нового устройства.\n\nПри удалении базы данных ";
+"wipe_database.info_label.highlighted" = "все локальные данные и сообщения этого аккаунта будут удалены навсегда.";
+
+"wipe_database.button.title" = "Я хочу удалить базу данных";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Подтвердить удаление базы данных";
+"wipe_database.alert.message" = "Введите 'Удалить', для подтверждения намерения удалить все данные с этого устройства.";
+"wipe_database.alert.placeholder" = "Введите 'Удалить'";
+"wipe_database.alert.confirm" = "Удалить";
+"wipe_database.alert.confirm_input" = "Удалить";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "База данных удалена";
+"wipe_database_completion.subtitle" = "Ваши данные и сообщения были удалены. Теперь вы можете повторно авторизоваться как новое устройство.";

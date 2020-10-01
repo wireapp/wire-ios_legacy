@@ -151,7 +151,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     }
     
     func testForOptionsForTeamUserInTeamConversation_Admins() {
-        // GIVEN
+        // GIVEN        
         let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
         let actionAddMember = Action.insertNewObject(in: uiMOC)
         actionAddMember.name = "add_conversation_member"
