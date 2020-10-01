@@ -173,8 +173,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
-        AutomationHelper.sharedHelper.overrideConferenceCallingSettingIfNeeded()
-
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
@@ -196,7 +194,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
-            sessionManager.useConferenceCalling = Settings.shared[.conferenceCalling] ?? false
+            sessionManager.useConferenceCalling = true
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
