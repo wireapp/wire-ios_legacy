@@ -31,12 +31,16 @@ final class ConversationActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
+    weak var sourceView: UIView?
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    init(conversation: ZMConversation, target: UIViewController) {
+    init(conversation: ZMConversation,
+         target: UIViewController,
+         sourceView: UIView?) {
         self.conversation = conversation
         self.target = target
+        self.sourceView = sourceView
     }
 
     func presentMenu(from sourceView: UIView?, context: Context) {
@@ -97,8 +101,9 @@ final class ConversationActionController {
         case .silence(isSilenced: let isSilenced): self.enqueue {
             self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
             }
-        case .leave: self.request(LeaveResult.self) { result in
-            self.handleLeaveResult(result, for: self.conversation)
+        case .leave:
+            request(LeaveResult.self) { result in
+                self.handleLeaveResult(result, for: self.conversation)
             }
         case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
             self.handleClearContentResult(result, for: self.conversation)
@@ -151,7 +156,10 @@ final class ConversationActionController {
         currentContext.apply {
             prepare(viewController: controller, with: $0)
         }
-        target.present(controller, animated: true, completion: nil)
+        
+        controller.configPopover(pointToView: sourceView ?? target.view, popoverPresenter: target as? PopoverPresenterViewController)
+
+        target.present(controller, animated: true)
     }
     
 }

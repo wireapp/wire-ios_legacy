@@ -27,4 +27,16 @@ extension UIStackView {
     var visibleSubviews: [UIView] {
         return subviews.filter { !$0.isHidden }
     }
+
+    // factory methods
+    static func verticalStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        return stackView
+    }
 }

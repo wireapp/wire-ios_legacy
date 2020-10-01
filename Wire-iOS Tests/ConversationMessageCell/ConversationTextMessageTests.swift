@@ -72,7 +72,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testTextWithQuote() {
         // GIVEN
         let conversation = createGroupConversation()
-        let quote = conversation.append(text: "Who is responsible for this!")
+        let quote = try! conversation.appendText(content: "Who is responsible for this!")
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am")!
         message.sender = otherUser
@@ -95,7 +95,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         }
         let article = ArticleMetadata(protocolBuffer: linkPreview)
         let conversation = createGroupConversation()
-        let quote = conversation.append(text: "Who is responsible for this!")
+        let quote = try! conversation.appendText(content: "Who is responsible for this!")
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am http://www.example.com")!
         message.sender = otherUser

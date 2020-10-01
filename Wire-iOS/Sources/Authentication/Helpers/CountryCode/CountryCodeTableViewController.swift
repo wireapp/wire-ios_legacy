@@ -140,11 +140,11 @@ extension CountryCodeTableViewController: UISearchBarDelegate {
 
 // MARK: - UISearchResultsUpdating
 
+///TODO: test
 extension CountryCodeTableViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        // Update the filtered array based on the search text
-        let searchText = searchController.searchBar.text
-        guard var searchResults: NSArray = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? NSArray else { return }
+
+    func filter(searchText: String?) -> [Any]? {
+        guard var searchResults: [Any] = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? [Any] else { return nil}
 
         // Strip out all the leading and trailing spaces
         let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
@@ -176,7 +176,18 @@ extension CountryCodeTableViewController: UISearchResultsUpdating {
         let orPredicates = NSCompoundPredicate(orPredicateWithSubpredicates: numberPredicates)
         let finalPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [andPredicates, orPredicates])
 
-        searchResults = searchResults.filtered(using: finalPredicate) as NSArray
+        searchResults = searchResults.filter {
+            finalPredicate.evaluate(with: $0)
+        }
+
+        return searchResults
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        // Update the filtered array based on the search text
+        let searchText = searchController.searchBar.text
+
+        guard let searchResults = filter(searchText: searchText) else { return }
 
         // Hand over the filtered results to our search results table
         let tableController = self.searchController.searchResultsController as? CountryCodeResultsTableViewController

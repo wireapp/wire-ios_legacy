@@ -21,30 +21,30 @@ import UIKit
 import WireSystem
 
 final class AppLockView: UIView {
-    public var onReauthRequested: (()->())?
-    
-    public let shieldViewContainer = UIView()
-    public let contentContainerView = UIView()
-    public let blurView: UIVisualEffectView!
-    public let authenticateLabel: UILabel = {
+    var onReauthRequested: Completion?
+
+    let shieldViewContainer = UIView()
+    let contentContainerView = UIView()
+    let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
+    let authenticateLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
         label.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return label
     }()
-    public let authenticateButton = Button(style: .fullMonochrome)
-    
+    let authenticateButton = Button(style: .fullMonochrome)
+
     private var contentWidthConstraint: NSLayoutConstraint!
     private var contentCenterConstraint: NSLayoutConstraint!
     private var contentLeadingConstraint: NSLayoutConstraint!
     private var contentTrailingConstraint: NSLayoutConstraint!
 
-    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+    var userInterfaceSizeClass: (UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
         return traitEnvironment.traitCollection.horizontalSizeClass
     }
 
-    public var showReauth: Bool = false {
+    var showReauth: Bool = false {
         didSet {
             self.authenticateLabel.isHidden = !showReauth
             self.authenticateButton.isHidden = !showReauth
@@ -52,25 +52,21 @@ final class AppLockView: UIView {
     }
 
     init(authenticationType: AuthenticationType = .current) {
-        let blurEffect = UIBlurEffect(style: .dark)
-        self.blurView = UIVisualEffectView(effect: blurEffect)
-        
+
         super.init(frame: .zero)
-        
-        let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
-        
-        let nibView = loadedObjects.first as! UIView
-        shieldViewContainer.addSubview(nibView)
+
+        let shieldView = UIView.shieldView()
+        shieldViewContainer.addSubview(shieldView)
 
         addSubview(shieldViewContainer)
         addSubview(blurView)
-        
+
         self.authenticateLabel.isHidden = true
         self.authenticateLabel.numberOfLines = 0
         self.authenticateButton.isHidden = true
-        
+
         addSubview(contentContainerView)
-        
+
         contentContainerView.addSubview(authenticateLabel)
         contentContainerView.addSubview(authenticateButton)
 
@@ -88,7 +84,7 @@ final class AppLockView: UIView {
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
 
-        createConstraints(nibView: nibView)
+        createConstraints(nibView: shieldView)
 
         toggleConstraints()
     }
@@ -138,30 +134,28 @@ final class AppLockView: UIView {
             authenticateLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
 
             // authenticateButton
-            authenticateButton.heightAnchor.constraint(equalToConstant: 40),
-            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
+            authenticateButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
+            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
-            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
-            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -24),
-        ])
+            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         toggleConstraints()
     }
 
-    
     func toggleConstraints() {
         userInterfaceSizeClass(self).toggle(compactConstraints: [contentLeadingConstraint, contentTrailingConstraint],
                regularConstraints: [contentCenterConstraint, contentWidthConstraint])
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatal("init(coder) is not implemented")
     }
-    
+
     @objc func onReauthenticatePressed(_ sender: AnyObject!) {
         self.onReauthRequested?()
     }

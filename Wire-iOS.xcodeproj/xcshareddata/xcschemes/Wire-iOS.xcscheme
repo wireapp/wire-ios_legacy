@@ -51,6 +51,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "AVURLAsset_conversionTests">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -165,6 +168,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-UseConferenceCalling 1"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-UseHockey 1"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -218,7 +225,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "ZMLOG_TAGS"
-            value = "Network,Authentication,Performance,event-processing"
+            value = "Network,Authentication,Performance,event-processing,Message Processing"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

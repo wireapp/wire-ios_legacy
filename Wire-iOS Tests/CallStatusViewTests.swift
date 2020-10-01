@@ -25,6 +25,7 @@ struct MockStatusViewConfiguration: CallStatusViewInputType {
     var variant: ColorSchemeVariant
     var isConstantBitRate: Bool
     let title: String
+    let userEnabledCBR: Bool
 }
 
 final class CallStatusViewTests: ZMSnapshotTestCase {
@@ -34,7 +35,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        sut = CallStatusView(configuration: MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip"))
+        sut = CallStatusView(configuration: MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false))
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
         sut.setNeedsLayout()
@@ -53,7 +54,8 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             variant: .light,
             isConstantBitRate: false,
-            title: "Amazing Way Too Long Group Conversation Name"
+            title: "Amazing Way Too Long Group Conversation Name",
+            userEnabledCBR: false
         )
         
         // Then
@@ -62,7 +64,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testConnectingAudioCallLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -71,7 +73,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testConnectingAudioCallDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -79,7 +81,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testIncomingAudioLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -87,7 +89,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testIncomingAudioLightOneOnOne() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: nil), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Miguel")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: nil), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Miguel", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -96,7 +98,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testIncomingAudioDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -105,7 +107,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testIncomingVideoLight() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -114,7 +116,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testIncomingVideoDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -122,7 +124,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testOutgoingLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -131,7 +133,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testOutgoingDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -139,7 +141,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testEstablishedBriefLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -148,7 +150,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testEstablishedBriefDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -156,7 +158,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testEstablishedLongLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -165,7 +167,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testEstablishedLongDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -173,8 +175,8 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testConstantBitRateLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: true, title: "Italy Trip")
-        
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true)
+
         // Then
         verify(view: sut)
     }
@@ -182,7 +184,24 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testConstantBitRateDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: true, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testVariableBitRateLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testVariableBitRateDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true)
         
         // Then
         verify(view: sut)
@@ -190,7 +209,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testReconnectingLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -199,7 +218,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testReconnectingDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -207,7 +226,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     
     func testEndingLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)
@@ -216,7 +235,7 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
     func testEndingDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip")
+        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
         
         // Then
         verify(view: sut)

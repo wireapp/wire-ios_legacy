@@ -19,36 +19,73 @@
 import WireSyncEngine
 
 struct VideoConfiguration: VideoGridConfiguration {
+
+    fileprivate static let maxVideoStreams: Int = 12
+
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
-    let isMuted: Bool
     let networkQuality: NetworkQuality
 
-    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManagerInterface, isOverlayVisible: Bool) {
-        floatingVideoStream = voiceChannel.videoStreamArrangment.preview
-        videoStreams = voiceChannel.videoStreamArrangment.grid
-        isMuted = mediaManager.isMicrophoneMuted && !isOverlayVisible
+    init(voiceChannel: VoiceChannel) {
+        let videoStreamArrangment = voiceChannel.videoStreamArrangment
+       
+        floatingVideoStream = videoStreamArrangment.preview
+        videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
     }
 }
 
+extension CallParticipant {
+    var streamId: AVSClient {
+        return AVSClient(userId: user.remoteIdentifier, clientId: clientId)
+    }
+}
+
 extension VoiceChannel {
+
+    private var sortedParticipants: [CallParticipant] {
+        return participants.sorted {
+            $0.streamId == selfStreamId ||
+            $0.user.name?.lowercased() < $1.user.name?.lowercased()
+        }
+    }
     
     private var selfStream: VideoStream? {
+        guard
+            let selfUser = ZMUser.selfUser(),
+            let userId = selfUser.remoteIdentifier,
+            let clientId = selfUser.selfClient()?.remoteIdentifier,
+            let name = selfUser.name
+        else {
+            return nil
+        }
+        
+        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
+                            participantName: name,
+                            microphoneState: .unmuted,
+                            videoState: videoState)
+        
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
-            return .init(stream: ZMUser.selfUser().selfStream, isPaused: false)
+            return .init(stream: stream, isPaused: false)
         case (_, .paused):
-            return .init(stream: ZMUser.selfUser().selfStream, isPaused: true)
+            return .init(stream: stream, isPaused: true)
         case (_, .stopped):
             return nil
         }
     }
     
+    private var selfStreamId: AVSClient? {
+        return ZMUser.selfUser()?.selfStreamId
+    }
+    
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
+
+        let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
+        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
         
-        return arrangeVideoStreams(for: selfStream, participantsStreams: participantsActiveVideoStreams)
+        return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
     }
     
     private var isEstablished: Bool {
@@ -56,24 +93,27 @@ extension VoiceChannel {
     }
     
     func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
-        let streamsExcludingSelf = participantsStreams.filter { $0.stream != selfStream?.stream }
+        let streamsExcludingSelf = participantsStreams.filter { $0.stream.streamId != selfStreamId }
 
         guard let selfStream = selfStream else {
             return (nil, streamsExcludingSelf)
         }
-        
-        if 1 == streamsExcludingSelf.count {
+
+        if conversation?.conversationType == ZMConversationType.oneOnOne && streamsExcludingSelf.count == 1 {
             return (selfStream, streamsExcludingSelf)
         } else {
             return (nil, [selfStream] + streamsExcludingSelf)
         }
     }
-    
-    var participantsActiveVideoStreams: [VideoStream] {
-        return participants.compactMap { participant in
+
+    var sortedActiveVideoStreams: [VideoStream] {
+        return sortedParticipants.compactMap { participant in
             switch participant.state {
-            case .connected(let videoState) where videoState != .stopped:
-                let stream = Stream(userId: participant.user.remoteIdentifier, clientId: participant.clientId)
+            case .connected(let videoState, let microphoneState) where videoState != .stopped:
+                let stream = Stream(streamId: participant.streamId,
+                                    participantName: participant.user.name,
+                                    microphoneState: microphoneState,
+                                    videoState: videoState)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -41,15 +41,6 @@ enum TeamCreationState: Equatable {
         case .sendEmailCode, .verifyActivationCode: return false
         case .provideMarketingConsent: return false
         case .createTeam: return false
-        default: return true
-        }
-    }
-
-    /// Whether it's possible to exit this step and .
-    var allowsUnwind: Bool {
-        switch self {
-        case .setFullName: return false
-        case .inviteMembers: return false
         default: return true
         }
     }

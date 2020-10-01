@@ -85,6 +85,7 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
+        button.isEnabled = !session.encryptMessagesAtRest
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()
@@ -239,7 +240,7 @@ extension ZMConversation {
     var canStartVideoCall: Bool {
         guard !isCallOngoing else { return false }
 
-        guard !(type(of: self).callCenterConfiguration.useConferenceCalling) else { return true }
+        guard !(type(of: self).useConferenceCalling) else { return true }
 
         if self.conversationType == .oneOnOne {
             return true

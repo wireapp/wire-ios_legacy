@@ -83,6 +83,8 @@ final class ConversationMessageActionController {
         switch action {
         case .copy:
             return message.canBeCopied
+        case .digitallySign:
+            return message.canBeDigitallySigned
         case .reply:
             return message.canBeQuoted
         case .openDetails:
@@ -107,9 +109,10 @@ final class ConversationMessageActionController {
             return message.canBeResent
         case .showInConversation:
             return context == .collection
+        case .sketchDraw,
+             .sketchEmoji:
+            return message.isImage
         case .present,
-             .sketchDraw,
-             .sketchEmoji,
              .openQuote:
             return false
         }
@@ -185,6 +188,10 @@ final class ConversationMessageActionController {
                            view: view)
     }
 
+    @objc func digitallySignMessage() {
+        perform(action: .digitallySign)
+    }
+    
     @objc func copyMessage() {
         perform(action: .copy)
     }

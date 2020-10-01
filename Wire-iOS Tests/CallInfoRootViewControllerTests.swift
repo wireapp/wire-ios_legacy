@@ -81,6 +81,17 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
+    
+    func testOneToOneAudioEstablishedVBR() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedVBR)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
 
     @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
@@ -185,6 +196,17 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verify(matching: sut)
     }
+    
+    func testGroupAudioEstablished_ConferenceCall() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablishedConferenceCall)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
 
     // MARK: - Group Video
 
@@ -221,6 +243,28 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
+    func testGroupVideoEstablishedConferenceCall() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedConferenceCall)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
+    
+    func testGroupVideoEstablishedScreenSharing() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedScreenSharing)
+
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
+
     func testGroupVideoEstablishedPoorConnection() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
@@ -243,6 +287,18 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
+    func testGroupVideoEstablishedVBR() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedVBR)
+        
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
+
+    
     // MARK: - Missing Video Permissions
 
     func testGroupVideoUndeterminedVideoPermissions() {

@@ -17,13 +17,28 @@
 //
 
 import Foundation
+import WireSyncEngine
 import WireDataModel
 
 extension ZMConversationMessage {
 
+    /// Whether the message can be digitally signed in.
+    var canBeDigitallySigned: Bool {
+        guard
+            SelfUser.current.phoneNumber != nil,
+            SelfUser.current.isTeamMember,
+            SelfUser.current.hasDigitalSignatureEnabled
+        else {
+            return false
+        }
+        return isPDF
+    }
+    
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        return !isEphemeral && (isText || isImage || isLocation)
+        return SecurityFlags.clipboard.isEnabled
+            && !isEphemeral
+            && (isText || isImage || isLocation)
     }
     
     /// Whether the message can be edited.
@@ -105,7 +120,7 @@ extension ZMConversationMessage {
     
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral {
+        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
             return false
         }
         

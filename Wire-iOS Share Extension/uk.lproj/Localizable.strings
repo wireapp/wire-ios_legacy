@@ -38,7 +38,7 @@
 
 "content.file.too_big" = "Ви можете надсилати файли до %@";
 "content.file.unsupported_attachment" = "Непідтримуване вкладення";
-"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+"share_extension.error.conversation_does_not_exist.message" = "Будь ласка, виберіть розмову для надсилання";
 
 "share_extension.privacy_security.lock_app.description" = "Розблокувати Wire";
 "share_extension.logged_out.title" = "Ви вийшли з цього акаунту.";

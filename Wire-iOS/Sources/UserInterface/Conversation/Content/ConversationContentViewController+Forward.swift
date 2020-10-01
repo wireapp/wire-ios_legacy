@@ -59,25 +59,47 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
         let fetchLinkPreview = !Settings.disableLinkPreviews
         ZMUserSession.shared()?.perform {
             conversations.forEachNonEphemeral {
-                // We should not forward any mentions to other conversations
-                _ = $0.append(text: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
+                do {
+                    // We should not forward any mentions to other conversations
+                    try $0.appendText(content: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
+                } catch {
+                    Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
+                }
             }
         }
     } else if message.isImage, let imageData = message.imageMessageData?.imageData {
         ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral { _ = $0.append(imageFromData: imageData) }
+            conversations.forEachNonEphemeral {
+                do {
+                    try $0.appendImage(from: imageData)
+                } catch {
+                    Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
+                }
+            }
         }
     } else if message.isVideo || message.isAudio || message.isFile {
         let url  = message.fileMessageData!.fileURL!
         FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
             ZMUserSession.shared()?.perform {
-                conversations.forEachNonEphemeral { _ = $0.append(file: fileMetadata) }
+                conversations.forEachNonEphemeral {
+                    do {
+                        try $0.appendFile(with: fileMetadata)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append file message. Reason: \(error.localizedDescription)")
+                    }
+                }
             }
         }
     } else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral { _ = $0.append(location: locationData) }
+            conversations.forEachNonEphemeral {
+                do {
+                    try $0.appendLocation(with: locationData)
+                } catch {
+                    Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
+                }
+            }
         }
     } else {
         fatal("Cannot forward message")

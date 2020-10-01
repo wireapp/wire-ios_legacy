@@ -27,6 +27,7 @@
 "general.edit" = "Düzenle";
 "general.done" = "Yapıldı";
 "general.confirm" = "TAMAM";
+"general.later" = "Sonra";
 "general.skip" = "Henüz değil";
 "general.accept" = "Kabul et";
 "general.decline" = "Hayır , Teşekkürler";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "TAMAM";
 "image_confirmer.cancel" = "İptal";
 "image.add_sketch" = "Çizim ekle";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Fotoğrafı düzenle";
 
 // Camera access
-"camera_access.denied" = "Wire'ın kameraya erişmesi gerek.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire kameraya erişemiyor";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Wire Ayarları'ndan etkinleştirin";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video önizlemesi";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud şarkı önizlemesi";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud çalma listesi önizlemesi";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
 "content.message.open" = "Aç";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopyala";
 "content.message.download" = "İndir";
 "content.message.details" = "Ayrıntılar";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Tek seferde sadece bir arama yapabilirsiniz";
 "voice.alert.call_in_progress.confirm" = "TAMAM";
 
-"voice.alert.microphone_warning.title" = "Wire'ın mikrofona erişmesi gerek.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire'ın kameraya erişmesi gerek.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Aramaya dönmek için dokunun";
 "voice.top_overlay.accessibility_title" = "Devam eden arama";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Yeniden bağlanıyor…";
 "call.status.terminating" = "Kapatılıyor…";
 "call.status.constant_bitrate" = "Sabit Bit Hızı";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "(%@) Tümünü göster";
 "call.participants.list.title" = "Katılımcılar";
@@ -989,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Okundu Bilgisi Gönder";
 "self.settings.privacy_section_group.subtitle" = "Bu durum kapalıyken, başkalarından gelen okundu bilgilerini göremezsiniz.\n\nBu ayar grup konuşmaları için geçerli değildir.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "Resim";
 "self.settings.account_picture_group.color" = "Renk";
 
@@ -1026,7 +1038,7 @@
 
 "self.settings.account_section.handle.change.title" = "Kullanıcı Adı";
 "self.settings.account_section.handle.change.save" = "Kaydet";
-"self.settings.account_section.handle.change.footer" = "En az 2 karakter. a—z, 0—9, ve yalnızca _.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Çoktan alınmış";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Kullanıcı adı ayarlanamadı";
@@ -1144,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Parmak iziyle kilidi açın veya şifrenizi girin.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Yüz tanımayla kilidi açın veya şifrenizi girin.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Şifreni girerek şifreyi aç.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
@@ -1165,10 +1178,15 @@
 "self.settings.privacy.clear_history.subtitle" = "Bu kalıcı olarak tüm konuşmalarınıza içeriğinizi silecektir.";
 
 "self.settings.advanced.title" = "Gelişmiş";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Sorun giderme";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Hata Ayıklama Raporu";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Bu bilgi, Wire Desteği arama sorunlarını tanılamanıza ve genel uygulama deneyimini geliştirmenize yardımcı olur.";
 "self.settings.advanced.reset_push_token.title" = "Bildirim Sıfırlama Belirteci";
 "self.settings.advanced.reset_push_token.subtitle" = "Eğer anlık bildirimler ile sorun yaşıyorsanız, Wire Destek sizden jetonu sıfırlamanızı isteyebilir.";
@@ -1239,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Hesabınızı Ekleyin.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Arkadaş grupları ile özel olarak sohbet et\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "İşletmeler, kurumlar ve profesyoneller için güvenli işbirliği\nprofessional\U00A0organizations";
@@ -1539,6 +1559,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Bir şeyler ters gitti, lütfen tekrar deneyin";
 "error.user.needs_credentials" = "Lütfen bilgilerinizi doğrulayın ve yeniden deneyin.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Lütfen bilgilerinizi doğrulayın ve yeniden deneyin.";
 "error.user.account_pending_activation" = "Ulaşmaya çalıştığınız hesap aktivosyan beklemesindedir. Lütfen bilgilerinizi doğrulayınız.";
 "error.user.network_error" = "Ağınızda problem var gibi gözüküyor. Lütfen daha sonra yeniden deneyin.";
@@ -1765,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "confirmed";
 
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Sil";
+"wipe_database.alert.confirm_input" = "Sil";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";

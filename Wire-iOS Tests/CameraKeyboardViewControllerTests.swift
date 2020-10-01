@@ -137,16 +137,12 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
 
     private func setupSut(permissions: PhotoPermissionsController) {
         sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
-                                           assetLibrary: mockAssetLibrary,
-                                           imageManagerType: MockImageManager.self,
                                            permissions: permissions)
     }
 
     func testWithCallingOverlay() {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
         sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: splitView,
-                                                      assetLibrary: mockAssetLibrary,
-                                                      imageManagerType: MockImageManager.self,
                                                       permissions: permissions)
 
         verify(matching: prepareForSnapshot())
@@ -182,21 +178,6 @@ final class CameraKeyboardViewControllerTests: XCTestCase {
         XCTAssertTrue(cameraCell is CameraKeyboardPermissionsCell)
         XCTAssertEqual(self.sut.collectionView.numberOfSections, 1)
         XCTAssertEqual(self.sut.collectionView.numberOfItems(inSection: 0), 1)
-    }
-
-    func testThatSecondSectionContainsCameraRollElements() {
-        // given
-        let permissions = MockPhotoPermissionsController(camera: true, library: true)
-        setupSut(permissions: permissions)
-        self.sut.delegate = self.delegateMock
-        self.prepareForSnapshot()
-
-        // when
-        let itemCell = self.sut.collectionView.cellForItem(at: IndexPath(item: 0, section: 1))
-
-        // then
-        XCTAssertTrue(itemCell is AssetCell)
-        XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
     }
 
     private func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController,
