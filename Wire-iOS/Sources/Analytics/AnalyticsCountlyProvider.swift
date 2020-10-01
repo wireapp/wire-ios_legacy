@@ -36,15 +36,15 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         get {
             return !sessionBegun
         }
-        
+
         set {
             newValue ? Countly.sharedInstance().endSession() :
                        Countly.sharedInstance().beginSession()
-            
+
             sessionBegun = !isOptedOut
         }
     }
-    
+
     var selfUser: UserType? {
         didSet {
             updateUserProperties()
@@ -62,7 +62,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = "https://" + countlyHost
-        config.deviceID = CLYTemporaryDeviceID //TODO: wait for ID generation task done
         config.manualSessionHandling = true
 
         Countly.sharedInstance().start(with: config)
@@ -77,11 +76,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
     }
-    
+
     /// update user properties after self user changes
     private func updateUserProperties() {
         guard shouldTracksEvent,
@@ -90,19 +88,19 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             let teamID = team.remoteIdentifier,
             let analyticsIdentifier = selfUser.analyticsIdentifier
         else {
-                
+
             //clean up
             ["team_team_id",
              "team_user_type",
              "team_team_size",
              "user_contacts",
-             "user_id"].forEach() {
+             "user_id"].forEach {
                 Countly.user().unSet($0)
             }
-                
+
             Countly.user().save()
             isOptedOut = true
-                
+
             return
         }
 
@@ -112,7 +110,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                                              "team_team_size": team.members.count,
                                              "user_contacts": team.members.count.logRound()]
 
-        let convertedAttributes = convertToCountlyDictionary(dictioary: userProperties)
+        let convertedAttributes = userProperties.countlyStringValueDictionary
 
         for(key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
@@ -121,12 +119,29 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         Countly.user().save()
     }
 
-    private func convertToCountlyDictionary(dictioary: [String: Any]) -> [String: String] {
-        let convertedAttributes: [String: String] = Dictionary(uniqueKeysWithValues:
-            dictioary.map { key, value in (key, countlyValue(rawValue: value)) })
+    func tagEvent(_ event: String,
+                  attributes: [String: Any]) {
+        guard shouldTracksEvent else { return }
 
-        return convertedAttributes
+        var convertedAttributes = attributes.countlyStringValueDictionary
+
+        convertedAttributes["app_name"] = "ios"
+        convertedAttributes["app_version"] = Bundle.main.shortVersionString
+
+        Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
+
+    func setSuperProperty(_ name: String, value: Any?) {
+        //TODO
+    }
+
+    func flush(completion: Completion?) {
+        isOptedOut = true
+        completion?()
+    }
+}
+
+extension Dictionary where Key == String, Value == Any {
 
     private func countlyValue(rawValue: Any) -> String {
         if let boolValue = rawValue as? Bool {
@@ -147,24 +162,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         return "\(rawValue)"
     }
 
-    func tagEvent(_ event: String,
-                  attributes: [String: Any]) {
-        guard shouldTracksEvent else { return }
-        
-        var convertedAttributes = convertToCountlyDictionary(dictioary: attributes)
+    var countlyStringValueDictionary: [String: String] {
+        let convertedAttributes: [String: String] = [String: String](uniqueKeysWithValues:
+            map { key, value in (key, countlyValue(rawValue: value)) })
 
-        convertedAttributes["app_name"] = "ios"
-        convertedAttributes["app_version"] = Bundle.main.shortVersionString
-
-        Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
-    }
-
-    func setSuperProperty(_ name: String, value: Any?) {
-        //TODO
-    }
-
-    func flush(completion: Completion?) {
-        isOptedOut = true
-        completion?()
+        return convertedAttributes
     }
 }

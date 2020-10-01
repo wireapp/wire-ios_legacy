@@ -24,9 +24,8 @@ private let zmLog = ZMSLog(tag: "Analytics")
 final class Analytics: NSObject {
 
     var provider: AnalyticsProvider?
-    //TODO:
 
-    //    private var callingTracker: AnalyticsCallingTracker?
+    private var callingTracker: AnalyticsCallingTracker?
     private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
 
     static var shared: Analytics!
@@ -46,15 +45,16 @@ final class Analytics: NSObject {
 
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
-//        callingTracker = AnalyticsCallingTracker(analytics: self)
+        callingTracker = AnalyticsCallingTracker(analytics: self)
+        selfUser = SelfUser.current
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
     }
 
-    var selfUser: UserType?  {
+    var selfUser: UserType? {
         get {
             return provider?.selfUser
         }
-        
+
         set {
             provider?.selfUser = newValue
         }
@@ -70,13 +70,8 @@ final class Analytics: NSObject {
     // MARK: - OTREvents
     func tagCannotDecryptMessage(withAttributes userInfo: [String: Any],
                                  conversation: ZMConversation?) {
-        var attributes: [String : Any]
-        if let conversation = conversation {
-            attributes = attributesForConversation(conversation)
-        } else {
-            attributes = [:]
-        }
-            
+        var attributes: [String: Any] = conversation?.attributesForConversation ?? [:]
+
         attributes.merge(userInfo, strategy: .preferNew)
         tagEvent("e2ee.failed_message_decryption", attributes: attributes)
     }
