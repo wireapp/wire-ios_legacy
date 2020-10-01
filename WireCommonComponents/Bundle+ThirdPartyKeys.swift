@@ -37,8 +37,4 @@ public extension Bundle {
     static var countlyAppKey: String? {
         return appMainBundle.infoForKey("CountlyAppKey")
     }
-    
-    static var countlyHost: String? {
-        return appMainBundle.infoForKey("CountlyHost")
-    }
 }
