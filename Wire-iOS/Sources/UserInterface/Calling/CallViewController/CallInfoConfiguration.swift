@@ -269,12 +269,6 @@ fileprivate extension VoiceChannel {
         }
     }
 
-    var firstDegradedUser: ZMUser? {
-        return conversation?.localParticipants.first(where: {
-            !$0.isTrusted
-        })
-    }
-
     private var isIncomingVideoCall: Bool {
         switch state {
         case .incoming(video: true, shouldRing: true, degraded: _): return true
@@ -284,6 +278,7 @@ fileprivate extension VoiceChannel {
 }
 
 extension VoiceChannel {
+
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
