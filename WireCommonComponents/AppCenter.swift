@@ -46,18 +46,3 @@ public extension MSCrashes {
         return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
     }
 }
-
-public extension Bundle {
-    
-    static var appCenterAppId: String? {
-        guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
-            let item = scheme.first,
-            let key = item["CFBundleURLSchemes"] as? [String],
-            let appCenterID = key.first else { return nil }
-        return appCenterID.replacingOccurrences(of: "appcenter-", with: "")
-    }
-    
-    static var useAppCenter: Bool {
-        return Bundle.appMainBundle.infoForKey("UseAppCenter") == "1"
-    }
-}

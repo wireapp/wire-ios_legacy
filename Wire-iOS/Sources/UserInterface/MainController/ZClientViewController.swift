@@ -709,7 +709,7 @@ final class ZClientViewController: UIViewController {
         analyticsEventPersistence?.clear()
         
         events?.forEach() {
-            Analytics.shared().tag($0)
+            Analytics.shared.tag($0)
         }
     }
 }

@@ -18,9 +18,6 @@
 
 import Foundation
 import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
-import AppCenterDistribute
 import WireCommonComponents
 import avs
 import WireSyncEngine
@@ -29,25 +26,35 @@ final class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {
-        AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+        AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableAnalyticsSharing)
         
         flowManagerObserver = NotificationCenter.default.addObserver(forName: FlowManager.AVSFlowManagerCreatedNotification, object: nil, queue: OperationQueue.main, using: { _ in
-            AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+            AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableAnalyticsSharing)
         })
     }
     
     static let shared = TrackingManager()
 
-    var disableCrashAndAnalyticsSharing: Bool {
+    var disableCrashSharing: Bool {
         set {
-            Analytics.shared().isOptedOut = newValue
-            AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
-            updateAppCenterStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
-            ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
+            updateAppCenterStateIfNeeded(oldState: disableCrashSharing, newValue)
+            ExtensionSettings.shared.disableCrashSharing = newValue
         }
         
         get {
-            return ExtensionSettings.shared.disableCrashAndAnalyticsSharing
+            return ExtensionSettings.shared.disableCrashSharing
+        }
+    }
+
+    var disableAnalyticsSharing: Bool {
+        set {
+            Analytics.shared.isOptedOut = newValue
+            AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
+            ExtensionSettings.shared.disableAnalyticsSharing = newValue
+        }
+        
+        get {
+            return ExtensionSettings.shared.disableAnalyticsSharing
         }
     }
 

@@ -42,7 +42,7 @@ extension AppDelegate {
         let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") //check
 
-        let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashSharing
 
         if appCenterTrackingEnabled {
             MSCrashes.setDelegate(self)
@@ -117,7 +117,7 @@ extension AppDelegate: MSDistributeDelegate {
 extension AppDelegate: MSCrashesDelegate {
 
     public func crashes(_ crashes: MSCrashes!, shouldProcessErrorReport errorReport: MSErrorReport!) -> Bool {
-        return !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        return !TrackingManager.shared.disableCrashSharing
     }
 
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {

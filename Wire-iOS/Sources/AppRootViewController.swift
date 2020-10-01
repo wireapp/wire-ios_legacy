@@ -167,7 +167,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
-        let analytics = Analytics.shared()
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
@@ -180,7 +179,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: analytics,
+            analytics: Analytics.shared,
             delegate: appStateController,
             showContentDelegate: self,
             application: UIApplication.shared,
@@ -283,13 +282,19 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                                                                  selfUser: ZMUser.selfUser())
                 clientViewController.isComingFromRegistration = completedRegistration
 
-                /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+                /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
                 clientViewController.needToShowDataUsagePermissionDialog = false
+                
                 if case .unauthenticated(_) = appStateController.lastAppState {
-                    clientViewController.needToShowDataUsagePermissionDialog = true
+                    if SelfUser.current.isTeamMember {
+                        TrackingManager.shared.disableCrashSharing = true
+                        TrackingManager.shared.disableAnalyticsSharing = false
+                    } else {
+                      clientViewController.needToShowDataUsagePermissionDialog = true
+                    }
                 }
 
-                Analytics.shared().setTeam(ZMUser.selfUser().team)
+                Analytics.shared.selfUser = SelfUser.current
 
                 viewController = clientViewController
             }
