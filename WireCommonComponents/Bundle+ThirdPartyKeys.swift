@@ -18,8 +18,7 @@
 
 import Foundation
 
-public extension Bundle {
-    
+public extension Bundle {    
     //MARK: - AppCenter
     static var appCenterAppId: String? {
         guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
@@ -36,9 +35,5 @@ public extension Bundle {
     //MARK: - Countly
     static var countlyAppKey: String? {
         return appMainBundle.infoForKey("CountlyAppKey")
-    }
-    
-    static var countlyHost: String? {
-        return appMainBundle.infoForKey("CountlyHost")
     }
 }
