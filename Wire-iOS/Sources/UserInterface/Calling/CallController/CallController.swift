@@ -76,7 +76,7 @@ extension CallController: WireCallCenterCallStateObserver {
         }
     }
     
-    private func scheduleSecurityDegradedAlert(degradedUser: ZMUser?) {
+    private func scheduleSecurityDegradedAlert(degradedUser: UserType?) {
         executeOrSchedulePostCallAction { [weak self] in
             self?.targetViewController?.present(UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true), animated: true)
         }
