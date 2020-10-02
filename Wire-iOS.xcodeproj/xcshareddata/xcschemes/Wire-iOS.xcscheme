@@ -161,10 +161,6 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-UseConferenceCalling 1"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-UseHockey 1"
             isEnabled = "NO">
          </CommandLineArgument>
