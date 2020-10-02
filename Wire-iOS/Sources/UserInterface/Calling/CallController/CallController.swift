@@ -60,7 +60,26 @@ extension CallController: WireCallCenterCallStateObserver {
         if isClientOutdated(callState: callState) {
             scheduleUnsupportedVersionAlert()
         }
+        handleDegradedConversationIfNeeded(conversation)
         updateState()
+    }
+    
+    private func handleDegradedConversationIfNeeded(_ conversation: ZMConversation) {
+        guard let degradationState = conversation.voiceChannel?.degradationState else {
+            return
+        }
+        switch degradationState {
+        case .incoming(degradedUser: let user):
+            scheduleSecurityDegradedAlert(degradedUser: user)
+        default:
+            break
+        }
+    }
+    
+    private func scheduleSecurityDegradedAlert(degradedUser: UserType?) {
+        executeOrSchedulePostCallAction { [weak self] in
+            self?.targetViewController?.present(UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true), animated: true)
+        }
     }
     
     private func scheduleUnsupportedVersionAlert() {
