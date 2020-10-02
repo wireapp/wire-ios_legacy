@@ -675,6 +675,11 @@
 "call.degraded.alert.message.unknown" = "Quelqu'un utilise un nouvel appareil.";
 "call.degraded.alert.action.continue" = "Appeler quand même";
 
+"call.degraded.ended.alert.title" = "Appel terminé";
+"call.degraded.ended.alert.message.self" = "L'appel a été déconnecté car vous avez ajouté un nouvel appareil";
+"call.degraded.ended.alert.message.user" = "L'appel a été déconnecté car %@ n'est plus un contact vérifié.";
+"call.degraded.ended.alert.message.unknown" = "L'appel a été déconnecté car l'un de vos contacts n'est plus un contact vérifié.";
+
 "call.alert.ongoing.alert_title" = "Cela mettra fin à votre autre appel.";
 
 "call.alert.ongoing.start.message" = "Un appel est en cours dans une autre conversation.\nAppeler ici raccrochera l'autre appel.";

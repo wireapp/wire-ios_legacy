@@ -675,6 +675,11 @@
 "call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
+"call.degraded.ended.alert.title" = "Anruf beendet";
+"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie ein neues Gerät verwendet haben.";
+"call.degraded.ended.alert.message.user" = "Der Anruf wurde unterbrochen, weil %@ kein verifizierter Kontakt mehr ist.";
+"call.degraded.ended.alert.message.unknown" = "Der Anruf wurde unterbrochen, weil jemand nicht mehr als verifizierter Kontakt gilt.";
+
 "call.alert.ongoing.alert_title" = "Dies wird den anderen Anruf beenden.";
 
 "call.alert.ongoing.start.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
