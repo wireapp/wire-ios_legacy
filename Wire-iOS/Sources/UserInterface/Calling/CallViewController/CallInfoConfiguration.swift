@@ -21,17 +21,6 @@ import avs
 import WireSyncEngine
 
 fileprivate extension VoiceChannel {
-    var degradationState: CallDegradationState {
-        switch state {
-        case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser)
-        case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser)
-        default:
-            return .none
-        }
-    }
-    
     func accessoryType() -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
@@ -280,12 +269,6 @@ fileprivate extension VoiceChannel {
         }
     }
 
-    var firstDegradedUser: ZMUser? {
-        return conversation?.localParticipants.first(where: {
-            !$0.isTrusted
-        })
-    }
-
     private var isIncomingVideoCall: Bool {
         switch state {
         case .incoming(video: true, shouldRing: true, degraded: _): return true
@@ -295,6 +278,18 @@ fileprivate extension VoiceChannel {
 }
 
 extension VoiceChannel {
+
+    var degradationState: CallDegradationState {
+        switch state {
+        case .incoming(video: _, shouldRing: _, degraded: true):
+            return .incoming(degradedUser: firstDegradedUser)
+        case .answered(degraded: true), .outgoing(degraded: true):
+            return .outgoing(degradedUser: firstDegradedUser)
+        default:
+            return .none
+        }
+    }
+
     var isLegacyGroupVideoParticipantLimitReached: Bool {
         guard let conversation = conversation else { return false }
         return conversation.localParticipants.count > ZMConversation.legacyGroupVideoParticipantLimit
