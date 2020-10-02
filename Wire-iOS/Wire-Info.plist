@@ -209,5 +209,9 @@
 	<string>${BACKUP_ENABLED}</string>
 	<key>ForceEncryptionAtRestEnabled</key>
 	<string>$(FORCE_ENCRYPTION_AT_REST_ENABLED)</string>
+	<key>CountlyAppKey</key>
+	<string>$(COUNTLY_APP_KEY)</string>
+	<key>CountlyHost</key>
+	<string>$(COUNTLY_HOST)</string>
 </dict>
 </plist>

@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,25 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-import WireSyncEngine
 
-extension AppDelegate {
-    
-    func trackErrors() {
-        ZMUserSession.shared()?.registerForSaveFailure(handler: { (metadata, type, error, userInfo) in
-            let name = "debug.database_context_save_failure"
-            let attributes = [
-                "context_type" : type.rawValue,
-                "error_code" : error.code,
-                "error_domain" : error.domain,
-            ] as [String: Any]
-            
-            DispatchQueue.main.async {
-                Analytics.shared.tagEvent(name, attributes: attributes)
-            }
-        })
+public extension Bundle {    
+    //MARK: - AppCenter
+    static var appCenterAppId: String? {
+        guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
+            let item = scheme.first,
+            let key = item["CFBundleURLSchemes"] as? [String],
+            let appCenterID = key.first else { return nil }
+        return appCenterID.replacingOccurrences(of: "appcenter-", with: "")
     }
     
+    static var useAppCenter: Bool {
+        return appMainBundle.infoForKey("UseAppCenter") == "1"
+    }
+
+    //MARK: - Countly
+    static var countlyAppKey: String? {
+        return appMainBundle.infoForKey("CountlyAppKey")
+    }
 }

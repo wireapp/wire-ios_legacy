@@ -1027,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anaonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
 "self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";

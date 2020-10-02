@@ -526,7 +526,7 @@ final class ConversationInputBarViewController: UIViewController,
         ZMUserSession.shared()?.enqueue({
             do {
                 try self.conversation.appendKnock()
-                Analytics.shared().tagMediaActionCompleted(.ping, inConversation: self.conversation)
+                Analytics.shared.tagMediaActionCompleted(.ping, inConversation: self.conversation)
 
                 AVSMediaManager.sharedInstance().playKnockSound()
                 self.notificationFeedbackGenerator.notificationOccurred(.success)

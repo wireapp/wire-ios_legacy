@@ -150,7 +150,7 @@ final class ConversationCreationController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.shared().tagLinearGroupOpened(with: self.source)
+        Analytics.shared.tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
         title = "conversation.create.group_name.title".localized(uppercased: true)
@@ -244,7 +244,7 @@ final class ConversationCreationController: UIViewController {
                 values.participants = parts
             }
             
-            Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
+            Analytics.shared.tagLinearGroupSelectParticipantsOpened(with: self.source)
             
             let participantsController = AddParticipantsViewController(context: .create(values), variant: colorSchemeVariant)
             participantsController.conversationCreationDelegate = self
@@ -276,8 +276,8 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
         case .create:
             var allParticipants = values.participants
             allParticipants.insert(ZMUser.selfUser())
-            Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: values.participants.isEmpty, allowGuests: values.allowGuests)
-            Analytics.shared().tagAddParticipants(source: self.source, allParticipants, allowGuests: values.allowGuests, in: nil)
+            Analytics.shared.tagLinearGroupCreated(with: self.source, isEmpty: values.participants.isEmpty, allowGuests: values.allowGuests)
+            Analytics.shared.tagAddParticipants(source: self.source, allParticipants, allowGuests: values.allowGuests, in: nil)
             
             delegate?.conversationCreationController(
                 self,

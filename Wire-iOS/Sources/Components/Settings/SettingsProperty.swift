@@ -143,7 +143,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     }
 
     func trackNewValue() {
-        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     let propertyName : SettingsPropertyName
@@ -177,7 +177,7 @@ final class SettingsBlockProperty : SettingsProperty {
     }
     
     func trackNewValue() {
-        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction

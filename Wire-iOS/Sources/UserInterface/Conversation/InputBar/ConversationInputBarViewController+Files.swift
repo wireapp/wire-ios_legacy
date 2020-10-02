@@ -156,7 +156,7 @@ extension ConversationInputBarViewController {
                         }
                     }
 
-                    Analytics.shared().tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
                 } catch {
                     Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
                 }
