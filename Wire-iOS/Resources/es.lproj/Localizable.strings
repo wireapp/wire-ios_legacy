@@ -727,7 +727,7 @@
 "participants.section.services" = "Servicios (%d)";
 "participants.section.settings" = "Opciones";
 "participants.footer.add_title" = "Añadir Participantes";
-"participants.section.name.footer" = "Hasta %1$d participantes pueden unirse a una conversación de grupo. Las llamadas de vídeo funcionan con hasta %2$d personas y tú.";
+"participants.section.name.footer" = "Hasta %1$d participantes pueden unirse a una conversación de grupo.";
 "participants.section.admins.footer" = "No hay administradores";
 "participants.section.members.footer" = "No hay miembros";
 

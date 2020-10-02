@@ -727,7 +727,7 @@
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "オプション";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "グループ会話には %1$d 人までが参加できます。ビデオ通話ではあなたと他最大 %2$d 人の間で通話が行えます。";
+"participants.section.name.footer" = "グループ会話には %1$d 人までが参加できます。";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 

@@ -727,7 +727,7 @@
 "participants.section.services" = "Servizi (%d)";
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo. Le videochiamate funzionano con altre %2$d persone oltre a te.";
+"participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo.";
 "participants.section.admins.footer" = "Non ci sono amministratori.";
 "participants.section.members.footer" = "Non ci sono membri.";
 

@@ -727,7 +727,7 @@
 "participants.section.services" = "Hizmetler (%d)";
 "participants.section.settings" = "Ayarlar";
 "participants.footer.add_title" = "Katılımcı ekle";
-"participants.section.name.footer" = "%1$d kişiye kadar katılımcı grup sohbetine katılabilir. Video görüşmeleri ise %2$d kişiyle ve birlikte çalışır.";
+"participants.section.name.footer" = "%1$d kişiye kadar katılımcı grup sohbetine katılabilir.";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
