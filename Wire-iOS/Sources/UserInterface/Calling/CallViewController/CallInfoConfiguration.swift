@@ -120,6 +120,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
+
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
     let title: String
@@ -138,7 +139,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
-    let isConferenceCall: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -169,7 +169,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
-        isConferenceCall = voiceChannel.isConferenceCall
     }
 
     // This property has to be computed in order to return the correct call duration
