@@ -70,5 +70,10 @@ extension StyleKitIcon {
         }
 
     }
+}
 
+public extension StyleKitIcon.Size {
+    var cgSize: CGSize {
+        return CGSize(width: rawValue, height: rawValue)
+    }
 }

@@ -26,7 +26,8 @@ import WireSyncEngine
 import WireCommonComponents
 
 protocol TrackingInterface {
-    var disableCrashAndAnalyticsSharing : Bool { get set }
+    var disableCrashSharing : Bool { get set }
+    var disableAnalyticsSharing : Bool { get set }
 }
 
 protocol AVSMediaManagerInterface {
@@ -54,6 +55,8 @@ enum SettingsPropertyError: Error {
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+    
+    func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping  ResultHandler)
 }
 
 final class SettingsPropertyFactory {
@@ -221,10 +224,10 @@ final class SettingsPropertyFactory {
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
-        case .disableCrashAndAnalyticsSharing:
+        case .disableAnalyticsSharing:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
-                    return SettingsPropertyValue(tracking.disableCrashAndAnalyticsSharing)
+                    return SettingsPropertyValue(tracking.disableAnalyticsSharing)
                 }
                 else {
                     return SettingsPropertyValue(false)
@@ -234,7 +237,27 @@ final class SettingsPropertyFactory {
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
-                        tracking.disableCrashAndAnalyticsSharing = number.boolValue
+                        tracking.disableAnalyticsSharing = number.boolValue
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+                }
+            }
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+        case .disableCrashSharing:
+            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                if let tracking = self.tracking {
+                    return SettingsPropertyValue(tracking.disableCrashSharing)
+                }
+                else {
+                    return SettingsPropertyValue(false)
+                }
+            }
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+                if var tracking = self.tracking {
+                    switch(value) {
+                    case .number(let number):
+                        tracking.disableCrashSharing = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -316,8 +339,14 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        AppLock.isActive = lockApp.boolValue
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                        self.delegate?.appLockOptionDidChange(self,
+                                                              newValue: lockApp.boolValue,
+                                                              callback: { result in
+                            AppLock.isActive = result
+                        })                        
+
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
         
@@ -372,6 +401,31 @@ final class SettingsPropertyFactory {
                         }
             })
             
+        case .encryptMessagesAtRest:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let value = ZMUserSession.shared()?.encryptMessagesAtRest ?? false
+                    return SettingsPropertyValue(value)
+            },
+                setAction: { (_, value) in
+                    guard case .number(let enabled) = value else { return }
+                    ZMUserSession.shared()?.encryptMessagesAtRest = enabled.boolValue
+            })
+            
+        case .enableConferenceCallingBeta:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let value: Bool = Settings.shared[.conferenceCalling] ?? false
+                    return SettingsPropertyValue(value)
+                },
+                setAction: { _, value  in
+                    if case .number(let enabled) = value {
+                        Settings.shared[.conferenceCalling] = enabled.boolValue
+                    }
+                }
+            )
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)

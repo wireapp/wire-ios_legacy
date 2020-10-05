@@ -71,7 +71,7 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
         }
     }
 
-    func testTeamGroupOptionsExpanded() {
+    func testTeamGroupOptionsExpanded() {        
         teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.optionsExpanded = true

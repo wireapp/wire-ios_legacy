@@ -19,12 +19,13 @@
 import XCTest
 @testable import Wire
 
-class ImageMessageViewTests: ZMSnapshotTestCase {
+final class ImageMessageViewTests: XCTestCase {
     var sut: ImageMessageView!
 
     override func setUp() {
         super.setUp()
         sut = ImageMessageView()
+        sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
     }
 
     override func tearDown() {
@@ -37,40 +38,27 @@ class ImageMessageViewTests: ZMSnapshotTestCase {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_small.jpg"))
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItRendersPortraitImage() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_burger.jpg"))
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItRendersLandscapeImage() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
         // THEN
-        self.verify(view: sut.snapshotView())
+        verify(matching: sut)
     }
     
     func testThatItShowsLoadingIndicator() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.pendingImageMessage()
         // THEN
-        self.verify(view: sut.snapshotView())
-    }
-    
-}
-
-
-fileprivate extension ImageMessageView {
-    func snapshotView() -> UIView {
-        widthAnchor.constraint(equalToConstant: 320).isActive = true
-        layer.speed = 0
-        setNeedsLayout()
-        layoutIfNeeded()
-        return self
+        verify(matching: sut)
     }
 }
-

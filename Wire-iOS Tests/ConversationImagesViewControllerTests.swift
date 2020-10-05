@@ -37,7 +37,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
     
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let initialMessage = otherUserConversation.append(imageFromData: image.imageData!)!
+        let initialMessage = try! otherUserConversation.appendImage(from: image.imageData!)
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
         let collection = MockCollection(messages: [ imagesCategoryMatch : [initialMessage] ])
         let delegate = AssetCollectionMulticastDelegate()

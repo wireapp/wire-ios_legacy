@@ -17,12 +17,12 @@
  */
 
 "NSContactsUsageDescription" = "Um sich mit anderen zu verbinden, den Zugriff auf Kontakte erlauben. Alle Daten werden vor dem Hochladen auf unseren Server anonymisiert und nicht mit Dritten geteilt.";
-"NSMicrophoneUsageDescription" = "Erlaube Wire den Zugriff auf dein Mikrofon. Dies is notwendig um mit deinen Freunden telefonieren, sowie ihnen Audio-Nachrichten senden zu können.";
-"NSLocationWhenInUseUsageDescription" = "Erlaube Wire Zugriff auf deinen Standort, damit du diesen mit anderen teilen kannst.";
-"NSCameraUsageDescription" = "Erlaube Wire den Zugriff auf deine Kamera. Dies ist notwendig um Fotos senden, sowie Audio- und Video-Telefonate durchführen zu können.";
+"NSMicrophoneUsageDescription" = "Erlauben Sie Wire, auf Ihr Mikrofon zuzugreifen, um Telefonate zu führen und Audionachrichten zu senden.";
+"NSLocationWhenInUseUsageDescription" = "Erlauben Sie Wire Zugriff auf Ihren Standort, damit Sie ihn mit anderen teilen können.";
+"NSCameraUsageDescription" = "Erlauben Sie Wire Zugriff auf Ihre Kamera, damit Sie Videoanrufe tätigen und Fotos senden können.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Erlaube Wire aufgenommene Bilder in deiner Galerie zu speichern.";
+"NSPhotoLibraryAddUsageDescription" = "Erlauben Sie Wire, die von Ihnen aufgenommenen Bilder im Fotoarchiv zu speichern.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Erlaube Wire Zugriff auf die gespeicherten Bilder in deiner Galerie.";
+"NSPhotoLibraryUsageDescription" = "Erlauben Sie Wire Zugriff auf die im Fotoarchiv gespeicherten Bilder.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "Um dich in der App zu authentifizieren, erlaube Wire Zugriff auf die Face ID Funktion.";
+"NSFaceIDUsageDescription" = "Um sich in der App zu authentifizieren, erlauben Sie Wire Zugriff auf die Face ID-Funktion.";

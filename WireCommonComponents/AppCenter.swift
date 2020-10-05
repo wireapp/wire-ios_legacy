@@ -31,7 +31,11 @@ public extension MSAppCenter {
     }
     
     static func start() {
-        MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
+        MSDistribute.updateTrack = .private
+
+        MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self,
+                                                                MSDistribute.self,
+                                                                MSAnalytics.self])
     }
 }
 
@@ -40,20 +44,5 @@ public extension MSCrashes {
     static var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
         guard let lastSessionCrashReport = lastSessionCrashReport() else { return nil }
         return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
-    }
-}
-
-public extension Bundle {
-    
-    static var appCenterAppId: String? {
-        guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
-            let item = scheme.first,
-            let key = item["CFBundleURLSchemes"] as? [String],
-            let appCenterID = key.first else { return nil }
-        return appCenterID.replacingOccurrences(of: "appcenter-", with: "")
-    }
-    
-    static var useAppCenter: Bool {
-        return Bundle.appMainBundle.infoForKey("UseAppCenter") == "1"
     }
 }

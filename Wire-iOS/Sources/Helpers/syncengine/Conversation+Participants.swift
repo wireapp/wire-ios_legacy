@@ -23,9 +23,17 @@ extension ZMConversation {
     private enum NetworkError: Error {
         case offline
     }
+
+    static var useConferenceCalling: Bool {
+        return Settings.shared[.conferenceCalling] == true
+    }
     
-    static let maxVideoCallParticipants: Int = 4
-    
+    static var maxVideoCallParticipants: Int {
+        return useConferenceCalling ? maxParticipants : legacyGroupVideoParticipantLimit
+    }
+
+    static let legacyGroupVideoParticipantLimit: Int = 4
+
     static let maxParticipants: Int = 500
     
     static var maxParticipantsExcludingSelf: Int {
@@ -68,7 +76,7 @@ extension ZMConversation {
             switch result {
             case .success:
                 if let serviceUser = user as? ServiceUser, user.isServiceUser {
-                    Analytics.shared().tagDidRemoveService(serviceUser)
+                    Analytics.shared.tagDidRemoveService(serviceUser)
                 }
             case .failure(let error):
                 self.showAlertForRemoval(for: error)

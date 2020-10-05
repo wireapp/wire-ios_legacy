@@ -27,6 +27,7 @@
 "general.edit" = "Редагувати";
 "general.done" = "Готово";
 "general.confirm" = "OK";
+"general.later" = "Пізніше";
 "general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
 "image.add_sketch" = "Додати зарисовку";
+"image.add_emoji" = "Додати емодзі";
 "image.edit_image" = "Редагувати картинку";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "Попередній перегляд відео з YouTube";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "Попередній перегляд пісні в SoundCloud";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Попередній перегляд плейліста SoundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "На жаль, не вдалося поставити ваш цифровий підпис.";
+"digital_signature.alert.error.no_consent_url" = "На жаль, форма для підписування не відкрилась. Спробуйте ще раз.";
+"digital_signature.alert.error.no_signature" = "На жаль, не вдалося поставити ваш цифровий підпис. Спробуйте ще раз.";
+"digital_signature.alert.download_necessary" = "Будь ласка, збережіть і прочитайте документ, перш ніж підписувати його.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Пошук…";
 "content.message.open" = "Вiдкрити";
+"content.message.sign" = "Підписати";
 "content.message.copy" = "Скопіювати";
 "content.message.download" = "Завантажити";
 "content.message.details" = "Подробиці";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Повторне під'єднання…";
 "call.status.terminating" = "Роз'єднання…";
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
+"call.status.variable_bitrate" = "Змінний бітрейт";
 
 "call.participants.show_all" = "Показати всіх (%@)";
 "call.participants.list.title" = "Учасники";
@@ -989,6 +999,8 @@
 "self.settings.enable_read_receipts.title" = "Надсилати звіти про перегляд";
 "self.settings.privacy_section_group.subtitle" = "Ви не зможете отримувати звіти про перегляд від інших учасників розмови, якщо дана опція вимкнена.\n\nЦе налаштування не застосовується до групових розмов.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Шифрувати повідомлення в режимі очікування";
+
 "self.settings.account_picture_group.picture" = "Картинка";
 "self.settings.account_picture_group.color" = "Колір";
 
@@ -1026,7 +1038,7 @@
 
 "self.settings.account_section.handle.change.title" = "Нік";
 "self.settings.account_section.handle.change.save" = "Зберегти";
-"self.settings.account_section.handle.change.footer" = "Мінімум 2 символи з множини a—z, 0—9, та _.";
+"self.settings.account_section.handle.change.footer" = "Мінімум 2 символи з множини a—z, 0—9, та '.', '-', '_'.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Уже зарезервоване";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Не вдалося зарезервувати нік";
@@ -1144,6 +1156,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Розблокуйте з Touch ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Розблокуйте з Face ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Розблокуйте, ввівши свій код.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Якщо ви забудете ваш код допуску, його неможливо буде відновити.";
 
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Розблокування паролем.";
@@ -1165,10 +1178,15 @@
 "self.settings.privacy.clear_history.subtitle" = "Це назавжди зітре історію всіх ваших розмов.";
 
 "self.settings.advanced.title" = "Розширені налаштування";
+"self.settings.advanced.conference_calling.title" = "Конференц-дзвінки";
+"self.settings.advanced.conference_calling.subtitle" = "Якщо дана опція увімкнена, дзвінки для аудіо- та відеоконференцій можуть вмістити більшу кількість учасників.";
+"self.settings.advanced.conference_calling.toggle" = "Бета-функціональність";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Відлагоджувальний звіт";
 "self.settings.advanced.debugging_tools.title" = "Інструменти налагоджування";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Знайти першу непрочитану розмову";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Показати мій ID користувача";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Введіть налагоджувальну команду";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Дана інформація допоможе службі технічної підтримки Wire діагностувати проблеми із дзвінками та покращити загальний досвід користування додатком.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
 "self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщеннями, команда підтримки Wire може попросити вас виконати скидання цього токену.";
@@ -1239,8 +1257,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Додати акаунт.";
-"landing.welcome_message" = "Ласкаво просимо до %@";
-"landing.create_account.title" = "Створити акаунт";
+"landing.welcome_message" = "Пробуєте створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
+"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку - як тільки ви створите свою команду, то зможете увійти тут";
+"landing.create_account.title" = "Створити персональний акаунт в Wire";
+"landing.create_account.infotitle" = "Спілкуєтесь з друзями та сім'єю?";
 "landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
 "landing.create_team.subtitle" = "Безпечна співпраця для бізнесу, органів влади та профільних\U00A0організацій";
@@ -1404,9 +1424,9 @@
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
-"login.sso.backend_switch.title" = "Redirecting...";
-"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
-"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+"login.sso.backend_switch.title" = "Перенаправлення...";
+"login.sso.backend_switch.subtitle" = "Вас буде перенаправлено до виділеного корпоративного сервісу.";
+"login.sso.backend_switch.information" = "Надайте ваші дані тільки якщо ви впевнені, що це сторінка входу вашої організації.";
 
 
 // Restore In Progress Loading Titles
@@ -1539,6 +1559,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 "error.user.needs_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
+"error.user.domain_blocked" = "Цей емейл потребує запрошення в команду. Зверніться до ІТ-адміністраторів вашої організації для отримання запрошення.";
 "error.user.invalid_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
 "error.user.account_pending_activation" = "Акаунт, який ви намагаєтесь використовувати, очікує активації. Будь ласка, перевірте ваші дані.";
 "error.user.network_error" = "Спостерігаються тимчасові проблеми з вашою мережею. Будь ласка, спробуйте знову пізніше.";
@@ -1765,3 +1786,49 @@
 "button_message_cell.state.confirmed" = "підтверджено";
 
 "button_message_cell.generic_error" = "Ваша відповідь не може бути відправлена. Будь ласка, спробуйте ще раз.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Код допуску";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Створіть код допуску";
+"create_passcode.info_label" = "Його буде використано для розблокування Wire. Якщо ви забудете цей код допуску ";
+"create_passcode.info_label.highlighted" = "його неможливо буде відновити.";
+"create_passcode.create_button.title" = "створити код допуску";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Не менше восьми символів";
+"create_passcode.validation.no_lowercase_char" = "Маленька літера";
+"create_passcode.validation.no_uppercase_char" = "Велика літера";
+"create_passcode.validation.no_number" = "Число";
+"create_passcode.validation.no_special_char" = "Спеціальний символ";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Введіть ваш код допуску";
+"unlock.title_label" = "Введіть код допуску, щоб розблокувати Wire";
+"unlock.wipe_button" = "Доступ як з нового пристрою";
+"unlock.error_label" = "Невірний код допуску";
+"unlock.submit_button.title" = "розблокувати";
+
+// Wipe database
+
+"wipe_database.title_label" = "Доступ як з нового пристрою";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
+
+"wipe_database.button.title" = "Я хочу видалити базу даних";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Підтвердити видалення бази даних";
+"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.placeholder" = "Введіть 'Видалити'";
+"wipe_database.alert.confirm" = "Видалити";
+"wipe_database.alert.confirm_input" = "Видалити";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "База даних видалена";
+"wipe_database_completion.subtitle" = "Ваші дані та повідомлення було видалено. Тепер ви можете увійти ще раз з новим пристроєм.";

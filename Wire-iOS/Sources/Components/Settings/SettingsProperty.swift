@@ -143,7 +143,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     }
 
     func trackNewValue() {
-        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     let propertyName : SettingsPropertyName
@@ -162,7 +162,7 @@ typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
 typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> ()
 
 /// Genetic block property
-class SettingsBlockProperty : SettingsProperty {
+final class SettingsBlockProperty : SettingsProperty {
     var enabled: Bool = true
 
     let propertyName : SettingsPropertyName
@@ -177,7 +177,7 @@ class SettingsBlockProperty : SettingsProperty {
     }
     
     func trackNewValue() {
-        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction

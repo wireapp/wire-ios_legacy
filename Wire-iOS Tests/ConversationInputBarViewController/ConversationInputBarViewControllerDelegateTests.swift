@@ -41,7 +41,7 @@ final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
         let delegate = MockDelegate()
         sut.delegate = delegate
 
-        let message = conversation.append(text: "Boo")!
+        let message = try! conversation.appendText(content: "Boo")
         conversation.draftMessage = DraftMessage(text: "Goo", mentions: [], quote: message as? ZMMessage)
         XCTAssertTrue(conversation.hasDraftMessage)
         XCTAssertNotNil(conversation.draftMessage!.quote)

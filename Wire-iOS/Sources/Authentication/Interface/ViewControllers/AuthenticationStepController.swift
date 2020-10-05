@@ -46,6 +46,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - Views
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .compatibleDarkContent
+    }
+
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: UILabel!
@@ -91,7 +95,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.Team.background
-        
+
         createViews()
         createConstraints()
         updateBackButton()
@@ -185,7 +189,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     private func updateHeadlineLabelFont() {
-        headlineLabel.font = self.view.frame.size.width > 320 ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
+        headlineLabel.font = self.view.frame.size.width > CGFloat.iPhone4Inch.width ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
 
     func setSecondaryViewHidden(_ isHidden: Bool) {
@@ -354,9 +358,9 @@ class AuthenticationStepController: AuthenticationStepViewController {
 // MARK: - Event Handling
 
 extension AuthenticationStepController {
-    
+
     // MARK: - AuthenticationCoordinatedViewController
-    
+
     func displayError(_ error: Error) {
         //no-op
     }
@@ -391,7 +395,7 @@ extension AuthenticationStepController {
             errorLabel.textColor = UIColor.Team.placeholderColor
             errorLabelContainer.isHidden = false
             showSecondaryView(for: nil)
-            
+
         case .error(let error, let showVisualFeedback)?:
             if !showVisualFeedback {
                 // If we do not want to show an error (eg if all the text was deleted,

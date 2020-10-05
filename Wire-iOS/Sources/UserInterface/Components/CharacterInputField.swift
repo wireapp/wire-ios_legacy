@@ -33,7 +33,7 @@ protocol TextContainer: class {
 
 /// Custom input field implementation. Allows entering the characters from @c characterSet up to @c maxLength characters
 /// Allows pasting the text.
-public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
+final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     fileprivate var storage = String() {
         didSet {
             if storage.count > maxLength {
@@ -45,8 +45,8 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
     }
     
-    public let maxLength: Int
-    public let characterSet: CharacterSet
+    let maxLength: Int
+    let characterSet: CharacterSet
     weak var delegate: CharacterInputFieldDelegate? = .none
     private let characterViews: [CharacterView]
     private let stackView = UIStackView()
@@ -100,9 +100,9 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         menuController.setMenuVisible(true, animated: true)
     }
     
-    class CharacterView: UIView {
+    final class CharacterView: UIView {
         private let label = UILabel()
-        public let parentSize: CGSize
+        let parentSize: CGSize
 
         var character: Character? = .none {
             didSet {
@@ -137,7 +137,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: parentSize.width > 320 ? 50 : 44, height: parentSize.height)
+            return CGSize(width: parentSize.width > CGFloat.iPhone4Inch.width ? 50 : 44, height: parentSize.height)
         }
     }
     
@@ -183,36 +183,36 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.storage = String()
     }
     
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return true
     }
     
-    public override var canBecomeFocused: Bool {
+    override var canBecomeFocused: Bool {
         return true
     }
     
-    @discardableResult public override func becomeFirstResponder() -> Bool {
+    @discardableResult override func becomeFirstResponder() -> Bool {
         let result = super.becomeFirstResponder()
         updateCharacterViews(isFirstResponder: true)
         return result
     }
     
-    @discardableResult public override func resignFirstResponder() -> Bool {
+    @discardableResult override func resignFirstResponder() -> Bool {
         let result = super.resignFirstResponder()
         updateCharacterViews(isFirstResponder: false)
         return result
     }
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.becomeFirstResponder()
     }
 
-    public override func accessibilityActivate() -> Bool {
+    override func accessibilityActivate() -> Bool {
         return self.becomeFirstResponder()
     }
     
@@ -222,7 +222,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.showMenu()
     }
     
-    public override func paste(_ sender: Any?) {
+    override func paste(_ sender: Any?) {
         guard UIPasteboard.general.hasStrings, let valueToPaste = UIPasteboard.general.string else {
             return
         }
@@ -232,7 +232,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
     }
     
-    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(paste(_:)):
             return UIPasteboard.general.string != nil
@@ -243,11 +243,11 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     
     // MARK: - Public API
     
-    public var isFilled: Bool {
+    var isFilled: Bool {
         return storage.count >= maxLength
     }
     
-    public var text: String? {
+    var text: String? {
         set {
             storage = prepare(string: newValue ?? "")
         }
@@ -257,12 +257,12 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     }
     
     // MARK: - UITextInputTraits
-    public var keyboardType: UIKeyboardType = .default
-    public var textContentType: UITextContentType! = nil
+    var keyboardType: UIKeyboardType = .default
+    var textContentType: UITextContentType! = nil
 }
 
 extension CharacterInputField: UIKeyInput {
-    public func insertText(_ text: String) {
+    func insertText(_ text: String) {
         let shouldInsert = delegate?.shouldAcceptChanges(self) ?? true
         guard shouldInsert else { return }
         
@@ -281,7 +281,7 @@ extension CharacterInputField: UIKeyInput {
         }
     }
     
-    public func deleteBackward() {
+    func deleteBackward() {
         guard !self.storage.isEmpty else {
             return
         }
@@ -294,7 +294,7 @@ extension CharacterInputField: UIKeyInput {
         }
     }
     
-    public var hasText: Bool {
+    var hasText: Bool {
         return !storage.isEmpty
     }
 }

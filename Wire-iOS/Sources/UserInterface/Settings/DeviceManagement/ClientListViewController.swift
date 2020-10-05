@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import WireSyncEngine
-
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -29,7 +27,7 @@ final class ClientListViewController: UIViewController,
                                 ClientUpdateObserver,
                                 ClientColorVariantProtocol,
                                 SpinnerCapable {
-    //MARK: SpinnerCapable
+    // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     var removalObserver: ClientRemovalObserver?
@@ -43,7 +41,7 @@ final class ClientListViewController: UIViewController,
             setColor(for: variant)
         }
     }
-    
+
     var editingList: Bool = false {
         didSet {
             guard clients.count > 0 else {
@@ -63,7 +61,7 @@ final class ClientListViewController: UIViewController,
     var clients: [UserClient] = [] {
         didSet {
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
-            self.clientsTableView?.reloadData();
+            self.clientsTableView?.reloadData()
 
             if clients.count > 0 {
                 createRightBarButtonItem()
@@ -77,13 +75,13 @@ final class ClientListViewController: UIViewController,
     private let clientFilter: (UserClient) -> Bool
 
     var sortedClients: [UserClient] = []
-    
+
     let selfClient: UserClient?
     let detailedView: Bool
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
-    var userObserverToken : NSObjectProtocol?
-    
+    var userObserverToken: NSObjectProtocol?
+
     var leftBarButtonItem: UIBarButtonItem? {
         if self.isIPadRegular() {
             return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
@@ -123,12 +121,12 @@ final class ClientListViewController: UIViewController,
         super.init(nibName: nil, bundle: nil)
         title = "registration.devices.title".localized(uppercased: true)
 
-        self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
+        self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() }))
         self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
             self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: session)
         }
-        
+
         if clientsList == nil {
             if clients.isEmpty {
                 (navigationController as? SpinnerCapableViewController ?? self).isLoadingViewVisible = true
@@ -136,21 +134,23 @@ final class ClientListViewController: UIViewController,
             ZMUserSession.shared()?.fetchAllClients()
         }
     }
-    
+
+    @available(*, unavailable)
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
-    
-    required init(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
         self.clients = clientsList
         self.editingList = false
     }
-    
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 
@@ -163,7 +163,7 @@ final class ClientListViewController: UIViewController,
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.clientsTableView?.reloadData()
@@ -176,12 +176,12 @@ final class ClientListViewController: UIViewController,
         ///prevent more then one removalObserver in self and SettingsClientViewController
         removalObserver = nil
     }
-    
+
     private func dismissLoadingView() {
-        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = false        
+        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
         isLoadingViewVisible = false
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -195,7 +195,7 @@ final class ClientListViewController: UIViewController,
     }
 
     fileprivate func createTableView() {
-        let tableView = UITableView(frame: CGRect.zero, style: .grouped);
+        let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -208,7 +208,7 @@ final class ClientListViewController: UIViewController,
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
-    
+
     fileprivate func createConstraints() {
         guard let clientsTableView = clientsTableView else {
             return
@@ -218,88 +218,84 @@ final class ClientListViewController: UIViewController,
 
         clientsTableView.fitInSuperview(safely: true)
     }
-    
+
     fileprivate func convertSection(_ section: Int) -> Int {
         if let _ = self.selfClient {
             return section
-        }
-        else {
+        } else {
             return section + 1
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @objc func startEditing(_ sender: AnyObject!) {
         self.editingList = true
     }
-    
+
     @objc private func endEditing(_ sender: AnyObject!) {
         self.editingList = false
     }
-    
+
     @objc func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
-    func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials?) {
+    func deleteUserClient(_ userClient: UserClient,
+                          credentials: ZMEmailCredentials?) {
         removalObserver = nil
 
         removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
-                                                    controller: self,
-                                                    credentials: credentials)
+                                                delegate: self,
+                                                credentials: credentials)
 
-        removalObserver?.userClientToDelete = userClient
-        removalObserver?.credentials = credentials
         removalObserver?.startRemoval()
 
         delegate?.finishedDeleting(self)
     }
-    
+
     // MARK: - ClientRegistrationObserver
-    
+
     func finishedFetching(_ userClients: [UserClient]) {
         dismissLoadingView()
-        
+
         self.clients = userClients.filter { !$0.isSelfClient() }
     }
-    
+
     func failedToFetchClients(_ error: Error) {
         dismissLoadingView()
 
         zmLog.error("Clients request failed: \(error.localizedDescription)")
-        
+
         presentAlertWithOKButton(message: "error.user.unkown_error".localized)
     }
-    
+
     func finishedDeleting(_ remainingClients: [UserClient]) {
         clients = remainingClients
 
         editingList = false
     }
-    
-    func failedToDeleteClients(_ error: Error) {
 
+    func failedToDeleteClients(_ error: Error) {
+        // no-op
     }
-    
+
     // MARK: - UITableViewDataSource & UITableViewDelegate
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = self.selfClient , self.sortedClients.count > 0 {
+        if let _ = self.selfClient, self.sortedClients.count > 0 {
             return 2
-        }
-        else {
+        } else {
             return 1
         }
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.convertSection(section) {
         case 0:
             if let _ = self.selfClient {
                 return 1
-            }
-            else {
+            } else {
                 return 0
             }
         case 1:
@@ -308,53 +304,52 @@ final class ClientListViewController: UIViewController,
             return 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch self.convertSection(section) {
             case 0:
                 if let _ = self.selfClient {
-                    return NSLocalizedString("registration.devices.current_list_header", comment:"")
-                }
-                else {
+                    return NSLocalizedString("registration.devices.current_list_header", comment: "")
+                } else {
                     return nil
                 }
             case 1:
-                return NSLocalizedString("registration.devices.active_list_header", comment:"")
+                return NSLocalizedString("registration.devices.active_list_header", comment: "")
             default:
                 return nil
         }
     }
-    
+
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch self.convertSection(section) {
             case 0:
                 return nil
             case 1:
-                return NSLocalizedString("registration.devices.active_list_subtitle", comment:"")
+                return NSLocalizedString("registration.devices.active_list_subtitle", comment: "")
             default:
                 return nil
         }
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
             cell.selectionStyle = .none
             cell.accessoryType = self.detailedView ? .disclosureIndicator : .none
             cell.showVerified = self.detailedView
             cell.variant = variant
-            
+
             switch self.convertSection((indexPath as NSIndexPath).section) {
             case 0:
                 cell.userClient = self.selfClient
@@ -366,26 +361,25 @@ final class ClientListViewController: UIViewController,
             default:
                 cell.userClient = nil
             }
-            
+
             return cell
-        }
-        else {
+        } else {
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 1:
-            
+
             let userClient = self.sortedClients[indexPath.row]
-            
+
             self.deleteUserClient(userClient, credentials: credentials)
         default: break
         }
-        
+
     }
-    
+
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 0:
@@ -395,15 +389,15 @@ final class ClientListViewController: UIViewController,
         default:
             return .none
         }
-        
+
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !self.detailedView {
             return
@@ -413,22 +407,22 @@ final class ClientListViewController: UIViewController,
             if let selfClient = self.selfClient {
                 self.openDetailsOfClient(selfClient)
             }
-            break;
+            break
         case 1:
             self.openDetailsOfClient(self.sortedClients[indexPath.row])
-            break;
+            break
         default:
-            break;
+            break
         }
 
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
     }
 
     func createRightBarButtonItem() {
-        if (self.editingList) {
+        if self.editingList {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
 
             self.navigationItem.setLeftBarButton(nil, animated: true)
@@ -438,17 +432,38 @@ final class ClientListViewController: UIViewController,
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
     }
+
 }
 
-extension ClientListViewController : ZMUserObserver {
-    
+// MARK: - ClientRemovalObserverDelegate
+
+extension ClientListViewController: ClientRemovalObserverDelegate {
+    func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {
+        guard removalObserver == clientRemovalObserver else {
+            return
+        }
+
+        isLoadingViewVisible = isVisible
+    }
+
+    func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
+        guard removalObserver == clientRemovalObserver else {
+            return
+        }
+
+        present(viewControllerToPresent, animated: true)
+    }
+}
+
+extension ClientListViewController: ZMUserObserver {
+
     func userDidChange(_ note: UserChangeInfo) {
-        if (note.clientsChanged || note.trustLevelChanged) {
+        if note.clientsChanged || note.trustLevelChanged {
             guard let selfClient = ZMUser.selfUser().selfClient() else { return }
             var clients = ZMUser.selfUser().clients
             clients.remove(selfClient)
             self.clients = Array(clients)
         }
     }
-    
+
 }

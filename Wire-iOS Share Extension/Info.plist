@@ -29,7 +29,9 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<string>
+            <string>
+                ${SHARE_EXTENSION_ENABLED} == 1
+                AND (
                 SUBQUERY(extensionItems, $extensionItem, SUBQUERY($extensionItem.attachments, $attachment, ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text").@count &gt;= 1).@count &gt;= 1
                 
                 OR SUBQUERY(extensionItems, $extensionItem, SUBQUERY($extensionItem.attachments, $attachment, SUBQUERY($attachment.registeredTypeIdentifiers, $uti, $uti UTI-CONFORMS-TO "public.url").@count &gt;= 1).@count &gt;= 1).@count &gt;= 1
@@ -40,7 +42,7 @@
                 
                 OR SUBQUERY(extensionItems,$extensionItem,SUBQUERY($extensionItem.attachments,$attachment,ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.apple.pkpass").@count == $extensionItem.attachments.@count AND $extensionItem.attachments.@count &lt;= 1).@count == 1
                 
-                OR SUBQUERY(extensionItems,$extensionItem,SUBQUERY($extensionItem.attachments,$attachment,ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.content").@count == $extensionItem.attachments.@count AND $extensionItem.attachments.@count &lt;= 1).@count == 1
+                OR SUBQUERY(extensionItems,$extensionItem,SUBQUERY($extensionItem.attachments,$attachment,ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.content").@count == $extensionItem.attachments.@count AND $extensionItem.attachments.@count &lt;= 1).@count == 1)
             </string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>

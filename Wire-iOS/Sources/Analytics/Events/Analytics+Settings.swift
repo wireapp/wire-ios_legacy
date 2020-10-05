@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireCommonComponents
 
@@ -25,17 +24,17 @@ private let settingsChangeEventPropertyName = "property"
 private let settingsChangeEventPropertyValue = "new_value"
 
 extension Analytics {
-    
+
     func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
         guard let value = value.value(),
-                propertyName != SettingsPropertyName.disableCrashAndAnalyticsSharing else {
+                propertyName != SettingsPropertyName.disableAnalyticsSharing else {
             return
         }
         let attributes = [settingsChangeEventPropertyName: propertyName,
                           settingsChangeEventPropertyValue: value]
         tagEvent(settingsChangeEvent, attributes: attributes)
     }
-    
+
     func tagOpenManageTeamURL() {
         self.tagEvent("settings.opened_manage_team")
     }

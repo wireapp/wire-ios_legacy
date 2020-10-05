@@ -37,7 +37,8 @@ final class ImageMessageView: UIView {
         self.createViews()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -154,7 +155,7 @@ final class ImageMessageView: UIView {
         self.updateForImage()
     }
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         
         self.updateImageLayout()

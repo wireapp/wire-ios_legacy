@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ extension AppDelegate {
         let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") //check
 
-        let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashSharing
 
         if appCenterTrackingEnabled {
             MSCrashes.setDelegate(self)
@@ -82,7 +82,8 @@ extension AppDelegate {
 }
 
 extension AppDelegate: MSDistributeDelegate {
-    func distribute(_ distribute: MSDistribute!, releaseAvailableWith details: MSReleaseDetails!) -> Bool {
+    func distribute(_ distribute: MSDistribute!,
+                    releaseAvailableWith details: MSReleaseDetails!) -> Bool {
         guard let window = window else { return false }
 
         let alertController = UIAlertController(title: "Update available \(details?.shortVersion ?? "") (\(details?.version ?? ""))",
@@ -116,11 +117,10 @@ extension AppDelegate: MSDistributeDelegate {
 extension AppDelegate: MSCrashesDelegate {
 
     public func crashes(_ crashes: MSCrashes!, shouldProcessErrorReport errorReport: MSErrorReport!) -> Bool {
-        return !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        return !TrackingManager.shared.disableCrashSharing
     }
 
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         crashReportUploadDone()
     }
-
 }

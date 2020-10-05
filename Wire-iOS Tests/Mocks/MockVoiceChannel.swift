@@ -29,6 +29,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var mockIsVideoCall: Bool = false
     var mockVideoState: VideoState = .stopped
     var mockNetworkQuality: NetworkQuality = .normal
+    var mockIsConferenceCall: Bool = false
 
     required init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -102,6 +103,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
 
     var networkQuality: NetworkQuality {
         return mockNetworkQuality
+    }
+
+    var isConferenceCall: Bool {
+        return mockIsConferenceCall
     }
     
     var mockMuted = false

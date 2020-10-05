@@ -25,9 +25,9 @@ protocol SearchServicesSectionDelegate: SearchSectionControllerDelegate {
     func addServicesSectionDidRequestOpenServicesAdmin()
 }
 
-class SearchServicesSectionController: SearchSectionController {
+final class SearchServicesSectionController: SearchSectionController {
     
-    var delegate: SearchServicesSectionDelegate? = nil
+    weak var delegate: SearchServicesSectionDelegate? = nil
 
     var services: [ServiceUser] = []
 

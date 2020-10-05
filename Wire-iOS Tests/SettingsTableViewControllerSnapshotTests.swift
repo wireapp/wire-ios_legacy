@@ -49,47 +49,32 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     func testForSettingGroup() {
         let group = settingsCellDescriptorFactory.settingsGroup()
-        sut = SettingsTableViewController(group: group)
-
-        sut.view.backgroundColor = .black
-
-        verify(matching: sut)
+        verify(group: group)
     }
 
     func testForAccountGroup() {
         let group = settingsCellDescriptorFactory.accountGroup()
-        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
-
-        sut.view.backgroundColor = .black
-
-        verify(matching: sut)
+        verify(group: group)
     }
 
     func testForAccountGroupWithDisabledEditing() {
 		MockUserRight.isPermitted = false
 
 		let group = settingsCellDescriptorFactory.accountGroup()
-        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
-
-        sut.view.backgroundColor = .black
-
-        verify(matching: sut)
+        verify(group: group)
     }
 
     // MARK: - options
     func testForOptionsGroup() {
-        let group = settingsCellDescriptorFactory.optionsGroup()
-        sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
-
-        sut.view.backgroundColor = .black
-
-        verify(matching: sut)
+        Settings.shared[.chatHeadsDisabled] = false
+        let group = settingsCellDescriptorFactory.optionsGroup
+        verify(group: group)
     }
 
     func testForOptionsGroupScrollToBottom() {
         setToLightTheme()
         
-        let group = settingsCellDescriptorFactory.optionsGroup()
+        let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
@@ -104,10 +89,29 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         setToLightTheme()
 
         let group = SettingsCellDescriptorFactory.darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
+        verify(group: group)
+    }
+    
+    private func verify(group: Any,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
-
+        
         sut.view.backgroundColor = .black
+        
+        verify(matching: sut, file: file, testName: testName, line: line)
+    }
+    
+    // MARK: - advanced
+    func testForAdvancedGroup() {
+        let group = settingsCellDescriptorFactory.advancedGroup
+        verify(group: group)
+    }
 
-        verify(matching: sut)
+    // MARK: - data usage permissions
+    func testForDataUsagePermissionsForTeamMember() {
+        let group = settingsCellDescriptorFactory.dataUsagePermissionsGroup(isTeamMember: true)
+        verify(group: group)
     }
 }
