@@ -180,7 +180,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             appVersion: appVersion!,
             mediaManager: mediaManager!,
             analytics: Analytics.shared,
-            delegate: appStateController.sessinManagerObeserver,
+            delegate: appStateController.appStateCalculator,
             showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,

@@ -19,16 +19,16 @@
 import Foundation
 import WireSyncEngine
 
-protocol AppStateSessionManagerObserverDelegate: class {
-    func sessionManagerObserver(_: AppStateSessionManagerObserver,
-                                willTransitionTo _: AppState,
-                                completion: (() -> Void)?)
+protocol AppStateCalculatorDelegate: class {
+    func appStateCalculator(_: AppStateCalculator,
+                            didCalculate appState: AppState,
+                            completion: (() -> Void)?)
 }
 
-class AppStateSessionManagerObserver: SessionManagerDelegate {
+class AppStateCalculator: SessionManagerDelegate {
     
     // MARK - Public Property
-    weak var delegate: AppStateSessionManagerObserverDelegate?
+    weak var delegate: AppStateCalculatorDelegate?
     
     // MARK - Private Property
     private var loadingAccount : Account?
@@ -38,9 +38,9 @@ class AppStateSessionManagerObserver: SessionManagerDelegate {
                                   userSessionCanBeTornDown: (() -> Void)?) {
         databaseEncryptionObserverToken = nil
         let appState: AppState = .unauthenticated(error: error as NSError?)
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: appState,
-                                         completion: userSessionCanBeTornDown)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: appState,
+                                     completion: userSessionCanBeTornDown)
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
@@ -57,34 +57,34 @@ class AppStateSessionManagerObserver: SessionManagerDelegate {
 
         loadingAccount = nil
         let appState: AppState = .unauthenticated(error: authenticationError)
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: appState,
-                                         completion: nil)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: appState,
+                                     completion: nil)
     }
         
     func sessionManagerDidBlacklistCurrentVersion() {
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: .blacklisted,
-                                         completion: nil)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: .blacklisted,
+                                     completion: nil)
     }
     
     func sessionManagerDidBlacklistJailbrokenDevice() {
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: .jailbroken,
-                                         completion: nil)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: .jailbroken,
+                                     completion: nil)
     }
     
     func sessionManagerWillMigrateLegacyAccount() {
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: .migrating,
-                                         completion: nil)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: .migrating,
+                                     completion: nil)
     }
     
     func sessionManagerWillMigrateAccount(_ account: Account) {
         guard account == loadingAccount else { return }
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: .migrating,
-                                         completion: nil)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: .migrating,
+                                     completion: nil)
     }
     
     func sessionManagerWillOpenAccount(_ account: Account,
@@ -93,9 +93,9 @@ class AppStateSessionManagerObserver: SessionManagerDelegate {
         loadingAccount = account
         let appState: AppState = .loading(account: account,
                                           from: SessionManager.shared?.accountManager.selectedAccount)
-        delegate?.sessionManagerObserver(self,
-                                         willTransitionTo: appState,
-                                         completion: userSessionCanBeTornDown)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: appState,
+                                     completion: userSessionCanBeTornDown)
     }
     
     func sessionManagerActivated(userSession: ZMUserSession) {
@@ -113,9 +113,9 @@ class AppStateSessionManagerObserver: SessionManagerDelegate {
             //       because we will receive `sessionManagerDidLogout()` with an auth error
             let appState: AppState = .authenticated(completedRegistration: false,
                                                     databaseIsLocked: userSession.isDatabaseLocked)
-            strongRef.delegate?.sessionManagerObserver(strongRef,
-                                                       willTransitionTo: appState,
-                                                       completion: nil)
+            strongRef.delegate?.appStateCalculator(strongRef,
+                                                   didCalculate: appState,
+                                                   completion: nil)
         }
         
         databaseEncryptionObserverToken = userSession.registerDatabaseLockedHandler({ [weak self] isDatabaseLocked in
@@ -125,9 +125,9 @@ class AppStateSessionManagerObserver: SessionManagerDelegate {
             
             let appState: AppState = .authenticated(completedRegistration: false,
                                                     databaseIsLocked: isDatabaseLocked)
-            strongRef.delegate?.sessionManagerObserver(strongRef,
-                                                       willTransitionTo: appState,
-                                                       completion: nil)
+            strongRef.delegate?.appStateCalculator(strongRef,
+                                                   didCalculate: appState,
+                                                   completion: nil)
         })
     }
 }

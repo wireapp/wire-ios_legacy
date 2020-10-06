@@ -37,7 +37,7 @@ final class AppStateController : NSObject {
     weak var delegate: AppStateControllerDelegate?
     
     // MARK - Private Set Property
-    private(set) var sessinManagerObeserver = AppStateSessionManagerObserver()
+    private(set) var appStateCalculator = AppStateCalculator()
     private(set) var previousAppState: AppState = .headless
     private(set) var appState: AppState = .headless {
         willSet {
@@ -48,15 +48,15 @@ final class AppStateController : NSObject {
     // MARK - Init
     override init() {
         super.init()
-        sessinManagerObeserver.delegate = self
+        appStateCalculator.delegate = self
     }
 }
 
-// MARK - AppStateSessionManagerObserverDelegate
-extension AppStateController: AppStateSessionManagerObserverDelegate {
-    func sessionManagerObserver(_: AppStateSessionManagerObserver,
-                                willTransitionTo appState: AppState,
-                                completion: (() -> Void)?) {
+// MARK - AppStateCalculatorDelegate
+extension AppStateController: AppStateCalculatorDelegate {
+    func appStateCalculator(_: AppStateCalculator,
+                            didCalculate appState: AppState,
+                            completion: (() -> Void)?) {
         transition(to: appState, completion: completion)
     }
     

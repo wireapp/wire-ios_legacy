@@ -47,7 +47,7 @@ final class AppStateControllerTests: XCTestCase {
 
         // WHEN
         // When first time running the app, account is nil and error code is accessTokenExpired
-        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.appStateCalculator.sessionManagerDidFailToLogin(account: nil, error: error)
 
         // THEN
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 0)
@@ -62,7 +62,8 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.appStateCalculator.sessionManagerDidFailToLogin(account: nil,
+                                                            error: error)
 
         // THEN
         // It should display the login screen in AppRootViewController
@@ -78,7 +79,8 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.sessinManagerObeserver.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
+        sut.appStateCalculator.sessionManagerWillLogout(error: error,
+                                                        userSessionCanBeTornDown: {})
 
         // THEN
         // It should display the login screen in AppRootViewController
@@ -96,7 +98,8 @@ final class AppStateControllerTests: XCTestCase {
         // WHEN
         let accountUnauthenticated = Account(userName: "Unauthenticated", userIdentifier: UUID())
         SessionManager.shared?.accountManager.addAndSelect(accountUnauthenticated)
-        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: accountUnauthenticated, error: error)
+        sut.appStateCalculator.sessionManagerDidFailToLogin(account: accountUnauthenticated,
+                                                            error: error)
 
         // THEN
         // It should display the login screen in AppRootViewController

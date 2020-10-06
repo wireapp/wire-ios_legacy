@@ -177,7 +177,7 @@
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
-		5489E20E252C84BE0010461D /* AppStateSessionManagerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateSessionManagerObserver.swift */; };
+		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
 		54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */; };
@@ -1773,7 +1773,7 @@
 		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
-		5489E20D252C84BE0010461D /* AppStateSessionManagerObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateSessionManagerObserver.swift; sourceTree = "<group>"; };
+		5489E20D252C84BE0010461D /* AppStateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculator.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Security-Flags.xcconfig"; sourceTree = "<group>"; };
 		54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperOptionsController.swift; sourceTree = "<group>"; };
@@ -5145,7 +5145,7 @@
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				162936BA1F470A9300D4F386 /* AppState.swift */,
 				162936BC1F470B4800D4F386 /* AppStateController.swift */,
-				5489E20D252C84BE0010461D /* AppStateSessionManagerObserver.swift */,
+				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */,
@@ -7737,7 +7737,7 @@
 				EF7F8FC121B5761C00D7723C /* ConversationReadReceiptSettingChangedCellDescription.swift in Sources */,
 				5E8DA782211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift in Sources */,
 				EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */,
-				5489E20E252C84BE0010461D /* AppStateSessionManagerObserver.swift in Sources */,
+				5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */,
