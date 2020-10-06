@@ -670,6 +670,7 @@
 "call.status.terminating" = "In fase di chiusura…";
 "call.status.constant_bitrate" = "Bit Rate costante";
 "call.status.variable_bitrate" = "Tasso Di Bit Rate";
+"call.status.conference_call" = "Conference Calling";
 
 "call.participants.show_all" = "Mostra tutti (%@)";
 "call.participants.list.title" = "Partecipanti";
@@ -692,7 +693,7 @@
 "call.alert.ongoing.start.button" = "Chiama comunque";
 "call.alert.ongoing.join.button" = "Entra comunque";
 
-"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.message" = "Il tuo relè di chiamata non è raggiungibile. Questo potrebbe influenzare la tua esperienza di chiamata.";
 "call.quality.indicator.more_info.button.text" = "Altre Informazioni";
 
 // Call Actions (accessibility)
@@ -727,7 +728,7 @@
 "participants.section.services" = "Servizi (%d)";
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo. Le videochiamate funzionano con altre %2$d persone oltre a te.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 "participants.section.admins.footer" = "Non ci sono amministratori.";
 "participants.section.members.footer" = "Non ci sono membri.";
 
@@ -999,7 +1000,7 @@
 "self.settings.enable_read_receipts.title" = "Invia conferme di lettura";
 "self.settings.privacy_section_group.subtitle" = "Quando è disattivato, non sarai in grado di vedere le conferme di lettura da altre persone.\nQuesta impostazione non si applica alle conversazioni di gruppo.";
 
-"self.settings.encrypt_messages_at_rest.title" = "Cifra i messaggi a riposo";
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Colore";
@@ -1026,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
-"self.settings.privacy_analytics.title" = "Inviare dati anonimi";
-"self.settings.privacy_analytics_menu.description.title" = "Contribuisci a migliorare Wire inviando rapporti anonimi di utilizzo e crash anonimi.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Ricevi newsletter";
 "self.settings.receiveNews_and_offers.description.title" = "Ricevi notizie e aggiornamenti da Wire via email.";
@@ -1178,9 +1185,9 @@
 "self.settings.privacy.clear_history.subtitle" = "Questo cancellerà il contenuto di tutte le tue conversazioni.";
 
 "self.settings.advanced.title" = "Avanzate";
-"self.settings.advanced.conference_calling.title" = "Chiamate conferenza";
-"self.settings.advanced.conference_calling.subtitle" = "Quando questo è attivato, le chiamate audio e video di conferenze sono abilitate, il che consente un numero maggiore di partecipanti.";
-"self.settings.advanced.conference_calling.toggle" = "Programma beta";
+"self.settings.advanced.conference_calling.title" = "Conference Calls";
+"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
+"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Risoluzione dei problemi";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Report di debug";
 "self.settings.advanced.debugging_tools.title" = "Strumenti di debug";

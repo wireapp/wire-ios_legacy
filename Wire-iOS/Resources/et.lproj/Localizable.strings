@@ -670,6 +670,7 @@
 "call.status.terminating" = "Kõne lõpetamine…";
 "call.status.constant_bitrate" = "Ühtlane bitisagedus";
 "call.status.variable_bitrate" = "Variable Bit Rate";
+"call.status.conference_call" = "Conference Calling";
 
 "call.participants.show_all" = "Näita kõik (%@)";
 "call.participants.list.title" = "Osalejad";
@@ -727,7 +728,7 @@
 "participants.section.services" = "Teenused (%d)";
 "participants.section.settings" = "Valikud";
 "participants.footer.add_title" = "Lisa osalejaid";
-"participants.section.name.footer" = "Grupivestlusega saab liituda kuni %1$dinimest. Videokõned töötavad kuni %2$d inimesega, lisaks sinule.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
@@ -1026,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
-"self.settings.privacy_analytics.title" = "Saada anonüümseid andmeid";
-"self.settings.privacy_analytics_menu.description.title" = "Aita Wire'i paremaks muuta, saates anonüümseid kasutus- ja krahhiaruandeid.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Uudiskirja tellimine";
 "self.settings.receiveNews_and_offers.description.title" = "Soovin Wire'ilt uudiseid ja tooteuuendusi e-posti teel.";

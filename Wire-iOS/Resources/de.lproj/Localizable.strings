@@ -670,6 +670,7 @@
 "call.status.terminating" = "Auflegen…";
 "call.status.constant_bitrate" = "Konstante Bitrate";
 "call.status.variable_bitrate" = "Variable Bitrate";
+"call.status.conference_call" = "Telefonkonferenz";
 
 "call.participants.show_all" = "Alle anzeigen (%@)";
 "call.participants.list.title" = "Teilnehmer";
@@ -999,7 +1000,7 @@
 "self.settings.enable_read_receipts.title" = "Lesebestätigungen senden";
 "self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nDies gilt nicht für Gruppen.";
 
-"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+"self.settings.encrypt_messages_at_rest.title" = "Ablageverschlüsselung für Nachrichten";
 
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
@@ -1026,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
+
+// Crash
+"self.settings.privacy_crash.title" = "Anonyme Fehlerberichte senden";
+"self.settings.privacy_crash_menu.description.title" = "Senden Sie anonyme Fehlerberichte und grundlegende Daten wie Versionsnummer und Betriebssystem, damit Wire Probleme in der App identifizieren und lösen kann.";
+
+// Analytics
 "self.settings.privacy_analytics.title" = "Anonyme Nutzungsdaten senden";
-"self.settings.privacy_analytics_menu.description.title" = "Anonymisierte Nutzungs- und Fehlerberichte schicken, um Wire zu verbessern.";
+"self.settings.privacy_analytics_menu.description.title" = "Anhand der Nutzungsdaten kann Wire verstehen, wie die App genutzt wird und wie sie verbessert werden kann. Die Daten sind anonym und umfassen nicht den Inhalt Ihrer Kommunikation (wie Nachrichten, Dateien oder Anrufe).";
 
 "self.settings.receiveNews_and_offers.title" = "Newsletter abonnieren";
 "self.settings.receiveNews_and_offers.description.title" = "Neuigkeiten und Informationen zu Produktaktualisierungen von Wire per E-Mail erhalten.";
@@ -1178,7 +1185,7 @@
 "self.settings.privacy.clear_history.subtitle" = "Dies löscht dauerhaft den Inhalt all Ihrer Unterhaltungen.";
 
 "self.settings.advanced.title" = "Erweitert";
-"self.settings.advanced.conference_calling.title" = "Telefonkonferenzen";
+"self.settings.advanced.conference_calling.title" = "Telefonkonferenz";
 "self.settings.advanced.conference_calling.subtitle" = "Hiermit aktivieren Sie Audio- und Videokonferenzen. Dies ermöglicht eine höhere Teilnehmerzahl.\n\n";
 "self.settings.advanced.conference_calling.toggle" = "Beta-Programm";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
@@ -1793,7 +1800,7 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Passwort erstellen";
+"create_passcode.title_label" = "Kennwort erstellen";
 "create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
 "create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
 "create_passcode.create_button.title" = "Kennwort erstellen";

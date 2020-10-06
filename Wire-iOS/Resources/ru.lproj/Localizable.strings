@@ -670,6 +670,7 @@
 "call.status.terminating" = "Разъединение…";
 "call.status.constant_bitrate" = "Постоянный битрейт";
 "call.status.variable_bitrate" = "Переменный битрейт";
+"call.status.conference_call" = "Групповой вызов";
 
 "call.participants.show_all" = "Показать все (%@)";
 "call.participants.list.title" = "Участники";
@@ -1026,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Отчеты об использовании и сбоях";
-"self.settings.privacy_analytics.title" = "Отправлять анонимные данные";
-"self.settings.privacy_analytics_menu.description.title" = "Помогите сделать Wire лучше, отправляя анонимные отчеты об использовании и сбоях.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Отправка анонимных данных о сбоях";
+"self.settings.privacy_crash_menu.description.title" = "Отправлять анонимные сообщения о сбоях и базовые данные, такие как номер версии и операционная система, чтобы помочь Wire идентифицировать и решить проблемы с приложением.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Отправка анонимных данных об использовании";
+"self.settings.privacy_analytics_menu.description.title" = "Данные об использовании позволяют Wire определить, как используется приложение и как его можно улучшить. Эти данные анонимны и не включают в себя содержимое вашего общения (такое как, сообщения, файлы или звонки).";
 
 "self.settings.receiveNews_and_offers.title" = "Получать рассылку";
 "self.settings.receiveNews_and_offers.description.title" = "Получайте новости и обновления от Wire по электронной почте.";

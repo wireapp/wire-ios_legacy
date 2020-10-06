@@ -670,6 +670,7 @@
 "call.status.terminating" = "Ophangen…";
 "call.status.constant_bitrate" = "Constante Bit Rate";
 "call.status.variable_bitrate" = "Variable Bit Rate";
+"call.status.conference_call" = "Conference Calling";
 
 "call.participants.show_all" = "Toon alle (%@)";
 "call.participants.list.title" = "Deelnemers";
@@ -1026,8 +1027,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Diagnose en gebruik";
-"self.settings.privacy_analytics.title" = "Anoniem gegevens delen";
-"self.settings.privacy_analytics_menu.description.title" = "Help Wire te verbeteren door anonieme gebruiksdata en crashrapporten te sturen.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Ontvang nieuwsbrief";
 "self.settings.receiveNews_and_offers.description.title" = "Ontvang nieuws en product updates van Wire via de mail.";
