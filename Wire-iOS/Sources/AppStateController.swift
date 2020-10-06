@@ -39,26 +39,10 @@ final class AppStateController : NSObject {
     
     // MARK - Private Set Property
     private(set) var sessinManagerObeserver = AppStateSessionManagerObserver()
+    private(set) var previousAppState: AppState = .headless
     private(set) var appState: AppState = .headless {
         willSet {
-            lastAppState = appState
-        }
-    }
-    private(set) var lastAppState: AppState = .headless
-    
-    // MARK - Test Property (??????)
-    private var isRunningTests = ProcessInfo.processInfo.isRunningTests {
-        didSet {
-            appState = !isRunningTests
-                ? .headless
-                : .unauthenticated(error: nil)
-        }
-    }
-    var isRunningSelfUnitTest = false {
-        didSet {
-            appState = isRunningSelfUnitTest
-                ? .headless
-                : .unauthenticated(error: nil)
+            previousAppState = appState
         }
     }
     
@@ -78,11 +62,10 @@ extension AppStateController: AppStateSessionManagerObserverDelegate {
     }
     
     // MARK - Private Helpers
-    
     private func transition(to appState: AppState,
                             completion: (() -> Void)? = nil) {
         self.appState = appState
-        if lastAppState != appState {
+        if previousAppState != appState {
             zmLog.debug("transitioning to app state: \(appState)")
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
@@ -100,7 +83,7 @@ extension AppStateController: AppStateSessionManagerObserverDelegate {
     }
 }
 
-// TO DO: Ask why AuthenticationCoordinatorDelegate implements AuthenticationStatusProvider. For the scope of knowing the appState it is not necessary. We could get rid off all the AuthenticationStatusProvider properties
+// TO DO: Ask why AuthenticationCoordinatorDelegate implements AuthenticationStatusProvider. For the scope of knowing the appState it is not necessary. We could get rid off all the AuthenticationStatusProvider properties.
 
 // MARK - AuthenticationCoordinatorDelegate
 

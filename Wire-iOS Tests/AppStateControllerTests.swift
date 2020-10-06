@@ -26,7 +26,6 @@ final class AppStateControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = AppStateController()
-        sut.isRunningSelfUnitTest = true
 
         if let accounts = SessionManager.shared?.accountManager.accounts {
             for account in accounts {
@@ -36,7 +35,6 @@ final class AppStateControllerTests: XCTestCase {
     }
 
     override func tearDown() {
-
         sut = nil
         super.tearDown()
     }
@@ -48,7 +46,6 @@ final class AppStateControllerTests: XCTestCase {
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
 
         // WHEN
-
         // When first time running the app, account is nil and error code is accessTokenExpired
         sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: nil, error: error)
 
@@ -84,7 +81,6 @@ final class AppStateControllerTests: XCTestCase {
         sut.sessinManagerObeserver.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
 
         // THEN
-
         // It should display the login screen in AppRootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
@@ -103,7 +99,6 @@ final class AppStateControllerTests: XCTestCase {
         sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: accountUnauthenticated, error: error)
 
         // THEN
-
         // It should display the login screen in AppRootViewController
         XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
