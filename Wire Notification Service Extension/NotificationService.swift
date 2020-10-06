@@ -85,8 +85,11 @@ extension NotificationService: NotificationSessionDelegate {
         if let bestAttemptContent = bestAttemptContent {
             switch messageCount {
             case 0:
-                let emptyContent = UNNotificationContent()
-                contentHandler?(emptyContent)
+               // let emptyContent = UNNotificationContent()
+//                contentHandler?(emptyContent)
+                bestAttemptContent.title = "alert.title"
+                bestAttemptContent.body = "alert.body"
+                contentHandler?(bestAttemptContent)
             case 1:
                 bestAttemptContent.title = alert.title
                 bestAttemptContent.body = alert.body
