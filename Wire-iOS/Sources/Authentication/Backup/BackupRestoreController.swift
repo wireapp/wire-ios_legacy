@@ -30,6 +30,7 @@ protocol BackupRestoreControllerDelegate: class {
 
 final class BackupRestoreController: NSObject {
     static let WireBackupUTI = "com.wire.backup-ios"
+    static let WireBackupAdditionalUTI = "com.wire.backup-ios-additional"
 
     let target: SpinnerCapableViewController
     weak var delegate: BackupRestoreControllerDelegate?
@@ -61,7 +62,10 @@ final class BackupRestoreController: NSObject {
         }
         #endif
 
-        let picker = UIDocumentPickerViewController(documentTypes: [BackupRestoreController.WireBackupUTI], in: .`import`)
+        let picker = UIDocumentPickerViewController(
+            documentTypes: [BackupRestoreController.WireBackupUTI,
+                            BackupRestoreController.WireBackupAdditionalUTI],
+            in: .`import`)
         picker.delegate = self
         target.present(picker, animated: true)
     }
