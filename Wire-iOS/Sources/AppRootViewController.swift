@@ -345,10 +345,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         dismissModalsFromAllChildren(of: visibleViewController)
         visibleViewController?.willMove(toParent: nil)
 
-        if
-            let previousViewController = visibleViewController,
+        if let previousViewController = visibleViewController,
             animated {
-
             addChild(viewController)
             transition(from: previousViewController,
                        to: viewController,
