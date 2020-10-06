@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-//import WireSystem
 
 private let zmLog = ZMSLog(tag: "AppState")
 
