@@ -180,7 +180,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             appVersion: appVersion!,
             mediaManager: mediaManager!,
             analytics: Analytics.shared,
-            delegate: appStateController,
+            delegate: appStateController.sessinManagerObeserver,
             showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
@@ -244,8 +244,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         switch appState {
-        case .blacklisted(jailbroken: let jailbroken):
-            viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
+        case .blacklisted:
+            viewController = BlockerViewController(context: .blacklist)
+        case .jailbroken:
+            viewController = BlockerViewController(context: .jailbroken)
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
@@ -334,14 +336,18 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    func transition(to viewController: UIViewController, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
+    func transition(to viewController: UIViewController,
+                    animated: Bool = true,
+                    completionHandler: (() -> Void)? = nil) {
 
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
         visibleViewController?.willMove(toParent: nil)
 
-        if let previousViewController = visibleViewController, animated {
+        if
+            let previousViewController = visibleViewController,
+            animated {
 
             addChild(viewController)
             transition(from: previousViewController,
@@ -583,7 +589,8 @@ extension AppRootViewController {
     fileprivate func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
         switch reason {
         case .sessionExpired:
-            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized, message: "account_deleted_session_expired_alert.message".localized)
+            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
+                                     message: "account_deleted_session_expired_alert.message".localized)
         default:
             break
             

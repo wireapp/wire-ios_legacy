@@ -425,7 +425,7 @@ final class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: false, reauthVisibile: false)
         
         //when
-        sut.appStateDidTransition(notification(for: AppState.blacklisted(jailbroken: true)))
+        sut.appStateDidTransition(notification(for: AppState.jailbroken))
         //then
         assert(contentsDimmed: false, reauthVisibile: false)
     }

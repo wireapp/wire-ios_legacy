@@ -18,112 +18,72 @@
 
 import Foundation
 import WireSyncEngine
-import WireSystem
+//import WireSystem
 
 private let zmLog = ZMSLog(tag: "AppState")
 
-protocol AppStateControllerDelegate : class {
-    
-    func appStateController(transitionedTo appState : AppState, transitionCompleted: @escaping () -> Void)
-    
+extension AppStateController {
+    static let appStateDidTransition = Notification.Name(rawValue: "AppStateDidTransitionNotification")
+    static let appStateKey = "AppState"
+}
+
+protocol AppStateControllerDelegate: class {
+    func appStateController(transitionedTo appState: AppState,
+                            transitionCompleted: @escaping () -> Void)
 }
 
 final class AppStateController : NSObject {
-
-    /**
-     * The possible states of authentication.
-     */
-
-    enum AuthenticationState {
-        /// The user is not logged in.
-        case loggedOut
-
-        /// The user logged in. This contains a flag to check if the account is new in the database.
-        case loggedIn(addedAccount: Bool)
-
-        /// The state is not determnined yet. This is the default, until we hear about the state from the session manager.
-        case undetermined
+    
+    // MARK - Public Property
+    weak var delegate: AppStateControllerDelegate?
+    
+    // MARK - Private Set Property
+    private(set) var sessinManagerObeserver = AppStateSessionManagerObserver()
+    private(set) var appState: AppState = .headless {
+        willSet {
+            lastAppState = appState
+        }
+    }
+    private(set) var lastAppState: AppState = .headless
+    
+    // MARK - Test Property (??????)
+    private var isRunningTests = ProcessInfo.processInfo.isRunningTests {
+        didSet {
+            appState = !isRunningTests
+                ? .headless
+                : .unauthenticated(error: nil)
+        }
+    }
+    var isRunningSelfUnitTest = false {
+        didSet {
+            appState = isRunningSelfUnitTest
+                ? .headless
+                : .unauthenticated(error: nil)
+        }
     }
     
-    private(set) var appState : AppState = .headless
-    private(set) var lastAppState : AppState = .headless
-    weak var delegate : AppStateControllerDelegate? = nil
-    
-    fileprivate var isDatabaseLocked = false
-    fileprivate var isBlacklisted = false
-    fileprivate var isJailbroken = false
-    fileprivate var hasEnteredForeground = false
-    fileprivate var isMigrating = false
-    fileprivate var loadingAccount : Account?
-    fileprivate var authenticationError : NSError?
-    fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
-    var isRunningSelfUnitTest = false
-    var databaseEncryptionObserverToken: Any? = nil
-
-    /// The state of authentication.
-    fileprivate(set) var authenticationState: AuthenticationState = .undetermined
-    
+    // MARK - Init
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
-        appState = calculateAppState()
+        sessinManagerObeserver.delegate = self
+    }
+}
+
+// MARK - AppStateSessionManagerObserverDelegate
+extension AppStateController: AppStateSessionManagerObserverDelegate {
+    func sessionManagerObserver(_: AppStateSessionManagerObserver,
+                                willTransitionTo appState: AppState,
+                                completion: (() -> Void)?) {
+        transition(to: appState, completion: completion)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    func calculateAppState() -> AppState {
-        guard !isRunningTests || isRunningSelfUnitTest else { return .headless }
-
-        if !hasEnteredForeground {
-            return .headless
-        }
-        
-        if isMigrating {
-            return .migrating
-        }
-        
-        if isBlacklisted {
-            return .blacklisted(jailbroken: false)
-        }
-        
-        if isJailbroken {
-            return .blacklisted(jailbroken: true)
-        }
-        
-        if let account = loadingAccount {
-            return .loading(account: account, from: SessionManager.shared?.accountManager.selectedAccount)
-        }
-
-        switch authenticationState {
-        case .loggedIn(let addedAccount):
-            return .authenticated(completedRegistration: addedAccount, databaseIsLocked: isDatabaseLocked)
-        case .loggedOut:
-            return .unauthenticated(error: authenticationError)
-        case .undetermined:
-            return .headless
-        }
-    }
+    // MARK - Private Helpers
     
-    func updateAppState(completion: (() -> Void)? = nil) {
-        let newAppState = calculateAppState()
-        
-        switch (appState, newAppState) {
-        case (_, .unauthenticated):
-            break
-        case (.unauthenticated, _):
-            // only clear the error when transitioning out of the unauthenticated state
-            authenticationError = nil
-        default: break
-        }
-        
-        if newAppState != appState {
-            zmLog.debug("transitioning to app state: \(newAppState)")
-            lastAppState = appState
-            appState = newAppState
-            
+    private func transition(to appState: AppState,
+                            completion: (() -> Void)? = nil) {
+        self.appState = appState
+        if lastAppState != appState {
+            zmLog.debug("transitioning to app state: \(appState)")
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
             }
@@ -138,100 +98,13 @@ final class AppStateController : NSObject {
                                         object: nil,
                                         userInfo: [AppStateController.appStateKey: appState])
     }
-
 }
 
-extension AppStateController : SessionManagerDelegate {
-    
-    func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
-        authenticationError = error as NSError?
-        authenticationState = .loggedOut
-        databaseEncryptionObserverToken = nil
+// TO DO: Ask why AuthenticationCoordinatorDelegate implements AuthenticationStatusProvider. For the scope of knowing the appState it is not necessary. We could get rid off all the AuthenticationStatusProvider properties
 
-        updateAppState {
-            userSessionCanBeTornDown?()
-        }
-    }
-    
-    func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
+// MARK - AuthenticationCoordinatorDelegate
 
-        // We only care about the error if it concerns the selected account, or the loading account.
-        if account != nil && (selectedAccount == account || loadingAccount == account) {
-            authenticationError = error as NSError
-        }
-        // When the account is nil, we care about the error if there are some accounts in accountManager
-        else if account == nil && SessionManager.shared?.accountManager.accounts.count > 0 {
-            authenticationError = error as NSError
-        }
-
-        loadingAccount = nil
-        authenticationState = .loggedOut
-        updateAppState()
-    }
-        
-    func sessionManagerDidBlacklistCurrentVersion() {
-        isBlacklisted = true
-        updateAppState()
-    }
-    
-    func sessionManagerDidBlacklistJailbrokenDevice() {
-        isJailbroken = true
-        updateAppState()
-    }
-    
-    func sessionManagerWillMigrateLegacyAccount() {
-        isMigrating = true
-        updateAppState()
-    }
-    
-    func sessionManagerWillMigrateAccount(_ account: Account) {
-        guard account == loadingAccount else { return }
-        
-        isMigrating = true
-        updateAppState()
-    }
-    
-    func sessionManagerWillOpenAccount(_ account: Account, userSessionCanBeTornDown: @escaping () -> Void) {
-        databaseEncryptionObserverToken = nil
-        loadingAccount = account
-        updateAppState { 
-            userSessionCanBeTornDown()
-        }
-    }
-    
-    func sessionManagerActivated(userSession: ZMUserSession) {        
-        userSession.checkIfLoggedIn { [weak self] (loggedIn) in
-            guard loggedIn else { return }
-            
-            // NOTE: we don't enter the unauthenticated state here if we are not logged in
-            //       because we will receive `sessionManagerDidLogout()` with an auth error
-
-            self?.isDatabaseLocked = userSession.isDatabaseLocked
-            self?.authenticationState = .loggedIn(addedAccount: false)
-            self?.loadingAccount = nil
-            self?.isMigrating = false
-            self?.updateAppState()
-        }
-        
-        databaseEncryptionObserverToken = userSession.registerDatabaseLockedHandler({ [weak self] (isDatabaseLocked) in
-            self?.isDatabaseLocked = isDatabaseLocked
-            self?.updateAppState()
-        })
-    }
-    
-}
-
-extension AppStateController {
-    
-    @objc func applicationDidBecomeActive() {
-        hasEnteredForeground = true
-        updateAppState()
-    }
-    
-}
-
-extension AppStateController : AuthenticationCoordinatorDelegate {
+extension AppStateController: AuthenticationCoordinatorDelegate {
 
     var authenticatedUserWasRegisteredOnThisDevice: Bool {
         return ZMUserSession.shared()?.registeredOnThisDevice == true
@@ -259,13 +132,9 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     }
 
     func userAuthenticationDidComplete(addedAccount: Bool) {
-        authenticationState = .loggedIn(addedAccount: addedAccount)
-        updateAppState()
+        let databaseIsLocked = ZMUserSession.shared()?.isDatabaseLocked ?? false
+        let appState: AppState = .authenticated(completedRegistration: addedAccount,
+                                                databaseIsLocked: databaseIsLocked)
+        transition(to: appState)
     }
-    
-}
-
-extension AppStateController {
-    static let appStateDidTransition = Notification.Name(rawValue: "AppStateDidTransitionNotification")
-    static let appStateKey = "AppState"
 }

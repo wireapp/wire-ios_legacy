@@ -27,7 +27,6 @@ final class AppStateControllerTests: XCTestCase {
         super.setUp()
         sut = AppStateController()
         sut.isRunningSelfUnitTest = true
-        sut.applicationDidBecomeActive()
 
         if let accounts = SessionManager.shared?.accountManager.accounts {
             for account in accounts {
@@ -51,14 +50,11 @@ final class AppStateControllerTests: XCTestCase {
         // WHEN
 
         // When first time running the app, account is nil and error code is accessTokenExpired
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: nil, error: error)
 
         // THEN
-        let newAppState = sut.calculateAppState()
-
-        // It should display the landing screen in AppRootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 0)
-        XCTAssertEqual(newAppState, .unauthenticated(error: nil))
+        XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
     }
 
     func testThatErrorIsAssignedWhenTheAccountManagerHasSomeAccounts() {
@@ -69,14 +65,12 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: nil, error: error)
 
         // THEN
-        let newAppState = sut.calculateAppState()
-
         // It should display the login screen in AppRootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
-        XCTAssertEqual(newAppState, .unauthenticated(error: error))
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }
 
     func testThatErrorAssignedWhenOtherDeivceRemovedCurrentlyAccount() {
@@ -87,14 +81,13 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
+        sut.sessinManagerObeserver.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
 
         // THEN
-        let newAppState = sut.calculateAppState()
 
         // It should display the login screen in AppRootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
-        XCTAssertEqual(newAppState, .unauthenticated(error: error))
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }
 
     func testThatErrorAssignedWhenSwitchingToUnauthenticatedAccount() {
@@ -107,13 +100,12 @@ final class AppStateControllerTests: XCTestCase {
         // WHEN
         let accountUnauthenticated = Account(userName: "Unauthenticated", userIdentifier: UUID())
         SessionManager.shared?.accountManager.addAndSelect(accountUnauthenticated)
-        sut.sessionManagerDidFailToLogin(account: accountUnauthenticated, error: error)
+        sut.sessinManagerObeserver.sessionManagerDidFailToLogin(account: accountUnauthenticated, error: error)
 
         // THEN
-        let newAppState = sut.calculateAppState()
 
         // It should display the login screen in AppRootViewController
         XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
-        XCTAssertEqual(newAppState, .unauthenticated(error: error))
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }
 }
