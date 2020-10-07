@@ -29,7 +29,8 @@ protocol BackupRestoreControllerDelegate: class {
  */
 
 final class BackupRestoreController: NSObject {
-    static let WireBackupUTIs = ["com.wire.backup-ios", "com.wire.backup-ios-additional"]
+    /// There are some external apps that users can use to transfer backup files, which can modify their attachments and change the underscore with a dash. This is the reason we accept 2 types of file extensions.: 'ios_wbu' and 'ios-wbu'
+    static let WireBackupUTIs = ["com.wire.backup-ios-underscore", "com.wire.backup-ios-hyphen"]
 
     let target: SpinnerCapableViewController
     weak var delegate: BackupRestoreControllerDelegate?
@@ -62,8 +63,7 @@ final class BackupRestoreController: NSObject {
         #endif
 
         let picker = UIDocumentPickerViewController(
-            documentTypes: [BackupRestoreController.WireBackupUTI,
-                            BackupRestoreController.WireBackupAdditionalUTI],
+            documentTypes: BackupRestoreController.WireBackupUTIs,
             in: .`import`)
         picker.delegate = self
         target.present(picker, animated: true)
