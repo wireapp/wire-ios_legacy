@@ -21,6 +21,22 @@ import WireSyncEngine
 import UIKit
 
 /**
+ * Provides and asks for context when registering users.
+ */
+
+protocol AuthenticationCoordinatorDelegate: class {
+
+    /**
+     * The coordinator finished authenticating the user.
+     * - parameter addedAccount: Whether the authentication action added a new account
+     * to this device.
+     */
+
+    func userAuthenticationDidComplete(addedAccount: Bool)
+
+}
+
+/**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
  *
