@@ -63,8 +63,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
     
-    /// Shortcut for accessing the authentication status provider.
-    var statusProvider: AuthenticationStatusProvider?
+    /// The object hepls accessing to some authentication information.
+    var statusProvider: AuthenticationStatusProvider
 
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
@@ -209,17 +209,17 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             return
         }
 
-        guard let selfUser = statusProvider?.selfUser else {
+        guard let selfUser = statusProvider.selfUser else {
             log.error("Post login observers were not registered because there is no self user.")
             return
         }
 
-        guard let sharedSession = statusProvider?.sharedUserSession else {
+        guard let sharedSession = statusProvider.sharedUserSession else {
             log.error("Post login observers were not registered because there is no user session.")
             return
         }
 
-        guard let userProfile = statusProvider?.selfUserProfile else {
+        guard let userProfile = statusProvider.selfUserProfile else {
             log.error("Post login observers were not registered because there is no user profile.")
             return
         }
@@ -586,7 +586,7 @@ extension AuthenticationCoordinator {
 
     /// Sends the fields provided during registration that requires a registered user session.
     private func sendPostRegistrationFields(_ fields: AuthenticationPostRegistrationFields) {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Could not save the marketing consent as there is no user session for the user.")
             return
         }
@@ -598,7 +598,7 @@ extension AuthenticationCoordinator {
 
     /// Auto-assigns a random profile image to the user.
     private func assignRandomProfileImage() {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Not assigning a random profile picture, because the user session does not exist.")
             return
         }
@@ -686,7 +686,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        guard let profile = statusProvider?.selfUserProfile else {
+        guard let profile = statusProvider.selfUserProfile else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
         }
