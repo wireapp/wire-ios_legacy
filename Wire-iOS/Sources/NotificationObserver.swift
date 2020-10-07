@@ -72,7 +72,6 @@ extension ContentSizeCategoryObserving {
 }
 
 // MARK: - AudioPermissionsObserving
-
 extension Notification.Name {
     static let UserGrantedAudioPermissions = Notification.Name("UserGrantedAudioPermissionsNotification")
 }
