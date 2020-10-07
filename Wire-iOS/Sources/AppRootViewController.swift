@@ -51,6 +51,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate let mediaManagerLoader = MediaManagerLoader()
+    fileprivate var observerTokens: [NSObjectProtocol] = []
 
     var authenticationCoordinator: AuthenticationCoordinator?
 
@@ -141,19 +142,20 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        setupApplicationNotifications()
+        setupContentSizeCategoryNotifications()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
-
-        transition(to: .headless)
-
+        
         enqueueTransition(to: appStateController.appState)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        removeAllObserverTokens()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,7 +164,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         view.frame = mainWindow.bounds
     }
 
-    
     func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -401,15 +402,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     func configureMediaManager() {
         self.mediaManagerLoader.send(message: .appStart)
     }
-
-    @objc func onContentSizeCategoryChange() {
-        NSAttributedString.invalidateParagraphStyle()
-        NSAttributedString.invalidateMarkdownStyle()
-        ConversationListCell.invalidateCachedCellSize()
-        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        type(of: self).configureAppearance()
-    }
-
+    
     func performWhenAuthenticated(_ block : @escaping () -> Void) {
         if case .authenticated = appStateController.appState {
             block()
@@ -532,22 +525,37 @@ extension AppRootViewController: ForegroundNotificationResponder {
     }
 }
 
-// MARK: - Application Icon Badge Number
+// MARK: - ApplicationStateObserving && ContentSizeCategoryObserving
 
-extension AppRootViewController {
-
-    @objc fileprivate func applicationWillEnterForeground() {
-        updateOverlayWindowFrame()
+extension AppRootViewController: ApplicationStateObserving, ContentSizeCategoryObserving {
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observerTokens.append(token)
     }
-
-    @objc fileprivate func applicationDidEnterBackground() {
+    
+    func removeAllObserverTokens() {
+        observerTokens.removeAll()
+    }
+    
+    func applicationDidBecomeActive() {
+        updateOverlayWindowFrame()
+        teamMetadataRefresher.triggerRefreshIfNeeded()
+    }
+    
+    func applicationDidEnterBackground() {
         let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
     }
-
-    @objc fileprivate func applicationDidBecomeActive() {
+    
+    func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
-        teamMetadataRefresher.triggerRefreshIfNeeded()
+    }
+    
+    func contentSizeCategoryDidChange() {
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
+        ConversationListCell.invalidateCachedCellSize()
+        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        type(of: self).configureAppearance()
     }
 }
 
