@@ -267,9 +267,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
-                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider())
+                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider(),
+                                                                  statusProvider: AuthenticationStatusProvider())
 
-            authenticationCoordinator!.delegate = appStateController
+            authenticationCoordinator!.delegate = appStateController.appStateCalculator
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
             viewController = navigationController
