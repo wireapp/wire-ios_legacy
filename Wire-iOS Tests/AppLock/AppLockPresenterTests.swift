@@ -458,9 +458,9 @@ final class AppLockPresenterTests: XCTestCase {
 
 extension AppLockPresenterTests {
     func notification(for appState: AppState) -> Notification {
-        return Notification(name: AppStateController.appStateDidTransition,
+        return Notification(name: AppStateCalculator.appStateDidTransit,
                             object: nil,
-                            userInfo: [AppStateController.appStateKey: appState])
+                            userInfo: [AppStateCalculator.appStateKey: appState])
     }
     
     func set(authNeeded: Bool, authenticationState: AuthenticationState) {

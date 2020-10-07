@@ -46,7 +46,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    fileprivate let appStateController: AppStateController
+    fileprivate let appStateCalculator: AppStateCalculator
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
@@ -107,7 +107,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        appStateController = AppStateController()
+        appStateCalculator = AppStateCalculator()
         fileBackupExcluder = FileBackupExcluder()
         SessionManager.startAVSLogging()
 
@@ -121,7 +121,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
-        appStateController.delegate = self
+        appStateCalculator.delegate = self
         
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
@@ -149,7 +149,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
         transition(to: .headless)
 
-        enqueueTransition(to: appStateController.appState)
+        enqueueTransition(to: appStateCalculator.appState)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -180,7 +180,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             appVersion: appVersion!,
             mediaManager: mediaManager!,
             analytics: Analytics.shared,
-            delegate: appStateController.appStateCalculator,
+            delegate: appStateCalculator,
             showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
@@ -270,7 +270,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                                                                   featureProvider: BuildSettingAuthenticationFeatureProvider(),
                                                                   statusProvider: AuthenticationStatusProvider())
 
-            authenticationCoordinator!.delegate = appStateController.appStateCalculator
+            authenticationCoordinator!.delegate = appStateCalculator
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
             viewController = navigationController
@@ -288,7 +288,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
                 clientViewController.needToShowDataUsagePermissionDialog = false
                 
-                if case .unauthenticated(_) = appStateController.previousAppState {
+                if case .unauthenticated(_) = appStateCalculator.previousAppState {
                     if SelfUser.current.isTeamMember {
                         TrackingManager.shared.disableCrashSharing = true
                         TrackingManager.shared.disableAnalyticsSharing = false
@@ -416,7 +416,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 
     func performWhenAuthenticated(_ block : @escaping () -> Void) {
-        if case .authenticated = appStateController.appState {
+        if case .authenticated = appStateCalculator.appState {
             block()
         } else {
             authenticatedBlocks.append(block)
@@ -431,7 +431,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     func reload() {
         enqueueTransition(to: .headless)
-        enqueueTransition(to: self.appStateController.appState)
+        enqueueTransition(to: appStateCalculator.appState)
     }
 
     // MARK: - Status Bar / Supported Orientations
@@ -453,12 +453,12 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 }
 
-extension AppRootViewController: AppStateControllerDelegate {
-
-    func appStateController(transitionedTo appState: AppState, transitionCompleted: @escaping () -> Void) {
-        enqueueTransition(to: appState, completion: transitionCompleted)
+extension AppRootViewController: AppStateCalculatorDelegate {
+    func appStateCalculator(_: AppStateCalculator,
+                            didCalculate appState: AppState,
+                            completion: @escaping () -> Void) {
+        enqueueTransition(to: appState, completion: completion)
     }
-
 }
 
 // MARK: - ShowContentDelegate

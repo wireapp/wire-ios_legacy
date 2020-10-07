@@ -43,7 +43,6 @@
 		162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */; };
 		162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */; };
 		162936BB1F470A9300D4F386 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BA1F470A9300D4F386 /* AppState.swift */; };
-		162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BC1F470B4800D4F386 /* AppStateController.swift */; };
 		162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BE1F4714D200D4F386 /* AppRootViewController.swift */; };
 		162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */; };
 		162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */; };
@@ -1325,7 +1324,7 @@
 		EF6E9FE623193478000B7785 /* UIViewControllerTransitioningDelegate+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */; };
 		EF6E9FEE231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FED231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift */; };
 		EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */; };
-		EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */; };
+		EF6EB1CE20A5C296002F720D /* AppStateCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateCalculatorTests.swift */; };
 		EF701A32223BE005007165E4 /* DummyComponentsVersions.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */; };
 		EF701A33223BE3D5007165E4 /* VersionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.swift */; };
 		EF71BFD420EBC39000894A7C /* ConversationInputBarViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */; };
@@ -1629,7 +1628,6 @@
 		162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
 		162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
 		162936BA1F470A9300D4F386 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		162936BC1F470B4800D4F386 /* AppStateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		162936BE1F4714D200D4F386 /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageTests.swift; sourceTree = "<group>"; };
 		162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSystemMessageTests.swift; sourceTree = "<group>"; };
@@ -3048,7 +3046,7 @@
 		EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControllerTransitioningDelegate+Present.swift"; sourceTree = "<group>"; };
 		EF6E9FED231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewControllerViewModel+ZMConversationListObserver.swift"; sourceTree = "<group>"; };
 		EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ConversationListBottomBarControllerDelegate.swift"; sourceTree = "<group>"; };
-		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
+		EF6EB1CD20A5C296002F720D /* AppStateCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculatorTests.swift; sourceTree = "<group>"; };
 		EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = DummyComponentsVersions.plist; sourceTree = "<group>"; };
 		EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Location.swift"; sourceTree = "<group>"; };
 		EF71BFD520EBCC5F00894A7C /* UIView+IPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IPadPopover.swift"; sourceTree = "<group>"; };
@@ -5141,7 +5139,6 @@
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				162936BA1F470A9300D4F386 /* AppState.swift */,
-				162936BC1F470B4800D4F386 /* AppStateController.swift */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
@@ -5946,7 +5943,7 @@
 				EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */,
 				EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */,
 				EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */,
-				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
+				EF6EB1CD20A5C296002F720D /* AppStateCalculatorTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
@@ -7574,7 +7571,6 @@
 				EEAC0A1621AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift in Sources */,
 				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
 				1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */,
-				162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */,
 				A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				7C5B94FA22DCAF3700A6F8BB /* BlockerViewController.swift in Sources */,
@@ -8383,7 +8379,7 @@
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
 				5E39FC65225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
-				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
+				EF6EB1CE20A5C296002F720D /* AppStateCalculatorTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				EF24477D2343656A00C747F5 /* ConnectRequestsCellTests.swift in Sources */,
 				A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */,

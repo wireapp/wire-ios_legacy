@@ -19,13 +19,13 @@
 import XCTest
 @testable import Wire
 
-final class AppStateControllerTests: XCTestCase {
+final class AppStateCalculatorTests: XCTestCase {
 
-    var sut: AppStateController!
+    var sut: AppStateCalculator!
 
     override func setUp() {
         super.setUp()
-        sut = AppStateController()
+        sut = AppStateCalculator()
 
         if let accounts = SessionManager.shared?.accountManager.accounts {
             for account in accounts {
@@ -47,7 +47,7 @@ final class AppStateControllerTests: XCTestCase {
 
         // WHEN
         // When first time running the app, account is nil and error code is accessTokenExpired
-        sut.appStateCalculator.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessionManagerDidFailToLogin(account: nil, error: error)
 
         // THEN
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 0)
@@ -62,7 +62,7 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.appStateCalculator.sessionManagerDidFailToLogin(account: nil,
+        sut.sessionManagerDidFailToLogin(account: nil,
                                                             error: error)
 
         // THEN
@@ -79,7 +79,7 @@ final class AppStateControllerTests: XCTestCase {
         SessionManager.shared?.accountManager.addAndSelect(account)
 
         // WHEN
-        sut.appStateCalculator.sessionManagerWillLogout(error: error,
+        sut.sessionManagerWillLogout(error: error,
                                                         userSessionCanBeTornDown: {})
 
         // THEN
@@ -98,7 +98,7 @@ final class AppStateControllerTests: XCTestCase {
         // WHEN
         let accountUnauthenticated = Account(userName: "Unauthenticated", userIdentifier: UUID())
         SessionManager.shared?.accountManager.addAndSelect(accountUnauthenticated)
-        sut.appStateCalculator.sessionManagerDidFailToLogin(account: accountUnauthenticated,
+        sut.sessionManagerDidFailToLogin(account: accountUnauthenticated,
                                                             error: error)
 
         // THEN
