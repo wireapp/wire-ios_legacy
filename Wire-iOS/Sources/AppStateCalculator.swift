@@ -25,7 +25,19 @@ protocol AppStateCalculatorDelegate: class {
                             completion: (() -> Void)?)
 }
 
-class AppStateCalculator: SessionManagerDelegate {
+class AppStateCalculator {
+    
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIApplication.didBecomeActiveNotification,
+                                                  object: nil)
+    }
     
     // MARK - Public Property
     weak var delegate: AppStateCalculatorDelegate?
@@ -34,6 +46,17 @@ class AppStateCalculator: SessionManagerDelegate {
     private var loadingAccount : Account?
     private var databaseEncryptionObserverToken: Any? = nil
     
+    // MARK - Private Implemetation
+    @objc
+    private func applicationDidBecomeActive() {
+        delegate?.appStateCalculator(self,
+                                     didCalculate: .headless,
+                                     completion: nil)
+    }
+}
+
+// MARK - SessionManagerDelegate
+extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerWillLogout(error: Error?,
                                   userSessionCanBeTornDown: (() -> Void)?) {
         databaseEncryptionObserverToken = nil
