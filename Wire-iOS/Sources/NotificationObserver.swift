@@ -18,10 +18,12 @@
 
 import UIKit
 
+// MARK: - ObserverTokenStore
 protocol ObserverTokenStore: AnyObject {
     func addObserverToken(_ token: NSObjectProtocol)
 }
 
+// MARK: - ApplicationStateObserving
 protocol ApplicationStateObserving: ObserverTokenStore {
     func applicationDidBecomeActive()
     func applicationDidEnterBackground()
@@ -53,6 +55,7 @@ extension ApplicationStateObserving {
     }
 }
 
+// MARK: - ContentSizeCategoryObserving
 protocol ContentSizeCategoryObserving: ObserverTokenStore {
     func contentSizeCategoryDidChange()
 }
@@ -64,6 +67,27 @@ extension ContentSizeCategoryObserving {
                                                                 queue: nil) { [weak self] _ in
             guard let observer = self else { return }
             observer.contentSizeCategoryDidChange()
+        })
+    }
+}
+
+// MARK: - AudioPermissionsObserving
+
+extension Notification.Name {
+    static let UserGrantedAudioPermissions = Notification.Name("UserGrantedAudioPermissionsNotification")
+}
+
+protocol AudioPermissionsObserving: ObserverTokenStore {
+    func userDidGrantAudioPermissions()
+}
+
+extension AudioPermissionsObserving {
+    func setupAudioPermissionsNotifications() {
+        addObserverToken(NotificationCenter.default.addObserver(forName: Notification.Name.UserGrantedAudioPermissions,
+                                                                object: nil,
+                                                                queue: nil) { [weak self] _ in
+            guard let observer = self else { return }
+            observer.userDidGrantAudioPermissions()
         })
     }
 }

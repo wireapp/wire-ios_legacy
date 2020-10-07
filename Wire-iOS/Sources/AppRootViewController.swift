@@ -144,8 +144,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
+        setupAudioPermissionsNotifications()
         
         enqueueTransition(to: appStateController.appState)
     }
@@ -525,9 +524,8 @@ extension AppRootViewController: ForegroundNotificationResponder {
     }
 }
 
-// MARK: - ApplicationStateObserving && ContentSizeCategoryObserving
-
-extension AppRootViewController: ApplicationStateObserving, ContentSizeCategoryObserving {
+// MARK: - ApplicationStateObserving
+extension AppRootViewController: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
@@ -549,7 +547,10 @@ extension AppRootViewController: ApplicationStateObserving, ContentSizeCategoryO
     func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
     }
-    
+}
+
+// MARK: - ContentSizeCategoryObserving
+extension AppRootViewController: ContentSizeCategoryObserving {
     func contentSizeCategoryDidChange() {
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
@@ -558,6 +559,14 @@ extension AppRootViewController: ApplicationStateObserving, ContentSizeCategoryO
         type(of: self).configureAppearance()
     }
 }
+
+// MARK: - AudioPermissionsObserving
+extension AppRootViewController: AudioPermissionsObserving {
+    func userDidGrantAudioPermissions() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
 
 // MARK: - Session Manager Observer
 
@@ -598,15 +607,6 @@ extension AppRootViewController {
         }
     }
     
-}
-
-// MARK: - Audio Permissions granted
-
-extension AppRootViewController {
-
-    @objc func onUserGrantedAudioPermissions() {
-        sessionManager?.updateCallNotificationStyleFromSettings()
-    }
 }
 
 // MARK: - Ask user if they want want switch account if there's an ongoing call
