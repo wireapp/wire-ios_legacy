@@ -117,12 +117,14 @@ extension ConversationContentViewController {
             session.perform({
                 Message.setLikedMessage(message, liked: updatedLikedState)
             })
-
+            
             if updatedLikedState {
                 // Deselect if necessary to show list of likers
                 if selectedMessage == message {
                     willSelectRow(at: indexPath, tableView: tableView)
                 }
+
+                Analytics.shared.tagLiked(in: conversation)
             } else {
                 // Select if necessary to prevent message from collapsing
                 if !(selectedMessage == message) && !Message.hasReactions(message) {
