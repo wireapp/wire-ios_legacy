@@ -55,9 +55,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     let eventResponderChain: AuthenticationEventResponderChain
 
-    /// Shortcut for accessing the authentication status provider (returns the delegate).
-    var statusProvider: AuthenticationStatusProvider?
-
     // MARK: - State
 
     /// The displayed view controller.
@@ -65,6 +62,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
+    
+    /// Shortcut for accessing the authentication status provider.
+    var statusProvider: AuthenticationStatusProvider?
 
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
@@ -106,15 +106,17 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController & SpinnerCapable, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController & SpinnerCapable,
+         sessionManager: ObservableSessionManager,
+         featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.stateController = AuthenticationStateController()
+        self.statusProvider = AuthenticationStatusProvider()
         self.featureProvider = featureProvider
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
-        self.statusProvider = AuthenticationStatusProviderObject()
         super.init()
 
         updateLoginObservers()
