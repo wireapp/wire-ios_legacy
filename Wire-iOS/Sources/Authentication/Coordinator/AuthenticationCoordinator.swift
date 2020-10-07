@@ -80,7 +80,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let stateController: AuthenticationStateController
     
     /// The object hepls accessing to some authentication information.
-    var statusProvider: AuthenticationStatusProvider
+    let statusProvider: AuthenticationStatusProvider
 
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
@@ -124,12 +124,13 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// Creates a new authentication coordinator with the required supporting objects.
     init(presenter: UINavigationController & SpinnerCapable,
          sessionManager: ObservableSessionManager,
-         featureProvider: AuthenticationFeatureProvider) {
+         featureProvider: AuthenticationFeatureProvider,
+         statusProvider: AuthenticationStatusProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
-        self.stateController = AuthenticationStateController()
-        self.statusProvider = AuthenticationStatusProvider()
+        self.statusProvider = statusProvider
         self.featureProvider = featureProvider
+        self.stateController = AuthenticationStateController()
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
