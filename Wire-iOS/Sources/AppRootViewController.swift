@@ -153,10 +153,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        removeAllObserverTokens()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -528,10 +524,6 @@ extension AppRootViewController: ForegroundNotificationResponder {
 extension AppRootViewController: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
-    }
-    
-    func removeAllObserverTokens() {
-        observerTokens.removeAll()
     }
     
     func applicationDidBecomeActive() {
