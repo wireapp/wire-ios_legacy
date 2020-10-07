@@ -23,7 +23,7 @@ import WireSyncEngine
  * Provides context about the current authentication stack.
  */
 
-protocol AuthenticationStatusProvider: class {
+public protocol AuthenticationStatusProvider: class {
 
     /**
      * Whether the authenticated user was registered on this device.
@@ -70,3 +70,33 @@ protocol AuthenticationStatusProvider: class {
     var numberOfAccounts: Int { get }
 
 }
+
+// MARK: AuthenticationStatusProvider Default Implementation
+extension AuthenticationStatusProvider {
+    var authenticatedUserWasRegisteredOnThisDevice: Bool {
+        return ZMUserSession.shared()?.registeredOnThisDevice == true
+    }
+
+    var authenticatedUserNeedsEmailCredentials: Bool {
+        guard let emailAddress = selfUser?.emailAddress else { return false }
+        return emailAddress.isEmpty
+    }
+
+    var sharedUserSession: ZMUserSession? {
+        return ZMUserSession.shared()
+    }
+
+    var selfUserProfile: UserProfileUpdateStatus? {
+        return sharedUserSession?.userProfile as? UserProfileUpdateStatus
+    }
+
+    var selfUser: UserType? {
+        return ZMUserSession.shared()?.selfUser
+    }
+
+    var numberOfAccounts: Int {
+        return SessionManager.numberOfAccounts
+    }
+}
+
+class AuthenticationStatusProviderObject: AuthenticationStatusProvider { }

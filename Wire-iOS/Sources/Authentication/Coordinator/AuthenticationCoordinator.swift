@@ -31,7 +31,7 @@ import UIKit
  */
 
 class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
-
+    
     /// The handle to the OS log for authentication events.
     let log = ZMSLog(tag: "Authentication")
 
@@ -56,9 +56,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let eventResponderChain: AuthenticationEventResponderChain
 
     /// Shortcut for accessing the authentication status provider (returns the delegate).
-    var statusProvider: AuthenticationStatusProvider? {
-        return delegate
-    }
+    var statusProvider: AuthenticationStatusProvider?
 
     // MARK: - State
 
@@ -116,6 +114,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
+        self.statusProvider = AuthenticationStatusProviderObject()
         super.init()
 
         updateLoginObservers()
@@ -208,17 +207,17 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             return
         }
 
-        guard let selfUser = delegate?.selfUser else {
+        guard let selfUser = statusProvider?.selfUser else {
             log.error("Post login observers were not registered because there is no self user.")
             return
         }
 
-        guard let sharedSession = delegate?.sharedUserSession else {
+        guard let sharedSession = statusProvider?.sharedUserSession else {
             log.error("Post login observers were not registered because there is no user session.")
             return
         }
 
-        guard let userProfile = delegate?.selfUserProfile else {
+        guard let userProfile = statusProvider?.selfUserProfile else {
             log.error("Post login observers were not registered because there is no user profile.")
             return
         }

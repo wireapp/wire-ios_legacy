@@ -131,3 +131,16 @@ class AppStateCalculator: SessionManagerDelegate {
         })
     }
 }
+
+// MARK - AuthenticationCoordinatorDelegate
+extension AppStateCalculator: AuthenticationCoordinatorDelegate {
+    
+    func userAuthenticationDidComplete(addedAccount: Bool) {
+        let databaseIsLocked = ZMUserSession.shared()?.isDatabaseLocked ?? false
+        let appState: AppState = .authenticated(completedRegistration: addedAccount,
+                                                databaseIsLocked: databaseIsLocked)
+        delegate?.appStateCalculator(self,
+                                     didCalculate: appState,
+                                     completion: nil)
+    }
+}
