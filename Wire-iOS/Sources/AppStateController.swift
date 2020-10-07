@@ -35,9 +35,9 @@ final class AppStateController : NSObject {
     
     // MARK - Public Property
     weak var delegate: AppStateControllerDelegate?
+    let appStateCalculator = AppStateCalculator()
     
     // MARK - Private Set Property
-    private(set) var appStateCalculator = AppStateCalculator()
     private(set) var previousAppState: AppState = .headless
     private(set) var appState: AppState = .headless {
         willSet {
