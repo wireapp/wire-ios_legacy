@@ -21,25 +21,21 @@ import UIKit
 import WireDataModel
 
 enum CallDegradationState: Equatable {
-    
     case none
     case incoming(degradedUser: ZMUser?)
     case outgoing(degradedUser: ZMUser?)
-    
 }
 
 protocol CallDegradationControllerDelegate: class {
-    
     func continueDegradedCall()
     func cancelDegradedCall()
-    
 }
 
 final class CallDegradationController: UIViewController {
 
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil
-    var visisibleAlertController: UIAlertController? = nil
+    var visibleAlertController: UIAlertController? = nil
     
     // Used to delay presentation of the alert controller until
     // the view is ready.
@@ -55,17 +51,13 @@ final class CallDegradationController: UIViewController {
         
     fileprivate func updateState() {
         switch state {
-        case .none:
-            visisibleAlertController?.dismiss(animated: true)
-            visisibleAlertController = nil
-        case .incoming(degradedUser: let degradedUser):
-            visisibleAlertController = UIAlertController.degradedCall(degradedUser: degradedUser)
         case .outgoing(degradedUser: let degradeduser):
-            visisibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser, confirmationBlock: { [weak self] (continueDegradedCall) in
+            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser, confirmationBlock: { [weak self] (continueDegradedCall) in
                 continueDegradedCall ? self?.delegate?.continueDegradedCall(): self?.delegate?.cancelDegradedCall()
             })
+        case .none, .incoming(degradedUser: _):
+            return
         }
-        
         presentAlertIfNeeded()
     }
     
@@ -83,46 +75,12 @@ final class CallDegradationController: UIViewController {
     private func presentAlertIfNeeded() {
         guard
             viewIsReady,
-            let alertViewController = visisibleAlertController,
+            let alertViewController = visibleAlertController,
             !alertViewController.isBeingPresented
             else { return }
         
         Log.calling.debug("Presenting alert about degraded call")
         targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
     }
-    
 }
 
-fileprivate extension UIAlertController {
-    
-    static func degradedCall(degradedUser: ZMUser?, confirmationBlock: ((_ continueDegradedCall: Bool) -> Void)? = nil) -> UIAlertController {
-        
-        let message: String
-        if let degradedUser = degradedUser {
-            if degradedUser.isSelfUser {
-                message = "call.degraded.alert.message.self".localized
-            } else {
-                message = "call.degraded.alert.message.user".localized(args: degradedUser.name ?? "")
-            }
-        } else {
-            message = "call.degraded.alert.message.unknown".localized
-        }
-        
-        let controller =  UIAlertController(title: "call.degraded.alert.title".localized, message: message, preferredStyle: .alert)
-        
-        if let confirmationBlock = confirmationBlock {
-            controller.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel) { (action) in
-                confirmationBlock(false)
-            })
-            
-            controller.addAction(UIAlertAction(title: "call.degraded.alert.action.continue".localized, style: .default) { (action) in
-                confirmationBlock(true)
-            })
-        } else {
-            controller.addAction(UIAlertAction(title: "general.ok".localized, style: .default))
-        }
-        
-        return controller
-    }
-    
-}

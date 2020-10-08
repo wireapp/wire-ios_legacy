@@ -238,25 +238,7 @@ extension ZMConversation {
     }
 
     var canStartVideoCall: Bool {
-        guard !isCallOngoing else { return false }
-
-        guard !(type(of: self).useConferenceCalling) else { return true }
-
-        if self.conversationType == .oneOnOne {
-            return true
-        }
-
-        if self.conversationType == .group &&
-            ZMUser.selfUser().isTeamMember &&
-            isConversationEligibleForVideoCalls {
-            return true
-        }
-
-        return false
-    }
-
-    var isConversationEligibleForVideoCalls: Bool {
-        return self.localParticipants.count <= ZMConversation.maxVideoCallParticipants
+        return !isCallOngoing
     }
 
     var isCallOngoing: Bool {
