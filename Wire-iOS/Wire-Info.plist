@@ -161,7 +161,7 @@
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.wire.backup-ios</string>
+			<string>com.wire.backup-ios-underscore</string>
 			<key>UTTypeSize320IconFile</key>
 			<string>logo</string>
 			<key>UTTypeSize64IconFile</key>
@@ -169,10 +169,35 @@
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
-				<string>com.wire.backup-ios</string>
+				<string>com.wire.backup-ios-underscore</string>
 				<key>public.filename-extension</key>
 				<array>
 					<string>ios_wbu</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Wire iOS Backup File</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>com.wire.backup-ios-hyphen</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>logo</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>logo</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>com.wire.backup-ios-hyphen</string>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ios-wbu</string>
 				</array>
 			</dict>
 		</dict>

@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
 
+"call.degraded.ended.alert.title" = "通話結束";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
 "call.alert.ongoing.alert_title" = "這將結束你的其他通話。";
 
 "call.alert.ongoing.start.message" = "在其他對話裏有另一通話。 \n現在打電話會掛斷該通話。";
@@ -727,7 +732,7 @@
 "participants.section.services" = "服務 (%d)";
 "participants.section.settings" = "選項";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "最多%1$d參與者可以加入群組對話。";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "沒有管理員";
 "participants.section.members.footer" = "沒有成員";
 
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用資料和崩潰報告";
-"self.settings.privacy_analytics.title" = "寄送匿名資料";
-"self.settings.privacy_analytics_menu.description.title" = "發送匿名使用紀錄和崩潰報告以改善Wire。";
+
+// Crash
+"self.settings.privacy_crash.title" = "傳送匿名錯誤資料";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "傳送匿名使用資料";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "接收新聞";
 "self.settings.receiveNews_and_offers.description.title" = "接收Wire的新聞和產品更新電子郵件。";
@@ -1178,15 +1189,12 @@
 "self.settings.privacy.clear_history.subtitle" = "這將永久移除您的所有對話內容。";
 
 "self.settings.advanced.title" = "進階";
-"self.settings.advanced.conference_calling.title" = "電話會議";
-"self.settings.advanced.conference_calling.subtitle" = "啟用此選項後，將啟用音頻和視頻電話會議，從而允許更多的參與者。";
-"self.settings.advanced.conference_calling.toggle" = "測試計畫";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
 "self.settings.advanced.debugging_tools.title" = "除錯工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一個未讀對話";
 "self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
-"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "輸入除錯指令";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助於Wire診斷通話問題，並改善整個應用體驗。";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
@@ -1260,7 +1268,7 @@
 "landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
 "landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
 "landing.create_account.title" = "Create a Wire personal account";
-"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.infotitle" = "與朋友和家人聊天？";
 "landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
 "landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
@@ -1789,28 +1797,28 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "密碼鎖";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
+"create_passcode.title_label" = "建立密碼鎖";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
 "create_passcode.info_label.highlighted" = "it can not be recovered.";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.create_button.title" = "建立密碼鎖";
 
 // Custom app lock - create passcode validation
-"create_passcode.validation.too_short" = "At least eight characters long";
-"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
-"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
-"create_passcode.validation.no_number" = "A number";
-"create_passcode.validation.no_special_char" = "A special character";
+"create_passcode.validation.too_short" = "至少八個字符長";
+"create_passcode.validation.no_lowercase_char" = "一個小寫字母";
+"create_passcode.validation.no_uppercase_char" = "一個大寫字符";
+"create_passcode.validation.no_number" = "一個數字";
+"create_passcode.validation.no_special_char" = "一個特殊字元";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.textfield.placeholder" = "輸入您的通行密碼";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
-"unlock.submit_button.title" = "unlock";
+"unlock.error_label" = "錯誤的解鎖密碼";
+"unlock.submit_button.title" = "解除鎖定";
 
 // Wipe database
 
@@ -1830,5 +1838,5 @@
 
 // Wipe database completion
 
-"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.title" = "數據庫已刪除";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
