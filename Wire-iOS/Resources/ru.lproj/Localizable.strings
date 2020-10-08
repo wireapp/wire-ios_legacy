@@ -727,7 +727,7 @@
 "participants.section.services" = "Сервисы (%d)";
 "participants.section.settings" = "Настройки";
 "participants.footer.add_title" = "Добавить участников";
-"participants.section.name.footer" = "К групповой беседе может присоединиться до %1$d участников. Видеозвонки возможны между вами и еще %2$d участниками.";
+"participants.section.name.footer" = "К групповой беседе может присоединиться до %1$d участников.";
 "participants.section.admins.footer" = "Здесь нет администраторов.";
 "participants.section.members.footer" = "Здесь нет участников.";
 

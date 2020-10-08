@@ -727,7 +727,7 @@
 "participants.section.services" = "خدمات (%d)";
 "participants.section.settings" = "الخيارات";
 "participants.footer.add_title" = "إضافة مشاركين";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "لا يوجد مشرفين.";
 "participants.section.members.footer" = "لا يوجد اعضاء.";
 

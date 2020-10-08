@@ -727,7 +727,7 @@
 "participants.section.services" = "Paslaugos (%d)";
 "participants.section.settings" = "Parinktys";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių. Bendrauti vaizdu gali iki %2$d žmonių ir jumis.";
+"participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių.";
 "participants.section.admins.footer" = "Administratorių nėra.";
 "participants.section.members.footer" = "Narių nėra.";
 

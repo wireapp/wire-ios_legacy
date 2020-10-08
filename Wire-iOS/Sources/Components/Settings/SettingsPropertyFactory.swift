@@ -400,7 +400,6 @@ final class SettingsPropertyFactory {
                             }
                         }
             })
-            
         case .encryptMessagesAtRest:
             return SettingsBlockProperty(
                 propertyName: propertyName,
@@ -412,20 +411,6 @@ final class SettingsPropertyFactory {
                     guard case .number(let enabled) = value else { return }
                     ZMUserSession.shared()?.encryptMessagesAtRest = enabled.boolValue
             })
-            
-        case .enableConferenceCallingBeta:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in
-                    let value: Bool = Settings.shared[.conferenceCalling] ?? false
-                    return SettingsPropertyValue(value)
-                },
-                setAction: { _, value  in
-                    if case .number(let enabled) = value {
-                        Settings.shared[.conferenceCalling] = enabled.boolValue
-                    }
-                }
-            )
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)

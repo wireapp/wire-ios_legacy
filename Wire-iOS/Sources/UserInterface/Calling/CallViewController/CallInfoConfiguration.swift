@@ -21,17 +21,6 @@ import avs
 import WireSyncEngine
 
 fileprivate extension VoiceChannel {
-    var degradationState: CallDegradationState {
-        switch state {
-        case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser)
-        case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser)
-        default:
-            return .none
-        }
-    }
-    
     func accessoryType() -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
@@ -131,6 +120,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
+
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
     let title: String
@@ -149,7 +139,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
-    let isConferenceCall: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -180,7 +169,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
-        isConferenceCall = voiceChannel.isConferenceCall
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -280,12 +268,6 @@ fileprivate extension VoiceChannel {
         }
     }
 
-    var firstDegradedUser: ZMUser? {
-        return conversation?.localParticipants.first(where: {
-            !$0.isTrusted
-        })
-    }
-
     private var isIncomingVideoCall: Bool {
         switch state {
         case .incoming(video: true, shouldRing: true, degraded: _): return true
@@ -295,6 +277,18 @@ fileprivate extension VoiceChannel {
 }
 
 extension VoiceChannel {
+
+    var degradationState: CallDegradationState {
+        switch state {
+        case .incoming(video: _, shouldRing: _, degraded: true):
+            return .incoming(degradedUser: firstDegradedUser)
+        case .answered(degraded: true), .outgoing(degraded: true):
+            return .outgoing(degradedUser: firstDegradedUser)
+        default:
+            return .none
+        }
+    }
+
     var isLegacyGroupVideoParticipantLimitReached: Bool {
         guard let conversation = conversation else { return false }
         return conversation.localParticipants.count > ZMConversation.legacyGroupVideoParticipantLimit

@@ -670,7 +670,6 @@
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
 "call.status.variable_bitrate" = "Variable Bit Rate";
-"call.status.conference_call" = "Conference Calling";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
@@ -685,6 +684,11 @@
 "call.degraded.alert.message.user" = "%@ started using a new device.";
 "call.degraded.alert.message.unknown" = "Someone started using a new device.";
 "call.degraded.alert.action.continue" = "Call anyway";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "This will end your other call.";
 
@@ -728,7 +732,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
@@ -1185,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
 
 "self.settings.advanced.title" = "Advanced";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Troubleshooting";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";

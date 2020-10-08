@@ -727,7 +727,7 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "До цієї розмови може прєднатись не більше %1$d учасників. Відеодзвінки будуть працювати тільки в розмовах, що містять до %2$d учасників, окрім вас.";
+"participants.section.name.footer" = "До цієї розмови може прєднатись не більше %1$d учасників.";
 "participants.section.admins.footer" = "Немає адміністраторів.";
 "participants.section.members.footer" = "Користувачі відсутні.";
 

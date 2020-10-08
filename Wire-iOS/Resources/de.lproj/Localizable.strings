@@ -727,7 +727,7 @@
 "participants.section.services" = "Dienste (%d)";
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und Ihnen.";
+"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen.";
 "participants.section.admins.footer" = "Es gibt keine Admins.";
 "participants.section.members.footer" = "Es gibt keine Mitglieder.";
 

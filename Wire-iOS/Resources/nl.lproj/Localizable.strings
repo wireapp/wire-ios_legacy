@@ -727,7 +727,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Opties";
 "participants.footer.add_title" = "Deelnemers toevoegen";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
