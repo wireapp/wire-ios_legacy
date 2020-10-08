@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1239,8 +1239,6 @@
 		EF2C9545214983BB000E4960 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = EF2C9544214983BB000E4960 /* video.mp4 */; };
 		EF2CF3262243EBAC003E16BC /* AppDelegate+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2CF3252243EBAA003E16BC /* AppDelegate+URL.swift */; };
 		EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */; };
-		EF2D6D3A228C507C00D8DBF4 /* SnapshotTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */; };
-		EF2D6D3B228C517F00D8DBF4 /* SnapshotTesting.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF2D6D43228C741500D8DBF4 /* PhotoPermissionsControllerStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2D6D42228C741500D8DBF4 /* PhotoPermissionsControllerStrategy.swift */; };
 		EF2DB834231678360055BDB4 /* UnsentGifImageSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2DB833231678360055BDB4 /* UnsentGifImageSendable.swift */; };
 		EF2E2F6E223BAF410038D7D9 /* MediaBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC8524A199245760008B66B /* MediaBar.swift */; };
@@ -1578,7 +1576,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EF2D6D3B228C517F00D8DBF4 /* SnapshotTesting.framework in CopyFiles */,
 				167961A7203DED9100B72ACC /* WireTesting.framework in CopyFiles */,
 				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in CopyFiles */,
 				871BE95E1CD0C459002267E8 /* OCMock.framework in CopyFiles */,
@@ -3224,6 +3221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
+				A938B3682477F63100236F9F /* Cartography in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3250,6 +3248,7 @@
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
+				A938B3662477F3AC00236F9F /* Cartography in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -3264,7 +3263,7 @@
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
-				EF2D6D3A228C507C00D8DBF4 /* SnapshotTesting.framework in Frameworks */,
+				A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
 			);
@@ -6852,6 +6851,9 @@
 				F1FEA15721DCEC3D00790A54 /* PBXTargetDependency */,
 			);
 			name = "Wire Share Extension";
+			packageProductDependencies = (
+				A938B3672477F63100236F9F /* Cartography */,
+			);
 			productName = "Wire-iOS Share Extension";
 			productReference = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -6878,6 +6880,9 @@
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
 			name = "Wire-iOS";
+			packageProductDependencies = (
+				A938B3652477F3AC00236F9F /* Cartography */,
+			);
 			productName = "ZClient iOS";
 			productReference = 8F42C538199244A700288E4D /* Wire.app */;
 			productType = "com.apple.product-type.application";
@@ -6898,6 +6903,9 @@
 				BACB88581AF7C48900DDCDB0 /* PBXTargetDependency */,
 			);
 			name = "Wire-iOS-Tests";
+			packageProductDependencies = (
+				A938B3622477F19600236F9F /* SnapshotTesting */,
+			);
 			productName = "ZClient-iOS Tests";
 			productReference = BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -6999,6 +7007,10 @@
 				lt,
 			);
 			mainGroup = 8F42C52F199244A700288E4D;
+			packageReferences = (
+				A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */,
+			);
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -7202,7 +7214,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WireLinkPreview.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireShareEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Ziphy.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
@@ -7231,7 +7242,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireLinkPreview.framework/WireLinkPreview",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireShareEngine.framework/WireShareEngine",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Ziphy.framework/Ziphy",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Cartography.framework/Cartography",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/libPhoneNumberiOS.framework/libPhoneNumberiOS",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PINCache.framework/PINCache",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ZipArchive.framework/ZipArchive",
@@ -8957,6 +8967,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wireapp/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.7.2;
+			};
+		};
+		A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wireapp/Cartography";
+			requirement = {
+				branch = feature/SPM;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A938B3622477F19600236F9F /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		A938B3652477F3AC00236F9F /* Cartography */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
+			productName = Cartography;
+		};
+		A938B3672477F63100236F9F /* Cartography */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
+			productName = Cartography;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F42C530199244A700288E4D /* Project object */;
 }

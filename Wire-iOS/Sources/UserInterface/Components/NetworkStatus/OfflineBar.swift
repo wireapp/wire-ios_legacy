@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
 
-class OfflineBar: UIView {
+final class OfflineBar: UIView {
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?

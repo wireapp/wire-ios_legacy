@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Cartography",
+        "repositoryURL": "https://github.com/wireapp/Cartography",
+        "state": {
+          "branch": "feature/SPM",
+          "revision": "3f2a1b09bc601c1fc649a3e833112ec13e657086",
+          "version": null
+        }
+      },
+      {
+        "package": "SnapshotTesting",
+        "repositoryURL": "https://github.com/wireapp/swift-snapshot-testing",
+        "state": {
+          "branch": null,
+          "revision": "114882386a815f4a2e6d8f2f7ee4857acd372438",
+          "version": "1.7.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

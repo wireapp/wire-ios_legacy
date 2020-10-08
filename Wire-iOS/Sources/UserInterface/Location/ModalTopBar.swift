@@ -18,6 +18,7 @@
 
 
 import Cartography
+import UIKit
 
 protocol ModalTopBarDelegate: class {
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)

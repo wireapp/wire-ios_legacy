@@ -59,7 +59,6 @@ platform :ios do
             configuration: "Debug",
             build_for_testing: true,
             sdk:"iphonesimulator",
-            derived_data_path: "DerivedData",
             buildlog_path: "build",
             output_directory: "build",
             output_types: "junit",
@@ -90,7 +89,6 @@ platform :ios do
             sdk:"iphonesimulator",
             destination: "platform=iOS Simulator,name=iPhone 8,OS=#{ios_version}",
             code_coverage: true,
-            derived_data_path: "DerivedData",
             buildlog_path: "test",
             output_directory: "test",
             output_types: "junit"
@@ -101,30 +99,37 @@ platform :ios do
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
 
-        if !xcode_version.nil? 
-            xcversion(version: xcode_version)
-        end
-
         build = Build.new(options: options)
-
         if build.for_simulator
             Dir.chdir("..") do
-                # Build the app for simulator
-                sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -derivedDataPath DerivedData -quiet build BUILD_NUMBER=#{build.build_number}"
+                derivedDataPath = `xcodebuild -project Wire-iOS.xcodeproj -showBuildSettings | grep -m 1 "BUILD_DIR" | grep -oEi "\/.*"`
+                derivedDataPath = `echo "#{derivedDataPath}" | tr -d "\n"`
+                
+                if derivedDataPath.nil? 
+                    if !xcode_version.nil? 
+                        xcversion(version: xcode_version)
+                    end
+
+                    # Build the app for simulator
+                    sh "xcodebuild -scheme 'Wire-iOS' -configuration 'Debug' -sdk 'iphonesimulator' -quiet build BUILD_NUMBER=#{build.build_number}"
+                end
 
                 # make a "fake" .ipa package that QA will use for installing to simulator
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
-                sh "cp -r DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
+                sh "cp -r #{derivedDataPath}/Debug-iphonesimulator/*.app debug/Payload/"
                 sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
+            if !xcode_version.nil? 
+                xcversion(version: xcode_version)
+            end
+            
             build_app(
                 scheme: "Wire-iOS",
                 configuration: build.configuration,
                 export_method: build.export_method,
                 export_options: {"iCloudContainerEnvironment": "Production"},
-                derived_data_path: "DerivedData",
                 archive_path: build.archive_path(with_filename: true),
                 buildlog_path: build.build_path,
                 output_directory: build.artifact_path(with_filename: false),
@@ -257,7 +262,7 @@ platform :ios do
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
-        codecov = "./codecov -J '^Wire$' -D ../DerivedData"
+        codecov = "./codecov -J '^Wire$'"
 
         if ENV["BUILD_REASON"] == "PullRequest"
             if ENV["CODECOV_TOKEN"].nil?

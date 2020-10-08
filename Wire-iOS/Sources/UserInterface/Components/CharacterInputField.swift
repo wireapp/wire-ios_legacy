@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 protocol CharacterInputFieldDelegate: class {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool

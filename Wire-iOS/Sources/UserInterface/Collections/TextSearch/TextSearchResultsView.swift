@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 final public class TextSearchResultsView: UIView {
     var tableView = UITableView()
