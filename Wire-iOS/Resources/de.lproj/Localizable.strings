@@ -722,7 +722,7 @@
 "participants.section.services" = "Dienste (%d)";
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen.";
+"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Gruppenunterhaltung teilnehmen.";
 "participants.section.admins.footer" = "Es gibt keine Admins.";
 "participants.section.members.footer" = "Es gibt keine Mitglieder.";
 
@@ -994,6 +994,8 @@
 "self.settings.enable_read_receipts.title" = "Lesebestätigungen senden";
 "self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nDies gilt nicht für Gruppen.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Ablageverschlüsselung für Nachrichten";
+
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
 
@@ -1019,8 +1021,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
+
+// Crash
+"self.settings.privacy_crash.title" = "Anonyme Fehlerberichte senden";
+"self.settings.privacy_crash_menu.description.title" = "Senden Sie anonyme Fehlerberichte und grundlegende Daten wie Versionsnummer und Betriebssystem, damit Wire Probleme in der App identifizieren und lösen kann.";
+
+// Analytics
 "self.settings.privacy_analytics.title" = "Anonyme Nutzungsdaten senden";
-"self.settings.privacy_analytics_menu.description.title" = "Anonymisierte Nutzungs- und Fehlerberichte schicken, um Wire zu verbessern.";
+"self.settings.privacy_analytics_menu.description.title" = "Anhand der Nutzungsdaten kann Wire verstehen, wie die App genutzt wird und wie sie verbessert werden kann. Die Daten sind anonym und umfassen nicht den Inhalt Ihrer Kommunikation (wie Nachrichten, Dateien oder Anrufe).";
 
 "self.settings.receiveNews_and_offers.title" = "Newsletter abonnieren";
 "self.settings.receiveNews_and_offers.description.title" = "Neuigkeiten und Informationen zu Produktaktualisierungen von Wire per E-Mail erhalten.";
@@ -1770,3 +1778,49 @@
 "button_message_cell.state.confirmed" = "bestätigt";
 
 "button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Kennwort";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Kennwort erstellen";
+"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
+"create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
+"create_passcode.create_button.title" = "Kennwort erstellen";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Mindestens 8 Zeichen lang";
+"create_passcode.validation.no_lowercase_char" = "Ein Kleinbuchstabe";
+"create_passcode.validation.no_uppercase_char" = "Ein Großbuchstabe";
+"create_passcode.validation.no_number" = "Eine Ziffer";
+"create_passcode.validation.no_special_char" = "Ein Sonderzeichen";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Geben Sie Ihr Kennwort ein";
+"unlock.title_label" = "Kennwort zum Entsperren eingeben";
+"unlock.wipe_button" = "Zugang als neues Gerät";
+"unlock.error_label" = "Falsches Kennwort";
+"unlock.submit_button.title" = "entsperren";
+
+// Wipe database
+
+"wipe_database.title_label" = "Zugang als neues Gerät";
+"wipe_database.info_label" = "Auf die gespeicherten Daten kann nur mit Ihrem Kennwort zugegriffen werden.\n\nWenn Sie Ihr Kennwort vergessen haben, können Sie die Datenbank löschen, um sich erneut anzumelden.\n\nDurch Löschung der Datenbank, ";
+"wipe_database.info_label.highlighted" = "werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
+
+"wipe_database.button.title" = "Ich möchte die Datenbank löschen";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Löschung der Daten bestätigen";
+"wipe_database.alert.message" = "Geben Sie \"Löschen\" ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten.";
+"wipe_database.alert.placeholder" = "\"Löschen\" eingeben";
+"wipe_database.alert.confirm" = "Löschen";
+"wipe_database.alert.confirm_input" = "Löschen";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Daten gelöscht";
+"wipe_database_completion.subtitle" = "Ihre Daten und Nachrichten wurden gelöscht. Sie können sich nun wieder anmelden.";
