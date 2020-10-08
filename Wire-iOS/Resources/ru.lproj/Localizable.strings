@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "Кто-то начал(-а) использовать новое устройство.";
 "call.degraded.alert.action.continue" = "Все равно позвонить";
 
+"call.degraded.ended.alert.title" = "Вызов завершен";
+"call.degraded.ended.alert.message.self" = "Вызов был прерван, поскольку вы начали использовать новое устройство.";
+"call.degraded.ended.alert.message.user" = "Вызов был прерван, поскольку %@ больше не является верифицированным контактом.";
+"call.degraded.ended.alert.message.unknown" = "Вызов был прерван, поскольку кто-то больше не является верифицированным контактом.";
+
 "call.alert.ongoing.alert_title" = "Это действие завершит другой ваш вызов.";
 
 "call.alert.ongoing.start.message" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
@@ -727,7 +732,7 @@
 "participants.section.services" = "Сервисы (%d)";
 "participants.section.settings" = "Настройки";
 "participants.footer.add_title" = "Добавить участников";
-"participants.section.name.footer" = "К групповой беседе может присоединиться до %1$d участников.";
+"participants.section.name.footer" = "К групповой беседе могут присоединиться до %1$d участников.";
 "participants.section.admins.footer" = "Здесь нет администраторов.";
 "participants.section.members.footer" = "Здесь нет участников.";
 
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Отчеты об использовании и сбоях";
-"self.settings.privacy_analytics.title" = "Отправлять анонимные данные";
-"self.settings.privacy_analytics_menu.description.title" = "Помогите сделать Wire лучше, отправляя анонимные отчеты об использовании и сбоях.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Отправка анонимных данных о сбоях";
+"self.settings.privacy_crash_menu.description.title" = "Отправлять анонимные сообщения о сбоях и базовые данные, такие как номер версии и операционная система, чтобы помочь Wire идентифицировать и решить проблемы с приложением.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Отправка анонимных данных об использовании";
+"self.settings.privacy_analytics_menu.description.title" = "Данные об использовании позволяют Wire определить, как используется приложение и как его можно улучшить. Эти данные анонимны и не включают в себя содержимое вашего общения (такое как, сообщения, файлы или звонки).";
 
 "self.settings.receiveNews_and_offers.title" = "Получать рассылку";
 "self.settings.receiveNews_and_offers.description.title" = "Получайте новости и обновления от Wire по электронной почте.";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит контент всех ваших бесед.";
 
 "self.settings.advanced.title" = "Дополнительные настройки";
-"self.settings.advanced.conference_calling.title" = "Групповые звонки";
-"self.settings.advanced.conference_calling.subtitle" = "При включении этого параметра активируется возможность групповых аудио- и видеозвонков, что позволяет увеличить количество участников.";
-"self.settings.advanced.conference_calling.toggle" = "Бета-программа";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
 "self.settings.advanced.debugging_tools.title" = "Средства отладки";
