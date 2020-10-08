@@ -23,6 +23,11 @@ import WireSyncEngine
 import avs
 import WireCommonComponents
 
+extension AppRootViewController {
+    static let appStateDidTransition = Notification.Name(rawValue: "appStateDidTransition")
+    static let appStateKey = "AppState"
+}
+
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
 
@@ -447,6 +452,13 @@ extension AppRootViewController: AppStateCalculatorDelegate {
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void) {
         enqueueTransition(to: appState, completion: completion)
+        notifyTransition(for: appState)
+    }
+    
+    private func notifyTransition(for appState: AppState) {
+        NotificationCenter.default.post(name: AppRootViewController.appStateDidTransition,
+                                        object: nil,
+                                        userInfo: [AppRootViewController.appStateKey: appState])
     }
 }
 

@@ -19,14 +19,6 @@
 import Foundation
 import WireSyncEngine
 
-
-private let zmLog = ZMSLog(tag: "AppState")
-
-extension AppStateCalculator {
-    static let appStateDidTransit = Notification.Name(rawValue: "AppStateDidTransit")
-    static let appStateKey = "AppState"
-}
-
 protocol AppStateCalculatorDelegate: class {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
@@ -36,15 +28,11 @@ protocol AppStateCalculatorDelegate: class {
 class AppStateCalculator {
     
     init() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(applicationDidBecomeActive),
-                                               name: UIApplication.didBecomeActiveNotification, object: nil)
+        setupApplicationNotifications()
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIApplication.didBecomeActiveNotification,
-                                                  object: nil)
+        removeObserverToken()
     }
     
     // MARK - Public Property
@@ -61,34 +49,52 @@ class AppStateCalculator {
     // MARK - Private Property
     private var loadingAccount : Account?
     private var databaseEncryptionObserverToken: Any? = nil
+    private var observerTokens: [NSObjectProtocol] = []
+    private var forceTransition: Bool = false
     
     // MARK - Private Implemetation
-    @objc
-    private func applicationDidBecomeActive() {
-        transition(to: appState)
-    }
-    
     private func transition(to appState: AppState,
                             completion: (() -> Void)? = nil) {
         self.appState = appState
-        if previousAppState != appState {
-            zmLog.debug("transitioning to app state: \(appState)")
-            delegate?.appStateCalculator(self,
-                                         didCalculate: appState,
-                                         completion: {
-                completion?()
-            })
-            notifyTransition()
-        } else {
-            completion?()
+        
+        if forceTransition {
+            propagate(appState: appState, completion: completion)
+            forceTransition = false
         }
+        
+        guard previousAppState != appState else {
+            completion?()
+            return
+        }
+        propagate(appState: appState, completion: completion)
     }
     
-    private func notifyTransition() {
-        NotificationCenter.default.post(name: AppStateCalculator.appStateDidTransit,
-                                        object: nil,
-                                        userInfo: [AppStateCalculator.appStateKey: appState])
+    private func propagate(appState: AppState, completion: (() -> Void)? = nil) {
+        ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
+        delegate?.appStateCalculator(self, didCalculate: appState, completion: {
+            completion?()
+        })
     }
+}
+
+// MARK: - ApplicationStateObserving
+extension AppStateCalculator: ApplicationStateObserving {
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observerTokens.append(token)
+    }
+    
+    func removeObserverToken() {
+        observerTokens.removeAll()
+    }
+    
+    func applicationDidBecomeActive() {
+        forceTransition = true
+        transition(to: appState)
+    }
+    
+    func applicationDidEnterBackground() { }
+    
+    func applicationWillEnterForeground() { }
 }
 
 // MARK - SessionManagerDelegate

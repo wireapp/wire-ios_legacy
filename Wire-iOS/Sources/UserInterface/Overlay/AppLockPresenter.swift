@@ -214,7 +214,7 @@ extension AppLockPresenter {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appStateDidTransition(_:)),
-                                               name: AppStateCalculator.appStateDidTransit,
+                                               name: AppRootViewController.appStateDidTransition,
                                                object: .none)
     }
     
@@ -238,7 +238,7 @@ extension AppLockPresenter {
     }
 
     @objc func appStateDidTransition(_ notification: Notification) {
-        guard let appState = notification.userInfo?[AppStateCalculator.appStateKey] as? AppState else { return }
+        guard let appState = notification.userInfo?[AppRootViewController.appStateKey] as? AppState else { return }
     
         appLockInteractorInput.appStateDidTransition(to: appState)
         switch appState {
