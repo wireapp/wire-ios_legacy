@@ -50,26 +50,17 @@ class AppStateCalculator {
     private var loadingAccount : Account?
     private var databaseEncryptionObserverToken: Any? = nil
     private var observerTokens: [NSObjectProtocol] = []
-    private var forceTransition: Bool = false
     
     // MARK - Private Implemetation
     private func transition(to appState: AppState,
+                            force: Bool = false,
                             completion: (() -> Void)? = nil) {
-        self.appState = appState
-        
-        if forceTransition {
-            propagate(appState: appState, completion: completion)
-            forceTransition = false
-        }
-        
-        guard previousAppState != appState else {
+        guard self.appState != appState || force else {
             completion?()
             return
         }
-        propagate(appState: appState, completion: completion)
-    }
-    
-    private func propagate(appState: AppState, completion: (() -> Void)? = nil) {
+        
+        self.appState = appState
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
         delegate?.appStateCalculator(self, didCalculate: appState, completion: {
             completion?()
@@ -88,8 +79,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     }
     
     func applicationDidBecomeActive() {
-        forceTransition = true
-        transition(to: appState)
+        transition(to: appState, force: true)
     }
     
     func applicationDidEnterBackground() { }
