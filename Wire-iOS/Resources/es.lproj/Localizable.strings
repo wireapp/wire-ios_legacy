@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "Alguien comenzó a usar un nuevo dispositivo.";
 "call.degraded.alert.action.continue" = "Llamar de todos modos";
 
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
 "call.alert.ongoing.alert_title" = "Esto terminará con su otra llamada.";
 
 "call.alert.ongoing.start.message" = "Una llamada está activa en otra conversación.\nLlamar aquí colgará la otra llamada.";
@@ -727,7 +732,7 @@
 "participants.section.services" = "Servicios (%d)";
 "participants.section.settings" = "Opciones";
 "participants.footer.add_title" = "Añadir Participantes";
-"participants.section.name.footer" = "Hasta %1$d participantes pueden unirse a una conversación de grupo.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "No hay administradores";
 "participants.section.members.footer" = "No hay miembros";
 
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";
-"self.settings.privacy_analytics.title" = "Enviar datos anónimos";
-"self.settings.privacy_analytics_menu.description.title" = "Ayude a mejorar Wire enviando informes anónimos de uso y de caídas.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Recibir boletín de noticias";
 "self.settings.receiveNews_and_offers.description.title" = "Reciba noticias y actualizaciones de productos de Wire por correo electrónico.";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Esto borrará permanentemente el contenido de tus chats.";
 
 "self.settings.advanced.title" = "Avanzado";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Solución de problemas";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Informe de depuración";
 "self.settings.advanced.debugging_tools.title" = "Herramientas de depuracion";
