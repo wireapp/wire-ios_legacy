@@ -196,17 +196,6 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verify(matching: sut)
     }
-    
-    func testGroupAudioEstablished_ConferenceCall() {
-        // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
-        // when
-        let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablishedConferenceCall)
-        
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
 
     // MARK: - Group Video
 
@@ -239,17 +228,6 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished)
 
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupVideoEstablishedConferenceCall() {
-        // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
-        // when
-        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedConferenceCall)
-        
         // then
         verifyAllIPhoneSizes(matching: sut)
     }

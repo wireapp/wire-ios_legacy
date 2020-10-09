@@ -24,14 +24,6 @@ extension ZMConversation {
         case offline
     }
 
-    static var useConferenceCalling: Bool {
-        return Settings.shared[.conferenceCalling] == true
-    }
-    
-    static var maxVideoCallParticipants: Int {
-        return useConferenceCalling ? maxParticipants : legacyGroupVideoParticipantLimit
-    }
-
     static let legacyGroupVideoParticipantLimit: Int = 4
 
     static let maxParticipants: Int = 500
@@ -39,11 +31,7 @@ extension ZMConversation {
     static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
     }
-    
-    static var maxVideoCallParticipantsExcludingSelf: Int {
-        return maxVideoCallParticipants - 1
-    }
-    
+
     var freeParticipantSlots: Int {
         return type(of: self).maxParticipants - localParticipants.count
     }
