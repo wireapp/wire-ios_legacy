@@ -190,12 +190,8 @@ extension ConversationContentViewController: SignatureObserver {
     
     func didReceiveDigitalSignature(_ cmsFileMetadata: ZMFileMetadata) {
         dismissDigitalSignatureVerification(completion: { [weak self] in
-            ZMUserSession.shared()?.perform({  
-                do {
-                    try self?.conversation.appendFile(with: cmsFileMetadata)
-                } catch {
-                    Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
-                }
+            ZMUserSession.shared()?.perform({
+                self?.conversation.append(file: cmsFileMetadata)
             })
         })
     }
