@@ -20,7 +20,7 @@ import WireDataModel
 import UIKit
 import WireSyncEngine
 
-final class ConversationInputBarSendController: NSObject {
+final class ConversationInputBarSendController:   NSObject {
     let conversation: ZMConversation
     private let feedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     
@@ -33,12 +33,8 @@ final class ConversationInputBarSendController: NSObject {
     func sendMessage(withImageData imageData: Data, completion completionHandler: Completion? = nil) {
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
-            do {
-                try self.conversation.appendImage(from:imageData)
-                self.feedbackGenerator.impactOccurred()
-            } catch {
-                Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
-            }
+            self.conversation.append(imageFromData:imageData)
+            self.feedbackGenerator.impactOccurred()
         }, completionHandler: {
             completionHandler?()
             Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
