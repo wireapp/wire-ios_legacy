@@ -92,7 +92,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         toggleConstraints()
     }
 
-    // MARK: - Back Button
+    // MARK: - Back Button  
 
     private func updateBackButton() {
         guard navigationController?.viewControllers.count > 1 else {

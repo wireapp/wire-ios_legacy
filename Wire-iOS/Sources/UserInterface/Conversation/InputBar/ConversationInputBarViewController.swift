@@ -527,18 +527,20 @@ final class ConversationInputBarViewController: UIViewController,
             do {
                 try self.conversation.appendKnock()
                 Analytics.shared.tagMediaActionCompleted(.ping, inConversation: self.conversation)
-
+                
                 AVSMediaManager.sharedInstance().playKnockSound()
                 self.notificationFeedbackGenerator.notificationOccurred(.success)
+            } catch {
+                Logging.messageProcessing.warn("Failed to append knock. Reason: \(error.localizedDescription)")
             }
         })
-
+        
         pingButton.isEnabled = false
         delay(0.5) {
             self.pingButton.isEnabled = true
         }
     }
-
+    
     // MARK: - SendButton
 
     @objc

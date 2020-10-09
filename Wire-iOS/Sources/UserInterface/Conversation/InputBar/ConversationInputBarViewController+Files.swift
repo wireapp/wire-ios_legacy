@@ -110,62 +110,63 @@ extension ConversationInputBarViewController {
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
         guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
-
+        
         let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
         }
-
+        
         guard let fileSize: UInt64 = url.fileSize else {
             zmLog.error("Cannot get file size on selected file:")
             parent?.dismiss(animated: true)
             completion()
-
+            
             return
         }
-
+        
         guard fileSize <= maxUploadFileSize else {
             // file exceeds maximum allowed upload size
             parent?.dismiss(animated: false)
-
+            
             showAlertForFileTooBig()
-
+            
             _ = completion()
-
+            
             return
         }
-
+        
         FileMetaDataGenerator.metadataForFileAtURL(url,
                                                    UTI: url.UTI(),
                                                    name: url.lastPathComponent) { [weak self] metadata in
-            guard let weakSelf = self else { return }
-
-            weakSelf.impactFeedbackGenerator.prepare()
-            ZMUserSession.shared()?.perform({
-
-                weakSelf.impactFeedbackGenerator.impactOccurred()
-
-                var conversationMediaAction: ConversationMediaAction = .fileTransfer
-
-                if let message: ZMConversationMessage = weakSelf.conversation.append(file: metadata),
-                    let fileMessageData = message.fileMessageData {
-                    if fileMessageData.isVideo {
-                        conversationMediaAction = .videoMessage
-                    } else if fileMessageData.isAudio {
-                        conversationMediaAction = .audioMessage
-                    }
-
-                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
-                } catch {
-                    Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
-                }
-
-                Analytics.shared().tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
-
-                completion()
-            })
+                                                    guard let weakSelf = self else { return }
+                                                    
+                                                    weakSelf.impactFeedbackGenerator.prepare()
+                                                    ZMUserSession.shared()?.perform({
+                                                        
+                                                        weakSelf.impactFeedbackGenerator.impactOccurred()
+                                                        
+                                                        var conversationMediaAction: ConversationMediaAction = .fileTransfer
+                                                        
+                                                        do {
+                                                            let message = try weakSelf.conversation.appendFile(with: metadata)
+                                                            if let fileMessageData = message.fileMessageData {
+                                                                if fileMessageData.isVideo {
+                                                                    conversationMediaAction = .videoMessage
+                                                                } else if fileMessageData.isAudio {
+                                                                    conversationMediaAction = .audioMessage
+                                                                }
+                                                            }
+                                                            
+                                                            Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                                                        } catch {
+                                                            Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
+                                                        }
+                                                        
+                                                        completion()
+                                                    })
         }
         parent?.dismiss(animated: true)
     }
+
     
     func execute(videoPermissions toExecute: @escaping () -> ()) {
         UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in

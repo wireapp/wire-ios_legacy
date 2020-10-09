@@ -19,21 +19,21 @@
 import UIKit
 
 final class AuthenticationNavigationBar: DefaultNavigationBar {
-
+    
     override var colorSchemeVariant: ColorSchemeVariant {
         return .light
     }
-
+    
     override func configureBackground() {
         isTranslucent = true
         setBackgroundImage(UIImage(), for: .default)
         shadowImage = UIImage()
     }
-
+    
 }
 
 extension AuthenticationNavigationBar {
-
+    
     static func makeBackButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, size: .tiny, for: .normal)
@@ -45,5 +45,5 @@ extension AuthenticationNavigationBar {
         button.accessibilityLabel = "general.back".localized
         return button
     }
-
+    
 }

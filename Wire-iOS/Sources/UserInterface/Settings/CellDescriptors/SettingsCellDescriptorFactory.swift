@@ -289,10 +289,7 @@ class SettingsCellDescriptorFactory {
                 let nonce = UUID()
                 let genericMessage = GenericMessage(content: Text(content: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;"), nonce: nonce)
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
-                do {
-                    clientMessage.add(try genericMessage.serializedData())
-                } catch {
-                }
+                try! clientMessage.setUnderlyingMessage(genericMessage)
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
                 
                 clientMessage.expire()
@@ -476,7 +473,7 @@ class SettingsCellDescriptorFactory {
     }
     
     /// Sends a message that will fail to decode on every other device, on the first conversation of the list
-    private static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
+    static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
         guard
             let userSession = ZMUserSession.shared(),
             let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
@@ -486,12 +483,12 @@ class SettingsCellDescriptorFactory {
         
         var external = External()
         if let otr = "broken_key".data(using: .utf8)  {
-             external.otrKey = otr
+            external.otrKey = otr
         }
         let genericMessage = GenericMessage(content: external)
         
         userSession.enqueue {
-            conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
+            try! conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
     }
     
@@ -508,7 +505,7 @@ class SettingsCellDescriptorFactory {
         
         func sendNext(count: Int) {
             userSession.enqueue {
-                conversation.append(text: "Message #\(count+1), series \(nonce)")
+                try! conversation.appendText(content: "Message #\(count+1), series \(nonce)")
             }
             guard count + 1 < amount else { return }
             DispatchQueue.main.asyncAfter(
