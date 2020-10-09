@@ -96,11 +96,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelper.sharedHelper.persistBackendTypeOverrideIfNeeded(with: backendTypeOverride)
     }
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         zmLog.info("application:willFinishLaunchingWithOptions \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
         
         // Initial log line to indicate the client version and build
-        zmLog.info("Wire-ios version \(String(describing: Bundle.main.infoDictionary?["CFBundleShortVersionString"])) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
+        zmLog.info("Wire-ios version \(String(describing: Bundle.main.shortVersionString)) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
         
         // Note: if we instantiate the root view controller (& windows) any earlier,
         // the windows will not receive any info about device orientation.
@@ -110,7 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         ZMSLog.switchCurrentLogToPrevious()
         
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
@@ -174,13 +176,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootViewController?.quickActionsManager?.performAction(for: shortcutItem, completionHandler: completionHandler)
     }
     
-    func setupTracking() {
+    private func setupTracking() {
         let containsConsoleAnalytics = ProcessInfo.processInfo.arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
-        let trackingManager = TrackingManager.shared
-        
         AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.loadShared(withOptedOut: trackingManager.disableCrashAndAnalyticsSharing)
+        Analytics.shared = Analytics(optedOut: TrackingManager.shared.disableAnalyticsSharing)
     }
     
     @objc

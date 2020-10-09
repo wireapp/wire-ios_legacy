@@ -255,7 +255,9 @@ extension SettingsPropertyName {
             return "self.settings.privacy_security.disable_link_previews.title".localized
 
             // personal information - Analytics
-        case .disableCrashAndAnalyticsSharing:
+        case .disableCrashSharing:
+            return "self.settings.privacy_crash.title".localized
+        case .disableAnalyticsSharing:
             return "self.settings.privacy_analytics.title".localized
         case .receiveNewsAndOffers:
             return "self.settings.receiveNews_and_offers.title".localized

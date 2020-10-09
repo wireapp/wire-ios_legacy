@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSystem
+import WireDataModel
 
 fileprivate let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider : NSObject {
@@ -25,7 +26,7 @@ final class AnalyticsConsoleProvider : NSObject {
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false
 
-    public required override init() {
+    required override init() {
         super.init()
         ZMSLog.set(level: .info, tag: tag)
     }
@@ -33,7 +34,7 @@ final class AnalyticsConsoleProvider : NSObject {
 }
 
 extension AnalyticsConsoleProvider: AnalyticsProvider {
-    public var isOptedOut : Bool {
+    var isOptedOut : Bool {
         get {
             return optedOut
         }
@@ -44,6 +45,18 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
+    /// no-op
+    var selfUser: UserType? {
+        get {
+            //no-op
+            return nil
+        }
+        
+        set {
+            //no-op
+        }
+    }
+
     private func print(loggingData data: [String: Any]) {
         if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: JSONSerialization.WritingOptions.prettyPrinted),
             let string = String(data: jsonData, encoding: .utf8) {
@@ -76,7 +89,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 
-    func flush(completion: (() -> Void)?) {
+    func flush(completion: Completion?) {
         completion?()
     }
 }
