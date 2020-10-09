@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireDataModel
-
 
 extension ZMConversationMessage {
 
@@ -38,8 +36,7 @@ extension ZMConversationMessage {
         set {
             if newValue {
                 ZMMessage.addReaction(.like, toMessage: self)
-            }
-            else {
+            } else {
                 ZMMessage.removeReaction(onMessage: self)
             }
         }

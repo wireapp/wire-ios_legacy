@@ -34,7 +34,6 @@ extension SettingsCellDescriptorFactory {
             soundAlertSection,
             callKitSection,
             SecurityFlags.forceConstantBitRateCalls.isEnabled ? nil : VBRSection,
-            conferenceCallingSection,
             soundsSection,
             externalAppsSection,
             popularDemandSendButtonSection,
@@ -140,19 +139,6 @@ extension SettingsCellDescriptorFactory {
             header: .none,
             footer: "self.settings.vbr.description".localized,
             visibilityAction: .none
-        )
-    }
-    
-    private var conferenceCallingSection: SettingsSectionDescriptor {
-        let betaToggle = SettingsPropertyToggleCellDescriptor(
-            settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta),
-            identifier: "Beta Toggle"
-        )
-
-        return SettingsSectionDescriptor(
-            cellDescriptors: [betaToggle],
-            header: "self.settings.advanced.conference_calling.title".localized,
-            footer: "self.settings.advanced.conference_calling.subtitle".localized
         )
     }
 
