@@ -71,7 +71,7 @@ final class CallTopOverlayController: UIViewController {
     private var muteIconWidth: NSLayoutConstraint?
     private var tapGestureRecognizer: UITapGestureRecognizer!
     private weak var callDurationTimer: Timer? = nil
-    private var observerToken: Any? = nil
+    private var observerTokens: [Any] = []
     private let callDurationFormatter = DateComponentsFormatter()
     
     let conversation: ZMConversation
@@ -94,7 +94,11 @@ final class CallTopOverlayController: UIViewController {
         callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         super.init(nibName: nil, bundle: nil)
         
-        self.observerToken = self.conversation.voiceChannel?.addCallStateObserver(self)
+        if let userSession = ZMUserSession.shared() {
+            observerTokens.append(WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession))
+            observerTokens.append(WireCallCenterV3.addMuteStateObserver(observer: self, userSession: userSession))
+        }
+
         AVSMediaManagerClientChangeNotification.add(self)
     }
     
@@ -238,8 +242,8 @@ extension CallTopOverlayController: WireCallCenterCallStateObserver {
     }
 }
 
-extension CallTopOverlayController: AVSMediaManagerClientObserver {
-    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
-        displayMuteIcon = AVSMediaManager.sharedInstance().isMicrophoneMuted
+extension CallTopOverlayController: MuteStateObserver {
+    func callCenterDidChange(muted: Bool) {
+        displayMuteIcon = muted
     }
 }
