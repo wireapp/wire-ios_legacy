@@ -115,6 +115,7 @@ extension ShareViewController {
          shareablePreviewWrapper,
          shareablePreviewView,
          tokenField,
+         searchIcon
             ].disableAutoresizingMaskTranslation()
         
         let shareablePreviewWrapperMargin: CGFloat = 16
@@ -125,6 +126,8 @@ extension ShareViewController {
         let tokenFieldShareablePreviewSpacingConstraint = tokenField.topAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor, constant: shareablePreviewWrapperMargin)
         
         let tokenFieldTopConstraint = tokenField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: tokenFieldMargin)
+        
+        let tokenFieldHeightConstraint = allowsMultipleSelection ? tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40) : tokenField.heightAnchor.constraint(equalToConstant: 0)
         
         
         NSLayoutConstraint.activate([
@@ -152,6 +155,11 @@ extension ShareViewController {
             
             tokenField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: tokenFieldMargin),
             tokenField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -tokenFieldMargin),
+            tokenFieldHeightConstraint,
+            
+            searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8) // the search icon glyph has whitespaces
+
         ])
         
         self.bottomConstraint = bottomConstraint
@@ -159,37 +167,17 @@ extension ShareViewController {
         self.tokenFieldShareablePreviewSpacingConstraint = tokenFieldShareablePreviewSpacingConstraint
         self.tokenFieldTopConstraint = tokenFieldTopConstraint
         
-        
-        //        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
-        //            blurView.edges == view.edges
-        //            containerView.top == view.topMargin
-        //            self.bottomConstraint = containerView.bottom == view.bottomMargin
-        //            containerView.leading == view.leading
-        //            containerView.trailing == view.trailing
-        //        }
-        
-        //        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
-        
-        //            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
-        //            shareablePreviewWrapper.left == view.left + 16
-        //            shareablePreviewWrapper.right == -16 + view.right
-        //            shareablePreviewView.edges == shareablePreviewWrapper.edges
-        
-        //            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
-        
-        //            tokenFieldTopConstraint = tokenField.top == view.top + 8
-        //        }
-        
+                
         ///TODO: mv to bottom?
         updateShareablePreviewConstraint()
         
-        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
-            searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
-            if !self.allowsMultipleSelection {
-                tokenField.height == 0
-            }
-        }
+//        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
+////            searchIcon.centerY == tokenField.centerY
+////            searchIcon.left == tokenField.left + 8
+//            if !self.allowsMultipleSelection {
+//                tokenField.height == 0
+//            }
+//        }
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
             topSeparatorView.left == view.left
@@ -200,10 +188,6 @@ extension ShareViewController {
         
         
         constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
-            
-            //            tokenField.left == view.left + 8
-            //            tokenField.right == -8 + view.right
-            tokenField.height >= 40
             
             tableView.left == view.left
             tableView.right == view.right
