@@ -27,14 +27,10 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var authenticationCoordinator: AuthenticationCoordinator?
-    private var sessionManagerCreatedSessionObserverToken: Any?
-    private var sessionManagerDestroyedSessionObserverToken: Any?
-    private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
-    private let foregroundNotificationObserver = ForegroundNotificationObserver()
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager?
-    private(set) var rootViewController: RootViewController //TO DO: This should remain private
+    private(set) var rootViewController: RootViewController //TO DO: This should be private
     
     // MARK: - Initialization
     
@@ -78,10 +74,10 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
-                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self.sessionManagerLifeCycleObserver)
-                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self.sessionManagerLifeCycleObserver)
-                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationObserver
                 /* TO DO: Add all this delegation
+                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
+                self.sessionManager?.foregroundNotificationResponder = self
                 self.sessionManager?.showContentDelegate = self
                 self.sessionManager?.switchingDelegate = self
                 self.sessionManager?.urlActionDelegate = self
