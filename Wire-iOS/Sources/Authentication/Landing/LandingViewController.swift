@@ -432,6 +432,7 @@ final class LandingViewController: AuthenticationStepViewController {
         createAccountButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
     }
     
+    ///TODO: rm
     private func disableAutoresizingMaskTranslation(for views: [UIView]) {
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false

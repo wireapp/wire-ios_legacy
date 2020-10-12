@@ -17,8 +17,8 @@
 //
 
 import Foundation
+import UIKit
 import Cartography
-
 
 extension ShareViewController {
 
@@ -103,26 +103,84 @@ extension ShareViewController {
     }
     
     func createConstraints() {
-        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
-            blurView.edges == view.edges
-            containerView.top == view.topMargin
-            self.bottomConstraint = containerView.bottom == view.bottomMargin
-            containerView.leading == view.leading
-            containerView.trailing == view.trailing
-        }
         
-        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
-
-            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
-            shareablePreviewWrapper.left == view.left + 16
-            shareablePreviewWrapper.right == -16 + view.right
-            shareablePreviewView.edges == shareablePreviewWrapper.edges
-
-            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
-
-            tokenFieldTopConstraint = tokenField.top == view.top + 8
+        guard let shareablePreviewWrapper = shareablePreviewWrapper,
+              let shareablePreviewView = shareablePreviewView else {
+            return
         }
 
+        [view,
+        blurView,
+        containerView,
+        shareablePreviewWrapper,
+        shareablePreviewView,
+        tokenField,
+        ].disableAutoresizingMaskTranslation()
+        
+        let shareablePreviewWrapperMargin: CGFloat = 16
+        let tokenFieldMargin: CGFloat = 8
+
+        let bottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+        let shareablePreviewTopConstraint = shareablePreviewWrapper.topAnchor.constraint(equalTo: containerView.safeTopAnchor, constant: 8)
+        let tokenFieldShareablePreviewSpacingConstraint = tokenField.topAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor, constant: shareablePreviewWrapperMargin)
+        
+        let tokenFieldTopConstraint = tokenField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: tokenFieldMargin)
+        
+        
+        NSLayoutConstraint.activate([
+        blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        blurView.topAnchor.constraint(equalTo: view.topAnchor),
+        blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        
+        containerView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+        bottomConstraint,
+        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            shareablePreviewTopConstraint,
+            shareablePreviewWrapper.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: shareablePreviewWrapperMargin),
+            shareablePreviewWrapper.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -shareablePreviewWrapperMargin),
+            
+            shareablePreviewView.leadingAnchor.constraint(equalTo: shareablePreviewWrapper.leadingAnchor),
+            shareablePreviewView.topAnchor.constraint(equalTo: shareablePreviewWrapper.topAnchor),
+            shareablePreviewView.trailingAnchor.constraint(equalTo: shareablePreviewWrapper.trailingAnchor),
+            shareablePreviewView.bottomAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor),
+            
+            tokenFieldShareablePreviewSpacingConstraint,
+            tokenFieldTopConstraint,
+
+            tokenField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: tokenFieldMargin),
+            tokenField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -tokenFieldMargin),
+            ])
+        
+        self.bottomConstraint = bottomConstraint
+        self.shareablePreviewTopConstraint = shareablePreviewTopConstraint
+        self.tokenFieldShareablePreviewSpacingConstraint = tokenFieldShareablePreviewSpacingConstraint
+        self.tokenFieldTopConstraint = tokenFieldTopConstraint
+
+        
+//        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
+//            blurView.edges == view.edges
+//            containerView.top == view.topMargin
+//            self.bottomConstraint = containerView.bottom == view.bottomMargin
+//            containerView.leading == view.leading
+//            containerView.trailing == view.trailing
+//        }
+        
+//        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
+
+//            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
+//            shareablePreviewWrapper.left == view.left + 16
+//            shareablePreviewWrapper.right == -16 + view.right
+//            shareablePreviewView.edges == shareablePreviewWrapper.edges
+
+//            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
+
+//            tokenFieldTopConstraint = tokenField.top == view.top + 8
+//        }
+
+        ///TODO: mv to bottom?
         updateShareablePreviewConstraint()
 
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
@@ -143,8 +201,8 @@ extension ShareViewController {
         
         constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
             
-            tokenField.left == view.left + 8
-            tokenField.right == -8 + view.right
+//            tokenField.left == view.left + 8
+//            tokenField.right == -8 + view.right
             tokenField.height >= 40
             
             tableView.left == view.left
