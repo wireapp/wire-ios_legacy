@@ -180,6 +180,9 @@
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
+		546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */; };
+		546EEA852534786600195097 /* SessionManagerLifeCycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA842534786600195097 /* SessionManagerLifeCycleObserver.swift */; };
+		546EEA87253479B300195097 /* ForegroundNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA86253479B300195097 /* ForegroundNotificationObserver.swift */; };
 		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
@@ -1776,6 +1779,9 @@
 		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
+		546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Conveninence.swift"; sourceTree = "<group>"; };
+		546EEA842534786600195097 /* SessionManagerLifeCycleObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerLifeCycleObserver.swift; sourceTree = "<group>"; };
+		546EEA86253479B300195097 /* ForegroundNotificationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForegroundNotificationObserver.swift; sourceTree = "<group>"; };
 		5489E20D252C84BE0010461D /* AppStateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculator.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Security-Flags.xcconfig"; sourceTree = "<group>"; };
@@ -5149,10 +5155,13 @@
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */,
+				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
+				546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */,
+				546EEA842534786600195097 /* SessionManagerLifeCycleObserver.swift */,
 				543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */,
 				543DF6AF25309CF8001F6EA6 /* Navigator.swift */,
 				8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */,
-				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
+				546EEA86253479B300195097 /* ForegroundNotificationObserver.swift */,
 			);
 			name = Sources;
 			path = "Wire-iOS/Sources";
@@ -7484,6 +7493,7 @@
 				A9730DDA250274150061BF36 /* AnalyticsCountlyProvider.swift in Sources */,
 				5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */,
 				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
+				546EEA852534786600195097 /* SessionManagerLifeCycleObserver.swift in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
 				5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */,
@@ -7520,6 +7530,7 @@
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
 				EEF71F6521B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift in Sources */,
 				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
+				546EEA87253479B300195097 /* ForegroundNotificationObserver.swift in Sources */,
 				EF1EE76F2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
 				5E769C5C21AEA3CB00785EB7 /* MessageDetailsContentViewController.swift in Sources */,
@@ -8163,6 +8174,7 @@
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */,
 				8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */,
+				546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */,
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,

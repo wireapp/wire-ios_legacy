@@ -29,7 +29,7 @@ public protocol NavigatorProtocol {
     func pop(_ animated: Bool)
     func present(_ viewController: UIViewController, animated: Bool, onComplete: (() -> Void)?)
     func setRoot(_ viewController: UIViewController, animated: Bool)
-    func dismiss(_ viewController: UIViewController?, animated: Bool)
+    func dismiss(_ viewController: UIViewController, animated: Bool)
 
     func addNavigateBack(closure: @escaping NavigateBackClosure, for viewController: UIViewController)
 }
@@ -76,14 +76,15 @@ public class Navigator: NSObject, NavigatorProtocol {
         vc.flatMap { runCompletion(for: $0) }
     }
 
-    public func dismiss(_ viewController: UIViewController?, animated: Bool) {
-        guard let viewController = viewController else { return }
+    public func dismiss(_ viewController: UIViewController, animated: Bool) {
         viewController.dismiss(animated: animated, completion: { [weak self] in
             self?.runCompletion(for: viewController)
         })
     }
 
-    public func present(_ viewController: UIViewController, animated: Bool, onComplete: (() -> Void)?) {
+    public func present(_ viewController: UIViewController,
+                        animated: Bool,
+                        onComplete: (() -> Void)?) {
         navigationController.present(viewController, animated: animated, completion: onComplete)
     }
 

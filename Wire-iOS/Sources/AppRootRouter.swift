@@ -25,12 +25,16 @@ public class AppRootRouter: NSObject {
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
-    private let rootViewController: RootViewController
     private var appStateCalculator = AppStateCalculator()
     private var authenticationCoordinator: AuthenticationCoordinator?
+    private var sessionManagerCreatedSessionObserverToken: Any?
+    private var sessionManagerDestroyedSessionObserverToken: Any?
+    private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
+    private let foregroundNotificationObserver = ForegroundNotificationObserver()
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager?
+    private(set) var rootViewController: RootViewController //TO DO: This should remain private
     
     // MARK: - Initialization
     
@@ -45,12 +49,12 @@ public class AppRootRouter: NSObject {
     
     public func start(launchOptions: LaunchOptions) {
         transition(to: .headless, completion: { })
-        createAnsStartSessionManager(launchOptions: launchOptions)
+        createAndStartSessionManager(launchOptions: launchOptions)
     }
     
     // MARK: - Private implementation
     
-    private func createAnsStartSessionManager(launchOptions: LaunchOptions) {
+    private func createAndStartSessionManager(launchOptions: LaunchOptions) {
         guard
             let appVersion = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String,
             let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
@@ -74,10 +78,10 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
+                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self.sessionManagerLifeCycleObserver)
+                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self.sessionManagerLifeCycleObserver)
+                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationObserver
                 /* TO DO: Add all this delegation
-                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
-                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
-                self.sessionManager?.foregroundNotificationResponder = self
                 self.sessionManager?.showContentDelegate = self
                 self.sessionManager?.switchingDelegate = self
                 self.sessionManager?.urlActionDelegate = self
