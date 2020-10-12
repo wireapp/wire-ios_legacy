@@ -78,8 +78,9 @@ public class Navigator: NSObject, NavigatorProtocol {
 
     public func dismiss(_ viewController: UIViewController?, animated: Bool) {
         guard let viewController = viewController else { return }
-        runCompletion(for: viewController)
-        viewController.dismiss(animated: animated, completion: nil)
+        viewController.dismiss(animated: animated, completion: { [weak self] in
+            self?.runCompletion(for: viewController)
+        })
     }
 
     public func present(_ viewController: UIViewController, animated: Bool, onComplete: (() -> Void)?) {
