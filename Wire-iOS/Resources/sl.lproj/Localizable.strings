@@ -27,6 +27,7 @@
 "general.edit" = "Uredi";
 "general.done" = "Done";
 "general.confirm" = "V redu";
+"general.later" = "Kasneje";
 "general.skip" = "Ne zdaj";
 "general.accept" = "Sprejmi";
 "general.decline" = "No, thanks";
@@ -359,10 +360,11 @@
 "image_confirmer.confirm" = "V redu";
 "image_confirmer.cancel" = "Prekliči";
 "image.add_sketch" = "Dodaj skico";
+"image.add_emoji" = "Add an emoji";
 "image.edit_image" = "Uredi sliko";
 
 // Camera access
-"camera_access.denied" = "Wire potrebuje dostop do kamere.";
+"camera_access.denied" = "Wire needs access to the camera";
 "video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Omogoči v nastavitvah Wire";
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "Razkrij";
 "content.message.forward.to" = "Išči…";
 "content.message.open" = "Odpri";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Kopiraj";
 "content.message.download" = "Prenos";
 "content.message.details" = "Podrobnosti";
@@ -643,9 +652,9 @@
 "voice.alert.call_in_progress.message" = "Lahko imate aktiven le en klic";
 "voice.alert.call_in_progress.confirm" = "V redu";
 
-"voice.alert.microphone_warning.title" = "Wire potrebuje dostop do mikrofona.";
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire potrebuje dostop do kamere.";
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Trenutni klic";
@@ -660,6 +669,7 @@
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Stalna bitna hitrost";
+"call.status.variable_bitrate" = "Variable Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
@@ -994,6 +1004,8 @@
 "self.settings.enable_read_receipts.title" = "Send Read Receipts";
 "self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "Slika";
 "self.settings.account_picture_group.color" = "Barva";
 
@@ -1037,7 +1049,7 @@
 
 "self.settings.account_section.handle.change.title" = "Uporabniško ime";
 "self.settings.account_section.handle.change.save" = "Shrani";
-"self.settings.account_section.handle.change.footer" = "Vsaj 2 znaka. Le a—z, 0—9, in _.";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "Že zasedeno";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "Ni mogoče nastaviti uporabniškega imena";
@@ -1155,6 +1167,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "Odkleni Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
@@ -1180,6 +1193,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Ponastavitev žetona za push obvestila";
 "self.settings.advanced.reset_push_token.subtitle" = "Če imate težave s push obvestili, vas bo podpora Wire morda zaprosila za ponastavitev tega žetona.";
@@ -1250,8 +1265,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
@@ -1550,6 +1567,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Nekaj je šlo narobe, prosimo poizkusite znova";
 "error.user.needs_credentials" = "Prosimo preverite vaše podatke in poizkusite ponovno.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
 "error.user.invalid_credentials" = "Prosimo preverite vaše podatke in poizkusite ponovno.";
 "error.user.account_pending_activation" = "Za račun, do katerega želite dostopati, je aktivacija v teku. Prosimo preverite vaše podatke.";
 "error.user.network_error" = "Zdi se, da je nekje težava z vašim omrežjem. Prosimo poskusite znova kasneje.";
@@ -1776,3 +1794,49 @@
 "button_message_cell.state.confirmed" = "confirmed";
 
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Izbriši";
+"wipe_database.alert.confirm_input" = "Izbriši";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";

@@ -31,50 +31,50 @@ protocol LandingViewControllerDelegate {
 
 /// Landing screen for choosing how to authenticate.
 final class LandingViewController: AuthenticationStepViewController {
-
+    
     // MARK: - State
-
+    
     weak var authenticationCoordinator: AuthenticationCoordinator?
-
+    
     var delegate: LandingViewControllerDelegate? {
         return authenticationCoordinator
     }
-
+    
     // MARK: - UI Styles
-
+    
     static let semiboldFont = FontSpec(.large, .semibold).font!
-
+    
     static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = .center
-
+        
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
-
+    
     static let buttonSubtitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
         alignCenterStyle.lineSpacing = 4
-
+        
         let lightFont = FontSpec(.normal, .light).font!
-
+        
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
-
+    
     // MARK: - UI Elements
-
+    
     private let contentView = UIView()
-
+    
     private let topStack: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.axis = .vertical
-
+        
         return stackView
     }()
-
+    
     private let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
@@ -82,7 +82,7 @@ final class LandingViewController: AuthenticationStepViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = UIColor.Team.textColor
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-
+        
         return imageView
     }()
     
@@ -120,7 +120,7 @@ final class LandingViewController: AuthenticationStepViewController {
         stackView.alignment = .fill
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
+        
         return stackView
     }()
     
@@ -169,7 +169,7 @@ final class LandingViewController: AuthenticationStepViewController {
         
         return button
     }()
-
+    
     private let createAccoutInfoLabel: UILabel = {
         let label = UILabel(key: "landing.create_account.infotitle".localized,
                             size: .small,
@@ -194,10 +194,10 @@ final class LandingViewController: AuthenticationStepViewController {
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)
-
+        
         return button
     }()
-
+    
     private let loginButtonsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
@@ -206,10 +206,10 @@ final class LandingViewController: AuthenticationStepViewController {
         stackView.axis = .vertical
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
+        
         return stackView
     }()
-
+    
     // MARK: - Constraints
     
     var topStackTopConstraint = NSLayoutConstraint()
@@ -236,46 +236,46 @@ final class LandingViewController: AuthenticationStepViewController {
     var createAccoutButtomBottomConstraint = NSLayoutConstraint()
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         Analytics.shared.tagOpenedLandingScreen(context: "email")
         self.view.backgroundColor = UIColor.Team.background
-
+        
         configureSubviews()
         configureConstraints()
         
         configureAccessibilityElements()
-
+        
         updateBarButtonItem()
         disableTrackingIfNeeded()
         updateButtons()
         updateCustomBackendLabels()
-
+        
         NotificationCenter.default.addObserver(forName: AccountManagerDidUpdateAccountsNotificationName,
                                                object: SessionManager.shared?.accountManager,
                                                queue: .main) { _ in
-                self.updateBarButtonItem()
-                self.disableTrackingIfNeeded()
+                                                self.updateBarButtonItem()
+                                                self.disableTrackingIfNeeded()
         }
         
         NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification,
                                                object: nil,
                                                queue: .main) { _ in
-            self.updateCustomBackendLabels()
-            self.updateButtons()
+                                                self.updateCustomBackendLabels()
+                                                self.updateButtons()
         }
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .compatibleDarkContent
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         activateRightConstraint()
@@ -290,11 +290,11 @@ final class LandingViewController: AuthenticationStepViewController {
         if #available(iOS 11, *) {
             additionalSafeAreaInsets.top = -44
         }
-
+        
         topStack.addArrangedSubview(logoView)
         
         view.addSubview(topStack)
-
+        
         contentView.addSubview(messageLabel)
         contentView.addSubview(subMessageLabel)
         buttonStackView.addArrangedSubview(loginButton)
@@ -302,12 +302,12 @@ final class LandingViewController: AuthenticationStepViewController {
         buttonStackView.addArrangedSubview(loginWithEmailButton)
         buttonStackView.addArrangedSubview(loginWithSSOButton)
         contentView.addSubview(buttonStackView)
-
+        
         view.addSubview(createAccoutInfoLabel)
         view.addSubview(createAccountButton)
         view.addSubview(contentView)
     }
-
+    
     private func configureConstraints() {
         disableAutoresizingMaskTranslationViews()
         createAndAddConstraints()
@@ -323,8 +323,8 @@ final class LandingViewController: AuthenticationStepViewController {
         
         [contentViewWidthConstraint,
          createAccoutInfoLabelTopConstraint].forEach() {
-             $0.isActive = traitCollection.horizontalSizeClass != .compact
-         }
+            $0.isActive = traitCollection.horizontalSizeClass != .compact
+        }
     }
     
     private func setConstraintsConstants() {
@@ -452,7 +452,7 @@ final class LandingViewController: AuthenticationStepViewController {
             return true
         }
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -463,7 +463,7 @@ final class LandingViewController: AuthenticationStepViewController {
         } else {
             topStack.spacing = view.frame.height / 6
         }
-
+        
         updateLogoView()
     }
     
@@ -515,36 +515,36 @@ final class LandingViewController: AuthenticationStepViewController {
             TrackingManager.shared.disableAnalyticsSharing = true
         }
     }
-
+    
     // MARK: - Accessibility
-
+    
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = true
         logoView.accessibilityLabel = "landing.header".localized
         logoView.accessibilityTraits.insert(.header)
     }
-
+    
     override func accessibilityPerformEscape() -> Bool {
         guard SessionManager.shared?.firstAuthenticatedAccount != nil else {
             return false
         }
-
+        
         cancelButtonTapped()
         return true
     }
-
+    
     // MARK: - Button tapped target
-
+    
     @objc func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared.tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
-
+    
     @objc func createTeamButtonTapped(_ sender: AnyObject!) {
         Analytics.shared.tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
-
+    
     @objc func loginButtonTapped(_ sender: AnyObject!) {
         Analytics.shared.tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
@@ -562,8 +562,8 @@ final class LandingViewController: AuthenticationStepViewController {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }
-
-
+    
+    
     // MARK: - AuthenticationCoordinatedViewController
     
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {

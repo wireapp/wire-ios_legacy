@@ -27,6 +27,7 @@
 "general.edit" = "修改";
 "general.done" = "完成";
 "general.confirm" = "好";
+"general.later" = "稍后";
 "general.skip" = "现在不要";
 "general.accept" = "接听";
 "general.decline" = "不用了，谢谢";
@@ -359,6 +360,7 @@
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "添加一个手绘图";
+"image.add_emoji" = "添加表情符号";
 "image.edit_image" = "编辑图像";
 
 // Camera access
@@ -425,6 +427,12 @@
 "content.message.link_attachment.accessibility_label.youtube" = "YouTube视频预览";
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud歌曲预览";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud 播放列表预览";
+
+// Digital signature
+"digital_signature.alert.error" = "不幸的是，您的数字签署失败。";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
 
 // New conversation participants added / removed / started system message
 
@@ -563,6 +571,7 @@
 "content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
+"content.message.sign" = "签署";
 "content.message.copy" = "复制";
 "content.message.download" = "下载";
 "content.message.details" = "详细信息";
@@ -645,7 +654,7 @@
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麦克风的权限。";
 
-"voice.alert.camera_warning.title" = "Wire需要使用相机的权限。";
+"voice.alert.camera_warning.title" = "Wire需要使用相机权限。";
 
 "voice.top_overlay.tap_to_return" = "点击返回通话";
 "voice.top_overlay.accessibility_title" = "正在呼叫";
@@ -995,6 +1004,8 @@
 "self.settings.enable_read_receipts.title" = "发送已读回执";
 "self.settings.privacy_section_group.subtitle" = "关闭后，你将无法查看他人的已读回执。\n该设定对群组聊天无效。";
 
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
 
@@ -1038,7 +1049,7 @@
 
 "self.settings.account_section.handle.change.title" = "用户名";
 "self.settings.account_section.handle.change.save" = "保存";
-"self.settings.account_section.handle.change.footer" = "至少2个字符，仅可使用a—z, 0—9以及下划线。";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
 "self.settings.account_section.handle.change.footer.unavailable" = "已经被占用";
 
 "self.settings.account_section.handle.change.failure_alert.title" = "无法设置您的用户名";
@@ -1156,6 +1167,7 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用触摸ID解锁或输入您的密码。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID或使用密码解锁。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "使用密码解锁";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "用您的密码解锁。";
@@ -1181,6 +1193,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
 "self.settings.advanced.debugging_tools.title" = "调试工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一个未读对话";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助于Wire诊断通话问题，并改善整个应用体验。";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
@@ -1251,8 +1265,10 @@
 // Landing screen
 
 "landing.header" = "Wire。添加您的帐号。";
-"landing.welcome_message" = "欢迎来到 %@";
-"landing.create_account.title" = "创建帐户";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "专业版";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
