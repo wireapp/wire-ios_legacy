@@ -145,7 +145,7 @@ extension ShareViewController {
                 sendButton.widthAnchor.constraint(equalToConstant: 32),
                 sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor),
                 sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-                sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: sendButtonMargin)
+                sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -sendButtonMargin)
 
             ]
         } else {
