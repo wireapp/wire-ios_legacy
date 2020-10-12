@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
 
 extension ShareViewController {
 
@@ -119,8 +118,7 @@ extension ShareViewController {
          bottomSeparatorLine,
          topSeparatorView,
          closeButton,
-         sendButton
-            ].disableAutoresizingMaskTranslation()
+         sendButton].disableAutoresizingMaskTranslation()
 
         let shareablePreviewWrapperMargin: CGFloat = 16
         let tokenFieldMargin: CGFloat = 8
@@ -200,9 +198,7 @@ extension ShareViewController {
 
             bottomSeparatorLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             bottomSeparatorLine.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            bottomSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)
-
-        ] + allowsMultipleSelectionConstraints)
+            bottomSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)] + allowsMultipleSelectionConstraints)
 
         self.bottomConstraint = bottomConstraint
         self.shareablePreviewTopConstraint = shareablePreviewTopConstraint
