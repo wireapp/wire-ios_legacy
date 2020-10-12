@@ -117,7 +117,8 @@ extension ShareViewController {
          tokenField,
          searchIcon,
          destinationsTableView,
-         bottomSeparatorLine
+         bottomSeparatorLine,
+         topSeparatorView
             ].disableAutoresizingMaskTranslation()
         
         let shareablePreviewWrapperMargin: CGFloat = 16
