@@ -115,7 +115,9 @@ extension ShareViewController {
          shareablePreviewWrapper,
          shareablePreviewView,
          tokenField,
-         searchIcon
+         searchIcon,
+         destinationsTableView,
+         bottomSeparatorLine
             ].disableAutoresizingMaskTranslation()
         
         let shareablePreviewWrapperMargin: CGFloat = 16
@@ -127,8 +129,12 @@ extension ShareViewController {
         
         let tokenFieldTopConstraint = tokenField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: tokenFieldMargin)
         
-        let tokenFieldHeightConstraint = allowsMultipleSelection ? tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40) : tokenField.heightAnchor.constraint(equalToConstant: 0)
-        
+        let tokenFieldHeightConstraint: NSLayoutConstraint
+        if allowsMultipleSelection {
+            tokenFieldHeightConstraint = tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
+        } else {
+            tokenFieldHeightConstraint = tokenField.heightAnchor.constraint(equalToConstant: 0)
+        }
         
         NSLayoutConstraint.activate([
             blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -158,7 +164,22 @@ extension ShareViewController {
             tokenFieldHeightConstraint,
             
             searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8) // the search icon glyph has whitespaces
+            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8), // the search icon glyph has whitespaces,
+            
+            topSeparatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topSeparatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topSeparatorView.topAnchor.constraint(equalTo: destinationsTableView.topAnchor),
+            topSeparatorView.heightAnchor.constraint(equalToConstant: .hairline),
+
+//            destinationsTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+//            destinationsTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+//            destinationsTableView.topAnchor.constraint(equalTo: tokenField.bottomAnchor, constant: 8),
+//            destinationsTableView.bottomAnchor.constraint(equalTo: bottomSeparatorLine.topAnchor),
+//
+//            bottomSeparatorLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+//            bottomSeparatorLine.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+//            bottomSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline),
+
 
         ])
         
@@ -171,20 +192,12 @@ extension ShareViewController {
         ///TODO: mv to bottom?
         updateShareablePreviewConstraint()
         
-//        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
-////            searchIcon.centerY == tokenField.centerY
-////            searchIcon.left == tokenField.left + 8
-//            if !self.allowsMultipleSelection {
-//                tokenField.height == 0
-//            }
+//        constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
+//            topSeparatorView.left == view.left
+//            topSeparatorView.right == view.right
+//            topSeparatorView.top == destinationsTableView.top
+//            topSeparatorView.height == .hairline
 //        }
-        
-        constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
-            topSeparatorView.left == view.left
-            topSeparatorView.right == view.right
-            topSeparatorView.top == destinationsTableView.top
-            topSeparatorView.height == .hairline
-        }
         
         
         constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
