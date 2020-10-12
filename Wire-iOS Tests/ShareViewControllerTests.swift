@@ -55,13 +55,13 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-    
+
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
         try! groupConversation.appendText(content: "This is a text message.")
 
         createSut(allowsMultipleSelection: false)
-        
+
         //THEN
         verify(matching: sut)
     }
@@ -150,7 +150,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     }
 
     private func createSut(allowsMultipleSelection: Bool = true) {
-        groupConversation.add(participants:[createUser(name: "John Appleseed")])
+        groupConversation.add(participants: [createUser(name: "John Appleseed")])
         let oneToOneConversation = otherUserConversation!
 
         guard let message = groupConversation.lastMessage else {
@@ -171,7 +171,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
                                         line: UInt = #line) {
         createSut()
 
-        verifyInAllDeviceSizes(matching: sut, file:file, testName: testName, line:line)
+        verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
     }
 
 }
