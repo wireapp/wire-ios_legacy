@@ -23,6 +23,11 @@ import WireSyncEngine
 import avs
 import WireCommonComponents
 
+extension AppRootViewController {
+    static let appStateDidTransition = Notification.Name(rawValue: "appStateDidTransition")
+    static let appStateKey = "AppState"
+}
+
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
 
@@ -46,7 +51,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    fileprivate let appStateController: AppStateController
+    fileprivate let appStateCalculator: AppStateCalculator
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
@@ -108,7 +113,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        appStateController = AppStateController()
+        appStateCalculator = AppStateCalculator()
         fileBackupExcluder = FileBackupExcluder()
         SessionManager.startAVSLogging()
 
@@ -122,7 +127,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
-        appStateController.delegate = self
+        appStateCalculator.delegate = self
         
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
@@ -141,12 +146,13 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
             fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
         }
-
+        
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
         
-        enqueueTransition(to: appStateController.appState)
+        enqueueTransition(to: appStateCalculator.appState)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -174,7 +180,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             appVersion: appVersion!,
             mediaManager: mediaManager!,
             analytics: Analytics.shared,
-            delegate: appStateController,
+            delegate: appStateCalculator,
             showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
@@ -238,8 +244,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         switch appState {
-        case .blacklisted(jailbroken: let jailbroken):
-            viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
+        case .blacklisted:
+            viewController = BlockerViewController(context: .blacklist)
+        case .jailbroken:
+            viewController = BlockerViewController(context: .jailbroken)
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
@@ -259,9 +267,10 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
-                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider())
+                                                                  featureProvider: BuildSettingAuthenticationFeatureProvider(),
+                                                                  statusProvider: AuthenticationStatusProvider())
 
-            authenticationCoordinator!.delegate = appStateController
+            authenticationCoordinator!.delegate = appStateCalculator
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
             viewController = navigationController
@@ -279,7 +288,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
                 clientViewController.needToShowDataUsagePermissionDialog = false
                 
-                if case .unauthenticated(_) = appStateController.lastAppState {
+                if case .unauthenticated(_) = appStateCalculator.previousAppState {
                     if SelfUser.current.isTeamMember {
                         TrackingManager.shared.disableCrashSharing = true
                         TrackingManager.shared.disableAnalyticsSharing = false
@@ -328,15 +337,17 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    func transition(to viewController: UIViewController, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
+    func transition(to viewController: UIViewController,
+                    animated: Bool = true,
+                    completionHandler: (() -> Void)? = nil) {
 
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
         visibleViewController?.willMove(toParent: nil)
 
-        if let previousViewController = visibleViewController, animated {
-
+        if let previousViewController = visibleViewController,
+            animated {
             addChild(viewController)
             transition(from: previousViewController,
                        to: viewController,
@@ -397,7 +408,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
     
     func performWhenAuthenticated(_ block : @escaping () -> Void) {
-        if case .authenticated = appStateController.appState {
+        if case .authenticated = appStateCalculator.appState {
             block()
         } else {
             authenticatedBlocks.append(block)
@@ -412,7 +423,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     func reload() {
         enqueueTransition(to: .headless)
-        enqueueTransition(to: self.appStateController.appState)
+        enqueueTransition(to: appStateCalculator.appState)
     }
 
     // MARK: - Status Bar / Supported Orientations
@@ -434,12 +445,19 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 }
 
-extension AppRootViewController: AppStateControllerDelegate {
-
-    func appStateController(transitionedTo appState: AppState, transitionCompleted: @escaping () -> Void) {
-        enqueueTransition(to: appState, completion: transitionCompleted)
+extension AppRootViewController: AppStateCalculatorDelegate {
+    func appStateCalculator(_: AppStateCalculator,
+                            didCalculate appState: AppState,
+                            completion: @escaping () -> Void) {
+        enqueueTransition(to: appState, completion: completion)
+        notifyTransition(for: appState)
     }
-
+    
+    private func notifyTransition(for appState: AppState) {
+        NotificationCenter.default.post(name: AppRootViewController.appStateDidTransition,
+                                        object: nil,
+                                        userInfo: [AppRootViewController.appStateKey: appState])
+    }
 }
 
 // MARK: - ShowContentDelegate
@@ -557,7 +575,6 @@ extension AppRootViewController: AudioPermissionsObserving {
     }
 }
 
-
 // MARK: - Session Manager Observer
 
 extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
@@ -590,7 +607,8 @@ extension AppRootViewController {
     fileprivate func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
         switch reason {
         case .sessionExpired:
-            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized, message: "account_deleted_session_expired_alert.message".localized)
+            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
+                                     message: "account_deleted_session_expired_alert.message".localized)
         default:
             break
             
@@ -651,7 +669,6 @@ extension SessionManager {
     static var numberOfAccounts: Int {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
-
 }
 
 final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
