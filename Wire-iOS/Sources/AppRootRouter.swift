@@ -27,6 +27,10 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var authenticationCoordinator: AuthenticationCoordinator?
+    private var sessionManagerCreatedSessionObserverToken: Any?
+    private var sessionManagerDestroyedSessionObserverToken: Any?
+    private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
+    private let foregroundNotificationDecisioner = ForegroundNotificationDecisioner()
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager?
@@ -74,10 +78,10 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
+                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self.sessionManagerLifeCycleObserver)
+                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self.sessionManagerLifeCycleObserver)
+                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationDecisioner
                 /* TO DO: Add all this delegation
-                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
-                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
-                self.sessionManager?.foregroundNotificationResponder = self
                 self.sessionManager?.showContentDelegate = self
                 self.sessionManager?.switchingDelegate = self
                 self.sessionManager?.urlActionDelegate = self
