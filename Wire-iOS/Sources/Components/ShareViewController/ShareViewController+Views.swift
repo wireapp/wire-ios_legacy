@@ -21,30 +21,30 @@ import UIKit
 import Cartography
 
 extension ShareViewController {
-
+    
     func createShareablePreview() {
         let shareablePreviewView = self.shareable.previewView()
         shareablePreviewView?.layer.cornerRadius = 4
         shareablePreviewView?.clipsToBounds = true
         self.shareablePreviewView = shareablePreviewView
-
+        
         let shareablePreviewWrapper = UIView()
         shareablePreviewWrapper.clipsToBounds = false
         shareablePreviewWrapper.layer.shadowOpacity = 1
         shareablePreviewWrapper.layer.shadowRadius = 8
         shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
         shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
-
+        
         shareablePreviewWrapper.addSubview(shareablePreviewView!)
         self.shareablePreviewWrapper = shareablePreviewWrapper
-
+        
         self.shareablePreviewWrapper?.isHidden = !showPreview
     }
-
+    
     func createViews() {
         
         createShareablePreview()
-
+        
         self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
@@ -60,7 +60,7 @@ extension ShareViewController {
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
         self.tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
-
+        
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
@@ -69,11 +69,11 @@ extension ShareViewController {
         self.destinationsTableView.keyboardDismissMode = .interactive
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
-
+        
         self.closeButton.accessibilityLabel = "close"
         self.closeButton.setIcon(.cross, size: .tiny, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
-
+        
         self.sendButton.accessibilityLabel = "send"
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, size: .tiny, for: .normal)
@@ -83,7 +83,7 @@ extension ShareViewController {
         self.sendButton.setBorderColor(.clear, for: .disabled)
         self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
-
+        
         if self.allowsMultipleSelection {
             self.searchIcon.setIcon(.search, size: .tiny, color: .white)
         }
@@ -93,7 +93,7 @@ extension ShareViewController {
             self.closeButton.isHidden = true
             self.bottomSeparatorLine.isHidden = true
         }
-
+        
         [self.blurView, self.containerView].forEach(self.view.addSubview)
         [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.containerView.addSubview)
         
@@ -105,37 +105,37 @@ extension ShareViewController {
     func createConstraints() {
         
         guard let shareablePreviewWrapper = shareablePreviewWrapper,
-              let shareablePreviewView = shareablePreviewView else {
-            return
+            let shareablePreviewView = shareablePreviewView else {
+                return
         }
-
+        
         [view,
-        blurView,
-        containerView,
-        shareablePreviewWrapper,
-        shareablePreviewView,
-        tokenField,
-        ].disableAutoresizingMaskTranslation()
+         blurView,
+         containerView,
+         shareablePreviewWrapper,
+         shareablePreviewView,
+         tokenField,
+            ].disableAutoresizingMaskTranslation()
         
         let shareablePreviewWrapperMargin: CGFloat = 16
         let tokenFieldMargin: CGFloat = 8
-
+        
         let bottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
-        let shareablePreviewTopConstraint = shareablePreviewWrapper.topAnchor.constraint(equalTo: containerView.safeTopAnchor, constant: 8)
+        let shareablePreviewTopConstraint = shareablePreviewWrapper.topAnchor.constraint(equalTo: containerView.safeTopAnchor)
         let tokenFieldShareablePreviewSpacingConstraint = tokenField.topAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor, constant: shareablePreviewWrapperMargin)
         
         let tokenFieldTopConstraint = tokenField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: tokenFieldMargin)
         
         
         NSLayoutConstraint.activate([
-        blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        blurView.topAnchor.constraint(equalTo: view.topAnchor),
-        blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        
-        containerView.topAnchor.constraint(equalTo: view.safeTopAnchor),
-        bottomConstraint,
-        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            bottomConstraint,
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             shareablePreviewTopConstraint,
@@ -149,40 +149,40 @@ extension ShareViewController {
             
             tokenFieldShareablePreviewSpacingConstraint,
             tokenFieldTopConstraint,
-
+            
             tokenField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: tokenFieldMargin),
             tokenField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -tokenFieldMargin),
-            ])
+        ])
         
         self.bottomConstraint = bottomConstraint
         self.shareablePreviewTopConstraint = shareablePreviewTopConstraint
         self.tokenFieldShareablePreviewSpacingConstraint = tokenFieldShareablePreviewSpacingConstraint
         self.tokenFieldTopConstraint = tokenFieldTopConstraint
-
         
-//        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
-//            blurView.edges == view.edges
-//            containerView.top == view.topMargin
-//            self.bottomConstraint = containerView.bottom == view.bottomMargin
-//            containerView.leading == view.leading
-//            containerView.trailing == view.trailing
-//        }
         
-//        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
-
-//            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
-//            shareablePreviewWrapper.left == view.left + 16
-//            shareablePreviewWrapper.right == -16 + view.right
-//            shareablePreviewView.edges == shareablePreviewWrapper.edges
-
-//            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
-
-//            tokenFieldTopConstraint = tokenField.top == view.top + 8
-//        }
-
+        //        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
+        //            blurView.edges == view.edges
+        //            containerView.top == view.topMargin
+        //            self.bottomConstraint = containerView.bottom == view.bottomMargin
+        //            containerView.leading == view.leading
+        //            containerView.trailing == view.trailing
+        //        }
+        
+        //        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
+        
+        //            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
+        //            shareablePreviewWrapper.left == view.left + 16
+        //            shareablePreviewWrapper.right == -16 + view.right
+        //            shareablePreviewView.edges == shareablePreviewWrapper.edges
+        
+        //            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
+        
+        //            tokenFieldTopConstraint = tokenField.top == view.top + 8
+        //        }
+        
         ///TODO: mv to bottom?
         updateShareablePreviewConstraint()
-
+        
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
             searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
@@ -201,8 +201,8 @@ extension ShareViewController {
         
         constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
             
-//            tokenField.left == view.left + 8
-//            tokenField.right == -8 + view.right
+            //            tokenField.left == view.left + 8
+            //            tokenField.right == -8 + view.right
             tokenField.height >= 40
             
             tableView.left == view.left
@@ -236,5 +236,5 @@ extension ShareViewController {
             }
         }
     }
-
+    
 }
