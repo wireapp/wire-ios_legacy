@@ -28,7 +28,7 @@ public protocol NavigatorProtocol {
     func push(_ viewController: UIViewController, animated: Bool, onNavigateBack: NavigateBackClosure?)
     func pop(_ animated: Bool)
     func present(_ viewController: UIViewController, animated: Bool, onComplete: (() -> Void)?)
-    func root(_ viewController: UIViewController, animated: Bool)
+    func setRoot(_ viewController: UIViewController, animated: Bool)
     func dismiss(_ viewController: UIViewController?, animated: Bool)
 
     func addNavigateBack(closure: @escaping NavigateBackClosure, for viewController: UIViewController)
@@ -47,8 +47,8 @@ public extension NavigatorProtocol {
         present(viewController, animated: true, onComplete: nil)
     }
 
-    func root(_ viewController: UIViewController) {
-        root(viewController, animated: true)
+    func setRoot(_ viewController: UIViewController) {
+        setRoot(viewController, animated: true)
     }
 }
 
@@ -86,7 +86,7 @@ public class Navigator: NSObject, NavigatorProtocol {
         navigationController.present(viewController, animated: animated, completion: onComplete)
     }
 
-    public func root(_ viewController: UIViewController, animated: Bool) {
+    public func setRoot(_ viewController: UIViewController, animated: Bool) {
         closures.forEach { $0.value() }
         closures = [:]
         navigationController.viewControllers = [viewController]
@@ -126,21 +126,16 @@ extension Navigator: UINavigationControllerDelegate {
 public final class NoBackTitleNavigationController: UINavigationController {
     public override var viewControllers: [UIViewController] {
         didSet {
-            viewControllers.forEach(shouldHideBackButton(for:))
+            viewControllers.forEach(hideBackButton(for:))
         }
     }
 
     public override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
-        shouldHideBackButton(for: viewController)
+        hideBackButton(for: viewController)
     }
 
-    public override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-        super.setViewControllers(viewControllers, animated: animated)
-        viewControllers.forEach(shouldHideBackButton(for:))
-    }
-
-    private func shouldHideBackButton(for viewController: UIViewController) {
+    private func hideBackButton(for viewController: UIViewController) {
         viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                           style: .plain,
                                                                           target: nil,
