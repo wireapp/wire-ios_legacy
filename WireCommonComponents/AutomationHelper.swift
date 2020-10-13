@@ -39,7 +39,12 @@ public final class AutomationHelper: NSObject {
     static public let sharedHelper = AutomationHelper()
     
     /// Whether AppCenter should be used
+    private var useAppCenterLaunchOption: Bool?
     public var useAppCenter: Bool {
+        if useAppCenterLaunchOption == false {
+            return false
+        }
+        
         return UserDefaults.standard.bool(forKey: "UseAppCenter")
     }
     
@@ -89,14 +94,23 @@ public final class AutomationHelper: NSObject {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
 
-        self.disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert)
-        self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
-        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
-        self.disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
-        self.shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
-        self.disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
+        disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert)
+        disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
+        uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
+        disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
+        shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
+        disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
+        
+        switch arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
+        case "0":
+            useAppCenterLaunchOption = false
+        case "1":
+            useAppCenterLaunchOption = true
+        default:
+            break
+        }
 
-        self.automationEmailCredentials = AutomationHelper.credentials(arguments)
+        automationEmailCredentials = AutomationHelper.credentials(arguments)
         if arguments.hasFlag(AutomationKey.logNetwork) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
@@ -130,6 +144,7 @@ public final class AutomationHelper: NSObject {
         case disableCallQualitySurvey = "disable-call-quality-survey"
         case persistBackendType = "persist-backend-type"
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
+        case useAppCenter = "-UseAppCenter"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
