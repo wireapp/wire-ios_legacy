@@ -85,7 +85,6 @@ final class CallTopOverlayController: UIViewController {
     
     deinit {
         stopCallDurationTimer()
-        AVSMediaManagerClientChangeNotification.remove(self)
     }
     
     init(conversation: ZMConversation) {
@@ -99,7 +98,6 @@ final class CallTopOverlayController: UIViewController {
             observerTokens.append(WireCallCenterV3.addMuteStateObserver(observer: self, userSession: userSession))
         }
 
-        AVSMediaManagerClientChangeNotification.add(self)
     }
     
     @available(*, unavailable)
