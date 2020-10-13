@@ -141,11 +141,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 //            UIColor.setAccentOverride(.undefined)
 //            mainWindow.tintColor = UIColor.accent()
 //            executeAuthenticatedBlocks()
-//            showAuthenticated(isComingFromRegistration: completedRegistration,
-//                              completion: completionBlock)
-            
-            // TO DO: Show Authenticated Case
-            showTempController(completion: completionBlock)
+            showAuthenticated(isComingFromRegistration: completedRegistration,
+                              completion: completionBlock)
             
         case .headless:
             showLaunchScreen(completion: completionBlock)
@@ -243,31 +240,21 @@ extension AppRootRouter {
         rootViewController.set(childViewController: skeletonViewController,
                                completion: completion)
     }
-    
-    private func showTempController(completion: @escaping () -> Void) {
-        let viewController = UIViewController()
-        viewController.view.frame = UIScreen.main.bounds
-        viewController.view.backgroundColor = .red
-        rootViewController.set(childViewController: viewController,
-                               completion: completion)
-    }
 }
 
 // TO DO: THIS PART MUST BE CLENED UP
 extension AppRootRouter {
     private func applicationWillTransition(to appState: AppState) {
-        /*
         if case .authenticated = appState {
             if AppDelegate.shared.shouldConfigureSelfUserProvider {
                 SelfUser.provider = ZMUserSession.shared()
             }
-            callWindow.callController.transitionToLoggedInSession()
+//            callWindow.callController.transitionToLoggedInSession()
         }
-
+        
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
-        */
     }
     
     private func applicationDidTransition(to appState: AppState) {
