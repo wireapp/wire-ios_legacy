@@ -25,7 +25,6 @@ typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & Us
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
-    var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -59,12 +58,6 @@ final class AppLockInteractor {
 extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
         return AppLock.isCustomPasscodeNotSet
-    }
-    
-    var isAuthenticationNeeded: Bool {
-        let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
-        
-        return screenLockIsActive || isDatabaseLocked
     }
     
     var isDimmingScreenWhenInactive: Bool {
@@ -146,22 +139,5 @@ extension AppLockInteractor {
             return isDatabaseLocked
         }
         return false
-    }
-    
-    private var isAppStateAuthenticated: Bool {
-        guard let state = appState else { return false }
-        if case AppState.authenticated(completedRegistration: _) = state {
-            return true
-        }
-        return false
-    }
-    
-    private var isLockTimeoutReached: Bool {
-        let lastAuthDate = appLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
-        return !isWithinTimeoutWindow
     }
 }

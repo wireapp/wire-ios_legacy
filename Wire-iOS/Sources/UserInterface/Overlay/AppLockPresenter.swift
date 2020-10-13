@@ -41,7 +41,6 @@ protocol AppLockUserInterface: class {
     func presentCreatePasscodeScreen(callback: ResultHandler?)
     
     func setSpinner(animating: Bool)
-    func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
 }
 
@@ -91,6 +90,7 @@ final class AppLockPresenter {
         self.appLockInteractorInput = appLockInteractorInput
         self.authenticationState = authenticationState
         self.addApplicationStateObservers()
+        self.requireAuthenticationIfNeeded()
     }
     
     func requireAuthentication() {
@@ -99,17 +99,12 @@ final class AppLockPresenter {
     }
     
     func requireAuthenticationIfNeeded() {
-        guard appLockInteractorInput.isAuthenticationNeeded else {
-            setContents(dimmed: false)
-            return
-        }
         switch authenticationState {
         case .needed, .authenticated:
             authenticationState = .needed
-            setContents(dimmed: true)
             appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
-            setContents(dimmed: true, withReauth: true)
+            showReauth(visible: true)
         case .pendingPassword:
             break
         }
@@ -121,7 +116,7 @@ extension AppLockPresenter {
     private func checkPassword(password: String) -> Bool {
         guard !password.isEmpty else {
             authenticationState = .cancelled
-            setContents(dimmed: true, withReauth: true)
+            showReauth(visible: true)
             return false
         }
         
@@ -131,7 +126,6 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
-        NotificationCenter.default.post(name: .appLocked, object: self, userInfo: nil)
         userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
@@ -154,14 +148,14 @@ extension AppLockPresenter: AppLockInteractorOutput {
     
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
         authenticationState.update(with: result)
-        setContents(dimmed: result != .granted, withReauth: result == .unavailable)
+        showReauth(visible: result != .granted)
 
         if case .needAccountPassword = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
             if appLockInteractorInput.isCustomPasscodeNotSet {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
                     // user need to enter the newly created passcode after creation
-                    self.setContents(dimmed: true, withReauth: true)
+                    self.showReauth(visible: true)
                 })
             } else {
                 requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
@@ -176,22 +170,15 @@ extension AppLockPresenter: AppLockInteractorOutput {
     func passwordVerified(with result: VerifyPasswordResult?) {
         userInterface?.setSpinner(animating: false)
         guard let result = result else {
-            setContents(dimmed: true, withReauth: true)
+            showReauth(visible: true)
             return
         }
-        let authNeeded = appLockInteractorInput.isAuthenticationNeeded
-
-        setContents(dimmed: result != .validated && authNeeded)
 
         switch result {
         case .validated:
             appUnlocked()
         case .denied, .unknown, .timeout:
-            if authNeeded {
-                requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
-            } else {
-                authenticationState = .needed
-            }
+            requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
         }
     }
 }
@@ -208,58 +195,23 @@ extension AppLockPresenter {
                                                selector: #selector(AppLockPresenter.applicationDidEnterBackground),
                                                name: UIApplication.didEnterBackgroundNotification,
                                                object: .none)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockPresenter.applicationDidBecomeActive),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: .none)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appStateDidTransition(_:)),
-                                               name: AppStateController.appStateDidTransition,
-                                               object: .none)
     }
     
     @objc func applicationWillResignActive() {
-        if appLockInteractorInput.isDimmingScreenWhenInactive {
-            userInterface?.setContents(dimmed: true)
-        }
+        showReauth(visible: false)
     }
     
     @objc func applicationDidEnterBackground() {
         if self.authenticationState == .authenticated {
             AppLock.lastUnlockedDate = Date()
         }
-        if appLockInteractorInput.isDimmingScreenWhenInactive {
-            userInterface?.setContents(dimmed: true)
-        }
-    }
-    
-    @objc func applicationDidBecomeActive() {
-        requireAuthenticationIfNeeded()
-    }
-
-    @objc func appStateDidTransition(_ notification: Notification) {
-        guard let appState = notification.userInfo?[AppStateController.appStateKey] as? AppState else { return }
-    
-        appLockInteractorInput.appStateDidTransition(to: appState)
-        switch appState {
-        case .authenticated:
-            if UIApplication.shared.applicationState == .active {
-                requireAuthenticationIfNeeded()
-            }
-        default:
-            setContents(dimmed: false)
-        }
     }
 }
 
 // MARK: - Helpers
 extension AppLockPresenter {
-    private func setContents(dimmed: Bool,
-                             withReauth showReauth: Bool = false) {
-        userInterface?.setContents(dimmed: dimmed)
-        userInterface?.setReauth(visible: showReauth)
+    private func showReauth(visible: Bool) {
+        userInterface?.setReauth(visible: visible)
     }
     
     private func appUnlocked() {

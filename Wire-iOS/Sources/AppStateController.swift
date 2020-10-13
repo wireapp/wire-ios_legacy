@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import WireSystem
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "AppState")
 
@@ -54,7 +55,6 @@ final class AppStateController : NSObject {
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
-    fileprivate var isLocked = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
@@ -70,11 +70,6 @@ final class AppStateController : NSObject {
             selector: #selector(applicationDidBecomeActive),
             name: UIApplication.didBecomeActiveNotification,
             object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-               selector: #selector(applicationDidBecomeLocked),
-               name: .appLocked,
-               object: .none)
         
         NotificationCenter.default.addObserver(self,
         selector: #selector(applicationDidBecomeUnlocked),
@@ -95,10 +90,6 @@ final class AppStateController : NSObject {
             return .headless
         }
         
-        if isLocked {
-            return .appLocked
-        }
-        
         if isMigrating {
             return .migrating
         }
@@ -116,6 +107,8 @@ final class AppStateController : NSObject {
         }
 
         switch authenticationState {
+        case .loggedIn where isScreenLockNeeded:
+            return .appLocked
         case .loggedIn(let addedAccount):
             return .authenticated(completedRegistration: addedAccount, databaseIsLocked: isDatabaseLocked)
         case .loggedOut:
@@ -246,16 +239,8 @@ extension AppStateController {
         hasEnteredForeground = true
         updateAppState()
     }
-    
-    @objc func applicationDidBecomeLocked() {
-        hasEnteredForeground = true
-        isLocked = true
-        updateAppState()
-    }
-    
+
     @objc func applicationDidBecomeUnlocked() {
-        hasEnteredForeground = true
-        isLocked = false
         updateAppState()
     }
     
@@ -293,6 +278,20 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         updateAppState()
     }
     
+    private var isScreenLockNeeded: Bool {
+        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
+        
+        return screenLockIsActive || isDatabaseLocked
+    }
+    
+    private var isLockTimeoutReached: Bool {
+        let lastAuthDate = AppLock.lastUnlockedDate
+        
+        // The app was authenticated at least N seconds ago
+        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        return !isWithinTimeoutWindow
+    }
 }
 
 extension AppStateController {

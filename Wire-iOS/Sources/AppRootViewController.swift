@@ -304,7 +304,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
         case .appLocked:
-            break
+            viewController = AppLockViewController()
         }
 
         if let viewController = viewController {

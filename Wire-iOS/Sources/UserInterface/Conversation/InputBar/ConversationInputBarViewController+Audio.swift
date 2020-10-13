@@ -47,7 +47,6 @@ extension ConversationInputBarViewController {
     @objc
     private func revealRecordKeyboardWhenAppLocked() {
         guard AppLock.isActive,
-              !AppLockViewController.isLocked,
               mode == .audioRecord,
               !self.inputBar.textView.isFirstResponder else { return }
 

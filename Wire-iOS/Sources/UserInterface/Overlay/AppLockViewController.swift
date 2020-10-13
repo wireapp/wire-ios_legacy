@@ -31,28 +31,11 @@ final class AppLockViewController: UIViewController {
     // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
-
-    private var dimContents: Bool = false {
-        didSet {
-            view.window?.isHidden = !dimContents
-
-            if dimContents {
-                AppDelegate.shared.notificationsWindow?.makeKey()
-            } else {
-                AppDelegate.shared.notificationsWindow?.isHidden = !dimContents
-                AppDelegate.shared.window?.makeKey()
-            }
-        }
-    }
     
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
 
     static let shared = AppLockViewController()
-
-    static var isLocked: Bool {
-        return shared.dimContents
-    }
 
     convenience init() {
         self.init(nibName:nil, bundle:nil)
@@ -85,8 +68,6 @@ final class AppLockViewController: UIViewController {
         constrain(self.view, self.spinner) { view, spinner in
             spinner.center == view.center
         }
-
-        self.dimContents = false
     }
     
     private func presentCustomPassCodeUnlockScreenIfNeeded(message: String,
@@ -152,9 +133,5 @@ extension AppLockViewController: AppLockUserInterface {
 
     func setReauth(visible: Bool) {
         lockView.showReauth = visible
-    }
-
-    func setContents(dimmed: Bool) {
-        dimContents = dimmed
     }
 }
