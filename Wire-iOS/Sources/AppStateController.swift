@@ -134,7 +134,6 @@ final class AppStateController : NSObject {
         case (.unauthenticated, _):
             // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
-            
         default: break
         }
         
