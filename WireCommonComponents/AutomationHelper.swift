@@ -38,8 +38,10 @@ public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
-    /// Whether AppCenter should be used
     private var useAppCenterLaunchOption: Bool?
+    
+    /// Whether AppCenter should be used
+    /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
         if useAppCenterLaunchOption == false {
             return false
@@ -101,7 +103,8 @@ public final class AutomationHelper: NSObject {
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
         
-        switch arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
+        let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue)
+        switch value {
         case "0":
             useAppCenterLaunchOption = false
         case "1":
@@ -144,7 +147,7 @@ public final class AutomationHelper: NSObject {
         case disableCallQualitySurvey = "disable-call-quality-survey"
         case persistBackendType = "persist-backend-type"
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
-        case useAppCenter = "-UseAppCenter"
+        case useAppCenter = "use-app-center"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
@@ -189,6 +192,7 @@ protocol ArgumentsType {
     func flagValueIfPresent(_ commandLineArgument: String) -> String?
 }
 
+//MARK: - default implementation
 extension ArgumentsType {
 
     var flagPrefix: String { return "--" }
@@ -202,8 +206,8 @@ extension ArgumentsType {
     }
 
     func flagValueIfPresent(_ commandLineArgument: String) -> String? {
-        for argument in self.arguments {
-            let searchString = "--" + commandLineArgument + "="
+        for argument in arguments {
+            let searchString = flagPrefix + commandLineArgument + "="
             if argument.hasPrefix(searchString) {
                 return String(argument[searchString.index(searchString.startIndex, offsetBy: searchString.count)...])
             }

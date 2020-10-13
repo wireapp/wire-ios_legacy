@@ -164,7 +164,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-UseAppCenter 1"
+            argument = "--use-app-center=0"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
