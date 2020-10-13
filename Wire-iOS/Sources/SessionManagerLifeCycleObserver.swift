@@ -25,7 +25,7 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
     
     // MARK: - SessionManagerCreatedSessionObserver
     func sessionManagerCreated(userSession: ZMUserSession) {
-        setSoundLister(for: userSession)
+        setSoundEventListener(for: userSession)
         enableEncryptMessagesAtRest(for: userSession)
     }
 
@@ -33,11 +33,11 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
 
     // MARK: - SessionManagerDestroyedSessionObserver
     func sessionManagerDestroyedUserSession(for accountId: UUID) {
-        resetSoundEventLister(for: accountId)
+        resetSoundEventListener(for: accountId)
     }
     
     // MARK: - Private Implementation
-    private func setSoundLister(for userSession: ZMUserSession) {
+    private func setSoundEventListener(for userSession: ZMUserSession) {
         for (accountId, session) in SessionManager.shared?.backgroundUserSessions ?? [:] {
             if session == userSession {
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
@@ -56,7 +56,7 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
         userSession.encryptMessagesAtRest = true
     }
     
-    private func resetSoundEventLister(for accountID: UUID) {
+    private func resetSoundEventListener(for accountID: UUID) {
         soundEventListeners[accountID] = nil
     }
 }

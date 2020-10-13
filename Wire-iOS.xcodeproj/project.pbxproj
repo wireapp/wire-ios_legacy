@@ -181,7 +181,7 @@
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
 		546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */; };
-		546EEA89253493FF00195097 /* ForegroundNotificationDecisioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA88253493FF00195097 /* ForegroundNotificationDecisioner.swift */; };
+		546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */; };
 		546EEA8B2534942F00195097 /* SessionManagerLifeCycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8A2534942F00195097 /* SessionManagerLifeCycleObserver.swift */; };
 		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
@@ -1780,7 +1780,7 @@
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
 		546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Conveninence.swift"; sourceTree = "<group>"; };
-		546EEA88253493FF00195097 /* ForegroundNotificationDecisioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForegroundNotificationDecisioner.swift; sourceTree = "<group>"; };
+		546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForegroundNotificationFilter.swift; sourceTree = "<group>"; };
 		546EEA8A2534942F00195097 /* SessionManagerLifeCycleObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerLifeCycleObserver.swift; sourceTree = "<group>"; };
 		5489E20D252C84BE0010461D /* AppStateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculator.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
@@ -5159,7 +5159,7 @@
 				546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */,
 				543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */,
 				543DF6AF25309CF8001F6EA6 /* Navigator.swift */,
-				546EEA88253493FF00195097 /* ForegroundNotificationDecisioner.swift */,
+				546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */,
 				546EEA8A2534942F00195097 /* SessionManagerLifeCycleObserver.swift */,
 				8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */,
 			);
@@ -8298,7 +8298,7 @@
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
 				A9681D8123883877004FE917 /* IconToggleSubtitleCell.swift in Sources */,
 				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
-				546EEA89253493FF00195097 /* ForegroundNotificationDecisioner.swift in Sources */,
+				546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */,
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,

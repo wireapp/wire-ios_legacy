@@ -27,10 +27,9 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var authenticationCoordinator: AuthenticationCoordinator?
-    private var sessionManagerCreatedSessionObserverToken: Any?
-    private var sessionManagerDestroyedSessionObserverToken: Any?
+    private var observerTokens: [Any?] = []
     private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
-    private let foregroundNotificationDecisioner = ForegroundNotificationDecisioner()
+    private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager?
@@ -78,21 +77,32 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
-                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self.sessionManagerLifeCycleObserver)
-                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self.sessionManagerLifeCycleObserver)
-                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationDecisioner
+                self.createLifeCycleObeserverTokens(for: sessionManager)
+                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationFilter
                 /* TO DO: Add all this delegation
                 self.sessionManager?.showContentDelegate = self
                 self.sessionManager?.switchingDelegate = self
                 self.sessionManager?.urlActionDelegate = self
                 */
-                sessionManager.updateCallNotificationStyleFromSettings()
-                sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
-                    ? true
-                    : Settings.shared[.callingConstantBitRate] ?? false
-                sessionManager.useConferenceCalling = true
+                self.setCallingSettting(for: sessionManager)
                 sessionManager.start(launchOptions: launchOptions)
         }
+    }
+    
+    private func createLifeCycleObeserverTokens(for sessionManager: SessionManager) {
+        let createdSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(sessionManagerLifeCycleObserver)
+        observerTokens.append(createdSessionObserverToken)
+                    
+        let destroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(sessionManagerLifeCycleObserver)
+        observerTokens.append(destroyedSessionObserverToken)
+    }
+    
+    private func setCallingSettting(for sessionManager: SessionManager) {
+        sessionManager.updateCallNotificationStyleFromSettings()
+        sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+            ? true
+            : Settings.shared[.callingConstantBitRate] ?? false
+        sessionManager.useConferenceCalling = true
     }
 }
 

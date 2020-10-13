@@ -19,7 +19,7 @@
 import WireSyncEngine
 
 //TO DO: Ask for the logic, not clear when a notification shuld be presented
-class ForegroundNotificationDecisioner: ForegroundNotificationResponder {
+class ForegroundNotificationFilter: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
         let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
