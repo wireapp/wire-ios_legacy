@@ -40,7 +40,7 @@ public final class AutomationHelper: NSObject {
     
     /// Whether AppCenter should be used
     public var useAppCenter: Bool {
-        return UserDefaults.standard.bool(forKey: "UseHockey")
+        return UserDefaults.standard.bool(forKey: "UseAppCenter")
     }
     
     /// Whether analytics should be used
