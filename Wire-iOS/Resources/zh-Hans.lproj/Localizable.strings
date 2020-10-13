@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
 
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
 "call.alert.ongoing.alert_title" = "这将结束您的其他通话。";
 
 "call.alert.ongoing.start.message" = "另一个对话中的呼叫正处在活跃状态，在这里呼叫会挂断那个呼叫。";
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
-"self.settings.privacy_analytics.title" = "发送匿名数据";
-"self.settings.privacy_analytics_menu.description.title" = "发送匿名使用纪录和崩溃报告以改善Wire。";
+
+// Crash
+"self.settings.privacy_crash.title" = "发送匿名故障数据";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "接收新闻动态";
 "self.settings.receiveNews_and_offers.description.title" = "通过邮件接收来自Wire的新闻动态和产品更新。";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "这将永久删除您的所有对话内容。";
 
 "self.settings.advanced.title" = "高级";
-"self.settings.advanced.conference_calling.title" = "电话会议";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
 "self.settings.advanced.debugging_tools.title" = "调试工具";
@@ -1789,33 +1797,33 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "密码";
+"passcode.hint_label" = "密码锁";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "无法恢复。";
+"create_passcode.info_label.highlighted" = "it can not be recovered.";
 "create_passcode.create_button.title" = "创建密码";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
-"create_passcode.validation.no_lowercase_char" = "小写字母";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
 "create_passcode.validation.no_uppercase_char" = "An uppercase letter";
-"create_passcode.validation.no_number" = "A number";
-"create_passcode.validation.no_special_char" = "特殊字符";
+"create_passcode.validation.no_number" = "一个数字";
+"create_passcode.validation.no_special_char" = "A special character";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "请输入密码";
+"unlock.textfield.placeholder" = "输入您的锁定码";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "密码错误";
+"unlock.error_label" = "Wrong passcode";
 "unlock.submit_button.title" = "解锁";
 
 // Wipe database
 
 "wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "此设备上存储的数据只能用您的密码访问。\n\n如果您忘记了您的密码，您可以删除数据库作为新设备重新登录。\n\n删除数据库， ";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";

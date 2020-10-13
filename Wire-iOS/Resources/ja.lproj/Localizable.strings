@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "新しいデバイスを使い始めた人がいます";
 "call.degraded.alert.action.continue" = "とにかく電話をする";
 
+"call.degraded.ended.alert.title" = "通話終了";
+"call.degraded.ended.alert.message.self" = "新しいデバイスの使用を開始したため、通話が切断されました。";
+"call.degraded.ended.alert.message.user" = "%@ が確認済みの連絡先ではなくなったため、通話は切断されました。";
+"call.degraded.ended.alert.message.unknown" = "確認済みではなくなった連絡先があるため、通話が切断されました。";
+
 "call.alert.ongoing.alert_title" = "他の通話を終了します";
 
 "call.alert.ongoing.start.message" = "他の会話で通話中です。\nここで呼び出すと、その他の通話は終了します。";
@@ -727,7 +732,7 @@
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "オプション";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "グループ会話には %1$d 人までが参加できます。";
+"participants.section.name.footer" = "最大 %1$d 人の参加者がグループ通話に参加できます。";
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
@@ -999,7 +1004,7 @@
 "self.settings.enable_read_receipts.title" = "開封通知を送信";
 "self.settings.privacy_section_group.subtitle" = "オフの場合は、他の人の開封通知を見ることができません。\n\nこの設定はグループ会議には適用されません。";
 
-"self.settings.encrypt_messages_at_rest.title" = "待機時にメッセージを暗号化する";
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
 "self.settings.account_picture_group.picture" = "写真";
 "self.settings.account_picture_group.color" = "色";
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";
-"self.settings.privacy_analytics.title" = "匿名データを共有";
-"self.settings.privacy_analytics_menu.description.title" = "Wire を改善するため、匿名の利用状況のデータとクラッシュレポートを送信します。";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "ニュースレターを受け取る";
 "self.settings.receiveNews_and_offers.description.title" = "電子メールで Wireからニュースや製品アップデート情報を受け取る。";
@@ -1178,15 +1189,12 @@
 "self.settings.privacy.clear_history.subtitle" = "すべてのあなたの会話の内容が完全に消去されます。";
 
 "self.settings.advanced.title" = "高度";
-"self.settings.advanced.conference_calling.title" = "電話会議";
-"self.settings.advanced.conference_calling.subtitle" = "オンの場合は、音声/ビデオ会議の呼び出しが有効になり、より多くの人数が参加できます。";
-"self.settings.advanced.conference_calling.toggle" = "ベータプログラム";
 "self.settings.advanced.troubleshooting.title" = "トラブルシューティング";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "デバッグ報告";
 "self.settings.advanced.debugging_tools.title" = "デバッグツール";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "最初の未読を検索";
-"self.settings.advanced.debugging_tools.show_user_id.title" = "自分のユーザーIDを表示";
-"self.settings.advanced.debugging_tools.enter_debug_command.title" = "デバッグコマンドを入力";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "この情報は、Wireサポートが通話の問題を診断し、全体的なアプリケーションの操作性を向上させるのに役立ちます。";
 "self.settings.advanced.reset_push_token.title" = "プッシュ通知のトークンをリセットする";
 "self.settings.advanced.reset_push_token.subtitle" = "プッシュ通知に関して問題があった場合、Wireサポートチームはあなたにトークンのリセットを求めることがあります。";
@@ -1257,10 +1265,10 @@
 // Landing screen
 
 "landing.header" = "Wire。あなたのアカウントを追加します。";
-"landing.welcome_message" = "ビジネスまたは組織で利用するために Proまたは Enterprise アカウントを作成しようとしていますか?";
-"landing.welcome_submessage" = "残念ながら、アプリでは不可能です。チームを作成したら、こちらからログインできます。";
-"landing.create_account.title" = "Wire 個人アカウントを作成します";
-"landing.create_account.infotitle" = "友人や家族とチャットしますか?";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "友人や家族のグループと個人的にチャット";
 "landing.create_team.title" = "プロ";
 "landing.create_team.subtitle" = "企業、団体、専門機関のためのセキュアなコラボレーション";
@@ -1815,7 +1823,7 @@
 // Wipe database
 
 "wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "このデバイスに保存されたデータには、パスコードを入力しなければアクセスできません。\nパスコードを忘れた場合は、データベースを消去すれば、新たなデバイスとして再度ログインできます。\nデータベースを消去すると、";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";
