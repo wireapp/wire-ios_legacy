@@ -54,6 +54,7 @@ final class AppStateController : NSObject {
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
+    fileprivate var isLocked = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
@@ -65,7 +66,20 @@ final class AppStateController : NSObject {
     
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(applicationDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+               selector: #selector(applicationDidBecomeLocked),
+               name: .appLocked,
+               object: .none)
+        
+        NotificationCenter.default.addObserver(self,
+        selector: #selector(applicationDidBecomeUnlocked),
+        name: .appUnlocked,
+        object: .none)
         
         appState = calculateAppState()
     }
@@ -79,6 +93,10 @@ final class AppStateController : NSObject {
 
         if !hasEnteredForeground {
             return .headless
+        }
+        
+        if isLocked {
+            return .appLocked
         }
         
         if isMigrating {
@@ -116,6 +134,7 @@ final class AppStateController : NSObject {
         case (.unauthenticated, _):
             // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
+            
         default: break
         }
         
@@ -226,6 +245,18 @@ extension AppStateController {
     
     @objc func applicationDidBecomeActive() {
         hasEnteredForeground = true
+        updateAppState()
+    }
+    
+    @objc func applicationDidBecomeLocked() {
+        hasEnteredForeground = true
+        isLocked = true
+        updateAppState()
+    }
+    
+    @objc func applicationDidBecomeUnlocked() {
+        hasEnteredForeground = true
+        isLocked = false
         updateAppState()
     }
     

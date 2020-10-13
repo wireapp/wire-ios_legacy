@@ -23,6 +23,7 @@ import WireSyncEngine
 
 extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")
+    static let appLocked = Notification.Name("AppLocked")
 }
 
 protocol AppLockUserInterface: class {
@@ -130,6 +131,7 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
+        NotificationCenter.default.post(name: .appLocked, object: self, userInfo: nil)
         userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
