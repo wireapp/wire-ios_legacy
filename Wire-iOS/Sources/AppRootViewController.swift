@@ -295,9 +295,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 Analytics.shared.selfUser = SelfUser.current
 
                 viewController = clientViewController
-                if let pendingCallKitCall = SessionManager.shared?.callKitManager?.pendingCallKitCall {
-                    pendingCallKitCall()
-                }
             }
         case .headless:
             viewController = LaunchImageViewController()
