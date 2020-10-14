@@ -123,7 +123,7 @@ final class AppStateControllerTests: XCTestCase {
         set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
         
         //when
-        XCTAssertTrue(sut.isScreenLockNeeded)
+        XCTAssertTrue(sut.appLock!.shouldLockScreen)
         sut.updateAppState()
         
         // then
@@ -136,15 +136,7 @@ final class AppStateControllerTests: XCTestCase {
         set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
         
         //when / then
-        XCTAssertTrue(sut.isScreenLockNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsTrueIfDatabaseIsLocked() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
-        
-        //when / then
-        XCTAssertTrue(sut.isScreenLockNeeded)
+        XCTAssertTrue(sut.appLock!.shouldLockScreen)
     }
     
     func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
@@ -152,7 +144,7 @@ final class AppStateControllerTests: XCTestCase {
         set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
         
         //when / then
-        XCTAssertFalse(sut.isScreenLockNeeded)
+        XCTAssertFalse(sut.appLock!.shouldLockScreen)
     }
     
     func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
@@ -160,7 +152,7 @@ final class AppStateControllerTests: XCTestCase {
         set(appLockActive: false, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
         
         //when / then
-        XCTAssertFalse(sut.isScreenLockNeeded)
+        XCTAssertFalse(sut.appLock!.shouldLockScreen)
     }
     
 }
