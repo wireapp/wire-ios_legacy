@@ -25,7 +25,6 @@ typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & Us
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
-    var isDimmingScreenWhenInactive: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
     func verify(customPasscode: String)
@@ -58,10 +57,6 @@ final class AppLockInteractor {
 extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
         return AppLock.isCustomPasscodeNotSet
-    }
-    
-    var isDimmingScreenWhenInactive: Bool {
-        return AppLock.isActive || userSession?.encryptMessagesAtRest == true
     }
     
     func evaluateAuthentication(description: String) {

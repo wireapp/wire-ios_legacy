@@ -303,7 +303,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
-        case .appLocked:
+        case .locked:
             viewController = AppLockViewController()
         }
 

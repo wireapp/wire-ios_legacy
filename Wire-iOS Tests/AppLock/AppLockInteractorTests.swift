@@ -88,31 +88,6 @@ final class AppLockInteractorTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenAppLockIsActive() {
-        //given
-        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
-    }
-    
-    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenEncryptionAtRestIsEnabled() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        userSessionMock.encryptMessagesAtRest = true
-        
-        //when / then
-        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
-    }
-    
-    func testThatIsDimmingScreenWhenInactiveReturnsFalseWhenAppLockIsInactive() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isDimmingScreenWhenInactive)
-    }
-    
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
         //given
         let queue = DispatchQueue.main

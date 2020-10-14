@@ -127,7 +127,7 @@ final class AppStateControllerTests: XCTestCase {
         sut.updateAppState()
         
         // then
-        XCTAssertEqual(sut.appState, AppState.appLocked)
+        XCTAssertEqual(sut.appState, AppState.locked)
     }
     
     // MARK: - tests for isScreenLockNeeded

@@ -67,14 +67,14 @@ final class AppStateController : NSObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self,
-            selector: #selector(applicationDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil)
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
-        selector: #selector(applicationDidBecomeUnlocked),
-        name: .appUnlocked,
-        object: .none)
+                                               selector: #selector(applicationDidBecomeUnlocked),
+                                               name: .appUnlocked,
+                                               object: .none)
         
         appState = calculateAppState()
     }
@@ -108,7 +108,7 @@ final class AppStateController : NSObject {
 
         switch authenticationState {
         case .loggedIn where isScreenLockNeeded:
-            return .appLocked
+            return .locked
         case .loggedIn(let addedAccount):
             return .authenticated(completedRegistration: addedAccount, databaseIsLocked: isDatabaseLocked)
         case .loggedOut:
