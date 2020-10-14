@@ -51,9 +51,9 @@ public class AppRootRouter: NSObject {
             self.sessionManager?.showContentDelegate = self
             */
             setCallingSettting(for: sessionManager)
-            
         }
     }
+
     private(set) var rootViewController: RootViewController //TO DO: This should be private
     
     // MARK: - Initialization
@@ -156,7 +156,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 //            executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
-            
         case .headless:
             showLaunchScreen(completion: completionBlock)
         case .loading(account: let toAccount, from: let fromAccount):

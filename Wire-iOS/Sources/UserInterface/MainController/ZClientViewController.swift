@@ -162,14 +162,10 @@ final class ZClientViewController: UIViewController {
     }
     
     private func createBackgroundViewController() {
-        print(backgroundViewController.view.frame)
-        
         backgroundViewController.addToSelf(conversationListViewController)
 
         conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         conversationListViewController.view.frame = backgroundViewController.view.bounds
-
-        print(conversationListViewController.view.frame)
         
         wireSplitViewController.leftViewController = backgroundViewController
     }
