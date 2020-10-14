@@ -16,47 +16,51 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import UIKit
 import WireSyncEngine
 
 extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }
 
-extension AppRootViewController: URLActionDelegate {
+final class URLActionRouter {
     
-    // MARK - Public Implementation
+    // MARK: - Private Property
+    private let rootViewController: RootViewController
+    private let sessionManager: SessionManager
     
-    func failedToPerformAction(_ action: URLAction, error: Error) {
-        if let error = error as? LocalizedError {
-            showAlert(for: error)
-        }
+    // MARK: - Initialization
+    public init(viewController: RootViewController, sessionManager: SessionManager) {
+        self.rootViewController = viewController
+        self.sessionManager = sessionManager
+    }
+}
+
+// MARK: - Public URLActionDelegate
+extension URLActionRouter: URLActionDelegate {
+    
+    // MARK: - Public Implementation
+    public func failedToPerformAction(_ action: URLAction, error: Error) {
+        presentLocalizedErrorAlert(error)
     }
     
-    func completedURLAction(_ action: URLAction) {
+    public func completedURLAction(_ action: URLAction) {
         if case URLAction.companyLoginSuccess = action {
             notifyCompanyLoginCompletion()
         }
     }
     
-    func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
+    public func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
         switch action {
         case .connectBot:
             presentConnectBotAlert(with: decisionHandler)
         case .accessBackend(configurationURL: let configurationURL):
-            guard SecurityFlags.customBackend.isEnabled else {
-                return
-            }
             presentCustomBackendAlert(with: configurationURL)
         default:
             decisionHandler(true)
         }
-        
     }
     
-    // MARK - Private Implementation
-    
+    // MARK: - Private Implementation
     private func notifyCompanyLoginCompletion() {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
@@ -80,32 +84,46 @@ extension AppRootViewController: URLActionDelegate {
         
         alert.addAction(cancelAction)
         
-        self.present(alert, animated: true, completion: nil)
+        rootViewController.present(alert, animated: true, completion: nil)
     }
     
     private func presentCustomBackendAlert(with configurationURL: URL) {
         let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
                                       message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                       preferredStyle: .alert)
+        guard SecurityFlags.customBackend.isEnabled else {
+            return
+        }
+        
         let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-            self.isLoadingViewVisible = true
-            self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                self.isLoadingViewVisible = false
-                switch result {
-                case let .success(environment):
-                    BackendEnvironment.shared = environment
-                case let .failure(error):
-                    if let error = error as? LocalizedError {
-                        self.showAlert(for: error)
-                    }
-                }
-            }
+            self.performSwitchBakend(with: configurationURL)
         }
         alert.addAction(agreeAction)
         
         let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
         alert.addAction(cancelAction)
         
-        self.present(alert, animated: true, completion: nil)
+        rootViewController.present(alert, animated: true, completion: nil)
+    }
+    
+    private func performSwitchBakend(with configurationURL: URL) {
+        sessionManager.switchBackend(configuration: configurationURL) { [weak self] result in
+            switch result {
+            case let .success(environment):
+                BackendEnvironment.shared = environment
+            case let .failure(error):
+                self?.presentLocalizedErrorAlert(error)
+            }
+        }
+    }
+    
+    private func presentLocalizedErrorAlert(_ error: Error) {
+        guard let error = error as? LocalizedError else {
+            return
+        }
+        let alertMessage = error.failureReason ?? "error.user.unkown_error".localized
+        let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
+                                                                  message: alertMessage)
+        rootViewController.present(alertController, animated: true)
     }
 }

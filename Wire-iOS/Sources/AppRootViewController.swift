@@ -192,7 +192,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             self.sessionManager?.foregroundNotificationResponder = self
             self.sessionManager?.showContentDelegate = self
             self.sessionManager?.switchingDelegate = self
-            self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
                 ? true

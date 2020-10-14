@@ -26,13 +26,34 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
+    private var urlActionRouter: URLActionRouter?
+    private var switchingAccountRouter: SwitchingAccountRouter?
     private var authenticationCoordinator: AuthenticationCoordinator?
     private var observerTokens: [Any?] = []
     private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
     // MARK: - Private Set Property
-    private(set) var sessionManager: SessionManager?
+    private(set) var sessionManager: SessionManager? {
+        didSet {
+            guard let sessionManager = sessionManager else {
+                return
+            }
+            
+            urlActionRouter = URLActionRouter(viewController: rootViewController,
+                                              sessionManager: sessionManager)
+            switchingAccountRouter = SwitchingAccountRouter(sessionManager: sessionManager)
+            createLifeCycleObeserverTokens(for: sessionManager)
+            sessionManager.foregroundNotificationResponder = self.foregroundNotificationFilter
+            sessionManager.switchingDelegate = switchingAccountRouter
+            sessionManager.urlActionDelegate = urlActionRouter
+            /* TO DO: Add all this delegation
+            self.sessionManager?.showContentDelegate = self
+            */
+            setCallingSettting(for: sessionManager)
+            
+        }
+    }
     private(set) var rootViewController: RootViewController //TO DO: This should be private
     
     // MARK: - Initialization
@@ -77,14 +98,6 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
-                self.createLifeCycleObeserverTokens(for: sessionManager)
-                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationFilter
-                /* TO DO: Add all this delegation
-                self.sessionManager?.showContentDelegate = self
-                self.sessionManager?.switchingDelegate = self
-                self.sessionManager?.urlActionDelegate = self
-                */
-                self.setCallingSettting(for: sessionManager)
                 sessionManager.start(launchOptions: launchOptions)
         }
     }
