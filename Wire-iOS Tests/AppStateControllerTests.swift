@@ -118,6 +118,18 @@ final class AppStateControllerTests: XCTestCase {
         XCTAssertEqual(newAppState, .unauthenticated(error: error))
     }
     
+    func testThatItSetsUpTheAppLockedState() {
+        //given
+        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
+        
+        //when
+        XCTAssertTrue(sut.isScreenLockNeeded)
+        sut.updateAppState()
+        
+        // then
+        XCTAssertEqual(sut.appState, AppState.appLocked)
+    }
+    
     // MARK: - tests for isScreenLockNeeded
     func testThatisScreenLockNeededReturnsTrueIfNeeded() {
         //given
