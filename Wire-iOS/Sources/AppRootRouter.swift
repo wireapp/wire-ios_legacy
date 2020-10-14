@@ -30,6 +30,7 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [Any] = []
     private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
+
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager?
@@ -84,6 +85,7 @@ public class AppRootRouter: NSObject {
                 self.sessionManager?.switchingDelegate = self
                 self.sessionManager?.urlActionDelegate = self
                 */
+
                 self.setCallingSettting(for: sessionManager)
                 sessionManager.start(launchOptions: launchOptions)
         }

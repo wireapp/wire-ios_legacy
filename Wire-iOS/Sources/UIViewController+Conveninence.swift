@@ -40,8 +40,20 @@ extension UIViewController {
         viewController?.removeFromParent()
     }
 
-    func childViewController<T: UIViewController>(with type: T.Type) -> T? {
-        return children.compactMap { $0 as? T }.first
-            ?? children.compactMap { $0.childViewController(with: type).flatMap { $0 } }.first
+    func firstChild<T: UIViewController>(ofType type: T.Type) -> T? {
+        // Check all the children first.
+        for child in children {
+            if let result = child as? T {
+                return result
+            }
+        }
+        
+        // Then check next layer down.
+        for child in children {
+            if let result = child.firstChild(ofType: type) {
+                return result
+            }
+        }
+        return nil
     }
 }
