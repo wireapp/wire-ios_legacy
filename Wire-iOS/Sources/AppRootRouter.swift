@@ -27,7 +27,7 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var authenticationCoordinator: AuthenticationCoordinator?
-    private var observerTokens: [Any?] = []
+    private var observerTokens: [Any] = []
     private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
@@ -141,6 +141,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 //            UIColor.setAccentOverride(.undefined)
 //            mainWindow.tintColor = UIColor.accent()
 //            executeAuthenticatedBlocks()
+            
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
             
