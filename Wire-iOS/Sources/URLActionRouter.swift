@@ -96,7 +96,7 @@ extension URLActionRouter: URLActionDelegate {
         }
         
         let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-            self.performSwitchBakend(with: configurationURL)
+            self.switchBackend(with: configurationURL)
         }
         alert.addAction(agreeAction)
         
@@ -106,7 +106,7 @@ extension URLActionRouter: URLActionDelegate {
         rootViewController.present(alert, animated: true, completion: nil)
     }
     
-    private func performSwitchBakend(with configurationURL: URL) {
+    private func switchBackend(with configurationURL: URL) {
         sessionManager.switchBackend(configuration: configurationURL) { [weak self] result in
             switch result {
             case let .success(environment):
