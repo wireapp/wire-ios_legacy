@@ -29,7 +29,30 @@ protocol AppStateControllerDelegate : class {
     
 }
 
-final class AppStateController : NSObject {
+protocol ScreenLockHelperProtocol: class {
+    var isScreenLockNeeded: Bool { get }
+    var isDatabaseLocked: Bool { get set }
+}
+
+extension ScreenLockHelperProtocol {
+    
+    var isScreenLockNeeded: Bool {
+        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
+        
+        return screenLockIsActive || isDatabaseLocked
+    }
+    
+    private var isLockTimeoutReached: Bool {
+        let lastAuthDate = AppLock.lastUnlockedDate
+        
+        // The app was authenticated at least N seconds ago
+        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        return !isWithinTimeoutWindow
+    }
+}
+
+final class AppStateController : NSObject, ScreenLockHelperProtocol {
 
     /**
      * The possible states of authentication.
@@ -50,7 +73,6 @@ final class AppStateController : NSObject {
     private(set) var lastAppState : AppState = .headless
     weak var delegate : AppStateControllerDelegate? = nil
     
-    internal var isDatabaseLocked = false
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
@@ -60,6 +82,7 @@ final class AppStateController : NSObject {
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
     var databaseEncryptionObserverToken: Any? = nil
+    var isDatabaseLocked = false
 
     /// The state of authentication.
     fileprivate(set) var authenticationState: AuthenticationState = .undetermined
@@ -276,21 +299,6 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
         authenticationState = .loggedIn(addedAccount: addedAccount)
         updateAppState()
-    }
-    
-    internal var isScreenLockNeeded: Bool {
-        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
-        
-        return screenLockIsActive || isDatabaseLocked
-    }
-    
-    private var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
-        return !isWithinTimeoutWindow
     }
 }
 
