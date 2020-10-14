@@ -76,7 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var mediaPlaybackManager: MediaPlaybackManager? {
-        return (rootViewController.visibleViewController as? ZClientViewController)?.mediaPlaybackManager
+        return appRootRouter?.rootViewController
+            .childViewController(with: ZClientViewController.self)?.mediaPlaybackManager
     }
 
     // When running production code, this should always be true to ensure that we set the self user provider
