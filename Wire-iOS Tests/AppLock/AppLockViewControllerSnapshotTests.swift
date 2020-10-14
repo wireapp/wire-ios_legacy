@@ -35,7 +35,6 @@ final class AppLockViewControllerSnapshotTests: XCTestCase {
     }
     
     func testDimmedState() {
-        sut.setContents(dimmed: true)
         verify(matching: sut)
     }
     

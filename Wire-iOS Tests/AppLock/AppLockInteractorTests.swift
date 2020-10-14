@@ -113,47 +113,6 @@ final class AppLockInteractorTests: XCTestCase {
         XCTAssertFalse(sut.isDimmingScreenWhenInactive)
     }
     
-    
-    func testThatIsAuthenticationNeededReturnsTrueIfNeeded() {
-        //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertTrue(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsTrueIfDatabaseIsLocked() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
-        
-        //when / then
-        XCTAssertTrue(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
-        //given
-        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
-        //given - appLock not active
-        set(appLockActive: false, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfAppStateNotAuthenticated() {
-        //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: false, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
         //given
         let queue = DispatchQueue.main

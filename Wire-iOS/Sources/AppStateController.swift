@@ -50,7 +50,7 @@ final class AppStateController : NSObject {
     private(set) var lastAppState : AppState = .headless
     weak var delegate : AppStateControllerDelegate? = nil
     
-    fileprivate var isDatabaseLocked = false
+    internal var isDatabaseLocked = false
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
@@ -278,7 +278,7 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         updateAppState()
     }
     
-    private var isScreenLockNeeded: Bool {
+    internal var isScreenLockNeeded: Bool {
         let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
         
         return screenLockIsActive || isDatabaseLocked
