@@ -17,8 +17,7 @@
 //
 
 import Foundation
-import Cartography
-
+import UIKit
 
 extension ShareViewController {
 
@@ -42,7 +41,7 @@ extension ShareViewController {
     }
 
     func createViews() {
-        
+
         createShareablePreview()
 
         self.tokenField.textColor = .white
@@ -86,8 +85,7 @@ extension ShareViewController {
 
         if self.allowsMultipleSelection {
             self.searchIcon.setIcon(.search, size: .tiny, color: .white)
-        }
-        else {
+        } else {
             self.searchIcon.isHidden = true
             self.sendButton.isHidden = true
             self.closeButton.isHidden = true
@@ -96,87 +94,118 @@ extension ShareViewController {
 
         [self.blurView, self.containerView].forEach(self.view.addSubview)
         [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.containerView.addSubview)
-        
+
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {
             self.containerView.addSubview(shareablePreviewWrapper)
         }
     }
-    
+
     func createConstraints() {
-        constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
-            blurView.edges == view.edges
-            containerView.top == view.topMargin
-            self.bottomConstraint = containerView.bottom == view.bottomMargin
-            containerView.leading == view.leading
-            containerView.trailing == view.trailing
+
+        guard let shareablePreviewWrapper = shareablePreviewWrapper,
+            let shareablePreviewView = shareablePreviewView else {
+                return
         }
-        
-        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
 
-            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
-            shareablePreviewWrapper.left == view.left + 16
-            shareablePreviewWrapper.right == -16 + view.right
-            shareablePreviewView.edges == shareablePreviewWrapper.edges
+        [view,
+         blurView,
+         containerView,
+         shareablePreviewWrapper,
+         shareablePreviewView,
+         tokenField,
+         searchIcon,
+         destinationsTableView,
+         bottomSeparatorLine,
+         topSeparatorView,
+         closeButton,
+         sendButton].disableAutoresizingMaskTranslation()
 
-            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
+        let shareablePreviewWrapperMargin: CGFloat = 16
+        let tokenFieldMargin: CGFloat = 8
+        let sendButtonMargin: CGFloat = 12
 
-            tokenFieldTopConstraint = tokenField.top == view.top + 8
+        let bottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+        let shareablePreviewTopConstraint = shareablePreviewWrapper.topAnchor.constraint(equalTo: containerView.safeTopAnchor, constant: shareablePreviewWrapperMargin)
+        let tokenFieldShareablePreviewSpacingConstraint = tokenField.topAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor, constant: shareablePreviewWrapperMargin)
+
+        let tokenFieldTopConstraint = tokenField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: tokenFieldMargin)
+
+        let tokenFieldHeightConstraint: NSLayoutConstraint
+        let allowsMultipleSelectionConstraints: [NSLayoutConstraint]
+        if allowsMultipleSelection {
+            tokenFieldHeightConstraint = tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
+
+            allowsMultipleSelectionConstraints = [
+                closeButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                closeButton.centerYAnchor.constraint(equalTo: sendButton.centerYAnchor),
+                closeButton.widthAnchor.constraint(equalToConstant: 44),
+                closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
+
+                sendButton.topAnchor.constraint(equalTo: bottomSeparatorLine.bottomAnchor, constant: sendButtonMargin),
+                sendButton.widthAnchor.constraint(equalToConstant: 32),
+                sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor),
+                sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+                sendButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -sendButtonMargin)
+
+            ]
+        } else {
+            tokenFieldHeightConstraint = tokenField.heightAnchor.constraint(equalToConstant: 0)
+
+            allowsMultipleSelectionConstraints = [
+                bottomSeparatorLine.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            ]
         }
+
+        NSLayoutConstraint.activate([
+            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            bottomConstraint,
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            shareablePreviewTopConstraint,
+            shareablePreviewWrapper.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: shareablePreviewWrapperMargin),
+            shareablePreviewWrapper.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -shareablePreviewWrapperMargin),
+
+            shareablePreviewView.leadingAnchor.constraint(equalTo: shareablePreviewWrapper.leadingAnchor),
+            shareablePreviewView.topAnchor.constraint(equalTo: shareablePreviewWrapper.topAnchor),
+            shareablePreviewView.trailingAnchor.constraint(equalTo: shareablePreviewWrapper.trailingAnchor),
+            shareablePreviewView.bottomAnchor.constraint(equalTo: shareablePreviewWrapper.bottomAnchor),
+
+            tokenFieldShareablePreviewSpacingConstraint,
+            tokenFieldTopConstraint,
+
+            tokenField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: tokenFieldMargin),
+            tokenField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -tokenFieldMargin),
+            tokenFieldHeightConstraint,
+
+            searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8), // the search icon glyph has whitespaces,
+
+            topSeparatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topSeparatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topSeparatorView.topAnchor.constraint(equalTo: destinationsTableView.topAnchor),
+            topSeparatorView.heightAnchor.constraint(equalToConstant: .hairline),
+
+            destinationsTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            destinationsTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            destinationsTableView.topAnchor.constraint(equalTo: tokenField.bottomAnchor, constant: 8),
+            destinationsTableView.bottomAnchor.constraint(equalTo: bottomSeparatorLine.topAnchor),
+
+            bottomSeparatorLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            bottomSeparatorLine.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            bottomSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)] + allowsMultipleSelectionConstraints)
+
+        self.bottomConstraint = bottomConstraint
+        self.shareablePreviewTopConstraint = shareablePreviewTopConstraint
+        self.tokenFieldShareablePreviewSpacingConstraint = tokenFieldShareablePreviewSpacingConstraint
+        self.tokenFieldTopConstraint = tokenFieldTopConstraint
 
         updateShareablePreviewConstraint()
-
-        constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
-            searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
-            if !self.allowsMultipleSelection {
-                tokenField.height == 0
-            }
-        }
-        
-        constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
-            topSeparatorView.left == view.left
-            topSeparatorView.right == view.right
-            topSeparatorView.top == destinationsTableView.top
-            topSeparatorView.height == .hairline
-        }
-        
-        
-        constrain(self.containerView, self.destinationsTableView, self.tokenField, self.bottomSeparatorLine) { view, tableView, tokenField, bottomSeparatorLine in
-            
-            tokenField.left == view.left + 8
-            tokenField.right == -8 + view.right
-            tokenField.height >= 40
-            
-            tableView.left == view.left
-            tableView.right == view.right
-            tableView.top == tokenField.bottom + 8
-            tableView.bottom == bottomSeparatorLine.top
-            
-            bottomSeparatorLine.left == view.left
-            bottomSeparatorLine.right == view.right
-            bottomSeparatorLine.height == .hairline
-        }
-        
-        if self.allowsMultipleSelection {
-            constrain(self.containerView, self.closeButton, self.sendButton, self.bottomSeparatorLine) { view, closeButton, sendButton, bottomSeparatorLine in
-                
-                closeButton.leading == view.leading
-                closeButton.centerY == sendButton.centerY
-                closeButton.width == 44
-                closeButton.height == closeButton.width
-                
-                sendButton.top == bottomSeparatorLine.bottom + 12
-                sendButton.height == 32
-                sendButton.width == sendButton.height
-                sendButton.trailing == view.trailing - 16
-                sendButton.bottom == -12 + view.bottom
-            }
-        }
-        else {
-            constrain(self.containerView, self.bottomSeparatorLine) { containerView, bottomSeparatorLine in
-                bottomSeparatorLine.bottom == containerView.bottom
-            }
-        }
     }
 
 }
