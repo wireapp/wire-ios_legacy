@@ -38,16 +38,12 @@ public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
-    private var useAppCenterLaunchOption: Bool?
+    private var useAppCenterLaunchOption: Bool
     
     /// Whether AppCenter should be used
     /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
-        if useAppCenterLaunchOption == false {
-            return false
-        }
-        
-        return UserDefaults.standard.bool(forKey: "UseAppCenter")
+        return useAppCenterLaunchOption && UserDefaults.standard.bool(forKey: "UseAppCenter")
     }
     
     /// Whether analytics should be used
@@ -107,10 +103,8 @@ public final class AutomationHelper: NSObject {
         switch value {
         case "0":
             useAppCenterLaunchOption = false
-        case "1":
-            useAppCenterLaunchOption = true
         default:
-            break
+            useAppCenterLaunchOption = true
         }
 
         automationEmailCredentials = AutomationHelper.credentials(arguments)
