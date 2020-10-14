@@ -19,6 +19,16 @@
 import Foundation
 import WireSyncEngine
 
+enum AppState: Equatable {
+    case headless
+    case authenticated(completedRegistration: Bool, databaseIsLocked: Bool)
+    case unauthenticated(error : NSError?)
+    case blacklisted
+    case jailbroken
+    case migrating
+    case loading(account: Account, from: Account?)
+}
+
 protocol AppStateCalculatorDelegate: class {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,

@@ -42,7 +42,6 @@
 		162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917C81F8BB991000F3E92 /* NetworkStatusView.swift */; };
 		162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */; };
 		162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */; };
-		162936BB1F470A9300D4F386 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BA1F470A9300D4F386 /* AppState.swift */; };
 		162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BE1F4714D200D4F386 /* AppRootViewController.swift */; };
 		162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */; };
 		162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */; };
@@ -172,11 +171,16 @@
 		5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5407B8C21A643CCE009090C6 /* UIKit.framework */; };
 		542CDF4024B32E2100DF0B39 /* HandleChangeStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */; };
 		543DF685252DD7F0001F6EA6 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */; };
+		543DF69F252F5A4C001F6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 543DF69E252F5A4B001F6EA6 /* Main.storyboard */; };
+		543DF6AD25309641001F6EA6 /* AppRootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DF6AC25309641001F6EA6 /* AppRootRouter.swift */; };
+		543DF6B025309CF8001F6EA6 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DF6AF25309CF8001F6EA6 /* Navigator.swift */; };
+		543DF6B225309E52001F6EA6 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543DF6B125309E52001F6EA6 /* RootViewController.swift */; };
 		543E0C641E2394F4000E2161 /* ConversationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */; };
 		543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */; };
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
+		546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */; };
 		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
@@ -1626,7 +1630,6 @@
 		162917C81F8BB991000F3E92 /* NetworkStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
 		162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
 		162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
-		162936BA1F470A9300D4F386 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		162936BE1F4714D200D4F386 /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageTests.swift; sourceTree = "<group>"; };
 		162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSystemMessageTests.swift; sourceTree = "<group>"; };
@@ -1765,11 +1768,16 @@
 		5407B8C21A643CCE009090C6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleChangeStateTests.swift; sourceTree = "<group>"; };
 		543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
+		543DF69E252F5A4B001F6EA6 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		543DF6AC25309641001F6EA6 /* AppRootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootRouter.swift; sourceTree = "<group>"; };
+		543DF6AF25309CF8001F6EA6 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		543DF6B125309E52001F6EA6 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationSelectionViewController.swift; sourceTree = "<group>"; };
 		543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingProgressViewController.swift; sourceTree = "<group>"; };
 		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
+		546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Conveninence.swift"; sourceTree = "<group>"; };
 		5489E20D252C84BE0010461D /* AppStateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculator.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Security-Flags.xcconfig"; sourceTree = "<group>"; };
@@ -5136,13 +5144,17 @@
 				7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */,
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
+				543DF69E252F5A4B001F6EA6 /* Main.storyboard */,
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
-				162936BA1F470A9300D4F386 /* AppState.swift */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
+				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */,
+				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
+				546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */,
 				543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */,
+				543DF6AF25309CF8001F6EA6 /* Navigator.swift */,
 				8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */,
 			);
 			name = Sources;
@@ -7037,6 +7049,7 @@
 				BF732A731D9C14C7003077DB /* emoji_activities.plist in Resources */,
 				BF732A771D9C14C7003077DB /* emoji_objects.plist in Resources */,
 				BF732A791D9C14C7003077DB /* emoji_symbols.plist in Resources */,
+				543DF69F252F5A4C001F6EA6 /* Main.storyboard in Resources */,
 				8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */,
 				F122349921A715DA0038DCAC /* Backend.bundle in Resources */,
 				EF21270B1FB9DFE300625A9B /* CountryCodes.plist in Resources */,
@@ -7435,6 +7448,7 @@
 				87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */,
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
 				F15650D721DD0FC800210504 /* VerticalColumnCollectionViewController.swift in Sources */,
+				543DF6B225309E52001F6EA6 /* RootViewController.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
 				A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */,
@@ -7627,6 +7641,7 @@
 				871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */,
 				87E4D2CA1FC6E39800F3C664 /* CharacterInputField.swift in Sources */,
 				F15650D921DD107800210504 /* RoundedViewProtocol.swift in Sources */,
+				543DF6B025309CF8001F6EA6 /* Navigator.swift in Sources */,
 				A9F57E3D2419A83100EEA912 /* TokenContainer.swift in Sources */,
 				5E39FC63225CCEFA00C682B8 /* ValueValidationCell.swift in Sources */,
 				7C440E7823472DFB00D91B5F /* FolderCreationNameSectionController.swift in Sources */,
@@ -7805,7 +7820,6 @@
 				EF39BD2E233E2FDA00F02DDB /* main.swift in Sources */,
 				5E8FFC2021EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift in Sources */,
 				EF218AC720A9DDEF004977BF /* ZClientViewController+DataUsagePermissions.swift in Sources */,
-				162936BB1F470A9300D4F386 /* AppState.swift in Sources */,
 				EF39BD30233E418B00F02DDB /* FileManager+Directory.swift in Sources */,
 				A90E4ABC2381B26600468F31 /* Settings+ColorScheme.swift in Sources */,
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
@@ -7816,6 +7830,7 @@
 				A9DC33EA2506865B00AB09DF /* WipeDatabaseInteractor.swift in Sources */,
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
+				543DF6AD25309641001F6EA6 /* AppRootRouter.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
 				5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */,
 				A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */,
@@ -8151,6 +8166,7 @@
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */,
 				8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */,
+				546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */,
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,

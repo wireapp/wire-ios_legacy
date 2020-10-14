@@ -37,15 +37,18 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow? {
-        get {
-            return rootViewController?.mainWindow
-        }
-        
-        set {
-            assert(true, "cannot set window")
-        }
-    }
+//    var window: UIWindow? {
+//        get {
+//            return rootViewController?.mainWindow
+//        }
+//
+//        set {
+//            assert(true, "cannot set window")
+//        }
+//    }
+    
+    private(set) var appRootRouter: AppRootRouter?
+    var window: UIWindow?
     
     // Singletons
     var unauthenticatedSession: UnauthenticatedSession? {
@@ -103,9 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initial log line to indicate the client version and build
         zmLog.info("Wire-ios version \(String(describing: Bundle.main.shortVersionString)) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
         
+        /*
         // Note: if we instantiate the root view controller (& windows) any earlier,
         // the windows will not receive any info about device orientation.
         rootViewController = AppRootViewController()
+        */
         
         PerformanceDebugger.shared.start()
         return true
@@ -122,9 +127,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupTracking()
         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
         
-        setupAppCenter() {
-            self.rootViewController?.launch(with: launchOptions ?? [:])
-        }
+//        setupAppCenter() {
+//            self.rootViewController?.launch(with: launchOptions ?? [:])
+//        }
         
         if let launchOptions = launchOptions {
             self.launchOptions = launchOptions
@@ -132,6 +137,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
+        
+        queueInitializationOperations(launchOptions: launchOptions ?? [:])
         
         return true
     }
@@ -228,5 +235,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootViewController?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
+    }
+}
+
+
+// MARK: - Private Helpers
+
+private extension AppDelegate {
+    private func queueInitializationOperations(launchOptions: LaunchOptions) {
+        var operations: [BlockOperation] = []
+        operations.append(BlockOperation {
+            self.startAppCoordinator(launchOptions: launchOptions)
+        })
+
+        OperationQueue.main.addOperations(operations, waitUntilFinished: false)
+    }
+    
+    private func startAppCoordinator(launchOptions: LaunchOptions) {
+        guard let viewController = window?.rootViewController as? RootViewController else {
+            fatalError("rootViewController is not of type RootViewController")
+        }
+    
+        let navigator = Navigator(NoBackTitleNavigationController())
+        appRootRouter = AppRootRouter(viewController: viewController,
+                                      navigator: navigator)
+        appRootRouter?.start(launchOptions: launchOptions)
     }
 }

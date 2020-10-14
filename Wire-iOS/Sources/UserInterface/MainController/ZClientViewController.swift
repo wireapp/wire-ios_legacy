@@ -232,7 +232,7 @@ final class ZClientViewController: UIViewController {
     
     // MARK: - Singleton
     static var shared: ZClientViewController? {
-        return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
+        return AppDelegate.shared.appRootRouter?.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }
     
     /// Select the connection inbox and optionally move focus to it.

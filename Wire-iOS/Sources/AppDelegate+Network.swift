@@ -28,6 +28,6 @@ extension AppDelegate {
     }
 
     var sessionManager: SessionManager? {
-        return rootViewController.sessionManager
+        return appRootRouter?.sessionManager
     }
 }
