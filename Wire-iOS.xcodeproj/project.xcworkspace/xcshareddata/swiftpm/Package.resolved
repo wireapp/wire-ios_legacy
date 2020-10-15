@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "DifferenceKit",
+        "repositoryURL": "https://github.com/wireapp/DifferenceKit",
+        "state": {
+          "branch": null,
+          "revision": "14c66681e12a38b81045f44c6c29724a0d4b0e72",
+          "version": "1.1.5"
+        }
+      },
+      {
         "package": "SnapshotTesting",
         "repositoryURL": "https://github.com/wireapp/swift-snapshot-testing",
         "state": {
