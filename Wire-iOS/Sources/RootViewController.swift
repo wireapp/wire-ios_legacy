@@ -19,7 +19,9 @@
 import UIKit
 
 final class RootViewController: UIViewController {
+    var dismissSpinner: SpinnerCompletion?
     private var childViewController: UIViewController?
+    
     
     override var childForStatusBarStyle: UIViewController? {
         return childViewController
@@ -120,3 +122,5 @@ final class RootViewController: UIViewController {
         }
     }
 }
+
+extension RootViewController: SpinnerCapable { }

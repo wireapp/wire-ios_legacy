@@ -29,7 +29,8 @@ final class URLActionRouter {
     private let sessionManager: SessionManager
     
     // MARK: - Initialization
-    public init(viewController: RootViewController, sessionManager: SessionManager) {
+    public init(viewController: RootViewController,
+                sessionManager: SessionManager) {
         self.rootViewController = viewController
         self.sessionManager = sessionManager
     }
@@ -54,6 +55,7 @@ extension URLActionRouter: URLActionDelegate {
         case .connectBot:
             presentConnectBotAlert(with: decisionHandler)
         case .accessBackend(configurationURL: let configurationURL):
+            guard SecurityFlags.customBackend.isEnabled else { return }
             presentCustomBackendAlert(with: configurationURL)
         default:
             decisionHandler(true)
@@ -91,12 +93,10 @@ extension URLActionRouter: URLActionDelegate {
         let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
                                       message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                       preferredStyle: .alert)
-        guard SecurityFlags.customBackend.isEnabled else {
-            return
-        }
         
-        let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-            self.switchBackend(with: configurationURL)
+        let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { [weak self] _ in
+            self?.rootViewController.isLoadingViewVisible = true
+            self?.switchBackend(with: configurationURL)
         }
         alert.addAction(agreeAction)
         
@@ -108,6 +108,7 @@ extension URLActionRouter: URLActionDelegate {
     
     private func switchBackend(with configurationURL: URL) {
         sessionManager.switchBackend(configuration: configurationURL) { [weak self] result in
+            self?.rootViewController.isLoadingViewVisible = false
             switch result {
             case let .success(environment):
                 BackendEnvironment.shared = environment
