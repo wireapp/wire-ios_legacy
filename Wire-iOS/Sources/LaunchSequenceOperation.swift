@@ -21,14 +21,14 @@ import WireSyncEngine
 import WireCommonComponents
 import avs
 
-// MARK: - Initializer
-public protocol Initializer {
-    func configure()
+// MARK: - LaunchSequenceOperation
+public protocol LaunchSequenceOperation {
+    func execute()
 }
 
-// MARK: - BackendEnvironmentInitializer
-final class BackendEnvironmentInitializer: Initializer {
-    public func configure() {
+// MARK: - BackendEnvironmentOperation
+final class BackendEnvironmentOperation: LaunchSequenceOperation {
+    public func execute() {
         guard let backendTypeOverride = AutomationHelper.sharedHelper.backendEnvironmentTypeOverride() else {
             return
         }
@@ -36,46 +36,46 @@ final class BackendEnvironmentInitializer: Initializer {
     }
 }
 
-// MARK: - PerformanceDebuggerInitializer
-final class PerformanceDebuggerInitializer: Initializer {
-    public func configure() {
+// MARK: - PerformanceDebuggerOperation
+final class PerformanceDebuggerOperation: LaunchSequenceOperation {
+    public func execute() {
         PerformanceDebugger.shared.start()
     }
 }
 
-// MARK: - ZMSLogInitializer
-final class ZMSLogInitializer: Initializer {
-    public func configure() {
+// MARK: - ZMSLogOperation
+final class ZMSLogOperation: LaunchSequenceOperation {
+    public func execute() {
         ZMSLog.switchCurrentLogToPrevious()
     }
 }
 
-// MARK: - ZMSLogInitializer
-final class AVSLoggingInitializer: Initializer {
-    public func configure() {
+// MARK: - ZMSLogOperation
+final class AVSLoggingOperation: LaunchSequenceOperation {
+    public func execute() {
         SessionManager.startAVSLogging()
     }
 }
 
-// MARK: - AutomationHelperInitializer
-final class AutomationHelperInitializer: Initializer {
-    public func configure() {
+// MARK: - AutomationHelperOperation
+final class AutomationHelperOperation: LaunchSequenceOperation {
+    public func execute() {
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
     }
 }
 
-// MARK: - MediaManagerInitializer
-final class MediaManagerInitializer: Initializer {
+// MARK: - MediaManagerOperation
+final class MediaManagerOperation: LaunchSequenceOperation {
     private let mediaManagerLoader = MediaManagerLoader()
     
-    public func configure() {
+    public func execute() {
         mediaManagerLoader.send(message: .appStart)
     }
 }
 
-// MARK: - TrackingInitializer
-final class TrackingInitializer: Initializer {
-    public func configure() {
+// MARK: - TrackingOperation
+final class TrackingOperation: LaunchSequenceOperation {
+    public func execute() {
         let containsConsoleAnalytics = ProcessInfo.processInfo
             .arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
@@ -84,11 +84,11 @@ final class TrackingInitializer: Initializer {
     }
 }
 
-// MARK: - FileBackupExcluderInitializer
-final class FileBackupExcluderInitializer: Initializer {
+// MARK: - FileBackupExcluderOperation
+final class FileBackupExcluderOperation: LaunchSequenceOperation {
     private let fileBackupExcluder = FileBackupExcluder()
     
-    public func configure() {
+    public func execute() {
         guard let appGroupIdentifier = Bundle.main.appGroupIdentifier else {
             return
         }

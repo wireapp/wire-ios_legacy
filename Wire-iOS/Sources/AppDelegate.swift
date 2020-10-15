@@ -37,15 +37,15 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    private var initializers: [Initializer] = [
-        BackendEnvironmentInitializer(),
-        PerformanceDebuggerInitializer(),
-        ZMSLogInitializer(),
-        AVSLoggingInitializer(),
-        AutomationHelperInitializer(),
-        MediaManagerInitializer(),
-        TrackingInitializer(),
-        FileBackupExcluderInitializer()
+    private var launchOperations: [LaunchSequenceOperation] = [
+        BackendEnvironmentOperation(),
+        PerformanceDebuggerOperation(),
+        ZMSLogOperation(),
+        AVSLoggingOperation(),
+        AutomationHelperOperation(),
+        MediaManagerOperation(),
+        TrackingOperation(),
+        FileBackupExcluderOperation()
     ]
     
     private(set) var appRootRouter: AppRootRouter?
@@ -222,9 +222,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Private Helpers
 private extension AppDelegate {
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
-        var operations = initializers.map { initializer in
+        var operations = launchOperations.map { operation in
             BlockOperation {
-                initializer.configure()
+                operation.execute()
             }
         }
 
