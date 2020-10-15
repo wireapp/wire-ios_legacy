@@ -66,8 +66,9 @@ final class AutomationHelperInitializer: Initializer {
 
 // MARK: - MediaManagerInitializer
 final class MediaManagerInitializer: Initializer {
+    private let mediaManagerLoader = MediaManagerLoader()
+    
     public func configure() {
-        let mediaManagerLoader = MediaManagerLoader()
         mediaManagerLoader.send(message: .appStart)
     }
 }
@@ -85,11 +86,13 @@ final class TrackingInitializer: Initializer {
 
 // MARK: - FileBackupExcluderInitializer
 final class FileBackupExcluderInitializer: Initializer {
+    private let fileBackupExcluder = FileBackupExcluder()
+    
     public func configure() {
         guard let appGroupIdentifier = Bundle.main.appGroupIdentifier else {
             return
         }
-        let fileBackupExcluder = FileBackupExcluder()
+        
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
         fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
     }
