@@ -40,8 +40,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     var stream: Stream {
         didSet {
-            updateUserDetails()
-            updateFillMode()
+            streamDidChange()
         }
     }
     
@@ -81,15 +80,16 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Handle Stream changes
+    func streamDidChange() {
+        updateUserDetails()
+    }
+    
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
         userDetailsView.alpha = userDetailsAlpha
-    }
-    
-    func updateFillMode() {
-        // no-op
     }
     
     func setupViews() {
