@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,30 +16,44 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import UIKit
 
 extension UIViewController {
-    func add(_ child: UIViewController) {
-        self.add(child, to: view)
-    }
-    
-    func add(_ child: UIViewController, to view: UIView, pinToSuperview: Bool = true) {
-        child.willMove(toParent: self)
-        addChild(child)
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-        if pinToSuperview {
-            child.view.translatesAutoresizingMaskIntoConstraints = false
-            child.view.pin(to: view)
-        }
+    /// add a child view controller to self and add its view as view paramenter's subview
+    ///
+    /// - Parameters:
+    ///   - viewController: the view controller to add
+    ///   - view: the viewController parameter's view will be added to this view
+    func add(_ viewController: UIViewController?, to view: UIView) {
+        guard let viewController = viewController else { return }
+        viewController.willMove(toParent: self)
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.didMove(toParent: self)
     }
 
+    /// Add a view controller as self's child viewController and add its view as self's subview
+    ///
+    /// - Parameter viewController: viewController to add
+    func addToSelf(_ viewController: UIViewController) {
+        add(viewController, to: view)
+    }
+    
+    /// remove a child view controller to self and add its view from the paramenter's view
+    ///
+    /// - Parameters:
+    ///   - viewController: the view controller to remove
     func removeChild(_ viewController: UIViewController?) {
         viewController?.willMove(toParent: nil)
         viewController?.view.removeFromSuperview()
         viewController?.removeFromParent()
     }
-
+    
+    /// Return the first child of class T in the hierarchy of the children of the view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of the view controller to find
     func firstChild<T: UIViewController>(ofType type: T.Type) -> T? {
         // Check all the children first.
         for child in children {
@@ -57,3 +71,4 @@ extension UIViewController {
         return nil
     }
 }
+
