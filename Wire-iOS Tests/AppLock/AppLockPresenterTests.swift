@@ -109,19 +109,6 @@ final class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertEqual(appLockInteractor.authDescription, "self.settings.privacy_security.lock_app.description")
         XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
-        sut.applicationWillResignActive()
-        assert(reauthVisibile: false)
-        
-        //given
-        set(authenticationState: .authenticated)
-        resetMocksValues()
-        
-        //when
-        sut.requireAuthenticationIfNeeded()
-        sut.applicationWillResignActive()
-        
-        //then
-        XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
         assert(reauthVisibile: false)
     }
     
@@ -135,7 +122,7 @@ final class AppLockPresenterTests: XCTestCase {
         
         //then
         XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
-        assert(reauthVisibile: nil)
+        assert(reauthVisibile: false)
         
         //given
         set(authenticationState: .cancelled)
@@ -163,17 +150,15 @@ final class AppLockPresenterTests: XCTestCase {
     func testThatFailedAuthenticationDimsContentsWithoutReauth() {
         //when
         sut.authenticationEvaluated(with: .denied)
-        sut.applicationWillResignActive()
         //then
-        assert(reauthVisibile: false)
+        assert(reauthVisibile: true)
         
         //given
         resetMocksValues()
         //when
         sut.authenticationEvaluated(with: .needAccountPassword)
-        sut.applicationWillResignActive()
         //then
-        assert(reauthVisibile: false)
+        assert(reauthVisibile: true)
     }
     
     func testThatUnavailableAuthenticationDimsContentsWithReauth() {
@@ -208,7 +193,7 @@ final class AppLockPresenterTests: XCTestCase {
     func testThatPasswordVerifiedWithValidatedResultSetContentsNotDimmed() {
         //when
         sut.passwordVerified(with: .validated)
-        sut.applicationWillResignActive()
+        
         //then
         assert(reauthVisibile: false)
     }
@@ -217,7 +202,7 @@ final class AppLockPresenterTests: XCTestCase {
          //when
         sut.passwordVerified(with: .denied)
         //then
-        assert(reauthVisibile: nil)
+        assert(reauthVisibile: false)
         
         //given
         resetMocksValues()
@@ -276,65 +261,7 @@ final class AppLockPresenterTests: XCTestCase {
         assertPasswordVerification(on: queue)
         XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
     }
-
-    func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
-        //when
-        sut.applicationWillResignActive()
-        //then
-        assert(reauthVisibile: false)
-    }
-    
-    func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
-        //given
-        AppLock.lastUnlockedDate = Date()
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .authenticated)
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        XCTAssertTrue(Date() > AppLock.lastUnlockedDate)
-    }
-    
-    func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
-        //given
-        let date = Date()
-        AppLock.lastUnlockedDate = date
         
-        //given
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .cancelled)
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
-        
-        //given
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .needed)
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
-        
-        //given
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .pendingPassword)
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
-    }
-    
-    func testThatApplicationDidEnterBackgroundDimsContentIfAppLockActive() {
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        assert(reauthVisibile: nil)
-    }
-    
-    func testThatApplicationDidEnterBackgroundDoesntDimContentsIfAppLockNotActive() {
-        //when
-        sut.applicationDidEnterBackground()
-        //then
-        assert(reauthVisibile: nil)
-    }
-    
     //MARK: - custom app lock
     func testThatUpdateFromAnOldVersionToNewVersionSupportAppLockShowsCreatePasscodeScreen() {
         //GIVEN

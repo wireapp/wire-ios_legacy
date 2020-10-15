@@ -120,7 +120,7 @@ final class AppStateControllerTests: XCTestCase {
     
     func testThatItSetsUpTheAppLockedState() {
         //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
+        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
         
         //when
         XCTAssertTrue(sut.appLock!.shouldLockScreen)
@@ -130,7 +130,8 @@ final class AppStateControllerTests: XCTestCase {
         XCTAssertEqual(sut.appState, AppState.locked)
     }
     
-    // MARK: - tests for isScreenLockNeeded
+    // MARK: - Tests for isScreenLockNeeded
+    
     func testThatisScreenLockNeededReturnsTrueIfNeeded() {
         //given
         set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
@@ -153,6 +154,33 @@ final class AppStateControllerTests: XCTestCase {
         
         //when / then
         XCTAssertFalse(sut.appLock!.shouldLockScreen)
+    }
+    
+    // MARK: - Application did enter background
+    
+    func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
+        //given
+        AppLock.lastUnlockedDate = Date()
+        sut.userAuthenticationDidComplete(addedAccount: true)
+        //when
+        sut.applicationDidEnterBackground()
+        //then
+        XCTAssertTrue(Date() > AppLock.lastUnlockedDate)
+    }
+    
+    func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
+        //given
+        let date = Date()
+        AppLock.lastUnlockedDate = date
+
+        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        
+        //when
+        sut.applicationDidEnterBackground()
+        
+        //then
+        XCTAssertEqual(date, AppLock.lastUnlockedDate)
     }
     
 }

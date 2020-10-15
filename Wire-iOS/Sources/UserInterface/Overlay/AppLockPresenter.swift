@@ -47,7 +47,6 @@ protocol AppLockUserInterface: class {
 enum AuthenticationState {
     case needed
     case cancelled
-    case authenticated
     case pendingPassword
 
     fileprivate mutating func update(with result: AppLock.AuthenticationResult) {
@@ -89,7 +88,6 @@ final class AppLockPresenter {
         self.userInterface = userInterface
         self.appLockInteractorInput = appLockInteractorInput
         self.authenticationState = authenticationState
-        self.addApplicationStateObservers()
         self.requireAuthenticationIfNeeded()
     }
     
@@ -100,8 +98,8 @@ final class AppLockPresenter {
     
     func requireAuthenticationIfNeeded() {
         switch authenticationState {
-        case .needed, .authenticated:
-            authenticationState = .needed
+        case .needed:
+            showReauth(visible: false)
             appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
             showReauth(visible: true)
@@ -183,31 +181,6 @@ extension AppLockPresenter: AppLockInteractorOutput {
     }
 }
 
-// MARK: - App state observers
-extension AppLockPresenter {
-    func addApplicationStateObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockPresenter.applicationWillResignActive),
-                                               name: UIApplication.willResignActiveNotification,
-                                               object: .none)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockPresenter.applicationDidEnterBackground),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: .none)
-    }
-    
-    @objc func applicationWillResignActive() {
-        showReauth(visible: false)
-    }
-    
-    @objc func applicationDidEnterBackground() {
-        if self.authenticationState == .authenticated {
-            AppLock.lastUnlockedDate = Date()
-        }
-    }
-}
-
 // MARK: - Helpers
 extension AppLockPresenter {
     private func showReauth(visible: Bool) {
@@ -217,7 +190,6 @@ extension AppLockPresenter {
     private func appUnlocked() {
         userInterface?.dismissUnlockScreen()
         
-        authenticationState = .authenticated
         AppLock.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }

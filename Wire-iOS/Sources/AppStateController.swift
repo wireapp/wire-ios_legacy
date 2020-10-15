@@ -81,6 +81,11 @@ final class AppStateController : NSObject {
                                                name: .appUnlocked,
                                                object: .none)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: .none)
+        
         appState = calculateAppState()
         appLock = self
     }
@@ -249,6 +254,15 @@ extension AppStateController {
 
     @objc func applicationDidBecomeUnlocked() {
         updateAppState()
+    }
+    
+    @objc func applicationDidEnterBackground() {
+        switch authenticationState {
+        case .loggedIn where appState != .locked:
+            AppLock.lastUnlockedDate = Date()
+        default:
+            break
+        }
     }
     
 }
