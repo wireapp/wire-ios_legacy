@@ -786,6 +786,10 @@
 		A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */; };
 		A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D22410016B00BE6EF7 /* SpinnerButton.swift */; };
 		A97017D6241004A600BE6EF7 /* SpinnerButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */; };
+		A971376A253854300020496A /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3652477F3AC00236F9F /* Cartography */; };
+		A971376B253854300020496A /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3672477F63100236F9F /* Cartography */; };
+		A971376C253854300020496A /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3622477F19600236F9F /* SnapshotTesting */; };
+		A971377125385BB50020496A /* DifferenceKit in Frameworks */ = {isa = PBXBuildFile; productRef = A971377025385BB50020496A /* DifferenceKit */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A9730DDA250274150061BF36 /* AnalyticsCountlyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9730DD9250274150061BF36 /* AnalyticsCountlyProvider.swift */; };
@@ -3221,7 +3225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
-				A938B3682477F63100236F9F /* Cartography in Frameworks */,
+				A971376B253854300020496A /* Cartography in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3245,10 +3249,11 @@
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				874A17482056D9FA001C6760 /* libcmark.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
+				A971377125385BB50020496A /* DifferenceKit in Frameworks */,
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
-				A938B3662477F3AC00236F9F /* Cartography in Frameworks */,
+				A971376A253854300020496A /* Cartography in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -3263,7 +3268,7 @@
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
-				A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */,
+				A971376C253854300020496A /* SnapshotTesting in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
 			);
@@ -6882,6 +6887,7 @@
 			name = "Wire-iOS";
 			packageProductDependencies = (
 				A938B3652477F3AC00236F9F /* Cartography */,
+				A971377025385BB50020496A /* DifferenceKit */,
 			);
 			productName = "ZClient iOS";
 			productReference = 8F42C538199244A700288E4D /* Wire.app */;
@@ -7010,6 +7016,7 @@
 			packageReferences = (
 				A938B3612477F19600236F9F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 				A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */,
+				A971376F25385BB50020496A /* XCRemoteSwiftPackageReference "DifferenceKit" */,
 			);
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
@@ -8986,6 +8993,14 @@
 				kind = branch;
 			};
 		};
+		A971376F25385BB50020496A /* XCRemoteSwiftPackageReference "DifferenceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wireapp/DifferenceKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -9003,6 +9018,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A938B3642477F3AC00236F9F /* XCRemoteSwiftPackageReference "Cartography" */;
 			productName = Cartography;
+		};
+		A971377025385BB50020496A /* DifferenceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A971376F25385BB50020496A /* XCRemoteSwiftPackageReference "DifferenceKit" */;
+			productName = DifferenceKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
