@@ -36,7 +36,8 @@ final class RootViewController: UIViewController {
     func set(childViewController newViewController: UIViewController?,
              animated: Bool = false,
              completion: (() -> Void)? = nil) {
-        if let newViewController = newViewController, let previousViewController = childViewController {
+        if let newViewController = newViewController,
+            let previousViewController = childViewController {
             transition(
                 from: previousViewController,
                 to: newViewController,
@@ -52,13 +53,11 @@ final class RootViewController: UIViewController {
     }
     
     private func contain(_ newViewController: UIViewController, completion: (() -> Void)?) {
-        add(newViewController)
-        newViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        newViewController.view.frame = view.bounds
-        view.addSubview(newViewController.view)
-        newViewController.didMove(toParent: self)
-        childViewController = newViewController
-        completion?()
+        UIView.performWithoutAnimation {
+            add(newViewController, to: view)
+            childViewController = newViewController
+            completion?()
+        }
     }
     
     private func removeChildViewController(animated: Bool, completion: (() -> Void)?) {
@@ -79,7 +78,7 @@ final class RootViewController: UIViewController {
             completion?()
         }
     }
-    
+        
     private func transition(from fromViewController: UIViewController,
                             to toViewController: UIViewController,
                             animated: Bool = false,
@@ -96,6 +95,7 @@ final class RootViewController: UIViewController {
         fromViewController.willMove(toParent: nil)
         addChild(toViewController)
         
+        toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         toViewController.view.frame = fromViewController.view.bounds
         
         animationGroup.enter()
