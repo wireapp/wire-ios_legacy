@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import avs
+import WireSyncEngine
 
 final class VideoPreviewView: BaseVideoPreviewView {
 
@@ -70,14 +71,25 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
+    override func streamDidChange() {
+        super.streamDidChange()
+        videoKind = VideoKind(videoState: stream.videoState)
+    }
+    
     // MARK: - Fill mode
-    private var isScreenSharing: Bool {
-        return stream.videoState == .screenSharing
+
+    private var videoKind: VideoKind = .none {
+        didSet {
+            guard oldValue != videoKind else { return }
+            shouldFill = videoKind.shouldFill
+            updateFillMode()
+        }
     }
 
-    override func updateFillMode() {
+    private func updateFillMode() {
         guard let previewView = previewView else { return }
-        previewView.shouldFill = shouldFill && !isScreenSharing
+
+        previewView.shouldFill = shouldFill
     }
 
     // MARK: - Paused state update
@@ -143,7 +155,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
-        preview.shouldFill = shouldFill && !isScreenSharing
+        preview.shouldFill = videoKind.shouldFill
         
         previewView = preview
     }
@@ -154,5 +166,30 @@ final class VideoPreviewView: BaseVideoPreviewView {
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
         snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
+    }
+}
+
+private enum VideoKind {
+    case camera
+    case screenshare
+    case none
+    
+    init(videoState: VideoState?) {
+        guard let state = videoState else {
+            self = .none
+            return
+        }
+        switch state {
+        case .stopped, .paused:
+            self = .none
+        case .started, .badConnection:
+            self = .camera
+        case .screenSharing:
+            self = .screenshare
+        }
+    }
+    
+    var shouldFill: Bool {
+        return self == .camera
     }
 }
