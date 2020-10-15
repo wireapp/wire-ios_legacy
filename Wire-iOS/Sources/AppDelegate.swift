@@ -222,10 +222,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Private Helpers
 private extension AppDelegate {
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
-        var operations = launchOperations.map { operation in
-            BlockOperation {
-                operation.execute()
-            }
+        var operations = launchOperations.map {
+            BlockOperation(block: $0.execute)
         }
 
         operations.append(BlockOperation {
