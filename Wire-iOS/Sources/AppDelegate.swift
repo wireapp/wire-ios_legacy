@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
+        AppCenterOperation(),
         PerformanceDebuggerOperation(),
         ZMSLogOperation(),
         AVSLoggingOperation(),
@@ -110,9 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
                 
-        setupAppCenter() {
-            self.queueInitializationOperations(launchOptions: launchOptions ?? [:])
-        }
+        queueInitializationOperations(launchOptions: launchOptions ?? [:])
         
         if let launchOptions = launchOptions {
             self.launchOptions = launchOptions
@@ -190,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
         
-        return (SessionManager.shared?.continueUserActivity(userActivity)) ?? false
+        return SessionManager.shared?.continueUserActivity(userActivity) ?? false
     }
     
     // MARK : - BackgroundUpdates
@@ -217,7 +216,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-
 
 // MARK: - Private Helpers
 private extension AppDelegate {

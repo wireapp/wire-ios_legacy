@@ -487,7 +487,6 @@
 		7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7C88BB8F235DE3F50075BCC5 /* (null) in Headers */ = {isa = PBXBuildFile; };
 		7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */; };
-		7CA971F7235605D6007C5F09 /* AppDelegate+AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */; };
 		7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */; };
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
@@ -2102,7 +2101,6 @@
 		7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = Carthage/Build/iOS/AppCenterCrashes.framework; sourceTree = "<group>"; };
 		7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = Carthage/Build/iOS/AppCenterAnalytics.framework; sourceTree = "<group>"; };
 		7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPropertyName.swift; sourceTree = "<group>"; };
-		7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+AppCenter.swift"; sourceTree = "<group>"; };
 		7CAB7B5D235998E200A65042 /* AppCenterData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterData.framework; path = Carthage/Build/iOS/AppCenterData.framework; sourceTree = "<group>"; };
 		7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationCellTests.swift; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
@@ -5147,7 +5145,6 @@
 				54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */,
 				163495881F015389004E80DB /* AppDelegate+Network.swift */,
 				EF2CF3252243EBAA003E16BC /* AppDelegate+URL.swift */,
-				7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */,
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
 				543DF69E252F5A4B001F6EA6 /* Main.storyboard */,
@@ -7579,7 +7576,6 @@
 				5EF7BA65221AEB1B00815625 /* ProfileDetailsContentController.swift in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */,
-				7CA971F7235605D6007C5F09 /* AppDelegate+AppCenter.swift in Sources */,
 				546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */,
 				8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
