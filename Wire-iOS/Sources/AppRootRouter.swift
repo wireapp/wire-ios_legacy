@@ -417,3 +417,13 @@ extension AppRootRouter: ShowContentDelegate {
         }
     }
 }
+
+// TO DO: Move out this code from here
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
+}

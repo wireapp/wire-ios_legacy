@@ -23,4 +23,9 @@ extension UIApplication {
     static var runningInExtension: Bool {
         return Bundle.main.bundlePath.hasSuffix(".appex")
     }
+    
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+        UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
 }
