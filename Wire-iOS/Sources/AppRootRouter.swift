@@ -141,7 +141,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
     
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
-        //        showContentDelegate = nil
+        showContentDelegate = nil
         //        resetAuthenticationCoordinatorIfNeeded(for: appState)
         
         let completionBlock = { [weak self] in
@@ -243,6 +243,8 @@ extension AppRootRouter {
         
         /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
         clientViewController.needToShowDataUsagePermissionDialog = false
+        
+        showContentDelegate = clientViewController
         
         if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
             if SelfUser.current.isTeamMember {
