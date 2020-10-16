@@ -22,17 +22,22 @@ final class RootViewController: UIViewController {
     var dismissSpinner: SpinnerCompletion?
     private var childViewController: UIViewController?
     
-    
+    // MARK: - Status Bar / Supported Orientations
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     override var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
     
     override var childForStatusBarHidden: UIViewController? {
         return childViewController
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     func set(childViewController newViewController: UIViewController?,
