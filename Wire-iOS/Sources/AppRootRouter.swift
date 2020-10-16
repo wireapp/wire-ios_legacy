@@ -20,6 +20,11 @@ import UIKit
 import WireSyncEngine
 import avs
 
+extension AppRootRouter {
+    static let appStateDidTransition = Notification.Name(rawValue: "appStateDidTransition")
+    static let appStateKey = "AppState"
+}
+
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
     
@@ -143,6 +148,13 @@ extension AppRootRouter: AppStateCalculatorDelegate {
                             completion: @escaping () -> Void) {
         applicationWillTransition(to: appState)
         transition(to: appState, completion: completion)
+        notifyTransition(for: appState)
+    }
+    
+    private func notifyTransition(for appState: AppState) {
+        NotificationCenter.default.post(name: AppRootRouter.appStateDidTransition,
+                                        object: nil,
+                                        userInfo: [AppRootRouter.appStateKey: appState])
     }
     
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
@@ -296,7 +308,6 @@ extension AppRootRouter {
             SelfUser.provider = nil
         }
         
-        /*
         guard
             case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
@@ -306,19 +317,17 @@ extension AppRootRouter {
         }
         
         presentAlertForDeletedAccount(reason)
-        */
     }
     
     private func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
-        /*
+        
         switch reason {
         case .sessionExpired:
-            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
-                                     message: "account_deleted_session_expired_alert.message".localized)
+            rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
+                                                        message: "account_deleted_session_expired_alert.message".localized)
         default:
             break
         }
-        */
     }
 }
 
