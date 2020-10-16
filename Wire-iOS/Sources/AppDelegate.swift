@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var callWindowRootViewController: CallWindowRootViewController? {
-        return rootViewController?.callWindow.rootViewController as? CallWindowRootViewController
+        return appRootRouter?.callWindow.rootViewController as? CallWindowRootViewController
     }
     
     var notificationsWindow: UIWindow? {

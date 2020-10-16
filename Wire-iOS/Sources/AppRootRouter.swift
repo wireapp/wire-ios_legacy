@@ -23,6 +23,8 @@ import avs
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
     
+    var callWindow = CallWindow(frame: UIScreen.main.bounds)
+    
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
@@ -83,6 +85,9 @@ public class AppRootRouter: NSObject {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
+        
+        callWindow.makeKeyAndVisible()
+        callWindow.isHidden = true
     }
     
     // MARK: - Public implementation
@@ -275,7 +280,7 @@ extension AppRootRouter {
             if AppDelegate.shared.shouldConfigureSelfUserProvider {
                 SelfUser.provider = ZMUserSession.shared()
             }
-//            callWindow.callController.transitionToLoggedInSession()
+            callWindow.callController.transitionToLoggedInSession()
         }
         
         let colorScheme = ColorScheme.default
@@ -284,7 +289,6 @@ extension AppRootRouter {
     }
     
     private func applicationDidTransition(to appState: AppState) {
-        /*
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
@@ -292,6 +296,7 @@ extension AppRootRouter {
             SelfUser.provider = nil
         }
         
+        /*
         guard
             case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
