@@ -28,15 +28,19 @@ extension AppRootRouter {
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
     
-    var callWindow = CallWindow(frame: UIScreen.main.bounds)
+    let callWindow = CallWindow(frame: UIScreen.main.bounds)
+    let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
+    
+    
+    // TO DO: this shoud be private
+    private(set) var switchingAccountRouter: SwitchingAccountRouter?
+    private(set) var authenticationCoordinator: AuthenticationCoordinator?
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var urlActionRouter: URLActionRouter?
-    private var switchingAccountRouter: SwitchingAccountRouter?
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
-    private var authenticationCoordinator: AuthenticationCoordinator?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
     private var observerTokens: [NSObjectProtocol] = []
@@ -87,14 +91,16 @@ public class AppRootRouter: NSObject {
         super.init()
         appStateCalculator.delegate = self
         
-        configureAppearance()
-        
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
         
+        AppRootRouter.configureAppearance()
+        
         callWindow.makeKeyAndVisible()
         callWindow.isHidden = true
+        overlayWindow.makeKeyAndVisible()
+        overlayWindow.isHidden = true
     }
     
     // MARK: - Public implementation
@@ -182,9 +188,9 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
         case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
-//            UIColor.setAccentOverride(.undefined)
+            UIColor.setAccentOverride(.undefined)
 //            mainWindow.tintColor = UIColor.accent()
-//            executeAuthenticatedBlocks()
+            executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
         case .headless:
@@ -368,7 +374,7 @@ extension AppRootRouter: ApplicationStateObserving {
     }
     
     func applicationDidBecomeActive() {
-//        updateOverlayWindowFrame()
+        updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
     }
     
@@ -378,7 +384,15 @@ extension AppRootRouter: ApplicationStateObserving {
     }
     
     func applicationWillEnterForeground() {
-//        updateOverlayWindowFrame()
+        updateOverlayWindowFrame()
+    }
+    
+    func updateOverlayWindowFrame(size: CGSize? = nil) {
+        if let size = size {
+            overlayWindow.frame.size = size
+        } else {
+            overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+        }
     }
 }
 
@@ -389,10 +403,10 @@ extension AppRootRouter: ContentSizeCategoryObserving {
         NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        configureAppearance()
+        AppRootRouter.configureAppearance()
     }
     
-    private func configureAppearance() {
+    public static func configureAppearance() {
         let navigationBarTitleBaselineOffset: CGFloat = 2.5
         
         let attributes: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: 11, weight: .semibold), .baselineOffset: navigationBarTitleBaselineOffset]

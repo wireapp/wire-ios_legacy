@@ -62,10 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var notificationsWindow: UIWindow? {
-        return rootViewController?.overlayWindow
+        return appRootRouter?.overlayWindow
     }
 
-    private(set) var rootViewController: AppRootViewController!
+//    private(set) var rootViewController: AppRootViewController!
     private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
     

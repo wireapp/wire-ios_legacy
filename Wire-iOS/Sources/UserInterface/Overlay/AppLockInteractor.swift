@@ -47,7 +47,7 @@ final class AppLockInteractor {
     var _userSession: AppLockInteractorUserSession?
     
     // Workaround because accessing `ZMUserSession.shared()` crashes
-    // if done at init (AppRootViewController won't be instantianted)
+    // if done at init (RootViewController won't be instantianted)
     private var userSession: AppLockInteractorUserSession? {
         return _userSession ?? ZMUserSession.shared()
     }

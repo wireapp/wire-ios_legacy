@@ -66,7 +66,7 @@ final class AppStateCalculatorTests: XCTestCase {
                                                             error: error)
 
         // THEN
-        // It should display the login screen in AppRootViewController
+        // It should display the login screen in RootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }
@@ -83,7 +83,7 @@ final class AppStateCalculatorTests: XCTestCase {
                                                         userSessionCanBeTornDown: {})
 
         // THEN
-        // It should display the login screen in AppRootViewController
+        // It should display the login screen in RootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }
@@ -102,7 +102,7 @@ final class AppStateCalculatorTests: XCTestCase {
                                                             error: error)
 
         // THEN
-        // It should display the login screen in AppRootViewController
+        // It should display the login screen in RootViewController
         XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
     }

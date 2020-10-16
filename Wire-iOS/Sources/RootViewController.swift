@@ -128,4 +128,36 @@ final class RootViewController: UIViewController {
     }
 }
 
+extension RootViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        guard let appRouter = (UIApplication.shared.delegate as? AppDelegate)?.appRootRouter else {
+            return
+        }
+        
+        coordinator.animate(alongsideTransition: nil, completion: { _ in
+            appRouter.updateOverlayWindowFrame(size: size)
+        })
+    }
+        
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // Do not refresh for iOS 13+ when the app is in background.
+        // Go to home screen may trigger `traitCollectionDidChange` twice.
+        if #available(iOS 13.0, *) {
+            if UIApplication.shared.applicationState == .background {
+                return
+            }
+        }
+
+        if #available(iOS 12.0, *) {
+            if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
+            }
+        }
+    }
+}
+
 extension RootViewController: SpinnerCapable { }

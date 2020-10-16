@@ -27,7 +27,7 @@ extension AppDelegate {
             return try sessionManager?.openURL(url, options: options) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
-                rootViewController.authenticationCoordinator?.cancelCompanyLogin()
+                appRootRouter?.authenticationCoordinator?.cancelCompanyLogin()
                 
                 UIApplication.shared.topmostViewController()?.dismissIfNeeded(animated: true, completion: {
                     UIApplication.shared.topmostViewController()?.showAlert(for: error)
