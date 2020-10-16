@@ -38,7 +38,9 @@ public class AppRootRouter: NSObject {
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private var authenticationCoordinator: AuthenticationCoordinator?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
+    
     private var observerTokens: [NSObjectProtocol] = []
+    private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
     
     private weak var showContentDelegate: ShowContentDelegate? {
@@ -159,7 +161,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
         showContentDelegate = nil
-        //        resetAuthenticationCoordinatorIfNeeded(for: appState)
+        resetAuthenticationCoordinatorIfNeeded(for: appState)
         
         let completionBlock = { [weak self] in
             self?.applicationDidTransition(to: appState)
@@ -192,6 +194,34 @@ extension AppRootRouter: AppStateCalculatorDelegate {
                          toAccount: toAccount,
                          completion: completionBlock)
         }
+    }
+    
+    private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
+        switch state {
+        case .unauthenticated:
+            break // do not reset the authentication coordinator for unauthenticated state
+        default:
+            authenticationCoordinator = nil // reset the authentication coordinator when we no longer need it
+        }
+    }
+    
+    func performWhenAuthenticated(_ block : @escaping () -> Void) {
+        if case .authenticated = appStateCalculator.appState {
+            block()
+        } else {
+            authenticatedBlocks.append(block)
+        }
+    }
+
+    func executeAuthenticatedBlocks() {
+        while !authenticatedBlocks.isEmpty {
+            authenticatedBlocks.removeFirst()()
+        }
+    }
+
+    func reload() {
+        transition(to: .headless, completion: { })
+        transition(to: appStateCalculator.appState, completion: { })
     }
 }
 
