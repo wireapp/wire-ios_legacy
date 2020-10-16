@@ -153,26 +153,6 @@ final class AppLockInteractorTests: XCTestCase {
         //then
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
     }
-    
-    func testThatAppStateDidTransitionToNewAppStateUpdatesAppState() {
-        //given
-        sut.appState = nil
-        let appState = AppState.authenticated(completedRegistration: false, databaseIsLocked: false)
-        //when
-        sut.appStateDidTransition(to: appState)
-        //the
-        XCTAssertEqual(sut.appState, appState)
-    }
-    
-    func testThatStateChangeFromUnauthenticatedToAuthenticationUpdatesLastUnlockedDate() {
-        //given
-        AppLock.lastUnlockedDate = Date(timeIntervalSince1970: 0)
-        sut.appState = AppState.unauthenticated(error: nil)
-        //when
-        sut.appStateDidTransition(to: AppState.authenticated(completedRegistration: false, databaseIsLocked: false))
-        //then
-        XCTAssert(AppLock.lastUnlockedDate > Date(timeIntervalSince1970: 0))
-    }
 }
 
 extension AppLockInteractorTests {
@@ -181,6 +161,5 @@ extension AppLockInteractorTests {
         AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
         let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
         AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
-        sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false, databaseIsLocked: databaseIsLocked) : AppState.unauthenticated(error: nil)
     }
 }

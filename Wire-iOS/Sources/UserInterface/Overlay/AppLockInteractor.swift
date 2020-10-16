@@ -28,7 +28,6 @@ protocol AppLockInteractorInput: class {
     func evaluateAuthentication(description: String)
     func verify(password: String)
     func verify(customPasscode: String)
-    func appStateDidTransition(to newState: AppState)
 }
 
 protocol AppLockInteractorOutput: class {
@@ -50,7 +49,6 @@ final class AppLockInteractor {
         return _userSession ?? ZMUserSession.shared()
     }
     
-    var appState: AppState?
 }
 
 // MARK: - Interface
@@ -100,26 +98,14 @@ extension AppLockInteractor: AppLockInteractorInput {
         }
     }
     
-    func appStateDidTransition(to newState: AppState) {
-        if let state = appState,
-            case AppState.unauthenticated(error: _) = state,
-            case AppState.authenticated(completedRegistration: _) = newState {
-            AppLock.lastUnlockedDate = Date()
-        }
-        appState = newState
-    }
 }
 
 // MARK: - Helpers
 extension AppLockInteractor {
     
     private var authenticationScenario: AppLock.AuthenticationScenario {
-        if isDatabaseLocked {
-            return .databaseLock
-        } else {
-            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
-        }
+        return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+                           grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
     }
     
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
@@ -128,11 +114,4 @@ extension AppLockInteractor {
         }
     }
     
-    private var isDatabaseLocked: Bool {
-        guard let state = appState else { return false }
-        if case AppState.authenticated(completedRegistration: _, databaseIsLocked: let isDatabaseLocked) = state {
-            return isDatabaseLocked
-        }
-        return false
-    }
 }
