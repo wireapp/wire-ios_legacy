@@ -427,3 +427,11 @@ final class SpinnerCapableNavigationController: UINavigationController, SpinnerC
     }
     
 }
+
+extension UIApplication {
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
+}
+
