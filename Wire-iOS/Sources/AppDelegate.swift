@@ -165,8 +165,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
         
-        rootViewController?.quickActionsManager?.performAction(for: shortcutItem,
-                                                               completionHandler: completionHandler)
+        appRootRouter?.quickActionsManager?.performAction(for: shortcutItem,
+                                                          completionHandler: completionHandler)
     }
     
     @objc
