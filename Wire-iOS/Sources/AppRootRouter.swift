@@ -31,6 +31,19 @@ public class AppRootRouter: NSObject {
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private var authenticationCoordinator: AuthenticationCoordinator?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
+    private var observerTokens: [NSObjectProtocol] = []
+    private let teamMetadataRefresher = TeamMetadataRefresher()
+    
+    private weak var showContentDelegate: ShowContentDelegate? {
+        didSet {
+            if let delegate = showContentDelegate {
+                performWhenShowContentDelegateIsAvailable?(delegate)
+                performWhenShowContentDelegateIsAvailable = nil
+            }
+        }
+    }
+
+    fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
     
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
@@ -47,14 +60,15 @@ public class AppRootRouter: NSObject {
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
             sessionManager.urlActionDelegate = urlActionRouter
-            /* TO DO: Add all this delegation
-            self.sessionManager?.showContentDelegate = self
-            */
+            sessionManager.showContentDelegate = self
             setCallingSettings(for: sessionManager)
+            quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
+                                                      application: UIApplication.shared)
         }
     }
 
     private(set) var rootViewController: RootViewController //TO DO: This should be private
+    private(set) var quickActionsManager: QuickActionsManager?
     
     // MARK: - Initialization
     
@@ -63,6 +77,12 @@ public class AppRootRouter: NSObject {
         self.navigator = navigator
         super.init()
         appStateCalculator.delegate = self
+        
+        configureAppearance()
+        
+        setupApplicationNotifications()
+        setupContentSizeCategoryNotifications()
+        setupAudioPermissionsNotifications()
     }
     
     // MARK: - Public implementation
@@ -92,7 +112,7 @@ public class AppRootRouter: NSObject {
                               mediaManager: mediaManager,
                               analytics: Analytics.shared,
                               delegate: appStateCalculator,
-                              showContentDelegate: nil, //TO DO: We must set it
+                              showContentDelegate: self,
                               application: UIApplication.shared,
                               environment: BackendEnvironment.shared,
                               configuration: configuration,
@@ -292,5 +312,92 @@ extension AppRootRouter {
             break
         }
         */
+    }
+}
+
+// MARK: - ApplicationStateObserving
+extension AppRootRouter: ApplicationStateObserving {
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observerTokens.append(token)
+    }
+    
+    func applicationDidBecomeActive() {
+//        updateOverlayWindowFrame()
+        teamMetadataRefresher.triggerRefreshIfNeeded()
+    }
+    
+    func applicationDidEnterBackground() {
+        let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
+        UIApplication.shared.applicationIconBadgeNumber = unreadConversations
+    }
+    
+    func applicationWillEnterForeground() {
+//        updateOverlayWindowFrame()
+    }
+}
+
+// MARK: - ContentSizeCategoryObserving
+extension AppRootRouter: ContentSizeCategoryObserving {
+    func contentSizeCategoryDidChange() {
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
+        ConversationListCell.invalidateCachedCellSize()
+        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        configureAppearance()
+    }
+    
+    private func configureAppearance() {
+        let navigationBarTitleBaselineOffset: CGFloat = 2.5
+        
+        let attributes: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: 11, weight: .semibold), .baselineOffset: navigationBarTitleBaselineOffset]
+        let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [DefaultNavigationBar.self])
+        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
+        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)
+        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .disabled)
+    }
+}
+
+// MARK: - AudioPermissionsObserving
+extension AppRootRouter: AudioPermissionsObserving {
+    func userDidGrantAudioPermissions() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+// MARK: - ShowContentDelegate
+
+extension AppRootRouter: ShowContentDelegate {
+    public func showConnectionRequest(userId: UUID) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConnectionRequest(userId: userId)
+        }
+    }
+
+    public func showUserProfile(user: UserType) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showUserProfile(user: user)
+        }
+    }
+
+
+    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversation(conversation, at: message)
+        }
+    }
+    
+    public func showConversationList() {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversationList()
+        }
+    }
+    
+    public func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+        if let delegate = showContentDelegate {
+            closure(delegate)
+        }
+        else {
+            performWhenShowContentDelegateIsAvailable = closure
+        }
     }
 }
