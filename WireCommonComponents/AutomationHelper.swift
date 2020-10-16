@@ -38,9 +38,12 @@ public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
+    private var useAppCenterLaunchOption: Bool
+    
     /// Whether AppCenter should be used
+    /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
-        return UserDefaults.standard.bool(forKey: "UseHockey")
+        return useAppCenterLaunchOption && UserDefaults.standard.bool(forKey: "UseAppCenter")
     }
     
     /// Whether analytics should be used
@@ -89,14 +92,22 @@ public final class AutomationHelper: NSObject {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
 
-        self.disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert)
-        self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
-        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
-        self.disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
-        self.shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
-        self.disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
+        disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert)
+        disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
+        uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
+        disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
+        shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
+        disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
+        
+        let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue)
+        switch value {
+        case "0":
+            useAppCenterLaunchOption = false
+        default:
+            useAppCenterLaunchOption = true
+        }
 
-        self.automationEmailCredentials = AutomationHelper.credentials(arguments)
+        automationEmailCredentials = AutomationHelper.credentials(arguments)
         if arguments.hasFlag(AutomationKey.logNetwork) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
@@ -130,6 +141,7 @@ public final class AutomationHelper: NSObject {
         case disableCallQualitySurvey = "disable-call-quality-survey"
         case persistBackendType = "persist-backend-type"
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
+        case useAppCenter = "use-app-center"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
@@ -174,6 +186,7 @@ protocol ArgumentsType {
     func flagValueIfPresent(_ commandLineArgument: String) -> String?
 }
 
+//MARK: - default implementation
 extension ArgumentsType {
 
     var flagPrefix: String { return "--" }
@@ -187,8 +200,8 @@ extension ArgumentsType {
     }
 
     func flagValueIfPresent(_ commandLineArgument: String) -> String? {
-        for argument in self.arguments {
-            let searchString = "--" + commandLineArgument + "="
+        for argument in arguments {
+            let searchString = flagPrefix + commandLineArgument + "="
             if argument.hasPrefix(searchString) {
                 return String(argument[searchString.index(searchString.startIndex, offsetBy: searchString.count)...])
             }

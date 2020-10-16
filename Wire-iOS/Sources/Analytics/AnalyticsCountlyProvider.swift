@@ -52,15 +52,16 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     init?() {
-        guard let countlyAppKey = Bundle.countlyAppKey,
-              !countlyAppKey.isEmpty else {
+        guard
+            let countlyAppKey = Bundle.countlyAppKey, !countlyAppKey.isEmpty,
+            let countlyURL = BackendEnvironment.shared.countlyURL else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
                 return nil
         }
 
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
-        config.host = BackendEnvironment.shared.countlyURL.absoluteString
+        config.host = countlyURL.absoluteString
         config.manualSessionHandling = true
 
         Countly.sharedInstance().start(with: config)
