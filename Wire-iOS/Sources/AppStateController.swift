@@ -60,12 +60,14 @@ final class AppStateController : NSObject {
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
     var databaseEncryptionObserverToken: Any? = nil
-    var appLockTimer: AppLockTimerProtocol = AppLockTimer()
+    var appLockTimer: AppLockTimerProtocol
 
     /// The state of authentication.
     fileprivate(set) var authenticationState: AuthenticationState = .undetermined
     
     override init() {
+        appLockTimer = AppLockTimer()
+        
         super.init()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationDidBecomeActive),
