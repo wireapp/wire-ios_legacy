@@ -23,7 +23,6 @@ import WireSyncEngine
 
 extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")
-    static let appLocked = Notification.Name("AppLocked")
 }
 
 protocol AppLockUserInterface: class {

@@ -45,7 +45,6 @@ final class NotificationWindowRootViewController: UIViewController {
     }
     
     // MARK: - status bar
-        
     override var prefersStatusBarHidden: Bool {
         return true
     }
