@@ -154,12 +154,3 @@ final class AppLockInteractorTests: XCTestCase {
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
     }
 }
-
-extension AppLockInteractorTests {
-    func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
-        AppLock.isActive = appLockActive
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
-        let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
-    }
-}
