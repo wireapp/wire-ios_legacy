@@ -89,7 +89,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     }
     
     func applicationDidBecomeActive() {
-        transition(to: appState, force: true)
+        transition(to: appState)
     }
     
     func applicationDidEnterBackground() { }
