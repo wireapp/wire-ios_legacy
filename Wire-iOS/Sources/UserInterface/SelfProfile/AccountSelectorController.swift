@@ -69,7 +69,7 @@ extension AccountSelectorController: AccountSelectorViewDelegate {
         guard account != SessionManager.shared?.accountManager.selectedAccount else { return }
         
         if ZClientViewController.shared?.conversationListViewController.presentedViewController != nil {
-            AppDelegate.shared.rootViewController.confirmSwitchingAccount { (confirmed) in
+            AppDelegate.shared.appRootRouter?.switchingAccountRouter?.confirmSwitchingAccount { (confirmed) in
                 if confirmed {
                     ZClientViewController.shared?.conversationListViewController.dismiss(animated: true, completion: {
                         AppDelegate.shared.mediaPlaybackManager?.stop()

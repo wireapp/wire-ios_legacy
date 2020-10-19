@@ -58,14 +58,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var callWindowRootViewController: CallWindowRootViewController? {
-        return rootViewController?.callWindow.rootViewController as? CallWindowRootViewController
+        return appRootRouter?.callWindow.rootViewController as? CallWindowRootViewController
     }
     
     var notificationsWindow: UIWindow? {
-        return rootViewController?.overlayWindow
+        return appRootRouter?.overlayWindow
     }
 
-    private(set) var rootViewController: AppRootViewController!
+//    private(set) var rootViewController: AppRootViewController!
     private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
     
@@ -164,9 +164,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        
-        rootViewController?.quickActionsManager?.performAction(for: shortcutItem,
-                                                               completionHandler: completionHandler)
+        appRootRouter?.quickActionsManager?.performAction(for: shortcutItem,
+                                                          completionHandler: completionHandler)
     }
     
     @objc
@@ -203,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
         
-        rootViewController?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
         }
     }
@@ -211,7 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
         
-        rootViewController?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }

@@ -126,7 +126,7 @@ final class CoreDataFixture {
         if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
             XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
         }
-        AppRootViewController.configureAppearance()
+        AppRootRouter.configureAppearance()
         UIView.setAnimationsEnabled(false)
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
