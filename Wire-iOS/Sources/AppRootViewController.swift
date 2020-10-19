@@ -270,7 +270,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
             viewController = navigationController
 
-        case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
+        case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()

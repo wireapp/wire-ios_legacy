@@ -151,7 +151,7 @@ final class AppStateControllerTests: XCTestCase {
         sut.updateAppState()
         
         // then
-        XCTAssertEqual(sut.appState, AppState.authenticated(completedRegistration: true, databaseIsLocked: false))
+        XCTAssertEqual(sut.appState, AppState.authenticated(completedRegistration: true))
     }
     
     // MARK: - Application did enter background
