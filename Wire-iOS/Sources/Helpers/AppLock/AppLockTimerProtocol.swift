@@ -16,26 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
+import WireCommonComponents
 
-final class AppLockViewControllerSnapshotTests: XCTestCase {
-    var sut: AppLockViewController!
+protocol AppLockTimerProtocol {
+    var shouldLockScreen: Bool { get }
+}
+
+final class  AppLockTimer : AppLockTimerProtocol {
     
-    override func setUp() {
-        super.setUp()
-
-        sut = AppLockViewController()
-        sut.viewDidLoad()
+    var shouldLockScreen: Bool {
+        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
+        
+        return screenLockIsActive
     }
     
-    ///TODO: blur view is not visible in updated snapshots
-    func testInitialState() {
-        verify(matching: sut)
-    }
-    
-    func testReauthState() {
-        sut.setReauth(visible: true)
-        verify(matching: sut)
+    private var isLockTimeoutReached: Bool {
+        let lastAuthDate = AppLock.lastUnlockedDate
+        
+        // The app was authenticated at least N seconds ago
+        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        return !isWithinTimeoutWindow
     }
 }

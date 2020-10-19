@@ -29,10 +29,6 @@ protocol AppStateControllerDelegate : class {
     
 }
 
-protocol AppLockProtocol : class {
-    var shouldLockScreen: Bool { get }
-}
-
 final class AppStateController : NSObject {
 
     /**
@@ -64,7 +60,7 @@ final class AppStateController : NSObject {
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
     var databaseEncryptionObserverToken: Any? = nil
-    var appLock: AppLockProtocol?
+    var appLockTimer: AppLockTimerProtocol?
 
     /// The state of authentication.
     fileprivate(set) var authenticationState: AuthenticationState = .undetermined
@@ -87,7 +83,7 @@ final class AppStateController : NSObject {
                                                object: .none)
         
         appState = calculateAppState()
-        appLock = self
+        appLockTimer = AppLockTimer()
     }
     
     deinit {
@@ -117,7 +113,7 @@ final class AppStateController : NSObject {
             return .loading(account: account, from: SessionManager.shared?.accountManager.selectedAccount)
         }
 
-        let shouldLockScreen = appLock?.shouldLockScreen ?? false
+        let shouldLockScreen = appLockTimer?.shouldLockScreen ?? false
         switch authenticationState {
         case .loggedIn where shouldLockScreen || isDatabaseLocked:
             return .locked
@@ -297,24 +293,6 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
         authenticationState = .loggedIn(addedAccount: addedAccount)
         updateAppState()
-    }
-}
-
-extension AppStateController : AppLockProtocol {
-    
-    var shouldLockScreen: Bool {
-        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
-        
-        return screenLockIsActive
-    }
-    
-    private var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
-        return !isWithinTimeoutWindow
     }
 }
 
