@@ -24,7 +24,7 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class AppLockViewController: UIViewController {
-    private var lockView: AppLockView?
+    private var lockView: AppLockView!
     private let spinner = UIActivityIndicatorView(style: .white)
 
     // need to hold a reference onto `passwordController`,
@@ -47,11 +47,11 @@ final class AppLockViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        lockView = AppLockView()
         self.appLockPresenter = AppLockPresenter(userInterface: self)
 
-        lockView = AppLockView()
-        self.lockView?.onReauthRequested = { [weak self] in
+        self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }
             self.appLockPresenter?.requireAuthentication()
         }
@@ -59,10 +59,10 @@ final class AppLockViewController: UIViewController {
         self.spinner.hidesWhenStopped = true
         self.spinner.translatesAutoresizingMaskIntoConstraints = false
 
-        self.view.addSubview(self.lockView!)
+        self.view.addSubview(self.lockView)
         self.view.addSubview(self.spinner)
 
-        constrain(self.view, self.lockView!) { view, lockView in
+        constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
         }
         constrain(self.view, self.spinner) { view, spinner in
@@ -132,6 +132,6 @@ extension AppLockViewController: AppLockUserInterface {
     }
 
     func setReauth(visible: Bool) {
-        lockView?.showReauth = visible
+        lockView.showReauth = visible
     }
 }
