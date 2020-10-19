@@ -36,16 +36,17 @@ extension Notification.Name {
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-//    var window: UIWindow? {
-//        get {
-//            return rootViewController?.mainWindow
-//        }
-//
-//        set {
-//            assert(true, "cannot set window")
-//        }
-//    }
+    
+    private var launchOperations: [LaunchSequenceOperation] = [
+        BackendEnvironmentOperation(),
+        PerformanceDebuggerOperation(),
+        ZMSLogOperation(),
+        AVSLoggingOperation(),
+        AutomationHelperOperation(),
+        MediaManagerOperation(),
+        TrackingOperation(),
+        FileBackupExcluderOperation()
+    ]
     
     private(set) var appRootRouter: AppRootRouter?
     var window: UIWindow?
@@ -93,13 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.sharedAppDelegate = self
     }
     
-    func setupBackendEnvironment() {
-        guard let backendTypeOverride = AutomationHelper.sharedHelper.backendEnvironmentTypeOverride() else {
-            return
-        }
-        AutomationHelper.sharedHelper.persistBackendTypeOverrideIfNeeded(with: backendTypeOverride)
-    }
-    
     func application(_ application: UIApplication,
                      willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         zmLog.info("application:willFinishLaunchingWithOptions \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
@@ -107,30 +101,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initial log line to indicate the client version and build
         zmLog.info("Wire-ios version \(String(describing: Bundle.main.shortVersionString)) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
         
-        /*
-        // Note: if we instantiate the root view controller (& windows) any earlier,
-        // the windows will not receive any info about device orientation.
-        rootViewController = AppRootViewController()
-        */
-        
-        PerformanceDebugger.shared.start()
         return true
     }
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        ZMSLog.switchCurrentLogToPrevious()
-        
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
         
-        setupBackendEnvironment()
-        
-        setupTracking()
         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
-        
-//        setupAppCenter() {
-//            self.rootViewController?.launch(with: launchOptions ?? [:])
-//        }
+                
+        setupAppCenter() {
+            self.queueInitializationOperations(launchOptions: launchOptions ?? [:])
+        }
         
         if let launchOptions = launchOptions {
             self.launchOptions = launchOptions
@@ -138,8 +120,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
-        
-        queueInitializationOperations(launchOptions: launchOptions ?? [:])
         
         return true
     }
@@ -172,7 +152,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.synchronize()
     }
         
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return open(url: url, options: options)
     }
 
@@ -180,15 +162,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
     }
     
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        rootViewController?.quickActionsManager?.performAction(for: shortcutItem, completionHandler: completionHandler)
-    }
-    
-    private func setupTracking() {
-        let containsConsoleAnalytics = ProcessInfo.processInfo.arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
+    func application(_ application: UIApplication,
+                     performActionFor shortcutItem: UIApplicationShortcutItem,
+                     completionHandler: @escaping (Bool) -> Void) {
         
-        AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.shared = Analytics(optedOut: TrackingManager.shared.disableAnalyticsSharing)
+        rootViewController?.quickActionsManager?.performAction(for: shortcutItem,
+                                                               completionHandler: completionHandler)
     }
     
     @objc
@@ -241,10 +220,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 // MARK: - Private Helpers
-
 private extension AppDelegate {
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
-        var operations: [BlockOperation] = []
+        var operations = launchOperations.map {
+            BlockOperation(block: $0.execute)
+        }
+
         operations.append(BlockOperation {
             self.startAppCoordinator(launchOptions: launchOptions)
         })

@@ -52,10 +52,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
     }
 
     fileprivate let appStateCalculator: AppStateCalculator
-    fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
-    fileprivate let mediaManagerLoader = MediaManagerLoader()
     fileprivate var observerTokens: [NSObjectProtocol] = []
 
     var authenticationCoordinator: AuthenticationCoordinator?
@@ -114,8 +112,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateCalculator = AppStateCalculator()
-        fileBackupExcluder = FileBackupExcluder()
-        SessionManager.startAVSLogging()
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
@@ -124,8 +120,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-        AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateCalculator.delegate = self
         
@@ -140,12 +134,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         overlayWindow.isHidden = true
 
         type(of: self).configureAppearance()
-        configureMediaManager()
-
-        if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
-            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
-            fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
-        }
         
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
@@ -400,10 +388,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
            let reason = error?.userInfo[ZMAccountDeletedReasonKey] as? ZMAccountDeletedReason {
             presentAlertForDeletedAccount(reason)
         }
-    }
-    
-    func configureMediaManager() {
-        self.mediaManagerLoader.send(message: .appStart)
     }
     
     func performWhenAuthenticated(_ block : @escaping () -> Void) {
