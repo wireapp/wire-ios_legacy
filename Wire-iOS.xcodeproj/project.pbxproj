@@ -15,6 +15,7 @@
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
 		06CF2987253D9ABA00A23E97 /* AppLockTimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CF2986253D9ABA00A23E97 /* AppLockTimerProtocol.swift */; };
+		06CF2989253DCAAC00A23E97 /* AppLockTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CF2988253DCAAC00A23E97 /* AppLockTimerTests.swift */; };
 		06F2664223881A0D006BD21F /* LabelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F2664123881A0D006BD21F /* LabelIndicator.swift */; };
 		16030DAD21A846A200F8032E /* ConversationVideoMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16030DAC21A846A200F8032E /* ConversationVideoMessageCellTests.swift */; };
 		1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */; };
@@ -1597,6 +1598,7 @@
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06CF2986253D9ABA00A23E97 /* AppLockTimerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockTimerProtocol.swift; sourceTree = "<group>"; };
+		06CF2988253DCAAC00A23E97 /* AppLockTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockTimerTests.swift; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
 		095275931B7E834400123BAF /* WireSyncEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireSyncEngine.framework; path = Carthage/Build/iOS/WireSyncEngine.framework; sourceTree = "<group>"; };
 		16030DAC21A846A200F8032E /* ConversationVideoMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVideoMessageCellTests.swift; sourceTree = "<group>"; };
@@ -4161,6 +4163,7 @@
 				6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */,
 				6306903723AA8D480081802B /* AppLockPresenterTests.swift */,
 				636B716923C39D0600B624D6 /* AppLockViewControllerSnapshotTests.swift */,
+				06CF2988253DCAAC00A23E97 /* AppLockTimerTests.swift */,
 			);
 			path = AppLock;
 			sourceTree = "<group>";
@@ -8466,6 +8469,7 @@
 				EF17B0D2223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift in Sources */,
 				EE52378723F556DE00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift in Sources */,
 				63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */,
+				06CF2989253DCAAC00A23E97 /* AppLockTimerTests.swift in Sources */,
 				BF5DF5CA20F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift in Sources */,
 				F1F5E57C216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift in Sources */,
 				EF5741EE2102001A0041AD47 /* MessageTests.swift in Sources */,

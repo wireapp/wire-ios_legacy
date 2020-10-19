@@ -20,15 +20,29 @@ import XCTest
 @testable import Wire
 @testable import WireCommonComponents
 
+private final class AppLockTimerMock: AppLockTimerProtocol {
+    private var shouldLockScreenTemp: Bool = true
+    var shouldLockScreen: Bool {
+        return shouldLockScreenTemp
+    }
+    
+    func set(shouldLockScreen: Bool) {
+        shouldLockScreenTemp = shouldLockScreen
+    }
+}
+    
 final class AppStateControllerTests: XCTestCase {
 
     var sut: AppStateController!
+    private var appLockTimerMock: AppLockTimerMock!
 
     override func setUp() {
         super.setUp()
         sut = AppStateController()
         sut.isRunningSelfUnitTest = true
         sut.applicationDidBecomeActive()
+        appLockTimerMock = AppLockTimerMock()
+        sut.appLockTimer = appLockTimerMock
 
         if let accounts = SessionManager.shared?.accountManager.accounts {
             for account in accounts {
@@ -38,8 +52,8 @@ final class AppStateControllerTests: XCTestCase {
     }
 
     override func tearDown() {
-
         sut = nil
+        appLockTimerMock = nil
         super.tearDown()
     }
 
@@ -118,42 +132,30 @@ final class AppStateControllerTests: XCTestCase {
         XCTAssertEqual(newAppState, .unauthenticated(error: error))
     }
     
-    func testThatItSetsUpTheAppLockedState() {
+    func testThatItSetsTheAppToALockedStateIfTheUserIsAuthenticatedAndShouldLockScreenIsTrue() {
         //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
+        sut.userAuthenticationDidComplete(addedAccount: true)
+
         //when
-        XCTAssertTrue(sut.appLock!.shouldLockScreen)
+        XCTAssertTrue(sut.appLockTimer!.shouldLockScreen)
         sut.updateAppState()
         
         // then
         XCTAssertEqual(sut.appState, AppState.locked)
     }
     
-    // MARK: - Tests for isScreenLockNeeded
-    
-    func testThatisScreenLockNeededReturnsTrueIfNeeded() {
+    func testThatItDoesNotSetTheAppToALockedStateIfTheUserIsAuthenticatedAndShouldLockScreenIsFalse() {
         //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
+        sut.userAuthenticationDidComplete(addedAccount: true)
+        appLockTimerMock.set(shouldLockScreen: false)
+        sut.appLockTimer = appLockTimerMock
+
+        //when
+        XCTAssertFalse(sut.appLockTimer!.shouldLockScreen)
+        sut.updateAppState()
         
-        //when / then
-        XCTAssertTrue(sut.appLock!.shouldLockScreen)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
-        //given
-        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.appLock!.shouldLockScreen)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
-        //given - appLock not active
-        set(appLockActive: false, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.appLock!.shouldLockScreen)
+        // then
+        XCTAssertEqual(sut.appState, AppState.authenticated(completedRegistration: true, databaseIsLocked: false))
     }
     
     // MARK: - Application did enter background
@@ -183,21 +185,4 @@ final class AppStateControllerTests: XCTestCase {
         XCTAssertEqual(date, AppLock.lastUnlockedDate)
     }
     
-}
-
-extension AppStateControllerTests {
-    func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
-        AppLock.isActive = appLockActive
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
-        let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
-        if !authenticatedAppState {
-            let error = NSError(code: ZMUserSessionErrorCode.clientDeletedRemotely, userInfo: nil)
-            sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
-        }
-        
-        sut.userAuthenticationDidComplete(addedAccount: authenticatedAppState)
-        sut.isDatabaseLocked = databaseIsLocked
-        
-    }
 }
