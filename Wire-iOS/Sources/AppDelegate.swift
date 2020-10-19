@@ -39,13 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
+        TrackingOperation(),
         AppCenterOperation(),
         PerformanceDebuggerOperation(),
         ZMSLogOperation(),
         AVSLoggingOperation(),
         AutomationHelperOperation(),
         MediaManagerOperation(),
-        TrackingOperation(),
         FileBackupExcluderOperation()
     ]
     

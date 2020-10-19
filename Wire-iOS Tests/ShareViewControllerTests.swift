@@ -56,6 +56,16 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         NSAttributedString.invalidateParagraphStyle()
     }
 
+    func testForAllowMultipleSelectionDisabled() {
+        // GIVEN & WHEN
+        try! groupConversation.appendText(content: "This is a text message.")
+
+        createSut(allowsMultipleSelection: false)
+
+        //THEN
+        verify(matching: sut)
+    }
+
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
         try! groupConversation.appendText(content: "This is a text message.")
         makeTestForShareViewController()
@@ -139,8 +149,8 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         makeTestForShareViewController()
     }
 
-    private func createSut() {
-        groupConversation.add(participants:[self.createUser(name: "John Appleseed")])
+    private func createSut(allowsMultipleSelection: Bool = true) {
+        groupConversation.add(participants: [createUser(name: "John Appleseed")])
         let oneToOneConversation = otherUserConversation!
 
         guard let message = groupConversation.lastMessage else {
@@ -151,7 +161,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         sut = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
-            showPreview: true
+            showPreview: true, allowsMultipleSelection: allowsMultipleSelection
         )
     }
 
@@ -161,7 +171,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
                                         line: UInt = #line) {
         createSut()
 
-        verifyInAllDeviceSizes(matching: sut, file:file, testName: testName, line:line)
+        verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
     }
 
 }
