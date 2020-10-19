@@ -60,7 +60,7 @@ final class AppStateController : NSObject {
     fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
     var isRunningSelfUnitTest = false
     var databaseEncryptionObserverToken: Any? = nil
-    var appLockTimer: AppLockTimerProtocol?
+    var appLockTimer: AppLockTimerProtocol = AppLockTimer()
 
     /// The state of authentication.
     fileprivate(set) var authenticationState: AuthenticationState = .undetermined
@@ -83,7 +83,6 @@ final class AppStateController : NSObject {
                                                object: .none)
         
         appState = calculateAppState()
-        appLockTimer = AppLockTimer()
     }
     
     deinit {
@@ -113,9 +112,8 @@ final class AppStateController : NSObject {
             return .loading(account: account, from: SessionManager.shared?.accountManager.selectedAccount)
         }
 
-        let shouldLockScreen = appLockTimer?.shouldLockScreen ?? false
         switch authenticationState {
-        case .loggedIn where shouldLockScreen || isDatabaseLocked:
+        case .loggedIn where appLockTimer.shouldLockScreen || isDatabaseLocked:
             return .locked
         case .loggedIn(let addedAccount):
             return .authenticated(completedRegistration: addedAccount, databaseIsLocked: isDatabaseLocked)

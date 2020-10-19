@@ -134,7 +134,7 @@ final class AppStateControllerTests: XCTestCase {
         mockAppLockTimer.shouldLock = true
 
         //when
-        XCTAssertTrue(sut.appLockTimer!.shouldLockScreen)
+        XCTAssertTrue(sut.appLockTimer.shouldLockScreen)
         sut.updateAppState()
         
         // then
@@ -147,7 +147,7 @@ final class AppStateControllerTests: XCTestCase {
         mockAppLockTimer.shouldLock = false
 
         //when
-        XCTAssertFalse(sut.appLockTimer!.shouldLockScreen)
+        XCTAssertFalse(sut.appLockTimer.shouldLockScreen)
         sut.updateAppState()
         
         // then
