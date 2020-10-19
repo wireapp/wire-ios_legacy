@@ -33,7 +33,6 @@
 		161285DF1DD1E81E004728E9 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* String+URL.swift */; };
 		161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */; };
 		161ACB2823F5805000ABFF33 /* UIAlertController+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */; };
-		161ACB2A23F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */; };
 		161ACB3823F6AFB100ABFF33 /* Error+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB3723F6AFB100ABFF33 /* Error+Localization.swift */; };
 		161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */; };
 		16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */; };
@@ -180,9 +179,10 @@
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
-		546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */; };
 		546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */; };
 		546EEA8B2534942F00195097 /* SessionManagerLifeCycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8A2534942F00195097 /* SessionManagerLifeCycleObserver.swift */; };
+		546EEA8D2536DDF500195097 /* URLActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8C2536DDF500195097 /* URLActionRouter.swift */; };
+		546EEA8F2536DFAB00195097 /* SwitchingAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546EEA8E2536DFAB00195097 /* SwitchingAccountRouter.swift */; };
 		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
@@ -1369,7 +1369,7 @@
 		EFA145F4231EA4980073BA5E /* ConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */; };
 		EFA145F6231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA145F5231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UITraitEnvironment+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UITraitEnvironment+SizeClass.swift */; };
-		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
+		EFA820AE2019075400FED370 /* UIViewController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+Convenience.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
 		EFAFCA822133FB59002B31A6 /* ArchivedNavigationBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */; };
@@ -1622,7 +1622,6 @@
 		161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingViewController.swift; sourceTree = "<group>"; };
 		161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+LocalizedError.swift"; sourceTree = "<group>"; };
-		161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+URLActionDelegate.swift"; sourceTree = "<group>"; };
 		161ACB3723F6AFB100ABFF33 /* Error+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Localization.swift"; sourceTree = "<group>"; };
 		161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Calling.swift"; sourceTree = "<group>"; };
 		1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -1779,9 +1778,10 @@
 		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
-		546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Conveninence.swift"; sourceTree = "<group>"; };
 		546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForegroundNotificationFilter.swift; sourceTree = "<group>"; };
 		546EEA8A2534942F00195097 /* SessionManagerLifeCycleObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerLifeCycleObserver.swift; sourceTree = "<group>"; };
+		546EEA8C2536DDF500195097 /* URLActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLActionRouter.swift; sourceTree = "<group>"; };
+		546EEA8E2536DFAB00195097 /* SwitchingAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchingAccountRouter.swift; sourceTree = "<group>"; };
 		5489E20D252C84BE0010461D /* AppStateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateCalculator.swift; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Security-Flags.xcconfig"; sourceTree = "<group>"; };
@@ -3095,7 +3095,7 @@
 		EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewController.swift; sourceTree = "<group>"; };
 		EFA145F5231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+SplitViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UITraitEnvironment+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITraitEnvironment+SizeClass.swift"; sourceTree = "<group>"; };
-		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
+		EFA820AD2019075400FED370 /* UIViewController+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Convenience.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedNavigationBarTests.swift; sourceTree = "<group>"; };
@@ -4532,7 +4532,7 @@
 				F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */,
 				879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */,
 				872C8241214BFA8700236A76 /* UITextView+Range.swift */,
-				EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */,
+				EFA820AD2019075400FED370 /* UIViewController+Convenience.swift */,
 				EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */,
 				EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */,
 				8716850F203332F800AC9F81 /* UIViewController+SafeArea.swift */,
@@ -5154,9 +5154,9 @@
 				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
-				161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */,
 				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
-				546EEA8225345CCE00195097 /* UIViewController+Conveninence.swift */,
+				546EEA8C2536DDF500195097 /* URLActionRouter.swift */,
+				546EEA8E2536DFAB00195097 /* SwitchingAccountRouter.swift */,
 				543DF684252DD7F0001F6EA6 /* NotificationObserver.swift */,
 				543DF6AF25309CF8001F6EA6 /* Navigator.swift */,
 				546EEA88253493FF00195097 /* ForegroundNotificationFilter.swift */,
@@ -7503,7 +7503,7 @@
 				162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */,
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				63256D8224D46456009FC58B /* BitRateLabel.swift in Sources */,
-				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
+				EFA820AE2019075400FED370 /* UIViewController+Convenience.swift in Sources */,
 				EFEC7D9B2362011E0003CF33 /* MessageAction.swift in Sources */,
 				A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */,
 				5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */,
@@ -7802,7 +7802,6 @@
 				F15650DB21DD10A100210504 /* UserImageView.swift in Sources */,
 				1639A84922648BE400868AB9 /* ZClientViewController+AvailabilityBehaviourChange.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
-				161ACB2A23F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
 				EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */,
 				F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */,
@@ -7929,6 +7928,7 @@
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,
 				5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */,
 				BF5DF5C520F4B0B8002BCB67 /* UICollectionView+GroupedSections.swift in Sources */,
+				546EEA8F2536DFAB00195097 /* SwitchingAccountRouter.swift in Sources */,
 				8742C2E21E51BD7900329FB6 /* TextSearchInputView.swift in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
 				5E0F75BE2268A0B6006C991E /* ColorScheme+Helper.swift in Sources */,
@@ -8020,6 +8020,7 @@
 				D50892FB2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift in Sources */,
 				5502C6E222B7B729000684B7 /* LegalHoldAlertFactory.swift in Sources */,
 				EEAC0A1221AD875900BE5F5D /* ConversationCreateNameSectionController.swift in Sources */,
+				546EEA8D2536DDF500195097 /* URLActionRouter.swift in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */,
 				5E21344B21E351D400273D0D /* LogInStepDescription.swift in Sources */,
@@ -8173,7 +8174,6 @@
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */,
 				8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */,
-				546EEA8325345CCE00195097 /* UIViewController+Conveninence.swift in Sources */,
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,

@@ -26,13 +26,34 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
+    private var urlActionRouter: URLActionRouter?
+    private var switchingAccountRouter: SwitchingAccountRouter?
+    private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private var authenticationCoordinator: AuthenticationCoordinator?
-    private var observerTokens: [Any] = []
-    private let sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
     // MARK: - Private Set Property
-    private(set) var sessionManager: SessionManager?
+    private(set) var sessionManager: SessionManager? {
+        didSet {
+            guard let sessionManager = sessionManager else {
+                return
+            }
+            
+            urlActionRouter = URLActionRouter(viewController: rootViewController,
+                                              sessionManager: sessionManager)
+            switchingAccountRouter = SwitchingAccountRouter(sessionManager: sessionManager)
+            sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver(sessionManager: sessionManager)
+            
+            sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
+            sessionManager.switchingDelegate = switchingAccountRouter
+            sessionManager.urlActionDelegate = urlActionRouter
+            /* TO DO: Add all this delegation
+            self.sessionManager?.showContentDelegate = self
+            */
+            setCallingSettings(for: sessionManager)
+        }
+    }
+
     private(set) var rootViewController: RootViewController //TO DO: This should be private
     
     // MARK: - Initialization
@@ -77,27 +98,11 @@ public class AppRootRouter: NSObject {
                               configuration: configuration,
                               detector: jailbreakDetector) { sessionManager in
                 self.sessionManager = sessionManager
-                self.createLifeCycleObeserverTokens(for: sessionManager)
-                self.sessionManager?.foregroundNotificationResponder = self.foregroundNotificationFilter
-                /* TO DO: Add all this delegation
-                self.sessionManager?.showContentDelegate = self
-                self.sessionManager?.switchingDelegate = self
-                self.sessionManager?.urlActionDelegate = self
-                */
-                self.setCallingSettting(for: sessionManager)
                 sessionManager.start(launchOptions: launchOptions)
         }
     }
     
-    private func createLifeCycleObeserverTokens(for sessionManager: SessionManager) {
-        let createdSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(sessionManagerLifeCycleObserver)
-        observerTokens.append(createdSessionObserverToken)
-                    
-        let destroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(sessionManagerLifeCycleObserver)
-        observerTokens.append(destroyedSessionObserverToken)
-    }
-    
-    private func setCallingSettting(for sessionManager: SessionManager) {
+    private func setCallingSettings(for sessionManager: SessionManager) {
         sessionManager.updateCallNotificationStyleFromSettings()
         sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
@@ -141,10 +146,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 //            UIColor.setAccentOverride(.undefined)
 //            mainWindow.tintColor = UIColor.accent()
 //            executeAuthenticatedBlocks()
-            
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
-            
         case .headless:
             showLaunchScreen(completion: completionBlock)
         case .loading(account: let toAccount, from: let fromAccount):

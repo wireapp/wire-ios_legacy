@@ -162,7 +162,6 @@ final class ZClientViewController: UIViewController {
     }
     
     private func createBackgroundViewController() {
-
         backgroundViewController.addToSelf(conversationListViewController)
 
         conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

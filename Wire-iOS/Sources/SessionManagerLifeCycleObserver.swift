@@ -18,10 +18,30 @@
 
 import WireSyncEngine
 
-class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
+final class SessionManagerLifeCycleObserver {
     
     // MARK: - Private Property
+    private var observerTokens: [Any] = []
     private var soundEventListeners = [UUID: SoundEventListener]()
+    private var sessionManager: SessionManager
+    
+    // MARK: - Initialization
+    public init(sessionManager: SessionManager) {
+        self.sessionManager = sessionManager
+        createLifeCycleObserverTokens()
+    }
+    
+    // MARK: - Private implementation
+    private func createLifeCycleObserverTokens() {
+        let createdSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+        observerTokens.append(createdSessionObserverToken)
+        
+        let destroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
+        observerTokens.append(destroyedSessionObserverToken)
+    }
+}
+
+extension SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
     
     // MARK: - SessionManagerCreatedSessionObserver
     func sessionManagerCreated(userSession: ZMUserSession) {
@@ -35,7 +55,7 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
     func sessionManagerDestroyedUserSession(for accountId: UUID) {
         resetSoundEventListener(for: accountId)
     }
-    
+
     // MARK: - Private Implementation
     private func setSoundEventListener(for userSession: ZMUserSession) {
         for (accountId, session) in SessionManager.shared?.backgroundUserSessions ?? [:] {
@@ -44,7 +64,7 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
             }
         }
     }
-    
+
     private func enableEncryptMessagesAtRest(for userSession: ZMUserSession) {
         guard
             SecurityFlags.forceEncryptionAtRest.isEnabled,
@@ -55,9 +75,11 @@ class SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver, Ses
         
         userSession.encryptMessagesAtRest = true
     }
-    
+
     private func resetSoundEventListener(for accountID: UUID) {
         soundEventListeners[accountID] = nil
     }
 }
+
+
 

@@ -193,12 +193,12 @@ final class ConversationListViewController: UIViewController {
     // MARK: - setup UI
 
     private func setupTopBar() {
-        add(topBarViewController, to: contentContainer, pinToSuperview: false)
+        add(topBarViewController, to: contentContainer)
     }
     
     private func setupListContentController() {
         listContentController.contentDelegate = viewModel
-        add(listContentController, to: contentContainer, pinToSuperview: false)
+        add(listContentController, to: contentContainer)
     }
     
     private func setupNoConversationLabel() {
@@ -211,13 +211,13 @@ final class ConversationListViewController: UIViewController {
     
     private func setupBottomBarController() {
         bottomBarController.delegate = self
-        add(bottomBarController, to: contentContainer, pinToSuperview: false)
+        add(bottomBarController, to: contentContainer)
         listContentController.listViewModel.restorationDelegate = bottomBarController
     }
 
     private func setupNetworkStatusBar() {
         networkStatusViewController.delegate = self
-        add(networkStatusViewController, to: contentContainer, pinToSuperview: false)
+        add(networkStatusViewController, to: contentContainer)
     }
 
     private func createViewConstraints() {
