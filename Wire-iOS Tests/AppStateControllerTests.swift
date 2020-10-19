@@ -20,29 +20,25 @@ import XCTest
 @testable import Wire
 @testable import WireCommonComponents
 
-private final class AppLockTimerMock: AppLockTimerProtocol {
-    private var shouldLockScreenTemp: Bool = true
+private final class MockAppLockTimer: AppLockTimerProtocol {
+    var shouldLock: Bool = true
     var shouldLockScreen: Bool {
-        return shouldLockScreenTemp
-    }
-    
-    func set(shouldLockScreen: Bool) {
-        shouldLockScreenTemp = shouldLockScreen
+        return shouldLock
     }
 }
     
 final class AppStateControllerTests: XCTestCase {
 
     var sut: AppStateController!
-    private var appLockTimerMock: AppLockTimerMock!
+    private var mockAppLockTimer: MockAppLockTimer!
 
     override func setUp() {
         super.setUp()
         sut = AppStateController()
         sut.isRunningSelfUnitTest = true
         sut.applicationDidBecomeActive()
-        appLockTimerMock = AppLockTimerMock()
-        sut.appLockTimer = appLockTimerMock
+        mockAppLockTimer = MockAppLockTimer()
+        sut.appLockTimer = mockAppLockTimer
 
         if let accounts = SessionManager.shared?.accountManager.accounts {
             for account in accounts {
@@ -53,7 +49,7 @@ final class AppStateControllerTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
-        appLockTimerMock = nil
+        mockAppLockTimer = nil
         super.tearDown()
     }
 
@@ -135,6 +131,7 @@ final class AppStateControllerTests: XCTestCase {
     func testThatItSetsTheAppToALockedStateIfTheUserIsAuthenticatedAndShouldLockScreenIsTrue() {
         //given
         sut.userAuthenticationDidComplete(addedAccount: true)
+        mockAppLockTimer.shouldLock = true
 
         //when
         XCTAssertTrue(sut.appLockTimer!.shouldLockScreen)
@@ -147,8 +144,7 @@ final class AppStateControllerTests: XCTestCase {
     func testThatItDoesNotSetTheAppToALockedStateIfTheUserIsAuthenticatedAndShouldLockScreenIsFalse() {
         //given
         sut.userAuthenticationDidComplete(addedAccount: true)
-        appLockTimerMock.set(shouldLockScreen: false)
-        sut.appLockTimer = appLockTimerMock
+        mockAppLockTimer.shouldLock = false
 
         //when
         XCTAssertFalse(sut.appLockTimer!.shouldLockScreen)
