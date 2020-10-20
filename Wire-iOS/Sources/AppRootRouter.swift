@@ -47,14 +47,7 @@ public class AppRootRouter: NSObject {
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
     
-    private weak var showContentDelegate: ShowContentDelegate? {
-        didSet {
-            if let delegate = showContentDelegate {
-                performWhenShowContentDelegateIsAvailable?(delegate)
-                performWhenShowContentDelegateIsAvailable = nil
-            }
-        }
-    }
+    private weak var showContentDelegate: ShowContentDelegate?
 
     fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
     
@@ -166,12 +159,12 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
     
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
-        showContentDelegate = nil
         resetAuthenticationCoordinatorIfNeeded(for: appState)
         
         let completionBlock = { [weak self] in
-            self?.applicationDidTransition(to: appState)
             completion()
+            self?.applicationDidTransition(to: appState)
+            self?.performWhenShowContentDelegateAction()
         }
         
         switch appState {
@@ -344,6 +337,10 @@ extension AppRootRouter {
             SelfUser.provider = nil
         }
         
+        presentAlertForDeletedAccount(appState)
+    }
+    
+    private func presentAlertForDeletedAccount(_ appState: AppState) {
         guard
             case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
@@ -351,12 +348,7 @@ extension AppRootRouter {
         else {
             return
         }
-        
-        presentAlertForDeletedAccount(reason)
-    }
     
-    private func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
-        
         switch reason {
         case .sessionExpired:
             rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
@@ -364,6 +356,13 @@ extension AppRootRouter {
         default:
             break
         }
+    }
+    
+    private func performWhenShowContentDelegateAction() {
+        guard let showContentDelegate = showContentDelegate else { return }
+        performWhenShowContentDelegateIsAvailable?(showContentDelegate)
+        performWhenShowContentDelegateIsAvailable = nil
+        self.showContentDelegate = nil
     }
 }
 

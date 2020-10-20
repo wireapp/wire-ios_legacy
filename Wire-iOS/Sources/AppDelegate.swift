@@ -226,7 +226,12 @@ private extension AppDelegate {
         operations.append(BlockOperation {
             self.startAppCoordinator(launchOptions: launchOptions)
         })
-
+                
+        //Deeplink
+        (launchOptions[.url] as? URL)
+            .flatMap { url in BlockOperation { let _ = self.open(url: url, options: [:]) } }
+            .map { operations.append($0) }
+        
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
