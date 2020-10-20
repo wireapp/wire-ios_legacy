@@ -28,9 +28,9 @@ extension AppRootRouter {
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
     
+    // MARK: - Public Property
     let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
-    
     
     // TO DO: this shoud be private
     private(set) var switchingAccountRouter: SwitchingAccountRouter?
@@ -39,6 +39,8 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
+    private var authenticationCompletion: (() -> Void?)?
+    
     private var urlActionRouter: URLActionRouter?
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
@@ -47,10 +49,9 @@ public class AppRootRouter: NSObject {
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
     
+    // MARK: - Private Weak Property
     private weak var showContentDelegate: ShowContentDelegate?
 
-    fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
-    
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
         didSet {
@@ -78,9 +79,12 @@ public class AppRootRouter: NSObject {
     
     // MARK: - Initialization
     
-    init(viewController: RootViewController, navigator: NavigatorProtocol) {
+    init(viewController: RootViewController,
+         navigator: NavigatorProtocol,
+         authenticationCompletion: (() -> Void)?) {
         self.rootViewController = viewController
         self.navigator = navigator
+        self.authenticationCompletion = authenticationCompletion
         super.init()
         appStateCalculator.delegate = self
         
@@ -164,7 +168,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         let completionBlock = { [weak self] in
             completion()
             self?.applicationDidTransition(to: appState)
-            self?.performWhenShowContentDelegateAction()
         }
         
         switch appState {
@@ -333,6 +336,7 @@ extension AppRootRouter {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            authenticationCompletion?()
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
@@ -356,12 +360,6 @@ extension AppRootRouter {
         default:
             break
         }
-    }
-    
-    private func performWhenShowContentDelegateAction() {
-        guard let showContentDelegate = showContentDelegate else { return }
-        performWhenShowContentDelegateIsAvailable?(showContentDelegate)
-        performWhenShowContentDelegateIsAvailable = nil
     }
 }
 
@@ -426,37 +424,20 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 extension AppRootRouter: ShowContentDelegate {
     public func showConnectionRequest(userId: UUID) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConnectionRequest(userId: userId)
-        }
+        showContentDelegate?.showConnectionRequest(userId: userId)
     }
 
     public func showUserProfile(user: UserType) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showUserProfile(user: user)
-        }
+        showContentDelegate?.showUserProfile(user: user)
     }
 
 
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversation(conversation, at: message)
-        }
+        showContentDelegate?.showConversation(conversation, at: message)
     }
     
     public func showConversationList() {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversationList()
-        }
-    }
-    
-    public func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
-        if let delegate = showContentDelegate {
-            closure(delegate)
-        }
-        else {
-            performWhenShowContentDelegateIsAvailable = closure
-        }
+        showContentDelegate?.showConversationList()
     }
 }
 
