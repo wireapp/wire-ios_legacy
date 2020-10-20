@@ -106,6 +106,13 @@ extension AppLockInteractor {
     private var authenticationScenario: AppLock.AuthenticationScenario {
         return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
                            grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+        
+//        if isDatabaseLocked {
+//            return .databaseLock
+//        } else {
+//            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+//                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+//        }
     }
     
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
