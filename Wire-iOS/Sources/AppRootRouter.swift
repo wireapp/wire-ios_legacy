@@ -48,9 +48,6 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    
-    // MARK: - Private Weak Property
-    private weak var showContentDelegate: ShowContentDelegate?
 
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
@@ -293,8 +290,6 @@ extension AppRootRouter {
         /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
         clientViewController.needToShowDataUsagePermissionDialog = false
         
-        showContentDelegate = clientViewController
-        
         if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
             if SelfUser.current.isTeamMember {
                 TrackingManager.shared.disableCrashSharing = true
@@ -424,20 +419,31 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 extension AppRootRouter: ShowContentDelegate {
     public func showConnectionRequest(userId: UUID) {
-        showContentDelegate?.showConnectionRequest(userId: userId)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConnectionRequest(userId: userId)
     }
 
     public func showUserProfile(user: UserType) {
-        showContentDelegate?.showUserProfile(user: user)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showUserProfile(user: user)
     }
 
-
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        showContentDelegate?.showConversation(conversation, at: message)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversation(conversation, at: message)
     }
     
     public func showConversationList() {
-        showContentDelegate?.showConversationList()
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversationList()
     }
 }
 
