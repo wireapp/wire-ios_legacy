@@ -156,7 +156,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-DisableHockeyUpdates 1"
+            argument = "-DisableAppCenterUpdates 1"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -164,7 +164,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-UseHockey 1"
+            argument = "--use-app-center=0"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

@@ -32,9 +32,10 @@ extension AppDelegate {
 
     func setupAppCenter(completion: @escaping () -> Void) {
 
-        let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter
+        // launch option has higher priority than bundle option
+        let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter && Bundle.useAppCenter
 
-        if !shouldUseAppCenter {
+        guard shouldUseAppCenter else {
             completion()
             return
         }
