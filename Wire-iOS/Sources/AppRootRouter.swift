@@ -362,7 +362,6 @@ extension AppRootRouter {
         guard let showContentDelegate = showContentDelegate else { return }
         performWhenShowContentDelegateIsAvailable?(showContentDelegate)
         performWhenShowContentDelegateIsAvailable = nil
-        self.showContentDelegate = nil
     }
 }
 
