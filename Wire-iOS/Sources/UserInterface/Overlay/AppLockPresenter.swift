@@ -76,8 +76,8 @@ final class AppLockPresenter {
     
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     
-    convenience init(userInterface: AppLockUserInterface, authenticationState: AuthenticationState) {
-        let appLockInteractor = AppLockInteractor()
+    convenience init(userInterface: AppLockUserInterface, authenticationState: AuthenticationState, isDatabaseLocked: Bool) {
+        let appLockInteractor = AppLockInteractor(isDatabaseLocked: isDatabaseLocked)
         self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
         appLockInteractor.output = self
     }

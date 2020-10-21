@@ -32,15 +32,17 @@ final class AppLockViewController: UIViewController {
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
     private var authenticationState: AuthenticationState = .needed
+    private var isDatabaseLocked: Bool = false
     
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
 
     static let shared = AppLockViewController(authenticationState: .noNeeded)
 
-    convenience init(authenticationState: AuthenticationState = .needed) {
+    convenience init(isDatabaseLocked: Bool = false, authenticationState: AuthenticationState = .needed) {
         self.init(nibName:nil, bundle:nil)
         self.authenticationState = authenticationState
+        self.isDatabaseLocked = isDatabaseLocked
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -51,7 +53,9 @@ final class AppLockViewController: UIViewController {
         super.viewDidLoad()
         
         lockView = AppLockView()
-        self.appLockPresenter = AppLockPresenter(userInterface: self, authenticationState: authenticationState)
+        self.appLockPresenter = AppLockPresenter(userInterface: self,
+                                                 authenticationState: authenticationState,
+                                                 isDatabaseLocked: isDatabaseLocked)
 
         self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }

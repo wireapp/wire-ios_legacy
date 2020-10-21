@@ -49,6 +49,11 @@ final class AppLockInteractor {
         return _userSession ?? ZMUserSession.shared()
     }
     
+    private var isDatabaseLocked: Bool
+    
+    init(isDatabaseLocked: Bool) {
+        self.isDatabaseLocked = isDatabaseLocked
+    }
 }
 
 // MARK: - Interface
@@ -104,15 +109,12 @@ extension AppLockInteractor: AppLockInteractorInput {
 extension AppLockInteractor {
     
     private var authenticationScenario: AppLock.AuthenticationScenario {
-        return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                           grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
-        
-//        if isDatabaseLocked {
-//            return .databaseLock
-//        } else {
-//            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-//                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
-//        }
+        if isDatabaseLocked {
+            return .databaseLock
+        } else {
+            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+        }
     }
     
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {

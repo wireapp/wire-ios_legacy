@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class NotificationWindowRootViewController: UIViewController {
     
@@ -58,7 +59,7 @@ final class NotificationWindowRootViewController: UIViewController {
         add(appLockViewController, to: view)
         
         setupConstraints()
-        AppDelegate.shared.notificationsWindow?.isHidden = false
+        AppDelegate.shared.notificationsWindow?.isHidden = !AppLock.isActive
     }
 
     // MARK: - Rotation handling (should match up with root)
