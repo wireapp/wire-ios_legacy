@@ -22,7 +22,7 @@ import WireDataModel
 enum AppState : Equatable {
     
     case headless
-    case locked
+    case locked(databaseIsLocked: Bool)
     case authenticated(completedRegistration: Bool)
     case unauthenticated(error : NSError?)
     case blacklisted(jailbroken: Bool)

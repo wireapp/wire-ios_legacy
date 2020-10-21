@@ -76,7 +76,7 @@ final class AppLockInteractorTests: XCTestCase {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
         userSessionMock = UserSessionMock()
-        sut = AppLockInteractor()
+        sut = AppLockInteractor(isDatabaseLocked: false)
         sut._userSession = userSessionMock
         sut.output = appLockInteractorOutputMock
         sut.appLock = AppLockMock.self

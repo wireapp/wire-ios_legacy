@@ -300,8 +300,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
-        case .locked:
-            viewController = AppLockViewController(isDatabaseLocked: appStateController.isDatabaseLocked)
+        case .locked(databaseIsLocked: let isDatabaseLocked):
+            viewController = AppLockViewController(isDatabaseLocked: isDatabaseLocked)
         }
 
         if let viewController = viewController {

@@ -50,7 +50,7 @@ final class AppStateController : NSObject {
     private(set) var lastAppState : AppState = .headless
     weak var delegate : AppStateControllerDelegate? = nil
     
-    private(set) var isDatabaseLocked = false
+    fileprivate var isDatabaseLocked = false
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
@@ -116,7 +116,7 @@ final class AppStateController : NSObject {
 
         switch authenticationState {
         case .loggedIn where appLockTimer.shouldLockScreen || isDatabaseLocked:
-            return .locked
+            return .locked(databaseIsLocked: isDatabaseLocked)
         case .loggedIn(let addedAccount):
             return .authenticated(completedRegistration: addedAccount)
         case .loggedOut:
@@ -254,7 +254,7 @@ extension AppStateController {
     
     @objc func applicationDidEnterBackground() {
         switch authenticationState {
-        case .loggedIn where appState != .locked:
+        case .loggedIn where appState != .locked(databaseIsLocked: isDatabaseLocked):
             AppLock.lastUnlockedDate = Date()
         default:
             break
