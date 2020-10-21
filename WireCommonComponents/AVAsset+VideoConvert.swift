@@ -134,24 +134,28 @@ extension AVURLAsset {
         
         exportSession.timeRange = CMTimeRangeMake(start: .zero, duration: duration);
         
-        //TODO: get est. size here
-        let estimatedOutputFileLength = exportSession.estimatedOutputFileLength
-        //TODO: estimatedOutputFileLength = 0
-        
-        if estimatedOutputFileLength > fileLengthLimit {
-            let reducedQuality: String
-            if quality == AVAssetExportPresetHighestQuality {
+        // reduce quality if estimatedOutputFileLength is large then limitation.
+        var estimatedOutputFileLength = exportSession.estimatedOutputFileLength
+        var reducedQuality: String = quality
+
+        while let fileLengthLimit = fileLengthLimit,
+              estimatedOutputFileLength > fileLengthLimit,
+              reducedQuality != AVAssetExportPresetLowQuality {
+                
+            if reducedQuality == AVAssetExportPresetHighestQuality {
                 reducedQuality = AVAssetExportPresetMediumQuality
-            } else if quality == AVAssetExportPresetMediumQuality {
-                reducedQuality = AVAssetExportPresetLowQuality
             } else {
                 reducedQuality = AVAssetExportPresetLowQuality
             }
+                
             if let reducedExportSession = AVAssetExportSession(asset: self,
                                                                presetName: reducedQuality) {
             
             exportSession = reducedExportSession
+                
             }
+            
+            estimatedOutputFileLength = exportSession.estimatedOutputFileLength
         }
         
         if let fileLengthLimit = fileLengthLimit {
