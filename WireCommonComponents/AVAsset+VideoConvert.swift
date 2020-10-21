@@ -80,7 +80,7 @@ extension AVURLAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
-                                                  fileLengthLimit: Int64? = nil,
+                                                  fileLengthLimit: Int64? = nil, ///TODO: nil?
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
@@ -91,14 +91,15 @@ extension AVURLAsset {
         
         let cappedQuality: String
         
-        if size.width > 1920 || size.height > 1920 {
+        if size.width > 1920 || size.height > 1920 { ///TODO: mv to convert?
             cappedQuality = AVAssetExportPreset1920x1080
         } else {
             cappedQuality = quality
         }
         
         asset.convert(filename: filename,
-                      quality: cappedQuality, fileLengthLimit: fileLengthLimit) { URL, asset, error in
+                      quality: cappedQuality,
+                      fileLengthLimit: fileLengthLimit) { URL, asset, error in
             
             completion(URL, asset, error)
             
@@ -126,7 +127,32 @@ extension AVURLAsset {
             }
         }
         
-        guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
+        guard var exportSession = AVAssetExportSession(asset: self,
+                                                       presetName: quality) else {
+                                                        return
+        }
+        
+        exportSession.timeRange = CMTimeRangeMake(start: .zero, duration: duration);
+        
+        //TODO: get est. size here
+        let estimatedOutputFileLength = exportSession.estimatedOutputFileLength
+        //TODO: estimatedOutputFileLength = 0
+        
+        if estimatedOutputFileLength > fileLengthLimit {
+            let reducedQuality: String
+            if quality == AVAssetExportPresetHighestQuality {
+                reducedQuality = AVAssetExportPresetMediumQuality
+            } else if quality == AVAssetExportPresetMediumQuality {
+                reducedQuality = AVAssetExportPresetLowQuality
+            } else {
+                reducedQuality = AVAssetExportPresetLowQuality
+            }
+            if let reducedExportSession = AVAssetExportSession(asset: self,
+                                                               presetName: reducedQuality) {
+            
+            exportSession = reducedExportSession
+            }
+        }
         
         if let fileLengthLimit = fileLengthLimit {
             exportSession.fileLengthLimit = fileLengthLimit
