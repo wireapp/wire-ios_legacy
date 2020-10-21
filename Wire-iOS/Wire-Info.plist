@@ -72,8 +72,6 @@
 	<string>${WIRE_BUILD_NUMBER}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
-	<key>ITSEncryptionExportComplianceCode</key>
-	<string>${APPLE_EXPORT_COMPLIANCE_CODE}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>
