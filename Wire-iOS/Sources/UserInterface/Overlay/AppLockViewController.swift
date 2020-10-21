@@ -31,17 +31,15 @@ final class AppLockViewController: UIViewController {
     // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
-    private var authenticationState: AuthenticationState = .needed
     private var isDatabaseLocked: Bool = false
     
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
 
-    static let shared = AppLockViewController(authenticationState: .noNeeded)
+    static let shared = AppLockViewController()
 
-    convenience init(isDatabaseLocked: Bool = false, authenticationState: AuthenticationState = .needed) {
+    convenience init(isDatabaseLocked: Bool = false) {
         self.init(nibName:nil, bundle:nil)
-        self.authenticationState = authenticationState
         self.isDatabaseLocked = isDatabaseLocked
     }
 
@@ -53,9 +51,7 @@ final class AppLockViewController: UIViewController {
         super.viewDidLoad()
         
         lockView = AppLockView()
-        self.appLockPresenter = AppLockPresenter(userInterface: self,
-                                                 authenticationState: authenticationState,
-                                                 isDatabaseLocked: isDatabaseLocked)
+        self.appLockPresenter = AppLockPresenter(userInterface: self, isDatabaseLocked: isDatabaseLocked)
 
         self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }

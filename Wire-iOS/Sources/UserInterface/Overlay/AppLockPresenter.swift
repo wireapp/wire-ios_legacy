@@ -45,7 +45,6 @@ protocol AppLockUserInterface: class {
 
 enum AuthenticationState {
     case needed
-    case noNeeded
     case cancelled
     case pendingPassword
 
@@ -76,18 +75,17 @@ final class AppLockPresenter {
     
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     
-    convenience init(userInterface: AppLockUserInterface, authenticationState: AuthenticationState, isDatabaseLocked: Bool) {
+    convenience init(userInterface: AppLockUserInterface, isDatabaseLocked: Bool) {
         let appLockInteractor = AppLockInteractor(isDatabaseLocked: isDatabaseLocked)
-        self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
+        self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
         appLockInteractor.output = self
     }
     
     init(userInterface: AppLockUserInterface,
-         appLockInteractorInput: AppLockInteractorInput,
-         authenticationState: AuthenticationState) {
+         appLockInteractorInput: AppLockInteractorInput) {
         self.userInterface = userInterface
         self.appLockInteractorInput = appLockInteractorInput
-        self.authenticationState = authenticationState
+        self.authenticationState = .needed
         self.requireAuthenticationIfNeeded()
     }
     
@@ -105,8 +103,6 @@ final class AppLockPresenter {
             showReauth(visible: true)
         case .pendingPassword:
             break
-        case .noNeeded:
-            showReauth(visible: false)
         }
     }
 }

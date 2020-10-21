@@ -16,12 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Cartography
 import UIKit
 import WireCommonComponents
 
 final class NotificationWindowRootViewController: UIViewController {
     
-    private(set) var appLockViewController: AppLockViewController?
+    private(set) var dimmedViewController: DimmedViewController = DimmedViewController()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -36,8 +37,8 @@ final class NotificationWindowRootViewController: UIViewController {
     }
     
     deinit {
-        if appLockViewController?.parent == self {
-            appLockViewController?.wr_removeFromParentViewController()
+        if dimmedViewController.parent == self {
+            dimmedViewController.wr_removeFromParentViewController()
         }
     }
     
@@ -46,17 +47,16 @@ final class NotificationWindowRootViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        appLockViewController?.view.translatesAutoresizingMaskIntoConstraints = false
-        appLockViewController?.view.fitInSuperview()
+        dimmedViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        dimmedViewController.view.fitInSuperview()
     }
     
     @objc func applicationWillResignActive() {
-        appLockViewController = AppLockViewController.shared
-        if nil != appLockViewController?.parent {
-            appLockViewController!.wr_removeFromParentViewController()
+        if nil != dimmedViewController.parent {
+            dimmedViewController.wr_removeFromParentViewController()
         }
         
-        add(appLockViewController, to: view)
+        add(dimmedViewController, to: view)
         
         setupConstraints()
         AppDelegate.shared.notificationsWindow?.isHidden = !AppLock.isActive
@@ -85,11 +85,11 @@ final class NotificationWindowRootViewController: UIViewController {
     // MARK: - status bar
     
     override var childForStatusBarStyle: UIViewController? {
-        return appLockViewController
+        return dimmedViewController
     }
 
     override var childForStatusBarHidden: UIViewController? {
-        return appLockViewController
+        return dimmedViewController
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -106,4 +106,21 @@ fileprivate extension UIViewController {
         removeFromParent()
     }
 
+}
+
+final class DimmedViewController: UIViewController {
+    let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.addSubview(blurView)
+        constrain(self.view, self.blurView) { view, blurView in
+            blurView.edges == view.edges
+        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
