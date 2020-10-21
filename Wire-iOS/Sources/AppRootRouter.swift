@@ -39,8 +39,6 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
-    private var authenticationCompletion: (() -> Void?)?
-    
     private var urlActionRouter: URLActionRouter?
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
@@ -48,7 +46,11 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
+    
+    private weak var showContentDelegate: ShowContentDelegate?
 
+    private var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
+    
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
         didSet {
@@ -76,12 +78,9 @@ public class AppRootRouter: NSObject {
     
     // MARK: - Initialization
     
-    init(viewController: RootViewController,
-         navigator: NavigatorProtocol,
-         authenticationCompletion: (() -> Void)?) {
+    init(viewController: RootViewController, navigator: NavigatorProtocol) {
         self.rootViewController = viewController
         self.navigator = navigator
-        self.authenticationCompletion = authenticationCompletion
         super.init()
         appStateCalculator.delegate = self
         
@@ -165,6 +164,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         let completionBlock = { [weak self] in
             completion()
             self?.applicationDidTransition(to: appState)
+            self?.performWhenShowContentDelegateAction()
         }
         
         switch appState {
@@ -290,6 +290,8 @@ extension AppRootRouter {
         /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
         clientViewController.needToShowDataUsagePermissionDialog = false
         
+        showContentDelegate = clientViewController
+        
         if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
             if SelfUser.current.isTeamMember {
                 TrackingManager.shared.disableCrashSharing = true
@@ -331,7 +333,6 @@ extension AppRootRouter {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
-            authenticationCompletion?()
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
@@ -355,6 +356,12 @@ extension AppRootRouter {
         default:
             break
         }
+    }
+    
+    private func performWhenShowContentDelegateAction() {
+        guard let showContentDelegate = showContentDelegate else { return }
+        performWhenShowContentDelegateIsAvailable?(showContentDelegate)
+        performWhenShowContentDelegateIsAvailable = nil
     }
 }
 
@@ -419,31 +426,37 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 extension AppRootRouter: ShowContentDelegate {
     public func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConnectionRequest(userId: userId)
         }
-        zClientViewController.showConnectionRequest(userId: userId)
     }
 
     public func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showUserProfile(user: user)
         }
-        zClientViewController.showUserProfile(user: user)
     }
 
+
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversation(conversation, at: message)
         }
-        zClientViewController.showConversation(conversation, at: message)
     }
     
     public func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversationList()
         }
-        zClientViewController.showConversationList()
+    }
+    
+    public func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+        if let delegate = showContentDelegate {
+            closure(delegate)
+        }
+        else {
+            performWhenShowContentDelegateIsAvailable = closure
+        }
     }
 }
 
