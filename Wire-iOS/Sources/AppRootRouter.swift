@@ -39,6 +39,8 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
+    private var deeplinkAction: (() -> Void?)?
+    
     private var urlActionRouter: URLActionRouter?
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
@@ -46,11 +48,7 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    
-    private weak var showContentDelegate: ShowContentDelegate?
 
-    private var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
-    
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
         didSet {
@@ -78,9 +76,12 @@ public class AppRootRouter: NSObject {
     
     // MARK: - Initialization
     
-    init(viewController: RootViewController, navigator: NavigatorProtocol) {
+    init(viewController: RootViewController,
+         navigator: NavigatorProtocol,
+         deeplinkAction: (() -> Void)?) {
         self.rootViewController = viewController
         self.navigator = navigator
+        self.deeplinkAction = deeplinkAction
         super.init()
         appStateCalculator.delegate = self
         
@@ -127,9 +128,10 @@ public class AppRootRouter: NSObject {
                               application: UIApplication.shared,
                               environment: BackendEnvironment.shared,
                               configuration: configuration,
-                              detector: jailbreakDetector) { sessionManager in
-                self.sessionManager = sessionManager
-                sessionManager.start(launchOptions: launchOptions)
+                              detector: jailbreakDetector) { [weak self] sessionManager in
+                self?.sessionManager = sessionManager
+                self?.sessionManager?.start(launchOptions: launchOptions)
+                self?.deeplinkAction?()
         }
     }
     
@@ -164,7 +166,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         let completionBlock = { [weak self] in
             completion()
             self?.applicationDidTransition(to: appState)
-            self?.performWhenShowContentDelegateAction()
         }
         
         switch appState {
@@ -290,8 +291,6 @@ extension AppRootRouter {
         /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
         clientViewController.needToShowDataUsagePermissionDialog = false
         
-        showContentDelegate = clientViewController
-        
         if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
             if SelfUser.current.isTeamMember {
                 TrackingManager.shared.disableCrashSharing = true
@@ -333,6 +332,8 @@ extension AppRootRouter {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            deeplinkAction?()
+            deeplinkAction = nil
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
@@ -356,12 +357,6 @@ extension AppRootRouter {
         default:
             break
         }
-    }
-    
-    private func performWhenShowContentDelegateAction() {
-        guard let showContentDelegate = showContentDelegate else { return }
-        performWhenShowContentDelegateIsAvailable?(showContentDelegate)
-        performWhenShowContentDelegateIsAvailable = nil
     }
 }
 
@@ -426,37 +421,31 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 extension AppRootRouter: ShowContentDelegate {
     public func showConnectionRequest(userId: UUID) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConnectionRequest(userId: userId)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
         }
+        zClientViewController.showConnectionRequest(userId: userId)
     }
 
     public func showUserProfile(user: UserType) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showUserProfile(user: user)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
         }
+        zClientViewController.showUserProfile(user: user)
     }
 
-
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversation(conversation, at: message)
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
         }
+        zClientViewController.showConversation(conversation, at: message)
     }
     
     public func showConversationList() {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversationList()
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
         }
-    }
-    
-    public func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
-        if let delegate = showContentDelegate {
-            closure(delegate)
-        }
-        else {
-            performWhenShowContentDelegateIsAvailable = closure
-        }
+        zClientViewController.showConversationList()
     }
 }
 

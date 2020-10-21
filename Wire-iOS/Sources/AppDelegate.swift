@@ -223,26 +223,27 @@ private extension AppDelegate {
             BlockOperation(block: $0.execute)
         }
 
+        let deeplinkAction = {
+            guard let url = launchOptions[.url] as? URL else { return }
+            let _ = self.open(url: url, options: [:])
+        }
+        
         operations.append(BlockOperation {
-            self.startAppCoordinator(launchOptions: launchOptions)
+            self.startAppCoordinator(launchOptions: launchOptions, deeplinkAction: deeplinkAction)
         })
-                
-        //Deeplink
-        (launchOptions[.url] as? URL)
-            .flatMap { url in BlockOperation { let _ = self.open(url: url, options: [:]) } }
-            .map { operations.append($0) }
         
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
-    private func startAppCoordinator(launchOptions: LaunchOptions) {
+    private func startAppCoordinator(launchOptions: LaunchOptions, deeplinkAction: (() -> Void)?) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }
     
         let navigator = Navigator(NoBackTitleNavigationController())
         appRootRouter = AppRootRouter(viewController: viewController,
-                                      navigator: navigator)
+                                      navigator: navigator,
+                                      deeplinkAction: deeplinkAction)
         appRootRouter?.start(launchOptions: launchOptions)
     }
 }
