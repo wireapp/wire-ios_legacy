@@ -295,7 +295,6 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 Analytics.shared.selfUser = SelfUser.current
 
                 viewController = clientViewController
-                SessionManager.shared?.callKitManager?.answerPendingCallIfNeeded()
             }
         case .headless:
             viewController = LaunchImageViewController()
@@ -549,6 +548,7 @@ extension AppRootViewController {
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
+        AppDelegate.shared.notificationsWindow?.isHidden = true
     }
 }
 

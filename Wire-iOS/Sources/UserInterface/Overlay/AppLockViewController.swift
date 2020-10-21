@@ -31,14 +31,16 @@ final class AppLockViewController: UIViewController {
     // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
+    private var authenticationState: AuthenticationState = .needed
     
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
 
-    static let shared = AppLockViewController()
+    static let shared = AppLockViewController(authenticationState: .noNeeded)
 
-    convenience init() {
+    convenience init(authenticationState: AuthenticationState = .needed) {
         self.init(nibName:nil, bundle:nil)
+        self.authenticationState = authenticationState
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -49,7 +51,7 @@ final class AppLockViewController: UIViewController {
         super.viewDidLoad()
         
         lockView = AppLockView()
-        self.appLockPresenter = AppLockPresenter(userInterface: self)
+        self.appLockPresenter = AppLockPresenter(userInterface: self, authenticationState: authenticationState)
 
         self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }

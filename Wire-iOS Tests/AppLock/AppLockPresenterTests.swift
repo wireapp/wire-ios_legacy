@@ -87,7 +87,7 @@ final class AppLockPresenterTests: XCTestCase {
         super.setUp()
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .needed)
         AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
     }
     
@@ -229,7 +229,7 @@ final class AppLockPresenterTests: XCTestCase {
     func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
         //given
         let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .needed)
         sut.dispatchQueue = queue
         setupPasswordVerificationTest()
 

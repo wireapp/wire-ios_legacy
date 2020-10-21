@@ -19,9 +19,46 @@
 import UIKit
 
 final class NotificationWindowRootViewController: UIViewController {
-
+    
+    private(set) var appLockViewController: AppLockViewController?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationWillResignActive),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: .none)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        if appLockViewController?.parent == self {
+            appLockViewController?.wr_removeFromParentViewController()
+        }
+    }
+    
     override func loadView() {
         view = PassthroughTouchesView()
+    }
+    
+    private func setupConstraints() {
+        appLockViewController?.view.translatesAutoresizingMaskIntoConstraints = false
+        appLockViewController?.view.fitInSuperview()
+    }
+    
+    @objc func applicationWillResignActive() {
+        appLockViewController = AppLockViewController.shared
+        if nil != appLockViewController?.parent {
+            appLockViewController!.wr_removeFromParentViewController()
+        }
+        
+        add(appLockViewController, to: view)
+        
+        setupConstraints()
+        AppDelegate.shared.notificationsWindow?.isHidden = false
     }
 
     // MARK: - Rotation handling (should match up with root)
@@ -45,6 +82,15 @@ final class NotificationWindowRootViewController: UIViewController {
     }
     
     // MARK: - status bar
+    
+    override var childForStatusBarStyle: UIViewController? {
+        return appLockViewController
+    }
+
+    override var childForStatusBarHidden: UIViewController? {
+        return appLockViewController
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
