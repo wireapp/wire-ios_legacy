@@ -28,7 +28,6 @@
 		160D6929212EFE5300096EAD /* ButtonWithLargerHitArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CAD1B6B83C6003B0CAC /* ButtonWithLargerHitArea.swift */; };
 		160DF02F234DCE0400978FCF /* MockConverationDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
-		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
 		161041B722D764C1001109D7 /* session_manager.json in Resources */ = {isa = PBXBuildFile; fileRef = 161041B622D764C1001109D7 /* session_manager.json */; };
 		161285DF1DD1E81E004728E9 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* String+URL.swift */; };
 		161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */; };
@@ -41,7 +40,6 @@
 		162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917C81F8BB991000F3E92 /* NetworkStatusView.swift */; };
 		162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */; };
 		162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */; };
-		162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BE1F4714D200D4F386 /* AppRootViewController.swift */; };
 		162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */; };
 		162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */; };
 		162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE749219D854100581D98 /* ConversationImageMessageCell.swift */; };
@@ -1615,7 +1613,6 @@
 		160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConverationDirectory.swift; sourceTree = "<group>"; };
 		160FD05321085F3900C517B5 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
-		1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+Appearance.swift"; sourceTree = "<group>"; };
 		161041B622D764C1001109D7 /* session_manager.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = session_manager.json; sourceTree = "<group>"; };
 		161285DD1DD1DA85004728E9 /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
 		161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire-iOS Share Extension.entitlements"; sourceTree = "<group>"; };
@@ -1631,7 +1628,6 @@
 		162917C81F8BB991000F3E92 /* NetworkStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
 		162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
 		162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
-		162936BE1F4714D200D4F386 /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
 		162AE739219AC4C100581D98 /* ConversationTextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageTests.swift; sourceTree = "<group>"; };
 		162AE747219B26AF00581D98 /* ConversationSystemMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSystemMessageTests.swift; sourceTree = "<group>"; };
 		162AE749219D854100581D98 /* ConversationImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationImageMessageCell.swift; sourceTree = "<group>"; };
@@ -5151,8 +5147,6 @@
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
-				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
-				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
 				546EEA8C2536DDF500195097 /* URLActionRouter.swift */,
 				546EEA8E2536DFAB00195097 /* SwitchingAccountRouter.swift */,
@@ -7517,7 +7511,6 @@
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
 				EF20BE4322CB57B1004F8910 /* UIViewController+Present.swift in Sources */,
 				EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */,
-				1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */,
 				EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */,
 				5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */,
 				A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */,
@@ -7572,7 +7565,6 @@
 				F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */,
 				8759E2C51FC86090008E17C9 /* UIAlertController+TOS.swift in Sources */,
 				874E27CB1E2912860079573D /* ConversationImagesViewController.swift in Sources */,
-				162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */,
 				5EF7BA65221AEB1B00815625 /* ProfileDetailsContentController.swift in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */,
