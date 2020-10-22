@@ -35,6 +35,9 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
+// TO DO: Move out this code from here
+var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var launchOperations: [LaunchSequenceOperation] = [
@@ -65,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appRootRouter?.overlayWindow
     }
 
-//    private(set) var rootViewController: AppRootViewController!
     private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
     

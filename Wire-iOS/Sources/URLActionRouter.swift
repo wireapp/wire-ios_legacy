@@ -33,8 +33,8 @@ final class URLActionRouter {
     }
 }
 
-// MARK: - Public URLActionDelegate
-extension URLActionRouter: URLActionDelegate {
+// MARK: - Public PresentationDelegate
+extension URLActionRouter: PresentationDelegate {
     
     // MARK: - Public Implementation
     public func failedToPerformAction(_ action: URLAction, error: Error) {
@@ -124,11 +124,7 @@ extension URLActionRouter: URLActionDelegate {
                                                                   message: alertMessage)
         rootViewController.present(alertController, animated: true)
     }
-}
 
-// MARK: - ShowContentDelegate
-
-extension URLActionRouter: ShowContentDelegate {
     public func showConnectionRequest(userId: UUID) {
         guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
             return

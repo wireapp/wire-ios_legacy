@@ -60,8 +60,7 @@ public class AppRootRouter: NSObject {
             
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
-            sessionManager.urlActionDelegate = urlActionRouter
-            sessionManager.showContentDelegate = urlActionRouter
+            sessionManager.presentationDelegate = urlActionRouter
             setCallingSettings(for: sessionManager)
             quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                       application: UIApplication.shared)
@@ -132,7 +131,7 @@ public class AppRootRouter: NSObject {
                               mediaManager: mediaManager,
                               analytics: Analytics.shared,
                               delegate: appStateCalculator,
-                              showContentDelegate: urlActionRouter,
+                              presentationDelegate: urlActionRouter,
                               application: UIApplication.shared,
                               environment: BackendEnvironment.shared,
                               configuration: configuration,
@@ -435,6 +434,7 @@ final class SpinnerCapableNavigationController: UINavigationController, SpinnerC
     
 }
 
+// TO DO: Move out this code from here
 extension UIApplication {
     @available(iOS 12.0, *)
     static var userInterfaceStyle: UIUserInterfaceStyle? {
@@ -442,3 +442,30 @@ extension UIApplication {
     }
 }
 
+// TO DO: Move out this code from here
+extension SessionManager {
+
+    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
+        if let selectedAccount = accountManager.selectedAccount {
+            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
+                return selectedAccount
+            }
+        }
+
+        for account in accountManager.accounts {
+            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
+                return account
+            }
+        }
+
+        return nil
+    }
+
+    var firstAuthenticatedAccount: Account? {
+        return firstAuthenticatedAccount(excludingCredentials: nil)
+    }
+
+    static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+}
