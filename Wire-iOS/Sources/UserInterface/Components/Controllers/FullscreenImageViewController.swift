@@ -500,26 +500,25 @@ final class FullscreenImageViewController: UIViewController {
             imageView?.layer.sublayers?.contains(highlightLayer) == true {
             return true
         }
-        
+
         return false
     }
-    
+
     func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
-        
-        
+
         if selected {
-            
+
             guard !isImageViewHightlighted else {
                 return
             }
-            
+
             if let highlightLayer = highlightLayer {
                 guard imageView?.layer.sublayers?.contains(highlightLayer) == false else {
                     return
                 }
             }
-            
+
             let layer = CALayer()
             layer.backgroundColor = UIColor.clear.cgColor
             layer.frame = CGRect(x: 0,
@@ -527,7 +526,7 @@ final class FullscreenImageViewController: UIViewController {
                                  width: (imageView?.frame.size.width ?? 0) / scrollView.zoomScale,
                                  height: (imageView?.frame.size.height ?? 0) / scrollView.zoomScale)
             imageView?.layer.insertSublayer(layer, at: 0)
-            
+
             let blackLayerClosure: Completion = {
                 self.highlightLayer?.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
             }
@@ -538,12 +537,12 @@ final class FullscreenImageViewController: UIViewController {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
                 blackLayerClosure()
         } else {
-            
+
             let removeLayerClosure: Completion = {
                 self.highlightLayer?.removeFromSuperlayer()
                 self.highlightLayer = nil
             }
-            
+
             if animated {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: {
                     self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
@@ -575,7 +574,7 @@ final class FullscreenImageViewController: UIViewController {
 
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
-        
+
         prepareShowingMenu()
 
         if #available(iOS 13.0, *) {
@@ -600,7 +599,7 @@ final class FullscreenImageViewController: UIViewController {
             UIMenuController.shared.isMenuVisible = false
         }
     }
-    
+
     @objc
     private func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
@@ -608,7 +607,7 @@ final class FullscreenImageViewController: UIViewController {
         guard let image = imageView?.image else { return }
 
         hideMenu()
-        
+
         /// Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
         guard scrollView.minimumZoomScale != scrollView.maximumZoomScale else {
             return
@@ -724,7 +723,7 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
     override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return actionController
     }
-    
+
     @objc
     private func menuDidHide(_ notification: Notification?) {
         NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
