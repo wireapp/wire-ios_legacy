@@ -20,6 +20,32 @@ import XCTest
 
 final class AVURLAsset_conversionTests: XCTestCase {
 
+    func testThatLongVideoIsConvertedToLowQualityFormat() {
+        // GIVEN
+        let videoURL = urlForResource(inTestBundleNamed: "empty_4k_30sec.mp4")
+        
+        // WHEN
+        let expectation = self.expectation(description: "Video converted")
+        
+        AVURLAsset.convertVideoToUploadFormat(at: videoURL,
+                                              quality: AVAssetExportPresetHighestQuality,
+                                              deleteSourceFile: false,
+                                              fileLengthLimit: 200000) {
+                                                url, asset, error in
+                                                // THEN
+                                                
+                                                // we expect the file is compressed to fit the fileLengthLimit
+                                                XCTAssertLessThan(url!.fileSize!, videoURL.fileSize!)
+                                                
+                                                XCTAssertNil(error)
+                                                expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 300) { error in
+            XCTAssertNil(error)
+        }
+    }
+    
     func testThatVideoIsConvertedToUploadFormat() {
         // GIVEN
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")

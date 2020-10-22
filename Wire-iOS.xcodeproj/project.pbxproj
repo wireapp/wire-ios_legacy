@@ -780,6 +780,7 @@
 		A96A21EF23D5AE6D005B5579 /* UIApplication+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1693D9661CEDB26200D1F13C /* UIApplication+Permissions.swift */; };
 		A96A21F123D5B865005B5579 /* ConversationInputBarViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */; };
 		A96A21F323D5BC25005B5579 /* UIResponder+FirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */; };
+		A96E0731254194D3001F7658 /* empty_4k_30sec.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A96E0730254194D3001F7658 /* empty_4k_30sec.mp4 */; };
 		A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */; };
 		A96E802824C828070010CD80 /* WipeDatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */; };
 		A96E802A24C846E40010CD80 /* WipeDatabaseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */; };
@@ -2428,6 +2429,7 @@
 		A9681D8523884FF1004FE917 /* Message+DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+DateFormatter.swift"; sourceTree = "<group>"; };
 		A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Files.swift"; sourceTree = "<group>"; };
 		A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+FirstResponder.swift"; sourceTree = "<group>"; };
+		A96E0730254194D3001F7658 /* empty_4k_30sec.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = empty_4k_30sec.mp4; sourceTree = "<group>"; };
 		A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		A96E802724C828070010CD80 /* WipeDatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeDatabaseViewController.swift; sourceTree = "<group>"; };
 		A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeDatabaseViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5661,6 +5663,7 @@
 		A96E072525416F87001F7658 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				A96E0730254194D3001F7658 /* empty_4k_30sec.mp4 */,
 				EF2C9544214983BB000E4960 /* video.mp4 */,
 			);
 			name = video;
@@ -7122,6 +7125,7 @@
 				EF2C9545214983BB000E4960 /* video.mp4 in Resources */,
 				BFF9447220F64B4200531BC3 /* unsplash_vertical_pano.jpg in Resources */,
 				1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */,
+				A96E0731254194D3001F7658 /* empty_4k_30sec.mp4 in Resources */,
 				1E2268061B3957A7003980E3 /* conversations-01.json in Resources */,
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
