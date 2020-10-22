@@ -80,7 +80,7 @@ extension AVURLAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
-                                                  fileLengthLimit: Int64? = nil, ///TODO: nil?
+                                                  fileLengthLimit: Int64?,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)

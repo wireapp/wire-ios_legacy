@@ -312,7 +312,8 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                                       fileURL: URL,
                                       completion: @escaping SendingCompletion) {
         if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
-            AVURLAsset.convertVideoToUploadFormat(at: fileURL) { (url, _, error) in
+            AVURLAsset.convertVideoToUploadFormat(at: fileURL,
+                                                  fileLengthLimit: Int64(AccountManager.fileSizeLimitInBytes)) { (url, _, error) in
                 completion(url, error)
             }
         } else {

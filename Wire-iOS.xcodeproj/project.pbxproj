@@ -5658,6 +5658,55 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		A96E072525416F87001F7658 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				EF2C9544214983BB000E4960 /* video.mp4 */,
+			);
+			name = video;
+			sourceTree = "<group>";
+		};
+		A96E072625417133001F7658 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */,
+				EF8DD909211C840800E970F1 /* 20000x20000.gif */,
+				BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */,
+				BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */,
+				7C37E3431FDE89510077B2E3 /* unsplash_matterhorn.jpg */,
+				7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */,
+				7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */,
+				7C374E491FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg */,
+				7C374E4A1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg */,
+				BFF9446D20F64B4100531BC3 /* unsplash_pano.jpg */,
+				BFF9446E20F64B4200531BC3 /* unsplash_square.jpg */,
+				BFF9446F20F64B4200531BC3 /* unsplash_vertical_pano.jpg */,
+				EF6E3C7F208A262B003F6752 /* not_animated.gif */,
+				EF6E3C792089F231003F6752 /* animated.gif */,
+				EF30524A2088927D00613C45 /* transparent.png */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
+		A96E072725417154001F7658 /* pdf */ = {
+			isa = PBXGroup;
+			children = (
+				8735AE702036C88800DCE66E /* huge.pdf */,
+				87656FCE1FB5FEDC00D5286C /* 0x0.pdf */,
+			);
+			name = pdf;
+			sourceTree = "<group>";
+		};
+		A96E072825417173001F7658 /* others */ = {
+			isa = PBXGroup;
+			children = (
+				EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */,
+				BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */,
+				EF8DD916211E2BD200E970F1 /* sample.pkpass */,
+			);
+			name = others;
+			sourceTree = "<group>";
+		};
 		A96E802F24CB2A760010CD80 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
@@ -6130,27 +6179,10 @@
 		BFAD3A1B1CD1078500F0FBED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */,
-				EF2C9544214983BB000E4960 /* video.mp4 */,
-				BFF9446D20F64B4100531BC3 /* unsplash_pano.jpg */,
-				BFF9446E20F64B4200531BC3 /* unsplash_square.jpg */,
-				BFF9446F20F64B4200531BC3 /* unsplash_vertical_pano.jpg */,
-				EF6E3C7F208A262B003F6752 /* not_animated.gif */,
-				EF6E3C792089F231003F6752 /* animated.gif */,
-				EF30524A2088927D00613C45 /* transparent.png */,
-				BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */,
-				BFA13E1B1D4B77C600F0A91B /* unsplash_small.jpg */,
-				BFA13E171D4B509A00F0A91B /* unsplash_burger.jpg */,
-				7C37E3431FDE89510077B2E3 /* unsplash_matterhorn.jpg */,
-				7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */,
-				7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */,
-				7C374E491FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg */,
-				7C374E4A1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg */,
-				EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */,
-				8735AE702036C88800DCE66E /* huge.pdf */,
-				87656FCE1FB5FEDC00D5286C /* 0x0.pdf */,
-				EF8DD909211C840800E970F1 /* 20000x20000.gif */,
-				EF8DD916211E2BD200E970F1 /* sample.pkpass */,
+				A96E072825417173001F7658 /* others */,
+				A96E072725417154001F7658 /* pdf */,
+				A96E072625417133001F7658 /* image */,
+				A96E072525416F87001F7658 /* video */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
