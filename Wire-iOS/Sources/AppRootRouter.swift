@@ -41,7 +41,7 @@ public class AppRootRouter: NSObject {
     private var appStateCalculator = AppStateCalculator()
     private var deeplinkAction: (() -> Void?)?
     
-    private var urlActionRouter: URLActionRouter?
+    private var urlActionRouter: URLActionRouter
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
     
@@ -55,16 +55,13 @@ public class AppRootRouter: NSObject {
             guard let sessionManager = sessionManager else {
                 return
             }
-            
-            urlActionRouter = URLActionRouter(viewController: rootViewController,
-                                              sessionManager: sessionManager)
             switchingAccountRouter = SwitchingAccountRouter(sessionManager: sessionManager)
             sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver(sessionManager: sessionManager)
             
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
             sessionManager.urlActionDelegate = urlActionRouter
-            sessionManager.showContentDelegate = self
+            sessionManager.showContentDelegate = urlActionRouter
             setCallingSettings(for: sessionManager)
             quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                       application: UIApplication.shared)
@@ -82,19 +79,14 @@ public class AppRootRouter: NSObject {
         self.rootViewController = viewController
         self.navigator = navigator
         self.deeplinkAction = deeplinkAction
+        self.urlActionRouter = URLActionRouter(viewController: viewController)
         super.init()
-        appStateCalculator.delegate = self
         
-        setupApplicationNotifications()
-        setupContentSizeCategoryNotifications()
-        setupAudioPermissionsNotifications()
+        setupAppStateCalculator()
+        setupNotifications()
+        setupAdditionalWindows()
         
         AppRootRouter.configureAppearance()
-        
-        callWindow.makeKeyAndVisible()
-        callWindow.isHidden = true
-        overlayWindow.makeKeyAndVisible()
-        overlayWindow.isHidden = true
     }
     
     // MARK: - Public implementation
@@ -105,6 +97,22 @@ public class AppRootRouter: NSObject {
     }
     
     // MARK: - Private implementation
+    private func setupAppStateCalculator() {
+        appStateCalculator.delegate = self
+    }
+    
+    private func setupNotifications() {
+        setupApplicationNotifications()
+        setupContentSizeCategoryNotifications()
+        setupAudioPermissionsNotifications()
+    }
+    
+    private func setupAdditionalWindows() {
+        callWindow.makeKeyAndVisible()
+        callWindow.isHidden = true
+        overlayWindow.makeKeyAndVisible()
+        overlayWindow.isHidden = true
+    }
     
     private func createAndStartSessionManager(launchOptions: LaunchOptions) {
         guard
@@ -124,7 +132,7 @@ public class AppRootRouter: NSObject {
                               mediaManager: mediaManager,
                               analytics: Analytics.shared,
                               delegate: appStateCalculator,
-                              showContentDelegate: self,
+                              showContentDelegate: urlActionRouter,
                               application: UIApplication.shared,
                               environment: BackendEnvironment.shared,
                               configuration: configuration,
@@ -414,38 +422,6 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
-    }
-}
-
-// MARK: - ShowContentDelegate
-
-extension AppRootRouter: ShowContentDelegate {
-    public func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConnectionRequest(userId: userId)
-    }
-
-    public func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showUserProfile(user: user)
-    }
-
-    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversation(conversation, at: message)
-    }
-    
-    public func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversationList()
     }
 }
 

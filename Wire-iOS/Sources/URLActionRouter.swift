@@ -26,13 +26,10 @@ final class URLActionRouter {
     
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private let sessionManager: SessionManager
     
     // MARK: - Initialization
-    public init(viewController: RootViewController,
-                sessionManager: SessionManager) {
+    public init(viewController: RootViewController) {
         self.rootViewController = viewController
-        self.sessionManager = sessionManager
     }
 }
 
@@ -107,7 +104,7 @@ extension URLActionRouter: URLActionDelegate {
     }
     
     private func switchBackend(with configurationURL: URL) {
-        sessionManager.switchBackend(configuration: configurationURL) { [weak self] result in
+        SessionManager.shared?.switchBackend(configuration: configurationURL) { [weak self] result in
             self?.rootViewController.isLoadingViewVisible = false
             switch result {
             case let .success(environment):
@@ -126,5 +123,37 @@ extension URLActionRouter: URLActionDelegate {
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
         rootViewController.present(alertController, animated: true)
+    }
+}
+
+// MARK: - ShowContentDelegate
+
+extension URLActionRouter: ShowContentDelegate {
+    public func showConnectionRequest(userId: UUID) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConnectionRequest(userId: userId)
+    }
+
+    public func showUserProfile(user: UserType) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showUserProfile(user: user)
+    }
+
+    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversation(conversation, at: message)
+    }
+    
+    public func showConversationList() {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversationList()
     }
 }
