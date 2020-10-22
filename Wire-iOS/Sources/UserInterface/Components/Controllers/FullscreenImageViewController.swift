@@ -602,7 +602,7 @@ final class FullscreenImageViewController: UIViewController {
     }
     
     @objc
-    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
+    private func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }
@@ -626,7 +626,8 @@ final class FullscreenImageViewController: UIViewController {
             let zoomRect = CGRect(x: point.x - zoomLength / 2, y: point.y - zoomLength / 2, width: zoomLength, height: zoomLength)
             let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
 
-            scrollView.zoom(to: finalRect ?? .zero, animated: false)
+            scrollView.zoom(to: finalRect ?? .zero,
+                            animated: true)
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }
