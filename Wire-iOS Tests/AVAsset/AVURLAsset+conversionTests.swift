@@ -22,6 +22,7 @@ final class AVURLAsset_conversionTests: XCTestCase {
 
     func testThatLongVideoIsConvertedToLowQualityFormat() {
         // GIVEN
+        // file size: 195064 bytes
         let videoURL = urlForResource(inTestBundleNamed: "empty_4k_30sec.mp4")
         
         // WHEN

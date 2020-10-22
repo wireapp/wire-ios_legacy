@@ -127,44 +127,35 @@ extension AVURLAsset {
             }
         }
         
-        //TODO: do while
-        guard var exportSession = AVAssetExportSession(asset: self,
-                                                       presetName: quality) else {
-                                                        return
-        }
-        
-        exportSession.timeRange = CMTimeRangeMake(start: .zero, duration: duration)
-        
         // reduce quality if estimatedOutputFileLength is large then limitation.
-        var estimatedOutputFileLength = exportSession.estimatedOutputFileLength
+        var estimatedOutputFileLength: Int64?
         var reducedQuality: String = quality
+        var exportSession: AVAssetExportSession?
 
-        while let fileLengthLimit = fileLengthLimit,
-              estimatedOutputFileLength > fileLengthLimit,
-              reducedQuality != AVAssetExportPresetLowQuality {
-                
+        repeat {
+            exportSession = AVAssetExportSession(asset: self,
+                                                           presetName: quality)
+            
+            exportSession?.timeRange = CMTimeRangeMake(start: .zero, duration: duration)
+            estimatedOutputFileLength = exportSession?.estimatedOutputFileLength
+
             if reducedQuality == AVAssetExportPresetHighestQuality ||
-               reducedQuality == AVAssetExportPreset1920x1080 {
+                reducedQuality == AVAssetExportPreset1920x1080 {
                 reducedQuality = AVAssetExportPresetMediumQuality
             } else {
                 reducedQuality = AVAssetExportPresetLowQuality
             }
-                
-            if let reducedExportSession = AVAssetExportSession(asset: self,
-                                                               presetName: reducedQuality) {
-                exportSession = reducedExportSession
-            }
-            
-            exportSession.timeRange = CMTimeRangeMake(start: .zero, duration: duration)
 
-            estimatedOutputFileLength = exportSession.estimatedOutputFileLength
-        }
+        } while (estimatedOutputFileLength ?? 0) > (fileLengthLimit ?? 0) &&
+                reducedQuality != AVAssetExportPresetLowQuality
+        
+        guard let unwrappedExportSession = exportSession else { return }
         
         if let fileLengthLimit = fileLengthLimit {
-            exportSession.fileLengthLimit = fileLengthLimit
+            unwrappedExportSession.fileLengthLimit = fileLengthLimit
         }
         
-        exportSession.exportVideo(exportURL: outputURL) { url, error in
+        unwrappedExportSession.exportVideo(exportURL: outputURL) { url, error in
             DispatchQueue.main.async(execute: {
                 completion(outputURL, self, error)
             })
