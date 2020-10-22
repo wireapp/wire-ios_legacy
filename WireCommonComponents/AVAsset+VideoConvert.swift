@@ -80,7 +80,7 @@ extension AVURLAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
-                                                  fileLengthLimit: Int64?,
+                                                  fileLengthLimit: Int64? = nil,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
@@ -91,7 +91,7 @@ extension AVURLAsset {
         
         let cappedQuality: String
         
-        if size.width > 1920 || size.height > 1920 { ///TODO: mv to convert?
+        if size.width > 1920 || size.height > 1920 {
             cappedQuality = AVAssetExportPreset1920x1080
         } else {
             cappedQuality = quality
@@ -142,7 +142,8 @@ extension AVURLAsset {
               estimatedOutputFileLength > fileLengthLimit,
               reducedQuality != AVAssetExportPresetLowQuality {
                 
-            if reducedQuality == AVAssetExportPresetHighestQuality {
+            if reducedQuality == AVAssetExportPresetHighestQuality ||
+               reducedQuality == AVAssetExportPreset1920x1080 {
                 reducedQuality = AVAssetExportPresetMediumQuality
             } else {
                 reducedQuality = AVAssetExportPresetLowQuality

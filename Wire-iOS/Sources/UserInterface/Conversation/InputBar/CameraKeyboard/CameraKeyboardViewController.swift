@@ -305,7 +305,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
         isLoadingViewVisible = true
-        guard let fileLengthLimit: UInt64 = ZMUserSession.shared()?.maxUploadFileSize else { return } //TODO: SE?
+        guard let fileLengthLimit: UInt64 = ZMUserSession.shared()?.maxUploadFileSize else { return }
         
         asset.getVideoURL { url in
             DispatchQueue.main.async(execute: {
@@ -318,7 +318,6 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
                 self.isLoadingViewVisible = true
             })
             
-            ///TODO: size check alert?
             AVURLAsset.convertVideoToUploadFormat(at: url,
                                                   fileLengthLimit: Int64(fileLengthLimit)) { resultURL, asset, error in
                 DispatchQueue.main.async(execute: {
