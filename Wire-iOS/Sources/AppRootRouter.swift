@@ -161,11 +161,11 @@ public class AppRootRouter: NSObject {
     }
     
     private func setCallingSettings() {
-        SessionManager.shared?.updateCallNotificationStyleFromSettings()
-        SessionManager.shared?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+        sessionManager?.updateCallNotificationStyleFromSettings()
+        sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        SessionManager.shared?.useConferenceCalling = true
+        sessionManager?.useConferenceCalling = true
     }
 }
 
