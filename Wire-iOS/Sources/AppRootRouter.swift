@@ -34,13 +34,13 @@ public class AppRootRouter: NSObject {
     
     // TO DO: this shoud be private
     private(set) var switchingAccountRouter: SwitchingAccountRouter?
-    private(set) var authenticationCoordinator: AuthenticationCoordinator?
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var deepLinkURL: URL?
     
+    private var authenticationCoordinator: AuthenticationCoordinator?
     private var urlActionRouter: URLActionRouter
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
     private let foregroundNotificationFilter = ForegroundNotificationFilter()
