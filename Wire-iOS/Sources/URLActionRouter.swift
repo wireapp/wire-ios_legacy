@@ -80,17 +80,17 @@ final class URLActionRouter {
 extension URLActionRouter: PresentationDelegate {
     
     // MARK: - Public Implementation
-    public func failedToPerformAction(_ action: URLAction, error: Error) {
+    func failedToPerformAction(_ action: URLAction, error: Error) {
         presentLocalizedErrorAlert(error)
     }
     
-    public func completedURLAction(_ action: URLAction) {
+    func completedURLAction(_ action: URLAction) {
         if case URLAction.companyLoginSuccess = action {
             notifyCompanyLoginCompletion()
         }
     }
     
-    public func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
+    func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
         switch action {
         case .connectBot:
             presentConnectBotAlert(with: decisionHandler)
@@ -100,6 +100,34 @@ extension URLActionRouter: PresentationDelegate {
         default:
             decisionHandler(true)
         }
+    }
+    
+    func showConnectionRequest(userId: UUID) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConnectionRequest(userId: userId)
+    }
+
+    func showUserProfile(user: UserType) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showUserProfile(user: user)
+    }
+
+    func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversation(conversation, at: message)
+    }
+    
+    func showConversationList() {
+        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
+            return
+        }
+        zClientViewController.showConversationList()
     }
     
     // MARK: - Private Implementation
@@ -166,33 +194,5 @@ extension URLActionRouter: PresentationDelegate {
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
         rootViewController.present(alertController, animated: true)
-    }
-
-    public func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConnectionRequest(userId: userId)
-    }
-
-    public func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showUserProfile(user: user)
-    }
-
-    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversation(conversation, at: message)
-    }
-    
-    public func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversationList()
     }
 }
