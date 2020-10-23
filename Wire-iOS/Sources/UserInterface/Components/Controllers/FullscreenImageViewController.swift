@@ -41,7 +41,7 @@ final class FullscreenImageViewController: UIViewController {
             panRecognizer.isEnabled = swipeToDismiss
         }
     }
-    
+
     var showCloseButton = true
     var dismissAction: DismissAction?
 
