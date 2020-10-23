@@ -156,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return open(url: url, options: options)
+        return appRootRouter?.openDeepLinkURL(url) ?? false
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -224,20 +224,16 @@ private extension AppDelegate {
         var operations = launchOperations.map {
             BlockOperation(block: $0.execute)
         }
-
-        let deeplinkAction = {
-            guard let url = launchOptions[.url] as? URL else { return }
-            let _ = self.open(url: url, options: [:])
-        }
         
+        let deepLinkURL = launchOptions[.url] as? URL
         operations.append(BlockOperation {
-            self.startAppCoordinator(launchOptions: launchOptions, deeplinkAction: deeplinkAction)
+            self.startAppCoordinator(launchOptions: launchOptions, deepLinkURL: deepLinkURL)
         })
         
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
-    private func startAppCoordinator(launchOptions: LaunchOptions, deeplinkAction: (() -> Void)?) {
+    private func startAppCoordinator(launchOptions: LaunchOptions, deepLinkURL: URL?) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }
@@ -245,7 +241,7 @@ private extension AppDelegate {
         let navigator = Navigator(NoBackTitleNavigationController())
         appRootRouter = AppRootRouter(viewController: viewController,
                                       navigator: navigator,
-                                      deeplinkAction: deeplinkAction)
+                                      deepLinkURL: deepLinkURL)
         appRootRouter?.start(launchOptions: launchOptions)
     }
 }

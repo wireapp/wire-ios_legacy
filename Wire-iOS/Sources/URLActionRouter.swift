@@ -26,14 +26,57 @@ final class URLActionRouter {
     
     // MARK: - Private Property
     private let rootViewController: RootViewController
+    private let authenticationCoordinator: AuthenticationCoordinator?
+    private var url: URL?
     
     // MARK: - Initialization
-    public init(viewController: RootViewController) {
+    public init(viewController: RootViewController,
+                authenticationCoordinator: AuthenticationCoordinator?,
+                url: URL?) {
         self.rootViewController = viewController
+        self.authenticationCoordinator = authenticationCoordinator
+        self.url = url
+    }
+    
+    // MARK: - Public Implementation
+    @discardableResult
+    func open(url: URL) -> Bool {
+        do {
+            return try SessionManager.shared?.openURL(url) ?? false
+        } catch let error as LocalizedError {
+            if error is CompanyLoginError {
+                authenticationCoordinator?.cancelCompanyLogin()
+                
+                UIApplication.shared.topmostViewController()?.dismissIfNeeded(animated: true, completion: {
+                    UIApplication.shared.topmostViewController()?.showAlert(for: error)
+                })
+            } else {
+                UIApplication.shared.topmostViewController()?.showAlert(for: error)
+            }
+            return false
+        } catch {
+            return false
+        }
+    }
+    
+    func openDeepLink(needsAuthentication: Bool) {
+        do {
+            guard let deeplink = url else { return }
+            guard let action = try URLAction(url: deeplink) else { return }
+            guard action.requiresAuthentication == needsAuthentication else { return }
+            open(url: deeplink)
+            resetDeepLinkURL()
+        } catch {
+            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
+        }
+    }
+    
+    private func resetDeepLinkURL() {
+        url = nil
     }
 }
 
-// MARK: - Public PresentationDelegate
+// MARK: - PresentationDelegate
 extension URLActionRouter: PresentationDelegate {
     
     // MARK: - Public Implementation

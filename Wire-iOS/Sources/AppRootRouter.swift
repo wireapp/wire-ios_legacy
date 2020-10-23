@@ -39,7 +39,7 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
-    private var deeplinkAction: (() -> Void?)?
+    private var deepLinkURL: URL?
     
     private var urlActionRouter: URLActionRouter
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
@@ -74,11 +74,13 @@ public class AppRootRouter: NSObject {
     
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
-         deeplinkAction: (() -> Void)?) {
+         deepLinkURL: URL?) {
         self.rootViewController = viewController
         self.navigator = navigator
-        self.deeplinkAction = deeplinkAction
-        self.urlActionRouter = URLActionRouter(viewController: viewController)
+        self.deepLinkURL = deepLinkURL
+        self.urlActionRouter = URLActionRouter(viewController: viewController,
+                                               authenticationCoordinator: authenticationCoordinator,
+                                               url: deepLinkURL)
         super.init()
         
         setupAppStateCalculator()
@@ -93,6 +95,11 @@ public class AppRootRouter: NSObject {
     public func start(launchOptions: LaunchOptions) {
         transition(to: .headless, completion: { })
         createAndStartSessionManager(launchOptions: launchOptions)
+    }
+    
+    public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
+        guard let url = deepLinkURL else { return false }
+        return urlActionRouter.open(url: url)
     }
     
     // MARK: - Private implementation
@@ -138,7 +145,7 @@ public class AppRootRouter: NSObject {
                               detector: jailbreakDetector) { [weak self] sessionManager in
                 self?.sessionManager = sessionManager
                 self?.sessionManager?.start(launchOptions: launchOptions)
-                self?.deeplinkAction?()
+                self?.urlActionRouter.openDeepLink(needsAuthentication: false)
         }
     }
     
@@ -339,8 +346,7 @@ extension AppRootRouter {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
-            deeplinkAction?()
-            deeplinkAction = nil
+            urlActionRouter.openDeepLink(needsAuthentication: true)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
