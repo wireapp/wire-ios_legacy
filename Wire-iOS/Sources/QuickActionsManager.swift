@@ -30,16 +30,13 @@ extension UIApplicationShortcutItem {
 }
 
 public final class QuickActionsManager: NSObject {
-    let sessionManager: SessionManager
     let application: UIApplication
     
-    init(sessionManager: SessionManager, application: UIApplication) {
-        self.sessionManager = sessionManager
-        self.application = application
+    override init() {
+        self.application = UIApplication.shared
         super.init()
         updateQuickActions()
     }
-    
     
     func updateQuickActions() {
         guard Bundle.developerModeEnabled else {
@@ -53,7 +50,7 @@ public final class QuickActionsManager: NSObject {
     @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {
         switch shortcutItem.type {
         case UIApplicationShortcutItem.markAllAsReadType:
-            sessionManager.markAllConversationsAsRead {
+            SessionManager.shared?.markAllConversationsAsRead {
                 completionHandler?(true)
             }
         default:

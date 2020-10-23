@@ -23,20 +23,17 @@ final class SessionManagerLifeCycleObserver {
     // MARK: - Private Property
     private var observerTokens: [Any] = []
     private var soundEventListeners = [UUID: SoundEventListener]()
-    private var sessionManager: SessionManager
     
-    // MARK: - Initialization
-    public init(sessionManager: SessionManager) {
-        self.sessionManager = sessionManager
-        createLifeCycleObserverTokens()
-    }
-    
-    // MARK: - Private implementation
-    private func createLifeCycleObserverTokens() {
-        let createdSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+    // MARK: - Public implementation
+    func createLifeCycleObserverTokens() {
+        guard let createdSessionObserverToken = SessionManager.shared?.addSessionManagerCreatedSessionObserver(self) else {
+            return
+        }
         observerTokens.append(createdSessionObserverToken)
         
-        let destroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
+        guard let destroyedSessionObserverToken = SessionManager.shared?.addSessionManagerDestroyedSessionObserver(self) else {
+            return
+        }
         observerTokens.append(destroyedSessionObserverToken)
     }
 }

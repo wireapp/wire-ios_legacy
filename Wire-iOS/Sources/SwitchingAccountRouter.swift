@@ -18,22 +18,9 @@
 
 import WireSyncEngine
 
-final class SwitchingAccountRouter {
-    
-    // MARK: - Private Property
-    private let sessionManager: SessionManager
-    
-    // MARK: - Initialization
-    public init(sessionManager: SessionManager) {
-        self.sessionManager = sessionManager
-    }
-}
-
-// MARK: - SessionManagerSwitchingDelegate
-extension SwitchingAccountRouter: SessionManagerSwitchingDelegate {
-    // Ask user if they want switch account if there's an ongoing call
-    
+final class SwitchingAccountRouter: SessionManagerSwitchingDelegate {
     // MARK: - Public Implementation
+    // Ask user if they want switch account if there's an ongoing call
     public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
         
         guard
@@ -57,8 +44,8 @@ extension SwitchingAccountRouter: SessionManagerSwitchingDelegate {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
                                       style: .default,
-                                      handler: { [weak self] (action) in
-            self?.sessionManager.activeUserSession?.callCenter?.endAllCalls()
+                                      handler: { action in
+            SessionManager.shared?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))
         alert.addAction(.cancel {

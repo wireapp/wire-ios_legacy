@@ -46,7 +46,7 @@
 		162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162AE74B219DB1B600581D98 /* ConversationImageMessageTests.swift */; };
 		162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */; };
 		16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16325E641EE03CC4000E72EB /* SearchResultsView.swift */; };
-		1633875B1F065A960015034C /* SessionManager+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1633875A1F065A960015034C /* SessionManager+Shared.swift */; };
+		1633875B1F065A960015034C /* SessionManager+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1633875A1F065A960015034C /* SessionManager+Convenience.swift */; };
 		16345574200D01180009B5DB /* ConversationListOnboardHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16345573200D01180009B5DB /* ConversationListOnboardHint.swift */; };
 		163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */; };
 		163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495881F015389004E80DB /* AppDelegate+Network.swift */; };
@@ -1633,7 +1633,7 @@
 		162AE74B219DB1B600581D98 /* ConversationImageMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationImageMessageTests.swift; sourceTree = "<group>"; };
 		162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioProcessingTests.swift; sourceTree = "<group>"; };
 		16325E641EE03CC4000E72EB /* SearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		1633875A1F065A960015034C /* SessionManager+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SessionManager+Shared.swift"; sourceTree = "<group>"; };
+		1633875A1F065A960015034C /* SessionManager+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SessionManager+Convenience.swift"; sourceTree = "<group>"; };
 		16345573200D01180009B5DB /* ConversationListOnboardHint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListOnboardHint.swift; sourceTree = "<group>"; };
 		163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnauthenticatedSession+Shared.swift"; sourceTree = "<group>"; };
 		163495881F015389004E80DB /* AppDelegate+Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Network.swift"; sourceTree = "<group>"; };
@@ -5249,7 +5249,7 @@
 		8FC8512F199245760008B66B /* syncengine */ = {
 			isa = PBXGroup;
 			children = (
-				1633875A1F065A960015034C /* SessionManager+Shared.swift */,
+				1633875A1F065A960015034C /* SessionManager+Convenience.swift */,
 				EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */,
 				16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */,
 				5E7315342191EADF00255A78 /* Message+Formatters.swift */,
@@ -7980,7 +7980,7 @@
 				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
 				5EF4A6E420F3C4BD00A9EF22 /* GiphyNavigationController.swift in Sources */,
-				1633875B1F065A960015034C /* SessionManager+Shared.swift in Sources */,
+				1633875B1F065A960015034C /* SessionManager+Convenience.swift in Sources */,
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */,
 				D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */,

@@ -166,8 +166,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        appRootRouter?.quickActionsManager?.performAction(for: shortcutItem,
-                                                          completionHandler: completionHandler)
+        appRootRouter?.performQuickAction(for: shortcutItem,
+                                          completionHandler: completionHandler)
     }
     
     @objc
