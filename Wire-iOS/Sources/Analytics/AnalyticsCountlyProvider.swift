@@ -46,30 +46,45 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     var selfUser: UserType? {
-        didSet {
+        didSet {            
+            if !sessionBegun {
+                beginSession()
+            }
             updateUserProperties()
         }
     }
 
-    init?() {
-        guard
-            let countlyAppKey = Bundle.countlyAppKey, !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL else {
-                zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
-                return nil
-        }
+    init() {
+        beginSession() //else { return nil }
 
+        isOptedOut = false
+    }
+    
+    
+    /// Begin Countly session. If Self User is not yet assigned, it would not start Countly.
+    /// - Returns: return true if Countly is started
+    @discardableResult
+    private func beginSession() -> Bool {
+        let url = String(describing: BackendEnvironment.shared.countlyURL)
+        guard let countlyAppKey = Bundle.countlyAppKey,
+              !countlyAppKey.isEmpty,
+              let countlyURL = BackendEnvironment.shared.countlyURL,
+              let analyticsIdentifier = (selfUser as? ZMUser)?.analyticsIdentifier else {
+                zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
+                return false
+        }
+        
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyURL.absoluteString
         config.manualSessionHandling = true
 
+        config.deviceID = analyticsIdentifier
         Countly.sharedInstance().start(with: config)
-
         zmLog.info("AnalyticsCountlyProvider \(self) started")
-
-        isOptedOut = false
         sessionBegun = true
+        
+        return true
     }
 
     deinit {
@@ -85,16 +100,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let team = selfUser.team,
-            let teamID = team.remoteIdentifier,
-            let analyticsIdentifier = selfUser.analyticsIdentifier
-        else {
+            let teamID = team.remoteIdentifier else {
 
             //clean up
             ["team_team_id",
              "team_user_type",
              "team_team_size",
-             "user_contacts",
-             "user_id"].forEach {
+             "user_contacts"].forEach {
                 Countly.user().unSet($0)
             }
 
@@ -106,7 +118,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         let userProperties: [String: Any] = ["team_team_id": teamID,
                                              "team_user_type": selfUser.teamRole,
-                                             "user_id": analyticsIdentifier,
                                              "team_team_size": team.members.count,
                                              "user_contacts": team.members.count.logRound()]
 
