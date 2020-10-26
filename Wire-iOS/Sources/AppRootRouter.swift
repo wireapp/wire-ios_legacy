@@ -52,6 +52,12 @@ public class AppRootRouter: NSObject {
     private(set) var sessionManager: SessionManager? {
         didSet {
             guard let sessionManager = sessionManager else { return }
+            switchingAccountRouter.sessionManager = sessionManager
+            urlActionRouter.sessionManager = sessionManager
+            sessionManagerLifeCycleObserver.sessionManager = sessionManager
+            foregroundNotificationFilter.sessionManager = sessionManager
+            quickActionsManager.sessionManager = sessionManager
+            
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
             sessionManager.presentationDelegate = urlActionRouter
