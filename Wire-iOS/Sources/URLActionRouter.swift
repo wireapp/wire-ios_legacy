@@ -24,6 +24,9 @@ extension Notification.Name {
 
 final class URLActionRouter {
     
+    // MARK: - Public Property
+    var sessionManager: SessionManager?
+    
     // MARK: - Private Property
     private let rootViewController: RootViewController
     private let authenticationCoordinator: AuthenticationCoordinator?
@@ -32,6 +35,7 @@ final class URLActionRouter {
     // MARK: - Initialization
     public init(viewController: RootViewController,
                 authenticationCoordinator: AuthenticationCoordinator?,
+                sessionManager: SessionManager? = nil,
                 url: URL?) {
         self.rootViewController = viewController
         self.authenticationCoordinator = authenticationCoordinator
@@ -42,7 +46,7 @@ final class URLActionRouter {
     @discardableResult
     func open(url: URL) -> Bool {
         do {
-            return try SessionManager.shared?.openURL(url) ?? false
+            return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
                 authenticationCoordinator?.cancelCompanyLogin()
@@ -175,7 +179,7 @@ extension URLActionRouter: PresentationDelegate {
     }
     
     private func switchBackend(with configurationURL: URL) {
-        SessionManager.shared?.switchBackend(configuration: configurationURL) { [weak self] result in
+        sessionManager?.switchBackend(configuration: configurationURL) { [weak self] result in
             self?.rootViewController.isLoadingViewVisible = false
             switch result {
             case let .success(environment):

@@ -32,18 +32,17 @@ public class AppRootRouter: NSObject {
     let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
     
-    // TO DO: this shoud be private
-    private(set) var switchingAccountRouter: SwitchingAccountRouter?
-    
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
     private var deepLinkURL: URL?
     
     private var authenticationCoordinator: AuthenticationCoordinator?
+    private var switchingAccountRouter: SwitchingAccountRouter
     private var urlActionRouter: URLActionRouter
-    private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
-    private let foregroundNotificationFilter = ForegroundNotificationFilter()
+    private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
+    private let foregroundNotificationFilter: ForegroundNotificationFilter
+    private var quickActionsManager: QuickActionsManager
     
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks : [() -> Void] = []
@@ -52,23 +51,23 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
         didSet {
-            guard let sessionManager = sessionManager else {
-                return
-            }
-            switchingAccountRouter = SwitchingAccountRouter(sessionManager: sessionManager)
-            sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver(sessionManager: sessionManager)
+            guard let sessionManager = sessionManager else { return }
+            switchingAccountRouter.sessionManager = sessionManager
+            urlActionRouter.sessionManager = sessionManager
+            sessionManagerLifeCycleObserver.sessionManager = sessionManager
+            foregroundNotificationFilter.sessionManager = sessionManager
+            quickActionsManager.sessionManager = sessionManager
             
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
             sessionManager.presentationDelegate = urlActionRouter
-            setCallingSettings(for: sessionManager)
-            quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
-                                                      application: UIApplication.shared)
+            createLifeCycleObserverTokens()
+            setCallingSettings()
         }
     }
 
-    private(set) var rootViewController: RootViewController //TO DO: This should be private
-    private(set) var quickActionsManager: QuickActionsManager?
+    //TO DO: This should be private
+    private(set) var rootViewController: RootViewController
     
     // MARK: - Initialization
     
@@ -81,6 +80,10 @@ public class AppRootRouter: NSObject {
         self.urlActionRouter = URLActionRouter(viewController: viewController,
                                                authenticationCoordinator: authenticationCoordinator,
                                                url: deepLinkURL)
+        self.switchingAccountRouter = SwitchingAccountRouter()
+        self.quickActionsManager = QuickActionsManager()
+        self.foregroundNotificationFilter = ForegroundNotificationFilter()
+        self.sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
         super.init()
         
         setupAppStateCalculator()
@@ -102,6 +105,16 @@ public class AppRootRouter: NSObject {
         return urlActionRouter.open(url: url)
     }
     
+    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
+    }
+    
+    public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
+                                   completionHandler: ((Bool)->())?) {
+        quickActionsManager.performAction(for: shortcutItem,
+                                          completionHandler: completionHandler)
+    }
+    
     // MARK: - Private implementation
     private func setupAppStateCalculator() {
         appStateCalculator.delegate = self
@@ -118,6 +131,10 @@ public class AppRootRouter: NSObject {
         callWindow.isHidden = true
         overlayWindow.makeKeyAndVisible()
         overlayWindow.isHidden = true
+    }
+    
+    private func createLifeCycleObserverTokens() {
+        sessionManagerLifeCycleObserver.createLifeCycleObserverTokens()
     }
     
     private func createAndStartSessionManager(launchOptions: LaunchOptions) {
@@ -149,12 +166,12 @@ public class AppRootRouter: NSObject {
         }
     }
     
-    private func setCallingSettings(for sessionManager: SessionManager) {
-        sessionManager.updateCallNotificationStyleFromSettings()
-        sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+    private func setCallingSettings() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
+        sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        sessionManager.useConferenceCalling = true
+        sessionManager?.useConferenceCalling = true
     }
 }
 
@@ -190,14 +207,12 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
-//            mainWindow.tintColor = .black
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
         case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
             UIColor.setAccentOverride(.undefined)
-//            mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
@@ -427,51 +442,5 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
-    }
-}
-
-// TO DO: Move out this code from here
-final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
-    var dismissSpinner: SpinnerCompletion?
-
-    override var childForStatusBarStyle: UIViewController? {
-        return topViewController
-    }
-    
-}
-
-// TO DO: Move out this code from here
-extension UIApplication {
-    @available(iOS 12.0, *)
-    static var userInterfaceStyle: UIUserInterfaceStyle? {
-            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
-    }
-}
-
-// TO DO: Move out this code from here
-extension SessionManager {
-
-    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
-        if let selectedAccount = accountManager.selectedAccount {
-            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
-                return selectedAccount
-            }
-        }
-
-        for account in accountManager.accounts {
-            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
-                return account
-            }
-        }
-
-        return nil
-    }
-
-    var firstAuthenticatedAccount: Account? {
-        return firstAuthenticatedAccount(excludingCredentials: nil)
-    }
-
-    static var numberOfAccounts: Int {
-        return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 }

@@ -68,6 +68,11 @@ extension UIApplication {
         
         return topController
     }
+    
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
+    }
 }
 
 extension UINavigationController {
