@@ -139,12 +139,12 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
     
-    func testThatSessionManagerChangedActiveUserSession() {
+    func testThatSessionManagerDidUpdateActiveUserSession() {
         // GIVEN
         let isDatabaseLocked = true
         
         // WHEN
-        sut.sessionManagerChangedActiveUserSession(isDatabaseLocked: isDatabaseLocked)
+        sut.sessionManagerDidUpdateActiveUserSession(isDatabaseLocked: isDatabaseLocked)
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
@@ -186,7 +186,7 @@ final class AppStateCalculatorTests: XCTestCase {
         appRootRouter.isAppStateCalculatorCalled = false
 
         // WHEN
-        sut.sessionManagerChangedActiveUserSession(isDatabaseLocked: isDatabaseLocked)
+        sut.sessionManagerDidUpdateActiveUserSession(isDatabaseLocked: isDatabaseLocked)
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
