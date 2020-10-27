@@ -38,6 +38,7 @@ final class AppLockView: UIView {
     let callerDisplayNameLabel: UILabel = {
         let label = UILabel()
         label.font = .largeThinFont
+        label.textAlignment = .center
         label.lineBreakMode = .byTruncatingTail
         label.textColor = .from(scheme: .textForeground, variant: .dark)
 
@@ -193,7 +194,6 @@ final class AppLockView: UIView {
             
             // callerDisplayName
             callerDisplayNameLabel.centerYAnchor.constraint(equalTo: incomingCallContainerView.centerYAnchor, constant: -44), //TODO: ask the design team
-            callerDisplayNameLabel.centerXAnchor.constraint(equalTo: incomingCallContainerView.centerXAnchor),
             callerDisplayNameLabel.leadingAnchor.constraint(equalTo: incomingCallContainerView.leadingAnchor),
             callerDisplayNameLabel.trailingAnchor.constraint(equalTo: incomingCallContainerView.trailingAnchor),
             

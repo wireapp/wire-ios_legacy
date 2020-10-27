@@ -107,7 +107,6 @@ final class AppLockPresenter {
                 showIncomingCall(visible: false)
                 appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
             }
-            
         case .cancelled:
             showReauth(visible: true)
         case .pendingPassword:
