@@ -121,11 +121,11 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidEnterBackground()
         sut.applicationDidBecomeActive()
         
-        // WHEN
+        // THEN
         XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
     }
     
-    func testApplicationTransitIfAppStateDontChangeWhenAppBecomeActive() {
+    func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
         
@@ -141,7 +141,7 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidBlacklistCurrentVersion()
         sut.applicationDidBecomeActive()
         
-        // WHEN
+        // THEN
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
 }
