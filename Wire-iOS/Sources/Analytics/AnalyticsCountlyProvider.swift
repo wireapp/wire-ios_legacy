@@ -65,7 +65,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     /// - Returns: return true if Countly is started
     @discardableResult
     private func beginSession() -> Bool {
-        let url = String(describing: BackendEnvironment.shared.countlyURL)
+        //TODO: begin session only if self user is set
         guard let countlyAppKey = Bundle.countlyAppKey,
               !countlyAppKey.isEmpty,
               let countlyURL = BackendEnvironment.shared.countlyURL,
