@@ -31,6 +31,14 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
+    
+    private struct StoredEvent {
+        let event: String
+        let attributes: [String: Any]
+    }
+    
+    /// store the events before selfUser is assigned. Send them and clear after selfUser is set
+    private var storedEvents: [StoredEvent]?
 
     var isOptedOut: Bool {
         get {
@@ -48,6 +56,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     var selfUser: UserType? {
         didSet {
             updateUserProperties()
+            
+            storedEvents?.forEach() {
+                tagEvent($0.event, attributes: $0.attributes)
+            }
+            
+            storedEvents = nil
         }
     }
 
@@ -119,8 +133,16 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         Countly.user().save()
     }
 
-    func tagEvent(_ event: String,
-                  attributes: [String: Any]) {
+    func tagEvent(_ event: String, attributes: [String: Any]) {
+        //store the event before self user is assigned, send it later when self user is ready.
+        if selfUser == nil {
+            if storedEvents == nil {
+                storedEvents = []
+            }
+            
+            storedEvents?.append(StoredEvent(event: event, attributes: attributes))
+        }
+        
         guard shouldTracksEvent else { return }
 
         var convertedAttributes = attributes.countlyStringValueDictionary
