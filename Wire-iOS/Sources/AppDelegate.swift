@@ -150,6 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             launchType = .direct
         }
+        
+        Analytics.shared.tagEvent("app.open")
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

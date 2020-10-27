@@ -89,7 +89,7 @@ extension Analytics: AnalyticsType {
 
     /// Record an event with no attributes
     func tagEvent(_ event: String) {
-        //no-op
+        provider?.tagEvent(event, attributes: [:])
     }
 
     /// Record an event with optional attributes.
