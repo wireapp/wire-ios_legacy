@@ -25,6 +25,7 @@ final class AppLockView: UIView {
 
     let shieldViewContainer = UIView()
     let contentContainerView = UIView()
+    let incomingCallContainerView = UIView()
     let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
     let authenticateLabel: UILabel = {
         let label = UILabel()
@@ -33,6 +34,24 @@ final class AppLockView: UIView {
 
         return label
     }()
+    
+    let callerDisplayNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .largeThinFont
+        label.lineBreakMode = .byTruncatingTail
+        label.textColor = .from(scheme: .textForeground, variant: .dark)
+
+        return label
+    }()
+    
+    let incomingCallLabel: UILabel = {
+        let label = UILabel()
+        label.font = .largeThinFont
+        label.textColor = .from(scheme: .textForeground, variant: .dark)
+
+        return label
+    }()
+    
     let authenticateButton = Button(style: .fullMonochrome)
 
     private var contentWidthConstraint: NSLayoutConstraint!
@@ -50,6 +69,19 @@ final class AppLockView: UIView {
             self.authenticateButton.isHidden = !showReauth
         }
     }
+    
+    var showIncomingCall: Bool = false {
+        didSet {
+            self.incomingCallLabel.isHidden = !showIncomingCall
+            self.callerDisplayNameLabel.isHidden = !showIncomingCall
+        }
+    }
+    
+    var callerDisplayName: String = "" {
+        didSet {
+            self.callerDisplayNameLabel.text = callerDisplayName
+        }
+    }
 
     init(authenticationType: AuthenticationType = .current) {
 
@@ -64,12 +96,20 @@ final class AppLockView: UIView {
         self.authenticateLabel.isHidden = true
         self.authenticateLabel.numberOfLines = 0
         self.authenticateButton.isHidden = true
+        
+        self.incomingCallLabel.isHidden = true
+        self.incomingCallLabel.numberOfLines = 0
+        self.callerDisplayNameLabel.isHidden = true
 
         addSubview(contentContainerView)
 
         contentContainerView.addSubview(authenticateLabel)
         contentContainerView.addSubview(authenticateButton)
 
+        addSubview(incomingCallContainerView)
+        incomingCallContainerView.addSubview(incomingCallLabel)
+        incomingCallContainerView.addSubview(callerDisplayNameLabel)
+        
         switch authenticationType {
         case .touchID:
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
@@ -83,6 +123,8 @@ final class AppLockView: UIView {
 
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
         self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
+        
+        self.incomingCallLabel.text = "call.status.incoming".localized
 
         createConstraints(nibView: shieldView)
 
@@ -97,6 +139,9 @@ final class AppLockView: UIView {
         contentContainerView.translatesAutoresizingMaskIntoConstraints = false
         authenticateButton.translatesAutoresizingMaskIntoConstraints = false
         authenticateLabel.translatesAutoresizingMaskIntoConstraints = false
+        incomingCallContainerView.translatesAutoresizingMaskIntoConstraints = false
+        incomingCallLabel.translatesAutoresizingMaskIntoConstraints = false
+        callerDisplayNameLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Compact
         contentLeadingConstraint = contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
@@ -138,7 +183,23 @@ final class AppLockView: UIView {
             authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
             authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
             authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
-            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
+            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            
+            // incomingCallContainerView
+            incomingCallContainerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            incomingCallContainerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            incomingCallContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            incomingCallContainerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
+            // callerDisplayName
+            callerDisplayNameLabel.centerYAnchor.constraint(equalTo: incomingCallContainerView.centerYAnchor, constant: -44), //TODO: ask the design team
+            callerDisplayNameLabel.centerXAnchor.constraint(equalTo: incomingCallContainerView.centerXAnchor),
+            callerDisplayNameLabel.leadingAnchor.constraint(equalTo: incomingCallContainerView.leadingAnchor),
+            callerDisplayNameLabel.trailingAnchor.constraint(equalTo: incomingCallContainerView.trailingAnchor),
+            
+            // incomingCallLabel
+            incomingCallLabel.topAnchor.constraint(equalTo: callerDisplayNameLabel.bottomAnchor, constant: 28), //TODO: ask the design team
+            incomingCallLabel.centerXAnchor.constraint(equalTo: incomingCallContainerView.centerXAnchor)])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

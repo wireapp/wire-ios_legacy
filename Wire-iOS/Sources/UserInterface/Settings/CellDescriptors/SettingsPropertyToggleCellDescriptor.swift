@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import WireSystem
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -64,6 +65,12 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
             toggleCell.switchView.isOn = boolValue
             toggleCell.switchView.accessibilityLabel = identifier
             toggleCell.switchView.isEnabled = self.settingsProperty.enabled
+            switch settingsProperty.propertyName {
+            case .disableCallKit:
+                toggleCell.switchView.isHidden = SessionManager.shared?.isLockScreenEnabled ?? false
+            default:
+                toggleCell.switchView.isHidden = false
+            }
         }
     }
     

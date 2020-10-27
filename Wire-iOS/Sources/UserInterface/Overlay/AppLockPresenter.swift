@@ -41,6 +41,7 @@ protocol AppLockUserInterface: class {
     
     func setSpinner(animating: Bool)
     func setReauth(visible: Bool)
+    func setIncomingCallHeader(visible: Bool, from callerDisplayName: String)
 }
 
 enum AuthenticationState {
@@ -97,8 +98,15 @@ final class AppLockPresenter {
     func requireAuthenticationIfNeeded() {
         switch authenticationState {
         case .needed:
-            showReauth(visible: false)
-            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            if let callConversation = ZMUserSession.shared()?.priorityCallConversation {
+                showReauth(visible: true)
+                showIncomingCall(visible: true, for: callConversation)
+            } else {
+                showReauth(visible: false)
+                showIncomingCall(visible: false)
+                appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            }
+            
         case .cancelled:
             showReauth(visible: true)
         case .pendingPassword:
@@ -183,6 +191,11 @@ extension AppLockPresenter: AppLockInteractorOutput {
 extension AppLockPresenter {
     private func showReauth(visible: Bool) {
         userInterface?.setReauth(visible: visible)
+    }
+    
+    private func showIncomingCall(visible: Bool, for conversation: ZMConversation? = nil) {
+        let callerDisplayName = (conversation?.voiceChannel?.initiator?.name) ?? "conversation.status.someone".localized //TODO: ask the design team
+        userInterface?.setIncomingCallHeader(visible: visible, from: callerDisplayName)
     }
     
     private func appUnlocked() {

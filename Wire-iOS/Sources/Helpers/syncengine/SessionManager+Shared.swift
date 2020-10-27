@@ -20,10 +20,15 @@ import Foundation
 import WireSyncEngine
 import AVFoundation
 import WireSyncEngine
+import WireCommonComponents
 
 extension SessionManager {
     static var shared : SessionManager? {
         return AppDelegate.shared.sessionManager
+    }
+    
+    var isLockScreenEnabled: Bool {
+        return AppLock.isActive || (ZMUserSession.shared()?.isDatabaseLocked ?? false)
     }
     
     func updateCallNotificationStyleFromSettings() {
@@ -31,7 +36,7 @@ extension SessionManager {
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
         let isCallKitSupported = !UIDevice.isSimulator
         
-        if isCallKitEnabled && isCallKitSupported && hasAudioPermissions {
+        if isCallKitEnabled && isCallKitSupported && hasAudioPermissions && !isLockScreenEnabled {
             self.callNotificationStyle = .callKit
         }
         else {

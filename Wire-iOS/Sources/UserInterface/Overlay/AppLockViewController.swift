@@ -136,4 +136,9 @@ extension AppLockViewController: AppLockUserInterface {
     func setReauth(visible: Bool) {
         lockView.showReauth = visible
     }
+    
+    func setIncomingCallHeader(visible: Bool, from callerDisplayName: String) {
+        lockView.showIncomingCall = visible
+        lockView.callerDisplayName = callerDisplayName
+    }
 }
