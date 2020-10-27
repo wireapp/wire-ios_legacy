@@ -83,10 +83,11 @@ final class AppLockPresenter {
     }
     
     init(userInterface: AppLockUserInterface,
-         appLockInteractorInput: AppLockInteractorInput) {
+         appLockInteractorInput: AppLockInteractorInput,
+         authenticationState: AuthenticationState = .needed) {
         self.userInterface = userInterface
         self.appLockInteractorInput = appLockInteractorInput
-        self.authenticationState = .needed
+        self.authenticationState = authenticationState
         self.requireAuthenticationIfNeeded()
     }
     
