@@ -36,10 +36,6 @@ enum AttachmentType:Int, CaseIterable {
 
 final class ExtensionActivity {
 
-    static private var openedEventName = "share_extension_opened"
-    static private var sentEventName = "share_extension_sent"
-    static private var cancelledEventName = "share_extension_cancelled"
-
     private var verifiedConversation = false
     private var conversationDidDegrade = false
 
@@ -72,37 +68,6 @@ final class ExtensionActivity {
     func markConversationDidDegrade() {
         conversationDidDegrade = true
     }
-
-    func openedEvent() -> StorableTrackingEvent {
-        return StorableTrackingEvent(
-            name: ExtensionActivity.openedEventName,
-            attributes: [:]
-        )
-    }
-
-    func cancelledEvent() -> StorableTrackingEvent {
-        return StorableTrackingEvent(
-            name: ExtensionActivity.cancelledEventName,
-            attributes: [:]
-        )
-    }
-
-    func sentEvent(completion: @escaping (StorableTrackingEvent) -> Void) {
-        let event = StorableTrackingEvent(
-            name: ExtensionActivity.sentEventName,
-            attributes: [
-                "verified_conversation": self.verifiedConversation,
-                "number_of_images": self.numberOfImages,
-                "video": self.hasVideo,
-                "file": self.hasFile,
-                "text": self.hasText,
-                "conversation_did_degrade": self.conversationDidDegrade
-            ]
-        )
-
-        completion(event)
-    }
-
 }
 
 extension NSItemProvider {

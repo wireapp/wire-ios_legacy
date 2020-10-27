@@ -113,7 +113,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         CrashReporter.setupAppCenterIfNeeded()
         updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
-        sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
     }
 
@@ -294,19 +293,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
-    override func cancel() {
-        if let event = extensionActivity?.cancelledEvent() {
-            sharingSession?.analyticsEventPersistence.add(event)
-        }
-        super.cancel()
-    }
-
     private func storeTrackingData(completion: @escaping () -> Void) {
         extensionActivity?.hasText = !contentText.isEmpty
-        extensionActivity?.sentEvent { [weak self] event in
-            self?.sharingSession?.analyticsEventPersistence.add(event)
-            completion()
-        }
+        completion()
     }
 
     // MARK: - Preview
