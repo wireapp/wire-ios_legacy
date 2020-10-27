@@ -144,7 +144,7 @@ final class AppStateCalculatorTests: XCTestCase {
         let isDatabaseLocked = true
         
         // WHEN
-        sut.activeUserSessionDatabaseLockDidChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
@@ -186,7 +186,7 @@ final class AppStateCalculatorTests: XCTestCase {
         appRootRouter.isAppStateCalculatorCalled = false
 
         // WHEN
-        sut.activeUserSessionDatabaseLockDidChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,

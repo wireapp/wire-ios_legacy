@@ -147,7 +147,7 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func activeUserSessionDatabaseLockDidChange(isLocked: Bool) {
+    func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
         loadingAccount = nil
         let appState: AppState = .authenticated(completedRegistration: false,
                                                 databaseIsLocked: isLocked)
