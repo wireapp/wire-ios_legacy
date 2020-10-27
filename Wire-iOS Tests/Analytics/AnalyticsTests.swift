@@ -54,14 +54,14 @@ final class AnalyticsTests: XCTestCase {
         XCTAssert(ExtensionSettings.shared.disableCrashSharing)
     }
 
-//    func testThatItSetsOptOutAnalyticsToSharedSettings() {
-//        // GIVEN
-//        TrackingManager.shared.disableAnalyticsSharing = false
-//        // THEN
-//        XCTAssertFalse(ExtensionSettings.shared.disableAnalyticsSharing)
-//        // WHEN
-//        TrackingManager.shared.disableAnalyticsSharing = true
-//        // THEN
-//        XCTAssert(ExtensionSettings.shared.disableAnalyticsSharing)
-//    }
+    func testThatItSetsOptOutAnalyticsToSharedSettings() {
+        // GIVEN
+        TrackingManager.shared.disableAnalyticsSharing = false
+        // THEN
+        XCTAssertFalse(ExtensionSettings.shared.disableAnalyticsSharing)
+        // WHEN
+        TrackingManager.shared.disableAnalyticsSharing = true
+        // THEN
+        XCTAssert(ExtensionSettings.shared.disableAnalyticsSharing)
+    }
 }
