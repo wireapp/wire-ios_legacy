@@ -38,7 +38,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     /// store the events before selfUser is assigned. Send them and clear after selfUser is set
-    private var storedEvents: [StoredEvent]?
+    private var storedEvents: [StoredEvent] = []
 
     var isOptedOut: Bool {
         get {
@@ -57,11 +57,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         didSet {
             updateUserProperties()
 
-            storedEvents?.forEach {
+            storedEvents.forEach {
                 tagEvent($0.event, attributes: $0.attributes)
             }
 
-            storedEvents = nil
+            storedEvents.removeAll()
         }
     }
 
@@ -135,12 +135,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String, attributes: [String: Any]) {
         //store the event before self user is assigned, send it later when self user is ready.
-        if selfUser == nil {
-            if storedEvents == nil {
-                storedEvents = []
-            }
-
-            storedEvents?.append(StoredEvent(event: event, attributes: attributes))
+        guard selfUser != nil else {            
+            storedEvents.append(StoredEvent(event: event, attributes: attributes))
+            return
         }
 
         guard shouldTracksEvent else { return }
