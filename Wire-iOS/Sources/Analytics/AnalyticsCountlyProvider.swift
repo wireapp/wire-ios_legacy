@@ -32,7 +32,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
     private static var appOpenTagged = false
-    
+
     private func tagAppOpen() {
         guard !AnalyticsCountlyProvider.appOpenTagged else {
             return
@@ -141,7 +141,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
 
         Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
-        
+
         return true
     }
 

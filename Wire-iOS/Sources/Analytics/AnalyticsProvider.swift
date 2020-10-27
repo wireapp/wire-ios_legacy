@@ -23,7 +23,6 @@ protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
     var selfUser: UserType? { get set }
 
-        
     /// Record an event with optional attributes.
     /// - Parameters:
     ///   - event: event to tag
