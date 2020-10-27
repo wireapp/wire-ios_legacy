@@ -58,7 +58,6 @@ class AppStateCalculator {
     
     // MARK - Private Property
     private var loadingAccount : Account?
-    private var databaseEncryptionObserverToken: Any? = nil
     private var observerTokens: [NSObjectProtocol] = []
     
     // MARK - Private Implemetation
@@ -101,7 +100,6 @@ extension AppStateCalculator: ApplicationStateObserving {
 extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerWillLogout(error: Error?,
                                   userSessionCanBeTornDown: (() -> Void)?) {
-        databaseEncryptionObserverToken = nil
         let appState: AppState = .unauthenticated(error: error as NSError?)
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
@@ -142,7 +140,6 @@ extension AppStateCalculator: SessionManagerDelegate {
     
     func sessionManagerWillOpenAccount(_ account: Account,
                                        userSessionCanBeTornDown: @escaping () -> Void) {
-        databaseEncryptionObserverToken = nil
         loadingAccount = account
         let appState: AppState = .loading(account: account,
                                           from: SessionManager.shared?.accountManager.selectedAccount)
@@ -150,25 +147,17 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func sessionManagerActivated(userSession: ZMUserSession) {
-        userSession.checkIfLoggedIn { [weak self] loggedIn in
-            guard loggedIn else {
-                return
-            }
-            self?.loadingAccount = nil
-            
-            // NOTE: we don't enter the unauthenticated appstate here if we are not logged in
-            //       because we will receive `sessionManagerDidLogout()` with an auth error
-            let appState: AppState = .authenticated(completedRegistration: false,
-                                                    databaseIsLocked: userSession.isDatabaseLocked)
-            self?.transition(to: appState)
-        }
-        
-        databaseEncryptionObserverToken = userSession.registerDatabaseLockedHandler({ [weak self] isDatabaseLocked in
-            let appState: AppState = .authenticated(completedRegistration: false,
-                                                    databaseIsLocked: isDatabaseLocked)
-            self?.transition(to: appState)
-        })
+    func sessionManagerUserIsLoggedIn(isDatabaseLocked: Bool) {
+        loadingAccount = nil
+        let appState: AppState = .authenticated(completedRegistration: false,
+                                                databaseIsLocked: isDatabaseLocked)
+        transition(to: appState)
+    }
+    
+    func sessionManagerRegisterDatabaseLocked(isDatabaseLocked: Bool) {
+        let appState: AppState = .authenticated(completedRegistration: false,
+                                                databaseIsLocked: isDatabaseLocked)
+        transition(to: appState)
     }
 }
 

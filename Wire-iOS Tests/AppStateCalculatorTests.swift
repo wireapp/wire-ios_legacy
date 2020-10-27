@@ -22,16 +22,14 @@ import XCTest
 final class AppStateCalculatorTests: XCTestCase {
 
     var sut: AppStateCalculator!
-
+    var appRootRouter: AppRootRouterMock!
+    
     override func setUp() {
         super.setUp()
         sut = AppStateCalculator()
-
-        if let accounts = SessionManager.shared?.accountManager.accounts {
-            for account in accounts {
-                SessionManager.shared?.accountManager.remove(account)
-            }
-        }
+        appRootRouter = AppRootRouterMock()
+        appRootRouter.isAppStateCalculatorCalled = false
+        sut.delegate = appRootRouter
     }
 
     override func tearDown() {
@@ -39,73 +37,107 @@ final class AppStateCalculatorTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - tests for .unauthenticated state handling
-
-    func testThatErrorIsIgnoredWhenTheAppFrashInstalled() {
-        // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-
+    func testThatSessionManagerDidBlacklistCurrentVersion() {
         // WHEN
-        // When first time running the app, account is nil and error code is accessTokenExpired
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessionManagerDidBlacklistCurrentVersion()
 
         // THEN
-        XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 0)
+        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerWillMigrateLegacyAccount() {
+        // WHEN
+        sut.sessionManagerWillMigrateLegacyAccount()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .migrating)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+        
+    func testThatSessionManagerDidJailbreakCurrentVersion() {
+        // WHEN
+        sut.sessionManagerDidBlacklistJailbrokenDevice()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .jailbroken)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerWillMigrateAccount() {
+        // GIVEN
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        
+        // WHEN
+        // Will first set the selected account
+        sut.sessionManagerWillOpenAccount(account, userSessionCanBeTornDown: { })
+        
+        // THEN
+        XCTAssertEqual(sut.appState, .loading(account: account, from: nil))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        
+        // GIVEN
+        appRootRouter.isAppStateCalculatorCalled = false
+        
+        // WHEN
+        // Will migrate to that account
+        sut.sessionManagerWillMigrateAccount(account)
+        
+        // THEN
+        XCTAssertEqual(sut.appState, .migrating)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerWillNotMigrateAccount() {
+        // GIVEN
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        let otherAccount = Account(userName: "otherDummy", userIdentifier: UUID())
+        
+        // WHEN
+        // Will first set the selected account
+        sut.sessionManagerWillOpenAccount(account, userSessionCanBeTornDown: { })
+        
+        // THEN
+        XCTAssertEqual(sut.appState, .loading(account: account, from: nil))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        
+        // GIVEN
+        appRootRouter.isAppStateCalculatorCalled = false
+        
+        // WHEN
+        // Will migrate to that account
+        sut.sessionManagerWillMigrateAccount(otherAccount)
+        
+        // THEN
+        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+    }
+
+    func testThatWillLogout() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.unknownError, userInfo: nil)
+        
+        // WHEN
+        sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: nil)
+
+        // THEN
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error as NSError?))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerDidFailToLogin() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        
+        // WHEN
+        sut.sessionManagerDidFailToLogin(account: account, error: error)
+
+        // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
-
-    func testThatErrorIsAssignedWhenTheAccountManagerHasSomeAccounts() {
-        // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        // When last time SessionManager store some accounts, but it is invalid
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        SessionManager.shared?.accountManager.addAndSelect(account)
-
-        // WHEN
-        sut.sessionManagerDidFailToLogin(account: nil,
-                                         error: error)
-
-        // THEN
-        // It should display the login screen in RootViewController
-        XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-    }
-
-    func testThatErrorAssignedWhenOtherDeivceRemovedCurrentlyAccount() {
-        // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.clientDeletedRemotely, userInfo: nil)
-        // When last time SessionManager store some accounts, but it is invalid
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        SessionManager.shared?.accountManager.addAndSelect(account)
-
-        // WHEN
-        sut.sessionManagerWillLogout(error: error,
-                                     userSessionCanBeTornDown: {})
-
-        // THEN
-        // It should display the login screen in RootViewController
-        XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-    }
-
-    func testThatErrorAssignedWhenSwitchingToUnauthenticatedAccount() {
-        // GIVEN
-        // When last time SessionManager store some accounts, but it is invalid
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        SessionManager.shared?.accountManager.addAndSelect(account)
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-
-        // WHEN
-        let accountUnauthenticated = Account(userName: "Unauthenticated", userIdentifier: UUID())
-        SessionManager.shared?.accountManager.addAndSelect(accountUnauthenticated)
-        sut.sessionManagerDidFailToLogin(account: accountUnauthenticated,
-                                                            error: error)
-
-        // THEN
-        // It should display the login screen in RootViewController
-        XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-    }
+    
+    // MARK: - Tests When App Become Active
     
     func testApplicationDontTransitIfAppStateDontChangeWhenAppBecomeActive() {
         // GIVEN
@@ -115,9 +147,13 @@ final class AppStateCalculatorTests: XCTestCase {
         // Initial App State Before Going in Background
         sut.sessionManagerDidFailToLogin(account: nil, error: error)
         
-        let appRootRouter = AppRootRouterMock()
-        sut.delegate = appRootRouter
+        // THEN
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
         
+        // GIVEN
+        appRootRouter.isAppStateCalculatorCalled = false
+        
+        // WHEN
         sut.applicationDidEnterBackground()
         sut.applicationDidBecomeActive()
         
@@ -133,9 +169,13 @@ final class AppStateCalculatorTests: XCTestCase {
         // Initial AppState before going in background
         sut.sessionManagerDidFailToLogin(account: nil, error: error)
         
-        let appRootRouter = AppRootRouterMock()
-        sut.delegate = appRootRouter
+        // THEN
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
         
+        // GIVEN
+        appRootRouter.isAppStateCalculatorCalled = false
+        
+        // WHEN
         sut.applicationDidEnterBackground()
         // AppState changes when the app is in background
         sut.sessionManagerDidBlacklistCurrentVersion()
