@@ -138,7 +138,7 @@ final class AppStateControllerTests: XCTestCase {
         sut.updateAppState()
         
         // then
-        XCTAssertEqual(sut.appState, AppState.locked)
+        XCTAssertEqual(sut.appState, AppState.locked(databaseIsLocked: false))
     }
     
     func testThatItDoesNotSetTheAppToALockedStateIfTheUserIsAuthenticatedAndShouldLockScreenIsFalse() {
