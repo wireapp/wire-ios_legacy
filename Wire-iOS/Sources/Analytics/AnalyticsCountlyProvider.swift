@@ -55,7 +55,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     init() {
-        beginSession() //else { return nil }
+        beginSession()
 
         isOptedOut = false
     }
