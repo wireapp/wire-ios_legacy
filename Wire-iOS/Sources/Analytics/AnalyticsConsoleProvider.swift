@@ -64,7 +64,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
-    func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
+    func tagEvent(_ event: String, attributes: [String : Any] = [:]) -> Bool {
         
         let printableAttributes = attributes
         
@@ -83,6 +83,8 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
         
         print(loggingData: loggingDict)
+        
+        return true
     }
     
     func setSuperProperty(_ name: String, value: Any?) {

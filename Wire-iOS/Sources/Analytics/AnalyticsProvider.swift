@@ -23,8 +23,13 @@ protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
     var selfUser: UserType? { get set }
 
+        
     /// Record an event with optional attributes.
-    func tagEvent(_ event: String, attributes: [String: Any])
+    /// - Parameters:
+    ///   - event: event to tag
+    ///   - attributes: event attributes
+    @discardableResult
+    func tagEvent(_ event: String, attributes: [String: Any]) -> Bool
 
     /// Set a custom dimension
     func setSuperProperty(_ name: String, value: Any?)

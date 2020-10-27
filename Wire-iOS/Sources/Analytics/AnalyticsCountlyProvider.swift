@@ -31,6 +31,17 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
+    private static var appOpenTagged = false
+    
+    private func tagAppOpen() {
+        guard !AnalyticsCountlyProvider.appOpenTagged else {
+            return
+        }
+
+        if tagEvent("app.open") {
+            AnalyticsCountlyProvider.appOpenTagged = true
+        }
+    }
 
     var isOptedOut: Bool {
         get {
@@ -48,6 +59,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     var selfUser: UserType? {
         didSet {
             updateUserProperties()
+            tagAppOpen()
         }
     }
 
@@ -69,7 +81,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
         isOptedOut = false
-        sessionBegun = true
     }
 
     deinit {
@@ -119,9 +130,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         Countly.user().save()
     }
 
+    @discardableResult
     func tagEvent(_ event: String,
-                  attributes: [String: Any]) {
-        guard shouldTracksEvent else { return }
+                  attributes: [String: Any] = [:]) -> Bool {
+        guard shouldTracksEvent else { return false }
 
         var convertedAttributes = attributes.countlyStringValueDictionary
 
@@ -129,6 +141,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
 
         Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
+        
+        return true
     }
 
     func setSuperProperty(_ name: String, value: Any?) {
