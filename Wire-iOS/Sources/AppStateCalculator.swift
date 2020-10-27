@@ -147,18 +147,14 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func sessionManagerUserIsLoggedIn(isDatabaseLocked: Bool) {
+    func sessionManagerChangedActiveUserSession(isDatabaseLocked: Bool) {
         loadingAccount = nil
         let appState: AppState = .authenticated(completedRegistration: false,
                                                 databaseIsLocked: isDatabaseLocked)
         transition(to: appState)
     }
     
-    func sessionManagerRegisterDatabaseLocked(isDatabaseLocked: Bool) {
-        let appState: AppState = .authenticated(completedRegistration: false,
-                                                databaseIsLocked: isDatabaseLocked)
-        transition(to: appState)
-    }
+    func sessionManagerWillChangeActiveUserSession(userSession: ZMUserSession?) { }
 }
 
 // MARK - AuthenticationCoordinatorDelegate

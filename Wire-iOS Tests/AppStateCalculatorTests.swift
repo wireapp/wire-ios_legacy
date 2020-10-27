@@ -37,6 +37,8 @@ final class AppStateCalculatorTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Tests AppState Cases
+    
     func testThatSessionManagerDidBlacklistCurrentVersion() {
         // WHEN
         sut.sessionManagerDidBlacklistCurrentVersion()
@@ -134,6 +136,61 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerChangedActiveUserSession() {
+        // GIVEN
+        let isDatabaseLocked = true
+        
+        // WHEN
+        sut.sessionManagerChangedActiveUserSession(isDatabaseLocked: isDatabaseLocked)
+
+        // THEN
+        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
+                                                    databaseIsLocked: isDatabaseLocked))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    // MARK: - Tests AppState Changes
+    
+    func testApplicationDontTransitIfAppStateDontChange() {
+        // WHEN
+        sut.sessionManagerDidBlacklistCurrentVersion()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        
+        // GIVEN
+        appRootRouter.isAppStateCalculatorCalled = false
+
+        // WHEN
+        sut.sessionManagerDidBlacklistCurrentVersion()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testApplicationDontTransitIfAppStateChange() {
+        // WHEN
+        sut.sessionManagerDidBlacklistCurrentVersion()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        
+        // GIVEN
+        let isDatabaseLocked = true
+        appRootRouter.isAppStateCalculatorCalled = false
+
+        // WHEN
+        sut.sessionManagerChangedActiveUserSession(isDatabaseLocked: isDatabaseLocked)
+
+        // THEN
+        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
+                                                    databaseIsLocked: isDatabaseLocked))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
     
