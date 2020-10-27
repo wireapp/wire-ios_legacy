@@ -63,7 +63,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // WHEN
         sut.sessionManagerDidFailToLogin(account: nil,
-                                                            error: error)
+                                         error: error)
 
         // THEN
         // It should display the login screen in RootViewController
@@ -80,7 +80,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // WHEN
         sut.sessionManagerWillLogout(error: error,
-                                                        userSessionCanBeTornDown: {})
+                                     userSessionCanBeTornDown: {})
 
         // THEN
         // It should display the login screen in RootViewController
@@ -105,5 +105,52 @@ final class AppStateCalculatorTests: XCTestCase {
         // It should display the login screen in RootViewController
         XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
+    }
+    
+    func testApplicationDontTransitIfAppStateDontChangeWhenAppBecomeActive() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+        
+        // WHEN
+        // Initial App State Before Going in Background
+        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        
+        let appRootRouter = AppRootRouterMock()
+        sut.delegate = appRootRouter
+        
+        sut.applicationDidEnterBackground()
+        sut.applicationDidBecomeActive()
+        
+        // THEN
+        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+        
+        // WHEN
+        // Initial AppState before going in background
+        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        
+        let appRootRouter = AppRootRouterMock()
+        sut.delegate = appRootRouter
+        
+        sut.applicationDidEnterBackground()
+        // AppState changes when the app is in background
+        sut.sessionManagerDidBlacklistCurrentVersion()
+        sut.applicationDidBecomeActive()
+        
+        // THEN
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+}
+
+class AppRootRouterMock: AppStateCalculatorDelegate {
+    var isAppStateCalculatorCalled: Bool = false
+    func appStateCalculator(_: AppStateCalculator,
+                            didCalculate appState: AppState,
+                            completion: @escaping () -> Void) {
+        isAppStateCalculatorCalled = true
     }
 }

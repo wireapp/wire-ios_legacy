@@ -35,6 +35,9 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
+// TO DO: Move out this code from here
+var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var launchOperations: [LaunchSequenceOperation] = [
@@ -65,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appRootRouter?.overlayWindow
     }
 
-//    private(set) var rootViewController: AppRootViewController!
     private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
     
@@ -154,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return open(url: url, options: options)
+        return appRootRouter?.openDeepLinkURL(url) ?? false
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -164,8 +166,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
-        appRootRouter?.quickActionsManager?.performAction(for: shortcutItem,
-                                                          completionHandler: completionHandler)
+        appRootRouter?.performQuickAction(for: shortcutItem,
+                                          completionHandler: completionHandler)
     }
     
     @objc
@@ -222,22 +224,24 @@ private extension AppDelegate {
         var operations = launchOperations.map {
             BlockOperation(block: $0.execute)
         }
-
+        
+        let deepLinkURL = launchOptions[.url] as? URL
         operations.append(BlockOperation {
-            self.startAppCoordinator(launchOptions: launchOptions)
+            self.startAppCoordinator(launchOptions: launchOptions, deepLinkURL: deepLinkURL)
         })
-
+        
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
-    private func startAppCoordinator(launchOptions: LaunchOptions) {
+    private func startAppCoordinator(launchOptions: LaunchOptions, deepLinkURL: URL?) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }
     
         let navigator = Navigator(NoBackTitleNavigationController())
         appRootRouter = AppRootRouter(viewController: viewController,
-                                      navigator: navigator)
+                                      navigator: navigator,
+                                      deepLinkURL: deepLinkURL)
         appRootRouter?.start(launchOptions: launchOptions)
     }
 }

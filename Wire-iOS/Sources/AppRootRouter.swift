@@ -28,79 +28,69 @@ extension AppRootRouter {
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
     
+    // MARK: - Public Property
     let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
-    
-    
-    // TO DO: this shoud be private
-    private(set) var switchingAccountRouter: SwitchingAccountRouter?
-    private(set) var authenticationCoordinator: AuthenticationCoordinator?
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
     private var appStateCalculator = AppStateCalculator()
-    private var urlActionRouter: URLActionRouter?
-    private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver?
-    private let foregroundNotificationFilter = ForegroundNotificationFilter()
+    private var deepLinkURL: URL?
+    
+    private var authenticationCoordinator: AuthenticationCoordinator?
+    private var switchingAccountRouter: SwitchingAccountRouter
+    private var urlActionRouter: URLActionRouter
+    private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
+    private let foregroundNotificationFilter: ForegroundNotificationFilter
+    private var quickActionsManager: QuickActionsManager
     
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks : [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    
-    private weak var showContentDelegate: ShowContentDelegate? {
-        didSet {
-            if let delegate = showContentDelegate {
-                performWhenShowContentDelegateIsAvailable?(delegate)
-                performWhenShowContentDelegateIsAvailable = nil
-            }
-        }
-    }
 
-    fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
-    
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager? {
         didSet {
-            guard let sessionManager = sessionManager else {
-                return
-            }
-            
-            urlActionRouter = URLActionRouter(viewController: rootViewController,
-                                              sessionManager: sessionManager)
-            switchingAccountRouter = SwitchingAccountRouter(sessionManager: sessionManager)
-            sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver(sessionManager: sessionManager)
+            guard let sessionManager = sessionManager else { return }
+            switchingAccountRouter.sessionManager = sessionManager
+            urlActionRouter.sessionManager = sessionManager
+            sessionManagerLifeCycleObserver.sessionManager = sessionManager
+            foregroundNotificationFilter.sessionManager = sessionManager
+            quickActionsManager.sessionManager = sessionManager
             
             sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
             sessionManager.switchingDelegate = switchingAccountRouter
-            sessionManager.urlActionDelegate = urlActionRouter
-            sessionManager.showContentDelegate = self
-            setCallingSettings(for: sessionManager)
-            quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
-                                                      application: UIApplication.shared)
+            sessionManager.presentationDelegate = urlActionRouter
+            createLifeCycleObserverTokens()
+            setCallingSettings()
         }
     }
 
-    private(set) var rootViewController: RootViewController //TO DO: This should be private
-    private(set) var quickActionsManager: QuickActionsManager?
+    //TO DO: This should be private
+    private(set) var rootViewController: RootViewController
     
     // MARK: - Initialization
     
-    init(viewController: RootViewController, navigator: NavigatorProtocol) {
+    init(viewController: RootViewController,
+         navigator: NavigatorProtocol,
+         deepLinkURL: URL?) {
         self.rootViewController = viewController
         self.navigator = navigator
+        self.deepLinkURL = deepLinkURL
+        self.urlActionRouter = URLActionRouter(viewController: viewController,
+                                               authenticationCoordinator: authenticationCoordinator,
+                                               url: deepLinkURL)
+        self.switchingAccountRouter = SwitchingAccountRouter()
+        self.quickActionsManager = QuickActionsManager()
+        self.foregroundNotificationFilter = ForegroundNotificationFilter()
+        self.sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
         super.init()
-        appStateCalculator.delegate = self
         
-        setupApplicationNotifications()
-        setupContentSizeCategoryNotifications()
-        setupAudioPermissionsNotifications()
+        setupAppStateCalculator()
+        setupNotifications()
+        setupAdditionalWindows()
         
         AppRootRouter.configureAppearance()
-        
-        callWindow.makeKeyAndVisible()
-        callWindow.isHidden = true
-        overlayWindow.makeKeyAndVisible()
-        overlayWindow.isHidden = true
     }
     
     // MARK: - Public implementation
@@ -110,7 +100,42 @@ public class AppRootRouter: NSObject {
         createAndStartSessionManager(launchOptions: launchOptions)
     }
     
+    public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
+        guard let url = deepLinkURL else { return false }
+        return urlActionRouter.open(url: url)
+    }
+    
+    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
+    }
+    
+    public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
+                                   completionHandler: ((Bool)->())?) {
+        quickActionsManager.performAction(for: shortcutItem,
+                                          completionHandler: completionHandler)
+    }
+    
     // MARK: - Private implementation
+    private func setupAppStateCalculator() {
+        appStateCalculator.delegate = self
+    }
+    
+    private func setupNotifications() {
+        setupApplicationNotifications()
+        setupContentSizeCategoryNotifications()
+        setupAudioPermissionsNotifications()
+    }
+    
+    private func setupAdditionalWindows() {
+        callWindow.makeKeyAndVisible()
+        callWindow.isHidden = true
+        overlayWindow.makeKeyAndVisible()
+        overlayWindow.isHidden = true
+    }
+    
+    private func createLifeCycleObserverTokens() {
+        sessionManagerLifeCycleObserver.createLifeCycleObserverTokens()
+    }
     
     private func createAndStartSessionManager(launchOptions: LaunchOptions) {
         guard
@@ -130,22 +155,23 @@ public class AppRootRouter: NSObject {
                               mediaManager: mediaManager,
                               analytics: Analytics.shared,
                               delegate: appStateCalculator,
-                              showContentDelegate: self,
+                              presentationDelegate: urlActionRouter,
                               application: UIApplication.shared,
                               environment: BackendEnvironment.shared,
                               configuration: configuration,
-                              detector: jailbreakDetector) { sessionManager in
-                self.sessionManager = sessionManager
-                sessionManager.start(launchOptions: launchOptions)
+                              detector: jailbreakDetector) { [weak self] sessionManager in
+                self?.sessionManager = sessionManager
+                self?.sessionManager?.start(launchOptions: launchOptions)
+                self?.urlActionRouter.openDeepLink(needsAuthentication: false)
         }
     }
     
-    private func setCallingSettings(for sessionManager: SessionManager) {
-        sessionManager.updateCallNotificationStyleFromSettings()
-        sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+    private func setCallingSettings() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
+        sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        sessionManager.useConferenceCalling = true
+        sessionManager?.useConferenceCalling = true
     }
 }
 
@@ -166,12 +192,11 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
     
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
-        showContentDelegate = nil
         resetAuthenticationCoordinatorIfNeeded(for: appState)
         
         let completionBlock = { [weak self] in
-            self?.applicationDidTransition(to: appState)
             completion()
+            self?.applicationDidTransition(to: appState)
         }
         
         switch appState {
@@ -182,14 +207,12 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
-//            mainWindow.tintColor = .black
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
         case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
             UIColor.setAccentOverride(.undefined)
-//            mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
@@ -297,8 +320,6 @@ extension AppRootRouter {
         /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
         clientViewController.needToShowDataUsagePermissionDialog = false
         
-        showContentDelegate = clientViewController
-        
         if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
             if SelfUser.current.isTeamMember {
                 TrackingManager.shared.disableCrashSharing = true
@@ -340,10 +361,15 @@ extension AppRootRouter {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            urlActionRouter.openDeepLink(needsAuthentication: true)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
         
+        presentAlertForDeletedAccount(appState)
+    }
+    
+    private func presentAlertForDeletedAccount(_ appState: AppState) {
         guard
             case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
@@ -351,12 +377,7 @@ extension AppRootRouter {
         else {
             return
         }
-        
-        presentAlertForDeletedAccount(reason)
-    }
     
-    private func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
-        
         switch reason {
         case .sessionExpired:
             rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
@@ -423,59 +444,3 @@ extension AppRootRouter: AudioPermissionsObserving {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
-
-// MARK: - ShowContentDelegate
-
-extension AppRootRouter: ShowContentDelegate {
-    public func showConnectionRequest(userId: UUID) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConnectionRequest(userId: userId)
-        }
-    }
-
-    public func showUserProfile(user: UserType) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showUserProfile(user: user)
-        }
-    }
-
-
-    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversation(conversation, at: message)
-        }
-    }
-    
-    public func showConversationList() {
-        whenShowContentDelegateIsAvailable { delegate in
-            delegate.showConversationList()
-        }
-    }
-    
-    public func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
-        if let delegate = showContentDelegate {
-            closure(delegate)
-        }
-        else {
-            performWhenShowContentDelegateIsAvailable = closure
-        }
-    }
-}
-
-// TO DO: Move out this code from here
-final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
-    var dismissSpinner: SpinnerCompletion?
-
-    override var childForStatusBarStyle: UIViewController? {
-        return topViewController
-    }
-    
-}
-
-extension UIApplication {
-    @available(iOS 12.0, *)
-    static var userInterfaceStyle: UIUserInterfaceStyle? {
-            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
-    }
-}
-

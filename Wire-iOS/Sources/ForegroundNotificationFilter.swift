@@ -18,8 +18,21 @@
 
 import WireSyncEngine
 
+final class ForegroundNotificationFilter {
+    
+    // MARK: - Public Property
+    var sessionManager: SessionManager?
+    
+    // MARK: - Initialization
+    public init(sessionManager: SessionManager? = nil) {
+        self.sessionManager = sessionManager
+    }
+}
+
 //TO DO: Ask for the logic, not clear when a notification shuld be presented
-class ForegroundNotificationFilter: ForegroundNotificationResponder {
+extension ForegroundNotificationFilter: ForegroundNotificationResponder {
+    
+    
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
         let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
@@ -30,7 +43,7 @@ class ForegroundNotificationFilter: ForegroundNotificationResponder {
         // the concerned account is active
         guard
             let selfUserID = userInfo.selfUserID,
-            selfUserID == SessionManager.shared?.accountManager.selectedAccount?.userIdentifier
+            selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
         else {
             return true
         }
