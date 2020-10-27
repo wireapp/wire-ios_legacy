@@ -49,6 +49,10 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     func setReauth(visible: Bool) {
         reauthVisible = visible
     }
+    
+    func setIncomingCallHeader(visible: Bool, from callerDisplayName: String) {
+        
+    }
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
