@@ -75,7 +75,7 @@ extension ZMConversation {
 /// of mock objects.
 final class CoreDataFixture {
 
-    var selfUserInTeam: Bool = false
+    private var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!

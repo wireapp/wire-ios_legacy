@@ -27,6 +27,13 @@ extension Int {
     }
 }
 
+protocol CountlyInstance {
+    func recordEvent(_ key: String, segmentation: [String : String]?)
+    static func sharedInstance() -> Self
+}
+
+extension Countly: CountlyInstance {}
+
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
@@ -68,23 +75,30 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             storedEvents.removeAll()
         }
     }
+    
+    var countlyInstanceType: CountlyInstance.Type
 
-    init?() {
-        guard
-            let countlyAppKey = Bundle.countlyAppKey, !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL else {
-                zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
-                return nil
+    init?(countlyInstanceType: CountlyInstance.Type = Countly.self) {
+        
+        self.countlyInstanceType = countlyInstanceType
+        
+        if countlyInstanceType == Countly.self {
+            guard
+                let countlyAppKey = Bundle.countlyAppKey, !countlyAppKey.isEmpty,
+                let countlyURL = BackendEnvironment.shared.countlyURL else {
+                    zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
+                    return nil
+            }
+
+            let config: CountlyConfig = CountlyConfig()
+            config.appKey = countlyAppKey
+            config.host = countlyURL.absoluteString
+            config.manualSessionHandling = true
+
+            Countly.sharedInstance().start(with: config)
+
+            zmLog.info("AnalyticsCountlyProvider \(self) started")
         }
-
-        let config: CountlyConfig = CountlyConfig()
-        config.appKey = countlyAppKey
-        config.host = countlyURL.absoluteString
-        config.manualSessionHandling = true
-
-        Countly.sharedInstance().start(with: config)
-
-        zmLog.info("AnalyticsCountlyProvider \(self) started")
 
         isOptedOut = false
         sessionBegun = true
@@ -137,21 +151,24 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         Countly.user().save()
     }
 
-    func tagEvent(_ event: String, attributes: [String: Any]) {
+    func tagEvent(_ event: String,
+                  attributes: [String: Any]) {
         //store the event before self user is assigned, send it later when self user is ready.
         guard selfUser != nil else {            
             storedEvents.append(StoredEvent(event: event, attributes: attributes))
             return
         }
 
-        guard shouldTracksEvent else { return }
+        guard shouldTracksEvent else {
+            return
+        }
 
         var convertedAttributes = attributes.countlyStringValueDictionary
 
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
 
-        Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
+        countlyInstanceType.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
 
     func setSuperProperty(_ name: String, value: Any?) {
