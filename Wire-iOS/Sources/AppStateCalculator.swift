@@ -46,7 +46,6 @@ class AppStateCalculator {
     }
     
     // MARK: - Public Property
-    var sessionManager: SessionManager?
     weak var delegate: AppStateCalculatorDelegate?
     
     // MARK: - Private Set Property
@@ -61,11 +60,6 @@ class AppStateCalculator {
     private var loadingAccount: Account?
     private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
-    
-    // MARK: - Initialization
-    public init(sessionManager: SessionManager? = nil) {
-        self.sessionManager = sessionManager
-    }
     
     // MARK: - Private Implemetation
     private func transition(to appState: AppState,
@@ -112,15 +106,16 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        let selectedAccount = sessionManager?.accountManager.selectedAccount
+    func sessionManagerDidFailToLogin(account: Account?,
+                                      from selectedAccount: Account?,
+                                      error : Error) {
         var authenticationError: NSError?
         // We only care about the error if it concerns the selected account, or the loading account.
         if account != nil && (selectedAccount == account || loadingAccount == account) {
             authenticationError = error as NSError
         }
         // When the account is nil, we care about the error if there are some accounts in accountManager
-        else if account == nil && sessionManager?.accountManager.accounts.count > 0 {
+        else if account == nil && selectedAccount != nil {
             authenticationError = error as NSError
         }
 

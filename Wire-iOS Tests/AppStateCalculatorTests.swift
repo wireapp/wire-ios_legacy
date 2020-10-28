@@ -138,10 +138,36 @@ final class AppStateCalculatorTests: XCTestCase {
         let account = Account(userName: "dummy", userIdentifier: UUID())
         
         // WHEN
-        sut.sessionManagerDidFailToLogin(account: account, error: error)
+        sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerDidFailToLoginSwitchingOnSameAccount() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        
+        // WHEN
+        sut.sessionManagerDidFailToLogin(account: account, from: account, error: error)
+
+        // THEN
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
+        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+    }
+    
+    func testThatSessionManagerDidFailToLoginSwitchingOnDifferentAccount() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
+        let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
+        
+        // WHEN
+        sut.sessionManagerDidFailToLogin(account: nil, from: selectedAccount, error: error)
+
+        // THEN
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
     
@@ -205,10 +231,11 @@ final class AppStateCalculatorTests: XCTestCase {
     func testApplicationDontTransitIfAppStateDontChangeWhenAppBecomeActive() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+        let account = Account(userName: "dummy", userIdentifier: UUID())
         
         // WHEN
         // Initial App State Before Going in Background
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
         
         // THEN
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
@@ -227,10 +254,11 @@ final class AppStateCalculatorTests: XCTestCase {
     func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+        let account = Account(userName: "dummy", userIdentifier: UUID())
         
         // WHEN
         // Initial AppState before going in background
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
+        sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
         
         // THEN
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
