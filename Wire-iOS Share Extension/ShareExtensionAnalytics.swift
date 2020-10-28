@@ -21,7 +21,7 @@ import WireCommonComponents
 import MobileCoreServices
 import WireDataModel
 
-enum AttachmentType:Int, CaseIterable {
+enum AttachmentType: Int, CaseIterable {
     static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
@@ -70,7 +70,7 @@ extension NSItemProvider {
     }
 
     var hasURL: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1 
+        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1
     }
 
     var hasFileURL: Bool {
@@ -81,7 +81,7 @@ extension NSItemProvider {
         guard let uti = registeredTypeIdentifiers.first else { return false }
         return UTTypeConformsTo(uti as CFString, kUTTypeMovie)
     }
-    
+
     var hasWalletPass: Bool {
         return hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
     }
