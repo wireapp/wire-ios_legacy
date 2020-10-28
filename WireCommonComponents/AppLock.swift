@@ -45,9 +45,6 @@ public class AppLock {
         }
     }
     
-    // Returns the time since last lock happened.
-    public static var lastUnlockedDate: Date = Date(timeIntervalSince1970: 0)
-    
     public enum AuthenticationResult {
         /// User sucessfully authenticated
         case granted

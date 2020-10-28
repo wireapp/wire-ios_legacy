@@ -21,21 +21,36 @@ import WireCommonComponents
 
 protocol AppLockTimerProtocol {
     var shouldLockScreen: Bool { get }
+    func appDidBecomeUnlocked()
+    func appDidEnterForeground()
+    func appDidEnterBackground()
 }
 
 final class  AppLockTimer : AppLockTimerProtocol {
-    
+    private var isLocked = true
+    private var lastUnlockedDate = Date.distantPast
+
     var shouldLockScreen: Bool {
-        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
-        
-        return screenLockIsActive
+        return AppLock.isActive && isLocked
     }
     
+    func appDidBecomeUnlocked() {
+        lastUnlockedDate = Date()
+        isLocked = false
+    }
+    
+    func appDidEnterForeground() {
+        isLocked = isLockTimeoutReached
+    }
+
+    func appDidEnterBackground() {
+        guard !isLocked else { return }
+        lastUnlockedDate = Date()
+    }
+
     private var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
         // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let timeSinceAuth = -lastUnlockedDate.timeIntervalSinceNow
         let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
         return !isWithinTimeoutWindow
     }

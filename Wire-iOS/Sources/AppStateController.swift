@@ -245,17 +245,19 @@ extension AppStateController {
     
     @objc func applicationDidBecomeActive() {
         hasEnteredForeground = true
+        appLockTimer.appDidEnterForeground()
         updateAppState()
     }
 
     @objc func applicationDidBecomeUnlocked() {
+        appLockTimer.appDidBecomeUnlocked()
         updateAppState()
     }
     
     @objc func applicationDidEnterBackground() {
         switch authenticationState {
-        case .loggedIn where appState != .locked(databaseIsLocked: isDatabaseLocked):
-            AppLock.lastUnlockedDate = Date()
+        case .loggedIn:
+            appLockTimer.appDidEnterBackground()
         default:
             break
         }

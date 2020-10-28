@@ -22,8 +22,17 @@ import XCTest
 
 private final class MockAppLockTimer: AppLockTimerProtocol {
     var shouldLock: Bool = true
+    var lastUnlockedDate = Date.distantPast
     var shouldLockScreen: Bool {
         return shouldLock
+    }
+    
+    func appDidBecomeUnlocked() {}
+    
+    func appDidEnterForeground() {}
+    
+    func appDidEnterBackground() {
+        lastUnlockedDate = Date()
     }
 }
     
@@ -158,18 +167,20 @@ final class AppStateControllerTests: XCTestCase {
     
     func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
         //given
-        AppLock.lastUnlockedDate = Date()
+        mockAppLockTimer.lastUnlockedDate = Date()
         sut.userAuthenticationDidComplete(addedAccount: true)
+        
         //when
         sut.applicationDidEnterBackground()
+        
         //then
-        XCTAssertTrue(Date() > AppLock.lastUnlockedDate)
+        XCTAssertTrue(Date() > mockAppLockTimer.lastUnlockedDate)
     }
     
     func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
         //given
         let date = Date()
-        AppLock.lastUnlockedDate = date
+        mockAppLockTimer.lastUnlockedDate = date
 
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
         sut.sessionManagerDidFailToLogin(account: nil, error: error)
@@ -178,7 +189,7 @@ final class AppStateControllerTests: XCTestCase {
         sut.applicationDidEnterBackground()
         
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, mockAppLockTimer.lastUnlockedDate)
     }
     
 }
