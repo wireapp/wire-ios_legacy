@@ -219,7 +219,7 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertFalse(delegate.wasNotified)
     }
     
-    func testApplicationDontTransitIfAppStateChange() {
+    func testApplicationTransitIfAppStateChange() {
         // WHEN
         sut.sessionManagerDidBlacklistCurrentVersion()
 
