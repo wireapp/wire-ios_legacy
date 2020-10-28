@@ -17,22 +17,60 @@
 //
 
 import Foundation
+import WireSyncEngine
 import UIKit
+import WireCommonComponents
+import Cartography
 
-final class NotificationWindow: UIWindow {
+final class ScreenObfuscationWindow: UIWindow {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        rootViewController = NotificationWindowRootViewController()
+        rootViewController = RootViewController()
         backgroundColor = .clear
         accessibilityIdentifier = "ZClientNotificationWindow"
         accessibilityViewIsModal = true
         windowLevel = UIWindowLevelNotification // status bar level - 1
         isOpaque = false
+        configureObservers()
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationWillResignActive),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
+    
+    @objc func applicationWillResignActive() {
+        isHidden = !(AppLock.isActive || (ZMUserSession.shared()?.isDatabaseLocked ?? false))
+    }
+
+    @objc func applicationDidBecomeActive() {
+        isHidden = true
+    }
+
 }
+
+private extension ScreenObfuscationWindow {
+    
+    class RootViewController: UIViewController {
+        let blurView = UIVisualEffectView.blurView()
+        
+        override func loadView() {
+            view = blurView
+        }
+        
+    }
+    
+}
+
+
