@@ -84,7 +84,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
 
         let markdownId: Markdown = [.bold, .italic, .link]
         let attrs: [NSAttributedString.Key: Any] = [.markdownID: markdownId, .link: url]
-        sut.attributedText = NSAttributedString(string: "click me!", attributes: attrs)
+        sut.attributedText = NSAttributedString(string: str, attributes: attrs)
 
         // WHEN
         let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
