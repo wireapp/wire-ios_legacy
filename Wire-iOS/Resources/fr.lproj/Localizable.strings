@@ -732,7 +732,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Ajouter des contacts";
-"participants.section.name.footer" = "Une conversation de groupe peut inclure jusqu'à %1$s contacts.";
+"participants.section.name.footer" = "Une conversation de groupe peut inclure jusqu'à %1$d contacts.";
 "participants.section.admins.footer" = "Il n'y a aucun administrateur.";
 "participants.section.members.footer" = "Il n'y a aucun participant.";
 
