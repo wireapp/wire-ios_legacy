@@ -70,18 +70,8 @@ final class AppStateCalculatorTests: XCTestCase {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
-        
-        // WHEN
-        // Will first set the selected account
-        sut.sessionManagerWillOpenAccount(account,
-                                          from: selectedAccount,
-                                          userSessionCanBeTornDown: { })
-        
-        // THEN
-        XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
-        XCTAssertTrue(delegate.wasNotified)
-        
-        // GIVEN
+        sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
+        sut.testHelper_setLoadingAccount(account)
         delegate.wasNotified = false
         
         // WHEN
@@ -98,18 +88,7 @@ final class AppStateCalculatorTests: XCTestCase {
         let account = Account(userName: "dummy", userIdentifier: UUID())
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         let otherAccount = Account(userName: "otherDummy", userIdentifier: UUID())
-        
-        // WHEN
-        // Will first set the selected account
-        sut.sessionManagerWillOpenAccount(account,
-                                          from: selectedAccount,
-                                          userSessionCanBeTornDown: { })
-        
-        // THEN
-        XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
-        XCTAssertTrue(delegate.wasNotified)
-        
-        // GIVEN
+        sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
         delegate.wasNotified = false
         
         // WHEN
@@ -201,14 +180,8 @@ final class AppStateCalculatorTests: XCTestCase {
     // MARK: - Tests AppState Changes
     
     func testApplicationDontTransitIfAppStateDontChange() {
-        // WHEN
-        sut.sessionManagerDidBlacklistCurrentVersion()
-
-        // THEN
-        XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(delegate.wasNotified)
-        
         // GIVEN
+        sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
 
         // WHEN
@@ -221,14 +194,8 @@ final class AppStateCalculatorTests: XCTestCase {
     
     func testApplicationTransitIfAppStateChange() {
         // WHEN
-        sut.sessionManagerDidBlacklistCurrentVersion()
-
-        // THEN
-        XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(delegate.wasNotified)
-        
-        // GIVEN
         let isDatabaseLocked = true
+        sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
 
         // WHEN
@@ -245,16 +212,7 @@ final class AppStateCalculatorTests: XCTestCase {
     func testApplicationDontTransitIfAppStateDontChangeWhenAppBecomeActive() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        
-        // WHEN
-        // Initial App State Before Going in Background
-        sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
-        
-        // THEN
-        XCTAssertTrue(delegate.wasNotified)
-        
-        // GIVEN
+        sut.testHelper_setAppState(.unauthenticated(error: error))
         delegate.wasNotified = false
         
         // WHEN
@@ -268,16 +226,7 @@ final class AppStateCalculatorTests: XCTestCase {
     func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        
-        // WHEN
-        // Initial AppState before going in background
-        sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
-        
-        // THEN
-        XCTAssertTrue(delegate.wasNotified)
-        
-        // GIVEN
+        sut.testHelper_setAppState(.unauthenticated(error: error))
         delegate.wasNotified = false
         
         // WHEN
