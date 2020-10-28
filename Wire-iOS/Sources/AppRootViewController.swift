@@ -548,7 +548,6 @@ extension AppRootViewController {
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
-        AppDelegate.shared.notificationsWindow?.isHidden = true
     }
 }
 

@@ -30,6 +30,7 @@ final class NotificationWindowRootViewController: UIViewController {
                                                selector: #selector(applicationWillResignActive),
                                                name: UIApplication.willResignActiveNotification,
                                                object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -60,6 +61,10 @@ final class NotificationWindowRootViewController: UIViewController {
         
         setupConstraints()
         AppDelegate.shared.notificationsWindow?.isHidden = !AppLock.isActive
+    }
+    
+    @objc fileprivate func applicationDidBecomeActive() {
+        AppDelegate.shared.notificationsWindow?.isHidden = true
     }
 
     // MARK: - Rotation handling (should match up with root)
