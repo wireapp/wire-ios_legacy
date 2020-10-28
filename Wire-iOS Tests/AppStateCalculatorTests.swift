@@ -22,14 +22,14 @@ import XCTest
 final class AppStateCalculatorTests: XCTestCase {
 
     var sut: AppStateCalculator!
-    var appRootRouter: AppRootRouterMock!
+    var delegate: MockAppStateCalculatorDelegate!
     
     override func setUp() {
         super.setUp()
         sut = AppStateCalculator()
-        appRootRouter = AppRootRouterMock()
-        appRootRouter.isAppStateCalculatorCalled = false
-        sut.delegate = appRootRouter
+        delegate = MockAppStateCalculatorDelegate()
+        delegate.wasNotified = false
+        sut.delegate = delegate
     }
 
     override func tearDown() {
@@ -45,7 +45,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerWillMigrateLegacyAccount() {
@@ -54,7 +54,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
         
     func testThatSessionManagerDidJailbreakCurrentVersion() {
@@ -63,7 +63,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .jailbroken)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerWillMigrateAccount() {
@@ -79,10 +79,10 @@ final class AppStateCalculatorTests: XCTestCase {
         
         // THEN
         XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
         
         // WHEN
         // Will migrate to that account
@@ -90,7 +90,7 @@ final class AppStateCalculatorTests: XCTestCase {
         
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerWillNotMigrateAccount() {
@@ -107,17 +107,17 @@ final class AppStateCalculatorTests: XCTestCase {
         
         // THEN
         XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
         
         // WHEN
         // Will migrate to that account
         sut.sessionManagerWillMigrateAccount(otherAccount)
         
         // THEN
-        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertFalse(delegate.wasNotified)
     }
 
     func testThatWillLogout() {
@@ -129,7 +129,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error as NSError?))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerDidFailToLogin() {
@@ -142,7 +142,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerDidFailToLoginSwitchingOnSameAccount() {
@@ -155,7 +155,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerDidFailToLoginSwitchingOnDifferentAccount() {
@@ -168,7 +168,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatSessionManagerDidUpdateActiveUserSession() {
@@ -181,7 +181,21 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
                                                     isDatabaseLocked: isDatabaseLocked))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
+    }
+    
+    func testUserAuthenticationDidComplete() {
+        // GIVEN
+        let addedAccount = false
+        let isDatabaseLocked = false
+        
+        // WHEN
+        sut.userAuthenticationDidComplete(addedAccount: addedAccount)
+        
+        // THEN
+        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: addedAccount,
+                                                    isDatabaseLocked: isDatabaseLocked))
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     // MARK: - Tests AppState Changes
@@ -192,17 +206,17 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
 
         // WHEN
         sut.sessionManagerDidBlacklistCurrentVersion()
 
         // THEN
         XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertFalse(delegate.wasNotified)
     }
     
     func testApplicationDontTransitIfAppStateChange() {
@@ -211,11 +225,11 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
         let isDatabaseLocked = true
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
 
         // WHEN
         sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
@@ -223,7 +237,7 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
                                                     isDatabaseLocked: isDatabaseLocked))
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
     
     // MARK: - Tests When App Become Active
@@ -238,17 +252,17 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
         
         // THEN
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
         
         // WHEN
         sut.applicationDidEnterBackground()
         sut.applicationDidBecomeActive()
         
         // THEN
-        XCTAssertFalse(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertFalse(delegate.wasNotified)
     }
     
     func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
@@ -261,10 +275,10 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
         
         // THEN
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
         
         // GIVEN
-        appRootRouter.isAppStateCalculatorCalled = false
+        delegate.wasNotified = false
         
         // WHEN
         sut.applicationDidEnterBackground()
@@ -273,15 +287,16 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidBecomeActive()
         
         // THEN
-        XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
+        XCTAssertTrue(delegate.wasNotified)
     }
 }
 
-class AppRootRouterMock: AppStateCalculatorDelegate {
-    var isAppStateCalculatorCalled: Bool = false
+class MockAppStateCalculatorDelegate: AppStateCalculatorDelegate {
+    var wasNotified: Bool = false
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void) {
-        isAppStateCalculatorCalled = true
+        wasNotified = true
     }
 }
+
