@@ -19,7 +19,6 @@
 import WireShareEngine
 import WireCommonComponents
 import MobileCoreServices
-import WireDataModel
 
 enum AttachmentType: Int, CaseIterable {
     static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
@@ -33,14 +32,6 @@ enum AttachmentType: Int, CaseIterable {
     case url
     case fileUrl
 }
-
-//final class ExtensionActivity {
-//    let attachments: [AttachmentType: [NSItemProvider]]
-//
-//    init(attachments: [AttachmentType: [NSItemProvider]]?) {
-//        self.attachments = attachments ?? [:]
-//    }
-//}
 
 extension NSItemProvider {
     var hasGifImage: Bool {
