@@ -21,7 +21,7 @@ import WireSyncEngine
 
 enum AppState: Equatable {
     case headless
-    case authenticated(completedRegistration: Bool, databaseIsLocked: Bool)
+    case authenticated(completedRegistration: Bool, isDatabaseLocked: Bool)
     case unauthenticated(error : NSError?)
     case blacklisted
     case jailbroken
@@ -45,10 +45,11 @@ class AppStateCalculator {
         removeObserverToken()
     }
     
-    // MARK - Public Property
+    // MARK: - Public Property
+    var sessionManager: SessionManager?
     weak var delegate: AppStateCalculatorDelegate?
     
-    // MARK - Private Set Property
+    // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
     private(set) var appState: AppState = .headless {
         willSet {
@@ -56,11 +57,17 @@ class AppStateCalculator {
         }
     }
     
-    // MARK - Private Property
-    private var loadingAccount : Account?
+    // MARK: - Private Property
+    private var loadingAccount: Account?
+    private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
     
-    // MARK - Private Implemetation
+    // MARK: - Initialization
+    public init(sessionManager: SessionManager? = nil) {
+        self.sessionManager = sessionManager
+    }
+    
+    // MARK: - Private Implemetation
     private func transition(to appState: AppState,
                             force: Bool = false,
                             completion: (() -> Void)? = nil) {
@@ -96,7 +103,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     func applicationWillEnterForeground() { }
 }
 
-// MARK - SessionManagerDelegate
+// MARK: - SessionManagerDelegate
 extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerWillLogout(error: Error?,
                                   userSessionCanBeTornDown: (() -> Void)?) {
@@ -106,14 +113,14 @@ extension AppStateCalculator: SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
+        let selectedAccount = sessionManager?.accountManager.selectedAccount
         var authenticationError: NSError?
         // We only care about the error if it concerns the selected account, or the loading account.
         if account != nil && (selectedAccount == account || loadingAccount == account) {
             authenticationError = error as NSError
         }
         // When the account is nil, we care about the error if there are some accounts in accountManager
-        else if account == nil && SessionManager.shared?.accountManager.accounts.count > 0 {
+        else if account == nil && sessionManager?.accountManager.accounts.count > 0 {
             authenticationError = error as NSError
         }
 
@@ -139,30 +146,31 @@ extension AppStateCalculator: SessionManagerDelegate {
     }
     
     func sessionManagerWillOpenAccount(_ account: Account,
+                                       from selectedAccount: Account?,
                                        userSessionCanBeTornDown: @escaping () -> Void) {
         loadingAccount = account
         let appState: AppState = .loading(account: account,
-                                          from: SessionManager.shared?.accountManager.selectedAccount)
+                                          from: selectedAccount)
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
     }
     
     func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
         loadingAccount = nil
+        isDatabaseLocked = isLocked
         let appState: AppState = .authenticated(completedRegistration: false,
-                                                databaseIsLocked: isLocked)
+                                                isDatabaseLocked: isLocked)
         transition(to: appState)
     }
     
     func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) { }
 }
 
-// MARK - AuthenticationCoordinatorDelegate
+// MARK: - AuthenticationCoordinatorDelegate
 extension AppStateCalculator: AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
-        let databaseIsLocked = ZMUserSession.shared()?.isDatabaseLocked ?? false
         let appState: AppState = .authenticated(completedRegistration: addedAccount,
-                                                databaseIsLocked: databaseIsLocked)
+                                                isDatabaseLocked: isDatabaseLocked)
         transition(to: appState)
     }
 }

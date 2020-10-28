@@ -69,13 +69,16 @@ final class AppStateCalculatorTests: XCTestCase {
     func testThatSessionManagerWillMigrateAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
+        let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         
         // WHEN
         // Will first set the selected account
-        sut.sessionManagerWillOpenAccount(account, userSessionCanBeTornDown: { })
+        sut.sessionManagerWillOpenAccount(account,
+                                          from: selectedAccount,
+                                          userSessionCanBeTornDown: { })
         
         // THEN
-        XCTAssertEqual(sut.appState, .loading(account: account, from: nil))
+        XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
         
         // GIVEN
@@ -93,14 +96,17 @@ final class AppStateCalculatorTests: XCTestCase {
     func testThatSessionManagerWillNotMigrateAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
+        let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         let otherAccount = Account(userName: "otherDummy", userIdentifier: UUID())
         
         // WHEN
         // Will first set the selected account
-        sut.sessionManagerWillOpenAccount(account, userSessionCanBeTornDown: { })
+        sut.sessionManagerWillOpenAccount(account,
+                                          from: selectedAccount,
+                                          userSessionCanBeTornDown: { })
         
         // THEN
-        XCTAssertEqual(sut.appState, .loading(account: account, from: nil))
+        XCTAssertEqual(sut.appState, .loading(account: account, from: selectedAccount))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
         
         // GIVEN
@@ -148,7 +154,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
-                                                    databaseIsLocked: isDatabaseLocked))
+                                                    isDatabaseLocked: isDatabaseLocked))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
     
@@ -190,7 +196,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
-                                                    databaseIsLocked: isDatabaseLocked))
+                                                    isDatabaseLocked: isDatabaseLocked))
         XCTAssertTrue(appRootRouter.isAppStateCalculatorCalled)
     }
     

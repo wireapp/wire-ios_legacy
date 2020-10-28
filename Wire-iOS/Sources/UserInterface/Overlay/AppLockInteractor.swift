@@ -142,7 +142,7 @@ extension AppLockInteractor {
     
     private var isDatabaseLocked: Bool {
         guard let state = appState else { return false }
-        if case AppState.authenticated(completedRegistration: _, databaseIsLocked: let isDatabaseLocked) = state {
+        if case AppState.authenticated(completedRegistration: _, isDatabaseLocked: let isDatabaseLocked) = state {
             return isDatabaseLocked
         }
         return false

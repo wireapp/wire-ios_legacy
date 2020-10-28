@@ -211,7 +211,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
-        case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
+        case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
             UIColor.setAccentOverride(.undefined)
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
