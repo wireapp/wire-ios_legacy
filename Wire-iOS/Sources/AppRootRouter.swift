@@ -104,9 +104,8 @@ public class AppRootRouter: NSObject {
         return urlActionRouter.open(url: url)
     }
     
-    public func confirmSwitchingAccount(activeUserSession: ZMUserSession, completion: @escaping (Bool) -> Void) {
-        switchingAccountRouter.confirmSwitchingAccount(activeUserSession: activeUserSession,
-                                                       completion: completion)
+    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
     }
     
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,

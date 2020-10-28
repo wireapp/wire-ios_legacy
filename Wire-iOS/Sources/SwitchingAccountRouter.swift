@@ -18,24 +18,24 @@
 
 import WireSyncEngine
 
-class SwitchingAccountRouter: SessionManagerSwitchingDelegate {
-    func sessionManagerConfirmSwitchingAccount(activeUserSession: ZMUserSession,
-                                                      completion: @escaping (Bool) -> Void) {
-        confirmSwitchingAccount(activeUserSession: activeUserSession,
-                                completion: completion)
+typealias SwitchingAccountRouterProtocol = SessionManagerSwitchingDelegate & SwitchingAccountAlertPresenter
+
+protocol SwitchingAccountAlertPresenter {
+    func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void)
+}
+
+class SwitchingAccountRouter: SwitchingAccountRouterProtocol { }
+
+// MARK: - SessionManagerSwitchingDelegate
+extension SwitchingAccountRouter {
+    func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        presentSwitchAccountAlert(completion: completion)
     }
-    
-    // MARK: - Public Implementation
-    public func confirmSwitchingAccount(activeUserSession: ZMUserSession,
-                                        completion: @escaping (Bool) -> Void) {
-        guard activeUserSession.isCallOngoing else {
-            return completion(true)
-        }
-        presentSwitchAccountAlert(with: activeUserSession, completion: completion)
-    }
-    
-    // MARK: - Private Implementation
-    private func presentSwitchAccountAlert(with activeUserSession: ZMUserSession, completion: @escaping (Bool) -> Void) {
+}
+
+// MARK: - SwitchingAccountAlertPresenter
+extension SwitchingAccountRouter {
+    internal func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         guard let topmostController = UIApplication.shared.topmostViewController() else {
             return completion(false)
         }
@@ -46,7 +46,6 @@ class SwitchingAccountRouter: SessionManagerSwitchingDelegate {
         alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
                                       style: .default,
                                       handler: { action in
-            activeUserSession.callCenter?.endAllCalls()
             completion(true)
         }))
         alert.addAction(.cancel {
@@ -56,3 +55,4 @@ class SwitchingAccountRouter: SessionManagerSwitchingDelegate {
         topmostController.present(alert, animated: true, completion: nil)
     }
 }
+
