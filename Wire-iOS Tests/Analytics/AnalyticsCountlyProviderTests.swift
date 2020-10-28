@@ -54,4 +54,27 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
                                              "is_global_ephemeral": "False",
                                              "conversation_guests": "0"])
     }
+
+    //MARK: - app.open tag
+    
+    func testThatAppOpenIsStoredAndTaggedAfterSelfUserIsSet() {
+        //GIVEN
+        let sut = Analytics(optedOut: false)
+        ///TODO: inject app key to prevent nil
+        let analyticsCountlyProvider = AnalyticsCountlyProvider()!
+        sut.provider = analyticsCountlyProvider
+
+        //WHEN
+        XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 0)
+        sut.tagEvent("app.open")
+
+        //THEN
+        XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 1)
+
+        //WHEN
+        sut.selfUser = coreDataFixture.selfUser
+
+        //THEN
+        XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 0)
+    }
 }

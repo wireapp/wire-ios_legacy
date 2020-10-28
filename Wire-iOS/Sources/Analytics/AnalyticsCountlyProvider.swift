@@ -39,6 +39,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// store the events before selfUser is assigned. Send them and clear after selfUser is set
     private var storedEvents: [StoredEvent] = []
+    
+    var storedEventsCount: Int {
+        return storedEvents.count
+    }
 
     var isOptedOut: Bool {
         get {
