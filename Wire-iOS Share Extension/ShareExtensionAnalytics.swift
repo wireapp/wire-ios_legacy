@@ -34,30 +34,13 @@ enum AttachmentType:Int, CaseIterable {
     case fileUrl
 }
 
-final class ExtensionActivity {
-
-    private var numberOfImages: Int {
-        return attachments[.image]?.count ?? 0
-    }
-
-    private var hasVideo: Bool {
-        return attachments.keys.contains(.video)
-    }
-
-    private var hasFile: Bool {
-        return attachments.keys.contains(.rawFile)
-    }
-
-    public var hasText = false
-
-    let attachments: [AttachmentType: [NSItemProvider]]
-
-    var conversation: Conversation? = nil
-
-    init(attachments: [AttachmentType: [NSItemProvider]]?) {
-        self.attachments = attachments ?? [:]
-    }
-}
+//final class ExtensionActivity {
+//    let attachments: [AttachmentType: [NSItemProvider]]
+//
+//    init(attachments: [AttachmentType: [NSItemProvider]]?) {
+//        self.attachments = attachments ?? [:]
+//    }
+//}
 
 extension NSItemProvider {
     var hasGifImage: Bool {

@@ -72,7 +72,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
-    fileprivate var extensionActivity: ExtensionActivity? = nil
+    
+    /// stores extensionContext?.attachments
+    fileprivate var attachments: [AttachmentType: [NSItemProvider]] = [:]
+    
     fileprivate var currentAccount: Account? = nil
     fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .disabled
     private var observer: SendableBatchObserver? = nil
@@ -112,8 +115,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupAppCenterIfNeeded()
         updateAccount(currentAccount)
-        let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
-        extensionActivity = activity
+        
+        if let sortedAttachments = extensionContext?.attachments.sorted {
+            attachments = sortedAttachments
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -195,7 +200,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
     private func appendTextToEditor() {
-        guard let urlItems = extensionActivity?.attachments[.url] else {
+        guard let urlItems = attachments[.url] else {
             return
         }
 
@@ -212,7 +217,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     /// If there is a File URL attachment, copy the filename of the URL attachment into the text field
     private func appendFileTextToEditor() {
-        guard let urlItems = extensionActivity?.attachments[.fileUrl] else {
+        guard let urlItems = attachments[.fileUrl] else {
             return
         }
 
@@ -375,7 +380,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     func updateState(conversation: Conversation?) {
         conversationItem.value = conversation?.name ?? "share_extension.conversation_selection.empty.value".localized
         postContent?.target = conversation
-        extensionActivity?.conversation = conversation
     }
     
     func updateAccount(_ account: Account?) {
@@ -411,7 +415,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         guard account != currentAccount else { return }
         postContent?.target = nil
-        extensionActivity?.conversation = nil
     }
     
     private func presentChooseAccount() {
