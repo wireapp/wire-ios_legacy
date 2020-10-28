@@ -52,7 +52,6 @@ public class AppRootRouter: NSObject {
     private(set) var sessionManager: SessionManager? {
         didSet {
             guard let sessionManager = sessionManager else { return }
-            switchingAccountRouter.sessionManager = sessionManager
             urlActionRouter.sessionManager = sessionManager
             sessionManagerLifeCycleObserver.sessionManager = sessionManager
             foregroundNotificationFilter.sessionManager = sessionManager
@@ -105,8 +104,9 @@ public class AppRootRouter: NSObject {
         return urlActionRouter.open(url: url)
     }
     
-    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
-        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
+    public func confirmSwitchingAccount(activeUserSession: ZMUserSession, completion: @escaping (Bool) -> Void) {
+        switchingAccountRouter.confirmSwitchingAccount(activeUserSession: activeUserSession,
+                                                       completion: completion)
     }
     
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
