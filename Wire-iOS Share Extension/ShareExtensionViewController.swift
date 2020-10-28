@@ -258,17 +258,14 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 self.progressViewController?.progress = progress
 
             case .done:
-                self.storeTrackingData {
-                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                        self.view.alpha = 0
-                        self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                    }, completion: { _ in
-                        self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-                    })
-                }
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                    self.view.alpha = 0
+                    self.navigationController?.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+                }, completion: { _ in
+                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                })
 
             case .conversationDidDegrade((let users, let strategyChoice)):
-                self.extensionActivity?.markConversationDidDegrade()
                 if let conversation = postContent.target {
                     self.conversationDidDegrade(
                         change: ConversationDegradationInfo(conversation: conversation, users: users),
@@ -291,11 +288,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 }
             }
         }
-    }
-
-    private func storeTrackingData(completion: @escaping () -> Void) {
-        extensionActivity?.hasText = !contentText.isEmpty
-        completion()
     }
 
     // MARK: - Preview

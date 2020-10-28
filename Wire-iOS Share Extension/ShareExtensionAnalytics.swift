@@ -36,9 +36,6 @@ enum AttachmentType:Int, CaseIterable {
 
 final class ExtensionActivity {
 
-    private var verifiedConversation = false
-    private var conversationDidDegrade = false
-
     private var numberOfImages: Int {
         return attachments[.image]?.count ?? 0
     }
@@ -55,18 +52,10 @@ final class ExtensionActivity {
 
     let attachments: [AttachmentType: [NSItemProvider]]
 
-    public var conversation: Conversation? = nil {
-        didSet {
-            verifiedConversation = conversation?.securityLevel == .secure
-        }
-    }
+    var conversation: Conversation? = nil
 
     init(attachments: [AttachmentType: [NSItemProvider]]?) {
         self.attachments = attachments ?? [:]
-    }
-
-    func markConversationDidDegrade() {
-        conversationDidDegrade = true
     }
 }
 
