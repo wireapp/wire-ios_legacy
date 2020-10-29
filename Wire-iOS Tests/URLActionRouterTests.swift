@@ -30,7 +30,7 @@ final class URLActionRouterTests: XCTestCase {
         router.openDeepLink(needsAuthentication: false)
         
         // THEN
-        XCTAssertFalse(router.hasBeenDeepLinkOpened)
+        XCTAssertFalse(router.wasDeepLinkOpened)
     }
     
     func testThatDeepLinkIsOpened_WhenDeepLinkIsValid() {
@@ -42,7 +42,7 @@ final class URLActionRouterTests: XCTestCase {
         router.openDeepLink()
         
         // THEN
-        XCTAssertTrue(router.hasBeenDeepLinkOpened)
+        XCTAssertTrue(router.wasDeepLinkOpened)
     }
     
     func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndNeedsAuthentication() {
@@ -54,14 +54,14 @@ final class URLActionRouterTests: XCTestCase {
         router.openDeepLink(needsAuthentication: true)
         
         // THEN
-        XCTAssertFalse(router.hasBeenDeepLinkOpened)
+        XCTAssertFalse(router.wasDeepLinkOpened)
     }
 }
 
 class TestableURLActionRouter: URLActionRouter {
-    var hasBeenDeepLinkOpened = false
+    var wasDeepLinkOpened = false
     override func open(url: URL) -> Bool {
-        hasBeenDeepLinkOpened = true
-        return hasBeenDeepLinkOpened
+        wasDeepLinkOpened = true
+        return wasDeepLinkOpened
     }
 }
