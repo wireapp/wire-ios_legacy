@@ -33,7 +33,7 @@ final class AppLockTimerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatShouldLockScreenReturnsTrueIfNeeded() {
+    func testThatScreenShouldBeLockedIfAppLockIsActiveAndTimeoutIsReached() {
         //given
         set(appLockActive: true, timeoutReached: true)
         
