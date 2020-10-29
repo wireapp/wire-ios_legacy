@@ -83,10 +83,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
     var countlyInstanceType: CountlyInstance.Type
-    var countlyAppKey: String?
+    var countlyAppKey: String
 
     init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
           countlyAppKey: String? = Bundle.countlyAppKey) {
+        guard let countlyAppKey = countlyAppKey else { return nil }
+        
         self.countlyAppKey = countlyAppKey
         self.countlyInstanceType = countlyInstanceType
         isOptedOut = false
@@ -110,9 +112,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                 return false
         }
 
-        guard let countlyAppKey = countlyAppKey,
-            !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL else {
+        guard !countlyAppKey.isEmpty,
+              let countlyURL = BackendEnvironment.shared.countlyURL else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
                 return false
         }
