@@ -20,7 +20,6 @@ import Foundation
 import WireSyncEngine
 import UIKit
 import WireCommonComponents
-import Cartography
 
 final class ScreenObfuscationWindow: UIWindow {
     

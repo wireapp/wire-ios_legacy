@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 import WireCommonComponents
 
 protocol AppLockTimerProtocol {
@@ -30,6 +31,13 @@ final class  AppLockTimer : AppLockTimerProtocol {
     private var isLocked = true
     private var lastUnlockedDate = Date.distantPast
 
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: .none)
+    }
+    
     var shouldLockScreen: Bool {
         return AppLock.isActive && isLocked
     }
@@ -43,7 +51,7 @@ final class  AppLockTimer : AppLockTimerProtocol {
         isLocked = isLockTimeoutReached
     }
 
-    func appDidEnterBackground() {
+    @objc func appDidEnterBackground() {
         guard !isLocked else { return }
         lastUnlockedDate = Date()
     }
