@@ -134,8 +134,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let team = selfUser.team,
-            let teamID = team.remoteIdentifier,
-            let analyticsIdentifier = selfUser.analyticsIdentifier
+            let teamID = team.remoteIdentifier
         else {
 
             //clean up
