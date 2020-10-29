@@ -67,9 +67,8 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             //GIVEN
             sut = Analytics(optedOut: false)
-            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self ,
-                                                                    countlyAppKey: "dummy countlyAppKey"
-                )!
+            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self,
+                                                                    countlyAppKey: "dummy countlyAppKey")!
             sut.provider = analyticsCountlyProvider
 
             //WHEN
