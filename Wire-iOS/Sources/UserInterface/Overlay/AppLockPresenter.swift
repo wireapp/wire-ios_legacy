@@ -41,7 +41,7 @@ protocol AppLockUserInterface: class {
     
     func setSpinner(animating: Bool)
     func setReauth(visible: Bool)
-    func setIncomingCallHeader(visible: Bool, from callerDisplayName: String)
+    func setIncomingCallHeader(visible: Bool)
 }
 
 enum AuthenticationState {
@@ -99,16 +99,10 @@ final class AppLockPresenter {
     func requireAuthenticationIfNeeded() {
         switch authenticationState {
         case .needed:
-            if let callConversation = ZMUserSession.shared()?.priorityCallConversation {
-                showReauth(visible: true)
-                showIncomingCall(visible: true, for: callConversation)
-            } else {
-                showReauth(visible: false)
-                showIncomingCall(visible: false)
-                appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
-            }
+            showContents(visible: false)
+            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
-            showReauth(visible: true)
+            showContents(visible: true)
         case .pendingPassword:
             break
         }
@@ -120,7 +114,7 @@ extension AppLockPresenter {
     private func checkPassword(password: String) -> Bool {
         guard !password.isEmpty else {
             authenticationState = .cancelled
-            showReauth(visible: true)
+            showContents(visible: true)
             return false
         }
         
@@ -152,14 +146,14 @@ extension AppLockPresenter: AppLockInteractorOutput {
     
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
         authenticationState.update(with: result)
-        showReauth(visible: result != .granted)
+        showContents(visible: result != .granted)
 
         if case .needAccountPassword = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
             if appLockInteractorInput.isCustomPasscodeNotSet {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
                     // user need to enter the newly created passcode after creation
-                    self.showReauth(visible: true)
+                    self.showContents(visible: true)
                 })
             } else {
                 requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
@@ -174,7 +168,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
     func passwordVerified(with result: VerifyPasswordResult?) {
         userInterface?.setSpinner(animating: false)
         guard let result = result else {
-            showReauth(visible: true)
+            showContents(visible: true)
             return
         }
 
@@ -189,15 +183,11 @@ extension AppLockPresenter: AppLockInteractorOutput {
 
 // MARK: - Helpers
 extension AppLockPresenter {
-    private func showReauth(visible: Bool) {
+    private func showContents(visible: Bool) {
         userInterface?.setReauth(visible: visible)
+        userInterface?.setIncomingCallHeader(visible: visible)
     }
-    
-    private func showIncomingCall(visible: Bool, for conversation: ZMConversation? = nil) {
-        let callerDisplayName = (conversation?.voiceChannel?.initiator?.name) ?? "conversation.status.someone".localized //TODO: ask the design team
-        userInterface?.setIncomingCallHeader(visible: visible, from: callerDisplayName)
-    }
-    
+        
     private func appUnlocked() {
         userInterface?.dismissUnlockScreen()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
