@@ -55,8 +55,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     init() {
-        beginSession()
-
         isOptedOut = false
     }
     
@@ -65,7 +63,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     /// - Returns: return true if Countly is started
     @discardableResult
     private func beginSession() -> Bool {
-        //TODO: begin session only if self user is set
+        // begin the session when:
+        // 1. self user is a team member
+        // 2. analyticsIdentifier is generated
+        // 3. Countly key and URL is read
         guard let countlyAppKey = Bundle.countlyAppKey,
               !countlyAppKey.isEmpty,
               let countlyURL = BackendEnvironment.shared.countlyURL,
