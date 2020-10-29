@@ -24,17 +24,13 @@ protocol SwitchingAccountAlertPresenter {
     func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void)
 }
 
-class SwitchingAccountRouter: SwitchingAccountRouterProtocol { }
-
-// MARK: - SessionManagerSwitchingDelegate
-extension SwitchingAccountRouter {
+class SwitchingAccountRouter: SwitchingAccountRouterProtocol {
+    // MARK: - SessionManagerSwitchingDelegate
     func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
         presentSwitchAccountAlert(completion: completion)
     }
-}
-
-// MARK: - SwitchingAccountAlertPresenter
-extension SwitchingAccountRouter {
+    
+    // MARK: - SwitchingAccountAlertPresenter
     @objc
     internal func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         guard let topmostController = UIApplication.shared.topmostViewController() else {
@@ -56,4 +52,3 @@ extension SwitchingAccountRouter {
         topmostController.present(alert, animated: true, completion: nil)
     }
 }
-

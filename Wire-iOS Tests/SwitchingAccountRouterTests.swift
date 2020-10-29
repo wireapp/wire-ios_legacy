@@ -34,7 +34,7 @@ final class SwitchingAccountRouterTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatSwitchAccountAlertIfPresented() {
+    func testThatAlertIsPresented_WhenConfirmSwitchingAccountIsInvoked() {
         // WHEN
         sut.confirmSwitchingAccount { _ in }
 
