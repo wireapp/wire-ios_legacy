@@ -22,18 +22,11 @@ import XCTest
 
 private final class MockAppLockTimer: AppLockTimerProtocol {
     var shouldLock: Bool = true
-    var lastUnlockedDate = Date.distantPast
     var shouldLockScreen: Bool {
         return shouldLock
     }
-    
     func appDidBecomeUnlocked() {}
-    
     func appDidEnterForeground() {}
-    
-    func appDidEnterBackground() {
-        lastUnlockedDate = Date()
-    }
 }
     
 final class AppStateControllerTests: XCTestCase {

@@ -24,7 +24,7 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class AppLockViewController: UIViewController {
-    private var lockView: AppLockView!
+    private var lockView: AppLockView = AppLockView()
     private let spinner = UIActivityIndicatorView(style: .white)
 
     // need to hold a reference onto `passwordController`,
@@ -39,7 +39,6 @@ final class AppLockViewController: UIViewController {
 
     convenience init(isDatabaseLocked: Bool = false) {
         self.init(nibName:nil, bundle:nil)
-        lockView = AppLockView()
         self.appLockPresenter = AppLockPresenter(userInterface: self, isDatabaseLocked: isDatabaseLocked)
     }
 

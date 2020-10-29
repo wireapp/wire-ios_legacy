@@ -28,7 +28,7 @@ extension SessionManager {
     }
     
     var isLockScreenEnabled: Bool {
-        return AppLock.isActive || (ZMUserSession.shared()?.isDatabaseLocked ?? false)
+        return AppLock.isActive || (ZMUserSession.shared()?.encryptMessagesAtRest ?? false)
     }
     
     func updateCallNotificationStyleFromSettings() {

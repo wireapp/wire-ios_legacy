@@ -151,7 +151,7 @@ final class AppLockPresenterTests: XCTestCase {
         assert(reauthVisibile: nil)
     }
     
-    func testThatFailedAuthenticationDimsContentsWithoutReauth() {
+    func testThatFailedAuthenticationShowsReauth() {
         //when
         sut.authenticationEvaluated(with: .denied)
         //then
@@ -165,14 +165,14 @@ final class AppLockPresenterTests: XCTestCase {
         assert(reauthVisibile: true)
     }
     
-    func testThatUnavailableAuthenticationDimsContentsWithReauth() {
+    func testThatUnavailableAuthenticationShowsReauth() {
         //when
         sut.authenticationEvaluated(with: .unavailable)
         //then
         assert(reauthVisibile: true)
     }
     
-    func testThatGrantedAuthenticationDoesntDimContentsOrShowReauth() {
+    func testThatGrantedAuthenticationDoesntShowReauth() {
         //when
         sut.authenticationEvaluated(with: .granted)
         //then
@@ -187,14 +187,14 @@ final class AppLockPresenterTests: XCTestCase {
         XCTAssertFalse(userInterface.spinnerAnimating ?? true)
     }
     
-    func testThatPasswordVerifiedWithoutResultDimsContentsWithReauth() {
+    func testThatPasswordVerifiedWithoutResultShowsReauth() {
         //when
         sut.passwordVerified(with: nil)
         //then
         assert(reauthVisibile: true)
     }
     
-    func testThatPasswordVerifiedWithValidatedResultSetContentsNotDimmed() {
+    func testThatPasswordVerifiedWithValidatedResultDoesntShowReauth() {
         //when
         sut.passwordVerified(with: .validated)
         
@@ -202,7 +202,7 @@ final class AppLockPresenterTests: XCTestCase {
         assert(reauthVisibile: false)
     }
     
-    func testThatPasswordVerifiedWithNotValidatedResultDimsContentsIfAuthNeeded() {
+    func testThatPasswordVerifiedWithNotValidatedResultDoesntShowReauth() {
          //when
         sut.passwordVerified(with: .denied)
         //then
