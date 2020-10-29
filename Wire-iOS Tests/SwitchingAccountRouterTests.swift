@@ -21,11 +21,11 @@ import XCTest
 
 final class SwitchingAccountRouterTests: XCTestCase {
     
-    var sut: MockSwitchingAccountRouter!
+    var sut: TestableSwitichingAccountRouter!
     
     override func setUp() {
         super.setUp()
-        sut = MockSwitchingAccountRouter()
+        sut = TestableSwitichingAccountRouter()
 
     }
 
@@ -44,7 +44,7 @@ final class SwitchingAccountRouterTests: XCTestCase {
 }
 
 
-class MockSwitchingAccountRouter: SwitchingAccountRouter {
+class TestableSwitichingAccountRouter: SwitchingAccountRouter {
     var hasBeenAlertPresented: Bool = false
     override func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         hasBeenAlertPresented = true
