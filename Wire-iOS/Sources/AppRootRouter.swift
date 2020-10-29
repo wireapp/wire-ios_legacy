@@ -104,10 +104,6 @@ public class AppRootRouter: NSObject {
         return urlActionRouter.open(url: url)
     }
     
-    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
-        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
-    }
-    
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
                                    completionHandler: ((Bool)->())?) {
         quickActionsManager.performAction(for: shortcutItem,
