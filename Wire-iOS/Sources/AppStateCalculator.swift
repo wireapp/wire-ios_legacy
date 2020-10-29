@@ -65,10 +65,14 @@ class AppStateCalculator {
     
     // MARK: - Private Implemetation
     private func transition(to appState: AppState,
-                            force: Bool = false,
                             completion: (() -> Void)? = nil) {
-        guard (self.appState != appState && hasEnteredForeground) || force else {
-            if !hasEnteredForeground { pendingAppState = appState }
+        guard hasEnteredForeground  else {
+            pendingAppState = appState
+            completion?()
+            return
+        }
+        
+        guard self.appState != appState else {
             completion?()
             return
         }
