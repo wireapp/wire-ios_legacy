@@ -21,18 +21,10 @@ import XCTest
 
 final class URLActionRouterTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     func testThatDeepLinkIsNotOpened_WhenDeepLinkIsNotValid() {
         // GIVEN
-        let invalidDeppLinkUrl = URL(string:"wire://invalidDeppLinkUrl")!
-        let router =  TestableURLActionRouter(viewController: RootViewController(), url: invalidDeppLinkUrl)
+        let invalidDeepLinkUrl = URL(string:"wire://invalidDeepLinkUrl")!
+        let router =  TestableURLActionRouter(viewController: RootViewController(), url: invalidDeepLinkUrl)
         
         // WHEN
         router.openDeepLink(needsAuthentication: false)
