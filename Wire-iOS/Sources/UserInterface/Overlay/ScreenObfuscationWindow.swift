@@ -45,7 +45,7 @@ final class ScreenObfuscationWindow: UIWindow {
     }
     
     @objc func applicationWillResignActive() {
-        isHidden = !(AppLock.isActive || (ZMUserSession.shared()?.isDatabaseLocked ?? false))
+        isHidden = !(AppLock.isActive || (ZMUserSession.shared()?.encryptMessagesAtRest ?? false))
     }
 
     @objc func applicationDidBecomeActive() {
@@ -66,5 +66,4 @@ private extension ScreenObfuscationWindow {
     }
     
 }
-
 
