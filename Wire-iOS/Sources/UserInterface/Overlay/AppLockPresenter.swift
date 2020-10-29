@@ -200,8 +200,6 @@ extension AppLockPresenter {
     
     private func appUnlocked() {
         userInterface?.dismissUnlockScreen()
-        
-        AppLock.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 }

@@ -45,7 +45,6 @@ final class ZClientViewController: UIViewController {
     let backgroundViewController: BackgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
 
     private let colorSchemeController: ColorSchemeController = ColorSchemeController()
-    private var analyticsEventPersistence: ShareExtensionAnalyticsPersistence?
     private var incomingApnsObserver: Any?
     private var networkAvailabilityObserverToken: Any?
     private var pendingInitialStateRestore = false
@@ -75,13 +74,11 @@ final class ZClientViewController: UIViewController {
             let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
             
             let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
-            analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
         }
         
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         setupAppearance()
         
@@ -695,21 +692,5 @@ final class ZClientViewController: UIViewController {
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         AppDelegate.shared.callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
-    }
-
-    // MARK: - Application State
-    @objc
-    private func applicationWillEnterForeground(_ notification: Notification?) {
-        trackShareExtensionEventsIfNeeded()
-    }
-    
-    // MARK: -  Share extension analytics
-    private func trackShareExtensionEventsIfNeeded() {
-        let events: [StorableTrackingEvent]? = analyticsEventPersistence?.storedTrackingEvents.map { $0 }
-        analyticsEventPersistence?.clear()
-        
-        events?.forEach() {
-            Analytics.shared.tag($0)
-        }
     }
 }

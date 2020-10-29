@@ -31,7 +31,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     let mainWindow: UIWindow
     let callWindow: CallWindow
-    let overlayWindow: NotificationWindow
+    let overlayWindow: ScreenObfuscationWindow
 
     fileprivate(set) var sessionManager: SessionManager?
     fileprivate(set) var quickActionsManager: QuickActionsManager?
@@ -115,7 +115,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
         callWindow = CallWindow(frame: UIScreen.main.bounds)
-        overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
+        overlayWindow = ScreenObfuscationWindow(frame: UIScreen.main.bounds)
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -548,7 +548,6 @@ extension AppRootViewController {
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
-        AppDelegate.shared.notificationsWindow?.isHidden = true
     }
 }
 

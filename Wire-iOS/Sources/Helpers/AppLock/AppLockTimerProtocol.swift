@@ -17,25 +17,47 @@
 //
 
 import Foundation
+import WireSyncEngine
 import WireCommonComponents
 
 protocol AppLockTimerProtocol {
     var shouldLockScreen: Bool { get }
+    func appDidBecomeUnlocked()
+    func appDidEnterForeground()
 }
 
 final class  AppLockTimer : AppLockTimerProtocol {
-    
-    var shouldLockScreen: Bool {
-        let screenLockIsActive = AppLock.isActive && isLockTimeoutReached
-        
-        return screenLockIsActive
+    private var isLocked = true
+    private var lastUnlockedDate = Date.distantPast
+
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: .none)
     }
     
+    var shouldLockScreen: Bool {
+        return AppLock.isActive && isLocked
+    }
+    
+    func appDidBecomeUnlocked() {
+        lastUnlockedDate = Date()
+        isLocked = false
+    }
+    
+    func appDidEnterForeground() {
+        isLocked = isLockTimeoutReached
+    }
+
+    @objc func appDidEnterBackground() {
+        guard !isLocked else { return }
+        lastUnlockedDate = Date()
+    }
+
     private var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
         // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let timeSinceAuth = -lastUnlockedDate.timeIntervalSinceNow
         let isWithinTimeoutWindow = (0..<Double(AppLock.rules.appLockTimeout)).contains(timeSinceAuth)
         return !isWithinTimeoutWindow
     }
