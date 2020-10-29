@@ -34,6 +34,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        delegate = nil
         super.tearDown()
     }
 
