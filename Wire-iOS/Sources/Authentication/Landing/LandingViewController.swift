@@ -239,8 +239,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.shared.tagOpenedLandingScreen(context: "email")
-        self.view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = UIColor.Team.background
 
         configureSubviews()
         configureConstraints()
@@ -529,30 +528,33 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - Button tapped target
 
-    @objc func createAccountButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared.tagOpenedUserRegistration(context: "email")
+    @objc
+    private func createAccountButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
-    @objc func createTeamButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared.tagOpenedTeamCreation(context: "email")
+    @objc
+    private func createTeamButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
-    @objc func loginButtonTapped(_ sender: AnyObject!) {
-        Analytics.shared.tagOpenedLogin(context: "email")
+    @objc
+    private func loginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseLogin()
     }
 
-    @objc func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
+    @objc
+    private func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
 
-    @objc func ssoLoginButtonTapped(_ sender: AnyObject!) {
+    @objc
+    private func ssoLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseSSOLogin()
     }
 
-    @objc func cancelButtonTapped() {
+    @objc
+    private func cancelButtonTapped() {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }

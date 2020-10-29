@@ -1514,7 +1514,6 @@
 		F1FDF2C621ADA3FA00E037A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1FDF2C521ADA3F000E037A1 /* Images.xcassets */; };
 		F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
 		F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 /* End PBXBuildFile section */
 
@@ -3214,7 +3213,6 @@
 		F1FDF2C521ADA3F000E037A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireCommonComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1FEA14D21DCEB1700790A54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -4316,7 +4314,6 @@
 				8701221B20F7923D001E6342 /* Analytics+LinearGroupCreation.swift */,
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
-				F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */,
 				871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
 				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
@@ -8206,7 +8203,6 @@
 				16DD6E982283102D0090A74C /* LegalHoldParticipantsSectionController.swift in Sources */,
 				16616750223A81CB00779AE3 /* MessageKeyPathObserver.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
-				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
 				7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */,
 				A95C76C0240E87440047CD29 /* ConversationButtonMessageCell.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.swift in Sources */,
