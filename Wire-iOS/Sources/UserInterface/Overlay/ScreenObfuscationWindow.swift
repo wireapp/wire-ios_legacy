@@ -26,7 +26,6 @@ final class ScreenObfuscationWindow: UIWindow {
     override init(frame: CGRect) {
         super.init(frame: frame)
         rootViewController = RootViewController()
-        accessibilityIdentifier = "ZClientNotificationWindow"
         configureObservers()
     }
     
