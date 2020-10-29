@@ -50,6 +50,7 @@ class AppStateCalculator {
     
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
+    private(set) var pendingAppState: AppState? = nil
     private(set) var appState: AppState = .headless {
         willSet {
             previousAppState = appState
@@ -60,17 +61,24 @@ class AppStateCalculator {
     private var loadingAccount: Account?
     private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
+    private var hasEnteredForeground: Bool = false
     
-    // MARK: - Private Implemetation
+    // MARK: - Private Implementation
     private func transition(to appState: AppState,
-                            force: Bool = false,
                             completion: (() -> Void)? = nil) {
-        guard self.appState != appState || force else {
+        guard hasEnteredForeground  else {
+            pendingAppState = appState
+            completion?()
+            return
+        }
+        
+        guard self.appState != appState else {
             completion?()
             return
         }
         
         self.appState = appState
+        self.pendingAppState = nil
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
         delegate?.appStateCalculator(self, didCalculate: appState, completion: {
             completion?()
@@ -89,7 +97,8 @@ extension AppStateCalculator: ApplicationStateObserving {
     }
     
     func applicationDidBecomeActive() {
-        transition(to: appState)
+        hasEnteredForeground = true
+        transition(to: pendingAppState ?? appState)
     }
     
     func applicationDidEnterBackground() { }

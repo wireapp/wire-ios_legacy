@@ -34,13 +34,15 @@ final class AppStateCalculatorTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        delegate = nil
         super.tearDown()
     }
 
     // MARK: - Tests AppState Cases
     
-    func testThatSessionManagerDidBlacklistCurrentVersion() {
+    func testThatAppStateChanges_OnDidBlacklistCurrentVersion() {
         // WHEN
+        sut.applicationDidBecomeActive()
         sut.sessionManagerDidBlacklistCurrentVersion()
 
         // THEN
@@ -48,8 +50,9 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerWillMigrateLegacyAccount() {
+    func testThatAppStateChanges_OnThatSessionManagerWillMigrateLegacyAccount() {
         // WHEN
+        sut.applicationDidBecomeActive()
         sut.sessionManagerWillMigrateLegacyAccount()
 
         // THEN
@@ -57,8 +60,9 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
         
-    func testThatSessionManagerDidJailbreakCurrentVersion() {
+    func testThatAppStateChanges_OnDidJailbreakCurrentVersion() {
         // WHEN
+        sut.applicationDidBecomeActive()
         sut.sessionManagerDidBlacklistJailbrokenDevice()
 
         // THEN
@@ -66,13 +70,14 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerWillMigrateAccount() {
+    func testThatAppStateChanges_OnWillMigrateAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
         sut.testHelper_setLoadingAccount(account)
         delegate.wasNotified = false
+        sut.applicationDidBecomeActive()
         
         // WHEN
         // Will migrate to that account
@@ -83,13 +88,14 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerWillNotMigrateAccount() {
+    func testThatAppStateIsNotChanged_OnSessionManagerWillMigrateAccount_ForNonActiveAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         let otherAccount = Account(userName: "otherDummy", userIdentifier: UUID())
         sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
         delegate.wasNotified = false
+        sut.applicationDidBecomeActive()
         
         // WHEN
         // Will migrate to that account
@@ -99,9 +105,10 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertFalse(delegate.wasNotified)
     }
 
-    func testThatWillLogout() {
+    func testThatAppStateChanges_OnSessionManagerWillLogout() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.unknownError, userInfo: nil)
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: nil)
@@ -111,10 +118,11 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerDidFailToLogin() {
+    func testThatAppStateChanges_OnDidFailToLogin() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
         let account = Account(userName: "dummy", userIdentifier: UUID())
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.sessionManagerDidFailToLogin(account: account, from: nil, error: error)
@@ -124,10 +132,11 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerDidFailToLoginSwitchingOnSameAccount() {
+    func testThatAppStateChanges_OnDidFailToLogin_SwitchingOnSameAccount() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
         let account = Account(userName: "dummy", userIdentifier: UUID())
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.sessionManagerDidFailToLogin(account: account, from: account, error: error)
@@ -137,10 +146,11 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerDidFailToLoginSwitchingOnDifferentAccount() {
+    func testThatAppStateChanges_OnDidFailToLogin_SwitchingOnDifferentAccount() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.sessionManagerDidFailToLogin(account: nil, from: selectedAccount, error: error)
@@ -150,9 +160,10 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatSessionManagerDidUpdateActiveUserSession() {
+    func testThatAppStateChanges_OnDidUpdateActiveUserSession() {
         // GIVEN
         let isDatabaseLocked = true
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
@@ -163,10 +174,11 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testUserAuthenticationDidComplete() {
+    func testThatAppStateChanges_OnUserAuthenticationDidComplete() {
         // GIVEN
         let addedAccount = false
         let isDatabaseLocked = false
+        sut.applicationDidBecomeActive()
         
         // WHEN
         sut.userAuthenticationDidComplete(addedAccount: addedAccount)
@@ -179,11 +191,12 @@ final class AppStateCalculatorTests: XCTestCase {
     
     // MARK: - Tests AppState Changes
     
-    func testApplicationDontTransitIfAppStateDontChange() {
+    func testApplicationDontTransit_WhenAppStateDontChanges() {
         // GIVEN
+        sut.applicationDidBecomeActive()
         sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
-
+        
         // WHEN
         sut.sessionManagerDidBlacklistCurrentVersion()
 
@@ -192,9 +205,10 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertFalse(delegate.wasNotified)
     }
     
-    func testApplicationTransitIfAppStateChange() {
+    func testApplicationTransit_WhenAppStateChanges() {
         // WHEN
         let isDatabaseLocked = true
+        sut.applicationDidBecomeActive()
         sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
 
@@ -209,30 +223,27 @@ final class AppStateCalculatorTests: XCTestCase {
     
     // MARK: - Tests When App Become Active
     
-    func testApplicationDontTransitIfAppStateDontChangeWhenAppBecomeActive() {
+    func testThatAppStateDoesntChange_OnDidReportDatabaseLockChange_BeforeAppBecomeActive() {
         // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        sut.testHelper_setAppState(.unauthenticated(error: error))
+        let isDatabaseLocked = true
         delegate.wasNotified = false
+        sut.applicationDidEnterBackground()
         
         // WHEN
-        sut.applicationDidEnterBackground()
-        sut.applicationDidBecomeActive()
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
         
         // THEN
         XCTAssertFalse(delegate.wasNotified)
     }
     
-    func testApplicationTransitIfAppStateChangesWhenAppBecomesActive() {
+    func testThatAppStateChanges_OnDidReportDatabaseLockChange_AfterAppHasBecomeActive() {
         // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        sut.testHelper_setAppState(.unauthenticated(error: error))
+        let isDatabaseLocked = true
         delegate.wasNotified = false
+        sut.applicationDidEnterBackground()
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
         
         // WHEN
-        sut.applicationDidEnterBackground()
-        // AppState changes when the app is in background
-        sut.sessionManagerDidBlacklistCurrentVersion()
         sut.applicationDidBecomeActive()
         
         // THEN
