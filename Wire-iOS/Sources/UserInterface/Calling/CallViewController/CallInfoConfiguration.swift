@@ -77,6 +77,13 @@ fileprivate extension VoiceChannel {
         }
     }
     
+    var isConnected: Bool {
+        switch state {
+        case .established, .establishedDataChannel: return true
+        default: return false
+        }
+    }
+    
     var isTerminating: Bool {
         switch state {
         case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
@@ -129,6 +136,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let canToggleMediaType: Bool
     let isMuted: Bool
     let isTerminating: Bool
+    let isConnected: Bool
     let canAccept: Bool
     let mediaState: MediaState
     let accessoryType: CallInfoViewControllerAccessoryType
@@ -162,6 +170,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         canAccept = voiceChannel.canAccept
         isVideoCall = voiceChannel.internalIsVideoCall
         isTerminating = voiceChannel.isTerminating
+        isConnected = voiceChannel.isConnected
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
         variant = ColorScheme.default.variant

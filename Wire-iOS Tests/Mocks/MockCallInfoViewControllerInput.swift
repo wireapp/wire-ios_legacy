@@ -27,6 +27,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var canToggleMediaType: Bool
     var isMuted: Bool
     var isTerminating: Bool
+    var isConnected: Bool
     var canAccept: Bool
     var mediaState: MediaState
     var state: CallStatusViewState

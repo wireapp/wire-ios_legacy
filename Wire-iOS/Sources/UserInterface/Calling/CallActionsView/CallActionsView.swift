@@ -55,6 +55,7 @@ enum MediaState: Equatable {
 protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
     var isMuted: Bool { get }
+    var isConnected: Bool { get }
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
@@ -162,11 +163,12 @@ final class CallActionsView: UIView {
     }
     
     // MARK: - State Input
-    
+
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted
+        muteCallButton.isEnabled = canToggleMuteButton(input)
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
         videoButtonDisabledTapRecognizer?.isEnabled = !input.canToggleMediaType
         videoButton.isEnabled = input.canToggleMediaType
@@ -175,7 +177,7 @@ final class CallActionsView: UIView {
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
-        speakerButton.isEnabled = input.mediaState.canSpeakerBeToggled
+        speakerButton.isEnabled = canToggleSpeakerButton(input)
         acceptCallButton.isHidden = !input.canAccept
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact
@@ -187,6 +189,14 @@ final class CallActionsView: UIView {
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    private func canToggleMuteButton(_ input: CallActionsViewInputType) -> Bool {
+        return input.isConnected && !input.permissions.isAudioDisabledForever
+    }
+    
+    private func canToggleSpeakerButton(_ input: CallActionsViewInputType) -> Bool {
+        return input.isConnected && input.mediaState.canSpeakerBeToggled
     }
 
     override func layoutSubviews() {
