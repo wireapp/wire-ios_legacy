@@ -24,7 +24,6 @@ protocol AppLockTimerProtocol {
     var shouldLockScreen: Bool { get }
     func appDidBecomeUnlocked()
     func appDidEnterForeground()
-    func appDidEnterBackground()
 }
 
 final class  AppLockTimer : AppLockTimerProtocol {
