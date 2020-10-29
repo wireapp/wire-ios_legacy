@@ -210,30 +210,27 @@ final class AppStateCalculatorTests: XCTestCase {
     
     // MARK: - Tests When App Become Active
     
-    func testApplicationDontTransit_WhenAppBecomeActive_AndAppStateDontChange() {
+    func testThatAppStateDoesntChange_OnDidReportDatabaseLockChange_BeforeAppBecomeActive() {
         // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        sut.testHelper_setAppState(.unauthenticated(error: error))
+        let isDatabaseLocked = true
         delegate.wasNotified = false
         
         // WHEN
         sut.applicationDidEnterBackground()
-        sut.applicationDidBecomeActive()
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
         
         // THEN
         XCTAssertFalse(delegate.wasNotified)
     }
     
-    func testApplicationTransit_WhenAppBecomeActive_AndAppStateChange() {
+    func testThatAppStateChanges_OnDidReportDatabaseLockChange_AfterAppHasBecomeActive() {
         // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        sut.testHelper_setAppState(.unauthenticated(error: error))
+        let isDatabaseLocked = true
         delegate.wasNotified = false
         
         // WHEN
         sut.applicationDidEnterBackground()
-        // AppState changes when the app is in background
-        sut.sessionManagerDidBlacklistCurrentVersion()
+        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
         sut.applicationDidBecomeActive()
         
         // THEN
