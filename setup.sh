@@ -41,6 +41,10 @@ XCODE_VERSION=( ${version//./ } )
 [[ ${XCODE_VERSION[0]} -gt 11 || ( ${XCODE_VERSION[0]} -eq 11 && ${XCODE_VERSION[1]} -ge 4 ) ]] || die "Xcode version should be at least 11.4.0. The current version is ${XCODE_VERSION}"
 
 # SETUP
+
+# Workaround for for carthage "The file couldn’t be saved." error
+rm -rf ${TMPDIR}/TemporaryItems/*carthage*
+
 echo "ℹ️  Carthage bootstrap. This might take a while..."
 carthage bootstrap --cache-builds --platform ios
 echo ""
