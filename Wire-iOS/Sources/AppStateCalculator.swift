@@ -63,7 +63,7 @@ class AppStateCalculator {
     private var observerTokens: [NSObjectProtocol] = []
     private var hasEnteredForeground: Bool = false
     
-    // MARK: - Private Implemetation
+    // MARK: - Private Implementation
     private func transition(to appState: AppState,
                             completion: (() -> Void)? = nil) {
         guard hasEnteredForeground  else {
