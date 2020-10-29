@@ -162,34 +162,4 @@ final class AppStateControllerTests: XCTestCase {
         // then
         XCTAssertEqual(sut.appState, AppState.authenticated(completedRegistration: true))
     }
-    
-    // MARK: - Application did enter background
-    
-    func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
-        //given
-        mockAppLockTimer.lastUnlockedDate = Date()
-        sut.userAuthenticationDidComplete(addedAccount: true)
-        
-        //when
-        sut.applicationDidEnterBackground()
-        
-        //then
-        XCTAssertTrue(Date() > mockAppLockTimer.lastUnlockedDate)
-    }
-    
-    func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
-        //given
-        let date = Date()
-        mockAppLockTimer.lastUnlockedDate = date
-
-        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
-        sut.sessionManagerDidFailToLogin(account: nil, error: error)
-        
-        //when
-        sut.applicationDidEnterBackground()
-        
-        //then
-        XCTAssertEqual(date, mockAppLockTimer.lastUnlockedDate)
-    }
-    
 }
