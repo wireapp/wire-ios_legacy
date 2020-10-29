@@ -36,7 +36,7 @@ final class SwitchingAccountRouterTests: XCTestCase {
     
     func testThatSwitchAccountAlertIfPresented() {
         // WHEN
-        sut.confirmSwitchingAccount { isConfirmed in }
+        sut.confirmSwitchingAccount { _ in }
 
         // THEN
         XCTAssertTrue(sut.hasBeenAlertPresented)
