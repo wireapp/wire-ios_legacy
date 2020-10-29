@@ -22,7 +22,12 @@ extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }
 
-final class URLActionRouter {
+protocol URLActionRouterProtocol {
+    func openDeepLink(needsAuthentication: Bool)
+    func open(url: URL) -> Bool
+}
+
+class URLActionRouter: URLActionRouterProtocol {
     
     // MARK: - Public Property
     var sessionManager: SessionManager?
@@ -34,9 +39,9 @@ final class URLActionRouter {
     
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                authenticationCoordinator: AuthenticationCoordinator?,
+                authenticationCoordinator: AuthenticationCoordinator? = nil,
                 sessionManager: SessionManager? = nil,
-                url: URL?) {
+                url: URL? = nil) {
         self.rootViewController = viewController
         self.authenticationCoordinator = authenticationCoordinator
         self.url = url
@@ -63,7 +68,7 @@ final class URLActionRouter {
         }
     }
     
-    func openDeepLink(needsAuthentication: Bool) {
+    func openDeepLink(needsAuthentication: Bool = false) {
         do {
             guard let deeplink = url else { return }
             guard let action = try URLAction(url: deeplink) else { return }
@@ -75,6 +80,7 @@ final class URLActionRouter {
         }
     }
     
+    // MARK: - Private Implementation
     private func resetDeepLinkURL() {
         url = nil
     }
