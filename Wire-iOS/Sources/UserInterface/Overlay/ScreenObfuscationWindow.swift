@@ -45,7 +45,7 @@ final class ScreenObfuscationWindow: UIWindow {
     }
     
     @objc func applicationWillResignActive() {
-        isHidden = !(AppLock.isActive || (ZMUserSession.shared()?.encryptMessagesAtRest ?? false))
+        isHidden = !(SessionManager.shared?.isLockScreenEnabled ?? false)
     }
 
     @objc func applicationDidBecomeActive() {

@@ -20,10 +20,15 @@ import Foundation
 import WireSyncEngine
 import AVFoundation
 import WireSyncEngine
+import WireCommonComponents
 
 extension SessionManager {
     static var shared : SessionManager? {
         return AppDelegate.shared.sessionManager
+    }
+    
+    var isLockScreenEnabled: Bool {
+        return AppLock.isActive || (ZMUserSession.shared()?.encryptMessagesAtRest ?? false)
     }
     
     func updateCallNotificationStyleFromSettings() {
