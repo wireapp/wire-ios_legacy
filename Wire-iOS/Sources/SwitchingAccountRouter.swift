@@ -35,6 +35,7 @@ extension SwitchingAccountRouter {
 
 // MARK: - SwitchingAccountAlertPresenter
 extension SwitchingAccountRouter {
+    @objc
     internal func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         guard let topmostController = UIApplication.shared.topmostViewController() else {
             return completion(false)
