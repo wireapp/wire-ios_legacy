@@ -81,6 +81,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         config.deviceID = analyticsIdentifier
         Countly.sharedInstance().start(with: config)
+        // Changing Device ID after app started
+        // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
+        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
+        
         zmLog.info("AnalyticsCountlyProvider \(self) started")
         sessionBegun = true
         
