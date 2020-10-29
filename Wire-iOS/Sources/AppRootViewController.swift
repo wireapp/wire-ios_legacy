@@ -172,6 +172,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
         let jailbreakDetector = JailbreakDetector()
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
+        Logging.backendEnvironment.debug("Shared backend environment is: \(BackendEnvironment.shared.title)")
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
