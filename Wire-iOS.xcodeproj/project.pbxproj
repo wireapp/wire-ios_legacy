@@ -7243,7 +7243,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "# Workaround for for carthage \"The file couldn’t be saved.\" error\nrm -rf ${TMPDIR}/TemporaryItems/*carthage*\n# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
