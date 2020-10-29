@@ -87,6 +87,7 @@
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
 		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
 		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
+		165C55C2254B0CB500731CA9 /* UIColor+NamedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
 		16616750223A81CB00779AE3 /* MessageKeyPathObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661674F223A81CB00779AE3 /* MessageKeyPathObserver.swift */; };
@@ -157,7 +158,6 @@
 		16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */; };
 		16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */; };
 		16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */; };
-		16EC8CE8246998970057EDB3 /* UIColor+NamedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */; };
 		16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */; };
 		16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */; };
 		16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */; };
@@ -3586,7 +3586,6 @@
 		5E144FF9213E92A700B65E14 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */,
 				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
 				D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */,
 				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
@@ -6777,6 +6776,7 @@
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */,
 				CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */,
+				16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */,
 				F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */,
 				CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */,
 				CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */,
@@ -7263,7 +7263,6 @@
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
 				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */,
-				16EC8CE8246998970057EDB3 /* UIColor+NamedColors.swift in Sources */,
 				168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */,
 				7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */,
 				543E0C661E23A72F000E2161 /* SendingProgressViewController.swift in Sources */,
@@ -8675,6 +8674,7 @@
 				7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */,
 				F15650AF21DCFE5200210504 /* CircularProgressView.swift in Sources */,
 				F156509E21DCF1DA00210504 /* Dummy.swift in Sources */,
+				165C55C2254B0CB500731CA9 /* UIColor+NamedColors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
