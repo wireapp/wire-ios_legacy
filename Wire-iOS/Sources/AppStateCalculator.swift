@@ -117,7 +117,7 @@ extension AppStateCalculator: SessionManagerDelegate {
     
     func sessionManagerDidFailToLogin(account: Account?,
                                       from selectedAccount: Account?,
-                                      error : Error) {
+                                      error: Error) {
         var authenticationError: NSError?
         // We only care about the error if it concerns the selected account, or the loading account.
         if account != nil && (selectedAccount == account || loadingAccount == account) {
