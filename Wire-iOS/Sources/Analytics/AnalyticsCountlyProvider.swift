@@ -69,6 +69,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard let countlyAppKey = Bundle.countlyAppKey,
               !countlyAppKey.isEmpty,
               let countlyURL = BackendEnvironment.shared.countlyURL,
+              shouldTracksEvent,
               let analyticsIdentifier = (selfUser as? ZMUser)?.analyticsIdentifier else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
                 return false
