@@ -41,6 +41,13 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// The validation error for the current input.
     private(set) var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
+    
+    var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updatePhoneNumberInputFieldIsEnabled()
+        }
+    }
 
     /// Whether to show the confirm button.
     var showConfirmButton: Bool = true {
@@ -239,11 +246,20 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         let selectedLabel = title.addingTrailingAttachment(selectedIcon, verticalOffset: 1) && selectedColor
         countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
     }
-
+    
     /// Sets the phone number to display.
     func setPhoneNumber(_ phoneNumber: PhoneNumber) {
+        hasPrefilledValue = true
         selectCountry(phoneNumber.country)
         textField.updateText(phoneNumber.numberWithoutCode)
+        updatePhoneNumberInputFieldIsEnabled()
+    }
+    
+    func updatePhoneNumberInputFieldIsEnabled() {
+        let allowEditing = !hasPrefilledValue || allowEditingPrefilledValue
+        textField.isEnabled = allowEditing
+        countryPickerButton.isEnabled = allowEditing
+        countryCodeInputView.isEnabled = allowEditing
     }
 
     // MARK: - Text Update
