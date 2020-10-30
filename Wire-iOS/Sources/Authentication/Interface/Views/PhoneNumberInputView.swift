@@ -48,6 +48,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             updatePhoneNumberInputFieldIsEnabled()
         }
     }
+    var allowEditing: Bool {
+        return !hasPrefilledValue || allowEditingPrefilledValue
+    }
 
     /// Whether to show the confirm button.
     var showConfirmButton: Bool = true {
@@ -63,7 +66,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     var text: String? {
         get { return textField.text }
-        set { textField.text = newValue }
+        set {
+            hasPrefilledValue = newValue != nil
+            textField.text = newValue
+            updatePhoneNumberInputFieldIsEnabled()
+        }
     }
 
     // MARK: - Views
@@ -256,8 +263,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
     
     func updatePhoneNumberInputFieldIsEnabled() {
-        let allowEditing = !hasPrefilledValue || allowEditingPrefilledValue
-        textField.isEnabled = allowEditing
         countryPickerButton.isEnabled = allowEditing
         countryCodeInputView.isEnabled = allowEditing
     }
@@ -266,7 +271,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// Returns whether the text should be updated.
     func shouldChangeCharacters(in range: NSRange, replacementString: String) -> Bool {
-        guard let replacementRange = Range(range, in: input) else {
+        guard
+            allowEditing,
+            let replacementRange = Range(range, in: input)
+        else {
             return false
         }
 
