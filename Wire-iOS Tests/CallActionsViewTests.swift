@@ -42,7 +42,6 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         widthConstraint.isActive = true
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
-        recordMode = true
     }
     
     override func tearDown() {
