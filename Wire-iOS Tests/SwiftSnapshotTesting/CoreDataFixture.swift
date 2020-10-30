@@ -47,7 +47,7 @@ extension ZMConversation {
 
         let role = Role(context: moc)
         role.name = ZMConversation.defaultAdminRoleName
-        conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
+        conversation.addParticipantsAndUpdateConversationState(users: [selfUser], role: role)
 
         return conversation
     }
@@ -56,7 +56,7 @@ extension ZMConversation {
                                         otherUser: ZMUser,
                                         selfUser: ZMUser) -> ZMConversation {
         let conversation = createGroupConversationOnlyAdmin(moc: moc, selfUser: selfUser)
-        conversation.add(participants:otherUser)
+        conversation.add(participants: otherUser)
         return conversation
     }
 
@@ -75,7 +75,7 @@ extension ZMConversation {
 /// of mock objects.
 final class CoreDataFixture {
 
-    var selfUserInTeam: Bool = false
+    private var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!

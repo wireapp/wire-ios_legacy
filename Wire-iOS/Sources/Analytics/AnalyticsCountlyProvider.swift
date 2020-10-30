@@ -27,10 +27,31 @@ extension Int {
     }
 }
 
+protocol CountlyInstance {
+    func recordEvent(_ key: String, segmentation: [String : String]?)
+    func start(with config: CountlyConfig)
+    
+    static func sharedInstance() -> Self
+}
+
+extension Countly: CountlyInstance {}
+
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
+
+    private struct StoredEvent {
+        let event: String
+        let attributes: [String: Any]
+    }
+
+    /// store the events before selfUser is assigned. Send them and clear after selfUser is set
+    private var storedEvents: [StoredEvent] = []
+    
+    var storedEventsCount: Int {
+        return storedEvents.count
+    }
 
     var isOptedOut: Bool {
         get {
@@ -46,19 +67,37 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     var selfUser: UserType? {
-        didSet {            
+        didSet {
             if !sessionBegun {
                 beginSession()
             }
+
             updateUserProperties()
+
+            storedEvents.forEach {
+                tagEvent($0.event, attributes: $0.attributes)
+            }
+
+            storedEvents.removeAll()
         }
     }
+    
+    var countlyInstanceType: CountlyInstance.Type
+    var countlyAppKey: String
 
-    init() {
+    init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
+          countlyAppKey: String? = Bundle.countlyAppKey) {
+        guard let countlyAppKey = countlyAppKey else { return nil }
+        
+        self.countlyAppKey = countlyAppKey
+        self.countlyInstanceType = countlyInstanceType
         isOptedOut = false
     }
-    
-    
+
+    deinit {
+        zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
+    }
+
     /// Begin Countly session. If Self User is not yet assigned, it would not start Countly.
     /// - Returns: return true if Countly is started
     @discardableResult
@@ -67,22 +106,25 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         // 1. self user is a team member
         // 2. analyticsIdentifier is generated
         // 3. Countly key and URL is read
-        guard let countlyAppKey = Bundle.countlyAppKey,
-              !countlyAppKey.isEmpty,
-              let countlyURL = BackendEnvironment.shared.countlyURL,
-              shouldTracksEvent,
-              let analyticsIdentifier = (selfUser as? ZMUser)?.analyticsIdentifier else {
+        
+        guard shouldTracksEvent,
+            let analyticsIdentifier = (selfUser as? ZMUser)?.analyticsIdentifier else {
+                return false
+        }
+
+        guard !countlyAppKey.isEmpty,
+              let countlyURL = BackendEnvironment.shared.countlyURL else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
                 return false
         }
-        
+                
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyURL.absoluteString
         config.manualSessionHandling = true
-
+        
         config.deviceID = analyticsIdentifier
-        Countly.sharedInstance().start(with: config)
+        countlyInstanceType.sharedInstance().start(with: config)
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
         Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
@@ -91,10 +133,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         sessionBegun = true
         
         return true
-    }
-
-    deinit {
-        zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
     private var shouldTracksEvent: Bool {
@@ -106,7 +144,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let team = selfUser.team,
-            let teamID = team.remoteIdentifier else {
+            let teamID = team.remoteIdentifier
+        else {
 
             //clean up
             ["team_team_id",
@@ -138,14 +177,22 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
-        guard shouldTracksEvent else { return }
+        //store the event before self user is assigned, send it later when self user is ready.
+        guard selfUser != nil else {            
+            storedEvents.append(StoredEvent(event: event, attributes: attributes))
+            return
+        }
+
+        guard shouldTracksEvent else {
+            return
+        }
 
         var convertedAttributes = attributes.countlyStringValueDictionary
 
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
 
-        Countly.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
+        countlyInstanceType.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
 
     func setSuperProperty(_ name: String, value: Any?) {

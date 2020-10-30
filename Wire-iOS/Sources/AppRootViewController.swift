@@ -251,7 +251,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            mainWindow.tintColor = .black
+            mainWindow.tintColor = UIColor.Wire.primaryLabel
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow

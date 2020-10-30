@@ -19,11 +19,11 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     
     struct Wire {
         
-        static var primaryLabel: UIColor {
+        public static var primaryLabel: UIColor {
             if #available(iOS 13.0, *) {
                 return label
             }
@@ -31,7 +31,7 @@ extension UIColor {
             return black
         }
         
-        static var secondaryLabel: UIColor {
+        public static var secondaryLabel: UIColor {
             if #available(iOS 13.0, *) {
                 return label.withAlphaComponent(0.7)
             }
