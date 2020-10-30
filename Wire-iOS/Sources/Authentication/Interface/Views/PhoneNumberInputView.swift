@@ -264,7 +264,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     
     func updatePhoneNumberInputFieldIsEnabled() {
         countryPickerButton.isEnabled = allowEditing
-        countryCodeInputView.isEnabled = allowEditing
     }
 
     // MARK: - Text Update
