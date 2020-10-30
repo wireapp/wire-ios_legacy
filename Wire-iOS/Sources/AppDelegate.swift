@@ -112,12 +112,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
         
         NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
-                
-        queueInitializationOperations(launchOptions: launchOptions ?? [:])
+             
+        self.launchOptions = launchOptions ?? [:]
         
-        if let launchOptions = launchOptions {
-            self.launchOptions = launchOptions
-        }
+        createAppRootRouter(launchOptions: launchOptions ?? [:])
+        queueInitializationOperations(launchOptions: launchOptions ?? [:])
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
@@ -220,28 +219,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - Private Helpers
 private extension AppDelegate {
+    private func createAppRootRouter(launchOptions: LaunchOptions) {
+        guard let viewController = window?.rootViewController as? RootViewController else {
+            fatalError("rootViewController is not of type RootViewController")
+        }
+        
+        let navigator = Navigator(NoBackTitleNavigationController())
+        appRootRouter = AppRootRouter(viewController: viewController,
+                                      navigator: navigator,
+                                      deepLinkURL: launchOptions[.url] as? URL)
+    }
+    
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
         var operations = launchOperations.map {
             BlockOperation(block: $0.execute)
         }
         
-        let deepLinkURL = launchOptions[.url] as? URL
         operations.append(BlockOperation {
-            self.startAppRouter(launchOptions: launchOptions, deepLinkURL: deepLinkURL)
+            self.startAppRouter(launchOptions: launchOptions)
         })
         
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
-    private func startAppRouter(launchOptions: LaunchOptions, deepLinkURL: URL?) {
-        guard let viewController = window?.rootViewController as? RootViewController else {
-            fatalError("rootViewController is not of type RootViewController")
-        }
-    
-        let navigator = Navigator(NoBackTitleNavigationController())
-        appRootRouter = AppRootRouter(viewController: viewController,
-                                      navigator: navigator,
-                                      deepLinkURL: deepLinkURL)
+    private func startAppRouter(launchOptions: LaunchOptions) {
         appRootRouter?.start(launchOptions: launchOptions)
     }
 }

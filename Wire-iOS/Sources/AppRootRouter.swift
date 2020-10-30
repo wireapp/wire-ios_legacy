@@ -72,7 +72,7 @@ public class AppRootRouter: NSObject {
     
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
-         deepLinkURL: URL?) {
+         deepLinkURL: URL? = nil) {
         self.rootViewController = viewController
         self.navigator = navigator
         self.deepLinkURL = deepLinkURL
