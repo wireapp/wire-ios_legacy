@@ -227,13 +227,13 @@ private extension AppDelegate {
         
         let deepLinkURL = launchOptions[.url] as? URL
         operations.append(BlockOperation {
-            self.startAppCoordinator(launchOptions: launchOptions, deepLinkURL: deepLinkURL)
+            self.startAppRouter(launchOptions: launchOptions, deepLinkURL: deepLinkURL)
         })
         
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
     
-    private func startAppCoordinator(launchOptions: LaunchOptions, deepLinkURL: URL?) {
+    private func startAppRouter(launchOptions: LaunchOptions, deepLinkURL: URL?) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }

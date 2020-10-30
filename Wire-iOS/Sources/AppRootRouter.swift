@@ -52,7 +52,6 @@ public class AppRootRouter: NSObject {
     private(set) var sessionManager: SessionManager? {
         didSet {
             guard let sessionManager = sessionManager else { return }
-            switchingAccountRouter.sessionManager = sessionManager
             urlActionRouter.sessionManager = sessionManager
             sessionManagerLifeCycleObserver.sessionManager = sessionManager
             foregroundNotificationFilter.sessionManager = sessionManager
@@ -103,10 +102,6 @@ public class AppRootRouter: NSObject {
     public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
         guard let url = deepLinkURL else { return false }
         return urlActionRouter.open(url: url)
-    }
-    
-    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
-        switchingAccountRouter.confirmSwitchingAccount(completion: completion)
     }
     
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
@@ -211,7 +206,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
-        case .authenticated(completedRegistration: let completedRegistration, databaseIsLocked: _):
+        case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
             UIColor.setAccentOverride(.undefined)
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,

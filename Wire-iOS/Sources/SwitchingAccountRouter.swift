@@ -18,36 +18,21 @@
 
 import WireSyncEngine
 
-final class SwitchingAccountRouter {
-    
-    // MARK: - Public Property
-    var sessionManager: SessionManager?
-    
-    // MARK: - Initialization
-    public init(sessionManager: SessionManager? = nil) {
-        self.sessionManager = sessionManager
-    }
+typealias SwitchingAccountRouterProtocol = SessionManagerSwitchingDelegate & SwitchingAccountAlertPresenter
+
+protocol SwitchingAccountAlertPresenter {
+    func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void)
 }
 
-// MARK: - SessionManagerSwitchingDelegate
-extension SwitchingAccountRouter: SessionManagerSwitchingDelegate {
-    // Ask user if they want switch account if there's an ongoing call
-    
-    // MARK: - Public Implementation
-    public func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
-        
-        guard
-            let userSession = ZMUserSession.shared(),
-            userSession.isCallOngoing
-        else {
-            return completion(true)
-        }
-        
-        presentSwitchAccountAlert(with: completion)
+class SwitchingAccountRouter: SwitchingAccountRouterProtocol {
+    // MARK: - SessionManagerSwitchingDelegate
+    func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        presentSwitchAccountAlert(completion: completion)
     }
     
-    // MARK: - Private Implementation
-    private func presentSwitchAccountAlert(with completion: @escaping (Bool) -> Void) {
+    // MARK: - SwitchingAccountAlertPresenter
+    @objc
+    internal func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         guard let topmostController = UIApplication.shared.topmostViewController() else {
             return completion(false)
         }
@@ -57,8 +42,7 @@ extension SwitchingAccountRouter: SessionManagerSwitchingDelegate {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
                                       style: .default,
-                                      handler: { [weak self] (action) in
-            self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
+                                      handler: { action in
             completion(true)
         }))
         alert.addAction(.cancel {

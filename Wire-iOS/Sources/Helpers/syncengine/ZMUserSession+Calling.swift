@@ -20,12 +20,6 @@ import WireSyncEngine
 
 extension ZMUserSession {
     
-    var isCallOngoing: Bool {
-        guard let callCenter = callCenter else { return false }
-        
-        return !callCenter.activeCallConversations(in: self).isEmpty
-    }
-    
     var priorityCallConversation: ZMConversation? {
         guard let callNotificationStyle = SessionManager.shared?.callNotificationStyle else { return nil }
         guard let callCenter = self.callCenter else { return nil }
