@@ -95,7 +95,9 @@ public class AppRootRouter: NSObject {
     // MARK: - Public implementation
     
     public func start(launchOptions: LaunchOptions) {
-        transition(to: .headless, completion: { })
+        transition(to: .headless, completion: {
+            Analytics.shared.tagEvent("app.open")
+        })
         createAndStartSessionManager(launchOptions: launchOptions)
     }
     
