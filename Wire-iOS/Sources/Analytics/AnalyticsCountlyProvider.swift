@@ -29,6 +29,8 @@ extension Int {
 
 protocol CountlyInstance {
     func recordEvent(_ key: String, segmentation: [String : String]?)
+    func start(with config: CountlyConfig)
+    
     static func sharedInstance() -> Self
 }
 
@@ -81,8 +83,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
     
     var countlyInstanceType: CountlyInstance.Type
+    var countlyAppKey: String
 
-    init?(countlyInstanceType: CountlyInstance.Type = Countly.self) {
+    init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
+          countlyAppKey: String? = Bundle.countlyAppKey) {
+        guard let countlyAppKey = countlyAppKey else { return nil }
+        
+        self.countlyAppKey = countlyAppKey
         self.countlyInstanceType = countlyInstanceType
         isOptedOut = false
     }
@@ -99,22 +106,25 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         // 1. self user is a team member
         // 2. analyticsIdentifier is generated
         // 3. Countly key and URL is read
-        guard let countlyAppKey = Bundle.countlyAppKey,
-            !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL,
-            shouldTracksEvent,
+        
+        guard shouldTracksEvent,
             let analyticsIdentifier = (selfUser as? ZMUser)?.analyticsIdentifier else {
+                return false
+        }
+
+        guard !countlyAppKey.isEmpty,
+              let countlyURL = BackendEnvironment.shared.countlyURL else {
                 zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(String(describing: Bundle.countlyAppKey)), countlyURL = \(String(describing: BackendEnvironment.shared.countlyURL)). Please check COUNTLY_APP_KEY is set in .xcconfig file")
                 return false
         }
-        
+                
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyURL.absoluteString
         config.manualSessionHandling = true
         
         config.deviceID = analyticsIdentifier
-        Countly.sharedInstance().start(with: config)
+        countlyInstanceType.sharedInstance().start(with: config)
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
         Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
