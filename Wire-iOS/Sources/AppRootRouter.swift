@@ -204,13 +204,15 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
-            AppDelegate.shared.window?.tintColor = UIColor.Wire.primaryLabel
+            rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
+            
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
             
         case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
-            AppDelegate.shared.window?.tintColor = UIColor.accent()
+            rootViewController.view.window?.tintColor = UIColor.accent()
+            
             UIColor.setAccentOverride(.undefined)
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
