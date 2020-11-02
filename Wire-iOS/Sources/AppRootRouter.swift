@@ -204,6 +204,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
+            AppDelegate.shared.window?.tintColor = UIColor.Wire.primaryLabel
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
             
             showUnauthenticatedFlow(error: error, completion: completionBlock)
