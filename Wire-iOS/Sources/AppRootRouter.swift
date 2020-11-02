@@ -466,7 +466,7 @@ extension AppRootRouter: AudioPermissionsObserving {
 }
 
 
-// MARK: - Class SearchRouter
+// MARK: - Class AuthenticatedRouter
 
 class AuthenticatedRouter {
     private let builder: AuthenticatedWireFrame
