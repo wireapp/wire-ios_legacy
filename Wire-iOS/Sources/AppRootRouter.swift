@@ -45,7 +45,7 @@ public class AppRootRouter: NSObject {
     private var quickActionsManager: QuickActionsManager
     
     private var observerTokens: [NSObjectProtocol] = []
-    private var authenticatedBlocks : [() -> Void] = []
+    private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
 
     // MARK: - Private Set Property
@@ -255,8 +255,9 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 }
 
-// MARK: - Navigation Helper
+
 extension AppRootRouter {
+    // MARK: - Navigation Helpers
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
@@ -310,29 +311,16 @@ extension AppRootRouter {
     }
     
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
-        guard let selectedAccount = SessionManager.shared?.accountManager.selectedAccount else {
+        guard
+            let selectedAccount = SessionManager.shared?.accountManager.selectedAccount,
+            let authenticationRouter = buildAuthenticationRouter(account: selectedAccount,
+                                                                 isComingFromRegistration: isComingFromRegistration)
+        else {
             return
         }
         
-        let clientViewController = ZClientViewController(account: selectedAccount,
-                                                         selfUser: ZMUser.selfUser())
-        clientViewController.isComingFromRegistration = isComingFromRegistration
-        
-        /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
-        clientViewController.needToShowDataUsagePermissionDialog = false
-        
-        if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
-            if SelfUser.current.isTeamMember {
-                TrackingManager.shared.disableCrashSharing = true
-                TrackingManager.shared.disableAnalyticsSharing = false
-            } else {
-                clientViewController.needToShowDataUsagePermissionDialog = true
-            }
-        }
-        
-        Analytics.shared.selfUser = SelfUser.current
-        
-        rootViewController.set(childViewController: clientViewController,
+        setupAnalyticsSharing()
+        rootViewController.set(childViewController: authenticationRouter.viewController,
                                completion: completion)
     }
     
@@ -340,6 +328,33 @@ extension AppRootRouter {
         let skeletonViewController = SkeletonViewController(from: fromAccount, to: toAccount)
         rootViewController.set(childViewController: skeletonViewController,
                                completion: completion)
+    }
+    
+    // MARK: - Helpers
+    private func setupAnalyticsSharing() {
+        Analytics.shared.selfUser = SelfUser.current
+        
+        guard
+            appStateCalculator.wasUnautheticated,
+            Analytics.shared.selfUser?.isTeamMember ?? false
+        else {
+            return
+        }
+        
+        TrackingManager.shared.disableCrashSharing = true
+        TrackingManager.shared.disableAnalyticsSharing = false
+    }
+    
+    private func buildAuthenticationRouter(account: Account,
+                                           isComingFromRegistration: Bool) -> AuthenticatedRouter? {
+        
+        let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnautheticated
+                                                    && !SelfUser.current.isTeamMember
+        
+        return AuthenticatedRouter(account: account,
+                                   selfUser: ZMUser.selfUser(),
+                                   isComingFromRegistration: isComingFromRegistration,
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
     }
 }
 
@@ -443,5 +458,55 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+
+// MARK: - Class SearchRouter
+
+class AuthenticatedRouter {
+    private let builder: AuthenticatedWireFrame
+    private weak var _viewController: ZClientViewController?
+    
+    init(account: Account,
+         selfUser: SelfUserType,
+         isComingFromRegistration: Bool,
+         needToShowDataUsagePermissionDialog: Bool) {
+        builder = AuthenticatedWireFrame(account: account,
+                                         selfUser: selfUser,
+                                         isComingFromRegistration: needToShowDataUsagePermissionDialog,
+                                         needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+    }
+    
+    var viewController: UIViewController {
+        let viewController = _viewController ?? builder.build()
+        _viewController = viewController
+        return viewController
+    }
+}
+
+// MARK: - AuthenticatedWireFrame
+
+struct AuthenticatedWireFrame {
+    private var account: Account
+    private var selfUser: SelfUserType
+    private var isComingFromRegistration: Bool
+    private var needToShowDataUsagePermissionDialog: Bool
+    
+    init(account: Account,
+         selfUser: SelfUserType,
+         isComingFromRegistration: Bool,
+         needToShowDataUsagePermissionDialog: Bool) {
+        self.account = account
+        self.selfUser = selfUser
+        self.isComingFromRegistration = isComingFromRegistration
+        self.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
+    }
+    
+    func build() -> ZClientViewController {
+        let viewController = ZClientViewController(account: account, selfUser: selfUser)
+        viewController.isComingFromRegistration = isComingFromRegistration
+        viewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
+        return viewController
     }
 }
