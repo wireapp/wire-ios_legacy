@@ -204,16 +204,10 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
-            rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
-            
-            AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
-            
+            configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
-            
         case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
-            rootViewController.view.window?.tintColor = UIColor.accent()
-            
-            UIColor.setAccentOverride(.undefined)
+            configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
@@ -331,6 +325,16 @@ extension AppRootRouter {
     }
     
     // MARK: - Helpers
+    private func configureUnauthenticatedAppearance() {
+        rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
+        AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
+    }
+    
+    private func configureAuthenticatedAppearance() {
+        rootViewController.view.window?.tintColor = .accent()
+        UIColor.setAccentOverride(.undefined)
+    }
+    
     private func setupAnalyticsSharing() {
         Analytics.shared.selfUser = SelfUser.current
         
