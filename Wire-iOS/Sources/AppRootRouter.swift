@@ -471,7 +471,7 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 // MARK: - Class AuthenticatedRouter
 
-class AuthenticatedRouter {
+class AuthenticatedRouter: NSObject {
     
     // MARK: - Private Property
     
@@ -483,7 +483,7 @@ class AuthenticatedRouter {
     // MARK: - Public Property
 
     var viewController: UIViewController {
-        let viewController = _viewController ?? builder.build()
+        let viewController = _viewController ?? builder.build(router: self)
         _viewController = viewController
         return viewController
     }
@@ -508,6 +508,11 @@ class AuthenticatedRouter {
     func presentCallCurrentlyInProgress() {
         callController.updateState()
     }
+    
+    func minimizeCallOverlay(animated: Bool,
+                             withCompletion completion: Completion?) {
+        callController.minimizeCall(animated: animated, completion: completion)
+    }
 }
 
 // MARK: - AuthenticatedWireFrame
@@ -528,10 +533,11 @@ struct AuthenticatedWireFrame {
         self.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
     }
     
-    func build() -> ZClientViewController {
+    func build(router: AuthenticatedRouter) -> ZClientViewController {
         let viewController = ZClientViewController(account: account, selfUser: selfUser)
         viewController.isComingFromRegistration = isComingFromRegistration
         viewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
+        viewController.router =  router
         return viewController
     }
 }
