@@ -111,7 +111,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(userSessionDidBecomeAvailable(_:)),
+                                               name: Notification.Name.ZMUserSessionDidBecomeAvailable,
+                                               object: nil)
              
         self.launchOptions = launchOptions ?? [:]
         
