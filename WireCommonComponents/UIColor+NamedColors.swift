@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,33 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-import WireSyncEngine
+import UIKit
 
-public enum ConversationEvent: Event {
+public extension UIColor {
+    
+    struct Wire {
+        
+        public static var primaryLabel: UIColor {
+            if #available(iOS 13.0, *) {
+                return label
+            }
+            
+            return black
+        }
+        
+        public static var secondaryLabel: UIColor {
+            if #available(iOS 13.0, *) {
+                return label.withAlphaComponent(0.7)
+            }
 
-    static let toggleAllowGuestsName = "guest_rooms.allow_guests"
-
-    case toggleAllowGuests(value: Bool)
-
-    var attributes: [AnyHashable : Any]? {
-        switch self {
-        case let .toggleAllowGuests(value: value):
-            return ["is_allow_guests" : value]
+            return black.withAlphaComponent(0.7)
         }
     }
-
-    var name: String {
-        switch self {
-        case .toggleAllowGuests:
-            return ConversationEvent.toggleAllowGuestsName
-        }
-    }
-}
-
-extension Analytics {
-    public func tagAllowGuests(value: Bool) {
-        tag(ConversationEvent.toggleAllowGuests(value: value))
-    }
+        
 }

@@ -76,6 +76,22 @@ final class LinkInteractionTextViewTests: XCTestCase {
             XCTAssertFalse(shouldOpenURL)
         }
     }
+
+    func testThatItDoesNotOpenStylizedMarkdownLinks() {
+        // GIVEN
+        let str = "I'm a markdown link!"
+        let url = URL(string: "http://www.wire.com")!
+
+        let markdownId: Markdown = [.bold, .italic, .link]
+        let attrs: [NSAttributedString.Key: Any] = [.markdownID: markdownId, .link: url]
+        sut.attributedText = NSAttributedString(string: str, attributes: attrs)
+
+        // WHEN
+        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
+
+        // THEN
+        XCTAssertFalse(shouldOpenURL)
+    }
     
     func testThatItDoesNotPreviewMarkdownLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
