@@ -69,8 +69,8 @@ final class CallWindowRootViewController: UIViewController {
     }
     
     func transitionToLoggedInSession() {
-        callController = CallController()
-        callController?.targetViewController = self
+//        callController = CallController()
+//        callController?.targetViewController = self
     }
     
     func presentCallCurrentlyInProgress() {

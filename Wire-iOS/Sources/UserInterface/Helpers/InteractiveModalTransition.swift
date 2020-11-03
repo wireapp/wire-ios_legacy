@@ -98,19 +98,12 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             return transitionContext.complete(true)
         }
 
-        weak var callWindow: CallWindow? = fromVC.view.window as? CallWindow
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
             delay: transitionContext.isInteractive ? configuration.duration : 0,
             options: [.curveLinear, .allowUserInteraction],
             animations: animations) { success in
                 transitionContext.complete(success)
-                    
-                // Hide the call window when the animation is done and the animation is not bounced back to init location
-                if success &&
-                    fromVC.viewController.view.transform != .identity {
-                    callWindow?.hideWindowIfNeeded()
-                }
         }
     }
 

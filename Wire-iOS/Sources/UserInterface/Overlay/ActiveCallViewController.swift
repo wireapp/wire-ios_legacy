@@ -93,14 +93,6 @@ final class ActiveCallViewController : UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let window = view.window
-        super.dismiss(animated: flag) {
-            completion?()
-            (window as? CallWindow)?.hideWindowIfNeeded()
-        }
-    }
-
     func updateVisibleVoiceChannelViewController() {
         guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {

@@ -192,14 +192,6 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
     
     // MARK: Dismiss Events
 
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let window = view.window
-        super.dismiss(animated: flag) {
-            completion?()
-            (window as? CallWindow)?.hideWindowIfNeeded()
-        }
-    }
-
     @objc func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }

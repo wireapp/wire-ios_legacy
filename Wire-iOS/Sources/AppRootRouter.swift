@@ -29,7 +29,7 @@ extension AppRootRouter {
 public class AppRootRouter: NSObject {
     
     // MARK: - Public Property
-    let callWindow = CallWindow(frame: UIScreen.main.bounds)
+//    let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
     
     // MARK: - Private Property
@@ -43,6 +43,11 @@ public class AppRootRouter: NSObject {
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
     private let foregroundNotificationFilter: ForegroundNotificationFilter
     private var quickActionsManager: QuickActionsManager
+    private var authenticationRouter: AuthenticatedRouter? {
+        didSet {
+            setupAnalyticsSharing()
+        }
+    }
     
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
@@ -124,8 +129,8 @@ public class AppRootRouter: NSObject {
     }
     
     private func setupAdditionalWindows() {
-        callWindow.makeKeyAndVisible()
-        callWindow.isHidden = true
+//        callWindow.makeKeyAndVisible()
+//        callWindow.isHidden = true
         overlayWindow.makeKeyAndVisible()
         overlayWindow.isHidden = true
     }
@@ -313,7 +318,8 @@ extension AppRootRouter {
             return
         }
         
-        setupAnalyticsSharing()
+        self.authenticationRouter = authenticationRouter
+        
         rootViewController.set(childViewController: authenticationRouter.viewController,
                                completion: completion)
     }
@@ -355,7 +361,8 @@ extension AppRootRouter {
         let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnautheticated
                                                     && !SelfUser.current.isTeamMember
         
-        return AuthenticatedRouter(account: account,
+        return AuthenticatedRouter(rootViewController: rootViewController,
+                                   account: account,
                                    selfUser: ZMUser.selfUser(),
                                    isComingFromRegistration: isComingFromRegistration,
                                    needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
@@ -369,7 +376,6 @@ extension AppRootRouter {
             if AppDelegate.shared.shouldConfigureSelfUserProvider {
                 SelfUser.provider = ZMUserSession.shared()
             }
-            callWindow.callController.transitionToLoggedInSession()
         }
         
         let colorScheme = ColorScheme.default
@@ -379,7 +385,7 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-            callWindow.callController.presentCallCurrentlyInProgress()
+//            callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
             urlActionRouter.openDeepLink(needsAuthentication: true)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
@@ -470,12 +476,17 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 class AuthenticatedRouter {
     private let builder: AuthenticatedWireFrame
+    private let rootViewController: RootViewController
+    private let callController: CallController
     private weak var _viewController: ZClientViewController?
     
-    init(account: Account,
+    init(rootViewController: RootViewController,
+         account: Account,
          selfUser: SelfUserType,
          isComingFromRegistration: Bool,
          needToShowDataUsagePermissionDialog: Bool) {
+        self.rootViewController = rootViewController
+        self.callController = CallController(rootViewController: rootViewController)
         builder = AuthenticatedWireFrame(account: account,
                                          selfUser: selfUser,
                                          isComingFromRegistration: needToShowDataUsagePermissionDialog,
