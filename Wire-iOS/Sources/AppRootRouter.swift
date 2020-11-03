@@ -29,7 +29,6 @@ extension AppRootRouter {
 public class AppRootRouter: NSObject {
     
     // MARK: - Public Property
-//    let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
     
     // MARK: - Private Property
@@ -129,8 +128,6 @@ public class AppRootRouter: NSObject {
     }
     
     private func setupAdditionalWindows() {
-//        callWindow.makeKeyAndVisible()
-//        callWindow.isHidden = true
         overlayWindow.makeKeyAndVisible()
         overlayWindow.isHidden = true
     }
@@ -385,9 +382,9 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-//            callWindow.callController.presentCallCurrentlyInProgress()
-            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            authenticationRouter?.presentCallCurrentlyInProgress()
             urlActionRouter.openDeepLink(needsAuthentication: true)
+            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
@@ -475,10 +472,23 @@ extension AppRootRouter: AudioPermissionsObserving {
 // MARK: - Class AuthenticatedRouter
 
 class AuthenticatedRouter {
+    
+    // MARK: - Private Property
+    
     private let builder: AuthenticatedWireFrame
     private let rootViewController: RootViewController
     private let callController: CallController
     private weak var _viewController: ZClientViewController?
+    
+    // MARK: - Public Property
+
+    var viewController: UIViewController {
+        let viewController = _viewController ?? builder.build()
+        _viewController = viewController
+        return viewController
+    }
+    
+    // MARK: - Init
     
     init(rootViewController: RootViewController,
          account: Account,
@@ -493,10 +503,10 @@ class AuthenticatedRouter {
                                          needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
     }
     
-    var viewController: UIViewController {
-        let viewController = _viewController ?? builder.build()
-        _viewController = viewController
-        return viewController
+    // MARK: - Public Implementation
+    
+    func presentCallCurrentlyInProgress() {
+        callController.updateState()
     }
 }
 
