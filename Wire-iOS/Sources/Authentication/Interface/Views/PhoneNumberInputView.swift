@@ -41,6 +41,16 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// The validation error for the current input.
     private(set) var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
+    
+    var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updatePhoneNumberInputFieldIsEnabled()
+        }
+    }
+    var allowEditing: Bool {
+        return !hasPrefilledValue || allowEditingPrefilledValue
+    }
 
     /// Whether to show the confirm button.
     var showConfirmButton: Bool = true {
@@ -56,7 +66,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     var text: String? {
         get { return textField.text }
-        set { textField.text = newValue }
+        set {
+            hasPrefilledValue = newValue != nil
+            textField.text = newValue
+            updatePhoneNumberInputFieldIsEnabled()
+        }
     }
 
     // MARK: - Views
@@ -239,18 +253,27 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         let selectedLabel = title.addingTrailingAttachment(selectedIcon, verticalOffset: 1) && selectedColor
         countryPickerButton.setAttributedTitle(selectedLabel, for: .highlighted)
     }
-
+    
     /// Sets the phone number to display.
     func setPhoneNumber(_ phoneNumber: PhoneNumber) {
+        hasPrefilledValue = true
         selectCountry(phoneNumber.country)
         textField.updateText(phoneNumber.numberWithoutCode)
+        updatePhoneNumberInputFieldIsEnabled()
+    }
+    
+    func updatePhoneNumberInputFieldIsEnabled() {
+        countryPickerButton.isEnabled = allowEditing
     }
 
     // MARK: - Text Update
 
     /// Returns whether the text should be updated.
     func shouldChangeCharacters(in range: NSRange, replacementString: String) -> Bool {
-        guard let replacementRange = Range(range, in: input) else {
+        guard
+            allowEditing,
+            let replacementRange = Range(range, in: input)
+        else {
             return false
         }
 
