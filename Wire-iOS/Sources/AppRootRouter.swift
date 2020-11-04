@@ -42,7 +42,7 @@ public class AppRootRouter: NSObject {
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
     private let foregroundNotificationFilter: ForegroundNotificationFilter
     private var quickActionsManager: QuickActionsManager
-    private var authenticationRouter: AuthenticatedRouter? {
+    private var authenticatedRouter: AuthenticatedRouter? {
         didSet {
             setupAnalyticsSharing()
         }
@@ -309,15 +309,15 @@ extension AppRootRouter {
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
         guard
             let selectedAccount = SessionManager.shared?.accountManager.selectedAccount,
-            let authenticationRouter = buildAuthenticationRouter(account: selectedAccount,
-                                                                 isComingFromRegistration: isComingFromRegistration)
+            let authenticatedRouter = buildAuthenticatedRouter(account: selectedAccount,
+                                                               isComingFromRegistration: isComingFromRegistration)
         else {
             return
         }
         
-        self.authenticationRouter = authenticationRouter
+        self.authenticatedRouter = authenticatedRouter
         
-        rootViewController.set(childViewController: authenticationRouter.viewController,
+        rootViewController.set(childViewController: authenticatedRouter.viewController,
                                completion: completion)
     }
     
@@ -352,7 +352,7 @@ extension AppRootRouter {
         TrackingManager.shared.disableAnalyticsSharing = false
     }
     
-    private func buildAuthenticationRouter(account: Account,
+    private func buildAuthenticatedRouter(account: Account,
                                            isComingFromRegistration: Bool) -> AuthenticatedRouter? {
         
         let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnautheticated
@@ -382,7 +382,7 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-            authenticationRouter?.presentCallCurrentlyInProgress()
+            authenticatedRouter?.presentCallCurrentlyInProgress()
             urlActionRouter.openDeepLink(needsAuthentication: true)
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
