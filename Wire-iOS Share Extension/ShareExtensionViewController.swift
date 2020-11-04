@@ -470,21 +470,22 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
         
         guard
-            AppLock.isActive || sharingSession?.encryptMessagesAtRest == true
+            let sharingSession = sharingSession,
+            AppLock.isActive || sharingSession.encryptMessagesAtRest
         else {
             localAuthenticationStatus = .disabled
             callback(localAuthenticationStatus)
             return
         }
         
-        guard localAuthenticationStatus != .granted, sharingSession?.isDatabaseLocked == true else {
+        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
             callback(localAuthenticationStatus)
             return
         }
         
         let scenario: AppLock.AuthenticationScenario
         
-        if sharingSession?.encryptMessagesAtRest == true {
+        if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
             scenario = .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
