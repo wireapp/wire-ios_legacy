@@ -61,7 +61,6 @@ final class AppLockTimerTests: XCTestCase {
 extension AppLockTimerTests {
     func set(appLockActive: Bool, timeoutReached: Bool) {
         AppLock.isActive = appLockActive
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
         if !timeoutReached {
             sut.appDidBecomeUnlocked()
         }
