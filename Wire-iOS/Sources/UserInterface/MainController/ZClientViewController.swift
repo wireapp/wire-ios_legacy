@@ -25,6 +25,10 @@ import WireCommonComponents
 final class ZClientViewController: UIViewController {
     private(set) var conversationRootViewController: UIViewController?
     private(set) var currentConversation: ZMConversation?
+    
+    // TODO: This must be removed from here once we introduce VIPER
+    weak var router: AuthenticatedRouterProtocol?
+    
     var isComingFromRegistration = false
     var needToShowDataUsagePermissionDialog = false
     let wireSplitViewController: SplitViewController = SplitViewController()
@@ -691,6 +695,6 @@ final class ZClientViewController: UIViewController {
 
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
-        AppDelegate.shared.callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+        router?.minimizeCallOverlay(animated: animated, withCompletion: completion)
     }
 }

@@ -21,7 +21,7 @@ import WireSyncEngine
 
 final class CallController: NSObject {
 
-    weak var targetViewController: UIViewController?
+    weak var rootViewController: RootViewController?
     private(set) weak var activeCallViewController: ActiveCallViewController?
     private let callQualityController = CallQualityController()
     private var scheduledPostCallAction: (() -> Void)?
@@ -40,11 +40,20 @@ final class CallController: NSObject {
             }
         }
     }
-
-    override init() {
+    
+    init(rootViewController: RootViewController) {
         super.init()
+        self.rootViewController = rootViewController
+        
+        setupCallQualityController()
+        addObservers()
+    }
+    
+    private func setupCallQualityController() {
         callQualityController.delegate = self
-
+    }
+    
+    private func addObservers() {
         if let userSession = ZMUserSession.shared() {
             observerTokens.append(WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession))
             observerTokens.append(WireCallCenterV3.addCallErrorObserver(observer: self, userSession: userSession))
@@ -78,13 +87,13 @@ extension CallController: WireCallCenterCallStateObserver {
     
     private func scheduleSecurityDegradedAlert(degradedUser: UserType?) {
         executeOrSchedulePostCallAction { [weak self] in
-            self?.targetViewController?.present(UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true), animated: true)
+            self?.rootViewController?.present(UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true), animated: true)
         }
     }
     
     private func scheduleUnsupportedVersionAlert() {
         executeOrSchedulePostCallAction { [weak self] in
-            self?.targetViewController?.present(UIAlertController.unsupportedVersionAlert, animated: true)
+            self?.rootViewController?.present(UIAlertController.unsupportedVersionAlert, animated: true)
         }
     }
 
@@ -147,11 +156,11 @@ extension CallController {
         let modalVC = ModalPresentationViewController(viewController: viewController)
 
         let presentClosure: Completion = {
-            self.targetViewController?.present(modalVC, animated: animated)
+            self.rootViewController?.present(modalVC, animated: animated)
         }
 
-        if targetViewController?.presentedViewController != nil {
-            targetViewController?.presentedViewController?.dismiss(animated: true, completion: presentClosure)
+        if rootViewController?.presentedViewController != nil {
+            rootViewController?.presentedViewController?.dismiss(animated: true, completion: presentClosure)
         } else {
             presentClosure()
         }
@@ -200,14 +209,14 @@ extension CallController: CallTopOverlayControllerDelegate {
 extension CallController: CallQualityControllerDelegate {
 
     func dismissCurrentSurveyIfNeeded() {
-        if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
+        if let survey = rootViewController?.presentedViewController as? CallQualityViewController {
             survey.dismiss(animated: true)
         }
     }
 
     func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController) {
         executeOrSchedulePostCallAction { [weak self] in
-            self?.targetViewController?.present(controller, animated: true, completion: nil)
+            self?.rootViewController?.present(controller, animated: true, completion: nil)
         }
     }
 
@@ -245,7 +254,7 @@ extension CallController: WireCallCenterCallErrorObserver {
         }
 
         type(of: self).dateOfLastErrorAlertByConversationId[conversationId] = .init()
-        targetViewController?.present(UIAlertController.unsupportedVersionAlert, animated: true)
+        rootViewController?.present(UIAlertController.unsupportedVersionAlert, animated: true)
     }
 }
 

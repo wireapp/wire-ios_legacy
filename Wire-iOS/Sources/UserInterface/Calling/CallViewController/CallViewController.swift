@@ -194,12 +194,10 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func minimizeOverlay() {
-        weak var window = view.window
         weak var rootViewController = view.window?.rootViewController
         dismiss(animated: true, completion: {
             self.dismisser?.dismiss(viewController: self, completion: nil)
             rootViewController?.setNeedsStatusBarAppearanceUpdate()
-            window?.isHidden = true
         })
     }
 

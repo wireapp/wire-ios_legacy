@@ -60,10 +60,6 @@ final class ActiveCallViewController : UIViewController {
         }
     }
     
-    override func loadView() {
-        view = PassthroughTouchesView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,14 +87,6 @@ final class ActiveCallViewController : UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
-    }
-
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let window = view.window
-        super.dismiss(animated: flag) {
-            completion?()
-            (window as? CallWindow)?.hideWindowIfNeeded()
-        }
     }
 
     func updateVisibleVoiceChannelViewController() {
