@@ -60,10 +60,6 @@ final class ActiveCallViewController : UIViewController {
         }
     }
     
-    override func loadView() {
-        view = PassthroughTouchesView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
