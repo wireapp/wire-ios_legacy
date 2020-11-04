@@ -27,7 +27,7 @@ final class ZClientViewController: UIViewController {
     private(set) var currentConversation: ZMConversation?
     
     // TO DO: This must be removed from here once we introduce VIPER
-    weak var router: AuthenticatedRouter?
+    weak var router: AuthenticatedRouterProtocol?
     
     var isComingFromRegistration = false
     var needToShowDataUsagePermissionDialog = false
