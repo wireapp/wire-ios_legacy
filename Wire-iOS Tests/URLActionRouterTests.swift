@@ -42,7 +42,7 @@ final class URLActionRouterTests: XCTestCase {
         router.openDeepLink()
         
         // THEN
-        XCTAssert(router.wasDeepLinkOpened)
+        XCTAssertTrue(router.wasDeepLinkOpened)
     }
     
     func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndNeedsAuthentication() {

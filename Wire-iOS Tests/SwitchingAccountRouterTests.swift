@@ -39,7 +39,7 @@ final class SwitchingAccountRouterTests: XCTestCase {
         sut.confirmSwitchingAccount { _ in }
 
         // THEN
-        XCTAssert(sut.hasBeenAlertPresented)
+        XCTAssertTrue(sut.hasBeenAlertPresented)
     }
 }
 
