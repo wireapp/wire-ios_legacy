@@ -47,7 +47,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .blacklisted)
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnThatSessionManagerWillMigrateLegacyAccount() {
@@ -57,7 +57,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
         
     func testThatAppStateChanges_OnDidJailbreakCurrentVersion() {
@@ -67,7 +67,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .jailbroken)
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnWillMigrateAccount() {
@@ -85,7 +85,7 @@ final class AppStateCalculatorTests: XCTestCase {
         
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateIsNotChanged_OnSessionManagerWillMigrateAccount_ForNonActiveAccount() {
@@ -114,8 +114,8 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: nil)
 
         // THEN
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error as NSError?))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnDidFailToLogin() {
@@ -129,7 +129,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnDidFailToLogin_SwitchingOnSameAccount() {
@@ -143,7 +143,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnDidFailToLogin_SwitchingOnDifferentAccount() {
@@ -157,7 +157,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnDidUpdateActiveUserSession() {
@@ -171,7 +171,7 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
                                                     isDatabaseLocked: isDatabaseLocked))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnUserAuthenticationDidComplete() {
@@ -186,7 +186,7 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: addedAccount,
                                                     isDatabaseLocked: isDatabaseLocked))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     // MARK: - Tests AppState Changes
@@ -218,7 +218,7 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
                                                     isDatabaseLocked: isDatabaseLocked))
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
     
     // MARK: - Tests When App Become Active
@@ -247,7 +247,7 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidBecomeActive()
         
         // THEN
-        XCTAssertTrue(delegate.wasNotified)
+        XCTAssert(delegate.wasNotified)
     }
 }
 
