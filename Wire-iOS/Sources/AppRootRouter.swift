@@ -482,7 +482,7 @@ class AuthenticatedRouter: NSObject {
     
     private let builder: AuthenticatedWireFrame
     private let rootViewController: RootViewController
-    private let callController: CallController
+    private let callRouter: CallRouter
     private weak var _viewController: ZClientViewController?
     
     // MARK: - Public Property
@@ -500,8 +500,10 @@ class AuthenticatedRouter: NSObject {
          selfUser: SelfUserType,
          isComingFromRegistration: Bool,
          needToShowDataUsagePermissionDialog: Bool) {
+        
         self.rootViewController = rootViewController
-        self.callController = CallController(rootViewController: rootViewController)
+        callRouter = CallRouter(rootviewController: rootViewController)
+        
         builder = AuthenticatedWireFrame(account: account,
                                          selfUser: selfUser,
                                          isComingFromRegistration: needToShowDataUsagePermissionDialog,
@@ -512,17 +514,16 @@ class AuthenticatedRouter: NSObject {
 // MARK: - AuthenticatedRouterProtocol
 extension AuthenticatedRouter: AuthenticatedRouterProtocol {
     func presentCallCurrentlyInProgress() {
-        callController.updateState()
+        callRouter.updateCallState()
     }
     
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
-        callController.minimizeCall(animated: animated, completion: completion)
+        callRouter.minimizeCall(animated: animated, completion: completion)
     }
 }
 
 // MARK: - AuthenticatedWireFrame
-
 struct AuthenticatedWireFrame {
     private var account: Account
     private var selfUser: SelfUserType
@@ -547,3 +548,4 @@ struct AuthenticatedWireFrame {
         return viewController
     }
 }
+

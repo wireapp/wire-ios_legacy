@@ -21,19 +21,13 @@ import WireSyncEngine
 import UIKit
 import WireCommonComponents
 
-protocol CallQualityControllerDelegate: class {
-    func dismissCurrentSurveyIfNeeded()
-    func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController)
-    func callQualityControllerDidScheduleDebugAlert()
-}
-
 /**
  * Observes call state to prompt the user for call quality feedback when appropriate.
  */
 
 final class CallQualityController: NSObject {
     
-    weak var delegate: CallQualityControllerDelegate? = nil
+    weak var router: CallQualityRouterProtocol? = nil
 
     fileprivate var answeredCalls: [UUID: Date] = [:]
     fileprivate var token: Any?
@@ -119,16 +113,12 @@ final class CallQualityController: NSObject {
             return
         }
 
-        let qualityController = CallQualityViewController.configureSurveyController(callDuration: callDuration)
-        qualityController.delegate = self
-        qualityController.transitioningDelegate = self
-
-        delegate?.callQualityControllerDidScheduleSurvey(with: qualityController)
+        router?.presentSurvey(with: callDuration)
     }
 
     /// Presents the debug log prompt after a call failure.
     private func handleCallFailure() {
-        delegate?.callQualityControllerDidScheduleDebugAlert()
+        router?.callQualityControllerDidScheduleDebugAlert()
     }
 
     /// Presents the debug log prompt after a user quality rejection.
@@ -158,7 +148,6 @@ extension CallQualityController: WireCallCenterCallStateObserver {
             return
         }
     }
-    
 }
 
 // MARK: - User Input
@@ -181,19 +170,4 @@ extension CallQualityController : CallQualityViewControllerDelegate {
         Analytics.shared.tagCallQualityReview(.dismissed(duration: controller.callDuration))
         controller.dismiss(animated: true, completion: nil)
     }
-
-}
-
-// MARK: - Transitions
-
-extension CallQualityController : UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
-    }
-    
 }

@@ -26,6 +26,12 @@ final class RootViewController: UIViewController {
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
     
+    // MARK: - Public Property
+    var isPresenting: Bool {
+        return presentedViewController != nil
+    }
+    
+    // MARK: - Private Property
     private var childViewController: UIViewController?
     
     // MARK: - Status Bar / Supported Orientations

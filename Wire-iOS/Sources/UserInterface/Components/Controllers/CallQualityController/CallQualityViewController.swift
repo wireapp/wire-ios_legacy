@@ -56,16 +56,6 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
 
     // MARK: Initialization
     
-    static func configureSurveyController(callDuration: TimeInterval) -> CallQualityViewController {
-        let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""),
-                                                   callDuration: Int(callDuration))
-
-        controller.modalPresentationCapturesStatusBarAppearance = true
-        controller.modalPresentationStyle = .overFullScreen
-        return controller
-        
-    }
-    
     init(questionLabelText: String, callDuration: Int) {
         self.questionLabelText = questionLabelText
         self.callDuration = callDuration
