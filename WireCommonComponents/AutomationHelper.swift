@@ -43,7 +43,16 @@ public final class AutomationHelper: NSObject {
     /// Whether AppCenter should be used
     /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
-        return useAppCenterLaunchOption && UserDefaults.standard.bool(forKey: "UseAppCenter")
+        
+        //when UserDefaults's useAppCenter is not set, default is true to allow app center start
+        let useAppCenter: Bool
+        if UserDefaults.standard.object(forKey: "UseAppCenter") != nil {
+            useAppCenter = UserDefaults.standard.bool(forKey: "UseAppCenter")
+        } else {
+            useAppCenter = true
+        }
+
+        return useAppCenterLaunchOption && useAppCenter
     }
     
     /// Whether analytics should be used
