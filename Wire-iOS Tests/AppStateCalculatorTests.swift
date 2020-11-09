@@ -50,15 +50,6 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatAppStateChanges_OnThatSessionManagerWillMigrateLegacyAccount() {
-        // WHEN
-        sut.applicationDidBecomeActive()
-        sut.sessionManagerWillMigrateLegacyAccount()
-
-        // THEN
-        XCTAssertEqual(sut.appState, .migrating)
-        XCTAssertTrue(delegate.wasNotified)
-    }
         
     func testThatAppStateChanges_OnDidJailbreakCurrentVersion() {
         // WHEN
@@ -80,31 +71,13 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidBecomeActive()
         
         // WHEN
-        // Will migrate to that account
-        sut.sessionManagerWillMigrateAccount(account)
+        sut.sessionManagerWillMigrateAccount()
         
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatAppStateIsNotChanged_OnSessionManagerWillMigrateAccount_ForNonActiveAccount() {
-        // GIVEN
-        let account = Account(userName: "dummy", userIdentifier: UUID())
-        let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
-        let otherAccount = Account(userName: "otherDummy", userIdentifier: UUID())
-        sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
-        delegate.wasNotified = false
-        sut.applicationDidBecomeActive()
-        
-        // WHEN
-        // Will migrate to that account
-        sut.sessionManagerWillMigrateAccount(otherAccount)
-        
-        // THEN
-        XCTAssertFalse(delegate.wasNotified)
-    }
-
     func testThatAppStateChanges_OnSessionManagerWillLogout() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.unknownError, userInfo: nil)
