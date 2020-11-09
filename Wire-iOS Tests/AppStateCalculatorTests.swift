@@ -114,7 +114,7 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: nil)
 
         // THEN
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error as NSError?))
+        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
         XCTAssertTrue(delegate.wasNotified)
     }
     

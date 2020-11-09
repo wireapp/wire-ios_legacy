@@ -170,7 +170,6 @@ public class AppRootRouter: NSObject {
         sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        sessionManager?.useConferenceCalling = true
     }
 }
 
@@ -253,7 +252,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 
 
 extension AppRootRouter {
-    // MARK: - Navigation Helpers
+    // MARK: - Navigation Helper
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
@@ -548,4 +547,3 @@ struct AuthenticatedWireFrame {
         return viewController
     }
 }
-
