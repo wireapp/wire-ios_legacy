@@ -53,7 +53,7 @@ class AppStateCalculator {
         }
         return true
     }
-    
+
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
     private(set) var pendingAppState: AppState? = nil

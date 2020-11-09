@@ -250,9 +250,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 }
 
-
+// MARK: - Navigation Helper
 extension AppRootRouter {
-    // MARK: - Navigation Helper
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
