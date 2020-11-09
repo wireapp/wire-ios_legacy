@@ -57,17 +57,17 @@ extension RandomGeneratorFromData {
 extension Array {
     func shuffled(with generator: RandomGenerator) -> Array {
         
-        var workingCopy = Array(self)
-        var result = Array()
+        var workingCopyIndices = [Int](indices)
+        var resultIndices = [Int]()
 
-        self.forEach { _ in
-            let rand: UInt = generator.rand() % UInt(workingCopy.count)
+        forEach { _ in
+            let rand: Int = generator.rand() % workingCopyIndices.count
 
-            result.append(workingCopy[Int(rand)])
-            workingCopy.remove(at: Int(rand))
+            resultIndices.append(workingCopyIndices[rand])
+            workingCopyIndices.remove(at: rand)
         }
 
-        return result
+        return resultIndices.map{ self[$0] }
     }
 }
 
