@@ -113,17 +113,17 @@ final class CallQualityController: NSObject {
             return
         }
 
-        router?.presentSurvey(with: callDuration)
+        router?.presentCallQualitySurvey(with: callDuration)
     }
 
     /// Presents the debug log prompt after a call failure.
     private func handleCallFailure() {
-        router?.callQualityControllerDidScheduleDebugAlert()
+        router?.presentCallFailureDebugAlert()
     }
 
     /// Presents the debug log prompt after a user quality rejection.
     private func handleCallQualityRejection() {
-        DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls and the overall app experience.")
+        router?.presentCallQualityRejection()
     }
 
 }
@@ -155,12 +155,11 @@ extension CallQualityController: WireCallCenterCallStateObserver {
 extension CallQualityController : CallQualityViewControllerDelegate {
 
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
-        controller.dismiss(animated: true) {
-            if self.callQualityRejectionRange.contains(score) {
-                self.handleCallQualityRejection()
-            }
-        }
-
+        router?.dismissCallQualitySurvey(completion: { [weak self] in
+            guard self?.callQualityRejectionRange.contains(score) ?? false else { return }
+            self?.handleCallQualityRejection()
+        })
+        
         CallQualityController.updateLastSurveyDate(Date())
         Analytics.shared.tagCallQualityReview(.answered(score: score, duration: controller.callDuration))
     }
@@ -168,6 +167,6 @@ extension CallQualityController : CallQualityViewControllerDelegate {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {
         CallQualityController.updateLastSurveyDate(Date())
         Analytics.shared.tagCallQualityReview(.dismissed(duration: controller.callDuration))
-        controller.dismiss(animated: true, completion: nil)
+        router?.dismissCallQualitySurvey(completion: nil)
     }
 }

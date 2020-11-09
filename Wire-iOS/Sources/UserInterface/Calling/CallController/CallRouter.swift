@@ -32,9 +32,10 @@ protocol CallRouterProtocol: class {
 
 // MARK: - CallQualityRouterProtocol
 protocol CallQualityRouterProtocol: class {
-    func presentSurvey(with callDuration: TimeInterval)
-    func dismissCurrentSurveyIfNeeded()
-    func callQualityControllerDidScheduleDebugAlert()
+    func presentCallQualitySurvey(with callDuration: TimeInterval)
+    func dismissCallQualitySurvey(completion: (()-> Void)?)
+    func presentCallFailureDebugAlert()
+    func presentCallQualityRejection()
 }
 
 // MARK: - CallRouter
@@ -153,8 +154,8 @@ extension CallRouter: CallRouterProtocol {
 
 // MARK: - CallRouterProtocol
 extension CallRouter: CallQualityRouterProtocol {
-    func presentSurvey(with callDuration: TimeInterval) {
-        let qualityController = buildSurvey(with: callDuration)
+    func presentCallQualitySurvey(with callDuration: TimeInterval) {
+        let qualityController = buildCallQualitySurvey(with: callDuration)
         
         executeOrSchedulePostCallAction { [weak self] in
             self?.rootViewController.present(qualityController, animated: true, completion: { [weak self] in
@@ -163,20 +164,25 @@ extension CallRouter: CallQualityRouterProtocol {
         }
     }
     
-    func dismissCurrentSurveyIfNeeded() {
+    func dismissCallQualitySurvey(completion: (()-> Void)? = nil) {
         guard isCallQualityShown else { return }
         rootViewController.dismiss(animated: true, completion: { [weak self] in
             self?.isCallQualityShown = false
+            completion?()
         })
     }
 
-    func callQualityControllerDidScheduleDebugAlert() {
+    func presentCallFailureDebugAlert() {
         executeOrSchedulePostCallAction {
             DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue and improve the overall app experience.")
         }
     }
     
-    private func buildSurvey(with callDuration: TimeInterval) -> CallQualityViewController {
+    func presentCallQualityRejection() {
+        DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls and the overall app experience.")
+    }
+    
+    private func buildCallQualitySurvey(with callDuration: TimeInterval) -> CallQualityViewController {
         let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
         let qualityController = CallQualityViewController(questionLabelText: questionLabelText,
                                                           callDuration: Int(callDuration))
