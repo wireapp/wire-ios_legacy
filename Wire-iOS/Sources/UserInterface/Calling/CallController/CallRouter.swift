@@ -197,8 +197,8 @@ extension CallRouter: CallQualityRouterProtocol {
 
 // MARK: - CallTopOverlayControllerDelegate
 extension CallRouter: CallTopOverlayControllerDelegate {
-    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController) {
-        guard let voiceChannel = controller.conversation.voiceChannel else { return }
+    func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel:VoiceChannel?) {
+        guard let voiceChannel = voiceChannel else { return }
         presentActiveCall(for: voiceChannel, animated: true)
     }
 }
