@@ -31,7 +31,7 @@ final class CallController: NSObject {
         didSet {
             guard topOverlayCall != oldValue else { return }
             guard let conversation = topOverlayCall else {
-                ZClientViewController.shared?.setTopOverlay(to: nil)
+                
                 return
             }
             router?.showCallTopOverlayController(for: conversation)
@@ -41,6 +41,10 @@ final class CallController: NSObject {
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
     
+    private var priorityCallConversation: ZMConversation? {
+        return ZMUserSession.shared()?.priorityCallConversation
+    }
+    
     // MARK: - Init
     override init() {
         super.init()
@@ -49,8 +53,10 @@ final class CallController: NSObject {
     
     // MARK: - Public Impletation
     func updateState() {
-        guard let userSession = ZMUserSession.shared() else { return }
-        guard let priorityCallConversation = userSession.priorityCallConversation else { dismissCall(); return }
+        guard let priorityCallConversation = priorityCallConversation else {
+        dismissCall();
+            return
+        }
         
         topOverlayCall = priorityCallConversation
         
@@ -118,7 +124,7 @@ extension CallController: WireCallCenterCallStateObserver {
                              timestamp: Date?,
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
-        handleDegradedConversationIfNecessary(conversation)
+        handleDegradedConversationIfNecessary(for: conversation.voiceChannel)
         updateState()
     }
     
@@ -127,8 +133,8 @@ extension CallController: WireCallCenterCallStateObserver {
         router?.presentUnsupportedVersionAlert()
     }
     
-    private func handleDegradedConversationIfNecessary(_ conversation: ZMConversation) {
-        guard let degradationState = conversation.voiceChannel?.degradationState else {
+    private func handleDegradedConversationIfNecessary(for voiceChannel: VoiceChannel?) {
+        guard let degradationState = voiceChannel?.degradationState else {
             return
         }
         switch degradationState {

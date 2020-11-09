@@ -20,14 +20,16 @@ import Foundation
 import XCTest
 @testable import Wire
 
-final class CallRouterTests: XCTestCase {
+final class CallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
     
+    var coreDataFixture: CoreDataFixture!
     var sut: CallRouterMock!
     var callController: CallController!
     
     override func setUp() {
         super.setUp()
         sut = CallRouterMock()
+        coreDataFixture = CoreDataFixture()
         callController = CallController()
         callController.router = sut
     }
@@ -38,37 +40,69 @@ final class CallRouterTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
+    func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
         // GIVEN
-        let callState: CallState = .terminating(reason: .canceled)
-        let conversation = ZMConversation()
-        let caller = MockUserType.createSelfUser(name: "caller")
+        let callState: CallState = .terminating(reason: .outdatedClient)
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
         
         // WHEN
         callController.callCenterDidChange(callState: callState,
                                            conversation: conversation,
-                                           caller: caller,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.presentUnsupportedVersionAlertIsCalled)
+    }
+    
+    func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
+        // GIVEN
+        let callState: CallState = .terminating(reason: .canceled)
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                          otherUser: otherUser)
+        
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
                                            timestamp: nil,
                                            previousCallState: nil)
         // THEN
         XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
     }
     
-    func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
+    func testThatVersionAlertIsNotPresented_WhenCallStateIsNotTerminated() {
         // GIVEN
-        let callState: CallState = .terminating(reason: .outdatedClient)
-        let conversation = ZMConversation()
-        let caller = MockUserType.createSelfUser(name: "caller")
-        
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
         // WHEN
         callController.callCenterDidChange(callState: callState,
                                            conversation: conversation,
-                                           caller: caller,
+                                           caller: otherUser,
                                            timestamp: nil,
                                            previousCallState: nil)
         
         // THEN
-        XCTAssertTrue(sut.presentUnsupportedVersionAlertIsCalled)
+        XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
+    }
+    
+    func testThatVersionDegradationAlertIsNotPresented_WhenVoiceChannelHasNotDegradationState() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertFalse(sut.presentSecurityDegradedAlertIsCalled)
     }
 }
 
