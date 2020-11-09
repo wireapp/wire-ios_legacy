@@ -168,7 +168,6 @@ public class AppRootRouter: NSObject {
         sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        sessionManager?.useConferenceCalling = true
     }
 }
 
