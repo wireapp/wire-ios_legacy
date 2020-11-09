@@ -170,7 +170,6 @@ public class AppRootRouter: NSObject {
         sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
-        sessionManager?.useConferenceCalling = true
     }
 }
 
@@ -251,9 +250,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 }
 
-
+// MARK: - Navigation Helper
 extension AppRootRouter {
-    // MARK: - Navigation Helpers
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
@@ -467,7 +465,6 @@ extension AppRootRouter: AudioPermissionsObserving {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
-
 
 protocol AuthenticatedRouterProtocol: class {
     func presentCallCurrentlyInProgress()
