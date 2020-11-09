@@ -23,16 +23,52 @@ import XCTest
 final class CallRouterTests: XCTestCase {
     
     var sut: CallRouterMock!
+    var callController: CallController!
     
     override func setUp() {
         super.setUp()
         sut = CallRouterMock()
-
+        callController = CallController()
+        callController.router = sut
     }
 
     override func tearDown() {
         sut = nil
+        callController = nil
         super.tearDown()
+    }
+    
+    func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
+        // GIVEN
+        let callState: CallState = .terminating(reason: .canceled)
+        let conversation = ZMConversation()
+        let caller = MockUserType.createSelfUser(name: "caller")
+        
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: caller,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        // THEN
+        XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
+    }
+    
+    func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
+        // GIVEN
+        let callState: CallState = .terminating(reason: .outdatedClient)
+        let conversation = ZMConversation()
+        let caller = MockUserType.createSelfUser(name: "caller")
+        
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: caller,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.presentUnsupportedVersionAlertIsCalled)
     }
 }
 
