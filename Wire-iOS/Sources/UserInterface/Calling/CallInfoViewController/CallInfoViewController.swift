@@ -44,8 +44,6 @@ extension CallInfoViewControllerInput {
             disableIdleTimer == other.disableIdleTimer &&
             canToggleMediaType == other.canToggleMediaType &&
             isMuted == other.isMuted &&
-            isTerminating == other.isTerminating &&
-            canAccept == other.canAccept &&
             mediaState == other.mediaState &&
             appearance == other.appearance &&
             isVideoCall == other.isVideoCall &&
@@ -55,7 +53,8 @@ extension CallInfoViewControllerInput {
             title == other.title &&
             cameraType == other.cameraType &&
             networkQuality == other.networkQuality &&
-            userEnabledCBR == other.userEnabledCBR
+            userEnabledCBR == other.userEnabledCBR &&
+            callState.isEqual(toCallState: other.callState)
     }
 }
 
