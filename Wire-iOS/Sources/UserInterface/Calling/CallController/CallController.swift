@@ -31,15 +31,18 @@ final class CallController: NSObject {
         didSet {
             guard topOverlayCall != oldValue else { return }
             guard let conversation = topOverlayCall else {
-                ZClientViewController.shared?.setTopOverlay(to: nil)
+                router?.hideCallTopOverlay()
                 return
             }
-            router?.showCallTopOverlayController(for: conversation)
+            router?.showCallTopOverlay(for: conversation)
         }
     }
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
+    private var priorityCallConversation: ZMConversation? {
+        return ZMUserSession.shared()?.priorityCallConversation
+    }
     
     // MARK: - Init
     override init() {
@@ -49,8 +52,10 @@ final class CallController: NSObject {
     
     // MARK: - Public Impletation
     func updateState() {
-        guard let userSession = ZMUserSession.shared() else { return }
-        guard let priorityCallConversation = userSession.priorityCallConversation else { dismissCall(); return }
+        guard let priorityCallConversation = priorityCallConversation else {
+            dismissCall();
+            return
+        }
         
         topOverlayCall = priorityCallConversation
         

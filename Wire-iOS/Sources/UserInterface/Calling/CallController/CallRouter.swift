@@ -22,10 +22,10 @@ import WireSyncEngine
 // MARK: - CallRouterProtocol
 protocol CallRouterProtocol: class {
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool)
-    func dismissActiveCall(animated: Bool, completion: (()-> Void)?)
+    func dismissActiveCall(animated: Bool, completion: Completion?)
     func minimizeCall(animated: Bool, completion: (() -> Void)?)
-    func showCallTopOverlayController(for conversation: ZMConversation)
-    func hideCallTopOverlayController()
+    func showCallTopOverlay(for conversation: ZMConversation)
+    func hideCallTopOverlay()
     func presentSecurityDegradedAlert(degradedUser: UserType?)
     func presentUnsupportedVersionAlert()
 }
@@ -33,7 +33,7 @@ protocol CallRouterProtocol: class {
 // MARK: - CallQualityRouterProtocol
 protocol CallQualityRouterProtocol: class {
     func presentCallQualitySurvey(with callDuration: TimeInterval)
-    func dismissCallQualitySurvey(completion: (()-> Void)?)
+    func dismissCallQualitySurvey(completion: Completion?)
     func presentCallFailureDebugAlert()
     func presentCallQualityRejection()
 }
@@ -45,15 +45,21 @@ class CallRouter: NSObject {
     private let rootViewController: RootViewController
     private let callController: CallController
     private let callQualityController: CallQualityController
+    private var transitioningDelegate: CallQualityTransitioningDelegate
     
     private var isActiveCallShown = false
     private var isCallQualityShown = false
     private var scheduledPostCallAction: (() -> Void)?
-        
+    
+    private var zClientViewController: ZClientViewController? {
+        return rootViewController.firstChild(ofType: ZClientViewController.self)
+    }
+    
     init(rootviewController: RootViewController) {
         self.rootViewController = rootviewController
         callController = CallController()
         callQualityController = CallQualityController()
+        transitioningDelegate = CallQualityTransitioningDelegate()
         
         super.init()
         
@@ -69,6 +75,7 @@ class CallRouter: NSObject {
 
 // MARK: - CallRouterProtocol
 extension CallRouter: CallRouterProtocol {
+    // MARK: - ActiveCall
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool) {
         guard !isActiveCallShown else { return }
         
@@ -86,7 +93,7 @@ extension CallRouter: CallRouterProtocol {
             : presentActiveCall(modalViewController: modalVC, animated: animated)
     }
     
-    func dismissActiveCall(animated: Bool = true, completion: (()-> Void)? = nil) {
+    func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {
         rootViewController.dismiss(animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = false
             self?.scheduledPostCallAction?()
@@ -100,18 +107,18 @@ extension CallRouter: CallRouterProtocol {
         dismissActiveCall(animated: animated, completion: completion)
     }
     
-    func showCallTopOverlayController(for conversation: ZMConversation) {
+    // MARK: - CallTopOverlay
+    func showCallTopOverlay(for conversation: ZMConversation) {
         let callTopOverlayController = CallTopOverlayController(conversation: conversation)
         callTopOverlayController.delegate = self
-        let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self)
         zClientViewController?.setTopOverlay(to: callTopOverlayController)
     }
     
-    func hideCallTopOverlayController() {
-        let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self)
+    func hideCallTopOverlay() {
         zClientViewController?.setTopOverlay(to: nil)
     }
     
+    // MARK: - Alerts
     func presentSecurityDegradedAlert(degradedUser: UserType?) {
         executeOrSchedulePostCallAction { [weak self] in
             let alert = UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true)
@@ -164,7 +171,7 @@ extension CallRouter: CallQualityRouterProtocol {
         }
     }
     
-    func dismissCallQualitySurvey(completion: (()-> Void)? = nil) {
+    func dismissCallQualitySurvey(completion: Completion? = nil) {
         guard isCallQualityShown else { return }
         rootViewController.dismiss(animated: true, completion: { [weak self] in
             self?.isCallQualityShown = false
@@ -173,13 +180,17 @@ extension CallRouter: CallQualityRouterProtocol {
     }
 
     func presentCallFailureDebugAlert() {
+        let logsMessage = "The call failed. Sending the debug logs can help us troubleshoot the issue and improve the overall app experience."
         executeOrSchedulePostCallAction {
-            DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue and improve the overall app experience.")
+            DebugAlert.showSendLogsMessage(message: logsMessage)
         }
     }
     
     func presentCallQualityRejection() {
-        DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls and the overall app experience.")
+        let logsMessage = "Sending the debug logs can help us improve the quality of calls and the overall app experience."
+        executeOrSchedulePostCallAction {
+            DebugAlert.showSendLogsMessage(message: logsMessage)
+        }
     }
     
     private func buildCallQualitySurvey(with callDuration: TimeInterval) -> CallQualityViewController {
@@ -190,7 +201,7 @@ extension CallRouter: CallQualityRouterProtocol {
         
         qualityController.modalPresentationCapturesStatusBarAppearance = true
         qualityController.modalPresentationStyle = .overFullScreen
-        qualityController.transitioningDelegate = self
+        qualityController.transitioningDelegate = transitioningDelegate
         return qualityController
     }
 }
@@ -200,18 +211,5 @@ extension CallRouter: CallTopOverlayControllerDelegate {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel:VoiceChannel?) {
         guard let voiceChannel = voiceChannel else { return }
         presentActiveCall(for: voiceChannel, animated: true)
-    }
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-extension CallRouter: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController,
-                             presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
     }
 }
