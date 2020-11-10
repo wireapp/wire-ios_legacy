@@ -27,12 +27,11 @@ final class CallController: NSObject {
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
+    private var priorityCallConversation: ZMConversation?
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
-    private var priorityCallConversation: ZMConversation? {
-        return ZMUserSession.shared()?.priorityCallConversation
-    }
+    
     
     // MARK: - Init
     override init() {
@@ -42,6 +41,10 @@ final class CallController: NSObject {
     
     // MARK: - Public Implementation
     func updateActiveCallPresentationState() {
+        priorityCallConversation = ProcessInfo.processInfo.isRunningTests
+                ? priorityCallConversation
+                : ZMUserSession.shared()?.priorityCallConversation
+        
         guard let priorityCallConversation = priorityCallConversation else {
             dismissCall();
             return
@@ -177,4 +180,16 @@ extension CallController: WireCallCenterCallErrorObserver {
            let elapsedTimeIntervalSinceLastAlert = -dateOfLastErrorAlert.timeIntervalSinceNow
            return elapsedTimeIntervalSinceLastAlert > alertDebounceInterval
        }
+}
+
+extension CallController {
+    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
+    public func testHelper_setPriorityCallConversation(_ conversation: ZMConversation?) {
+        priorityCallConversation = conversation
+    }
+    
+    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
+    public func testHelper_setMinimizedCall(_ conversation: ZMConversation?) {
+        minimizedCall = conversation
+    }
 }

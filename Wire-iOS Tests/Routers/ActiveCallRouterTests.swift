@@ -40,6 +40,115 @@ final class ActiveCallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
         super.tearDown()
     }
     
+    // MARK: - ActiveCall Presentation Tests
+    func testThatActiveCallIsPresented_WhenMinimizedCallIsNil() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(conversation)
+        callController.testHelper_setMinimizedCall(nil)
+        
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.presentActiveCallIsCalled)
+    }
+    
+    func testThaActiveCallIsDismissed_WhenPriorityCallConversationIsNil() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(nil)
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.dismissActiveCallIsCalled)
+    }
+    
+    func testThatActiveCallIsMinimized_WhenPriorityCallConversationIsTheCallConversationMinimized() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(conversation)
+        callController.testHelper_setMinimizedCall(conversation)
+        
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.minimizeCallIsCalled)
+    }
+    
+    // MARK: - CallTopOverlay Presentation Tests
+    func testThaCallTopOverlayIsShown_WhenPriorityCallConversationIsNotNil() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(conversation)
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.showCallTopOverlayIsCalled)
+    }
+    
+    func testThatCallTopOverlayIsHidded_WhenPriorityCallConversationIsNil() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(nil)
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertTrue(sut.hideCallTopOverlayIsCalled)
+    }
+    
+    func testThatCallTopOverlayIsHidden_When() {
+        // GIVEN
+        let callState: CallState = .established
+        let conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
+                                                                      otherUser: otherUser)
+        callController.testHelper_setPriorityCallConversation(nil)
+        // WHEN
+        callController.callCenterDidChange(callState: callState,
+                                           conversation: conversation,
+                                           caller: otherUser,
+                                           timestamp: nil,
+                                           previousCallState: nil)
+        
+        // THEN
+        XCTAssertFalse(sut.showCallTopOverlayIsCalled)
+    }
+    
+    // MARK: - Version Alert Presentation Tests
     func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
         // GIVEN
         let callState: CallState = .terminating(reason: .outdatedClient)
@@ -89,6 +198,7 @@ final class ActiveCallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
         XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
     }
     
+    // MARK: - Degradation Alert Presentation Tests
     func testThatVersionDegradationAlertIsNotPresented_WhenVoiceChannelHasNotDegradationState() {
         // GIVEN
         let callState: CallState = .established
@@ -115,7 +225,8 @@ class ActiveCallRouterMock: ActiveCallRouterProtocol {
     
     var dismissActiveCallIsCalled: Bool = false
     func dismissActiveCall(animated: Bool, completion: Completion?) {
-        dismissActiveCallIsCalled = false
+        dismissActiveCallIsCalled = true
+        hideCallTopOverlay()
     }
     
     var minimizeCallIsCalled: Bool = false
@@ -123,9 +234,15 @@ class ActiveCallRouterMock: ActiveCallRouterProtocol {
         minimizeCallIsCalled = true
     }
     
-    func showCallTopOverlay(for conversation: ZMConversation) { }
+    var showCallTopOverlayIsCalled: Bool = false
+    func showCallTopOverlay(for conversation: ZMConversation) {
+        showCallTopOverlayIsCalled = true
+    }
     
-    func hideCallTopOverlay() { }
+    var hideCallTopOverlayIsCalled: Bool = false
+    func hideCallTopOverlay() {
+        hideCallTopOverlayIsCalled = true
+    }
     
     var presentSecurityDegradedAlertIsCalled: Bool = false
     func presentSecurityDegradedAlert(degradedUser: UserType?) {
