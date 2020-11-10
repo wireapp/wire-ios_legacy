@@ -250,7 +250,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 }
 
-
 extension AppRootRouter {
     // MARK: - Navigation Helpers
     private func showBlacklisted(completion: @escaping () -> Void) {
@@ -547,4 +546,3 @@ struct AuthenticatedWireFrame {
         return viewController
     }
 }
-
