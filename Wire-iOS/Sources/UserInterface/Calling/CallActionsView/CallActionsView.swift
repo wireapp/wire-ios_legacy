@@ -51,43 +51,6 @@ enum MediaState: Equatable {
     }
 }
 
-protocol CallStateExtending {
-    var isConnected: Bool { get }
-    var isTerminating: Bool { get }
-    var canAccept: Bool { get }
-}
-
-extension CallStateExtending {
-    func isEqual(toCallState other: CallStateExtending) -> Bool {
-        return isConnected == other.isConnected &&
-            isTerminating == other.isTerminating &&
-            canAccept == other.canAccept
-    }
-}
-
-extension CallState: CallStateExtending {
-    var isConnected: Bool {
-        switch self {
-        case .established, .establishedDataChannel: return true
-        default: return false
-        }
-    }
-    
-    var isTerminating: Bool {
-        switch self {
-        case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
-        default: return false
-        }
-    }
-    
-    var canAccept: Bool {
-        switch self {
-        case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
-        default: return false
-        }
-    }
-}
-
 // This protocol describes the input for a `CallActionsView`.
 protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
