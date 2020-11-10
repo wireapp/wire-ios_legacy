@@ -43,6 +43,7 @@ class ActiveCallRouter: NSObject {
     
     // MARK: - Private Property
     private let rootViewController: RootViewController
+    private var activeCallViewController: ActiveCallViewController?
     private let callController: CallController
     private let callQualityController: CallQualityController
     private var transitioningDelegate: CallQualityTransitioningDelegate
@@ -85,6 +86,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 
         let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
         activeCallViewController.delegate = callController
+        self.activeCallViewController = activeCallViewController
         
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController)
 
@@ -94,7 +96,8 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     }
     
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {
-        rootViewController.dismiss(animated: animated, completion: { [weak self] in
+        guard isActiveCallShown else { return }
+        activeCallViewController?.dismiss(animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = false
             self?.scheduledPostCallAction?()
             self?.scheduledPostCallAction = nil

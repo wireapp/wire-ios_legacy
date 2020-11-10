@@ -148,9 +148,10 @@ extension CallController: WireCallCenterCallStateObserver {
 
 // MARK: - ActiveCallViewControllerDelegate
 extension CallController: ActiveCallViewControllerDelegate {
-    func callControllerDidDisappear(_ callController: CallViewController) {
+    func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
+                                              for conversation: ZMConversation?) {
         router?.dismissActiveCall(animated: true, completion: nil)
-        minimizedCall = callController.conversation
+        minimizedCall = conversation
     }
 }
 
