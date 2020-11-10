@@ -46,37 +46,6 @@ extension Analytics {
 
 }
 
-enum GuestLinkEvent: Event {
-    case created, copied, revoked, shared
-
-    var name: String {
-        switch self {
-        case .created: return "guest_rooms.link_created"
-        case .copied: return "guest_rooms.link_copied"
-        case .revoked: return "guest_rooms.link_revoked"
-        case .shared: return "guest_rooms.link_shared"
-        }
-    }
-
-    var attributes: [AnyHashable: Any]? {
-        return nil
-    }
-}
-
-enum GuestRoomEvent: Event {
-    case created
-
-    var name: String {
-        switch self {
-        case .created: return "guest_rooms.guest_room_creation"
-        }
-    }
-
-    var attributes: [AnyHashable: Any]? {
-        return nil
-    }
-}
-
 extension Event {
     func track() {
         Analytics.shared.tag(self)

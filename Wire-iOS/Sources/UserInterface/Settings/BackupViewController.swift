@@ -226,6 +226,5 @@ fileprivate extension BackupViewController {
             }
             self.present(activityController, animated: true)
         #endif
-        BackupEvent.exportSucceeded.track()
     }
 }

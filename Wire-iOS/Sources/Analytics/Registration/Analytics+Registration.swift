@@ -24,20 +24,8 @@ extension Analytics {
         self.tagEvent("registration.succeeded", attributes: ["context": context])
     }
     
-    func tagOpenedLandingScreen(context: String) {
-        self.tagEvent("start.opened_start_screen", attributes: ["context": context])
-    }
-    
-    func tagOpenedUserRegistration(context: String) {
-        self.tagEvent("start.opened_person_registration", attributes: ["context": context])
-    }
-    
     func tagOpenedTeamCreation(context: String) {
         self.tagEvent("start.opened_team_registration", attributes: ["context": context])
-    }
-    
-    func tagOpenedLogin(context: String) {
-        self.tagEvent("start.opened_login", attributes: ["context": context])
     }
         
     enum InviteResult {

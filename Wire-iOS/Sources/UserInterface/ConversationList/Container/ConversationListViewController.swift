@@ -80,13 +80,6 @@ final class ConversationListViewController: UIViewController {
         return viewController
     }()
 
-    let conversationListContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-
-        return view
-    }()
-
     fileprivate let onboardingHint: ConversationListOnboardingHint = {
         let conversationListOnboardingHint = ConversationListOnboardingHint()
         return conversationListOnboardingHint
@@ -104,7 +97,8 @@ final class ConversationListViewController: UIViewController {
 
         self.viewModel = viewModel
 
-        topBarViewController = ConversationListTopBarViewController(account: viewModel.account, selfUser: viewModel.selfUser)
+        topBarViewController = ConversationListTopBarViewController(account: viewModel.account,
+                                                                    selfUser: viewModel.selfUser)
 
         super.init(nibName:nil, bundle:nil)
 
@@ -112,16 +106,14 @@ final class ConversationListViewController: UIViewController {
 
         /// setup UI
         view.addSubview(contentContainer)
-
-        contentContainer.addSubview(onboardingHint)
-        contentContainer.addSubview(conversationListContainer)
-
-        setupNoConversationLabel()
+        
+        setupTopBar()
         setupListContentController()
         setupBottomBarController()
-        setupTopBar()
+        setupNoConversationLabel()
+        setupOnboardingHint()
         setupNetworkStatusBar()
-
+        
         createViewConstraints()
         
         onboardingHint.arrowPointToView = bottomBarController.startUIButton
@@ -200,84 +192,84 @@ final class ConversationListViewController: UIViewController {
 
     // MARK: - setup UI
 
-    fileprivate func setupNoConversationLabel() {
-        contentContainer.addSubview(noConversationLabel)
-    }
-
-    fileprivate func setupBottomBarController() {
-        bottomBarController.delegate = self
-        
-        add(bottomBarController, to: conversationListContainer)
-
-        listContentController.listViewModel.restorationDelegate = bottomBarController
-    }
-
-    fileprivate func setupListContentController() {
-        listContentController.contentDelegate = viewModel
-
-        add(listContentController, to: conversationListContainer)
-    }
-    
-    fileprivate func setupTopBar() {
+    private func setupTopBar() {
         add(topBarViewController, to: contentContainer)
     }
     
-    fileprivate func setupNetworkStatusBar() {
-        networkStatusViewController.delegate = self
-        addToSelf(networkStatusViewController)
+    private func setupListContentController() {
+        listContentController.contentDelegate = viewModel
+        add(listContentController, to: contentContainer)
+    }
+    
+    private func setupNoConversationLabel() {
+        contentContainer.addSubview(noConversationLabel)
     }
 
-    fileprivate func createViewConstraints() {
-        guard let bottomBar = bottomBarController.view,
-            let listContent = listContentController.view,
-            let topBarView = topBarViewController.view else { return }
+    private func setupOnboardingHint() {
+        contentContainer.addSubview(onboardingHint)
+    }
+    
+    private func setupBottomBarController() {
+        bottomBarController.delegate = self
+        add(bottomBarController, to: contentContainer)
+        listContentController.listViewModel.restorationDelegate = bottomBarController
+    }
+
+    private func setupNetworkStatusBar() {
+        networkStatusViewController.delegate = self
+        add(networkStatusViewController, to: contentContainer)
+    }
+
+    private func createViewConstraints() {
+        guard
+            let topBarView = topBarViewController.view,
+            let bottomBar = bottomBarController.view,
+            let conversationList = listContentController.view
+        else {
+            return
+        }
         
-        [conversationListContainer,
-         bottomBar,
-         networkStatusViewController.view,
-         topBarView,
-         contentContainer,
-         noConversationLabel,
-         onboardingHint,
-         listContent].forEach() { $0?.translatesAutoresizingMaskIntoConstraints = false }
-        
-        let bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
+        [contentContainer,
+        topBarView,
+        conversationList,
+        bottomBar,
+        noConversationLabel,
+        onboardingHint,
+        networkStatusViewController.view].forEach() {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         let constraints: [NSLayoutConstraint] = [
-            conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
-            conversationListContainer.leadingAnchor.constraint(equalTo: conversationListContainer.superview!.leadingAnchor),
-            conversationListContainer.trailingAnchor.constraint(equalTo: conversationListContainer.superview!.trailingAnchor),
-            
-            bottomBar.leftAnchor.constraint(equalTo: bottomBar.superview!.leftAnchor),
-            bottomBar.rightAnchor.constraint(equalTo: bottomBar.superview!.rightAnchor),
-            bottomBarBottomOffset,
-            
-            topBarView.leftAnchor.constraint(equalTo: topBarView.superview!.leftAnchor),
-            topBarView.rightAnchor.constraint(equalTo: topBarView.superview!.rightAnchor),
-            topBarView.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
-            
-            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             contentContainer.topAnchor.constraint(equalTo: safeTopAnchor),
             contentContainer.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             
-            noConversationLabel.centerXAnchor.constraint(equalTo: noConversationLabel.superview!.centerXAnchor),
-            noConversationLabel.centerYAnchor.constraint(equalTo: noConversationLabel.superview!.centerYAnchor),
-            noConversationLabel.heightAnchor.constraint(equalToConstant: 120),
-            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
+            topBarView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            topBarView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            topBarView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            
+            conversationList.topAnchor.constraint(equalTo: topBarView.bottomAnchor),
+            conversationList.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            conversationList.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            conversationList.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
             
             onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
-            onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
-            onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
+            onboardingHint.leftAnchor.constraint(equalTo: contentContainer.leftAnchor),
+            onboardingHint.rightAnchor.constraint(equalTo: contentContainer.rightAnchor),
             
-            listContent.topAnchor.constraint(equalTo: listContent.superview!.topAnchor),
-            listContent.leadingAnchor.constraint(equalTo: listContent.superview!.leadingAnchor),
-            listContent.trailingAnchor.constraint(equalTo: listContent.superview!.trailingAnchor),
-            listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
+            bottomBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            bottomBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            bottomBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            
+            noConversationLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
+            noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
+            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
         ]
         
         ///TODO: merge this method and activate the constraints in a batch
-        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView, controller: self)
+        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView,
+                                                                        controller: self)
         
         NSLayoutConstraint.activate(constraints)
     }

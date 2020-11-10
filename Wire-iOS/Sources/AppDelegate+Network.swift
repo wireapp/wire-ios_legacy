@@ -26,8 +26,4 @@ extension AppDelegate {
     static var isOffline: Bool {
         return .unreachable == NetworkStatus.shared.reachability
     }
-
-    var sessionManager: SessionManager? {
-        return rootViewController.sessionManager
-    }
 }

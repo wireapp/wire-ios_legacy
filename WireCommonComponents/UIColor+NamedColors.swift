@@ -17,14 +17,27 @@
 //
 
 import Foundation
-import WireDataModel
+import UIKit
 
-enum AppState : Equatable {
+public extension UIColor {
     
-    case headless
-    case authenticated(completedRegistration: Bool, databaseIsLocked: Bool)
-    case unauthenticated(error : NSError?)
-    case blacklisted(jailbroken: Bool)
-    case migrating
-    case loading(account: Account, from: Account?)
+    struct Wire {
+        
+        public static var primaryLabel: UIColor {
+            if #available(iOS 13.0, *) {
+                return label
+            }
+            
+            return black
+        }
+        
+        public static var secondaryLabel: UIColor {
+            if #available(iOS 13.0, *) {
+                return label.withAlphaComponent(0.7)
+            }
+
+            return black.withAlphaComponent(0.7)
+        }
+    }
+        
 }

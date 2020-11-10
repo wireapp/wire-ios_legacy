@@ -78,7 +78,8 @@ extension SpinnerCapable where Self: UIViewController {
 
 }
 
-fileprivate final class LoadingSpinnerView: UIView {
+// MARK: - LoadingSpinnerView
+final class LoadingSpinnerView: UIView {
     let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
 
     init() {
@@ -99,6 +100,16 @@ fileprivate final class LoadingSpinnerView: UIView {
             spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
     }
+}
+
+// MARK: - SpinnerCapableNavigationController
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+    
 }
 
 extension UINavigationController {

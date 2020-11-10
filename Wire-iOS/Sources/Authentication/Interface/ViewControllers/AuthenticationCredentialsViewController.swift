@@ -59,6 +59,14 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             return false
         }
     }
+    
+    var isReauthenticating: Bool {
+        if case .reauthentication? = flowType {
+            return true
+        } else {
+            return false
+        }
+    }
 
     private var emailFieldValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
@@ -126,8 +134,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         // Phone Number View
         phoneInputView.delegate = self
         phoneInputView.tintColor = .black
+        phoneInputView.allowEditingPrefilledValue = !isReauthenticating
 
         // Email Password Input View
+        emailPasswordInputField.allowEditingPrefilledValue = !isReauthenticating
         emailPasswordInputField.delegate = self
 
         // Email input view
