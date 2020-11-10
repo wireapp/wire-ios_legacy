@@ -21,7 +21,8 @@ import WireSyncEngine
 import avs
 
 protocol CallViewControllerDelegate: class {
-    func callControllerDidDisappear(_ callController: CallViewController)
+    func callViewControllerDidDisappear(_ callController: CallViewController,
+                                        for conversation: ZMConversation?)
 }
 
 final class CallViewController: UIViewController {
@@ -153,13 +154,13 @@ final class CallViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
 
         if isInteractiveDismissal {
-            delegate?.callControllerDidDisappear(self)
+            delegate?.callViewControllerDidDisappear(self, for: conversation)
         }
     }
 
     override func accessibilityPerformEscape() -> Bool {
         guard let delegate = delegate else { return false }
-        delegate.callControllerDidDisappear(self)
+        delegate.callViewControllerDidDisappear(self, for: conversation)
         return true
     }
 
@@ -198,7 +199,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func minimizeOverlay() {
-        delegate?.callControllerDidDisappear(self)
+        delegate?.callViewControllerDidDisappear(self, for: conversation)
     }
 
     fileprivate func acceptDegradedCall() {

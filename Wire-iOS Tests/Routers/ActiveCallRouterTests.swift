@@ -20,15 +20,15 @@ import Foundation
 import XCTest
 @testable import Wire
 
-final class CallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
+final class ActiveCallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var coreDataFixture: CoreDataFixture!
-    var sut: CallRouterMock!
+    var sut: ActiveCallRouterMock!
     var callController: CallController!
     
     override func setUp() {
         super.setUp()
-        sut = CallRouterMock()
+        sut = ActiveCallRouterMock()
         coreDataFixture = CoreDataFixture()
         callController = CallController()
         callController.router = sut
@@ -106,14 +106,15 @@ final class CallRouterTests: XCTestCase, CoreDataFixtureTestHelper {
     }
 }
 
-class CallRouterMock: CallRouterProtocol {
+class ActiveCallRouterMock: ActiveCallRouterProtocol {
+    
     var presentActiveCallIsCalled: Bool = false
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool) {
         presentActiveCallIsCalled = true
     }
     
     var dismissActiveCallIsCalled: Bool = false
-    func dismissActiveCall(animated: Bool, completion: (() -> Void)?) {
+    func dismissActiveCall(animated: Bool, completion: Completion?) {
         dismissActiveCallIsCalled = false
     }
     
@@ -122,9 +123,9 @@ class CallRouterMock: CallRouterProtocol {
         minimizeCallIsCalled = true
     }
     
-    func showCallTopOverlayController(for conversation: ZMConversation) { }
+    func showCallTopOverlay(for conversation: ZMConversation) { }
     
-    func hideCallTopOverlayController() { }
+    func hideCallTopOverlay() { }
     
     var presentSecurityDegradedAlertIsCalled: Bool = false
     func presentSecurityDegradedAlert(degradedUser: UserType?) {

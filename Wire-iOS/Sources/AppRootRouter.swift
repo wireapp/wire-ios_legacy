@@ -380,7 +380,7 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-            authenticatedRouter?.presentCallCurrentlyInProgress()
+            authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.openDeepLink(needsAuthentication: true)
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
@@ -468,7 +468,7 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 
 protocol AuthenticatedRouterProtocol: class {
-    func presentCallCurrentlyInProgress()
+    func updateActiveCallPresentationState()
     func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
 }
 
@@ -480,7 +480,7 @@ class AuthenticatedRouter: NSObject {
     
     private let builder: AuthenticatedWireFrame
     private let rootViewController: RootViewController
-    private let callRouter: CallRouter
+    private let activeCallRouter: ActiveCallRouter
     private weak var _viewController: ZClientViewController?
     
     // MARK: - Public Property
@@ -500,7 +500,7 @@ class AuthenticatedRouter: NSObject {
          needToShowDataUsagePermissionDialog: Bool) {
         
         self.rootViewController = rootViewController
-        callRouter = CallRouter(rootviewController: rootViewController)
+        activeCallRouter = ActiveCallRouter(rootviewController: rootViewController)
         
         builder = AuthenticatedWireFrame(account: account,
                                          selfUser: selfUser,
@@ -511,13 +511,13 @@ class AuthenticatedRouter: NSObject {
 
 // MARK: - AuthenticatedRouterProtocol
 extension AuthenticatedRouter: AuthenticatedRouterProtocol {
-    func presentCallCurrentlyInProgress() {
-        callRouter.updateCallState()
+    func updateActiveCallPresentationState() {
+        activeCallRouter.updateActiveCallPresentationState()
     }
     
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
-        callRouter.minimizeCall(animated: animated, completion: completion)
+        activeCallRouter.minimizeCall(animated: animated, completion: completion)
     }
 }
 

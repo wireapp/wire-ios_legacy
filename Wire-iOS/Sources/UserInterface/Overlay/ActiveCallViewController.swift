@@ -25,7 +25,8 @@ import WireSyncEngine
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
 protocol ActiveCallViewControllerDelegate: class {
-    func callControllerDidDisappear(_ callController: CallViewController)
+    func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
+                                              for conversation: ZMConversation?)
 }
 
 /// ViewController container for CallViewControllers. Displays the active the controller for active or incoming calls.
@@ -136,7 +137,8 @@ extension ActiveCallViewController : WireCallCenterCallStateObserver {
 }
 
 extension ActiveCallViewController: CallViewControllerDelegate {
-    func callControllerDidDisappear(_ callController: CallViewController) {
-        delegate?.callControllerDidDisappear(callController)
+    func callViewControllerDidDisappear(_ callController: CallViewController,
+                                        for conversation: ZMConversation?) {
+        delegate?.activeCallViewControllerDidDisappear(self, for: conversation)
     }
 }

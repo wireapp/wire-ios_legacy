@@ -22,25 +22,14 @@ import WireSyncEngine
 final class CallController: NSObject {
 
     // MARK: - Public Implentation
-    weak var router: CallRouterProtocol?
+    weak var router: ActiveCallRouterProtocol?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
-    private var topOverlayCall: ZMConversation? = nil {
-        didSet {
-            guard topOverlayCall != oldValue else { return }
-            guard let conversation = topOverlayCall else {
-                
-                return
-            }
-            router?.showCallTopOverlayController(for: conversation)
-        }
-    }
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
-    
     private var priorityCallConversation: ZMConversation? {
         return ZMUserSession.shared()?.priorityCallConversation
     }
@@ -51,18 +40,15 @@ final class CallController: NSObject {
         addObservers()
     }
     
-    // MARK: - Public Impletation
-    func updateState() {
+    // MARK: - Public Implementation
+    func updateActiveCallPresentationState() {
         guard let priorityCallConversation = priorityCallConversation else {
-        dismissCall();
+            dismissCall();
             return
         }
         
-        topOverlayCall = priorityCallConversation
-        
-        priorityCallConversation == minimizedCall
-            ? minimizeCall()
-            : presentCall(in: priorityCallConversation)
+        showCallTopOverlay(for: priorityCallConversation)
+        presentOrMinimizeActiveCall(for: priorityCallConversation)
     }
     
     // MARK: - Private Implementation
@@ -73,6 +59,12 @@ final class CallController: NSObject {
         }
     }
     
+    private func presentOrMinimizeActiveCall(for conversation: ZMConversation) {
+        conversation == minimizedCall
+            ? minimizeCall()
+            : presentCall(in: conversation)
+    }
+    
     private func minimizeCall() {
         router?.minimizeCall(animated: true, completion: nil)
     }
@@ -81,23 +73,31 @@ final class CallController: NSObject {
         guard let voiceChannel = conversation.voiceChannel else { return }
         if minimizedCall == conversation { minimizedCall = nil }
         
-        let animated = shouldAnimate(call: conversation)
+        let animated = shouldAnimateTransitionForCall(in: conversation)
         router?.presentActiveCall(for: voiceChannel, animated: animated)
     }
 
     private func dismissCall() {
         router?.dismissActiveCall(animated: true, completion: { [weak self] in
+            self?.hideCallTopOverlay()
             self?.minimizedCall = nil
-            self?.topOverlayCall = nil
         })
     }
     
-    private func shouldAnimate(call: ZMConversation) -> Bool {
+    private func showCallTopOverlay(for conversation: ZMConversation) {
+        router?.showCallTopOverlay(for: conversation)
+    }
+    
+    private func hideCallTopOverlay() {
+        router?.hideCallTopOverlay()
+    }
+    
+    private func shouldAnimateTransitionForCall(in conversation: ZMConversation) -> Bool {
         guard SessionManager.shared?.callNotificationStyle == .callKit else {
             return true
         }
         
-        switch call.voiceChannel?.state {
+        switch conversation.voiceChannel?.state {
         case .outgoing?:
             return true
         default:
@@ -124,8 +124,8 @@ extension CallController: WireCallCenterCallStateObserver {
                              timestamp: Date?,
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
-        handleDegradedConversationIfNecessary(for: conversation.voiceChannel)
-        updateState()
+        presentSecurityDegradedAlertIfNecessary(for: conversation.voiceChannel)
+        updateActiveCallPresentationState()
     }
     
     private func presentUnsupportedVersionAlertIfNecessary(callState: CallState) {
@@ -133,7 +133,7 @@ extension CallController: WireCallCenterCallStateObserver {
         router?.presentUnsupportedVersionAlert()
     }
     
-    private func handleDegradedConversationIfNecessary(for voiceChannel: VoiceChannel?) {
+    private func presentSecurityDegradedAlertIfNecessary(for voiceChannel: VoiceChannel?) {
         guard let degradationState = voiceChannel?.degradationState else {
             return
         }
@@ -148,9 +148,10 @@ extension CallController: WireCallCenterCallStateObserver {
 
 // MARK: - ActiveCallViewControllerDelegate
 extension CallController: ActiveCallViewControllerDelegate {
-    func callControllerDidDisappear(_ callController: CallViewController) {
+    func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
+                                              for conversation: ZMConversation?) {
         router?.dismissActiveCall(animated: true, completion: nil)
-        minimizedCall = callController.conversation
+        minimizedCall = conversation
     }
 }
 
