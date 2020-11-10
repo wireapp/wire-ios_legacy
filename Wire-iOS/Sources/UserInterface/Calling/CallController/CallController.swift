@@ -27,16 +27,6 @@ final class CallController: NSObject {
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
-    private var topOverlayCall: ZMConversation? = nil {
-        didSet {
-            guard topOverlayCall != oldValue else { return }
-            guard let conversation = topOverlayCall else {
-                router?.hideCallTopOverlay()
-                return
-            }
-            router?.showCallTopOverlay(for: conversation)
-        }
-    }
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
@@ -51,17 +41,14 @@ final class CallController: NSObject {
     }
     
     // MARK: - Public Implementation
-    func updateActiveCallPresentetionState() {
+    func updateActiveCallPresentationState() {
         guard let priorityCallConversation = priorityCallConversation else {
             dismissCall();
             return
         }
         
-        topOverlayCall = priorityCallConversation
-        
-        priorityCallConversation == minimizedCall
-            ? minimizeCall()
-            : presentCall(in: priorityCallConversation)
+        showCallTopOverlay(for: priorityCallConversation)
+        presentOrMinimizeActiveCall(for: priorityCallConversation)
     }
     
     // MARK: - Private Implementation
@@ -70,6 +57,12 @@ final class CallController: NSObject {
             observerTokens.append(WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession))
             observerTokens.append(WireCallCenterV3.addCallErrorObserver(observer: self, userSession: userSession))
         }
+    }
+    
+    private func presentOrMinimizeActiveCall(for conversation: ZMConversation) {
+        conversation == minimizedCall
+            ? minimizeCall()
+            : presentCall(in: conversation)
     }
     
     private func minimizeCall() {
@@ -86,9 +79,17 @@ final class CallController: NSObject {
 
     private func dismissCall() {
         router?.dismissActiveCall(animated: true, completion: { [weak self] in
+            self?.hideCallTopOverlay()
             self?.minimizedCall = nil
-            self?.topOverlayCall = nil
         })
+    }
+    
+    private func showCallTopOverlay(for conversation: ZMConversation) {
+        router?.showCallTopOverlay(for: conversation)
+    }
+    
+    private func hideCallTopOverlay() {
+        router?.hideCallTopOverlay()
     }
     
     private func shouldAnimateTransitionForCall(in conversation: ZMConversation) -> Bool {
@@ -124,7 +125,7 @@ extension CallController: WireCallCenterCallStateObserver {
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
         presentSecurityDegradedAlertIfNecessary(conversation)
-        updateActiveCallPresentetionState()
+        updateActiveCallPresentationState()
     }
     
     private func presentUnsupportedVersionAlertIfNecessary(callState: CallState) {

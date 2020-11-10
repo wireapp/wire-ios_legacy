@@ -68,8 +68,8 @@ class ActiveCallRouter: NSObject {
     }
         
     // MARK: - Public Implementation
-    func updateCallState() {
-        callController.updateActiveCallPresentetionState()
+    func updateActiveCallPresentationState() {
+        callController.updateActiveCallPresentationState()
     }
 }
 

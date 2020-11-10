@@ -380,7 +380,7 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-            authenticatedRouter?.presentCallCurrentlyInProgress()
+            authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.openDeepLink(needsAuthentication: true)
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
@@ -468,7 +468,7 @@ extension AppRootRouter: AudioPermissionsObserving {
 
 
 protocol AuthenticatedRouterProtocol: class {
-    func presentCallCurrentlyInProgress()
+    func updateActiveCallPresentationState()
     func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
 }
 
@@ -511,8 +511,8 @@ class AuthenticatedRouter: NSObject {
 
 // MARK: - AuthenticatedRouterProtocol
 extension AuthenticatedRouter: AuthenticatedRouterProtocol {
-    func presentCallCurrentlyInProgress() {
-        activeCallRouter.updateCallState()
+    func updateActiveCallPresentationState() {
+        activeCallRouter.updateActiveCallPresentationState()
     }
     
     func minimizeCallOverlay(animated: Bool,
