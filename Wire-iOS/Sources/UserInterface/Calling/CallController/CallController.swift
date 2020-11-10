@@ -22,7 +22,7 @@ import WireSyncEngine
 final class CallController: NSObject {
 
     // MARK: - Public Implentation
-    weak var router: CallRouterProtocol?
+    weak var router: ActiveCallRouterProtocol?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
@@ -50,8 +50,8 @@ final class CallController: NSObject {
         addObservers()
     }
     
-    // MARK: - Public Impletation
-    func updateState() {
+    // MARK: - Public Implementation
+    func updateActiveCallPresentetionState() {
         guard let priorityCallConversation = priorityCallConversation else {
             dismissCall();
             return
@@ -80,7 +80,7 @@ final class CallController: NSObject {
         guard let voiceChannel = conversation.voiceChannel else { return }
         if minimizedCall == conversation { minimizedCall = nil }
         
-        let animated = shouldAnimate(call: conversation)
+        let animated = shouldAnimateTransitionForCall(in: conversation)
         router?.presentActiveCall(for: voiceChannel, animated: animated)
     }
 
@@ -91,12 +91,12 @@ final class CallController: NSObject {
         })
     }
     
-    private func shouldAnimate(call: ZMConversation) -> Bool {
+    private func shouldAnimateTransitionForCall(in conversation: ZMConversation) -> Bool {
         guard SessionManager.shared?.callNotificationStyle == .callKit else {
             return true
         }
         
-        switch call.voiceChannel?.state {
+        switch conversation.voiceChannel?.state {
         case .outgoing?:
             return true
         default:
@@ -123,8 +123,8 @@ extension CallController: WireCallCenterCallStateObserver {
                              timestamp: Date?,
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
-        handleDegradedConversationIfNecessary(conversation)
-        updateState()
+        presentSecurityDegradedAlertIfNecessary(conversation)
+        updateActiveCallPresentetionState()
     }
     
     private func presentUnsupportedVersionAlertIfNecessary(callState: CallState) {
@@ -132,7 +132,7 @@ extension CallController: WireCallCenterCallStateObserver {
         router?.presentUnsupportedVersionAlert()
     }
     
-    private func handleDegradedConversationIfNecessary(_ conversation: ZMConversation) {
+    private func presentSecurityDegradedAlertIfNecessary(_ conversation: ZMConversation) {
         guard let degradationState = conversation.voiceChannel?.degradationState else {
             return
         }
