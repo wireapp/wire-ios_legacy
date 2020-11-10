@@ -50,13 +50,17 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    func testCallActionsView_CanNotToggle_Video_NotMuted_CanAccept_NotTerminating_NotSendingVideo_SpeakerEnabled() {
+    // MARK: - Light Theme
+    
+    func testCallActionsView_LightTheme_WithSelectedButtons() {
+        snapshotBackgroundColor = .white
+        
         // Given
         let input = CallActionsViewInput(
             permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: false,
-            isVideoCall: true,
-            isMuted: false,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: true,
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
@@ -71,13 +75,15 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
-    func testCallActionsView_CanToggle_Video_Muted_CanAccept_NotTerminating_NotSendingVideo_SpeakerDisabled() {
+    func testCallActionsView_LightTheme() {
+        snapshotBackgroundColor = .white
+        
         // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
-            isVideoCall: true,
-            isMuted: true,
+            isVideoCall: false,
+            isMuted: false,
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
@@ -92,122 +98,41 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
-    func testCallActionsView_CanNotToggle_NotMuted_Video_CanNotAccept_VideoUnvailable_FlipCamera_SpeakerDisabled() {
-        // Given
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: false,
-            isVideoCall: true,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
+    // MARK: - Dark Theme
 
-    func testCallActionsView_CanToggle_NotMuted_Video_CanAccept_SendingVideo_FlipCamera_DarkTheme() {
-        // Given
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
-            isVideoCall: true,
-            isMuted: false,
-            canAccept: true,
-            isTerminating: false,
-            mediaState: .sendingVideo,
-            variant: .dark,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_NotMuted_CanNotAccept_CanToggleMedia_SendingVideo_FlipCamera() {
-        // Given
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
-            isVideoCall: true,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: false,
-            mediaState: .sendingVideo,
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_NotMuted_Audio_CanNotAccept_VideoNotSending_SpearkerEnabled() {
-        // Given
-        snapshotBackgroundColor = .white
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoDeniedForever,
-            canToggleMediaType: false,
-            isVideoCall: false,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: false,
-            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_NotMuted_Audio_CanNotAccept_VideoNotSending_SpearkerDisabled() {
-        // Given
-        snapshotBackgroundColor = .white
-        let input = CallActionsViewInput(
-            permissions: CallPermissions(),
-            canToggleMediaType: false,
-            isVideoCall: false,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_Muted_Audio_CanNotAccept_CanToggle_VideoNotSending_SpearkerDisabled_DarkTheme() {
-        // Given
+    func testCallActionsView_DarkTheme_WithSelectedButtons() {
         snapshotBackgroundColor = .black
+        
+        // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: true,
-            canAccept: false,
+            canAccept: true,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
+            variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_DarkTheme() {
+        snapshotBackgroundColor = .black
+        
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
@@ -221,81 +146,16 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
-    func testCallActionsView_NotMuted_Audio_CanNotAccept_CanToggle_VideoNotSending_SpearkerEnabled_SpeakerUnvailable() {
-        // Given
-        snapshotBackgroundColor = .white
-        let input = CallActionsViewInput(
-            permissions: CallPermissions(),
-            canToggleMediaType: true,
-            isVideoCall: false,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: false,
-            mediaState: .notSendingVideo(speakerState: .selectedCanNotBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
+    // MARK: - Compact
     
-    func testCallActionsView_NotMuted_CanNotAccept_VideoNotSending_SpearkerEnabled_Terminating() {
+    func testCallActionsView_Compact() {
         // Given
-        snapshotBackgroundColor = .white
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoDeniedForever,
-            canToggleMediaType: false,
-            isVideoCall: false,
-            isMuted: false,
-            canAccept: false,
-            isTerminating: true,
-            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_Muted_CanAccept_Audio_VideoNotSending_SpearkerDisabled() {
-        // Given
-        snapshotBackgroundColor = .white
-        let input = CallActionsViewInput(
-            permissions: CallPermissions(),
-            canToggleMediaType: false,
-            isVideoCall: false,
-            isMuted: true,
-            canAccept: true,
-            isTerminating: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
-            cameraType: .front
-        )
-        
-        // When
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testCallActionsView_NotMuted_CanNotAccept_VideoNotSending_SpearkerEnabled_Compact() {
-        // Given
-        snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             permissions: MockCallPermissions.videoPendingApproval,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
-            canAccept: false,
+            canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
             variant: .light,
@@ -306,18 +166,21 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         widthConstraint.constant = 400
         sut.isCompact = true
         sut.update(with: input)
-
+        
         // Then
         verify(view: sut)
     }
     
-    func testCallActionsView_Muted_CanAccept_VideoSending_FlipCamera_Compact() {
+    // MARK: - Call State: Incoming
+    
+    func testCallActionsView_StateIncoming_Audio() {
+
         // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
-            canToggleMediaType: true,
-            isVideoCall: true,
-            isMuted: true,
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: false,
+            isVideoCall: false,
+            isMuted: false,
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
@@ -326,14 +189,207 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         )
         
         // When
-        widthConstraint.constant = 400
-        sut.isCompact = true
         sut.update(with: input)
         
         // Then
         verify(view: sut)
     }
 
+    func testCallActionsView_StateIncoming_Video() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: false,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: true,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    // MARK: - Call State: Outgoing
+    
+    func testCallActionsView_StateOutgoing_Audio() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            variant: .light,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOutgoing_Video() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: true,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .sendingVideo,
+            variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+
+    // MARK: Call State: - Ongoing
+
+    func testCallActionsView_StateOngoing_Audio() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            variant: .light,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOngoing_Audio_Muted() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: true,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            variant: .light,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOngoing_Audio_SpeakerUnavailable() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanNotBeToggled),
+            variant: .light,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOngoing_Video() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: true,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .sendingVideo,
+            variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    // MARK: Call State: - Terminating
+    
+    func testCallActionsView_StateTerminating_Audio() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: true,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            variant: .light,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateTerminating_Video() {
+        // Given
+        let input = CallActionsViewInput(
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: true,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: true,
+            mediaState: .sendingVideo,
+            variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
     // MARK: - Permissions
 
     func testCallActionsView_Permissions_NotDetermined() {

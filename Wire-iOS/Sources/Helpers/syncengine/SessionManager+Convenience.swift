@@ -23,9 +23,33 @@ import WireSyncEngine
 
 extension SessionManager {
     static var shared : SessionManager? {
-        return AppDelegate.shared.sessionManager
+        return AppDelegate.shared.appRootRouter?.sessionManager
     }
     
+    static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+    
+    var firstAuthenticatedAccount: Account? {
+        return firstAuthenticatedAccount(excludingCredentials: nil)
+    }
+    
+    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
+        if let selectedAccount = accountManager.selectedAccount {
+            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
+                return selectedAccount
+            }
+        }
+
+        for account in accountManager.accounts {
+            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
+                return account
+            }
+        }
+
+        return nil
+    }
+
     func updateCallNotificationStyleFromSettings() {
         let isCallKitEnabled: Bool = !(Settings.shared[.disableCallKit] ?? false)
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized

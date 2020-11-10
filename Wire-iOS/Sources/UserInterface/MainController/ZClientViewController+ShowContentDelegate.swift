@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-extension ZClientViewController: ShowContentDelegate {
+extension ZClientViewController {
     private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {
         let navWrapperController: UINavigationController = viewController.wrapInNavigationController()
         navWrapperController.modalPresentationStyle = .formSheet

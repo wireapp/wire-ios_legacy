@@ -27,7 +27,7 @@ extension UIViewController {
     ///   - view: the viewController parameter's view will be added to this view
     func add(_ viewController: UIViewController?, to view: UIView) {
         guard let viewController = viewController else { return }
-
+        viewController.willMove(toParent: self)
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.didMove(toParent: self)
@@ -38,6 +38,37 @@ extension UIViewController {
     /// - Parameter viewController: viewController to add
     func addToSelf(_ viewController: UIViewController) {
         add(viewController, to: view)
+    }
+    
+    /// remove a child view controller to self and add its view from the paramenter's view
+    ///
+    /// - Parameters:
+    ///   - viewController: the view controller to remove
+    func removeChild(_ viewController: UIViewController?) {
+        viewController?.willMove(toParent: nil)
+        viewController?.view.removeFromSuperview()
+        viewController?.removeFromParent()
+    }
+    
+    /// Return the first child of class T in the hierarchy of the children of the view controller
+    ///
+    /// - Parameters:
+    ///   - type: type of the view controller to find
+    func firstChild<T: UIViewController>(ofType type: T.Type) -> T? {
+        // Check all the children first.
+        for child in children {
+            if let result = child as? T {
+                return result
+            }
+        }
+        
+        // Then check next layer down.
+        for child in children {
+            if let result = child.firstChild(ofType: type) {
+                return result
+            }
+        }
+        return nil
     }
 }
 

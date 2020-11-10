@@ -38,11 +38,3 @@ public extension MSAppCenter {
                                                                 MSAnalytics.self])
     }
 }
-
-public extension MSCrashes {
-    
-    static var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
-        guard let lastSessionCrashReport = lastSessionCrashReport() else { return nil }
-        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
-    }
-}
