@@ -520,7 +520,7 @@
 "content.system.reactivated_device" = "Sie haben %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
 "content.system.new_device" = "ein neues Gerät";
-"content.system.started_using" = "benutzt";
+"content.system.started_using" = "benutzen";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
 "content.system.new_users" = "Teilnehmer hinzugefügt.";
