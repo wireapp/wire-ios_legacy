@@ -103,21 +103,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    /// Begin Countly session. If Self User is not yet assigned, it would not start Countly.
-    /// - Returns: return true if Countly is started
-    @discardableResult
-    private func beginSession() -> Bool {
-        // begin the session when:
-        // 1. self user is a team member
-        // 2. analyticsIdentifier is generated
-        // 3. Countly key and URL is read
-
+    private func beginSession() {
         guard
             shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
             let analyticsIdentifier = selfUser.analyticsIdentifier
         else {
-            return false
+            return
         }
 
         guard
@@ -127,7 +119,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             let appKey = String(describing: Bundle.countlyAppKey)
             let url = String(describing: BackendEnvironment.shared.countlyURL)
             zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(appKey), countlyURL = \(url). Please check COUNTLY_APP_KEY is set in .xcconfig file")
-            return false
+            return
         }
                 
         let config: CountlyConfig = CountlyConfig()
@@ -137,15 +129,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         
         config.deviceID = analyticsIdentifier
         countlyInstanceType.sharedInstance().start(with: config)
-        
+
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
         Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
         
         zmLog.info("AnalyticsCountlyProvider \(self) started")
         sessionBegun = true
-        
-        return true
     }
 
     private func endSession() {
