@@ -21,38 +21,42 @@ import XCTest
 
 class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
 
+    var sut: MockCallQualityController!
     var coreDataFixture: CoreDataFixture!
-    var sut: CallQualityRouterProtocolMock!
-    var callQualityController: MockCallQualityController!
+    var router: CallQualityRouterProtocolMock!
     var conversation: ZMConversation!
     var userSession: MockUserSession!
-    var qualityController: CallQualityViewController?
+    var callQualityViewController: CallQualityViewController!
 
     override func setUp() {
-        sut = CallQualityRouterProtocolMock()
+        router = CallQualityRouterProtocolMock()
         coreDataFixture = CoreDataFixture()
         conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
                                                                   otherUser: otherUser)
         userSession = MockUserSession()
         userSession.priorityCallConversation = conversation
-        callQualityController = MockCallQualityController()
-        callQualityController.router = sut
+        sut = MockCallQualityController()
+        sut.router = router
+        
+        let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
+        callQualityViewController = CallQualityViewController(questionLabelText: questionLabelText, callDuration: 10)
+        callQualityViewController?.delegate = sut
+        
         super.setUp()
     }
     
     override func tearDown() {
         coreDataFixture = nil
         sut = nil
-        callQualityController = nil
+        router = nil
         conversation = nil
         userSession = nil
-        qualityController = nil
+        callQualityViewController = nil
         super.tearDown()
     }
 
     // MARK: - SurveyRequestValidation Tests
     func testSurveyRequestValidation() {
-        let sut = CallQualityController()
         sut.usesCallSurveyBudget = true
 
         // When the survey was never presented, it is possible to request it
@@ -75,10 +79,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
     // MARK: - SnapshotTests
     func testSurveyInterface() {
         CallQualityController.resetSurveyMuteFilter()
-        let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
-        let qualityController = CallQualityViewController(questionLabelText: questionLabelText, callDuration: 10)
-        self.qualityController = qualityController
-        verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
+        verifyInAllDeviceSizes(view: callQualityViewController.view, configuration: configure)
     }
     
     // MARK: - CallQualitySurvey Presentation Tests
@@ -94,7 +95,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         callQualityController_callCenterDidChange(callState: terminatingCallState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.presentCallQualitySurveyIsCalled)
+        XCTAssertTrue(router.presentCallQualitySurveyIsCalled)
     }
     
     func testThatCallQualitySurveyIsPresented_WhenCallStateIsTerminating_AndReasonIsStillOngoing() {
@@ -109,7 +110,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         callQualityController_callCenterDidChange(callState: terminatingCallState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.presentCallQualitySurveyIsCalled)
+        XCTAssertTrue(router.presentCallQualitySurveyIsCalled)
     }
     
     func testThatCallQualitySurveyIsNotPresented_WhenCallStateIsTerminating_AndReasonIsNotNormanlOrStillOngoing() {
@@ -124,20 +125,15 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         callQualityController_callCenterDidChange(callState: terminatingCallState, conversation: conversation)
         
         // THEN
-        XCTAssertFalse(sut.presentCallQualitySurveyIsCalled)
+        XCTAssertFalse(router.presentCallQualitySurveyIsCalled)
     }
     
     func testThatCallQualitySurveyIsDismissed() {
-        // GIVEN
-        let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
-        let qualityController = CallQualityViewController(questionLabelText: questionLabelText, callDuration: 10)
-        qualityController.delegate = callQualityController
-        
         // WHEN
-        qualityController.delegate?.callQualityControllerDidFinishWithoutScore(qualityController)
+        callQualityViewController.delegate?.callQualityControllerDidFinishWithoutScore(callQualityViewController)
         
         // THEN
-        XCTAssertTrue(sut.dismissCallQualitySurveyIsCalled)
+        XCTAssertTrue(router.dismissCallQualitySurveyIsCalled)
     }
     
     // MARK: - CallFailureDebugAlert Presentation Tests
@@ -153,7 +149,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         callQualityController_callCenterDidChange(callState: terminatingCallState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.presentCallFailureDebugAlertIsCalled)
+        XCTAssertTrue(router.presentCallFailureDebugAlertIsCalled)
     }
     
     func testThatCallFailureDebugAlertIsNotPresented_WhenCallIsTerminated() {
@@ -168,7 +164,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         callQualityController_callCenterDidChange(callState: terminatingCallState, conversation: conversation)
         
         // THEN
-        XCTAssertFalse(sut.presentCallFailureDebugAlertIsCalled)
+        XCTAssertFalse(router.presentCallFailureDebugAlertIsCalled)
     }
 
 }
@@ -176,16 +172,16 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
 // MARK: - Helpers
 extension CallQualityControllerTests {
     private func configure(view: UIView, isTablet: Bool) {
-        qualityController?.dimmingView.alpha = 1
-        qualityController?.updateLayout(isRegular: isTablet)
+        callQualityViewController?.dimmingView.alpha = 1
+        callQualityViewController?.updateLayout(isRegular: isTablet)
     }
     
     private func callQualityController_callCenterDidChange(callState: CallState, conversation: ZMConversation) {
-        callQualityController.callCenterDidChange(callState: callState,
-                                                  conversation: conversation,
-                                                  caller: otherUser,
-                                                  timestamp: nil,
-                                                  previousCallState: nil)
+        sut.callCenterDidChange(callState: callState,
+                                conversation: conversation,
+                                caller: otherUser,
+                                timestamp: nil,
+                                previousCallState: nil)
     }
 }
 

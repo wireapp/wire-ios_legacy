@@ -23,15 +23,12 @@ final class CallController: NSObject {
 
     // MARK: - Public Implentation
     weak var router: ActiveCallRouterProtocol?
+    var userSession: UserSessionCallConversationSet?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
-    private var _userSession: UserSessionCallConversationSet? // THIS MUST BE USED JUST FOR TESTING PURPOSE
     
-    private var userSession: UserSessionCallConversationSet? {
-        return _userSession ?? ZMUserSession.shared()
-    }
     private var priorityCallConversation: ZMConversation? {
         return userSession?.priorityCallConversation
     }
@@ -186,11 +183,6 @@ extension CallController: WireCallCenterCallErrorObserver {
 }
 
 extension CallController {
-    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
-    public func testHelper_setUserSession(_ userSession: UserSessionCallConversationSet?) {
-        _userSession = userSession
-    }
-    
     // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
     public func testHelper_setMinimizedCall(_ conversation: ZMConversation?) {
         minimizedCall = conversation

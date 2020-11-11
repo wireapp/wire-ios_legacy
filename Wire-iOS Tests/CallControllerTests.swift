@@ -23,28 +23,28 @@ import XCTest
 final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var coreDataFixture: CoreDataFixture!
-    var sut: ActiveCallRouterProtocolMock!
-    var callController: CallController!
+    var sut: CallController!
+    var router: ActiveCallRouterProtocolMock!
     var conversation: ZMConversation!
     var userSession: MockUserSession!
     
     override func setUp() {
         super.setUp()
-        sut = ActiveCallRouterProtocolMock()
         coreDataFixture = CoreDataFixture()
+        router = ActiveCallRouterProtocolMock()
         conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
                                                                   otherUser: otherUser)
         userSession = MockUserSession()
         userSession.priorityCallConversation = conversation
-        callController = CallController()
-        callController.router = sut
-        callController.testHelper_setUserSession(userSession)
+        sut = CallController()
+        sut.userSession = userSession
+        sut.router = router
     }
 
     override func tearDown() {
         coreDataFixture = nil
         sut = nil
-        callController = nil
+        router = nil
         conversation = nil
         userSession = nil
         super.tearDown()
@@ -54,37 +54,37 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatActiveCallIsPresented_WhenMinimizedCallIsNil() {
         // GIVEN
         let callState: CallState = .established
-        callController.testHelper_setMinimizedCall(nil)
+        sut.testHelper_setMinimizedCall(nil)
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.presentActiveCallIsCalled)
+        XCTAssertTrue(router.presentActiveCallIsCalled)
     }
     
     func testThatActiveCallIsDismissed_WhenPriorityCallConversationIsNil() {
         // GIVEN
         let callState: CallState = .established
-        callController.testHelper_setUserSession(nil)
+        sut.userSession?.priorityCallConversation = nil
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.dismissActiveCallIsCalled)
+        XCTAssertTrue(router.dismissActiveCallIsCalled)
     }
     
     func testThatActiveCallIsMinimized_WhenPriorityCallConversationIsTheCallConversationMinimized() {
         // GIVEN
         let callState: CallState = .established
-        callController.testHelper_setMinimizedCall(conversation)
+        sut.testHelper_setMinimizedCall(conversation)
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.minimizeCallIsCalled)
+        XCTAssertTrue(router.minimizeCallIsCalled)
     }
     
     // MARK: - CallTopOverlay Presentation Tests
@@ -96,19 +96,19 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.showCallTopOverlayIsCalled)
+        XCTAssertTrue(router.showCallTopOverlayIsCalled)
     }
     
     func testThatCallTopOverlayIsHidden_WhenPriorityCallConversationIsNil() {
         // GIVEN
         let callState: CallState = .established
-        callController.testHelper_setUserSession(nil)
+        sut.userSession?.priorityCallConversation = nil
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.hideCallTopOverlayIsCalled)
+        XCTAssertTrue(router.hideCallTopOverlayIsCalled)
     }
     
     // MARK: - Version Alert Presentation Tests
@@ -120,7 +120,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertTrue(sut.presentUnsupportedVersionAlertIsCalled)
+        XCTAssertTrue(router.presentUnsupportedVersionAlertIsCalled)
     }
     
     func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
@@ -131,7 +131,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
+        XCTAssertFalse(router.presentUnsupportedVersionAlertIsCalled)
     }
     
     func testThatVersionAlertIsNotPresented_WhenCallStateIsNotTerminated() {
@@ -142,7 +142,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertFalse(sut.presentUnsupportedVersionAlertIsCalled)
+        XCTAssertFalse(router.presentUnsupportedVersionAlertIsCalled)
     }
     
     // MARK: - Degradation Alert Presentation Tests
@@ -154,18 +154,18 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callController_callCenterDidChange(callState: callState, conversation: conversation)
         
         // THEN
-        XCTAssertFalse(sut.presentSecurityDegradedAlertIsCalled)
+        XCTAssertFalse(router.presentSecurityDegradedAlertIsCalled)
     }
 }
 
 // MARK: - Helpers
 extension CallControllerTests {
     private func callController_callCenterDidChange(callState: CallState, conversation: ZMConversation) {
-        callController.callCenterDidChange(callState: callState,
-                                           conversation: conversation,
-                                           caller: otherUser,
-                                           timestamp: nil,
-                                           previousCallState: nil)
+        sut.callCenterDidChange(callState: callState,
+                                conversation: conversation,
+                                caller: otherUser,
+                                timestamp: nil,
+                                previousCallState: nil)
     }
 }
 
