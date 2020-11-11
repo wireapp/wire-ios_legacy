@@ -47,7 +47,7 @@ class AppStateCalculator {
     
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
-    var wasUnautheticated: Bool {
+    var wasUnauthenticated: Bool {
         guard case .unauthenticated(_) = previousAppState else {
             return false
         }
