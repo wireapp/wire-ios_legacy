@@ -60,8 +60,8 @@ final class Analytics: NSObject {
         set {
             provider?.selfUser = newValue
 
-            if let user = newValue {
-                userObserverToken = UserChangeInfo.add(observer: self, for: user, in: ZMUserSession.shared()!)
+            if let user = newValue, let userSession = ZMUserSession.shared() {
+                userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
             } else {
                 userObserverToken = nil
             }
