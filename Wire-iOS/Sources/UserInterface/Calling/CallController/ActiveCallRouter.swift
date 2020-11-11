@@ -23,7 +23,7 @@ import WireSyncEngine
 protocol ActiveCallRouterProtocol: class {
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool)
     func dismissActiveCall(animated: Bool, completion: Completion?)
-    func minimizeCall(animated: Bool, completion: (() -> Void)?)
+    func minimizeCall(animated: Bool, completion: Completion?)
     func showCallTopOverlay(for conversation: ZMConversation)
     func hideCallTopOverlay()
     func presentSecurityDegradedAlert(degradedUser: UserType?)
@@ -45,7 +45,7 @@ class ActiveCallRouter: NSObject {
     private let rootViewController: RootViewController
     private let callController: CallController
     private let callQualityController: CallQualityController
-    private var transitioningDelegate: CallQualityTransitioningDelegate
+    private var transitioningDelegate: CallQualityAnimator
     
     private var isActiveCallShown = false
     private var isCallQualityShown = false
@@ -59,7 +59,7 @@ class ActiveCallRouter: NSObject {
         self.rootViewController = rootviewController
         callController = CallController()
         callQualityController = CallQualityController()
-        transitioningDelegate = CallQualityTransitioningDelegate()
+        transitioningDelegate = CallQualityAnimator()
         
         super.init()
         
@@ -103,7 +103,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         })
     }
     
-    func minimizeCall(animated: Bool = true, completion: (() -> Void)? = nil) {
+    func minimizeCall(animated: Bool = true, completion: Completion? = nil) {
         guard isActiveCallShown else { completion?(); return }
         dismissActiveCall(animated: animated, completion: completion)
     }

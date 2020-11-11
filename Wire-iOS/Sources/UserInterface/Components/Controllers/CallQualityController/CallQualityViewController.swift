@@ -326,7 +326,7 @@ class QualityScoreSelectorView : UIView {
     }
 }
 
-class CallQualityTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+class CallQualityAnimator: NSObject, UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
