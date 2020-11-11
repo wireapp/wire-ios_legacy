@@ -80,8 +80,6 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
             XCTAssertEqual(MockCountly.recordEventCount, 0)
 
             //WHEN
-            coreDataFixture.selfUser?.analyticsIdentifier = "dummy"
-
             sut.selfUser = coreDataFixture.selfUser
 
             //THEN
@@ -106,6 +104,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
             XCTAssertEqual(MockCountly.startCount, 0)
         }
     }
+
 }
 
 final class MockCountly: CountlyInstance {
