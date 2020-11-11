@@ -20,13 +20,21 @@ import XCTest
 @testable import Wire
 import AppCenterCrashes
 import WireCommonComponents
+import WireDataModel
 
 final class AnalyticsTests: XCTestCase {
 
+    var coreDataFixture: CoreDataFixture!
+
     override func setUp() {
         super.setUp()
-        let coreDataFixture = CoreDataFixture()
+        coreDataFixture = CoreDataFixture()
         SelfUser.provider = coreDataFixture.selfUserProvider
+    }
+
+    override func tearDown() {
+        coreDataFixture = nil
+        super.tearDown()
     }
 
     func testThatItSetsOptOutOnAppCenter() {
@@ -64,4 +72,29 @@ final class AnalyticsTests: XCTestCase {
         // THEN
         XCTAssert(ExtensionSettings.shared.disableAnalyticsSharing)
     }
+
+    func testThatCountlyIsRestartedIfAnalyticsIdentifierChanges() {
+        coreDataFixture.teamTest {
+            // Given
+            let sut = Analytics(optedOut: false)
+            let provider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self,
+                                                    countlyAppKey: "dummy countlyAppKey")!
+            sut.provider = provider
+
+            let selfUser = coreDataFixture.selfUser!
+            sut.selfUser = selfUser
+
+            XCTAssertEqual(MockCountly.startCount, 1)
+
+            // When
+            let changeInfo = UserChangeInfo(object: selfUser)
+            changeInfo.changedKeys = [#keyPath(ZMUser.analyticsIdentifier)]
+            sut.userDidChange(changeInfo)
+
+            // Then
+            XCTAssertEqual(MockCountly.startCount, 2)
+        }
+
+    }
+
 }
