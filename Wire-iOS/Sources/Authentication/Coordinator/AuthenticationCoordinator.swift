@@ -21,6 +21,22 @@ import WireSyncEngine
 import UIKit
 
 /**
+ * Provides and asks for context when registering users.
+ */
+
+protocol AuthenticationCoordinatorDelegate: class {
+
+    /**
+     * The coordinator finished authenticating the user.
+     * - parameter addedAccount: Whether the authentication action added a new account
+     * to this device.
+     */
+
+    func userAuthenticationDidComplete(addedAccount: Bool)
+
+}
+
+/**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
  *
@@ -31,7 +47,7 @@ import UIKit
  */
 
 class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
-
+    
     /// The handle to the OS log for authentication events.
     let log = ZMSLog(tag: "Authentication")
 
@@ -55,11 +71,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     let eventResponderChain: AuthenticationEventResponderChain
 
-    /// Shortcut for accessing the authentication status provider (returns the delegate).
-    var statusProvider: AuthenticationStatusProvider? {
-        return delegate
-    }
-
     // MARK: - State
 
     /// The displayed view controller.
@@ -67,6 +78,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
+    
+    /// The object hepls accessing to some authentication information.
+    let statusProvider: AuthenticationStatusProvider
 
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
@@ -108,11 +122,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController & SpinnerCapable, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController & SpinnerCapable,
+         sessionManager: ObservableSessionManager,
+         featureProvider: AuthenticationFeatureProvider,
+         statusProvider: AuthenticationStatusProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
-        self.stateController = AuthenticationStateController()
+        self.statusProvider = statusProvider
         self.featureProvider = featureProvider
+        self.stateController = AuthenticationStateController()
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
@@ -208,17 +226,17 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             return
         }
 
-        guard let selfUser = delegate?.selfUser else {
+        guard let selfUser = statusProvider.selfUser else {
             log.error("Post login observers were not registered because there is no self user.")
             return
         }
 
-        guard let sharedSession = delegate?.sharedUserSession else {
+        guard let sharedSession = statusProvider.sharedUserSession else {
             log.error("Post login observers were not registered because there is no user session.")
             return
         }
 
-        guard let userProfile = delegate?.selfUserProfile else {
+        guard let userProfile = statusProvider.selfUserProfile else {
             log.error("Post login observers were not registered because there is no user profile.")
             return
         }
@@ -585,7 +603,7 @@ extension AuthenticationCoordinator {
 
     /// Sends the fields provided during registration that requires a registered user session.
     private func sendPostRegistrationFields(_ fields: AuthenticationPostRegistrationFields) {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Could not save the marketing consent as there is no user session for the user.")
             return
         }
@@ -597,7 +615,7 @@ extension AuthenticationCoordinator {
 
     /// Auto-assigns a random profile image to the user.
     private func assignRandomProfileImage() {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Not assigning a random profile picture, because the user session does not exist.")
             return
         }
@@ -685,7 +703,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        guard let profile = statusProvider?.selfUserProfile else {
+        guard let profile = statusProvider.selfUserProfile else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
         }

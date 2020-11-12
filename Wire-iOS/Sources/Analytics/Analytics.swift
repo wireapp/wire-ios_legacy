@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
@@ -27,6 +28,7 @@ final class Analytics: NSObject {
 
     private var callingTracker: AnalyticsCallingTracker?
     private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
+    private var userObserverToken: Any?
 
     static var shared: Analytics!
 
@@ -57,6 +59,12 @@ final class Analytics: NSObject {
 
         set {
             provider?.selfUser = newValue
+
+            if let user = newValue, let userSession = ZMUserSession.shared() {
+                userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            } else {
+                userObserverToken = nil
+            }
         }
     }
 
@@ -99,4 +107,20 @@ extension Analytics: AnalyticsType {
     func tagEvent(_ event: String, attributes: [String: NSObject]) {
         provider?.tagEvent(event, attributes: attributes)
     }
+}
+
+extension Analytics: ZMUserObserver {
+
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard
+            changeInfo.user.isSelfUser,
+            changeInfo.analyticsIdentifierChanged
+        else {
+            return
+        }
+
+        selfUser = nil
+        selfUser = changeInfo.user
+    }
+
 }

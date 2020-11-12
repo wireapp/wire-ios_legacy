@@ -19,54 +19,29 @@
 import Foundation
 import WireSyncEngine
 
-/**
- * Provides context about the current authentication stack.
- */
+class AuthenticationStatusProvider {
+    var sharedUserSession: ZMUserSession? {
+        return ZMUserSession.shared()
+    }
+    
+    var authenticatedUserWasRegisteredOnThisDevice: Bool {
+        return sharedUserSession?.registeredOnThisDevice == true
+    }
 
-protocol AuthenticationStatusProvider: class {
+    var authenticatedUserNeedsEmailCredentials: Bool {
+        guard let emailAddress = selfUser?.emailAddress else { return false }
+        return emailAddress.isEmpty
+    }
 
-    /**
-     * Whether the authenticated user was registered on this device.
-     *
-     * - returns: `true` if the user was registered on this device, `false` otherwise.
-     */
+    var selfUserProfile: UserProfileUpdateStatus? {
+        return sharedUserSession?.userProfile as? UserProfileUpdateStatus
+    }
 
-    var authenticatedUserWasRegisteredOnThisDevice: Bool { get }
+    var selfUser: UserType? {
+        return sharedUserSession?.selfUser
+    }
 
-    /**
-     * Whether the authenticated user needs an e-mail address to register their client.
-     *
-     * - returns: `true` if the user needs to add an e-mail, `false` otherwise.
-     */
-
-    var authenticatedUserNeedsEmailCredentials: Bool { get }
-
-    /**
-     * The authentication coordinator requested the shared user session.
-     * - returns: The shared user session, if any.
-     */
-
-    var sharedUserSession: ZMUserSession? { get }
-
-    /**
-     * The authentication coordinator requested the shared user profile.
-     * - returns: The shared user profile, if any.
-     */
-
-    var selfUserProfile: UserProfileUpdateStatus? { get }
-
-    /**
-     * The authentication coordinator requested the shared user.
-     * - returns: The shared user, if any.
-     */
-
-    var selfUser: UserType? { get }
-
-    /**
-     * The authentication coordinator requested the number of accounts.
-     * - returns: The number of currently logged in accounts.
-     */
-
-    var numberOfAccounts: Int { get }
-
+    var numberOfAccounts: Int {
+        return SessionManager.numberOfAccounts
+    }
 }
