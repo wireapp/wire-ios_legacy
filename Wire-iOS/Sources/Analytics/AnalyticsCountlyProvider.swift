@@ -77,6 +77,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
     }
 
+    private var updateTimer: Timer?
+
     // MARK: - Life cycle
 
     init?(
@@ -132,11 +134,20 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func beginSession() {
         Countly.sharedInstance().beginSession()
         isRecording = true
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
+    }
+
+    private func updateSession() {
+        guard isRecording else { return }
+        Countly.sharedInstance().updateSession()
     }
 
     private func endSession() {
         Countly.sharedInstance().endSession()
         isRecording = false
+
+        updateTimer?.invalidate()
+        updateTimer = nil
     }
 
     // MARK: - Countly user
