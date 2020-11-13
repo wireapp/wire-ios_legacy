@@ -41,9 +41,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// The Countly application to which events will be sent.
 
-    var countlyAppKey: String
+    private let appKey: String
 
-    let serverURL: URL
+    /// The url of the server hosting the Countly application.
+
+    private let serverURL: URL
 
     /// Whether a recording session is in progress.
 
@@ -85,7 +87,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard !countlyAppKey.isEmpty else { return nil }
         
         self.countlyInstanceType = countlyInstanceType
-        self.countlyAppKey = countlyAppKey
+        self.appKey = countlyAppKey
         self.serverURL = serverURL
         isOptedOut = false
     }
@@ -108,7 +110,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
 
         let config: CountlyConfig = CountlyConfig()
-        config.appKey = countlyAppKey
+        config.appKey = appKey
         config.host = serverURL.absoluteString
         config.manualSessionHandling = true
         config.deviceID = analyticsIdentifier
