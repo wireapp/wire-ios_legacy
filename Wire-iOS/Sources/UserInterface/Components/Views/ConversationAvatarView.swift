@@ -44,7 +44,7 @@ final class RandomGeneratorFromData: RandomGenerator {
         
         return result
     }
-
+    
 }
 
 extension RandomGeneratorFromData {
@@ -57,17 +57,18 @@ extension RandomGeneratorFromData {
 extension Array {
     func shuffled(with generator: RandomGenerator) -> Array {
         
-        var workingCopy = Array(self)
-        var result = Array()
-
-        self.forEach { _ in
-            let rand: UInt = generator.rand() % UInt(workingCopy.count)
-
-            result.append(workingCopy[Int(rand)])
-            workingCopy.remove(at: Int(rand))
+        var workingCopyIndices = [Int](indices)
+        var resultIndices = [Int]()
+        forEach { _ in
+            let rand: UInt = generator.rand() % (UInt)(workingCopyIndices.count)
+            
+            
+            resultIndices.append(workingCopyIndices[Int(rand)])
+            workingCopyIndices.remove(at: Int(rand))
         }
-
-        return result
+        
+        
+        return resultIndices.map { self[$0] }
     }
 }
 
@@ -122,7 +123,7 @@ extension Mode {
             self = .four
         }
     }
-
+    
     var showInitials: Bool {
         if case .one = self {
             return true
@@ -146,7 +147,7 @@ final class ConversationAvatarView: UIView {
         // an established conversation or self user has a pending request to other users
         case conversation(conversation: ZMConversation)
     }
-
+    
     func configure(context: Context) {
         switch context {
         case .connect(let users):
@@ -157,22 +158,22 @@ final class ConversationAvatarView: UIView {
             mode = Mode(conversationType: conversation.conversationType, users: users)
         }
     }
-
+    
     private var users: [UserType] = []
     
     private var conversation: ZMConversation? = .none {
         didSet {
-
+            
             guard let conversation = self.conversation else {
                 self.clippingView.subviews.forEach { $0.isHidden = true }
                 return
             }
-
+            
             accessibilityLabel = "Avatar for \(conversation.displayName)"
-
+            
             let usersOnAvatar: [UserType]
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
-
+            
             if stableRandomParticipants.isEmpty,
                 let connectedUser = conversation.connectedUser {
                 usersOnAvatar = [connectedUser]
@@ -198,7 +199,7 @@ final class ConversationAvatarView: UIView {
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
                 backgroundColor = UIColor(white: 0, alpha: 0.16)
             }
-
+            
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
@@ -213,20 +214,20 @@ final class ConversationAvatarView: UIView {
                     $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
                     $0.avatar = .none
                 }
-
+                
                 $0.allowsInitials = mode.showInitials
                 $0.shape = mode.shape
                 index = index + 1
             }
-
+            
             setNeedsLayout()
         }
     }
-
+    
     private var userImageViews: [UserImageView] {
         return [imageViewLeftTop, imageViewRightTop, imageViewLeftBottom, imageViewRightBottom]
     }
-
+    
     func userImages() -> [UserImageView] {
         switch mode {
         case .none:
@@ -248,7 +249,7 @@ final class ConversationAvatarView: UIView {
     let imageViewLeftTop: UserImageView = {
         let userImageView = BadgeUserImageView()
         userImageView.initialsFont = .mediumSemiboldFont
-
+        
         return userImageView
     }()
     lazy var imageViewRightTop: UserImageView = {
@@ -276,7 +277,7 @@ final class ConversationAvatarView: UIView {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     let interAvatarInset: CGFloat = 2
     var containerSize: CGSize {
         return self.clippingView.bounds.size
@@ -287,7 +288,7 @@ final class ConversationAvatarView: UIView {
         guard self.bounds != .zero else {
             return
         }
-
+        
         clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
         
         switch mode {
@@ -303,11 +304,11 @@ final class ConversationAvatarView: UIView {
         
         updateCornerRadius()
     }
-
+    
     private func layoutMultipleAvatars(with size: CGSize) {
         var xPosition: CGFloat = 0
         var yPosition: CGFloat = 0
-
+        
         self.userImages().forEach {
             $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
             if xPosition + size.width >= containerSize.width {
