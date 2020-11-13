@@ -52,7 +52,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private var isRecording: Bool = false {
         didSet {
             guard isRecording != oldValue else { return }
-            
+
             if isRecording {
                 updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
             } else {
@@ -82,11 +82,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     var selfUser: UserType? {
         didSet {
-            guard let user = selfUser as? ZMUser else {
-                endCountly()
-                return
-            }
-
+            endCountly()
+            guard let user = selfUser as? ZMUser else { return }
             startCountly(for: user)
         }
     }
