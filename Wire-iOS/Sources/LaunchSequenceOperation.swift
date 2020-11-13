@@ -25,13 +25,13 @@ import AppCenterDistribute
 import avs
 
 // MARK: - LaunchSequenceOperation
-public protocol LaunchSequenceOperation {
+protocol LaunchSequenceOperation {
     func execute()
 }
 
 // MARK: - BackendEnvironmentOperation
 final class BackendEnvironmentOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         guard let backendTypeOverride = AutomationHelper.sharedHelper.backendEnvironmentTypeOverride() else {
             return
         }
@@ -41,28 +41,28 @@ final class BackendEnvironmentOperation: LaunchSequenceOperation {
 
 // MARK: - PerformanceDebuggerOperation
 final class PerformanceDebuggerOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         PerformanceDebugger.shared.start()
     }
 }
 
 // MARK: - ZMSLogOperation
 final class ZMSLogOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         ZMSLog.switchCurrentLogToPrevious()
     }
 }
 
 // MARK: - ZMSLogOperation
 final class AVSLoggingOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         SessionManager.startAVSLogging()
     }
 }
 
 // MARK: - AutomationHelperOperation
 final class AutomationHelperOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
     }
 }
@@ -71,14 +71,14 @@ final class AutomationHelperOperation: LaunchSequenceOperation {
 final class MediaManagerOperation: LaunchSequenceOperation {
     private let mediaManagerLoader = MediaManagerLoader()
     
-    public func execute() {
+    func execute() {
         mediaManagerLoader.send(message: .appStart)
     }
 }
 
 // MARK: - TrackingOperation
 final class TrackingOperation: LaunchSequenceOperation {
-    public func execute() {
+    func execute() {
         let containsConsoleAnalytics = ProcessInfo.processInfo
             .arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
@@ -91,7 +91,7 @@ final class TrackingOperation: LaunchSequenceOperation {
 final class FileBackupExcluderOperation: LaunchSequenceOperation {
     private let fileBackupExcluder = FileBackupExcluder()
     
-    public func execute() {
+    func execute() {
         guard let appGroupIdentifier = Bundle.main.appGroupIdentifier else {
             return
         }
@@ -107,7 +107,7 @@ final class AppCenterOperation: NSObject, LaunchSequenceOperation {
         return ZMSLog(tag: "UI")
     }
     
-    public func execute() {
+    func execute() {
         guard AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter else {
             MSAppCenter.setTrackingEnabled(false)
             return
@@ -174,15 +174,15 @@ extension AppCenterOperation: MSDistributeDelegate {
 
 extension AppCenterOperation: MSCrashesDelegate {
 
-    public func crashes(_ crashes: MSCrashes!, shouldProcessErrorReport errorReport: MSErrorReport!) -> Bool {
+    func crashes(_ crashes: MSCrashes!, shouldProcessErrorReport errorReport: MSErrorReport!) -> Bool {
         return !TrackingManager.shared.disableCrashSharing
     }
 
-    public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
+    func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         zmLog.error("AppCenter: finished sending the crash report")
     }
     
-    public func crashes(_ crashes: MSCrashes!, didFailSending errorReport: MSErrorReport!, withError error: Error!) {
+    func crashes(_ crashes: MSCrashes!, didFailSending errorReport: MSErrorReport!, withError error: Error!) {
         zmLog.error("AppCenter: failed sending the crash report with error: \(error.localizedDescription)")
     }
 }

@@ -145,13 +145,8 @@ extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
     }
-    
-    func sessionManagerWillMigrateLegacyAccount() {
-        transition(to: .migrating)
-    }
-    
-    func sessionManagerWillMigrateAccount(_ account: Account) {
-        guard account == loadingAccount else { return }
+        
+    func sessionManagerWillMigrateAccount() {
         transition(to: .migrating)
     }
     

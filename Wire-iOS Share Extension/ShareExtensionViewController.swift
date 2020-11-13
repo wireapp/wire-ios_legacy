@@ -469,29 +469,36 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
         
-        guard AppLock.isActive else {
+        guard
+            let sharingSession = sharingSession,
+            AppLock.isActive || sharingSession.encryptMessagesAtRest
+        else {
             localAuthenticationStatus = .disabled
             callback(localAuthenticationStatus)
             return
         }
         
-        guard localAuthenticationStatus != .granted else {
+        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
             callback(localAuthenticationStatus)
             return
         }
         
-        // TODO jacob handle database lock scenario
+        let scenario: AppLock.AuthenticationScenario
         
-        let scenario: AppLock.AuthenticationScenario =
-            .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                        grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+        if sharingSession.encryptMessagesAtRest {
+            scenario = .databaseLock
+        } else {
+            scenario = .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
+                                   grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+        }
         
         AppLock.evaluateAuthentication(scenario: scenario,
                                        description: "share_extension.privacy_security.lock_app.description".localized)
-        { [weak self] (result, _) in
+        { [weak self] (result, context) in
             DispatchQueue.main.async {
                 if case .granted = result {
                     self?.localAuthenticationStatus = .granted
+                    try? self?.sharingSession?.unlockDatabase(with: context)
                 } else {
                     self?.localAuthenticationStatus = .denied
                 }
