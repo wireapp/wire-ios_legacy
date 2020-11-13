@@ -72,7 +72,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             }
 
             startCountly(for: user)
-            tagPendingEvents()
         }
     }
 
@@ -98,13 +97,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     // MARK: - Methods
 
     private func startCountly(for user: ZMUser) {
-        guard !isOptedOut && !isRecording else { return }
-
-        // We should throw an error here.
         guard
-            shouldTracksEvent,
-            let selfUser = selfUser as? ZMUser,
-            let analyticsIdentifier = selfUser.analyticsIdentifier
+            !isOptedOut,
+            !isRecording,
+            user.isTeamMember,
+            let analyticsIdentifier = user.analyticsIdentifier,
+            let userProperties = userProperties(for: user)
         else {
             return
         }
@@ -115,17 +113,18 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.manualSessionHandling = true
         config.deviceID = analyticsIdentifier
 
-        updateCountlyUser(with: user)
+        updateCountlyUser(withProperties: userProperties)
 
         countlyInstanceType.sharedInstance().start(with: config)
 
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
-        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
+        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer: true)
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
         beginSession()
+        tagPendingEvents()
     }
 
     private func userProperties(for user: ZMUser) -> [String: Any]? {
@@ -144,14 +143,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         ]
     }
 
-    private func updateCountlyUser(with user: ZMUser) {
-        guard
-            !isRecording,
-            let properties = userProperties(for: user)
-        else {
-            return
-        }
-
+    private func updateCountlyUser(withProperties properties: [String: Any]) {
         let convertedAttributes = properties.countlyStringValueDictionary
 
         for (key, value) in convertedAttributes {
