@@ -35,6 +35,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Properties
 
+    var countlyInstanceType: CountlyInstance.Type
+
+    /// The Countly application to which events will be sent.
+
+    var countlyAppKey: String
+
     /// Whether a recording session is in progress.
 
     private var isRecording: Bool = false
@@ -69,9 +75,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             storedEvents.removeAll()
         }
     }
-    
-    var countlyInstanceType: CountlyInstance.Type
-    var countlyAppKey: String
 
     // MARK: - Life cycle
 
