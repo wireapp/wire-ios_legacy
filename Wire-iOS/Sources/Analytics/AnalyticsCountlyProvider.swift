@@ -51,6 +51,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private var isRecording: Bool = false
 
+    /// Whether the Countly instance has been configured and started.
+
+    private var didInitializeCountly: Bool = false
+
     /// Events that have been tracked before Countly has begun.
 
     private(set) var pendingEvents: [PendingEvent] = []
@@ -68,8 +72,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     var selfUser: UserType? {
         didSet {
             guard let user = selfUser as? ZMUser else {
-                endSession()
-                clearCountlyUser()
+                endCountly()
                 return
             }
 
@@ -92,6 +95,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         self.appKey = countlyAppKey
         self.serverURL = serverURL
         isOptedOut = false
+        setupApplicationNotifications()
     }
 
     deinit {
@@ -127,8 +131,16 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
+        didInitializeCountly = true
+
         beginSession()
         tagPendingEvents()
+    }
+
+    private func endCountly() {
+        endSession()
+        clearCountlyUser()
+        didInitializeCountly = false
     }
 
     private func beginSession() {
@@ -231,6 +243,32 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     func flush(completion: Completion?) {
         completion?()
     }
+
+    private var observerTokens = [Any]()
+}
+
+// MARK: - Application state observing
+
+extension AnalyticsCountlyProvider: ApplicationStateObserving {
+
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observerTokens.append(token)
+    }
+    
+    func applicationDidBecomeActive() {
+        guard didInitializeCountly else { return }
+        beginSession()
+    }
+
+    func applicationDidEnterBackground() {
+        guard isRecording else { return }
+        endSession()
+    }
+
+    func applicationWillEnterForeground() {
+        // No op
+    }
+
 }
 
 // MARK: - Helpers
