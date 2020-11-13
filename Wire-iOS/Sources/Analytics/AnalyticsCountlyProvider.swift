@@ -43,15 +43,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private(set) var storedEvents: [StoredEvent] = []
 
     var isOptedOut: Bool {
-        get {
-            return !isRecording
-        }
-
-        set {
-            newValue ? Countly.sharedInstance().endSession() :
-                       Countly.sharedInstance().beginSession()
-
-            isRecording = !isOptedOut
+        didSet {
+            if !isOptedOut {
+                endSession()
+            } else if let user = selfUser as? ZMUser {
+                startCountly(for: user)
+            }
         }
     }
 
@@ -84,7 +81,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         
         self.countlyAppKey = countlyAppKey
         self.countlyInstanceType = countlyInstanceType
-        isOptedOut = false
+        isOptedOut = true
     }
 
     deinit {
@@ -94,7 +91,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     // MARK: - Methods
 
     private func startCountly(for user: ZMUser) {
-        guard !isRecording else { return }
+        guard !isOptedOut && !isRecording else { return }
 
         guard
             shouldTracksEvent,
