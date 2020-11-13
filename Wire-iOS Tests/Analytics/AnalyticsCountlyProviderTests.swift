@@ -67,8 +67,12 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             //GIVEN
             sut = Analytics(optedOut: false)
-            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self,
-                                                                    countlyAppKey: "dummy countlyAppKey")!
+            let analyticsCountlyProvider = AnalyticsCountlyProvider(
+                countlyInstanceType: MockCountly.self,
+                countlyAppKey: "dummy countlyAppKey",
+                serverURL: URL(string: "www.wire.com")!
+            )!
+
             sut.provider = analyticsCountlyProvider
 
             //WHEN
@@ -94,7 +98,13 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
         coreDataFixture.nonTeamTest {
             //GIVEN
             sut = Analytics(optedOut: false)
-            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self)!
+
+            let analyticsCountlyProvider = AnalyticsCountlyProvider(
+                countlyInstanceType: MockCountly.self,
+                countlyAppKey: "dummy countlyAppKey",
+                serverURL: URL(string: "www.wire.com")!
+            )!
+
             sut.provider = analyticsCountlyProvider
 
             //WHEN

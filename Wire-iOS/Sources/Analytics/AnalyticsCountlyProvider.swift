@@ -43,6 +43,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     var countlyAppKey: String
 
+    let serverURL: URL
+
     /// Whether a recording session is in progress.
 
     private var isRecording: Bool = false
@@ -78,13 +80,15 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     init?(
         countlyInstanceType: CountlyInstance.Type = Countly.self,
-        countlyAppKey: String? = Bundle.countlyAppKey
+        countlyAppKey: String,
+        serverURL: URL
     ) {
-        guard let countlyAppKey = countlyAppKey else { return nil }
+        guard !countlyAppKey.isEmpty else { return nil }
         
-        self.countlyAppKey = countlyAppKey
         self.countlyInstanceType = countlyInstanceType
-        isOptedOut = true
+        self.countlyAppKey = countlyAppKey
+        self.serverURL = serverURL
+        isOptedOut = false
     }
 
     deinit {
@@ -96,6 +100,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func startCountly(for user: ZMUser) {
         guard !isOptedOut && !isRecording else { return }
 
+        // We should throw an error here.
         guard
             shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
@@ -104,21 +109,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             return
         }
 
-        guard
-            !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL
-        else {
-            let appKey = String(describing: Bundle.countlyAppKey)
-            let url = String(describing: BackendEnvironment.shared.countlyURL)
-            zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(appKey), countlyURL = \(url). Please check COUNTLY_APP_KEY is set in .xcconfig file")
-            return
-        }
-
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
-        config.host = countlyURL.absoluteString
+        config.host = serverURL.absoluteString
         config.manualSessionHandling = true
-
         config.deviceID = analyticsIdentifier
 
         updateCountlyUser(with: user)
@@ -177,7 +171,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         keys.forEach(Countly.user().unSet)
         Countly.user().save()
-        isOptedOut = true
     }
 
     private func beginSession() {
@@ -227,7 +220,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     func flush(completion: Completion?) {
-        isOptedOut = true
         completion?()
     }
 }
