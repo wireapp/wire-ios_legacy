@@ -21,12 +21,6 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-extension Int {
-    func logRound(factor: Double = 6) -> Int {
-        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
-    }
-}
-
 protocol CountlyInstance {
     func recordEvent(_ key: String, segmentation: [String : String]?)
     func start(with config: CountlyConfig)
@@ -36,22 +30,16 @@ protocol CountlyInstance {
 
 extension Countly: CountlyInstance {}
 
+
 final class AnalyticsCountlyProvider: AnalyticsProvider {
+
+    // MARK: - Properties
 
     /// flag for recording session is begun
     private var sessionBegun: Bool = false
 
-    private struct StoredEvent {
-        let event: String
-        let attributes: [String: Any]
-    }
-
     /// store the events before selfUser is assigned. Send them and clear after selfUser is set
-    private var storedEvents: [StoredEvent] = []
-    
-    var storedEventsCount: Int {
-        return storedEvents.count
-    }
+    private(set) var storedEvents: [StoredEvent] = []
 
     var isOptedOut: Bool {
         get {
@@ -87,6 +75,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     var countlyInstanceType: CountlyInstance.Type
     var countlyAppKey: String
 
+    // MARK: - Life cycle
+
     init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
           countlyAppKey: String? = Bundle.countlyAppKey) {
         guard let countlyAppKey = countlyAppKey else { return nil }
@@ -99,6 +89,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     deinit {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
+
+    // MARK: - Methods
 
     private func startCountly(for user: ZMUser) {
         guard !sessionBegun else { return }
@@ -231,6 +223,17 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 }
 
+// MARK: - Helpers
+
+extension AnalyticsCountlyProvider {
+
+    struct StoredEvent {
+        let event: String
+        let attributes: [String: Any]
+    }
+
+}
+
 extension Dictionary where Key == String, Value == Any {
 
     private func countlyValue(rawValue: Any) -> String {
@@ -257,5 +260,11 @@ extension Dictionary where Key == String, Value == Any {
             map { key, value in (key, countlyValue(rawValue: value)) })
 
         return convertedAttributes
+    }
+}
+
+extension Int {
+    func logRound(factor: Double = 6) -> Int {
+        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
     }
 }
