@@ -51,6 +51,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private var isRecording: Bool = false {
         didSet {
+            guard isRecording != oldValue else { return }
+            
             if isRecording {
                 updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
             } else {
