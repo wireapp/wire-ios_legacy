@@ -76,8 +76,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Life cycle
 
-    init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
-          countlyAppKey: String? = Bundle.countlyAppKey) {
+    init?(
+        countlyInstanceType: CountlyInstance.Type = Countly.self,
+        countlyAppKey: String? = Bundle.countlyAppKey
+    ) {
         guard let countlyAppKey = countlyAppKey else { return nil }
         
         self.countlyAppKey = countlyAppKey
