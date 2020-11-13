@@ -94,7 +94,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    // MARK: - Methods
+    // MARK: - Session management
 
     private func startCountly(for user: ZMUser) {
         guard
@@ -127,12 +127,24 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         tagPendingEvents()
     }
 
+    private func beginSession() {
+        Countly.sharedInstance().beginSession()
+        isRecording = true
+    }
+
+    private func endSession() {
+        Countly.sharedInstance().endSession()
+        isRecording = false
+    }
+
+    // MARK: - Countly user
+
     private func userProperties(for user: ZMUser) -> [String: Any]? {
         guard
             let team = user.team,
             let teamId = team.remoteIdentifier
-        else {
-            return nil
+            else {
+                return nil
         }
 
         return [
@@ -165,19 +177,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         Countly.user().save()
     }
 
-    private func beginSession() {
-        Countly.sharedInstance().beginSession()
-        isRecording = true
-    }
-
-    private func endSession() {
-        Countly.sharedInstance().endSession()
-        isRecording = false
-    }
-
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
     }
+
+    // MARK: - Tag events
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
