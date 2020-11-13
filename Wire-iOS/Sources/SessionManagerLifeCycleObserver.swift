@@ -51,7 +51,6 @@ extension SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver,
     // MARK: - SessionManagerCreatedSessionObserver
     func sessionManagerCreated(userSession: ZMUserSession) {
         setSoundEventListener(for: userSession)
-        enableEncryptMessagesAtRest(for: userSession)
     }
 
     func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) { }
@@ -68,17 +67,6 @@ extension SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver,
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
             }
         }
-    }
-
-    private func enableEncryptMessagesAtRest(for userSession: ZMUserSession) {
-        guard
-            SecurityFlags.forceEncryptionAtRest.isEnabled,
-            userSession.encryptMessagesAtRest == false
-        else {
-            return
-        }
-        
-        userSession.encryptMessagesAtRest = true
     }
 
     private func resetSoundEventListener(for accountID: UUID) {

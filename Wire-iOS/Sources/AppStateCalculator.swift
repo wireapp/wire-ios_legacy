@@ -47,7 +47,7 @@ class AppStateCalculator {
     
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
-    var wasUnautheticated: Bool {
+    var wasUnauthenticated: Bool {
         guard case .unauthenticated(_) = previousAppState else {
             return false
         }
@@ -145,13 +145,8 @@ extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
     }
-    
-    func sessionManagerWillMigrateLegacyAccount() {
-        transition(to: .migrating)
-    }
-    
-    func sessionManagerWillMigrateAccount(_ account: Account) {
-        guard account == loadingAccount else { return }
+        
+    func sessionManagerWillMigrateAccount() {
         transition(to: .migrating)
     }
     
