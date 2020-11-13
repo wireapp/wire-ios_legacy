@@ -340,7 +340,7 @@ extension AppRootRouter {
         Analytics.shared.selfUser = SelfUser.current
         
         guard
-            appStateCalculator.wasUnautheticated,
+            appStateCalculator.wasUnauthenticated,
             Analytics.shared.selfUser?.isTeamMember ?? false
         else {
             return
@@ -353,7 +353,7 @@ extension AppRootRouter {
     private func buildAuthenticatedRouter(account: Account,
                                            isComingFromRegistration: Bool) -> AuthenticatedRouter? {
         
-        let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnautheticated
+        let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnauthenticated
                                                     && !SelfUser.current.isTeamMember
         
         return AuthenticatedRouter(rootViewController: rootViewController,
@@ -465,7 +465,6 @@ extension AppRootRouter: AudioPermissionsObserving {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
-
 
 protocol AuthenticatedRouterProtocol: class {
     func updateActiveCallPresentationState()

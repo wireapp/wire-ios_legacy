@@ -38,12 +38,22 @@ public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
-    private var useAppCenterLaunchOption: Bool
+    private var useAppCenterLaunchOption: Bool?
     
     /// Whether AppCenter should be used
     /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
-        return useAppCenterLaunchOption && UserDefaults.standard.bool(forKey: "UseAppCenter")
+        // useAppCenterLaunchOption has higher priority
+        if let useAppCenterLaunchOption = useAppCenterLaunchOption {
+            return useAppCenterLaunchOption
+        }
+        
+        if UserDefaults.standard.object(forKey: "UseAppCenter") != nil {
+            return UserDefaults.standard.bool(forKey: "UseAppCenter")
+        }
+
+        //when UserDefaults's useAppCenter is not set, default is true to allow app center start
+        return true
     }
     
     /// Whether analytics should be used
@@ -99,12 +109,8 @@ public final class AutomationHelper: NSObject {
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
         
-        let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue)
-        switch value {
-        case "0":
-            useAppCenterLaunchOption = false
-        default:
-            useAppCenterLaunchOption = true
+        if let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
+            useAppCenterLaunchOption = (value != "0")
         }
 
         automationEmailCredentials = AutomationHelper.credentials(arguments)
