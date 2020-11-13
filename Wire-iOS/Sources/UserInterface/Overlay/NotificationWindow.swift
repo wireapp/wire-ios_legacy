@@ -19,6 +19,8 @@
 import Foundation
 import UIKit
 
+let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
+
 final class NotificationWindow: UIWindow {
     
     override init(frame: CGRect) {

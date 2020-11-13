@@ -118,13 +118,14 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
                 return false
         }
                 
+
         let config: CountlyConfig = CountlyConfig()
         config.appKey = countlyAppKey
         config.host = countlyURL.absoluteString
         config.manualSessionHandling = true
-        
         config.deviceID = analyticsIdentifier
         countlyInstanceType.sharedInstance().start(with: config)
+        
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
         Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
@@ -146,6 +147,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             let team = selfUser.team,
             let teamID = team.remoteIdentifier
         else {
+
 
             //clean up
             ["team_team_id",
