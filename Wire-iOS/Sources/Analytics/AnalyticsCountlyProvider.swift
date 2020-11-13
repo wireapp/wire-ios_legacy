@@ -145,8 +145,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         guard
             let team = user.team,
             let teamId = team.remoteIdentifier
-            else {
-                return nil
+        else {
+            return nil
         }
 
         return [
