@@ -35,22 +35,23 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Properties
 
-    /// flag for recording session is begun
-    private var sessionBegun: Bool = false
+    /// Whether a recording session is in progress.
+
+    private var isRecording: Bool = false
 
     /// store the events before selfUser is assigned. Send them and clear after selfUser is set
     private(set) var storedEvents: [StoredEvent] = []
 
     var isOptedOut: Bool {
         get {
-            return !sessionBegun
+            return !isRecording
         }
 
         set {
             newValue ? Countly.sharedInstance().endSession() :
                        Countly.sharedInstance().beginSession()
 
-            sessionBegun = !isOptedOut
+            isRecording = !isOptedOut
         }
     }
 
@@ -93,7 +94,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     // MARK: - Methods
 
     private func startCountly(for user: ZMUser) {
-        guard !sessionBegun else { return }
+        guard !isRecording else { return }
 
         guard
             shouldTracksEvent,
@@ -151,7 +152,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private func updateCountlyUser(with user: ZMUser) {
         guard
-            !sessionBegun,
+            !isRecording,
             let properties = userProperties(for: user)
         else {
             return
@@ -181,12 +182,12 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private func beginSession() {
         Countly.sharedInstance().beginSession()
-        sessionBegun = true
+        isRecording = true
     }
 
     private func endSession() {
         Countly.sharedInstance().endSession()
-        sessionBegun = false
+        isRecording = false
     }
 
     private var shouldTracksEvent: Bool {
