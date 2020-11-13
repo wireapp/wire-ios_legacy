@@ -155,7 +155,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     // MARK - arrangeVideoStreams
     
     func videoStreamStub(userId: UUID = UUID(), clientId: String = UUID().transportString()) -> VideoStream {
-        let stream = Stream(streamId: AVSClient(userId: UUID(), clientId: clientId),
+        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
                             participantName: nil,
                             microphoneState: .none,
                             videoState: .none)
