@@ -33,6 +33,8 @@ extension Countly: CountlyInstance {}
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
+    typealias PendingEvent = (event: String, attribtues: [String: Any])
+
     // MARK: - Properties
 
     var countlyInstanceType: CountlyInstance.Type
@@ -45,8 +47,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private var isRecording: Bool = false
 
-    /// store the events before selfUser is assigned. Send them and clear after selfUser is set
-    private(set) var storedEvents: [StoredEvent] = []
+    /// Events that have been tracked before Countly has begun.
+
+    private(set) var pendingEvents: [PendingEvent] = []
 
     var isOptedOut: Bool {
         didSet {
@@ -67,12 +70,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             }
 
             startCountly(for: user)
-
-            storedEvents.forEach {
-                tagEvent($0.event, attributes: $0.attributes)
-            }
-
-            storedEvents.removeAll()
+            tagPendingEvents()
         }
     }
 
@@ -197,8 +195,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
         //store the event before self user is assigned, send it later when self user is ready.
-        guard selfUser != nil else {            
-            storedEvents.append(StoredEvent(event: event, attributes: attributes))
+        guard selfUser != nil else {
+            pendingEvents.append(PendingEvent(event, attributes))
             return
         }
 
@@ -214,6 +212,14 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         countlyInstanceType.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
 
+    private func tagPendingEvents() {
+        for (event, attributes) in pendingEvents {
+            tagEvent(event, attributes: attributes)
+        }
+
+        pendingEvents.removeAll()
+    }
+
     func setSuperProperty(_ name: String, value: Any?) {
         //TODO
     }
@@ -225,15 +231,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 }
 
 // MARK: - Helpers
-
-extension AnalyticsCountlyProvider {
-
-    struct StoredEvent {
-        let event: String
-        let attributes: [String: Any]
-    }
-
-}
 
 extension Dictionary where Key == String, Value == Any {
 
