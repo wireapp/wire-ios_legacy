@@ -68,16 +68,13 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     var selfUser: UserType? {
         didSet {
-            guard selfUser != nil else {
+            guard let user = selfUser as? ZMUser else {
                 endSession()
+                clearCountlyUser()
                 return
             }
 
-            if !sessionBegun {
-                startCountly()
-            }
-
-            updateUserProperties()
+            startCountly(for: user)
 
             storedEvents.forEach {
                 tagEvent($0.event, attributes: $0.attributes)
@@ -103,7 +100,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    private func startCountly() {
+    private func startCountly(for user: ZMUser) {
+        guard !sessionBegun else { return }
+
         guard
             shouldTracksEvent,
             let selfUser = selfUser as? ZMUser,
@@ -128,6 +127,9 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.manualSessionHandling = true
 
         config.deviceID = analyticsIdentifier
+
+        updateCountlyUser(with: user)
+
         countlyInstanceType.sharedInstance().start(with: config)
 
         // Changing Device ID after app started
@@ -137,6 +139,52 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
         beginSession()
+    }
+
+    private func userProperties(for user: ZMUser) -> [String: Any]? {
+        guard
+            let team = user.team,
+            let teamId = team.remoteIdentifier
+        else {
+            return nil
+        }
+
+        return [
+            "team_team_id": teamId,
+            "team_user_type": user.teamRole,
+            "team_team_size": team.members.count,
+            "user_contacts": team.members.count.logRound()
+        ]
+    }
+
+    private func updateCountlyUser(with user: ZMUser) {
+        guard
+            !sessionBegun,
+            let properties = userProperties(for: user)
+        else {
+            return
+        }
+
+        let convertedAttributes = properties.countlyStringValueDictionary
+
+        for (key, value) in convertedAttributes {
+            Countly.user().set(key, value: value)
+        }
+
+        Countly.user().save()
+    }
+
+    private func clearCountlyUser() {
+        let keys = [
+            "team_team_id",
+            "team_user_type",
+            "team_team_size",
+            "user_contacts"
+        ]
+
+        keys.forEach(Countly.user().unSet)
+        Countly.user().save()
+        isOptedOut = true
     }
 
     private func beginSession() {
@@ -151,42 +199,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
-    }
-
-    /// update user properties after self user changes
-    private func updateUserProperties() {
-        guard shouldTracksEvent,
-            let selfUser = selfUser as? ZMUser,
-            let team = selfUser.team,
-            let teamID = team.remoteIdentifier
-        else {
-
-            //clean up
-            ["team_team_id",
-             "team_user_type",
-             "team_team_size",
-             "user_contacts"].forEach {
-                Countly.user().unSet($0)
-            }
-
-            Countly.user().save()
-            isOptedOut = true
-
-            return
-        }
-
-        let userProperties: [String: Any] = ["team_team_id": teamID,
-                                             "team_user_type": selfUser.teamRole,
-                                             "team_team_size": team.members.count,
-                                             "user_contacts": team.members.count.logRound()]
-
-        let convertedAttributes = userProperties.countlyStringValueDictionary
-
-        for(key, value) in convertedAttributes {
-            Countly.user().set(key, value: value)
-        }
-
-        Countly.user().save()
     }
 
     func tagEvent(_ event: String,
