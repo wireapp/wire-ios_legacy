@@ -49,7 +49,16 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// Whether a recording session is in progress.
 
-    private var isRecording: Bool = false
+    private var isRecording: Bool = false {
+        didSet {
+            if isRecording {
+                updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
+            } else {
+                updateTimer?.invalidate()
+                updateTimer = nil
+            }
+        }
+    }
 
     /// Whether the Countly instance has been configured and started.
 
@@ -146,7 +155,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func beginSession() {
         Countly.sharedInstance().beginSession()
         isRecording = true
-        updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
     }
 
     private func updateSession() {
@@ -157,9 +165,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func endSession() {
         Countly.sharedInstance().endSession()
         isRecording = false
-
-        updateTimer?.invalidate()
-        updateTimer = nil
     }
 
     // MARK: - Countly user
