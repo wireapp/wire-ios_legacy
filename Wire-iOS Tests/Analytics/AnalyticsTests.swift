@@ -77,8 +77,13 @@ final class AnalyticsTests: XCTestCase {
         coreDataFixture.teamTest {
             // Given
             let sut = Analytics(optedOut: false)
-            let provider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self,
-                                                    countlyAppKey: "dummy countlyAppKey")!
+
+            let provider = AnalyticsCountlyProvider(
+                countlyInstanceType: MockCountly.self,
+                countlyAppKey: "dummy countlyAppKey",
+                serverURL: URL(string: "www.wire.com")!
+            )!
+
             sut.provider = provider
 
             let selfUser = coreDataFixture.selfUser!
