@@ -58,7 +58,6 @@
 		163E8C7921E363FE0030BD8D /* ConversationGuestsAllowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163E8C7821E363FE0030BD8D /* ConversationGuestsAllowedCell.swift */; };
 		163FB98F20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB98E20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift */; };
 		163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */; };
-		1642362621F0F8DE00D810B5 /* DifferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1642362521F0F8DE00D810B5 /* DifferenceKit.framework */; };
 		1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */; };
 		1648EEEF20498F8900CC6B37 /* ContactsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */; };
 		1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */; };
@@ -1648,7 +1647,6 @@
 		163E8C7821E363FE0030BD8D /* ConversationGuestsAllowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationGuestsAllowedCell.swift; sourceTree = "<group>"; };
 		163FB98E20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitEnvironment+LayoutMargins.swift"; sourceTree = "<group>"; };
 		163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSpec.swift"; sourceTree = "<group>"; };
-		1642362521F0F8DE00D810B5 /* DifferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DifferenceKit.framework; path = Carthage/Build/iOS/DifferenceKit.framework; sourceTree = "<group>"; };
 		1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSectionController.swift; sourceTree = "<group>"; };
 		1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSectionController.swift; sourceTree = "<group>"; };
 		1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationSectionController.swift; sourceTree = "<group>"; };
@@ -3255,7 +3253,6 @@
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */,
-				1642362621F0F8DE00D810B5 /* DifferenceKit.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				874A17482056D9FA001C6760 /* libcmark.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
@@ -4239,7 +4236,6 @@
 				7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */,
 				7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */,
 				EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */,
-				1642362521F0F8DE00D810B5 /* DifferenceKit.framework */,
 				5EF4A6E720F497E300A9EF22 /* Ziphy.framework */,
 				878B823F20A1EEEE007455CA /* HTMLString.framework */,
 				874A17472056D9FA001C6760 /* libcmark.framework */,
@@ -7247,7 +7243,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/libcmark.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HTMLString.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftProtobuf.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DifferenceKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Countly.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
