@@ -23,14 +23,14 @@ final class CallController: NSObject {
 
     // MARK: - Public Implentation
     weak var router: ActiveCallRouterProtocol?
-    var userSession: CallConversationProvider?
+    var callConversationProvider: CallConversationProvider?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
     
     private var priorityCallConversation: ZMConversation? {
-        return userSession?.priorityCallConversation
+        return callConversationProvider?.priorityCallConversation
     }
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()

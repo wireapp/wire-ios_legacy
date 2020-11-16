@@ -25,7 +25,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
     var coreDataFixture: CoreDataFixture!
     var router: CallQualityRouterProtocolMock!
     var conversation: ZMConversation!
-    var userSession: MockUserSession!
+    var callConversationProvider: MockCallConversationProvider!
     var callQualityViewController: CallQualityViewController!
 
     override func setUp() {
@@ -33,7 +33,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         coreDataFixture = CoreDataFixture()
         conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
                                                                   otherUser: otherUser)
-        userSession = MockUserSession()
+        callConversationProvider = MockCallConversationProvider()
         sut = MockCallQualityController()
         sut.router = router
         
@@ -49,7 +49,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         sut = nil
         router = nil
         conversation = nil
-        userSession = nil
+        callConversationProvider = nil
         callQualityViewController = nil
         super.tearDown()
     }
@@ -87,7 +87,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         let establishedCallState: CallState = .established
         let terminatingCallState: CallState = .terminating(reason: .normal)
         conversation.remoteIdentifier = UUID()
-        userSession.priorityCallConversation = conversation
+        callConversationProvider.priorityCallConversation = conversation
         
         callQualityController_callCenterDidChange(callState: establishedCallState, conversation: conversation)
     
@@ -103,7 +103,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         let establishedCallState: CallState = .established
         let terminatingCallState: CallState = .terminating(reason: .stillOngoing)
         conversation.remoteIdentifier = UUID()
-        userSession.priorityCallConversation = conversation
+        callConversationProvider.priorityCallConversation = conversation
         
         callQualityController_callCenterDidChange(callState: establishedCallState, conversation: conversation)
     
@@ -119,7 +119,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         let establishedCallState: CallState = .established
         let terminatingCallState: CallState = .terminating(reason: .timeout)
         conversation.remoteIdentifier = UUID()
-        userSession.priorityCallConversation = conversation
+        callConversationProvider.priorityCallConversation = conversation
         
         callQualityController_callCenterDidChange(callState: establishedCallState, conversation: conversation)
     
@@ -144,7 +144,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         let establishedCallState: CallState = .established
         let terminatingCallState: CallState = .terminating(reason: .internalError)
         conversation.remoteIdentifier = UUID()
-        userSession.priorityCallConversation = conversation
+        callConversationProvider.priorityCallConversation = conversation
         
         callQualityController_callCenterDidChange(callState: establishedCallState, conversation: conversation)
     
@@ -160,7 +160,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper 
         let establishedCallState: CallState = .established
         let terminatingCallState: CallState = .terminating(reason: .anweredElsewhere)
         conversation.remoteIdentifier = UUID()
-        userSession.priorityCallConversation = conversation
+        callConversationProvider.priorityCallConversation = conversation
         
         callQualityController_callCenterDidChange(callState: establishedCallState, conversation: conversation)
     
