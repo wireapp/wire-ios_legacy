@@ -25,7 +25,7 @@ import WireCommonComponents
  * Observes call state to prompt the user for call quality feedback when appropriate.
  */
 
-final class CallQualityController: NSObject {
+class CallQualityController: NSObject {
     
     weak var router: CallQualityRouterProtocol? = nil
 

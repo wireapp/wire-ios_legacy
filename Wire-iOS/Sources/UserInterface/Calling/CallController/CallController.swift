@@ -23,17 +23,19 @@ final class CallController: NSObject {
 
     // MARK: - Public Implentation
     weak var router: ActiveCallRouterProtocol?
+    var callConversationProvider: CallConversationProvider?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
     
-    private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
-    private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
     private var priorityCallConversation: ZMConversation? {
-        return ZMUserSession.shared()?.priorityCallConversation
+        return callConversationProvider?.priorityCallConversation
     }
     
+    private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
+    private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
+
     // MARK: - Init
     override init() {
         super.init()
@@ -124,7 +126,7 @@ extension CallController: WireCallCenterCallStateObserver {
                              timestamp: Date?,
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
-        presentSecurityDegradedAlertIfNecessary(conversation)
+        presentSecurityDegradedAlertIfNecessary(for: conversation.voiceChannel)
         updateActiveCallPresentationState()
     }
     
@@ -133,8 +135,8 @@ extension CallController: WireCallCenterCallStateObserver {
         router?.presentUnsupportedVersionAlert()
     }
     
-    private func presentSecurityDegradedAlertIfNecessary(_ conversation: ZMConversation) {
-        guard let degradationState = conversation.voiceChannel?.degradationState else {
+    private func presentSecurityDegradedAlertIfNecessary(for voiceChannel: VoiceChannel?) {
+        guard let degradationState = voiceChannel?.degradationState else {
             return
         }
         switch degradationState {
@@ -177,4 +179,11 @@ extension CallController: WireCallCenterCallErrorObserver {
            let elapsedTimeIntervalSinceLastAlert = -dateOfLastErrorAlert.timeIntervalSinceNow
            return elapsedTimeIntervalSinceLastAlert > alertDebounceInterval
        }
+}
+
+extension CallController {
+    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
+    public func testHelper_setMinimizedCall(_ conversation: ZMConversation?) {
+        minimizedCall = conversation
+    }
 }
