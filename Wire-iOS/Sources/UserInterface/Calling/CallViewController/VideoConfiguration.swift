@@ -99,13 +99,17 @@ extension VoiceChannel {
             return (nil, streamsExcludingSelf)
         }
 
-        if conversation?.conversationType == ZMConversationType.oneOnOne && streamsExcludingSelf.count == 1 {
+        if callHasTwoParticipants && streamsExcludingSelf.count == 1 {
             return (selfStream, streamsExcludingSelf)
         } else {
             return (nil, [selfStream] + streamsExcludingSelf)
         }
     }
-
+    
+    private var callHasTwoParticipants: Bool {
+        return connectedParticipants.count == 2
+    }
+    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
