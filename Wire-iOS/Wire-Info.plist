@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BackupEnabled</key>
+	<string>${BACKUP_ENABLED}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -70,6 +72,28 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
+	<key>CameraRollEnabled</key>
+	<string>${CAMERA_ROLL_ENABLED}</string>
+	<key>ClipboardEnabled</key>
+	<string>${CLIPBOARD_ENABLED}</string>
+	<key>CountlyAppKey</key>
+	<string>$(COUNTLY_APP_KEY)</string>
+	<key>CountlyHost</key>
+	<string>$(COUNTLY_HOST)</string>
+	<key>CustomBackendEnabled</key>
+	<string>${CUSTOM_BACKEND_ENABLED}</string>
+	<key>EnableDeveloperMenu</key>
+	<string>${DEVELOPER_MODE_ENABLED}</string>
+	<key>ExternalFilePickerEnabled</key>
+	<string>${EXTERNAL_FILE_PICKER_ACTION_ENABLED}</string>
+	<key>FileGifActionEnabled</key>
+	<string>${FILE_GIF_ACTION_ENABLED}</string>
+	<key>ForceCBREnabled</key>
+	<string>${FORCE_CBR_ENABLED}</string>
+	<key>ForceEncryptionAtRestEnabled</key>
+	<string>$(FORCE_ENCRYPTION_AT_REST_ENABLED)</string>
+	<key>GenerateLinkPreviewEnabled</key>
+	<string>${GENERATE_LINK_PREVIEW_ENABLED}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -103,12 +127,20 @@
 	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Wire to access your location so you can send your location to others.</string>
+	<key>NSMainStoryboardFile</key>
+	<string>Main</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow Wire to access your microphone so you can talk to people and send audio messages.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow Wire to store pictures you take in the photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Wire to access pictures stored in photo library.</string>
+	<key>OpenFilePreviewEnabled</key>
+	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
+	<key>SaveMessageEnabled</key>
+	<string>${SAVE_MESSAGE_ENABLED}</string>
+	<key>ShareExtensionEnabled</key>
+	<string>${SHARE_EXTENSION_ENABLED}</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RedactedScript-Regular.ttf</string>
@@ -124,6 +156,8 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -208,35 +242,5 @@
 	<string>${WIRE_SSO_URL_SCHEME}</string>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
-	<key>EnableDeveloperMenu</key>
-	<string>${DEVELOPER_MODE_ENABLED}</string>
-	<key>ClipboardEnabled</key>
-	<string>${CLIPBOARD_ENABLED}</string>
-	<key>SaveMessageEnabled</key>
-	<string>${SAVE_MESSAGE_ENABLED}</string>
-	<key>FileGifActionEnabled</key>
-	<string>${FILE_GIF_ACTION_ENABLED}</string>
-	<key>ExternalFilePickerEnabled</key>
-	<string>${EXTERNAL_FILE_PICKER_ACTION_ENABLED}</string>
-	<key>GenerateLinkPreviewEnabled</key>
-	<string>${GENERATE_LINK_PREVIEW_ENABLED}</string>
-	<key>ForceCBREnabled</key>
-	<string>${FORCE_CBR_ENABLED}</string>
-	<key>OpenFilePreviewEnabled</key>
-	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
-	<key>CustomBackendEnabled</key>
-	<string>${CUSTOM_BACKEND_ENABLED}</string>
-	<key>ShareExtensionEnabled</key>
-	<string>${SHARE_EXTENSION_ENABLED}</string>
-	<key>CameraRollEnabled</key>
-	<string>${CAMERA_ROLL_ENABLED}</string>
-	<key>BackupEnabled</key>
-	<string>${BACKUP_ENABLED}</string>
-	<key>ForceEncryptionAtRestEnabled</key>
-	<string>$(FORCE_ENCRYPTION_AT_REST_ENABLED)</string>
-	<key>CountlyAppKey</key>
-	<string>$(COUNTLY_APP_KEY)</string>
-	<key>CountlyHost</key>
-	<string>$(COUNTLY_HOST)</string>
 </dict>
 </plist>

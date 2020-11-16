@@ -32,6 +32,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
     let separatorContainer: ContentInsetView
 
     var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updateEmailFieldisEnabled()
+        }
+    }
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
@@ -130,6 +135,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
     func prefill(email: String?) {
         hasPrefilledValue = email != nil
         emailField.text = email
+        updateEmailFieldisEnabled()
+    }
+    
+    func updateEmailFieldisEnabled() {
+        emailField.isEnabled = !hasPrefilledValue || allowEditingPrefilledValue
     }
 
     // MARK: - Appearance

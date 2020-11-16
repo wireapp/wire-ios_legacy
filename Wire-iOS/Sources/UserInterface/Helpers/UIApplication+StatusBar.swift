@@ -26,7 +26,7 @@ extension UIApplication {
     /// return the visible window on the top most which fulfills these conditions:
     /// 1. the windows has rootViewController
     /// 2. CallWindowRootViewController is in use and voice channel controller is active
-    /// 3. the window's rootViewController is AppRootViewController
+    /// 3. the window's rootViewController is RootViewController
     var topMostVisibleWindow: UIWindow? {
         let orderedWindows = windows.sorted { win1, win2 in
             win1.windowLevel < win2.windowLevel
@@ -39,7 +39,7 @@ extension UIApplication {
 
             if let callWindowRootController = controller as? CallWindowRootViewController {
                 return callWindowRootController.isDisplayingCallOverlay
-            } else if controller is AppRootViewController  {
+            } else if controller is RootViewController  {
                 return true
             }
             
@@ -67,6 +67,11 @@ extension UIApplication {
         }
         
         return topController
+    }
+    
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
     }
 }
 

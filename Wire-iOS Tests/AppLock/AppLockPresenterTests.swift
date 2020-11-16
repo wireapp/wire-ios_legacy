@@ -391,7 +391,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatAppStateDidTransitionNotifiesInteractorWithState() {
         //given
-        let appState = AppState.authenticated(completedRegistration: true, databaseIsLocked: false)
+        let appState = AppState.authenticated(completedRegistration: true, isDatabaseLocked: false)
         //when
         sut.appStateDidTransition(notification(for: appState))
         //then
@@ -401,7 +401,7 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatAppStateDidTransitionToAuthenticatedAsksIfApplockIsNeeded() {
         //given
-        let appState = AppState.authenticated(completedRegistration: true, databaseIsLocked: false)
+        let appState = AppState.authenticated(completedRegistration: true, isDatabaseLocked: false)
         //when
         sut.appStateDidTransition(notification(for: appState))
         //then
@@ -425,7 +425,7 @@ final class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: false, reauthVisibile: false)
         
         //when
-        sut.appStateDidTransition(notification(for: AppState.blacklisted(jailbroken: true)))
+        sut.appStateDidTransition(notification(for: AppState.jailbroken))
         //then
         assert(contentsDimmed: false, reauthVisibile: false)
     }
@@ -458,9 +458,9 @@ final class AppLockPresenterTests: XCTestCase {
 
 extension AppLockPresenterTests {
     func notification(for appState: AppState) -> Notification {
-        return Notification(name: AppStateController.appStateDidTransition,
+        return Notification(name: AppRootRouter.appStateDidTransition,
                             object: nil,
-                            userInfo: [AppStateController.appStateKey: appState])
+                            userInfo: [AppRootRouter.appStateKey: appState])
     }
     
     func set(authNeeded: Bool, authenticationState: AuthenticationState) {
