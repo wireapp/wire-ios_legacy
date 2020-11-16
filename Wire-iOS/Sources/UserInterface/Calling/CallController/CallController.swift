@@ -35,8 +35,7 @@ final class CallController: NSObject {
     
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
-    
-    
+
     // MARK: - Init
     override init() {
         super.init()
