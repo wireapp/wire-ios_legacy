@@ -24,7 +24,7 @@ import WireSyncEngine
 import avs
 
 protocol CallTopOverlayControllerDelegate: class {
-    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)
+    func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)
 }
 
 extension CallState {
@@ -230,7 +230,7 @@ final class CallTopOverlayController: UIViewController {
     
     @objc
     private func openCall(_ sender: UITapGestureRecognizer?) {
-        delegate?.voiceChannelTopOverlayWantsToRestoreCall(self)
+        delegate?.voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: conversation.voiceChannel)
     }
 }
 

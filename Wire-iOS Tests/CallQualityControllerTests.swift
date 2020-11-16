@@ -60,7 +60,8 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
 
     func testSurveyInterface() {
         CallQualityController.resetSurveyMuteFilter()
-        let qualityController = CallQualityViewController.configureSurveyController(callDuration: 10)
+        let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
+        let qualityController = CallQualityViewController(questionLabelText: questionLabelText, callDuration: 10)
         self.qualityController = qualityController
         verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
     }
