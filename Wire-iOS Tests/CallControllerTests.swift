@@ -35,7 +35,6 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         conversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC,
                                                                   otherUser: otherUser)
         userSession = MockUserSession()
-        userSession.priorityCallConversation = conversation
         sut = CallController()
         sut.userSession = userSession
         sut.router = router
@@ -54,6 +53,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatActiveCallIsPresented_WhenMinimizedCallIsNil() {
         // GIVEN
         let callState: CallState = .established
+        userSession.priorityCallConversation = conversation
         sut.testHelper_setMinimizedCall(nil)
         
         // WHEN
@@ -78,6 +78,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatActiveCallIsMinimized_WhenPriorityCallConversationIsTheCallConversationMinimized() {
         // GIVEN
         let callState: CallState = .established
+        userSession.priorityCallConversation = conversation
         sut.testHelper_setMinimizedCall(conversation)
         
         // WHEN
@@ -91,6 +92,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatCallTopOverlayIsShown_WhenPriorityCallConversationIsNotNil() {
         // GIVEN
         let callState: CallState = .established
+        userSession.priorityCallConversation = conversation
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
@@ -115,6 +117,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
         // GIVEN
         let callState: CallState = .terminating(reason: .outdatedClient)
+        userSession.priorityCallConversation = conversation
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
@@ -126,6 +129,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
         // GIVEN
         let callState: CallState = .terminating(reason: .canceled)
+        userSession.priorityCallConversation = conversation
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
@@ -137,6 +141,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatVersionAlertIsNotPresented_WhenCallStateIsNotTerminated() {
         // GIVEN
         let callState: CallState = .established
+        userSession.priorityCallConversation = conversation
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
@@ -149,6 +154,7 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     func testThatVersionDegradationAlertIsNotPresented_WhenVoiceChannelHasNotDegradationState() {
         // GIVEN
         let callState: CallState = .established
+        userSession.priorityCallConversation = conversation
         
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
@@ -210,7 +216,7 @@ class ActiveCallRouterProtocolMock: ActiveCallRouterProtocol {
 }
 
 // MARK: - ActiveCallRouterMock
-class MockUserSession: UserSessionCallConversationSet {
+class MockUserSession: CallConversationProvider {
     var priorityCallConversation: ZMConversation?
     var ongoingCallConversation: ZMConversation?
     var ringingCallConversation: ZMConversation?

@@ -18,13 +18,13 @@
 
 import WireSyncEngine
 
-protocol UserSessionCallConversationSet {
+protocol CallConversationProvider {
     var priorityCallConversation: ZMConversation? { get set }
     var ongoingCallConversation: ZMConversation? { get }
     var ringingCallConversation: ZMConversation? { get }
 }
 
-extension ZMUserSession: UserSessionCallConversationSet { }
+extension ZMUserSession: CallConversationProvider { }
 
 extension ZMUserSession {
     

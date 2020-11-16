@@ -23,7 +23,7 @@ final class CallController: NSObject {
 
     // MARK: - Public Implentation
     weak var router: ActiveCallRouterProtocol?
-    var userSession: UserSessionCallConversationSet?
+    var userSession: CallConversationProvider?
     
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
