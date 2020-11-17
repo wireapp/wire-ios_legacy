@@ -31,6 +31,8 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         super.setUp()
 
         coreDataFixture = CoreDataFixture()
+        SelfUser.provider = coreDataFixture.selfUserProvider
+        
         mockConversation = createTeamGroupConversation()
         mockZMUserSession = MockZMUserSession()
     

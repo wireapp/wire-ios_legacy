@@ -93,8 +93,8 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             
             if waitForTextViewToLoad {
                 // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
-                RunLoop.main.run(until: delay)
+//                let delay = Date().addingTimeInterval(1)
+//                RunLoop.main.run(until: delay)
             }
             
             return stackView

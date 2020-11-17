@@ -203,7 +203,7 @@ final class InputBar: UIView {
     }
 
     deinit {
-        notificationCenter.removeObserver(self)
+//        notificationCenter.removeObserver(self)
     }
 
     required init(buttons: [UIButton]) {
