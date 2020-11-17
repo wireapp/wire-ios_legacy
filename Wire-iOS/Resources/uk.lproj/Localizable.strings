@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
 "call.degraded.alert.action.continue" = "Подзвонити все-одно";
 
+"call.degraded.ended.alert.title" = "Дзвінок завершено";
+"call.degraded.ended.alert.message.self" = "Дзвінок було роз'єднано, оскільки ви почали використовувати новий пристрій.";
+"call.degraded.ended.alert.message.user" = "Дзвінок було роз'єднано, оскільки %@ більше не є верифікованим контактом.";
+"call.degraded.ended.alert.message.unknown" = "Дзвінок було роз'єднано, оскільки хтось більше не є верифікованим контактом.";
+
 "call.alert.ongoing.alert_title" = "Це завершить інший активний дзвінок.";
 
 "call.alert.ongoing.start.message" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
@@ -727,7 +732,7 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "До цієї розмови може прєднатись не більше %1$d учасників. Відеодзвінки будуть працювати тільки в розмовах, що містять до %2$d учасників, окрім вас.";
+"participants.section.name.footer" = "До цієї розмови може приєднатися до %1$d учасників.";
 "participants.section.admins.footer" = "Немає адміністраторів.";
 "participants.section.members.footer" = "Користувачі відсутні.";
 
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
-"self.settings.privacy_analytics.title" = "Надсилати анонімну статистику";
-"self.settings.privacy_analytics_menu.description.title" = "Допоможіть зробити Wire кращим, відправляючи анонімні звіти про використання та збої в роботі.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Надсилати анонімну статистику про використання додатку";
+"self.settings.privacy_crash_menu.description.title" = "Надсилати анонімні звіти про збої та базові дані, такі як номер версії додатку та операційної системи, щоб допомогти Wire ідентифікувати та вирішити проблеми в додатку.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Надсилати анонімну статистику про використання додатку";
+"self.settings.privacy_analytics_menu.description.title" = "Дані про використання додатку дозволяють Wire зрозуміти, як використовується програма, і як вона може бути вдосконалена. Дані анонімні та не містять даних з ваших розмов (наприклад, повідомлення, файли або дзвінки).";
 
 "self.settings.receiveNews_and_offers.title" = "Отримувати новини";
 "self.settings.receiveNews_and_offers.description.title" = "Отримувати новини та інформацію про оновлення Wire по електронній пошті.";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Це назавжди зітре історію всіх ваших розмов.";
 
 "self.settings.advanced.title" = "Розширені налаштування";
-"self.settings.advanced.conference_calling.title" = "Конференц-дзвінки";
-"self.settings.advanced.conference_calling.subtitle" = "Якщо дана опція увімкнена, дзвінки для аудіо- та відеоконференцій можуть вмістити більшу кількість учасників.";
-"self.settings.advanced.conference_calling.toggle" = "Бета-функціональність";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Відлагоджувальний звіт";
 "self.settings.advanced.debugging_tools.title" = "Інструменти налагоджування";
@@ -1257,9 +1265,9 @@
 // Landing screen
 
 "landing.header" = "Wire. Додати акаунт.";
-"landing.welcome_message" = "Пробуєте створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
-"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку - як тільки ви створите свою команду, то зможете увійти тут";
-"landing.create_account.title" = "Створити персональний акаунт в Wire";
+"landing.welcome_message" = "Намагаєтесь створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
+"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку. Як тільки ви створите свою команду, то зможете увійти тут";
+"landing.create_account.title" = "Створити персональний акаунт Wire";
 "landing.create_account.infotitle" = "Спілкуєтесь з друзями та сім'єю?";
 "landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
@@ -1793,8 +1801,8 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Створіть код допуску";
-"create_passcode.info_label" = "Його буде використано для розблокування Wire. Якщо ви забудете цей код допуску ";
+"create_passcode.title_label" = "Створити код допуску";
+"create_passcode.info_label" = "Його буде використано для розблокування Wire. Якщо ви забудете цей код,  ";
 "create_passcode.info_label.highlighted" = "його неможливо буде відновити.";
 "create_passcode.create_button.title" = "створити код допуску";
 
@@ -1815,15 +1823,15 @@
 // Wipe database
 
 "wipe_database.title_label" = "Доступ як з нового пристрою";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
-"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
+"wipe_database.info_label" = "Дані, що зберігаються на цьому пристрої, доступні лише з вашим кодом доступу.\n\nЯкщо ви забудете код доступу, то зможете очистити базу даних для входу в якості нового пристрою.\n\nВидаливши базу даних, ";
+"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього акаунту будуть остаточно видалені.";
 
 "wipe_database.button.title" = "Я хочу видалити базу даних";
 
 // Wipe database alert
 
 "wipe_database.alert.description" = "Підтвердити видалення бази даних";
-"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.message" = "Введіть 'Видалити', щоб підтвердити, що ви дійсно хочете видалити всі дані на цьому пристрої.";
 "wipe_database.alert.placeholder" = "Введіть 'Видалити'";
 "wipe_database.alert.confirm" = "Видалити";
 "wipe_database.alert.confirm_input" = "Видалити";

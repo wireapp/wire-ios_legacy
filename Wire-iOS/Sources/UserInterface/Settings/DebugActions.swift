@@ -145,17 +145,36 @@ enum DebugActions {
             ZMUserSession.shared()?.requestSlowSync()
         }
     }
+
+    static func showAnalyticsIdentifier(_ type: SettingsCellDescriptorType) {
+        guard
+            let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false),
+            let userSession = ZMUserSession.shared()
+        else {
+            return
+        }
+
+        let selfUser = ZMUser.selfUser(inUserSession: userSession)
+
+        let alert = UIAlertController(
+            title: "Analytics identifier",
+            message: "\(selfUser.analyticsIdentifier ?? "nil")",
+            alertAction: .ok(style: .cancel)
+        )
+
+        controller.present(alert, animated: true)
+    }
     
     static func generateTestCrash(_ type: SettingsCellDescriptorType) {
         MSCrashes.generateTestCrash()
     }
     
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? AppRootViewController else {
+        guard let appRootRouter = (UIApplication.shared.delegate as? AppDelegate)?.appRootRouter else {
             return
         }
         
-        rootViewController.reload()
+        appRootRouter.reload()
     }
 
     static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {

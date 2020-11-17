@@ -21,12 +21,7 @@ import WireDataModel
 
 enum LinearGroupCreationFlowEvent {
 
-    static let openedGroupCreationName = "conversation.opened_group_creation"
-    static let openedSelectParticipantsName = "conversation.opened_select_participants"
-    static let groupCreationSucceededName = "conversation.group_creation_succeeded"
-    static let addParticipantsName = "conversation.add_participants"
-
-    public enum Source: String {
+    enum Source: String {
         case conversationDetails = "conversation_details"
         case startUI = "start_ui"
 
@@ -43,16 +38,7 @@ enum LinearGroupCreationFlowEvent {
 
 extension LinearGroupCreationFlowEvent: Event {
     var name: String {
-        switch self {
-        case .openedGroupCreation:
-            return LinearGroupCreationFlowEvent.openedGroupCreationName
-        case .openedSelectParticipants:
-            return LinearGroupCreationFlowEvent.openedSelectParticipantsName
-        case .groupCreationSucceeded:
-            return LinearGroupCreationFlowEvent.groupCreationSucceededName
-        case .addParticipants:
-            return LinearGroupCreationFlowEvent.addParticipantsName
-        }
+        return ""
     }
 
     var attributes: [AnyHashable : Any]? {

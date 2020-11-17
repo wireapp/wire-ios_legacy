@@ -29,6 +29,10 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     var remoteId2 = UUID()
     var remoteId3 = UUID()
     
+    var mockSelfUser: ZMUser!
+    var selfUserId = UUID()
+    var selfClientId = UUID().transportString()
+
     override func setUp() {
         super.setUp()
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
@@ -42,6 +46,16 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         mockUser3 = MockUser.mockUsers()[2]
         mockUser3.remoteIdentifier = remoteId3
         mockUser3.name = "Cate"
+        
+        let userClient = MockUserClient()
+        userClient.remoteIdentifier = selfClientId
+
+        // Workaround to have the self user mock be of ZMUser type.
+        mockSelfUser = MockUser.mockUsers()[3]
+        MockUser.setMockSelf(mockSelfUser)
+        MockUser.mockSelf()?.remoteIdentifier = selfUserId
+        MockUser.mockSelf()?.clients = [userClient]
+        MockUser.mockSelf()?.isSelfUser = true
     }
     
     override func tearDown() {
@@ -140,8 +154,8 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     
     // MARK - arrangeVideoStreams
     
-    func videoStreamStub() -> VideoStream {
-        let stream = Stream(streamId: AVSClient(userId: UUID(), clientId: UUID().transportString()),
+    func videoStreamStub(userId: UUID = UUID(), clientId: String = UUID().transportString()) -> VideoStream {
+        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
                             participantName: nil,
                             microphoneState: .none,
                             videoState: .none)
@@ -149,12 +163,20 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
                            isPaused: false)
     }
     
-    func testThatItReturnsSelfPreviewAndParticipantInGrid_OneOnOneConversation() {
+    func setMockParticipants(with users: [ZMUser]) {
+        sut.mockParticipants = []
+        for user in users {
+            sut.mockParticipants.append(participantStub(for: user, videoEnabled: false))
+        }
+    }
+    
+    func testThatItReturnsSelfPreviewAndParticipantInGrid_WhenOnlyTwoParticipants() {
         // GIVEN
-        let participantVideoStreams = [videoStreamStub()]
-        let selfStream = videoStreamStub()
-        sut.conversation?.conversationType = .oneOnOne
+        setMockParticipants(with: [mockUser1, mockSelfUser])
         
+        let participantVideoStreams = [videoStreamStub()]
+        let selfStream = videoStreamStub(userId: selfUserId, clientId: selfClientId)
+
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
         
@@ -162,31 +184,33 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == selfStream)
     }
-    
-    func testThatItReturnsNilPreviewAndAllParticipantsInGrid_GroupConversation() {
+
+    func testThatItReturnsNilPreviewAndParticipantInGrid_WhenOnlyTwoParticipants_WithoutSelfStream() {
         // GIVEN
+        setMockParticipants(with: [mockUser1, mockSelfUser])
+
         let participantVideoStreams = [videoStreamStub()]
-        let selfStream = videoStreamStub()
-        sut.conversation?.conversationType = .group
-        
-        // WHEN
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
-        
-        // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual([selfStream] + participantVideoStreams))
-        XCTAssert(videoStreamArrangement.preview == nil)
-    }
-    
-    func testThatItReturnsNilPreviewAndParticipantInGrid_WithoutSelfStream() {
-        // GIVEN
-        let participantVideoStreams = [videoStreamStub()]
-        sut.conversation?.conversationType = .oneOnOne
         
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
         
         // THEN
         XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
+        XCTAssert(videoStreamArrangement.preview == nil)
+    }
+    
+    func testThatItReturnsNilPreviewAndAllParticipantsInGrid_WhenOverTwoParticipants() {
+        // GIVEN
+        setMockParticipants(with: [mockUser1, mockUser2, mockSelfUser])
+        
+        let participantVideoStreams = [videoStreamStub()]
+        let selfStream = videoStreamStub()
+        
+        // WHEN
+        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
+        
+        // THEN
+        XCTAssert(videoStreamArrangement.grid.elementsEqual([selfStream] + participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == nil)
     }
 }

@@ -20,10 +20,6 @@ import WireCommonComponents
 import UIKit
 import Photos
 
-extension Notification.Name {
-    static let UserGrantedAudioPermissions = Notification.Name("UserGrantedAudioPermissionsNotification")
-}
-
 extension UIApplication {
     
     class func wr_requestOrWarnAboutMicrophoneAccess(_ grantedHandler: @escaping (_ granted: Bool) -> Void) {

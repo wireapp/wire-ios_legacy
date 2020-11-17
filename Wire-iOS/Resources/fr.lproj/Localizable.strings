@@ -685,6 +685,11 @@
 "call.degraded.alert.message.unknown" = "Quelqu'un utilise un nouvel appareil.";
 "call.degraded.alert.action.continue" = "Appeler quand même";
 
+"call.degraded.ended.alert.title" = "Fin de l'appel";
+"call.degraded.ended.alert.message.self" = "L'appel a été déconnecté car vous avez commencé à utiliser un nouvel appareil.";
+"call.degraded.ended.alert.message.user" = "L'appel a été déconnecté car %@ n'est plus un contact vérifié.";
+"call.degraded.ended.alert.message.unknown" = "L'appel a été déconnecté car l'un de vos contacts n'est plus un contact vérifié.";
+
 "call.alert.ongoing.alert_title" = "Cela mettra fin à votre autre appel.";
 
 "call.alert.ongoing.start.message" = "Un appel est en cours dans une autre conversation.\nAppeler ici raccrochera l'autre appel.";
@@ -727,7 +732,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Ajouter des contacts";
-"participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à %1$d participants. Les appels vidéo fonctionnent avec jusqu'à %2$d destinataires.";
+"participants.section.name.footer" = "Une conversation de groupe peut inclure jusqu'à %1$d contacts.";
 "participants.section.admins.footer" = "Il n'y a aucun administrateur.";
 "participants.section.members.footer" = "Il n'y a aucun participant.";
 
@@ -1026,8 +1031,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Rapports d’utilisation et de plantage";
-"self.settings.privacy_analytics.title" = "Envoyer des données anonymement";
-"self.settings.privacy_analytics_menu.description.title" = "Vous pouvez aider à améliorer Wire en envoyant des données anonymes sur votre utilisation et des rapports d'erreur.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Envoyer des rapports d’incident anonymes";
+"self.settings.privacy_crash_menu.description.title" = "Aidez nous à améliorer Wire en envoyant des rapports d'erreur anonymes et des données basiques comme le numéro de version et le système d'exploitation pour aider Wire à identifier et résoudre les problèmes dans l'application.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Envoyer des données d'utilisation anonymes";
+"self.settings.privacy_analytics_menu.description.title" = "Les données d'utilisation permettent à Wire de comprendre comment l'application est utilisée et comment elle peut être améliorée. Les données sont anonymes et n'incluent pas le contenu de vos communications (messages, fichiers ou appels).";
 
 "self.settings.receiveNews_and_offers.title" = "Recevoir notre Newsletter";
 "self.settings.receiveNews_and_offers.description.title" = "Recevoir des e-mails sur les nouveautés de Wire.";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Cette opération effacera définitivement le contenu de toutes vos conversations.";
 
 "self.settings.advanced.title" = "Avancé";
-"self.settings.advanced.conference_calling.title" = "Conférences téléphoniques";
-"self.settings.advanced.conference_calling.subtitle" = "Quand cette option est activée, les appels audio et vidéo de conférences sont activés, ce qui permet un plus grand nombre de participants.";
-"self.settings.advanced.conference_calling.toggle" = "Programme bêta";
 "self.settings.advanced.troubleshooting.title" = "Dépannage";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport d'erreur";
 "self.settings.advanced.debugging_tools.title" = "Outils pour débugger";
@@ -1794,7 +1802,7 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Créer un code d'accès";
-"create_passcode.info_label" = "Il sera utilisé pour déverrouiller Wire. Si vous oubliez ce mot de passe ";
+"create_passcode.info_label" = "Il sera utilisé pour déverrouiller Wire. Si vous oubliez ce code d'accès ";
 "create_passcode.info_label.highlighted" = "Ce code d'accès ne peut pas être récupéré.";
 "create_passcode.create_button.title" = "Créer un code d'accès";
 
@@ -1806,7 +1814,7 @@
 "create_passcode.validation.no_special_char" = "Un caractère spécial";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Entrez votre code d'accès";
+"unlock.textfield.placeholder" = "Saisissez votre code d'accès";
 "unlock.title_label" = "Entrez le code d'accès pour déverrouiller Wire";
 "unlock.wipe_button" = "Accéder en tant que nouvel appareil";
 "unlock.error_label" = "Code d'accès erroné";
@@ -1831,4 +1839,4 @@
 // Wipe database completion
 
 "wipe_database_completion.title" = "Base de données supprimée";
-"wipe_database_completion.subtitle" = "Vos données et messages ont été supprimés. Vous pouvez maintenant vous reconnecter comme sur un nouvel appareil.";
+"wipe_database_completion.subtitle" = "Vos données et messages ont été supprimés. Vous pouvez maintenant vous reconnecter en tant que nouvel appareil.";

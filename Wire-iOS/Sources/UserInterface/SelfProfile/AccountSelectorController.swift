@@ -66,22 +66,19 @@ final class AccountSelectorController: UIViewController {
 extension AccountSelectorController: AccountSelectorViewDelegate {
     
     func accountSelectorDidSelect(account: Account) {
-        guard account != SessionManager.shared?.accountManager.selectedAccount else { return }
-        
-        if ZClientViewController.shared?.conversationListViewController.presentedViewController != nil {
-            AppDelegate.shared.rootViewController.confirmSwitchingAccount { (confirmed) in
-                if confirmed {
-                    ZClientViewController.shared?.conversationListViewController.dismiss(animated: true, completion: {
-                        AppDelegate.shared.mediaPlaybackManager?.stop()
-                        SessionManager.shared?.select(account)
-                    })
-                }
-            }
-        }
+        guard
+            account != SessionManager.shared?.accountManager.selectedAccount,
+            ZClientViewController.shared?.conversationListViewController.presentedViewController != nil
         else {
-            SessionManager.shared?.select(account)
+            return
         }
+        
+        SessionManager.shared?.select(account, tearDownCompletion: {
+            ZClientViewController.shared?.conversationListViewController.dismiss(animated: true,
+                                                                                 completion: {
+                AppDelegate.shared.mediaPlaybackManager?.stop()
+            })
+        })
     }
-    
 }
 

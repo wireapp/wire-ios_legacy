@@ -19,6 +19,10 @@
 import Foundation
 @testable import Wire
 
+private extension CallStateMock {
+    static var connecting: CallStateMock { return .outgoing }
+}
+
 struct CallInfoTestFixture {
 
     enum GroupSize: Int {
@@ -44,8 +48,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.outgoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingOutgoing,
             isConstantBitRate: false,
@@ -55,8 +58,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -68,8 +70,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -79,8 +80,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -92,8 +92,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.outgoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingOutgoing,
             isConstantBitRate: false,
@@ -103,8 +102,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -116,8 +114,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -127,8 +124,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -140,8 +136,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.connecting,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .connecting,
             isConstantBitRate: false,
@@ -151,8 +146,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -164,8 +158,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -175,8 +168,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -188,8 +180,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: true,
@@ -199,8 +190,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
     
@@ -212,8 +202,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -223,8 +212,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
 
@@ -236,8 +224,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -247,8 +234,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -262,8 +248,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.outgoing,
             mediaState: .sendingVideo,
             state: .ringingOutgoing,
             isConstantBitRate: false,
@@ -273,8 +258,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -286,8 +270,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .sendingVideo,
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -297,8 +280,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -310,8 +292,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -321,8 +302,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -334,8 +314,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -345,8 +324,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -358,8 +336,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: nil),
             isConstantBitRate: false,
@@ -369,8 +346,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -382,8 +358,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.connecting,
             mediaState: .sendingVideo,
             state: .connecting,
             isConstantBitRate: false,
@@ -393,8 +368,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -406,8 +380,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -417,8 +390,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -432,8 +404,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.outgoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingOutgoing,
             isConstantBitRate: false,
@@ -443,8 +414,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -456,8 +426,7 @@ struct CallInfoTestFixture {
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: otherUser.name ?? ""),
             isConstantBitRate: false,
@@ -467,8 +436,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -480,8 +448,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.connecting,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .connecting,
             isConstantBitRate: false,
@@ -491,8 +458,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -504,8 +470,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .stopped, microphoneState: .unmuted)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -515,8 +480,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -528,8 +492,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -539,8 +502,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -552,8 +514,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .stopped, microphoneState: .unmuted)),
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -563,8 +524,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -576,8 +536,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: true,
@@ -587,32 +546,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
-        )
-    }
-    
-    var groupAudioEstablishedConferenceCall: CallInfoViewControllerInput {
-        return MockCallInfoViewControllerInput(
-            videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
-            degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
-            canToggleMediaType: true,
-            isMuted: false,
-            isTerminating: false,
-            canAccept: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            state: .established(duration: 10),
-            isConstantBitRate: true,
-            title: otherUser.name ?? "",
-            isVideoCall: false,
-            variant: .light,
-            disableIdleTimer: false,
-            cameraType: .front,
-            networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: true
+            userEnabledCBR: true
         )
     }
 
@@ -626,8 +560,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.outgoing,
             mediaState: .sendingVideo,
             state: .ringingOutgoing,
             isConstantBitRate: false,
@@ -637,8 +570,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -650,8 +582,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: true,
+            callState: CallStateMock.incoming,
             mediaState: .sendingVideo,
             state: .ringingIncoming(name: otherUser.name ?? ""),
             isConstantBitRate: false,
@@ -661,8 +592,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -674,8 +604,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.connecting,
             mediaState: .sendingVideo,
             state: .connecting,
             isConstantBitRate: false,
@@ -685,8 +614,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -698,8 +626,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .screenSharing)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -709,8 +636,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
     
@@ -722,8 +648,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -733,8 +658,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
@@ -746,8 +670,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -757,34 +680,10 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: false
+            userEnabledCBR: false
         )
     }
 
-    var groupVideoEstablishedConferenceCall: CallInfoViewControllerInput {
-        return MockCallInfoViewControllerInput(
-            videoPlaceholderState: .hidden,
-            permissions: MockCallPermissions.videoAllowedForever,
-            degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted)),
-            canToggleMediaType: true,
-            isMuted: false,
-            isTerminating: false,
-            canAccept: false,
-            mediaState: .sendingVideo,
-            state: .established(duration: 10),
-            isConstantBitRate: false,
-            title: otherUser.name ?? "",
-            isVideoCall: true,
-            variant: .light,
-            disableIdleTimer: true,
-            cameraType: .front,
-            networkQuality: .normal,
-            userEnabledCBR: false,
-            isConferenceCall: true
-        )
-    }
 
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
@@ -794,8 +693,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: true,
@@ -805,8 +703,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
 
@@ -818,8 +715,7 @@ struct CallInfoTestFixture {
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .started)),
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.ongoing,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .established(duration: 10),
             isConstantBitRate: false,
@@ -829,8 +725,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
 
@@ -844,8 +739,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: otherUser.name ?? ""),
             isConstantBitRate: true,
@@ -855,8 +749,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
 
@@ -869,8 +762,7 @@ struct CallInfoTestFixture {
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
-            isTerminating: false,
-            canAccept: false,
+            callState: CallStateMock.incoming,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             state: .ringingIncoming(name: otherUser.name ?? ""),
             isConstantBitRate: true,
@@ -880,8 +772,7 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true,
-            isConferenceCall: false
+            userEnabledCBR: true
         )
     }
 

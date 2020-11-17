@@ -19,7 +19,6 @@
 import WireDataModel
 import WireSyncEngine
 
-
 /// Source of random values.
 protocol RandomGenerator {
     func rand<ContentType>() -> ContentType
@@ -30,18 +29,18 @@ protocol RandomGenerator {
 final class RandomGeneratorFromData: RandomGenerator {
     public let source: Data
     private var step: Int = 0
-    
+
     init(data: Data) {
         source = data
     }
-    
+
     public func rand<ContentType>() -> ContentType {
         let currentStep = self.step
         let result = source.withUnsafeBytes { (pointer: UnsafeRawBufferPointer) -> ContentType in
             return pointer.baseAddress!.assumingMemoryBound(to: ContentType.self).advanced(by: currentStep % (source.count - MemoryLayout<ContentType>.size)).pointee
         }
         step = step + MemoryLayout<ContentType>.size
-        
+
         return result
     }
 
@@ -56,18 +55,17 @@ extension RandomGeneratorFromData {
 
 extension Array {
     func shuffled(with generator: RandomGenerator) -> Array {
-        
-        var workingCopy = Array(self)
-        var result = Array()
 
-        self.forEach { _ in
-            let rand: UInt = generator.rand() % UInt(workingCopy.count)
+        var workingCopyIndices = [Int](indices)
+        var resultIndices = [Int]()
+        forEach { _ in
+            let rand: UInt = generator.rand() % (UInt)(workingCopyIndices.count)
 
-            result.append(workingCopy[Int(rand)])
-            workingCopy.remove(at: Int(rand))
+            resultIndices.append(workingCopyIndices[Int(rand)])
+            workingCopyIndices.remove(at: Int(rand))
         }
 
-        return result
+        return resultIndices.map { self[$0] }
     }
 }
 
@@ -79,13 +77,12 @@ extension ZMConversation {
         guard let remoteIdentifier = self.remoteIdentifier else {
             return allUsers
         }
-        
+
         let rand = RandomGeneratorFromData(uuid: remoteIdentifier)
-        
+
         return allUsers.shuffled(with: rand)
     }
 }
-
 
 enum Mode: Equatable {
     /// 0 participants in conversation:
@@ -103,7 +100,7 @@ enum Mode: Equatable {
 }
 
 extension Mode {
-    
+
     /// create a Mode for different cases
     ///
     /// - Parameters:
@@ -130,7 +127,7 @@ extension Mode {
             return false
         }
     }
-    
+
     var shape: AvatarImageView.Shape {
         switch self {
         case .one(serviceUser: true): return .relative
@@ -159,7 +156,7 @@ final class ConversationAvatarView: UIView {
     }
 
     private var users: [UserType] = []
-    
+
     private var conversation: ZMConversation? = .none {
         didSet {
 
@@ -179,21 +176,20 @@ final class ConversationAvatarView: UIView {
             } else {
                 usersOnAvatar = stableRandomParticipants
             }
-            
+
             users = usersOnAvatar
         }
     }
-    
+
     private(set) var mode: Mode = .one(serviceUser: false) {
         didSet {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
-            
+
             if case .one = mode {
                 layer.borderWidth = 0
                 backgroundColor = .clear
-            }
-            else {
+            } else {
                 layer.borderWidth = .hairline
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
                 backgroundColor = UIColor(white: 0, alpha: 0.16)
@@ -206,8 +202,7 @@ final class ConversationAvatarView: UIView {
                 $0.size = mode == .four ? .tiny : .small
                 if index < users.count {
                     $0.user = users[index]
-                }
-                else {
+                } else {
                     $0.user = nil
                     $0.container.isOpaque = false
                     $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
@@ -231,19 +226,19 @@ final class ConversationAvatarView: UIView {
         switch mode {
         case .none:
             return []
-            
+
         case .one:
             return [imageViewLeftTop]
-            
+
         case .four:
             return userImageViews
         }
     }
-    
+
     override public var intrinsicContentSize: CGSize {
         return CGSize(width: CGFloat.ConversationAvatarView.iconSize, height: CGFloat.ConversationAvatarView.iconSize)
     }
-    
+
     let clippingView = UIView()
     let imageViewLeftTop: UserImageView = {
         let userImageView = BadgeUserImageView()
@@ -254,15 +249,15 @@ final class ConversationAvatarView: UIView {
     lazy var imageViewRightTop: UserImageView = {
         return UserImageView()
     }()
-    
+
     lazy var imageViewLeftBottom: UserImageView = {
         return UserImageView()
     }()
-    
+
     lazy var imageViewRightBottom: UserImageView = {
         return UserImageView()
     }()
-    
+
     init() {
         super.init(frame: .zero)
         userImageViews.forEach(self.clippingView.addSubview)
@@ -272,7 +267,7 @@ final class ConversationAvatarView: UIView {
         clippingView.clipsToBounds = true
         self.addSubview(clippingView)
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -281,7 +276,7 @@ final class ConversationAvatarView: UIView {
     var containerSize: CGSize {
         return self.clippingView.bounds.size
     }
-    
+
     override public func layoutSubviews() {
         super.layoutSubviews()
         guard self.bounds != .zero else {
@@ -289,7 +284,7 @@ final class ConversationAvatarView: UIView {
         }
 
         clippingView.frame = self.bounds.insetBy(dx: 2, dy: 2)
-        
+
         switch mode {
         case .none:
             break
@@ -300,7 +295,7 @@ final class ConversationAvatarView: UIView {
         case .four:
             layoutMultipleAvatars(with: CGSize(width: (containerSize.width - interAvatarInset) / 2.0, height: (containerSize.height - interAvatarInset) / 2.0))
         }
-        
+
         updateCornerRadius()
     }
 
@@ -313,13 +308,12 @@ final class ConversationAvatarView: UIView {
             if xPosition + size.width >= containerSize.width {
                 xPosition = 0
                 yPosition = yPosition + size.height + interAvatarInset
-            }
-            else {
+            } else {
                 xPosition = xPosition + size.width + interAvatarInset
             }
         }
     }
-    
+
     private func updateCornerRadius() {
         switch mode {
         case .one(serviceUser: let serviceUser):
@@ -331,4 +325,3 @@ final class ConversationAvatarView: UIView {
         }
     }
 }
-

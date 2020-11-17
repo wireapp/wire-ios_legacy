@@ -122,7 +122,7 @@ final class CompanyLoginFlowHandler {
     
     private func processURL(_ url: URL) {
         do {
-            _ = try SessionManager.shared?.openURL(url, options: [:])
+            try SessionManager.shared?.openURL(url)
         } catch let error as LocalizedError {
             UIApplication.shared.topmostViewController()?.showAlert(for: error)
         } catch {

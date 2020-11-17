@@ -26,8 +26,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
     var isMuted: Bool
-    var isTerminating: Bool
-    var canAccept: Bool
+    var callState: CallStateExtending
     var mediaState: MediaState
     var state: CallStatusViewState
     var isConstantBitRate: Bool
@@ -38,7 +37,6 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var cameraType: CaptureDevice
     var networkQuality: NetworkQuality
     var userEnabledCBR: Bool
-    var isConferenceCall: Bool
 }
 
 extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}
