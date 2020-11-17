@@ -27,8 +27,6 @@ extension CallInfoViewControllerInput  {
         disableIdleTimer: \(disableIdleTimer)
         canToggleMediaType: \(canToggleMediaType)
         isMuted: \(isMuted)
-        isTerminating: \(isTerminating)
-        canAccept \(canAccept)
         mediaState: \(mediaState)
         appearance: \(appearance)
         isVideoCall: \(isVideoCall)
@@ -36,6 +34,7 @@ extension CallInfoViewControllerInput  {
         state: \(state)
         isConstantBitRate: \(isConstantBitRate)
         title: \(title)
+        callState: \(callState)
         """
     }
 }

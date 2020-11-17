@@ -224,6 +224,9 @@ class SettingsCellDescriptorFactory {
         let triggerSlowSyncButton = SettingsButtonCellDescriptor(title: "Trigger slow sync", isDestructive: false, selectAction: DebugActions.triggerSlowSync)
         developerCellDescriptors.append(triggerSlowSyncButton)
 
+        let showAnalyticsIdentiferButton = SettingsButtonCellDescriptor(title: "What's my analytics id?", isDestructive: false, selectAction: DebugActions.showAnalyticsIdentifier)
+        developerCellDescriptors.append(showAnalyticsIdentiferButton)
+
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
     

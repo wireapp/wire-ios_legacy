@@ -424,6 +424,7 @@
 		6305206224FFEF9600ED295A /* OrientableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305206124FFEF9600ED295A /* OrientableView.swift */; };
 		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
 		6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903723AA8D480081802B /* AppLockPresenterTests.swift */; };
+		631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */; };
 		63256D8224D46456009FC58B /* BitRateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256D8124D46455009FC58B /* BitRateLabel.swift */; };
 		6328283C24A1100F000748D2 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328283B24A1100F000748D2 /* IconImageView.swift */; };
 		6328283F24A110CF000748D2 /* MicrophoneIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328283E24A110CF000748D2 /* MicrophoneIconStyle.swift */; };
@@ -2033,6 +2034,7 @@
 		6305206124FFEF9600ED295A /* OrientableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientableView.swift; sourceTree = "<group>"; };
 		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
 		6306903723AA8D480081802B /* AppLockPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenterTests.swift; sourceTree = "<group>"; };
+		631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateExtending.swift; sourceTree = "<group>"; };
 		63256D8124D46455009FC58B /* BitRateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitRateLabel.swift; sourceTree = "<group>"; };
 		6328283B24A1100F000748D2 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		6328283E24A110CF000748D2 /* MicrophoneIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneIconStyle.swift; sourceTree = "<group>"; };
@@ -6275,6 +6277,7 @@
 				D525426C209363AF001C04C1 /* IconLabelButton.swift */,
 				D525426E209363DC001C04C1 /* CallActionAppearance.swift */,
 				D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */,
+				631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */,
 			);
 			path = CallActionsView;
 			sourceTree = "<group>";
@@ -7941,6 +7944,7 @@
 				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				A9E674D524F508B70058FC72 /* WireEmail.swift in Sources */,
+				631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				A9614EF823C38C810012A718 /* ConnectRequestsViewController.swift in Sources */,
 				A90E4ABF2381CD0200468F31 /* AccentColorChangeHandler.swift in Sources */,
