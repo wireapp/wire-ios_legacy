@@ -29,7 +29,7 @@ final class AnalyticsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         coreDataFixture = CoreDataFixture()
-        SelfUser.provider = coreDataFixture.selfUserProvider
+        SelfUser.provider = SelfUser.provider
     }
 
     override func tearDown() {

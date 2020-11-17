@@ -48,7 +48,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         message.sender = otherUser
         
         // THEN
-        verify(message: message, waitForImagesToLoad: true)
+        verify(message: message, waitForImagesToLoad: true) ///TODO: crash
     }
     
     func testNotDownloadedImage() {

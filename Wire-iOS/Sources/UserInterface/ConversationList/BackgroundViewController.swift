@@ -40,9 +40,9 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self) //TODO:
+//    }
     
     init(user: UserType, userSession: ZMUserSession?) {
         self.user = user

@@ -363,7 +363,7 @@ extension AppRootRouter {
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
             urlActionRouter.openDeepLink(needsAuthentication: true)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
-            SelfUser.provider = nil
+//            SelfUser.provider = nil
         }
         
         presentAlertForDeletedAccount(appState)

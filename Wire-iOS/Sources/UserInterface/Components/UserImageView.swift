@@ -91,9 +91,9 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         configureConstraints()
     }
 
-    deinit {
-        userObserverToken = nil
-    }
+//    deinit {///TODO: crash
+//        userObserverToken = nil
+//    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

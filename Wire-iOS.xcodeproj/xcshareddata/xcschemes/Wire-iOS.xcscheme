@@ -62,6 +62,12 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
+                  Identifier = "CallInfoRootViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationImageMessageTests/testOpaqueImage()">
+               </Test>
+               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test

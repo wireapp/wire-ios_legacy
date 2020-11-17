@@ -27,7 +27,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
+        coreDataFixture = CoreDataFixture() ///TODO: crash
     }
 
     override func tearDown() {
