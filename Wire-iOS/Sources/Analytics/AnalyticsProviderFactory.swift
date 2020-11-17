@@ -19,6 +19,7 @@
 import Foundation
 import WireSystem
 import WireCommonComponents
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
@@ -42,7 +43,16 @@ final class AnalyticsProviderFactory: NSObject {
             return AnalyticsConsoleProvider()
         } else if AutomationHelper.sharedHelper.useAnalytics {
             // Create & return valid provider, when available.
-            return AnalyticsCountlyProvider()
+            guard
+                let appKey = Bundle.countlyAppKey,
+                let url = BackendEnvironment.shared.countlyURL
+            else {
+                zmLog.error("Could not create Countly provider. Make sure COUNTLY_APP_KEY in .xcconfig is set and countlyURL exists in backend environment.")
+                return nil
+            }
+
+            return AnalyticsCountlyProvider(countlyAppKey: appKey, serverURL: url)
+
         } else {
             zmLog.info("Creating analyticsProvider: no provider")
             return nil

@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
+final class RandomGeneratorFromDataTests: XCTestCase {
     func testThatItGeneratesAPseudorandom() {
         // GIVEN
         let uuid = NSUUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")! as UUID
