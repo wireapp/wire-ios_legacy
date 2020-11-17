@@ -37,7 +37,8 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
         super.setUp()
 
         coreDataFixture = CoreDataFixture()
-
+        SelfUser.provider = coreDataFixture.selfUserProvider
+        
         mockConversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser)
 
         analytics = Analytics(optedOut: true)

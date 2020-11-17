@@ -166,7 +166,7 @@ extension ConversationInputBarViewControllerTests {
     }
 
 // MARK: - file action sheet
-
+///TODO: fix alert test for XCode 12
     func testUploadFileActionSheet() {
         let alert: UIAlertController = sut.createDocUploadActionSheet()
 

@@ -282,7 +282,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     deinit {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
+//        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
 
     // MARK: - view life cycle

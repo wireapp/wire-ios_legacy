@@ -28,6 +28,7 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         super.setUp()
 
         coreDataFixture = CoreDataFixture()
+        SelfUser.provider = coreDataFixture.selfUserProvider
     }
 
     override func tearDown() {

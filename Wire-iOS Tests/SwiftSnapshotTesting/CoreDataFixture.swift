@@ -87,7 +87,7 @@ final class CoreDataFixture {
     // invokes `SelfUser.current`. As we slowly migrate to `UserType`, we will use this more
     // and the `var selfUser: ZMUser!` less.
     //
-//    var selfUserProvider: SelfUserProvider!
+    var selfUserProvider: SelfUserProvider!
 
     ///From ZMSnapshot
 
@@ -160,9 +160,10 @@ final class CoreDataFixture {
         setupTestObjects()
 
         MockUser.setMockSelf(selfUser)
-//        selfUserProvider = SelfProvider(selfUser: selfUser)
-///TODO: crash??
-        SelfUser.provider = SelfProvider(selfUser: selfUser)
+        selfUserProvider = SelfProvider(selfUser: selfUser)
+
+        //TODO: this line crashes
+//        SelfUser.provider = selfUserProvider
     }
 
     deinit {
