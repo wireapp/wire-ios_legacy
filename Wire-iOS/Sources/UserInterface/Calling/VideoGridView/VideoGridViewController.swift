@@ -40,7 +40,7 @@ final class VideoGridViewController: UIViewController {
     }
 
     private var dataSource: [VideoStream] = []
-    private var maximizedStream: Stream?
+    private var maximizedView: BaseVideoPreviewView?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
@@ -118,28 +118,23 @@ final class VideoGridViewController: UIViewController {
     // MARK: - Public Interface
 
     public func switchFillMode(location: CGPoint) {
-        toggleMaximized(stream: stream(at: location))
+        toggleMaximized(view: streamView(at: location))
     }
     
-    private func stream(at location: CGPoint) -> Stream? {
-        let displayedStreams = dataSource.compactMap { $0.stream }
+    // MARK: - View maximization
+    
+    private func toggleMaximized(view: BaseVideoPreviewView?) {
+        let stream = view?.stream
         
-        return viewCache.values.lazy
-            .compactMap { $0 as? BaseVideoPreviewView }
-            .filter { displayedStreams.contains($0.stream) }
-            .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })?
-            .stream
-    }
-    
-    private func toggleMaximized(stream: Stream?) {
-        maximizedStream = isMaximized(stream: stream) ? nil : stream
+        maximizedView = isMaximized(stream: stream) ? nil : view
+        (view as? VideoPreviewView)?.shouldFill = !isMaximized(stream: stream)
         updateVideoGrid(with: videoStreams)
     }
     
     private func isMaximized(stream: Stream?) -> Bool {
         guard
             let streamId = stream?.streamId,
-            let maximizedStreamId = maximizedStream?.streamId
+            let maximizedStreamId = maximizedView?.stream.streamId
         else { return false }
         
         return streamId == maximizedStreamId
@@ -284,6 +279,18 @@ final class VideoGridViewController: UIViewController {
 
     private func streamView(for stream: Stream) -> UIView? {
         return viewCache[stream.streamId]
+    }
+    
+    private func streamView(at location: CGPoint) -> BaseVideoPreviewView? {
+        let displayedStreams = dataSource.compactMap { $0.stream }
+        
+        return viewCache.values.lazy
+            .compactMap { $0 as? BaseVideoPreviewView }
+            .first {
+                let isShown = displayedStreams.contains($0.stream)
+                let isAtLocation = self.view.convert($0.frame, from: $0.superview).contains(location)
+                return isShown && isAtLocation
+        }
     }
 
     private func stream(with streamId: AVSClient) -> Stream? {
