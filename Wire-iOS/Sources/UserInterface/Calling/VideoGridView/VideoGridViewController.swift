@@ -33,10 +33,10 @@ final class VideoGridViewController: UIViewController {
     // MARK: - Private Properties
     
     private var videoStreams: [VideoStream] {
-        guard let videoStream = configuration.videoStreams.first(where: { $0.stream.streamId == maximizedStream?.streamId }) else {
-            return configuration.videoStreams
+        if let videoStream = configuration.videoStreams.first(where: { isMaximized(stream: $0.stream) }) {
+            return [videoStream]
         }
-        return [videoStream]
+        return configuration.videoStreams
     }
 
     private var dataSource: [VideoStream] = []
