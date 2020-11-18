@@ -32,14 +32,22 @@ final class VideoGridViewController: UIViewController {
 
     // MARK: - Private Properties
     
-    private var videoStreams: [VideoStream] = []
+    private var videoStreams: [VideoStream] {
+        guard let videoStream = configuration.videoStreams.first(where: { $0.stream.streamId == maximizedStream?.streamId }) else {
+            return configuration.videoStreams
+        }
+        return [videoStream]
+    }
+
+    private var dataSource: [VideoStream] = []
+    private var maximizedStream: Stream?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
 
-    // MARK: - Properties
+    // MARK: - Public Properties
 
     var configuration: VideoGridConfiguration {
         didSet {
@@ -110,11 +118,31 @@ final class VideoGridViewController: UIViewController {
     // MARK: - Public Interface
 
     public func switchFillMode(location: CGPoint) {
-        let tappedView = viewCache.values.lazy
-            .compactMap { $0 as? VideoPreviewView }
-            .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })
-
-        tappedView?.shouldFill.toggle()
+        toggleMaximized(stream: stream(at: location))
+    }
+    
+    private func stream(at location: CGPoint) -> Stream? {
+        let displayedStreams = dataSource.compactMap { $0.stream }
+        
+        return viewCache.values.lazy
+            .compactMap { $0 as? BaseVideoPreviewView }
+            .filter { displayedStreams.contains($0.stream) }
+            .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })?
+            .stream
+    }
+    
+    private func toggleMaximized(stream: Stream?) {
+        maximizedStream = isMaximized(stream: stream) ? nil : stream
+        updateVideoGrid(with: videoStreams)
+    }
+    
+    private func isMaximized(stream: Stream?) -> Bool {
+        guard
+            let streamId = stream?.streamId,
+            let maximizedStreamId = maximizedStream?.streamId
+        else { return false }
+        
+        return streamId == maximizedStreamId
     }
 
     // MARK: - UI Update
@@ -152,7 +180,7 @@ final class VideoGridViewController: UIViewController {
 
         updateSelfPreview()
         updateFloatingVideo(with: configuration.floatingVideoStream)
-        updateVideoGrid(with: configuration.videoStreams)
+        updateVideoGrid(with: videoStreams)
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
 
@@ -194,13 +222,13 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func updateVideoGrid(with newVideoStreams: [VideoStream]) {
-        let changeSet = StagedChangeset(source: videoStreams, target: newVideoStreams)
+        let changeSet = StagedChangeset(source: dataSource, target: newVideoStreams)
 
         UIView.performWithoutAnimation {
-            gridView.reload(using: changeSet) { videoStreams = $0 }
+            gridView.reload(using: changeSet) { dataSource = $0 }
         }
 
-        updateStates(with: videoStreams)
+        updateStates(with: dataSource)
         pruneCache()
     }
 
@@ -278,7 +306,7 @@ final class VideoGridViewController: UIViewController {
     private func videoConfigurationDescription() -> String {
         return """
         showing self preview: \(selfPreviewView != nil)
-        videos in grid: [\(videoStreams)]\n
+        videos in grid: [\(dataSource)]\n
         """
     }
 
@@ -294,7 +322,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoStreams.count
+        return dataSource.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,7 +330,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let videoStream = videoStreams[indexPath.row]
+        let videoStream = dataSource[indexPath.row]
         cell.add(streamView: streamView(for: videoStream))
 
         return cell
