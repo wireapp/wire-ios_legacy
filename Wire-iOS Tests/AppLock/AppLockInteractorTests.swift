@@ -44,6 +44,10 @@ private final class UserSessionMock: AppLockInteractorUserSession {
         encryptMessagesAtRest = enabled
     }
     
+    func setEncryptionAtRest(enabled: Bool, skipMigration: Bool) throws {
+        encryptMessagesAtRest = enabled
+    }
+    
     func unlockDatabase(with context: LAContext) throws {
         isDatabaseLocked = false
     }
