@@ -127,7 +127,7 @@ final class VideoGridViewController: UIViewController {
         let stream = view?.stream
         
         maximizedView = isMaximized(stream: stream) ? nil : view
-        (view as? VideoPreviewView)?.shouldFill = !isMaximized(stream: stream)
+        (view as? VideoPreviewView)?.isMaximized = isMaximized(stream: stream)
         updateVideoGrid(with: videoStreams)
     }
     

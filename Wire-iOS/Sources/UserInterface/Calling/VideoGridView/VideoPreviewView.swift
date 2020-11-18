@@ -30,10 +30,14 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var shouldFill: Bool = true {
+    var isMaximized: Bool = false {
         didSet {
             updateFillMode()
         }
+    }
+    
+    private var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
     }
 
     private var previewView: AVSVideoView?
@@ -81,7 +85,6 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var videoKind: VideoKind = .none {
         didSet {
             guard oldValue != videoKind else { return }
-            shouldFill = videoKind.shouldFill
             updateFillMode()
         }
     }
@@ -155,7 +158,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
-        preview.shouldFill = videoKind.shouldFill
+        preview.shouldFill = shouldFill
         
         previewView = preview
     }
