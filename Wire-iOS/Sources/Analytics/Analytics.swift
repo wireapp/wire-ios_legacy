@@ -48,7 +48,9 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
         callingTracker = AnalyticsCallingTracker(analytics: self)
-        selfUser = SelfUser.current
+        if SelfUser.provider != nil {
+            selfUser = SelfUser.current
+        }
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
     }
 
