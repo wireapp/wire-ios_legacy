@@ -60,7 +60,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     func testForAccountGroupWithDisabledEditing() {
 		MockUserRight.isPermitted = false
 
-		let group = settingsCellDescriptorFactory.accountGroup()
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 
