@@ -116,8 +116,9 @@ final class VideoGridViewController: UIViewController {
     }
 
     // MARK: - Public Interface
-
-    public func switchFillMode(location: CGPoint) {
+    
+    public func handleDoubleTap(gesture: UIGestureRecognizer) {
+        let location = gesture.location(in: gridView)
         toggleMaximized(view: streamView(at: location))
     }
     
@@ -282,15 +283,10 @@ final class VideoGridViewController: UIViewController {
     }
     
     private func streamView(at location: CGPoint) -> BaseVideoPreviewView? {
-        let displayedStreams = dataSource.compactMap { $0.stream }
-        
-        return viewCache.values.lazy
-            .compactMap { $0 as? BaseVideoPreviewView }
-            .first {
-                let isShown = displayedStreams.contains($0.stream)
-                let isAtLocation = self.view.convert($0.frame, from: $0.superview).contains(location)
-                return isShown && isAtLocation
+        guard let indexPath = gridView.indexPathForItem(at: location) else {
+            return nil
         }
+        return streamView(for: dataSource[indexPath.row].stream) as? BaseVideoPreviewView
     }
 
     private func stream(with streamId: AVSClient) -> Stream? {
