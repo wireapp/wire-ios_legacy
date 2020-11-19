@@ -182,6 +182,8 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.filename = "vacation.m4a"
         
         let previewView = message.replyPreview()!
+        
+        ///TODO: crash
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verify(view: previewView.prepareForSnapshot())

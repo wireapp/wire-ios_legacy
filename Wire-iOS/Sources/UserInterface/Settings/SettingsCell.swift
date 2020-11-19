@@ -352,9 +352,9 @@ final class SettingsValueCell: SettingsTableCell {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     
     // MARK: - Properties observing
     

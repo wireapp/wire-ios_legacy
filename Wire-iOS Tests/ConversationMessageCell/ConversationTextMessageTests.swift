@@ -132,6 +132,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         ]
 
         // THEN
+        ///TODO: crash for RunLoop run
         verify(message: message, waitForTextViewToLoad: true)
     }
 

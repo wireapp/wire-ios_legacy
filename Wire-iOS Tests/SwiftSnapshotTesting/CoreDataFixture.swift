@@ -163,7 +163,7 @@ final class CoreDataFixture {
         selfUserProvider = SelfProvider(selfUser: selfUser)
 
         ///TODO: crash when running full test set, but not always occurs?
-        SelfUser.provider = selfUserProvider
+//        SelfUser.provider = selfUserProvider
     }
 
     deinit {

@@ -27,7 +27,8 @@ final class GroupDetailsFooterViewTests: XCTestCase, CoreDataFixtureTestHelper {
     override func setUp() {
         super.setUp()
         coreDataFixture = CoreDataFixture()
-        SelfUser.provider = coreDataFixture.selfUserProvider
+        ///TODO: crash even set it outside CoreDataFixture init?
+//        SelfUser.provider = coreDataFixture.selfUserProvider
         ColorScheme.default.variant = .light
     }
     

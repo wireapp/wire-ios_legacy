@@ -490,6 +490,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration, animated: false)
+        ///TODO: app crash fo waitForGroupsToBeEmpty
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         return cell
     }

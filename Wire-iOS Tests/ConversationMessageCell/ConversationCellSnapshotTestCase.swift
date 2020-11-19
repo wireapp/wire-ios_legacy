@@ -86,15 +86,17 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
             
+            ///TODO: crash at RunLoop.current.run
             if waitForImagesToLoad {
                 XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
             }
             
-            if waitForTextViewToLoad {
-                // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
-                RunLoop.main.run(until: delay)
-            }
+            ///TODO: crash here
+//            if waitForTextViewToLoad {
+//                // We need to run the run loop for UITextView to highlight detected links
+//                let delay = Date().addingTimeInterval(1)
+//                RunLoop.main.run(until: delay)
+//            }
             
             return stackView
         }

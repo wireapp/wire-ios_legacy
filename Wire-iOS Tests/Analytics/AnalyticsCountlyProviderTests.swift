@@ -43,6 +43,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
         XCTAssertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100].map({$0.logRound()}), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 46, 91])
     }
 
+    ///TODO: self user not set
     func testThatCountlyAttributesFromConverationIsGenerated() {
         let mockConversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser)
 

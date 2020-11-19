@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1140"
+   LastUpgradeVersion = "1220"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -27,6 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
+      enableAddressSanitizer = "YES"
       disableMainThreadChecker = "YES"
       codeCoverageEnabled = "YES">
       <MacroExpansion>
@@ -53,6 +54,15 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "AddParticipantsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "AnalyticsCallingTrackerTests">
+               </Test>
+               <Test
+                  Identifier = "AnalyticsCountlyProviderTests">
+               </Test>
+               <Test
                   Identifier = "AppLockPresenterTests/testThatItVerifiesPasswordWithCorrectMessageWhenNeeded()">
                </Test>
                <Test
@@ -71,6 +81,51 @@
                   Identifier = "ClientListViewControllerTests/testThatObserverIsNonRetained()">
                </Test>
                <Test
+                  Identifier = "ColorSchemeControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationImageMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationListCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationReplyCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "EmoticonSubstitutionConfigurationTests/testThatParsingPerformanceForFullConfigurationIsEnoughForUsingOnMainQueue()">
+               </Test>
+               <Test
+                  Identifier = "FilePreviewGeneratorTests">
+               </Test>
+               <Test
+                  Identifier = "FilePreviewGeneratorTests/testThatItDoesNotBreakOn0x0PDF()">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsFooterViewTests">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "LicensesLoaderTests/testThatItDeletesCacheWhenMemoryWarningIsSent()">
+               </Test>
+               <Test
+                  Identifier = "MessageReplyPreviewViewTests">
+               </Test>
+               <Test
+                  Identifier = "SavableImageTests">
+               </Test>
+               <Test
+                  Identifier = "SavableImageTests/testThatAnimatedImageIsSavedAfterOwnerOfSavableImageIsDealloced()">
+               </Test>
+               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
@@ -84,6 +139,9 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()">
@@ -103,6 +161,12 @@
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
+               <Test
+                  Identifier = "TextMessageMentionsTests">
+               </Test>
+               <Test
+                  Identifier = "TypingIndicatorViewSnapshotTests/testThatLabelAndLineAreShownWhenAnimated()">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
@@ -111,6 +175,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableAddressSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

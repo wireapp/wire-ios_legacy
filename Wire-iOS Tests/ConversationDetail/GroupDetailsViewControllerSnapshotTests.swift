@@ -138,6 +138,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
 
+    ///TODO: crash when self user is set
     func testForActionMenu() {
         teamTest {
             verifyConversationActionController()

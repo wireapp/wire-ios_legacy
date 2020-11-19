@@ -52,7 +52,7 @@ final class EmoticonSubstitutionConfigurationTests: XCTestCase {
         // so performance is important: parsing should not take much time.
 
         // Given
-
+        ///TODO: crash
         measure({
             // When
             let config = createEmoticonSubstitutionConfiguration(fileName: "emoticons.min.json")

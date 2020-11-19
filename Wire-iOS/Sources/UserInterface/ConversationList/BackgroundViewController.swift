@@ -40,9 +40,10 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self) ///TODO: app crash when running testTransparentImage
-    }
+    //TODO: can rm, no need after iOS9
+//    deinit {
+//        NotificationCenter.default.removeObserver(self) ///TODO: app crash when running testTransparentImage
+//    }
     
     init(user: UserType, userSession: ZMUserSession?) {
         self.user = user

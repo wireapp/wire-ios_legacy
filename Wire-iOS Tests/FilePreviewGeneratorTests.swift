@@ -34,6 +34,14 @@ final class FilePreviewGeneratorTests : XCTestCase {
             expectation.fulfill()
         }
         // then
+        
+        ///TODO: try
+        ///let delayExpectation = XCTestExpectation()
+//        delayExpectation.isInverted = true
+//        wait(for: [delayExpectation], timeout: 5)
+        ///TODO: crash
+//        This method waits on expectations created with XCTestCase’s convenience methods only. This method does not wait on expectations created manually through initializers on XCTestExpectation or its subclasses.
+//        To wait for manually created expectations, use the wait(for:timeout:) or wait(for:timeout:enforceOrder:) methods, or the corresponding methods on XCTWaiter, passing an explicit list of expectations.
         self.waitForExpectations(timeout: 2, handler: nil)
     }
     

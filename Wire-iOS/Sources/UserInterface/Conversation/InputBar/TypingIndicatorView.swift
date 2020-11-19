@@ -34,9 +34,10 @@ final class AnimatedPenView : UIView {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    ///TODO: can rm
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

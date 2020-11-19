@@ -28,7 +28,7 @@ final class ColorSchemeControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-
+        ///TODO: crash for self user not set
         sut = ColorSchemeController()
         if originalColorScheme == nil {
             originalColorScheme = UserDefaults.standard.value(forKey: SettingKey.colorScheme.rawValue)

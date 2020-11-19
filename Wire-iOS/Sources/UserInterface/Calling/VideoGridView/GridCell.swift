@@ -31,9 +31,9 @@ class GridCell: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
 
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -90,6 +90,8 @@ final class LicensesLoaderTests: XCTestCase {
         }
 
         sendMemoryWarning()
+        
+        ///TODO: crash 
         wait(for: [deletedCacheExpectation], timeout: 30)
 
         // THEN

@@ -115,6 +115,7 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
         XCTAssertEqual(sut.screenSharingStartTimes.count, 2)
 
         //WHEN
+        ///TODO:  self user not set
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
         //THEN

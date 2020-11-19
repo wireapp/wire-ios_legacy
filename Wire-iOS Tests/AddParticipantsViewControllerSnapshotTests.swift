@@ -46,6 +46,7 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         verify(matching: sut)
     }
 
+    ///TODO: crash for self user not set
     func testForAddParticipantsButtonIsShown() {
         let conversation = createGroupConversation()
 

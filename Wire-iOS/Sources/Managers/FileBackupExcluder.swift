@@ -31,9 +31,10 @@ final class FileBackupExcluder: BackupExcluder {
         (.libraryDirectory, ".")
     ]
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    ///TODO: can rm
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     
     init() {
         NotificationCenter.default.addObserver(self,
