@@ -35,14 +35,14 @@ class SettingsCellDescriptorFactory {
         self.userRightInterfaceType = userRightInterfaceType
     }
     
-    func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+    func rootGroup(isTeamMember: Bool) -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var rootElements: [SettingsCellDescriptorType] = []
         
         if ZMUser.selfUser().canManageTeam {
             rootElements.append(self.manageTeamCell())
         }
         
-        rootElements.append(self.settingsGroup())
+        rootElements.append(settingsGroup(isTeamMember: isTeamMember))
         #if MULTIPLE_ACCOUNTS_DISABLED
             // We skip "add account" cell
         #else
@@ -97,8 +97,13 @@ class SettingsCellDescriptorFactory {
                                                     accessoryViewMode: .alwaysHide)
     }
     
-    func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup, self.advancedGroup, self.helpSection(), self.aboutSection()]
+    func settingsGroup(isTeamMember: Bool) -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
+        var topLevelElements = [accountGroup(isTeamMember: isTeamMember),
+                                devicesCell(),
+                                optionsGroup,
+                                advancedGroup,
+                                helpSection(),
+                                aboutSection()]
         
         if Bundle.developerModeEnabled {
             topLevelElements.append(self.developerGroup())
