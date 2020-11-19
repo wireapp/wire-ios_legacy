@@ -48,12 +48,12 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 	}
 
     func testForSettingGroup() {
-        let group = settingsCellDescriptorFactory.settingsGroup()
+        let group = settingsCellDescriptorFactory.settingsGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 
     func testForAccountGroup() {
-        let group = settingsCellDescriptorFactory.accountGroup()
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 
