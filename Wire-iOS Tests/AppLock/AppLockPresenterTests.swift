@@ -294,7 +294,7 @@ final class AppLockPresenterTests: XCTestCase {
         sut.passwordVerified(with: .denied)
         
         //then
-        assertPasswordVerification(on: queue)
+        assertPasswordVerification(on: queue) ///TODO: app crash at selfUser.legalHoldStatus, caused by wait(for: [expectation], timeout: 0.5)?
         XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
 
 

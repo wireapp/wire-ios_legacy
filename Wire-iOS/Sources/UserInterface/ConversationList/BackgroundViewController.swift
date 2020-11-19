@@ -41,7 +41,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self) ///TODO: app crash when running testTransparentImage
     }
     
     init(user: UserType, userSession: ZMUserSession?) {

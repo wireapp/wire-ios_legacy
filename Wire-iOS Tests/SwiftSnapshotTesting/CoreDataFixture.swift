@@ -162,6 +162,7 @@ final class CoreDataFixture {
         MockUser.setMockSelf(selfUser)
         selfUserProvider = SelfProvider(selfUser: selfUser)
 
+        ///TODO: crash when running full test set, but not always occurs?
         SelfUser.provider = selfUserProvider
     }
 

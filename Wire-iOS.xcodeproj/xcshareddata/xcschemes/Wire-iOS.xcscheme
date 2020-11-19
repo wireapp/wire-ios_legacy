@@ -53,6 +53,12 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "AppLockPresenterTests/testThatItVerifiesPasswordWithCorrectMessageWhenNeeded()">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -60,6 +66,9 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ClientListViewControllerTests/testThatObserverIsNonRetained()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">

@@ -256,7 +256,6 @@ final class ArticleViewTests: XCTestCase {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
-        sut.layoutIfNeeded()
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verifyInAllPhoneWidths(matching: sut, file: file, testName: testName, line: line)
