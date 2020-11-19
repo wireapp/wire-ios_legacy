@@ -77,7 +77,7 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         sut.isLoadingViewVisible = false
     }
 
-    func testThatObserverIsNonRetained() {
+    func testThatObserverIsNonRetained() {///TODO: crahes for The method 'markForDeletion()' can only be called for clients that belong to the selfUser (self user is ZMUser 0x0000600002f61e50: moc=<NSManagedObjectContext: 0x6000031085b0> objectID=0x6000001037e0 <x-coredata://7AF6CE13-BCD5-4E9F-AE60-48C5DAD04F3F/User/p7>)
         prepareSut(variant: nil)
 
         let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")

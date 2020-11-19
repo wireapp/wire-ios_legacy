@@ -48,7 +48,7 @@ final class TrackingManager: NSObject, TrackingInterface {
 
     var disableAnalyticsSharing: Bool {
         set {
-            Analytics.shared.isOptedOut = newValue
+            Analytics.shared?.isOptedOut = newValue //TODO: nil when running test
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             ExtensionSettings.shared.disableAnalyticsSharing = newValue
         }

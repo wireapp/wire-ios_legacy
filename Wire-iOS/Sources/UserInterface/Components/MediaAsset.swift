@@ -71,7 +71,7 @@ extension MediaAssetView where Self: FLAnimatedImageView {
                 if newValue.isGIF == true {
                     animatedImage = newValue as? FLAnimatedImage
                 } else {
-                    image = (newValue as? UIImage)?.downsized()
+                    image = (newValue as? UIImage)?.downsized()//TODO: need wait?
                 }
             } else {
                 image = nil
