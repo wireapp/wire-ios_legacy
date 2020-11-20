@@ -362,7 +362,6 @@ extension XCTestCase {
 
     // MARK: - UIAlertController hack
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        // Given
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
 
         let container = UIViewController()
@@ -374,23 +373,11 @@ extension XCTestCase {
         controller.loadViewIfNeeded()
         controller.view.layoutIfNeeded()
 
-        // When
-        let presentationExpectation = expectation(description: "It should be presented")
-        container.present(controller, animated: false) {
-            presentationExpectation.fulfill()
-        }
-
-        // Then
-        waitForExpectations(timeout: 2, handler: nil)
+        container.present(controller, animated: false)
     }
 
     func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        let dismissalExpectation = expectation(description: "It should be dismissed")
-        controller.dismiss(animated: false) {
-            dismissalExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 2, handler: nil)
+        controller.dismiss(animated: false)
     }
 
 }
