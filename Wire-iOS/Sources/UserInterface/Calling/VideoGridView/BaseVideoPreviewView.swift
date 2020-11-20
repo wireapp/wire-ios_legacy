@@ -21,22 +21,7 @@ import UIKit
 import avs
 import WireSyncEngine
 
-protocol AVSIdentifierProvider {
-    var stream: Stream { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-    
-    var stream: Stream {
-        return Stream(
-            streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
-            participantName: nil,
-            microphoneState: .unmuted,
-            videoState: .none)
-    }
-}
-
-class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
+class BaseVideoPreviewView: OrientableView {
 
     var videoStream: VideoStream {
         didSet {
