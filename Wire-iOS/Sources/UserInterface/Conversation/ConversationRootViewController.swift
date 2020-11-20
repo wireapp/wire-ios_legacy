@@ -89,9 +89,7 @@ final class ConversationRootViewController: UIViewController {
         [contentView,
          conversationViewController.view,
          networkStatusViewController.view
-        ].forEach() {
-            $0?.translatesAutoresizingMaskIntoConstraints = false
-        }
+        ].disableAutoresizingMaskTranslation()
         
         NSLayoutConstraint.activate([
             networkStatusViewController.view.topAnchor.constraint(equalTo: self.safeTopAnchor),
@@ -161,4 +159,3 @@ extension ZMConversation {
         }
     }
 }
-
