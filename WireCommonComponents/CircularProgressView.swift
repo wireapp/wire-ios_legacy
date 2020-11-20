@@ -22,10 +22,6 @@ import UIKit
 
 public class CircularProgressView: UIView {
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setup()
