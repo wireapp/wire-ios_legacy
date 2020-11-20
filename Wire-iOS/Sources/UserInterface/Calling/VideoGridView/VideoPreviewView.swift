@@ -52,8 +52,8 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var snapshotView: UIView?
     
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool) {
-        super.init(stream: stream, isCovered: isCovered)
+    override init(videoStream: VideoStream, isCovered: Bool) {
+        super.init(videoStream: videoStream, isCovered: isCovered)
         updateState()
         updateVideoKind()
     }
@@ -76,9 +76,10 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
-    override func streamDidChange() {
-        super.streamDidChange()
+    override func videoStreamDidChange() {
+        super.videoStreamDidChange()
         updateVideoKind()
+        isPaused = videoStream.isPaused
     }
     
     // MARK: - Fill mode

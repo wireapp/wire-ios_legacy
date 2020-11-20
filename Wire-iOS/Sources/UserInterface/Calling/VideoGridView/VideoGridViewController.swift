@@ -125,7 +125,7 @@ final class VideoGridViewController: UIViewController {
     // MARK: - View maximization
     
     private func toggleMaximized(view: BaseVideoPreviewView?) {
-        let stream = view?.stream
+        let stream = view?.videoStream.stream
         
         maximizedView = isMaximized(stream: stream) ? nil : view
         (view as? VideoPreviewView)?.isMaximized = isMaximized(stream: stream)
@@ -186,15 +186,15 @@ final class VideoGridViewController: UIViewController {
     private func updateSelfPreview() {
         guard
             let selfStreamId = ZMUser.selfUser()?.selfStreamId,
-            let selfStream = stream(with: selfStreamId)
+            let selfVideoStream = videoStream(with: selfStreamId)
         else {
             return
         }
 
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
-            view.stream = selfStream
+            view.videoStream = selfVideoStream
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream, isCovered: isCovered)
+            viewCache[selfStreamId] = SelfVideoPreviewView(videoStream: selfVideoStream, isCovered: isCovered)
         }
     }
 
@@ -230,9 +230,7 @@ final class VideoGridViewController: UIViewController {
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? VideoPreviewView)
-            view?.isPaused = $0.isPaused
-            view?.stream = $0.stream
+            (streamView(for: $0.stream) as? VideoPreviewView)?.videoStream = $0
         }
     }
 
@@ -289,14 +287,14 @@ final class VideoGridViewController: UIViewController {
         return streamView(for: dataSource[indexPath.row].stream) as? BaseVideoPreviewView
     }
 
-    private func stream(with streamId: AVSClient) -> Stream? {
-        var stream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })?.stream
+    private func videoStream(with streamId: AVSClient) -> VideoStream? {
+        var videoStream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })
 
-        if stream == nil && configuration.floatingVideoStream?.stream.streamId == streamId {
-            stream = configuration.floatingVideoStream?.stream
+        if videoStream == nil && configuration.floatingVideoStream?.stream.streamId == streamId {
+            videoStream = configuration.floatingVideoStream
         }
 
-        return stream
+        return videoStream
     }
 
     private var selfPreviewView: SelfVideoPreviewView? {
@@ -345,7 +343,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered)
+            let view = VideoPreviewView(videoStream: videoStream, isCovered: isCovered)
             viewCache[streamId] = view
             return view
         }

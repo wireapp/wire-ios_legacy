@@ -67,9 +67,9 @@ extension VoiceChannel {
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
-            return .init(stream: stream, isPaused: false)
+            return .init(stream: stream, isPaused: false, isMaximized: false)
         case (_, .paused):
-            return .init(stream: stream, isPaused: true)
+            return .init(stream: stream, isPaused: true, isMaximized: false)
         case (_, .stopped):
             return nil
         }
@@ -114,7 +114,7 @@ extension VoiceChannel {
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState,
                                     videoState: videoState)
-                return VideoStream(stream: stream, isPaused: videoState == .paused)
+                return VideoStream(stream: stream, isPaused: videoState == .paused, isMaximized: false)
             default:
                 return nil
             }

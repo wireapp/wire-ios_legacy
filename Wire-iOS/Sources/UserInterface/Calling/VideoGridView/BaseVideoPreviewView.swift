@@ -38,10 +38,15 @@ extension AVSVideoView: AVSIdentifierProvider {
 
 class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
-    var stream: Stream {
+    var videoStream: VideoStream {
         didSet {
-            streamDidChange()
+            guard videoStream != oldValue else { return }
+            videoStreamDidChange()
         }
+    }
+    
+    var stream: Stream {
+        videoStream.stream
     }
     
     private var delta: OrientationDelta = OrientationDelta()
@@ -58,8 +63,8 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     
     let userDetailsView = VideoParticipantDetailsView()
     
-    init(stream: Stream, isCovered: Bool) {
-        self.stream = stream
+    init(videoStream: VideoStream, isCovered: Bool) {
+        self.videoStream = videoStream
         self.isCovered = isCovered
         
         super.init(frame: .zero)
@@ -81,7 +86,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
     
     // MARK: - Handle Stream changes
-    func streamDidChange() {
+    func videoStreamDidChange() {
         updateUserDetails()
     }
     
