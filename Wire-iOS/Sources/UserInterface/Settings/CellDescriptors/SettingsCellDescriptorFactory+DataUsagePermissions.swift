@@ -19,7 +19,7 @@
 import Foundation
 
 extension SettingsCellDescriptorFactory {
-    func dataUsagePermissionsGroup(isTeamMember: Bool = SelfUser.current.isTeamMember) -> SettingsCellDescriptorType { //TODO: test
+    func dataUsagePermissionsGroup(isTeamMember: Bool) -> SettingsCellDescriptorType {
         
         let sendCrashData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCrashSharing), inverse: true)
         let sendCrashDataSection = SettingsSectionDescriptor(cellDescriptors: [sendCrashData], footer: "self.settings.privacy_crash_menu.description.title".localized)
