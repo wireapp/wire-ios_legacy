@@ -361,7 +361,8 @@ extension XCTestCase {
     }
 
     // MARK: - UIAlertController hack
-    func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
+    func presentViewController(_ controller: UIViewController,
+                               completion: Completion? = nil) {
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
 
         let container = UIViewController()
@@ -373,11 +374,12 @@ extension XCTestCase {
         controller.loadViewIfNeeded()
         controller.view.layoutIfNeeded()
 
-        container.present(controller, animated: false)
+        container.present(controller, animated: false, completion: completion)
     }
 
-    func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        controller.dismiss(animated: false)
+    func dismissViewController(_ controller: UIViewController,
+                               completion: Completion? = nil) {
+        controller.dismiss(animated: false, completion: completion)
     }
 
 }

@@ -453,16 +453,16 @@ extension ZMSnapshotTestCase {
 }
 
 extension ZMSnapshotTestCase {
-
     func verifyAlertController(_ controller: UIAlertController,
                                file: StaticString = #file,
                                line: UInt = #line) {
         /// ZClient VC changes alert tint color with init. Reset the tint color here
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = controller.view.tintColor
 
-        presentViewController(controller, file: file, line: line)
-        verify(view: controller.view, file: file, line: line)
-        dismissViewController(controller, file: file, line: line)
+        presentViewController(controller) {
+            self.verify(view: controller.view, file: file, line: line)
+            self.dismissViewController(controller)
+        }
     }
 }
 
