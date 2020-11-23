@@ -26,7 +26,7 @@ import SnapshotTesting
  */
 class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
-    
+
     fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
                                                                        isTimeIntervalSinceLastMessageSignificant: false,
                                                                        isFirstMessageOfTheDay: false,
@@ -35,33 +35,33 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                                                                        searchQueries: [],
                                                                        previousMessageIsKnock: false,
                                                                        spacing: 0)
-    
+
     override class func setUp() {
         resetDayFormatter()
-        
+
         [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
     }
-    
+
     override class func tearDown() {
         ColorScheme.default.variant = .light
     }
-    
+
     override func setUp() {
         super.setUp()
         coreDataFixture = CoreDataFixture()
-        
+
         ColorScheme.default.variant = .light
-        
+
     }
-    
+
     override func tearDown() {
         coreDataFixture = nil
         super.tearDown()
     }
-    
+
     /**
      * Performs a snapshot test for a message
      */
@@ -75,9 +75,9 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-        
+
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
-        
+
         let createViewClosure: () -> UIView = {
             let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
@@ -85,20 +85,26 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             stackView.axis = .vertical
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-            
+
             if waitForImagesToLoad {
-                self.waitForMediaAssetCacheToBeEmpty()
+                let expectation = XCTestExpectation(description: "snapshot is captured")
+                self.waitForMediaAssetCacheToBeEmpty {
+                    expectation.fulfill()
+                }
+                
+                ///wait for cache to be emptied, before stackView is returned
+                self.wait(for: [expectation], timeout: 5)
             }
-            
+
             if waitForTextViewToLoad {
                 // We need to run the run loop for UITextView to highlight detected links
                 let delay = Date().addingTimeInterval(1)
                 RunLoop.main.run(until: delay)
             }
-            
+
             return stackView
         }
-        
+
         if allColorSchemes {
             ColorScheme.default.variant = .dark
             verify(matching: createViewClosure(),
@@ -116,7 +122,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                    allWidths: allWidths,
                    file: file,
                    testName: testName,
-                   line: line)            
+                   line: line)
         } else {
             verify(matching: createViewClosure(),
                    snapshotBackgroundColor: snapshotBackgroundColor,
@@ -126,7 +132,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                    line: line)
         }
     }
-    
+
     private func verify(matching value: UIView,
                         snapshotBackgroundColor: UIColor?,
                         named name: String? = nil,
@@ -136,16 +142,16 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                         testName: String = #function,
                         line: UInt = #line) {
         let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-        
+
         if allWidths {
-            verifyInAllPhoneWidths(matching:value,
+            verifyInAllPhoneWidths(matching: value,
                                    snapshotBackgroundColor: backgroundColor,
                                    named: name,
                                    file: file,
                                    testName: testName,
                                    line: line)
         } else {
-            verifyInWidths(matching:value,
+            verifyInWidths(matching: value,
                            widths: [smallestWidth],
                            snapshotBackgroundColor: backgroundColor,
                            named: name,
@@ -154,7 +160,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                            line: line)
         }
     }
-    
+
 }
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {
