@@ -34,10 +34,13 @@ final class AppLockTests: XCTestCase {
     func testThatForcedAppLockDoesntAffectSettings() {
         
         //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false,
+        AppLock.rulesFromBundle = AppLockRules(useBiometricsOrAccountPassword: false,
                                      useCustomCodeInsteadOfAccountPassword: false,
                                      forceAppLock: true,
-                                     appLockTimeout: 900)
+                                     appLockTimeout: 900,
+                                     status: false)
+        
+        AppLock.rulesFromCoreData = nil
         
         //when
         XCTAssertFalse(AppLock.rules.useBiometricsOrAccountPassword)
@@ -55,7 +58,12 @@ final class AppLockTests: XCTestCase {
     func testThatAppLockAffectsSettings() {
         
         //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 10)
+        AppLock.rulesFromBundle = AppLockRules(useBiometricsOrAccountPassword: false,
+                                               useCustomCodeInsteadOfAccountPassword: false,
+                                               forceAppLock: false,
+                                               appLockTimeout: 10,
+                                               status: false)
+        AppLock.rulesFromCoreData = nil
 
         //when
         XCTAssertFalse(AppLock.rules.useBiometricsOrAccountPassword)
@@ -116,5 +124,58 @@ final class AppLockTests: XCTestCase {
         
         //then
         XCTAssertEqual(context.evaluatedPolicyDomainState, UserDefaults.standard.object(forKey: "DomainStateKey") as? Data)
+    }
+    
+    func testThatAppLockRulesAreUpdatedfromCoreData() {
+        //given
+        let jsonFromBundle = "{\"forceAppLock\":true,\"appLockTimeout\":900,\"useBiometricsOrAccountPassword\":true,\"useCustomCodeInsteadOfAccountPassword\":false}"
+        AppLock.rulesFromBundle = AppLockRules.fromData(jsonFromBundle.data(using: .utf8)!)
+        XCTAssertTrue(AppLock.rules.forceAppLock)
+        XCTAssertTrue(AppLock.rules.useBiometricsOrAccountPassword)
+        XCTAssertEqual(AppLock.rules.appLockTimeout, 900)
+        XCTAssertNil(AppLock.rules.status)
+
+        //when
+        let jsonFromCoreDta = """
+        {
+          "status": "enabled",
+             "config": {
+                "enforceAppLock": true,
+                "inactivityTimeoutSecs": 30
+           }
+        }
+        """
+        let data = jsonFromCoreDta.data(using: .utf8)!
+        AppLock.rulesFromCoreData = try! JSONDecoder().decode(FeatureConfigResponse<Feature.AppLock>.self, from: data)
+
+        //then
+        XCTAssertTrue(AppLock.rules.forceAppLock)
+        XCTAssertTrue(AppLock.rules.useBiometricsOrAccountPassword)
+        XCTAssertEqual(AppLock.rules.appLockTimeout, 30)
+        XCTAssertTrue(AppLock.rules.status!)
+    }
+    
+    func testThatForceAppLockValueInTheBundleHasHigherPriority() {
+        //given
+        let jsonFromBundle = "{\"forceAppLock\":true,\"appLockTimeout\":900,\"useBiometricsOrAccountPassword\":true,\"useCustomCodeInsteadOfAccountPassword\":false}"
+        AppLock.rulesFromBundle = AppLockRules.fromData(jsonFromBundle.data(using: .utf8)!)
+        XCTAssertTrue(AppLock.rules.forceAppLock)
+       
+        //when
+        let jsonFromCoreDta = """
+        {
+          "status": "enabled",
+             "config": {
+                "enforceAppLock": false,
+                "inactivityTimeoutSecs": 30
+           }
+        }
+        """
+        let data = jsonFromCoreDta.data(using: .utf8)!
+        AppLock.rulesFromCoreData = try! JSONDecoder().decode(FeatureConfigResponse<Feature.AppLock>.self, from: data)
+
+        //then
+        XCTAssertFalse(AppLock.rulesFromCoreData!.config!.enforceAppLock)
+        XCTAssertTrue(AppLock.rules.forceAppLock)
     }
 }

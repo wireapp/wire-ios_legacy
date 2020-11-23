@@ -244,7 +244,7 @@ final class AppLockInteractorTests: XCTestCase {
 extension AppLockInteractorTests {
     func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
         AppLock.isActive = appLockActive
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
+        AppLock.rulesFromBundle = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900, status: false)
         let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
         AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
         sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false, isDatabaseLocked: databaseIsLocked) : AppState.unauthenticated(error: nil)

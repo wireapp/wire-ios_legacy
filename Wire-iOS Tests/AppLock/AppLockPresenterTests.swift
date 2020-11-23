@@ -100,7 +100,7 @@ final class AppLockPresenterTests: XCTestCase {
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
+        AppLock.rulesFromBundle = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1, status: false)
     }
     
     override func tearDown() {

@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireRequestStrategy
 import LocalAuthentication
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -26,7 +27,20 @@ private let UserDefaultsDomainStateKey = "DomainStateKey"
 public class AppLock {
     // Returns true if user enabled the app lock feature.
     
-    public static var rules = AppLockRules.fromBundle()
+    internal static var rulesFromBundle = AppLockRules.fromBundle()
+    internal static var rulesFromCoreData: FeatureConfigResponse<Feature.AppLock>?
+    
+    public static var rules: AppLockRules {
+        var baseRules = rulesFromBundle
+        if let feature = rulesFromCoreData {
+            baseRules.status = (feature.status == .enabled)
+            if let config = feature.config {
+                baseRules.appLockTimeout = config.inactivityTimeoutSecs
+                baseRules.forceAppLock = baseRules.forceAppLock ? true : config.enforceAppLock
+            }
+        }
+        return baseRules
+    }
 
     public static var isActive: Bool {
         get {
@@ -167,10 +181,11 @@ public class BiometricsState {
 }
 
 public struct AppLockRules: Decodable {
-    public let useBiometricsOrAccountPassword: Bool
-    public let useCustomCodeInsteadOfAccountPassword: Bool
-    public let forceAppLock: Bool
-    public let appLockTimeout: UInt
+    public var useBiometricsOrAccountPassword: Bool
+    public var useCustomCodeInsteadOfAccountPassword: Bool
+    public var forceAppLock: Bool
+    public var appLockTimeout: UInt
+    public var status: Bool?
     
     public static func fromBundle() -> AppLockRules {
         if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
