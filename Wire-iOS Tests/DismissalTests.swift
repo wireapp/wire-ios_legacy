@@ -48,13 +48,14 @@ class DismissalTests: ZMSnapshotTestCase {
     func testThatItDoesNotAllowDismissalForDismissedViewController() {
         // GIVEN
         let viewController = UIViewController()
-        presentViewController(viewController)
-
-        // WHEN
-        dismissViewController(viewController)
-
-        // THEN
-        XCTAssertFalse(viewController.canBeDismissed)
+        presentViewController(viewController) {
+            // WHEN
+            self.dismissViewController(viewController) {
+            
+                // THEN
+                XCTAssertFalse(viewController.canBeDismissed)
+            }
+        }
     }
 
     func testThatItAllowsDismissalForControllerInNavigationController() {
@@ -76,12 +77,13 @@ class DismissalTests: ZMSnapshotTestCase {
         let navigationController = UINavigationController(rootViewController: viewController)
 
         // WHEN
-        presentViewController(navigationController)
-        dismissViewController(viewController)
-
-        // THEN
-        XCTAssertFalse(viewController.canBeDismissed)
-        XCTAssertFalse(navigationController.canBeDismissed)
+        presentViewController(navigationController) {
+            self.dismissViewController(viewController) {
+                // THEN
+                XCTAssertFalse(viewController.canBeDismissed)
+                XCTAssertFalse(navigationController.canBeDismissed)
+            }
+        }
     }
 
     // MARK: - Dismissal
