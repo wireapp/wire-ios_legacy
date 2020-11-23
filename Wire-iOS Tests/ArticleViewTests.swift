@@ -147,7 +147,7 @@ final class ArticleViewTests: XCTestCase {
 
     // MARK: - Tests
 
-    @available(iOS 13.0, *)
+//    @available(iOS 13.0, *)
 //    func testContextMenuIsCreatedWithDeleteItem() {
 //        // GIVEN
 //        sut = ArticleView(withImagePlaceholder: true)
@@ -164,32 +164,41 @@ final class ArticleViewTests: XCTestCase {
 //    }
 
     // MARK: - Snapshot Tests
+    
+    func verify(named name: String? = nil,
+                file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+        let expectation = XCTestExpectation(description: "snapshot is captured")
+        waitForMediaAssetCacheToBeEmpty() {
+            DispatchQueue.main.async {
+                self.verifyInAllPhoneWidths(matching: self.sut,
+                                            named: name,
+                                            file: file,
+                                            testName: testName,
+                                            line: line)
+                expectation.fulfill()
+            }
+        }
+        
+        ///prevent calling teardown before snapshot is done
+        wait(for: [expectation], timeout: 5)
+    }
 
     func testArticleViewWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         
-        let expectation = XCTestExpectation(description: "Download apple.com home page")
-        waitForMediaAssetCacheToBeEmpty() {
-            DispatchQueue.main.async {
-                self.verifyInAllPhoneWidths(matching: self.sut)
-                expectation.fulfill()
-            }
-        }
-        
-        ///prevent calling teardown before snapshot is done
-        wait(for: [expectation], timeout: 10.0)
+        verify()
     }
 
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verify()
     }
 
     func testArticleViewWithPictureStillDownloading() {
@@ -201,30 +210,24 @@ final class ArticleViewTests: XCTestCase {
         let textMessageData = articleWithPicture()
         textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verify()
     }
 
     func testArticleViewWithTruncatedURL() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verify()
     }
 
     func testArticleViewWithTwitterStatusWithoutPicture() {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verify()
     }
 
     func testArticleViewObfuscated() {
@@ -232,10 +235,8 @@ final class ArticleViewTests: XCTestCase {
         sut.layer.speed = 0
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verify()
     }
 
     // MARK: - ArticleView images aspect
@@ -263,9 +264,7 @@ final class ArticleViewTests: XCTestCase {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut, file: file, testName: testName, line: line)
+        verify(named: testName, file: file, testName: testName, line: line)
     }
 }
