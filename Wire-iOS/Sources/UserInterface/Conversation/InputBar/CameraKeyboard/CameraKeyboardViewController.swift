@@ -67,10 +67,6 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     let splitLayoutObservable: SplitLayoutObservable
     weak var delegate: CameraKeyboardViewControllerDelegate?
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     init(splitLayoutObservable: SplitLayoutObservable,
          imageManagerType: ImageManagerProtocol.Type = PHImageManager.self,
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {

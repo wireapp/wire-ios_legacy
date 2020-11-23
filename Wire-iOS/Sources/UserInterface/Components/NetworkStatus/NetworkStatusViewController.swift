@@ -73,7 +73,6 @@ final class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-        NotificationCenter.default.removeObserver(self)
     }
 
     override func loadView() {
