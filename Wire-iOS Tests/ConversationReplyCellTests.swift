@@ -20,9 +20,18 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
+final class ConversationReplyCellTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
+    override func setUp() {
+        super.setUp()
+        
+        coreDataFixture = CoreDataFixture()
+    }
+    
     override func tearDown() {
+        coreDataFixture = nil
+        
         super.tearDown()
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
     }
@@ -311,19 +320,6 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
-    private func verifySnapshotAndAccessibilityIdentifiers(message: ZMConversationMessage?,
-                                                           cellConfig: ((ConversationReplyCell)->())? = nil,
-                                                           file: StaticString = #file,
-                                                           line: UInt = #line) {
-        // WHEN
-        makeCell(for: message) { cell in
-            cellConfig?(cell)
-        // THEN
-            self.verifyInAllPhoneWidths(view: cell, file: file, line: line)
-            self.verifyAccessibilityIdentifiers(cell, message, file: file, line: line)
-        }
-    }
-    
     func testThatItDisplaysAudioMessage_55() {
         // GIVEN
         let message = MockMessageFactory.fileTransferMessage()!
@@ -391,6 +387,20 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     }
 
     // MARK: - Helpers
+    
+    private func verifySnapshotAndAccessibilityIdentifiers(message: ZMConversationMessage?,
+                                                           cellConfig: ((ConversationReplyCell)->())? = nil,
+                                                           file: StaticString = #file,
+                                                           testName: String = #function,
+                                                           line: UInt = #line) {
+        // WHEN
+        makeCell(for: message) { cell in
+            cellConfig?(cell)
+        // THEN
+            self.verifyInAllPhoneWidths(matching: cell, file: file, testName: testName, line: line)
+            self.verifyAccessibilityIdentifiers(cell, message, file: file, line: line)
+        }
+    }
 
     private func makeCell(for message: ZMConversationMessage?, completion:  @escaping (ConversationReplyCell) -> ()) {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
