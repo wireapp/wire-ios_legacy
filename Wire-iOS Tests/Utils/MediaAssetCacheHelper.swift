@@ -32,7 +32,7 @@ extension XCTestCase {
         }
     }
     
-    func verify(verifyClosure: @escaping Completion,
+    func verifyAfterMediaAssetCacheEmptied(verifyClosure: @escaping Completion,
                 named name: String? = nil,
                 file: StaticString = #file,
                 testName: String = #function,

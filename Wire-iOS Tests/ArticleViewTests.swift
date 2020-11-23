@@ -164,17 +164,17 @@ final class ArticleViewTests: XCTestCase {
 //    }
 
     // MARK: - Snapshot Tests
-    func snapshot(named name: String? = nil,
+    private func snapshot(named name: String? = nil,
                 file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-        verify() {
+        verifyAfterMediaAssetCacheEmptied(verifyClosure:{
             self.verifyInAllPhoneWidths(matching: self.sut,
                                         named: name,
                                         file: file,
                                         testName: testName,
                                         line: line)
-        }
+        })
     }
 
     func testArticleViewWithoutPicture() {

@@ -88,22 +88,21 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         makeTestForShareViewController()
     }
 
-    func snapshot(named name: String? = nil,
+    private func snapshot(named name: String? = nil,
                 file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-        verify() {
+        verifyAfterMediaAssetCacheEmptied(verifyClosure: {
             self.verifyInAllDeviceSizes(matching: self.sut,
-//                                        named: name,
                                         file: file,
                                         testName: testName,
                                         line: line)
-        }
+        })
     }
     
-    ///TODO: crash on Xcode12
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        ///TODO: this line crash on Xcode12, for force unwrap a nil value
         try! self.groupConversation.appendImage(from: img.imageData!)
 
         createSut()
