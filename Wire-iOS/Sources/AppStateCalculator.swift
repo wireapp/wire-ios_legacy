@@ -180,14 +180,20 @@ extension AppStateCalculator: AuthenticationCoordinatorDelegate {
 extension AppStateCalculator {
     private func configureObservers() {
         NotificationCenter.default.addObserver(forName: FeatureController.featureConfigDidChange, object: nil, queue: nil) { [weak self] (note) in
-            if let applock = note.userInfo?[Feature.AppLock.name] as? FeatureConfigResponse<Feature.AppLock> {
-                self?.updateAppLockFeature(applock)
-            }
+            self?.updateAppLockFeature(note)
         }
     }
     
-    private func updateAppLockFeature(_ configuration: FeatureConfigResponse<Feature.AppLock>) {
-        AppLock.setRules(fromCoreData: configuration)
+    private func updateAppLockFeature(_ notification: Notification) {
+        var applock: AppLockConfig?
+        if let status = notification.userInfo?["statusKey"] as? Feature.Status {
+            applock?.status = status
+        }
+        if let config = notification.userInfo?["configKey"] as? Feature.AppLock.Config {
+            applock?.forceAppLock = config.enforceAppLock
+            applock?.appLockTimeout = config.inactivityTimeoutSecs
+        }
+        AppLock.setRules(fromCoreData: applock)
     }
 }
 

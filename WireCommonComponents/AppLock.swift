@@ -24,25 +24,35 @@ import LocalAuthentication
 private let zmLog = ZMSLog(tag: "UI")
 private let UserDefaultsDomainStateKey = "DomainStateKey"
 
+public struct AppLockConfig {
+    public var status: Feature.Status
+    public var forceAppLock: Bool?
+    public var appLockTimeout: UInt?
+}
+
 public class AppLock {
     // Returns true if user enabled the app lock feature.
     
     internal static var rulesFromBundle = AppLockRules.fromBundle()
-    internal static var rulesFromCoreData: FeatureConfigResponse<Feature.AppLock>?
+    internal static var rulesFromCoreData: AppLockConfig?
     
     public static var rules: AppLockRules {
         var baseRules = rulesFromBundle
         if let feature = rulesFromCoreData {
             baseRules.status = (feature.status == .enabled)
-            if let config = feature.config {
-                baseRules.appLockTimeout = config.inactivityTimeoutSecs
-                baseRules.forceAppLock = baseRules.forceAppLock ? true : config.enforceAppLock
+            if let forceAppLock = feature.forceAppLock, !baseRules.forceAppLock {
+                baseRules.forceAppLock = forceAppLock
             }
+            
+            if let timeout = feature.appLockTimeout {
+                baseRules.appLockTimeout = timeout
+            }
+            
         }
         return baseRules
     }
 
-    public static  func setRules(fromCoreData: FeatureConfigResponse<Feature.AppLock>) {
+    public static  func setRules(fromCoreData: AppLockConfig?) {
         rulesFromCoreData = fromCoreData
     }
     
