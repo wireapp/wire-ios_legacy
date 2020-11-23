@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 import WireSyncEngine
 
 enum AppState: Equatable {
@@ -98,6 +99,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
+        configureObservers()
         transition(to: pendingAppState ?? appState)
     }
     
@@ -171,6 +173,21 @@ extension AppStateCalculator: AuthenticationCoordinatorDelegate {
         let appState: AppState = .authenticated(completedRegistration: addedAccount,
                                                 isDatabaseLocked: isDatabaseLocked)
         transition(to: appState)
+    }
+}
+
+// MARK: - Configure Observers
+extension AppStateCalculator {
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(forName: FeatureController.featureConfigDidChange, object: nil, queue: nil) { [weak self] (note) in
+            if let applock = note.userInfo?[Feature.AppLock.name] as? FeatureConfigResponse<Feature.AppLock> {
+                self?.updateAppLockFeature(applock)
+            }
+        }
+    }
+    
+    private func updateAppLockFeature(_ configuration: FeatureConfigResponse<Feature.AppLock>) {
+        AppLock.setRules(fromCoreData: configuration)
     }
 }
 

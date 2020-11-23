@@ -42,6 +42,10 @@ public class AppLock {
         return baseRules
     }
 
+    public static  func setRules(fromCoreData: FeatureConfigResponse<Feature.AppLock>) {
+        rulesFromCoreData = fromCoreData
+    }
+    
     public static var isActive: Bool {
         get {
             guard !rules.forceAppLock else { return true }
