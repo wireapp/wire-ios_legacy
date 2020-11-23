@@ -78,7 +78,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
 
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
 
-        let createViewClosure: () -> UIView = {
+        func createViewClosure(completion: @escaping (UIView) -> () ) {
             let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
             let stackView = UIStackView(arrangedSubviews: views)
@@ -93,44 +93,46 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             }
 
             if waitForImagesToLoad {
-                let expectation = XCTestExpectation(description: "snapshot is captured")
                 self.waitForMediaAssetCacheToBeEmpty {
-                    expectation.fulfill()
+                    completion(stackView)
                 }
                 
-                ///wait for cache to be emptied, before stackView is returned
-                ///TODO: not work on XCode12, crash when running testOpaqueImage
-                self.wait(for: [expectation], timeout: 5)
+            } else {
+                completion(stackView)
             }
-
-            return stackView
         }
 
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            verify(matching: createViewClosure(),
+            createViewClosure() { view in
+                self.verify(matching: view,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
                    allWidths: allWidths,
                    file: file,
                    testName: testName,
                    line: line)
+            }
 
             ColorScheme.default.variant = .light
-            verify(matching: createViewClosure(),
+            createViewClosure() { view in
+                self.verify(matching: view,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
                    allWidths: allWidths,
                    file: file,
                    testName: testName,
                    line: line)
+            }
         } else {
-            verify(matching: createViewClosure(),
+            createViewClosure() { view in                
+                self.verify(matching: view,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
                    file: file,
                    testName: testName,
                    line: line)
+            }
         }
     }
 
