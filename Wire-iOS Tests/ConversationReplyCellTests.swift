@@ -35,12 +35,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersShortMessageWithOtherMention_31() {
@@ -50,12 +46,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersShortMessageWithSelfMention_31() {
@@ -65,12 +57,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItTruncatesTextAfterFourLines_31() {
@@ -80,12 +68,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownWithoutFontChanges_32() {
@@ -101,12 +85,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersTextMoreThan4Lines() {
@@ -123,12 +103,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownWithMoreThan4Lines() {
@@ -145,12 +121,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownWithLastLineClipped() {
@@ -167,12 +139,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownWith5LinesAndForthLineClipped() {
@@ -189,12 +157,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownWithoutFontChanges_NoHeaders_32() {
@@ -208,12 +172,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersMarkdownListMoreThan4Line() {
@@ -229,11 +189,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = selfUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItRendersEmojiInLargeFont_33() {
@@ -242,12 +199,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItShowsEditBadgeWhenMessageIsEdited_34() {
@@ -258,12 +211,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation
         message.updatedAt = Date()
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     // MARK: - Rich content
@@ -276,12 +225,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysLinkPreviewAsText_WithText_51() {
@@ -292,12 +237,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysNullImage() {
@@ -307,12 +248,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysPortraitImage_52() {
@@ -322,12 +259,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysSquareImage_52() {
@@ -337,12 +270,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysPanoImage_52() {
@@ -352,12 +281,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysVideoMessage_53() {
@@ -370,12 +295,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysFileMessage_54() {
@@ -386,14 +307,23 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
+    private func verifySnapshotAndAccessibilityIdentifiers(message: ZMConversationMessage?,
+                                                           cellConfig: ((ConversationReplyCell)->())? = nil,
+                                                           file: StaticString = #file,
+                                                           line: UInt = #line) {
+        // WHEN
+        makeCell(for: message) { cell in
+            cellConfig?(cell)
+        // THEN
+            self.verifyInAllPhoneWidths(view: cell, file: file, line: line)
+            self.verifyAccessibilityIdentifiers(cell, message, file: file, line: line)
+        }
+    }
+    
     func testThatItDisplaysAudioMessage_55() {
         // GIVEN
         let message = MockMessageFactory.fileTransferMessage()!
@@ -402,12 +332,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysLocationMessage_56() {
@@ -417,12 +343,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDoesNotTruncateLongLocationMessage_56() {
@@ -432,12 +354,8 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysErrorForUnsupportedMessageType_57() {
@@ -446,24 +364,16 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     func testThatItDisplaysErrorForDeletedMessage_57() {
         // GIVEN
         let message: ZMConversationMessage? = nil
 
-        // WHEN
-        let cell = makeCell(for: message)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message)
     }
 
     // MARK: - Highlighting
@@ -474,30 +384,22 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.sender = otherUser
         message.conversation = otherUserConversation
 
-        // WHEN
-        let cell = makeCell(for: message)
-        cell.container.touchesBegan([], with: nil)
-
-        // THEN
-        verifyInAllPhoneWidths(view: cell)
-        verifyAccessibilityIdentifiers(cell, message)
+        // WHEN & THEN
+        verifySnapshotAndAccessibilityIdentifiers(message: message, cellConfig: { cell in
+            cell.container.touchesBegan([], with: nil)
+        })
     }
 
     // MARK: - Helpers
 
-    private func makeCell(for message: ZMConversationMessage?) -> ConversationReplyCell {
+    private func makeCell(for message: ZMConversationMessage?, completion:  @escaping (ConversationReplyCell) -> ()) {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration, animated: false)
 
-        let expectation = XCTestExpectation(description: "media asset cache is emptied")
         waitForMediaAssetCacheToBeEmpty {
-            expectation.fulfill()
+            completion(cell)
         }
-
-        wait(for: [expectation], timeout: 5)
-
-        return cell
     }
 
     private func verifyAccessibilityIdentifiers(_ cell: ConversationReplyCell, _ message: ZMConversationMessage?, file: StaticString = #file, line: UInt = #line) {
