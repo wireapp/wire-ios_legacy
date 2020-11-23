@@ -70,9 +70,9 @@ final class ArticleViewTests: XCTestCase {
     var sut: ArticleView!
 
     override func tearDown() {
-
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         sut = nil
+
         super.tearDown()
     }
 
@@ -169,10 +169,17 @@ final class ArticleViewTests: XCTestCase {
         sut = ArticleView(withImagePlaceholder: false)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-
-        verifyInAllPhoneWidths(matching: sut)
+        
+        let expectation = XCTestExpectation(description: "Download apple.com home page")
+        waitForMediaAssetCacheToBeEmpty() {
+            DispatchQueue.main.async {
+                self.verifyInAllPhoneWidths(matching: self.sut)
+                expectation.fulfill()
+            }
+        }
+        
+        ///prevent calling teardown before snapshot is done
+        wait(for: [expectation], timeout: 10.0)
     }
 
     func testArticleViewWithPicture() {
