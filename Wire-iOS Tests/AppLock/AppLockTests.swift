@@ -117,4 +117,115 @@ final class AppLockTests: XCTestCase {
         //then
         XCTAssertEqual(context.evaluatedPolicyDomainState, UserDefaults.standard.object(forKey: "DomainStateKey") as? Data)
     }
+
+    // MARK: - Authentication method discovery
+
+    func testThatIt_DiscoversAuthenticationMethod_WhenFaceID_IsEnrolled() {
+        //given
+        let context = MockLAContext(biometryType: .faceID, isEnrolled: true)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .faceID(enrolled: true))
+    }
+
+    func testThatIt_DiscoversAuthenticationMethod_WhenFaceID_IsNotEnrolled() {
+        //given
+        let context = MockLAContext(biometryType: .faceID, isEnrolled: false)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .faceID(enrolled: false))
+    }
+
+    func testThatIt_DiscoversAuthenticationMethod_WhenTouchID_IsEnrolled() {
+        //given
+        let context = MockLAContext(biometryType: .touchID, isEnrolled: true)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .touchID(enrolled: true))
+    }
+
+    func testThatIt_DiscoversAuthenticationMethod_WhenTouchID_IsNotEnrolled() {
+        //given
+        let context = MockLAContext(biometryType: .touchID, isEnrolled: false)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .touchID(enrolled: false))
+    }
+
+    @available(iOS 11.2, *)
+    func testThatIt_DiscoversAuthenticationMethod_WhenBiometryIsUnsupported_ButPasscodeIsSet() {
+        //given
+        let context = MockLAContext(passcodeIsSet: true)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .devicePasscode)
+    }
+
+    @available(iOS 11.2, *)
+    func testThatIt_DiscoversNoAuthenticationMethod_WhenBiometryIsUnsupported_AndPasscodeIsNotSet() {
+        //given
+        let context = MockLAContext(passcodeIsSet: false)
+
+        //when
+        let result = AppLock.discoverAuthenticationMethod(in: context)
+
+        //then
+        XCTAssertEqual(result, .none)
+    }
+    
 }
+
+@available(iOS 11, *)
+private struct MockLAContext: LAContextProtocol {
+
+    let biometryType: LABiometryType
+
+    let canEvaluate: Bool
+
+    init(biometryType: LABiometryType, isEnrolled: Bool) {
+        self.biometryType = biometryType
+        canEvaluate = isEnrolled
+    }
+
+    @available(iOS 11.2, *)
+    init(passcodeIsSet: Bool) {
+        biometryType = .none
+        canEvaluate = passcodeIsSet
+    }
+
+    func canEvaluatePolicy(_ policy: LAPolicy, error: NSErrorPointer) -> Bool {
+        guard !canEvaluate else { return true }
+        switch biometryType {
+        case .faceID, .touchID:
+            error?.pointee = NSError(
+                domain: LAErrorDomain,
+                code: LAError.biometryNotEnrolled.rawValue
+            )
+
+        default:
+            error?.pointee = NSError(
+                domain: LAErrorDomain,
+                code: LAError.passcodeNotSet.rawValue
+            )
+        }
+
+        return false
+    }
+
+}
+
