@@ -88,6 +88,20 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         makeTestForShareViewController()
     }
 
+    func snapshot(named name: String? = nil,
+                file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+        verify() {
+            self.verifyInAllDeviceSizes(matching: self.sut,
+//                                        named: name,
+                                        file: file,
+                                        testName: testName,
+                                        line: line)
+        }
+    }
+    
+    ///TODO: crash on Xcode12
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         try! self.groupConversation.appendImage(from: img.imageData!)
@@ -96,9 +110,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
         _ = sut.view // make sure view is loaded
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-
-        verifyInAllDeviceSizes(matching: sut)
+        snapshot()
     }
 
     func testThatItRendersCorrectlyShareViewController_DarkMode() {

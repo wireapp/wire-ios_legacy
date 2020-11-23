@@ -16,4 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
+
+extension XCTestCase {
+    
+    static let lockQueue = DispatchQueue(label: "mediaCacheClean.lock.queue")
+    
+    func waitForMediaAssetCacheToBeEmpty(completion: Completion? = nil) {
+        XCTestCase.lockQueue.async {
+            XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+            DispatchQueue.main.async {
+                completion?()
+            }
+        }
+    }
+    
+    func verify(verifyClosure: @escaping Completion,
+                named name: String? = nil,
+                file: StaticString = #file,
+                testName: String = #function,
+                line: UInt = #line) {
+        let expectation = XCTestExpectation(description: "snapshot is captured")
+        waitForMediaAssetCacheToBeEmpty() {
+            verifyClosure()
+            expectation.fulfill()
+        }
+        
+        ///prevent calling teardown before snapshot is done
+        wait(for: [expectation], timeout: 5)
+    }
+}

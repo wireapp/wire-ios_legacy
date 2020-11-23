@@ -164,25 +164,17 @@ final class ArticleViewTests: XCTestCase {
 //    }
 
     // MARK: - Snapshot Tests
-    
-    func verify(named name: String? = nil,
+    func snapshot(named name: String? = nil,
                 file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-        let expectation = XCTestExpectation(description: "snapshot is captured")
-        waitForMediaAssetCacheToBeEmpty() {
-            DispatchQueue.main.async {
-                self.verifyInAllPhoneWidths(matching: self.sut,
-                                            named: name,
-                                            file: file,
-                                            testName: testName,
-                                            line: line)
-                expectation.fulfill()
-            }
+        verify() {
+            self.verifyInAllPhoneWidths(matching: self.sut,
+                                        named: name,
+                                        file: file,
+                                        testName: testName,
+                                        line: line)
         }
-        
-        ///prevent calling teardown before snapshot is done
-        wait(for: [expectation], timeout: 5)
     }
 
     func testArticleViewWithoutPicture() {
@@ -190,7 +182,7 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         
-        verify()
+        snapshot()
     }
 
     func testArticleViewWithPicture() {
@@ -198,7 +190,7 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
 
-        verify()
+        snapshot()
     }
 
     func testArticleViewWithPictureStillDownloading() {
@@ -211,7 +203,7 @@ final class ArticleViewTests: XCTestCase {
         textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
 
-        verify()
+        snapshot()
     }
 
     func testArticleViewWithTruncatedURL() {
@@ -219,7 +211,7 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
 
-        verify()
+        snapshot()
     }
 
     func testArticleViewWithTwitterStatusWithoutPicture() {
@@ -227,7 +219,7 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
 
-        verify()
+        snapshot()
     }
 
     func testArticleViewObfuscated() {
@@ -236,7 +228,7 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
 
-        verify()
+        snapshot()
     }
 
     // MARK: - ArticleView images aspect
@@ -265,6 +257,6 @@ final class ArticleViewTests: XCTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
 
-        verify(named: testName, file: file, testName: testName, line: line)
+        snapshot(named: testName, file: file, testName: testName, line: line)
     }
 }
