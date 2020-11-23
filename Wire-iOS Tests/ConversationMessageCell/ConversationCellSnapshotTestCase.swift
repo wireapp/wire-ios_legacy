@@ -86,6 +86,12 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
 
+            if waitForTextViewToLoad {
+                // We need to run the run loop for UITextView to highlight detected links
+                let delay = Date().addingTimeInterval(1)
+                RunLoop.main.run(until: delay)
+            }
+
             if waitForImagesToLoad {
                 let expectation = XCTestExpectation(description: "snapshot is captured")
                 self.waitForMediaAssetCacheToBeEmpty {
@@ -93,13 +99,8 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 }
                 
                 ///wait for cache to be emptied, before stackView is returned
+                ///TODO: not work on XCode12, crash when running testOpaqueImage
                 self.wait(for: [expectation], timeout: 5)
-            }
-
-            if waitForTextViewToLoad {
-                // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
-                RunLoop.main.run(until: delay)
             }
 
             return stackView
