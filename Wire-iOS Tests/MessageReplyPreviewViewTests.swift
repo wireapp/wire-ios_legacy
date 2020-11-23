@@ -34,7 +34,7 @@ extension UIView {
     }
 }
 
-class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
+final class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
@@ -137,6 +137,20 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
+    private func snapshot(message: ZMConversationMessage,
+                          named name: String? = nil,
+                          file: StaticString = #file,
+                          line: UInt = #line) {
+        
+        let previewView = message.replyPreview()!
+        
+        verifyAfterMediaAssetCacheEmptied(verifyClosure: {
+            self.verify(view: previewView.prepareForSnapshot(),
+                                        file: file,
+                                        line: line)
+        })
+    }
+
     func testThatItRendersLinkPreviewMessagePreview() {
         let url = "https://www.example.com/article/1"
         let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
@@ -147,21 +161,15 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         message.backingTextMessageData.linkPreviewHasImage = true
-        
-        let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+
+        snapshot(message: message)
     }
 
     func testThatItRendersImageMessagePreview() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
 
-        let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-
-        verify(view: previewView.prepareForSnapshot())
+        snapshot(message: message)
     }
 
     func testThatItRendersVideoMessagePreview() {
@@ -170,10 +178,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
-        let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+        snapshot(message: message)
     }
     
     func testThatItRendersAudioMessagePreview() {
@@ -181,10 +186,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.mimeType = "audio/x-m4a"
         message.backingFileMessageData.filename = "vacation.m4a"
         
-        let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+        snapshot(message: message)
     }
     
     func testDeallocation() {

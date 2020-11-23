@@ -56,7 +56,8 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
     func testForWithUserImage(){
         setupSut(userSession: MockZMUserSession())
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        verify(matching: sut)
+        verifyAfterMediaAssetCacheEmptied(verifyClosure: {
+            self.verify(matching: self.sut)
+        })
     }
 }
