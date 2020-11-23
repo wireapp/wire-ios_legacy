@@ -236,7 +236,6 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
-
     func testThatItRendersEmojiInLargeFont_33() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "🌮🌮🌮")!
@@ -492,10 +491,10 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         cell.configure(with: cellDescription.configuration, animated: false)
 
         let expectation = XCTestExpectation(description: "media asset cache is emptied")
-        waitForMediaAssetCacheToBeEmpty() {
+        waitForMediaAssetCacheToBeEmpty {
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 5)
 
         return cell

@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 extension XCTestCase {
-    
+
     static let lockQueue = DispatchQueue(label: "mediaCacheClean.lock.queue")
-    
+
     func waitForMediaAssetCacheToBeEmpty(completion: Completion? = nil) {
         XCTestCase.lockQueue.async {
             XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
@@ -31,18 +31,18 @@ extension XCTestCase {
             }
         }
     }
-    
+
     func verifyAfterMediaAssetCacheEmptied(verifyClosure: @escaping Completion,
                 named name: String? = nil,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
         let expectation = XCTestExpectation(description: "snapshot is captured")
-        waitForMediaAssetCacheToBeEmpty() {
+        waitForMediaAssetCacheToBeEmpty {
             verifyClosure()
             expectation.fulfill()
         }
-        
+
         ///prevent calling teardown before snapshot is done
         wait(for: [expectation], timeout: 5)
     }

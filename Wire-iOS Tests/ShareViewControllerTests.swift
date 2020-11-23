@@ -99,7 +99,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
                                         line: line)
         })
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         ///TODO: this line crash on Xcode12, for force unwrap a nil value
