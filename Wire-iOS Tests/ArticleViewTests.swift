@@ -57,7 +57,7 @@ final class MockArticleViewDelegate: ContextMenuLinkViewDelegate {
     weak var delegate: ConversationMessageCellDelegate?
     var message: ZMConversationMessage?
 
-    weak var mockConversationMessageCellDelegate = MockConversationMessageCellDelegate()
+    let mockConversationMessageCellDelegate = MockConversationMessageCellDelegate()
 
     init() {
         delegate = mockConversationMessageCellDelegate
