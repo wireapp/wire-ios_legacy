@@ -35,7 +35,7 @@ extension ZMUser {
 
 extension SettingsCellDescriptorFactory {
 
-    func accountGroup() -> SettingsCellDescriptorType {
+    func accountGroup(isTeamMember: Bool) -> SettingsCellDescriptorType {
         var sections: [SettingsSectionDescriptorType] = [infoSection()]
 
         if userRightInterfaceType.selfUserIsPermitted(to: .editAccentColor) &&
@@ -50,7 +50,7 @@ extension SettingsCellDescriptorFactory {
         }
 
         #if !DATA_COLLECTION_DISABLED
-            sections.append(personalInformationSection())
+        sections.append(personalInformationSection(isTeamMember: isTeamMember))
         #endif
         
         if SecurityFlags.backup.isEnabled {
@@ -113,9 +113,9 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
-    func personalInformationSection() -> SettingsSectionDescriptorType {
+    func personalInformationSection(isTeamMember: Bool) -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(
-            cellDescriptors: [dateUsagePermissionsElement()],
+            cellDescriptors: [dateUsagePermissionsElement(isTeamMember: isTeamMember)],
             header: "self.settings.account_personal_information_group.title".localized
         )
     }
@@ -303,8 +303,8 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
-    func dateUsagePermissionsElement() -> SettingsCellDescriptorType {
-        return dataUsagePermissionsGroup()
+    func dateUsagePermissionsElement(isTeamMember: Bool) -> SettingsCellDescriptorType {
+        return dataUsagePermissionsGroup(isTeamMember: isTeamMember)
     }
 
     func resetPasswordElement() -> SettingsCellDescriptorType {

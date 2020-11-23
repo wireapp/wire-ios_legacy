@@ -111,16 +111,6 @@ final class NetworkStatusViewController : UIViewController {
         }
     }
 
-    func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
-        constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
-            networkStatusViewControllerView.leading == containerView.leading
-            networkStatusViewControllerView.trailing == containerView.trailing
-            bottomView.top == networkStatusViewControllerView.bottom
-        }
-        
-        view.topAnchor.constraint(equalTo: controller.safeTopAnchor).isActive = true
-    }
-
     func showOfflineAlert() {
         let offlineAlert = UIAlertController(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,

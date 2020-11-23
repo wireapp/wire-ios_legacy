@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -86,24 +85,32 @@ final class ConversationRootViewController: UIViewController {
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
-
-        networkStatusViewController.createConstraintsInParentController(bottomView: navBarContainer.view, controller: self)
-
-        constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
-            navBarContainer, view, contentView, conversationViewControllerView in
-
-            navBarContainer.left == view.left
-            navBarContainer.right == view.right
-
-            contentView.left == view.left
-            contentView.right == view.right
-            contentView.top == navBarContainer.bottom
-
-            conversationViewControllerView.edges == contentView.edges
-        }
         
-        contentView.bottomAnchor.constraint(equalTo: self.safeBottomAnchor).isActive = true
+        [contentView,
+         conversationViewController.view,
+         networkStatusViewController.view
+        ].disableAutoresizingMaskTranslation()
         
+        NSLayoutConstraint.activate([
+            networkStatusViewController.view.topAnchor.constraint(equalTo: self.safeTopAnchor),
+            networkStatusViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            networkStatusViewController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            navBarContainer.view.topAnchor.constraint(equalTo: networkStatusViewController.view.bottomAnchor),
+            navBarContainer.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            navBarContainer.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            contentView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            contentView.topAnchor.constraint(equalTo: navBarContainer.view.bottomAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.safeBottomAnchor),
+            
+            conversationViewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            conversationViewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            conversationViewController.view.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            conversationViewController.view.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+        ])
+
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
 
@@ -152,4 +159,3 @@ extension ZMConversation {
         }
     }
 }
-
