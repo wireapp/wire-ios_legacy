@@ -127,8 +127,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
         _ = sut.view // make sure view is loaded
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        verifyInAllDeviceSizes(matching: sut)
+        snapshot()
     }
 
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
@@ -142,8 +141,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
         _ = sut.view // make sure view is loaded
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        verifyInAllDeviceSizes(matching: sut)
+        snapshot()
     }
 
     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {

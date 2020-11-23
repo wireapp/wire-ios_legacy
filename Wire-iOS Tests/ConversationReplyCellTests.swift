@@ -490,7 +490,14 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration, animated: false)
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+
+        let expectation = XCTestExpectation(description: "media asset cache is emptied")
+        waitForMediaAssetCacheToBeEmpty() {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5)
+
         return cell
     }
 
