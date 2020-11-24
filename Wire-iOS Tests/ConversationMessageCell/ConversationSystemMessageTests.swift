@@ -61,7 +61,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
 
-        verify(message: message, allColorSchemes: true)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testTeamMemberLeave() {

@@ -36,9 +36,7 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
         let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
 
-        verify(message: message,
-               waitForTextViewToLoad: true,
-               allColorSchemes: true)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testThatItRendersMentions() {

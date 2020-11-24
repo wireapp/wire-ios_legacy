@@ -25,7 +25,7 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
     override func setUp() {
         super.setUp()
         // make sure the button's color is alarm red, not accent color
-        coreDataFixture.accentColor = .strongBlue
+//        coreDataFixture.accentColor = .strongBlue
     }
 
     func testThatItRendersErrorMessage() {
@@ -36,14 +36,11 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
                                              createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
 
         // when & then
-        verify(message: makeMessage(items: items),
-               allWidths: false,
-               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
+        verify(message: makeMessage(items: items))
     }
 
     func testThatItRendersButton() {
-        verify(message: makeMessage(),
-               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
+        verify(message: makeMessage())
     }
 
     func testThatButtonStyleIsUpdatedAfterStateChange() {
@@ -55,7 +52,7 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         }
 
         // then
-        verify(message: message, allWidths: false)
+        verify(message: message)
     }
 
     // MARK: - Helpers
