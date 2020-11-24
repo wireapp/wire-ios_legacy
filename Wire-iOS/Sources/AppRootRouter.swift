@@ -449,11 +449,13 @@ extension AppRootRouter: AudioPermissionsObserving {
 // MARK: - Post notifications
 extension AppRootRouter {
     private func notifyToFetchFeatureConfig() {
-        NotificationCenter.default.post(featureNeedsToBeFetchedNotification(featureName: .appLock))
+        NotificationCenter.default.post(Notification.featureNeedsToBeFetched(featureName: .appLock))
     }
-    
-    // TODO: move to the public place
-    private func featureNeedsToBeFetchedNotification(featureName: Feature.Name) -> Notification {
+}
+
+// MARK: - Method for generating notifications
+extension Notification {
+    static func featureNeedsToBeFetched(featureName: Feature.Name) -> Notification {
         return Notification(name: FeatureConfigRequestStrategy.needsToFetchFeatureConfigNotificationName, object: featureName, userInfo: nil)
     }
 }

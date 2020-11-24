@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import WireCommonComponents
 
 enum AppState: Equatable {
     case headless
