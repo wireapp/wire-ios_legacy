@@ -102,36 +102,32 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             }
         }
 
-        if allColorSchemes {
-            ColorScheme.default.variant = .dark
-            createViewClosure() { view in
-                self.verify(matching: view,
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   named: "dark",
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)
-            }
+        createViewClosure() { view in
+            if allColorSchemes {
+                ColorScheme.default.variant = .dark
+                    self.verify(matching: view,
+                       snapshotBackgroundColor: snapshotBackgroundColor,
+                       named: "dark",
+                       allWidths: allWidths,
+                       file: file,
+                       testName: testName,
+                       line: line)
 
-            ColorScheme.default.variant = .light
-            createViewClosure() { view in
-                self.verify(matching: view,
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   named: "light",
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)
-            }
-        } else {
-            createViewClosure() { view in                
-                self.verify(matching: view,
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)
+                ColorScheme.default.variant = .light
+                    self.verify(matching: view,
+                       snapshotBackgroundColor: snapshotBackgroundColor,
+                       named: "light",
+                       allWidths: allWidths,
+                       file: file,
+                       testName: testName,
+                       line: line)
+            } else {
+                    self.verify(matching: view,
+                       snapshotBackgroundColor: snapshotBackgroundColor,
+                       allWidths: allWidths,
+                       file: file,
+                       testName: testName,
+                       line: line)
             }
         }
     }
