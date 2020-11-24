@@ -171,6 +171,7 @@ public struct AppLockRules: Decodable {
     public let useCustomCodeInsteadOfAccountPassword: Bool
     public let forceAppLock: Bool
     public let appLockTimeout: UInt
+    public var isEnabled: Bool?
     
     public static func fromBundle() -> AppLockRules {
         if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
