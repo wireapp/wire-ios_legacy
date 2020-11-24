@@ -397,6 +397,7 @@ extension AppRootRouter: ApplicationStateObserving {
     func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
+        notifyToFetchFeatureConfig()
     }
     
     func applicationDidEnterBackground() {
@@ -442,5 +443,17 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+// MARK: - Post notifications
+extension AppRootRouter {
+    private func notifyToFetchFeatureConfig() {
+        NotificationCenter.default.post(featureNeedsToBeFetchedNotification(featureName: .appLock))
+    }
+    
+    // TODO: move to the public place
+    private func featureNeedsToBeFetchedNotification(featureName: Feature.Name) -> Notification {
+        return Notification(name: FeatureConfigRequestStrategy.needsToFetchFeatureConfigNotificationName, object: featureName, userInfo: nil)
     }
 }
