@@ -166,6 +166,7 @@ final class CoreDataFixture {
     }
 
     deinit {
+        SelfUser.provider = nil
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil

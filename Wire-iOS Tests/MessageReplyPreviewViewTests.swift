@@ -159,7 +159,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         let message = MockMessageFactory.imageMessage(with: image)!
 
         let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+        XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verify(view: previewView.prepareForSnapshot())
     }

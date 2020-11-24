@@ -67,16 +67,20 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             //GIVEN
             sut = Analytics(optedOut: false)
-            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self,
-                                                                    countlyAppKey: "dummy countlyAppKey")!
+            let analyticsCountlyProvider = AnalyticsCountlyProvider(
+                countlyInstanceType: MockCountly.self,
+                countlyAppKey: "dummy countlyAppKey",
+                serverURL: URL(string: "www.wire.com")!
+            )!
+
             sut.provider = analyticsCountlyProvider
 
             //WHEN
-            XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 0)
+            XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             sut.tagEvent("app.open")
 
             //THEN
-            XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 1)
+            XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
             XCTAssertEqual(MockCountly.recordEventCount, 0)
 
             //WHEN
@@ -85,7 +89,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
             //THEN
             XCTAssertEqual(MockCountly.startCount, 1)
 
-            XCTAssertEqual(analyticsCountlyProvider.storedEventsCount, 0)
+            XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             XCTAssertEqual(MockCountly.recordEventCount, 1)
         }
     }
@@ -94,7 +98,13 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
         coreDataFixture.nonTeamTest {
             //GIVEN
             sut = Analytics(optedOut: false)
-            let analyticsCountlyProvider = AnalyticsCountlyProvider(countlyInstanceType: MockCountly.self)!
+
+            let analyticsCountlyProvider = AnalyticsCountlyProvider(
+                countlyInstanceType: MockCountly.self,
+                countlyAppKey: "dummy countlyAppKey",
+                serverURL: URL(string: "www.wire.com")!
+            )!
+
             sut.provider = analyticsCountlyProvider
 
             //WHEN
