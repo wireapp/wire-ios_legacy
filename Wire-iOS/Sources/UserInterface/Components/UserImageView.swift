@@ -60,14 +60,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    var userSession: ZMUserSessionInterface? {
+    weak var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    var user: UserType? {
+    weak var user: UserType? {
         didSet {
             updateUser()
         }
@@ -166,7 +166,9 @@ class UserImageView: AvatarImageView, ZMUserObserver {
      * - parameter animated: Whether to animate the change.
      */
 
-    func setAvatar(_ avatar: Avatar, user: UserType, animated: Bool) {
+    func setAvatar(_ avatar: Avatar,
+                   user: UserType,
+                   animated: Bool) {
         let updateBlock = {
             self.avatar = avatar
             self.container.backgroundColor = self.containerBackgroundColor(for: user)
@@ -226,7 +228,8 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Called when the user or user session changes.
     func updateUser() {
-        guard let user = self.user, let initials = user.initials else {
+        guard let user = user,
+              let initials = user.initials else {
             return
         }
 
