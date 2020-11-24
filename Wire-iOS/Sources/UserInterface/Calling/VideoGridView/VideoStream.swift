@@ -24,6 +24,7 @@ struct VideoStream: Equatable, Differentiable {
 
     let stream: Stream
     let isPaused: Bool
+    let isMaximized: Bool
 
     var differenceIdentifier: AVSClient {
         return stream.streamId
