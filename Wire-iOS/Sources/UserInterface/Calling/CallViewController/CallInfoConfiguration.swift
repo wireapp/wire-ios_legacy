@@ -76,21 +76,7 @@ fileprivate extension VoiceChannel {
             return true
         }
     }
-    
-    var isTerminating: Bool {
-        switch state {
-        case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
-        default: return false
-        }
-    }
-    
-    var canAccept: Bool {
-        switch state {
-        case .incoming(video: _, shouldRing: true, degraded: _): return true
-        default: return false
-        }
-    }
-    
+
     func mediaState(with permissions: CallPermissionsConfiguration) -> MediaState {
         let isPadOrPod = UIDevice.current.type == .iPad || UIDevice.current.type == .iPod
         let speakerEnabled = AVSMediaManager.sharedInstance().isSpeakerEnabled
@@ -113,7 +99,7 @@ fileprivate extension VoiceChannel {
     var disableIdleTimer: Bool {
         switch state {
         case .none: return false
-        default: return internalIsVideoCall && !isTerminating
+        default: return internalIsVideoCall && !state.isTerminating
         }
     }
 
@@ -128,8 +114,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let variant: ColorSchemeVariant
     let canToggleMediaType: Bool
     let isMuted: Bool
-    let isTerminating: Bool
-    let canAccept: Bool
     let mediaState: MediaState
     let accessoryType: CallInfoViewControllerAccessoryType
     let degradationState: CallDegradationState
@@ -139,6 +123,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
+    let callState: CallStateExtending
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -159,9 +144,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
-        canAccept = voiceChannel.canAccept
         isVideoCall = voiceChannel.internalIsVideoCall
-        isTerminating = voiceChannel.isTerminating
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
         variant = ColorScheme.default.variant
@@ -169,6 +152,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
+        callState = voiceChannel.state
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -258,10 +242,6 @@ fileprivate extension VoiceChannel {
             || isIncomingVideoCall                                   // This is an incoming video call
     }
     
-    var connectedParticipants: [CallParticipant] {
-        return participants.filter { $0.state.isConnected }
-    }
-
     func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
             lhs.user.name?.lowercased() < rhs.user.name?.lowercased()
@@ -277,6 +257,9 @@ fileprivate extension VoiceChannel {
 }
 
 extension VoiceChannel {
+    var connectedParticipants: [CallParticipant] {
+        return participants.filter { $0.state.isConnected }
+    }
 
     var degradationState: CallDegradationState {
         switch state {

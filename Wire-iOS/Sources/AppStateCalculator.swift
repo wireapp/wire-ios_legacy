@@ -146,8 +146,8 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: .jailbroken)
     }
         
-    func sessionManagerWillMigrateAccount() {
-        transition(to: .migrating)
+    func sessionManagerWillMigrateAccount(userSessionCanBeTornDown: @escaping () -> Void) {
+        transition(to: .migrating, completion: userSessionCanBeTornDown)
     }
     
     func sessionManagerWillOpenAccount(_ account: Account,

@@ -75,7 +75,7 @@ final class SelfProfileViewController: UIViewController {
         // Create the settings hierarchy
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: userSession, selfUser: selfUser)
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
-		let rootGroup = settingsCellDescriptorFactory.rootGroup()
+        let rootGroup = settingsCellDescriptorFactory.rootGroup(isTeamMember: selfUser.isTeamMember)
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
         profileHeaderViewController = ProfileHeaderViewController(user: selfUser, viewer: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
 

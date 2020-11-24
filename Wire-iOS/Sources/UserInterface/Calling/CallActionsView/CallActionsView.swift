@@ -55,12 +55,11 @@ enum MediaState: Equatable {
 protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
     var isMuted: Bool { get }
-    var isTerminating: Bool { get }
-    var canAccept: Bool { get }
     var mediaState: MediaState { get }
     var permissions: CallPermissionsConfiguration { get }
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
+    var callState: CallStateExtending { get }
 }
 
 extension CallActionsViewInputType {
@@ -162,11 +161,12 @@ final class CallActionsView: UIView {
     }
     
     // MARK: - State Input
-    
+
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted
+        muteCallButton.isEnabled = canToggleMuteButton(input)
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
         videoButtonDisabledTapRecognizer?.isEnabled = !input.canToggleMediaType
         videoButton.isEnabled = input.canToggleMediaType
@@ -175,18 +175,26 @@ final class CallActionsView: UIView {
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
-        speakerButton.isEnabled = input.mediaState.canSpeakerBeToggled
-        acceptCallButton.isHidden = !input.canAccept
-        firstBottomRowSpacer.isHidden = input.canAccept || isCompact
+        speakerButton.isEnabled = canToggleSpeakerButton(input)
+        acceptCallButton.isHidden = !input.callState.canAccept
+        firstBottomRowSpacer.isHidden = input.callState.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact
         verticalStackView.axis = isCompact ? .horizontal : .vertical
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
-        alpha = input.isTerminating ? 0.4 : 1
-        isUserInteractionEnabled = !input.isTerminating
+        alpha = input.callState.isTerminating ? 0.4 : 1
+        isUserInteractionEnabled = !input.callState.isTerminating
         lastInput = input
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    private func canToggleMuteButton(_ input: CallActionsViewInputType) -> Bool {
+        return input.callState.isConnected && !input.permissions.isAudioDisabledForever
+    }
+    
+    private func canToggleSpeakerButton(_ input: CallActionsViewInputType) -> Bool {
+        return input.callState.isConnected && input.mediaState.canSpeakerBeToggled
     }
 
     override func layoutSubviews() {
@@ -226,7 +234,7 @@ final class CallActionsView: UIView {
         flipCameraButton.accessibilityLabel = "call.actions.label.flip_camera".localized
         speakerButton.accessibilityLabel = "call.actions.label.toggle_speaker_\(input.mediaState.isSpeakerEnabled ? "off" : "on")".localized
         acceptCallButton.accessibilityLabel = "call.actions.label.accept_call".localized
-        endCallButton.accessibilityLabel = "call.actions.label.\(input.canAccept ? "reject" : "terminate")_call".localized
+        endCallButton.accessibilityLabel = "call.actions.label.\(input.callState.canAccept ? "reject" : "terminate")_call".localized
         videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized;
         videoButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
 

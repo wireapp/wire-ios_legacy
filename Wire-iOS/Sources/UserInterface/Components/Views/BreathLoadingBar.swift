@@ -80,10 +80,6 @@ final class BreathLoadingBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     private func updateView() {
         switch state {
         case .online:

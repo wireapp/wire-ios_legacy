@@ -122,7 +122,6 @@ final class CallViewController: UIViewController {
 
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
-        NotificationCenter.default.removeObserver(self)
         stopOverlayTimer()
     }
 

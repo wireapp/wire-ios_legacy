@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -48,19 +48,19 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 	}
 
     func testForSettingGroup() {
-        let group = settingsCellDescriptorFactory.settingsGroup()
+        let group = settingsCellDescriptorFactory.settingsGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 
     func testForAccountGroup() {
-        let group = settingsCellDescriptorFactory.accountGroup()
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 
     func testForAccountGroupWithDisabledEditing() {
 		MockUserRight.isPermitted = false
 
-		let group = settingsCellDescriptorFactory.accountGroup()
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
         verify(group: group)
     }
 

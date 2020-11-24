@@ -21,12 +21,6 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-extension Int {
-    func logRound(factor: Double = 6) -> Int {
-        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
-    }
-}
-
 protocol CountlyInstance {
     func recordEvent(_ key: String, segmentation: [String : String]?)
     func start(with config: CountlyConfig)
@@ -36,158 +30,193 @@ protocol CountlyInstance {
 
 extension Countly: CountlyInstance {}
 
+
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
-    /// flag for recording session is begun
-    private var sessionBegun: Bool = false
+    typealias PendingEvent = (event: String, attribtues: [String: Any])
 
-    private struct StoredEvent {
-        let event: String
-        let attributes: [String: Any]
+    // MARK: - Properties
+
+    var countlyInstanceType: CountlyInstance.Type
+
+    /// The Countly application to which events will be sent.
+
+    private let appKey: String
+
+    /// The url of the server hosting the Countly application.
+
+    private let serverURL: URL
+
+    /// Whether a recording session is in progress.
+
+    private var isRecording: Bool = false {
+        didSet {
+            guard isRecording != oldValue else { return }
+
+            if isRecording {
+                updateTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in self.updateSession() }
+            } else {
+                updateTimer?.invalidate()
+                updateTimer = nil
+            }
+        }
     }
 
-    /// store the events before selfUser is assigned. Send them and clear after selfUser is set
-    private var storedEvents: [StoredEvent] = []
-    
-    var storedEventsCount: Int {
-        return storedEvents.count
-    }
+    /// Whether the Countly instance has been configured and started.
+
+    private var didInitializeCountly: Bool = false
+
+    /// Events that have been tracked before Countly has begun.
+
+    private(set) var pendingEvents: [PendingEvent] = []
 
     var isOptedOut: Bool {
-        get {
-            return !sessionBegun
-        }
-
-        set {
-            newValue ? Countly.sharedInstance().endSession() :
-                       Countly.sharedInstance().beginSession()
-
-            sessionBegun = !isOptedOut
+        didSet {
+            if !isOptedOut {
+                endSession()
+            } else if let user = selfUser as? ZMUser {
+                startCountly(for: user)
+            }
         }
     }
 
     var selfUser: UserType? {
         didSet {
-            guard selfUser != nil else {
-                endSession()
-                return
-            }
-
-            if !sessionBegun {
-                beginSession()
-            }
-
-            updateUserProperties()
-
-            storedEvents.forEach {
-                tagEvent($0.event, attributes: $0.attributes)
-            }
-
-            storedEvents.removeAll()
+            endCountly()
+            guard let user = selfUser as? ZMUser else { return }
+            startCountly(for: user)
         }
     }
-    
-    var countlyInstanceType: CountlyInstance.Type
-    var countlyAppKey: String
 
-    init?(countlyInstanceType: CountlyInstance.Type = Countly.self,
-          countlyAppKey: String? = Bundle.countlyAppKey) {
-        guard let countlyAppKey = countlyAppKey else { return nil }
+    private var updateTimer: Timer?
+
+    // MARK: - Life cycle
+
+    init?(
+        countlyInstanceType: CountlyInstance.Type = Countly.self,
+        countlyAppKey: String,
+        serverURL: URL
+    ) {
+        guard !countlyAppKey.isEmpty else { return nil }
         
-        self.countlyAppKey = countlyAppKey
         self.countlyInstanceType = countlyInstanceType
+        self.appKey = countlyAppKey
+        self.serverURL = serverURL
         isOptedOut = false
+        setupApplicationNotifications()
     }
 
     deinit {
         zmLog.info("AnalyticsCountlyProvider \(self) deallocated")
     }
 
-    private func beginSession() {
+    // MARK: - Session management
+
+    private func startCountly(for user: ZMUser) {
         guard
-            shouldTracksEvent,
-            let selfUser = selfUser as? ZMUser,
-            let analyticsIdentifier = selfUser.analyticsIdentifier
+            !isOptedOut,
+            !isRecording,
+            user.isTeamMember,
+            let analyticsIdentifier = user.analyticsIdentifier,
+            let userProperties = userProperties(for: user)
         else {
             return
         }
 
-        guard
-            !countlyAppKey.isEmpty,
-            let countlyURL = BackendEnvironment.shared.countlyURL
-        else {
-            let appKey = String(describing: Bundle.countlyAppKey)
-            let url = String(describing: BackendEnvironment.shared.countlyURL)
-            zmLog.error("AnalyticsCountlyProvider is not created. Bundle.countlyAppKey = \(appKey), countlyURL = \(url). Please check COUNTLY_APP_KEY is set in .xcconfig file")
-            return
-        }
-                
         let config: CountlyConfig = CountlyConfig()
-        config.appKey = countlyAppKey
-        config.host = countlyURL.absoluteString
+        config.appKey = appKey
+        config.host = serverURL.absoluteString
         config.manualSessionHandling = true
-        
         config.deviceID = analyticsIdentifier
+
+        updateCountlyUser(withProperties: userProperties)
+
         countlyInstanceType.sharedInstance().start(with: config)
 
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
-        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer:true)
-        
+        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer: true)
+
         zmLog.info("AnalyticsCountlyProvider \(self) started")
-        sessionBegun = true
+
+        didInitializeCountly = true
+
+        beginSession()
+        tagPendingEvents()
+    }
+
+    private func endCountly() {
+        endSession()
+        clearCountlyUser()
+        didInitializeCountly = false
+    }
+
+    private func beginSession() {
+        Countly.sharedInstance().beginSession()
+        isRecording = true
+    }
+
+    private func updateSession() {
+        guard isRecording else { return }
+        Countly.sharedInstance().updateSession()
     }
 
     private func endSession() {
         Countly.sharedInstance().endSession()
-        sessionBegun = false
+        isRecording = false
     }
 
-    private var shouldTracksEvent: Bool {
-        return selfUser?.isTeamMember == true
-    }
+    // MARK: - Countly user
 
-    /// update user properties after self user changes
-    private func updateUserProperties() {
-        guard shouldTracksEvent,
-            let selfUser = selfUser as? ZMUser,
-            let team = selfUser.team,
-            let teamID = team.remoteIdentifier
+    private func userProperties(for user: ZMUser) -> [String: Any]? {
+        guard
+            let team = user.team,
+            let teamId = team.remoteIdentifier
         else {
-
-            //clean up
-            ["team_team_id",
-             "team_user_type",
-             "team_team_size",
-             "user_contacts"].forEach {
-                Countly.user().unSet($0)
-            }
-
-            Countly.user().save()
-            isOptedOut = true
-
-            return
+            return nil
         }
 
-        let userProperties: [String: Any] = ["team_team_id": teamID,
-                                             "team_user_type": selfUser.teamRole,
-                                             "team_team_size": team.members.count,
-                                             "user_contacts": team.members.count.logRound()]
+        return [
+            "team_team_id": teamId,
+            "team_user_type": user.teamRole,
+            "team_team_size": team.members.count,
+            "user_contacts": team.members.count.logRound()
+        ]
+    }
 
-        let convertedAttributes = userProperties.countlyStringValueDictionary
+    private func updateCountlyUser(withProperties properties: [String: Any]) {
+        let convertedAttributes = properties.countlyStringValueDictionary
 
-        for(key, value) in convertedAttributes {
+        for (key, value) in convertedAttributes {
             Countly.user().set(key, value: value)
         }
 
         Countly.user().save()
     }
 
+    private func clearCountlyUser() {
+        let keys = [
+            "team_team_id",
+            "team_user_type",
+            "team_team_size",
+            "user_contacts"
+        ]
+
+        keys.forEach(Countly.user().unSet)
+        Countly.user().save()
+    }
+
+    private var shouldTracksEvent: Bool {
+        return selfUser?.isTeamMember == true
+    }
+
+    // MARK: - Tag events
+
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
         //store the event before self user is assigned, send it later when self user is ready.
-        guard selfUser != nil else {            
-            storedEvents.append(StoredEvent(event: event, attributes: attributes))
+        guard selfUser != nil else {
+            pendingEvents.append(PendingEvent(event, attributes))
             return
         }
 
@@ -203,15 +232,50 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         countlyInstanceType.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
     }
 
+    private func tagPendingEvents() {
+        for (event, attributes) in pendingEvents {
+            tagEvent(event, attributes: attributes)
+        }
+
+        pendingEvents.removeAll()
+    }
+
     func setSuperProperty(_ name: String, value: Any?) {
         //TODO
     }
 
     func flush(completion: Completion?) {
-        isOptedOut = true
         completion?()
     }
+
+    private var observerTokens = [Any]()
 }
+
+// MARK: - Application state observing
+
+extension AnalyticsCountlyProvider: ApplicationStateObserving {
+
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observerTokens.append(token)
+    }
+    
+    func applicationDidBecomeActive() {
+        guard didInitializeCountly else { return }
+        beginSession()
+    }
+
+    func applicationDidEnterBackground() {
+        guard isRecording else { return }
+        endSession()
+    }
+
+    func applicationWillEnterForeground() {
+        // No op
+    }
+
+}
+
+// MARK: - Helpers
 
 extension Dictionary where Key == String, Value == Any {
 
@@ -239,5 +303,11 @@ extension Dictionary where Key == String, Value == Any {
             map { key, value in (key, countlyValue(rawValue: value)) })
 
         return convertedAttributes
+    }
+}
+
+extension Int {
+    func logRound(factor: Double = 6) -> Int {
+        return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
     }
 }

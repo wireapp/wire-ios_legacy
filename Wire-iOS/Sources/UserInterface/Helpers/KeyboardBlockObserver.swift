@@ -59,7 +59,6 @@ final class KeyboardBlockObserver: NSObject {
     typealias ChangeBlock = (ChangeInfo) -> Void
     
     private let changeBlock: ChangeBlock
-    private let center = NotificationCenter.default
     
     init(block: @escaping ChangeBlock) {
         self.changeBlock = block
@@ -67,11 +66,9 @@ final class KeyboardBlockObserver: NSObject {
         registerKeyboardObservers()
     }
     
-    deinit {
-        center.removeObserver(self)
-    }
-    
     private func registerKeyboardObservers() {
+        let center = NotificationCenter.default
+
         center.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
