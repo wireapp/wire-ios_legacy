@@ -359,7 +359,8 @@ extension SettingsCellDescriptorFactory {
 
 // MARK: - Helpers
 extension SettingsCellDescriptorFactory {
+    // Encryption at rest will trigger its own variant of AppLock.
     private var isAppLockEnabled: Bool {
-        return !SecurityFlags.forceEncryptionAtRest.isEnabled || (AppLock.rules.isEnabled ?? false)
+        return !SecurityFlags.forceEncryptionAtRest.isEnabled && AppLock.rules.isEnabled
     }
 }

@@ -166,12 +166,22 @@ public class BiometricsState {
     }
 }
 
-public struct AppLockRules: Decodable {
+public struct AppLockRules: Codable {
     public let useBiometricsOrAccountPassword: Bool
     public let useCustomCodeInsteadOfAccountPassword: Bool
     public let forceAppLock: Bool
     public let appLockTimeout: UInt
-    public var isEnabled: Bool?
+    public let isEnabled: Bool
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        useBiometricsOrAccountPassword = try container.decode(Bool.self, forKey: .useBiometricsOrAccountPassword)
+        useCustomCodeInsteadOfAccountPassword = try container.decode(Bool.self, forKey: .useCustomCodeInsteadOfAccountPassword)
+        forceAppLock = try container.decode(Bool.self, forKey: .forceAppLock)
+        appLockTimeout = try container.decode(UInt.self, forKey: .appLockTimeout)
+        isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled) ?? true
+    }
     
     public static func fromBundle() -> AppLockRules {
         if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
@@ -185,5 +195,19 @@ public struct AppLockRules: Decodable {
     public static func fromData(_ data: Data) -> AppLockRules {
         let decoder = JSONDecoder()
         return try! decoder.decode(AppLockRules.self, from: data)
+    }
+}
+
+// MARK: - For testing purposes
+extension AppLockRules {
+    init(useBiometricsOrAccountPassword: Bool,
+         useCustomCodeInsteadOfAccountPassword: Bool,
+         forceAppLock: Bool,
+         appLockTimeout: UInt) {
+        self.useBiometricsOrAccountPassword = useBiometricsOrAccountPassword
+        self.useCustomCodeInsteadOfAccountPassword = useCustomCodeInsteadOfAccountPassword
+        self.forceAppLock = forceAppLock
+        self.appLockTimeout = appLockTimeout
+        self.isEnabled = true
     }
 }
