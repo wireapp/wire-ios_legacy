@@ -27,6 +27,9 @@ import SnapshotTesting
 class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
     
+    var stackView: UIStackView!
+    var section: ConversationMessageSectionController!
+    
     fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
                                                                        isTimeIntervalSinceLastMessageSignificant: false,
                                                                        isFirstMessageOfTheDay: false,
@@ -58,7 +61,10 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     }
     
     override func tearDown() {
+        stackView = nil
+        section = nil
         coreDataFixture = nil
+        
         super.tearDown()
     }
     
@@ -78,16 +84,15 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
         
-        let createViewClosure: () -> UIView = {
-            let section = ConversationMessageSectionController(message: message, context: context)
-            let views = section.cellDescriptions.map({ $0.makeView() })
-            let stackView = UIStackView(arrangedSubviews: views)
-            stackView.axis = .vertical
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        let createViewClosure: () -> UIView = {[weak self] in
+            self?.section = ConversationMessageSectionController(message: message, context: context)
+            self?.stackView = UIStackView(arrangedSubviews: (self?.section.cellDescriptions.map({ $0.makeView() }))!)
+            self?.stackView.axis = .vertical
+            self?.stackView.translatesAutoresizingMaskIntoConstraints = false
+            self?.stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
             
             if waitForImagesToLoad {
-                XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+                _ = self?.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup])
             }
             
             if waitForTextViewToLoad {
@@ -96,7 +101,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 RunLoop.main.run(until: delay)
             }
             
-            return stackView
+            return (self?.stackView)!
         }
         
         if allColorSchemes {
