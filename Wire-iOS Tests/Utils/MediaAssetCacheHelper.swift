@@ -25,7 +25,7 @@ extension XCTestCase {
 
     func waitForMediaAssetCacheToBeEmpty(completion: Completion? = nil) {
         XCTestCase.lockQueue.async {
-            XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+            _ = self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup])
             DispatchQueue.main.async {
                 completion?()
             }
