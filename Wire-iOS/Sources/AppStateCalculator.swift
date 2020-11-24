@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 enum AppState: Equatable {
     case headless
@@ -98,6 +99,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
+        notifyToFetchFeatureConfig()
         transition(to: pendingAppState ?? appState)
     }
     
@@ -171,6 +173,13 @@ extension AppStateCalculator: AuthenticationCoordinatorDelegate {
         let appState: AppState = .authenticated(completedRegistration: addedAccount,
                                                 isDatabaseLocked: isDatabaseLocked)
         transition(to: appState)
+    }
+}
+
+// MARK: - Post notifications
+extension AppStateCalculator {
+    private func notifyToFetchFeatureConfig() {
+        NotificationCenter.default.post(name: FeatureConfigRequestStrategy.needsToFetchFeatureConfigNotificationName, object: nil)
     }
 }
 
