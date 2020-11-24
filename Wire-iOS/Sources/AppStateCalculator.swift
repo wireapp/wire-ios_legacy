@@ -99,7 +99,7 @@ extension AppStateCalculator: ApplicationStateObserving {
     
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
-        configureObservers()
+        notifyToFetchFeatureConfig()
         transition(to: pendingAppState ?? appState)
     }
     
@@ -176,24 +176,10 @@ extension AppStateCalculator: AuthenticationCoordinatorDelegate {
     }
 }
 
-// MARK: - Configure Observers
+// MARK: - Post notifications
 extension AppStateCalculator {
-    private func configureObservers() {
-        NotificationCenter.default.addObserver(forName: FeatureController.featureConfigDidChange, object: nil, queue: nil) { [weak self] (note) in
-            self?.updateAppLockFeature(note)
-        }
-    }
-    
-    private func updateAppLockFeature(_ notification: Notification) {
-        var applock: AppLockConfig?
-        if let status = notification.userInfo?["statusKey"] as? Feature.Status {
-            applock?.status = status
-        }
-        if let config = notification.userInfo?["configKey"] as? Feature.AppLock.Config {
-            applock?.forceAppLock = config.enforceAppLock
-            applock?.appLockTimeout = config.inactivityTimeoutSecs
-        }
-        AppLock.setRules(fromCoreData: applock)
+    private func notifyToFetchFeatureConfig() {
+        NotificationCenter.default.post(name: FeatureConfigRequestStrategy.needsToFetchFeatureConfigNotificationName, object: nil)
     }
 }
 

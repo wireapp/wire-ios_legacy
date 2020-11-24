@@ -33,8 +33,8 @@ public struct AppLockConfig {
 public class AppLock {
     // Returns true if user enabled the app lock feature.
     
-    internal static var rulesFromBundle = AppLockRules.fromBundle()
-    internal static var rulesFromCoreData: AppLockConfig?
+    static var rulesFromBundle = AppLockRules.fromBundle()
+    static var rulesFromCoreData: AppLockConfig?
     
     public static var rules: AppLockRules {
         var baseRules = rulesFromBundle
@@ -52,6 +52,10 @@ public class AppLock {
         return baseRules
     }
 
+    init() {
+        configureObservers()
+    }
+    
     public static  func setRules(fromCoreData: AppLockConfig?) {
         rulesFromCoreData = fromCoreData
     }
@@ -161,6 +165,26 @@ public class AppLock {
     
     public class func persistBiometrics() {
         BiometricsState.persist()
+    }
+}
+
+extension AppLock {
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(forName: FeatureController.featureConfigDidChange, object: nil, queue: nil) { [weak self] (note) in
+            self?.updateAppLockFeature(note)
+        }
+    }
+    
+    public func updateAppLockFeature(_ notification: Notification) {
+//        var applock: AppLockConfig?
+//        if let status = notification.userInfo?["statusKey"] as? Feature.Status {
+//            applock?.status = status
+//        }
+//        if let config = notification.userInfo?["configKey"] as? Feature.AppLock.Config {
+//            applock?.forceAppLock = config.enforceAppLock
+//            applock?.appLockTimeout = config.inactivityTimeoutSecs
+//        }
+//        AppLock.setRules(fromCoreData: applock)
     }
 }
 
