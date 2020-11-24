@@ -216,6 +216,15 @@ extension AppLockPresenter {
                                                selector: #selector(appStateDidTransition(_:)),
                                                name: AppRootRouter.appStateDidTransition,
                                                object: .none)
+        
+        NotificationCenter.default.addObserver(forName: FeatureController.featureConfigDidChange,
+                                               object: nil,
+                                               queue: nil)
+        { [weak self] (note) in
+            if let applock = note.userInfo?[Feature.AppLock.name] as? Feature.AppLock {
+                self?.updateAppLockFeature(applock)
+            }
+        }
     }
     
     @objc func applicationWillResignActive() {
@@ -249,6 +258,10 @@ extension AppLockPresenter {
         default:
             setContents(dimmed: false)
         }
+    }
+    
+    func updateAppLockFeature(_ feature: Feature.AppLock) {
+        AppLock.setRules(fromCoreData: feature)
     }
 }
 

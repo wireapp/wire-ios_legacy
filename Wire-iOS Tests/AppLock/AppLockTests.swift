@@ -136,18 +136,10 @@ final class AppLockTests: XCTestCase {
         XCTAssertNil(AppLock.rules.status)
 
         //when
-        let jsonFromCoreDta = """
-        {
-          "status": "enabled",
-             "config": {
-                "enforceAppLock": true,
-                "inactivityTimeoutSecs": 30
-           }
-        }
-        """
-        let data = jsonFromCoreDta.data(using: .utf8)!
-        AppLock.rulesFromCoreData = try! JSONDecoder().decode(FeatureConfigResponse<Feature.AppLock>.self, from: data)
-
+        AppLock.rulesFromCoreData = Feature.AppLock(status: .enabled,
+                                                    config: Feature.AppLock.Config(enforceAppLock: true,
+                                                                                   inactivityTimeoutSecs: 30))
+    
         //then
         XCTAssertTrue(AppLock.rules.forceAppLock)
         XCTAssertTrue(AppLock.rules.useBiometricsOrAccountPassword)
@@ -162,20 +154,12 @@ final class AppLockTests: XCTestCase {
         XCTAssertTrue(AppLock.rules.forceAppLock)
        
         //when
-        let jsonFromCoreDta = """
-        {
-          "status": "enabled",
-             "config": {
-                "enforceAppLock": false,
-                "inactivityTimeoutSecs": 30
-           }
-        }
-        """
-        let data = jsonFromCoreDta.data(using: .utf8)!
-        AppLock.rulesFromCoreData = try! JSONDecoder().decode(FeatureConfigResponse<Feature.AppLock>.self, from: data)
+        AppLock.rulesFromCoreData = Feature.AppLock(status: .enabled,
+                                                           config: Feature.AppLock.Config(enforceAppLock: false,
+                                                                                          inactivityTimeoutSecs: 30))
 
         //then
-        XCTAssertFalse(AppLock.rulesFromCoreData!.config!.enforceAppLock)
+        XCTAssertFalse(AppLock.rulesFromCoreData!.config.enforceAppLock)
         XCTAssertTrue(AppLock.rules.forceAppLock)
     }
 }
