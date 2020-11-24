@@ -383,7 +383,7 @@ private extension ZMConversation {
 // MARK: - Descriptions
 
 
-class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ParticipantsConversationSystemMessageCell
     let configuration: View.Configuration
     
@@ -404,7 +404,12 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = UIColor.from(scheme: .textForeground)
 
-        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
+        let model = ParticipantsCellViewModel(font: .mediumFont,
+                                              boldFont: .mediumSemiboldFont,
+                                              largeFont: .largeSemiboldFont,
+                                              textColor: color,
+                                              iconColor: color,
+                                              message: message)
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
     }

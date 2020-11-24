@@ -102,9 +102,9 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             }
         }
 
-        createViewClosure() { view in
             if allColorSchemes {
                 ColorScheme.default.variant = .dark
+                createViewClosure() { view in
                     self.verify(matching: view,
                        snapshotBackgroundColor: snapshotBackgroundColor,
                        named: "dark",
@@ -112,8 +112,11 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                        file: file,
                        testName: testName,
                        line: line)
+                }
+                
 
                 ColorScheme.default.variant = .light
+                createViewClosure() { view in
                     self.verify(matching: view,
                        snapshotBackgroundColor: snapshotBackgroundColor,
                        named: "light",
@@ -121,7 +124,9 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                        file: file,
                        testName: testName,
                        line: line)
+                }
             } else {
+                createViewClosure() { view in
                     self.verify(matching: view,
                        snapshotBackgroundColor: snapshotBackgroundColor,
                        allWidths: allWidths,
