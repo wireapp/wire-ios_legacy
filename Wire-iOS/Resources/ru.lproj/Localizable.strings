@@ -760,7 +760,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Очистить контент?";
-"meta.menu.delete_content.dialog_message" = "Это очистит историю бесед на всех ваших устройствах.";
+"meta.menu.delete_content.dialog_message" = "Это действие очистит историю бесед на всех ваших устройствах.";
 "meta.menu.delete_content.leave_as_well_message" = "Также покинуть беседу";
 "meta.menu.delete_content.button_cancel" = "Отмена";
 "meta.menu.delete_content.button_delete" = "Очистить";
