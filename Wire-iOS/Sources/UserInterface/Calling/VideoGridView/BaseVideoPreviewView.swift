@@ -23,6 +23,11 @@ import WireSyncEngine
 
 class BaseVideoPreviewView: OrientableView {
 
+    var isMaximized: Bool {
+        get { videoStream.isMaximized }
+        set { videoStream.isMaximized = newValue }
+    }
+    
     var videoStream: VideoStream {
         didSet {
             guard videoStream != oldValue else { return }

@@ -30,7 +30,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var isMaximized: Bool = false {
+    override var isMaximized: Bool {
         didSet {
             updateFillMode()
         }

@@ -33,14 +33,13 @@ final class VideoGridViewController: UIViewController {
     // MARK: - Private Properties
     
     private var videoStreams: [VideoStream] {
-        if let videoStream = configuration.videoStreams.first(where: { isMaximized(stream: $0.stream) }) {
+        if let videoStream = maximizedStream() {
             return [videoStream]
         }
         return configuration.videoStreams
     }
 
     private var dataSource: [VideoStream] = []
-    private var maximizedView: BaseVideoPreviewView?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
@@ -125,20 +124,8 @@ final class VideoGridViewController: UIViewController {
     // MARK: - View maximization
     
     private func toggleMaximized(view: BaseVideoPreviewView?) {
-        let stream = view?.videoStream.stream
-        
-        maximizedView = isMaximized(stream: stream) ? nil : view
-        (view as? VideoPreviewView)?.isMaximized = isMaximized(stream: stream)
+        view?.isMaximized.toggle()
         updateVideoGrid(with: videoStreams)
-    }
-    
-    private func isMaximized(stream: Stream?) -> Bool {
-        guard
-            let streamId = stream?.streamId,
-            let maximizedStreamId = maximizedView?.stream.streamId
-        else { return false }
-        
-        return streamId == maximizedStreamId
     }
 
     // MARK: - UI Update
@@ -276,6 +263,18 @@ final class VideoGridViewController: UIViewController {
 
     // MARK: - Helpers
 
+    private func maximizedStream() -> VideoStream? {
+        let displayedVideoStreams = dataSource.compactMap { $0.stream.streamId }
+        
+        return viewCache.values.lazy
+        .compactMap ({
+            ($0 as? BaseVideoPreviewView)?.videoStream
+        })
+        .first(where: {
+            $0.isMaximized && displayedVideoStreams.contains($0.stream.streamId)
+        })
+    }
+    
     private func streamView(for stream: Stream) -> UIView? {
         return viewCache[stream.streamId]
     }
