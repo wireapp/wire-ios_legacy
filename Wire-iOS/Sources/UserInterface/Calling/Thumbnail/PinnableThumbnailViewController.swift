@@ -21,7 +21,13 @@ import UIKit
 final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
-    private let thumbnailContainerView = UIView()
+
+    private let thumbnailContainerView: UIView = {
+        let view = UIView()
+        view.accessibilityIdentifier = "ThumbnailContainerView"
+        return view
+    }()
+
     private(set) var contentView: OrientableView?
 
     // MARK: - Dynamics
