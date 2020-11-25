@@ -211,6 +211,8 @@ final class VideoGridViewController: UIViewController {
             gridView.reload(using: changeSet) { dataSource = $0 }
         }
 
+        // Updating with dataSource means we will not update the videoStream with the latest states from AVS
+        // Updating with the latest video streams means we will override `isMaximized`
         updateStates(with: dataSource)
         pruneCache()
     }
