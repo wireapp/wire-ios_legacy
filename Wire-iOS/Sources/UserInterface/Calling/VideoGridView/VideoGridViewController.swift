@@ -178,14 +178,8 @@ final class VideoGridViewController: UIViewController {
             return
         }
 
-        // Updating the self preview this way will override the `isMaximized`
-        // property each time there is a change in participant
-        // ...
-        // We would need a graceful way to update the current video streams with
-        // the new states from AVS, while conserving the maximized state.
-        // Ideally, the VC would rely on a single source of truth and only take care of showing it in the grid.
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
-            view.videoStream = selfVideoStream
+            view.videoStream.stream = selfVideoStream.stream
         } else {
             viewCache[selfStreamId] = SelfVideoPreviewView(videoStream: selfVideoStream, isCovered: isCovered)
         }

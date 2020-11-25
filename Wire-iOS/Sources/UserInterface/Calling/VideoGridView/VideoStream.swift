@@ -22,7 +22,7 @@ import DifferenceKit
 
 struct VideoStream: Equatable, Differentiable {
 
-    let stream: Stream
+    var stream: Stream
     let isPaused: Bool
     var isMaximized: Bool
 
