@@ -152,7 +152,6 @@ final class InputBar: UIView {
 
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
-    fileprivate let notificationCenter = NotificationCenter.default
     
     fileprivate var leftAccessoryViewWidthConstraint: NSLayoutConstraint?
     
@@ -202,10 +201,6 @@ final class InputBar: UIView {
         textView.isScrollEnabled = true
     }
 
-    deinit {
-        notificationCenter.removeObserver(self)
-    }
-
     required init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
         secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
@@ -225,6 +220,8 @@ final class InputBar: UIView {
         setupViews()
         updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
+        
+        let notificationCenter = NotificationCenter.default
         
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)

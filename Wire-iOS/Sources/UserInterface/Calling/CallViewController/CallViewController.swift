@@ -117,7 +117,7 @@ final class CallViewController: UIViewController {
 
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
-         stopOverlayTimer()
+        stopOverlayTimer()
     }
 
     private func setupApplicationStateObservers() {

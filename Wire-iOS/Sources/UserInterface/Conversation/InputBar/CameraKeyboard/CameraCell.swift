@@ -33,11 +33,6 @@ final class CameraCell: UICollectionViewCell {
 
     weak var delegate: CameraCellDelegate?
 
-    ///TODO: can rm
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
-
     override init(frame: CGRect) {
         let camera: SettingsCamera = Settings.shared[.preferredCamera] ?? .front
         cameraController = CameraController(camera: camera)

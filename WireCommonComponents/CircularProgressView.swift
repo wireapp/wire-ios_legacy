@@ -21,10 +21,6 @@ import Foundation
 import UIKit
 
 public class CircularProgressView: UIView {
-    ///TODO: can rm
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

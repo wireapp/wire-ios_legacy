@@ -40,11 +40,6 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    //TODO: can rm, no need after iOS9
-//    deinit {
-//        NotificationCenter.default.removeObserver(self) ///TODO: app crash when running testTransparentImage
-//    }
-    
     init(user: UserType, userSession: ZMUserSession?) {
         self.user = user
         self.userSession = userSession
@@ -60,10 +55,11 @@ final class BackgroundViewController: UIViewController {
                                                object: nil)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -409,7 +409,7 @@ final class SettingsPropertyFactory {
             },
                 setAction: { (_, value) in
                     guard case .number(let enabled) = value else { return }
-                    ZMUserSession.shared()?.encryptMessagesAtRest = enabled.boolValue
+                    try? ZMUserSession.shared()?.setEncryptionAtRest(enabled: enabled.boolValue)
             })
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
