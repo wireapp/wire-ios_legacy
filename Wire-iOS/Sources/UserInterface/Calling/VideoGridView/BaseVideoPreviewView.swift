@@ -30,8 +30,7 @@ class BaseVideoPreviewView: OrientableView {
     
     var videoStream: VideoStream {
         didSet {
-            guard videoStream != oldValue else { return }
-            videoStreamDidChange()
+            updateUserDetails()
         }
     }
     
@@ -73,11 +72,6 @@ class BaseVideoPreviewView: OrientableView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    // MARK: - Handle Stream changes
-    func videoStreamDidChange() {
-        updateUserDetails()
     }
     
     // MARK: - Setup

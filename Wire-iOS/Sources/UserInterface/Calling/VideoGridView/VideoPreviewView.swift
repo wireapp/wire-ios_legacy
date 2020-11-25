@@ -23,16 +23,17 @@ import WireSyncEngine
 
 final class VideoPreviewView: BaseVideoPreviewView {
 
-    var isPaused = false {
-        didSet {
-            guard oldValue != isPaused else { return }
-            updateState(animated: true)
-        }
-    }
-
     override var isMaximized: Bool {
         didSet {
             updateFillMode()
+        }
+    }
+    
+    override var videoStream: VideoStream {
+        didSet {
+            updateVideoKind()
+            guard videoStream.isPaused != oldValue.isPaused else { return }
+            updateState(animated: true)
         }
     }
     
@@ -75,12 +76,6 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-
-    override func videoStreamDidChange() {
-        super.videoStreamDidChange()
-        updateVideoKind()
-        isPaused = videoStream.isPaused
-    }
     
     // MARK: - Fill mode
 
@@ -103,7 +98,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
 
     // MARK: - Paused state update
     private func updateState(animated: Bool = false) {
-        if isPaused {
+        if videoStream.isPaused {
             createSnapshotView()
             blurView.effect = nil
             pausedLabel.alpha = 0
