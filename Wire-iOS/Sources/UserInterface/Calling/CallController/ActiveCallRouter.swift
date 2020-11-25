@@ -49,6 +49,7 @@ class ActiveCallRouter: NSObject {
     
     private var isActiveCallShown = false
     private var isCallQualityShown = false
+    private var isCallTopOverlayShown = false
     private var scheduledPostCallAction: (() -> Void)?
     
     private var zClientViewController: ZClientViewController? {
@@ -111,13 +112,16 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     
     // MARK: - CallTopOverlay
     func showCallTopOverlay(for conversation: ZMConversation) {
+        guard !isCallTopOverlayShown else { return }
         let callTopOverlayController = CallTopOverlayController(conversation: conversation)
         callTopOverlayController.delegate = self
         zClientViewController?.setTopOverlay(to: callTopOverlayController)
+        isCallTopOverlayShown = true
     }
     
     func hideCallTopOverlay() {
         zClientViewController?.setTopOverlay(to: nil)
+        isCallTopOverlayShown = false
     }
     
     // MARK: - Alerts
