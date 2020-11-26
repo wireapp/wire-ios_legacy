@@ -13,7 +13,7 @@ pr:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_11.4.1.app
+    sudo xcode-select -switch /Applications/Xcode_12.2.app
     fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
@@ -61,6 +61,6 @@ steps:
     fastlane post_test
   env:  
     CODECOV_TOKEN: $(CODECOV_TOKEN)
-    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/chore/xcode12"
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Post Test"
