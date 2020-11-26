@@ -24,7 +24,7 @@ import WireSyncEngine
 
 final class BackgroundViewController: UIViewController {
     
-    var dispatchGroup: DispatchGroup = DispatchGroup()
+//    private lazy var dispatchGroup: DispatchGroup = DispatchGroup()///TODO: mem leak
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
@@ -140,7 +140,7 @@ final class BackgroundViewController: UIViewController {
     }
 
     private func updateForUserImage() {
-        dispatchGroup.enter()
+//        dispatchGroup.enter()
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
@@ -149,7 +149,7 @@ final class BackgroundViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.imageView.image = image
-                self?.dispatchGroup.leave()
+//                self?.dispatchGroup.leave()
             }
         }
     }
