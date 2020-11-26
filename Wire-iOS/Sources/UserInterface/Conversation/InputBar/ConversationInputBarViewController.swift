@@ -281,10 +281,6 @@ final class ConversationInputBarViewController: UIViewController,
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
-    }
-
     // MARK: - view life cycle
 
     override func viewDidLoad() {
@@ -353,7 +349,6 @@ final class ConversationInputBarViewController: UIViewController,
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         endEditingMessageIfNeeded()
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
 
     override func viewDidLayoutSubviews() {
