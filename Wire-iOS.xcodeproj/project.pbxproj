@@ -8869,14 +8869,20 @@
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EXCLUDED_ARCHS = arm64;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
 		8F42C557199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EXCLUDED_ARCHS = arm64;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
@@ -8884,6 +8890,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				EXCLUDED_ARCHS = "i386 arm64";
 			};
 			name = Debug;
 		};
@@ -8891,6 +8898,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
+				EXCLUDED_ARCHS = "i386 arm64";
 			};
 			name = Release;
 		};
