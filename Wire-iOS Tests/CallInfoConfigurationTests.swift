@@ -23,7 +23,7 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
     return lhs.isEqual(toConfiguration: rhs)
 }
 
-class CallInfoConfigurationTests: XCTestCase {
+final class CallInfoConfigurationTests: XCTestCase {
     
     var mockOtherUser: MockUser!
     var mockSelfUser: MockUser!

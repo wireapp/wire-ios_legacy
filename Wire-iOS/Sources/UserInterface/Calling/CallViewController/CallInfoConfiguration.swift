@@ -21,6 +21,7 @@ import avs
 import WireSyncEngine
 
 fileprivate extension VoiceChannel {
+    ///TODO: first hit here at CallInfoConfigurationTests/CallViewControllerTests
     func accessoryType() -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none

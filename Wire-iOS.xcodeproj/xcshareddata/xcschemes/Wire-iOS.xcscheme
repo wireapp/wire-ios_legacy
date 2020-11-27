@@ -27,7 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      disableMainThreadChecker = "YES"
+      enableUBSanitizer = "YES"
       codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -40,12 +40,27 @@
       </MacroExpansion>
       <AdditionalOptions>
          <AdditionalOption
+            key = "MallocGuardEdges"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
             key = "MallocStackLogging"
             value = ""
             isEnabled = "YES">
          </AdditionalOption>
          <AdditionalOption
-            key = "PrefersMallocStackLoggingLite"
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "/usr/lib/libgmalloc.dylib"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocScribble"
             value = ""
             isEnabled = "YES">
          </AdditionalOption>
@@ -77,6 +92,15 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
+                  Identifier = "CallInfoConfigurationTests">
+               </Test>
+               <Test
+                  Identifier = "CallInfoRootViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "CallViewControllerTests">
+               </Test>
+               <Test
                   Identifier = "ConversationCellSnapshotTestCase">
                </Test>
                <Test
@@ -84,6 +108,9 @@
                </Test>
                <Test
                   Identifier = "ConversationImageMessageTests/testOpaqueImage()">
+               </Test>
+               <Test
+                  Identifier = "ConversationInputBarViewControllerTests">
                </Test>
                <Test
                   Identifier = "ConversationReplyCellTests">
@@ -95,6 +122,9 @@
                   Identifier = "ConversationVideoMessageCellTests">
                </Test>
                <Test
+                  Identifier = "Data_ImageTypeTests/testThatItIdentifiesJPEG()">
+               </Test>
+               <Test
                   Identifier = "DismissalTests">
                </Test>
                <Test
@@ -102,6 +132,12 @@
                </Test>
                <Test
                   Identifier = "FilePreviewGeneratorTests">
+               </Test>
+               <Test
+                  Identifier = "FullscreenImageViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "FullscreenImageViewControllerSnapshotTests/testThatVeryLargeImageIsLoadedToImageView()">
                </Test>
                <Test
                   Identifier = "LicensesLoaderTests">
@@ -154,6 +190,15 @@
                <Test
                   Identifier = "UserImageViewContainerSnapshotTests">
                </Test>
+               <Test
+                  Identifier = "ZClientViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ZMUserMentionsTest">
+               </Test>
+               <Test
+                  Identifier = "ZipFileTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
@@ -168,6 +213,7 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
+      enableGPUValidationMode = "1"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
@@ -290,11 +336,6 @@
       <AdditionalOptions>
          <AdditionalOption
             key = "MallocStackLogging"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
-            key = "PrefersMallocStackLoggingLite"
             value = ""
             isEnabled = "YES">
          </AdditionalOption>

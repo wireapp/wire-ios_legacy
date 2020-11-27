@@ -18,7 +18,7 @@
 import XCTest
 @testable import Wire
 
-final class ZipFileTests: XCTestCase {
+final class ZipFileTests: XCTestCase {///TODO: crash when CallInfoRootViewController deinit
 
     func testThatFileURLsCanBeZipped() {
         // GIVEN

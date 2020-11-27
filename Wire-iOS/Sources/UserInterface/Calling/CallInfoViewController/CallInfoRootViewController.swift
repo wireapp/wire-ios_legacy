@@ -44,7 +44,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         }
     }
     
-    var configuration: CallInfoViewControllerInput {
+    var configuration: CallInfoViewControllerInput! {
         didSet {
             guard !configuration.isEqual(toConfiguration: oldValue) else { return }
             updateConfiguration(animated: true)
@@ -66,6 +66,11 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         fatalError("init(coder:) has not been implemented")
     }
 
+//    deinit {
+//        configuration = nil
+//    }
+    ///TODO: crash when ZMuser mention test
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -95,7 +100,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         contentNavigationController.navigationBar.setBackgroundImage(UIImage.singlePixelImage(with: .clear), for: .default)
         
         UIView.animate(withDuration: 0.2) { [view, configuration] in
-            view?.backgroundColor = configuration.overlayBackgroundColor
+            view?.backgroundColor = configuration?.overlayBackgroundColor
         }
 
         updatePresentedParticipantsListIfNeeded()

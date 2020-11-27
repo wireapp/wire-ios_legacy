@@ -215,7 +215,7 @@ class SettingsCellDescriptorFactory {
         let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
         developerCellDescriptors.append(showStatistics)
 
-        if !Analytics.shared.isOptedOut &&
+        if Analytics.shared?.isOptedOut == false &&
             !TrackingManager.shared.disableAnalyticsSharing {
 
             let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Reset call quality survey", isDestructive: false, selectAction: DebugActions.resetCallQualitySurveyMuteFilter)

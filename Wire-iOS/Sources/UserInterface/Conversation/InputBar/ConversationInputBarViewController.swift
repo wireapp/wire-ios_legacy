@@ -281,14 +281,15 @@ final class ConversationInputBarViewController: UIViewController,
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        textfieldObserverToken = nil
-        callStateObserverToken = nil
-        typingObserverToken = nil
-        conversationObserverToken = nil
-        userObserverToken = nil
-        typingObserverToken = nil
-    }///TODO: bad access when test_it_refreshes_if_timeout_expired
+//    deinit {
+//        textfieldObserverToken = nil
+//        callStateObserverToken = nil
+//        typingObserverToken = nil
+//        conversationObserverToken = nil
+//        userObserverToken = nil
+//        typingObserverToken = nil
+//    }
+    //////TODO: bad access when test_it_refreshes_if_timeout_expired
     ///ConversationInputBarViewControllerDelegate
 
     // MARK: - view life cycle

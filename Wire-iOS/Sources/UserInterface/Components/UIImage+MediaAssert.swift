@@ -24,7 +24,7 @@ extension UIImage: MediaAsset {
         if isTransparent {
             return pngData()
         } else {
-            return jpegData(compressionQuality: 1.0)
+            return jpegData(compressionQuality: 1.0)///TODO: crash
         }
     }
 

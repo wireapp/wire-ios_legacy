@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 
+///TODO: crash
 class ZMUserMentionsTest: XCTestCase {
     
     var selfUser: MockUserType!

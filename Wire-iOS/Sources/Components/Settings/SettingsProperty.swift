@@ -176,8 +176,8 @@ final class SettingsBlockProperty : SettingsProperty {
         trackNewValue()
     }
     
-    func trackNewValue() {
-        Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
+    func trackNewValue() {///TODO: Analytics.shared is nil
+        Analytics.shared?.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction
