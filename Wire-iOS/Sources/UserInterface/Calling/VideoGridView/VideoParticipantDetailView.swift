@@ -29,7 +29,7 @@ final class VideoParticipantDetailsView: UIView {
     )
     
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    private let microphoneIconView = IconImageView()
+    private let microphoneIconView = PulsatingIconImageView()
     
     var name: String? {
         didSet {
@@ -65,6 +65,7 @@ final class VideoParticipantDetailsView: UIView {
             $0.clipsToBounds = true
             addSubview($0)
         }
+        microphoneIconView.clipsToBounds = false
     }
     
     func createConstraints() {
