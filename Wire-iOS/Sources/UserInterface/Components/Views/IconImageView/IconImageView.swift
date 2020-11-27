@@ -56,13 +56,12 @@ class PulsingIconImageView: IconImageView {
     }
 
     func startPulsing() {
-        self.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         UIView.animate(
             withDuration: 1,
             delay: 0,
             options: [.repeat, .autoreverse, .curveEaseOut],
             animations: {
-                self.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                self.alpha = 0.1
         })
     }
     
