@@ -282,9 +282,13 @@ final class ConversationInputBarViewController: UIViewController,
     }
     
     deinit {
+        textfieldObserverToken = nil
+        callStateObserverToken = nil
         typingObserverToken = nil
         conversationObserverToken = nil
-    }///TOD): bad access when test_it_refreshes_if_timeout_expired
+        userObserverToken = nil
+        typingObserverToken = nil
+    }///TODO: bad access when test_it_refreshes_if_timeout_expired
     ///ConversationInputBarViewControllerDelegate
 
     // MARK: - view life cycle
