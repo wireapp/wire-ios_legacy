@@ -223,7 +223,10 @@ extension SettingsCellDescriptorFactory {
     
     private var appLockSection: SettingsSectionDescriptorType {
         let appLockToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.lockApp))
-        appLockToggle.settingsProperty.enabled = !AppLock.rules.forceAppLock
+
+        if let appLock = ZMUserSession.shared()?.appLockController {
+            appLockToggle.settingsProperty.enabled = !appLock.config.forceAppLock
+        }
         
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
