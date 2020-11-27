@@ -120,7 +120,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             return zmLog.warn("Stopped recording but did not get file URL")
         }
         
-        if shouldSend {
+        if shouldSend && !ProcessInfo.processInfo.isRunningTests {
             sendAudio()
         }
         

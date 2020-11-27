@@ -60,14 +60,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    var userSession: ZMUserSessionInterface? {
+    weak var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    var user: UserType? {
+    weak var user: UserType? {
         didSet {
             updateUser()
         }
@@ -92,6 +92,8 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     }
 
     deinit {
+        user = nil
+        userSession = nil
         userObserverToken = nil
     }
 

@@ -19,7 +19,7 @@
 import XCTest
 import WireLinkPreview
 @testable import Wire
-
+///TODO: crash at wait
 final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     override func tearDown() {

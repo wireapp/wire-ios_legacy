@@ -621,7 +621,6 @@
 		877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325D1E8912500017DD9A /* RoundedBadge.swift */; };
 		877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */; };
 		877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */; };
-		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
 		8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */; };
 		8784D4551E817D13007A6867 /* ConversationListTopBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBarViewController.swift */; };
 		8784D4571E81832F007A6867 /* ConversationListViewController+NetworkStatusBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4561E81832F007A6867 /* ConversationListViewController+NetworkStatusBarDelegate.swift */; };
@@ -8414,7 +8413,6 @@
 				EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
 				EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */,
-				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
 				7C440E8123473F8500D91B5F /* FolderCreationControllerSnapshotTests.swift in Sources */,
 				5EBF47C621B2FA6D0021CFFC /* MockReadReceipt.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,

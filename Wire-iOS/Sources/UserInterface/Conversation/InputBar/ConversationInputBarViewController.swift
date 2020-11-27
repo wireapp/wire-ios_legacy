@@ -36,7 +36,7 @@ final class ConversationInputBarViewController: UIViewController,
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
-    let conversation: ZMConversation
+    let conversation: ZMConversation ///TODO: sth can not dealloc
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
     private(set) var inputController: UIViewController? {
@@ -280,6 +280,12 @@ final class ConversationInputBarViewController: UIViewController,
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        typingObserverToken = nil
+        conversationObserverToken = nil
+    }///TOD): bad access when test_it_refreshes_if_timeout_expired
+    ///ConversationInputBarViewControllerDelegate
 
     // MARK: - view life cycle
 

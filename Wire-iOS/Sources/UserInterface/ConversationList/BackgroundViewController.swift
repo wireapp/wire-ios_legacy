@@ -18,21 +18,19 @@
 
 
 import UIKit
-import Cartography
 import WireSyncEngine
-
 
 final class BackgroundViewController: UIViewController {
     
-    var dispatchGroup: DispatchGroup = DispatchGroup()
+//    lazy var dispatchGroup: DispatchGroup! = DispatchGroup()
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
-    private let user: UserType
-    private let userSession: ZMUserSession?
+    private weak var user: UserType!
+    private weak var userSession: ZMUserSession?
     
     var darkMode: Bool = false {
         didSet {
@@ -41,18 +39,25 @@ final class BackgroundViewController: UIViewController {
     }
     
     init(user: UserType, userSession: ZMUserSession?) {
-        self.user = user
+        self.user = user///1st: testGroupAudioConnecting
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(colorSchemeChanged),
                                                name: .SettingsColorSchemeChanged,
                                                object: nil)
+    }
+    
+    deinit {
+//        dispatchGroup = nil
+        userObserverToken = nil
+//        user = nil
+        userSession = nil
     }
     
     @available(*, unavailable)
@@ -140,7 +145,7 @@ final class BackgroundViewController: UIViewController {
     }
 
     private func updateForUserImage() {
-        dispatchGroup.enter()
+//        dispatchGroup.enter()
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
@@ -149,7 +154,7 @@ final class BackgroundViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.imageView.image = image
-                self?.dispatchGroup.leave()
+//                self?.dispatchGroup.leave()
             }
         }
     }

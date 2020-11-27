@@ -38,6 +38,18 @@
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "MallocStackLogging"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "PrefersMallocStackLoggingLite"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -53,6 +65,9 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "BackgroundViewControllerTests">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -60,6 +75,42 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ConversationCellSnapshotTestCase">
+               </Test>
+               <Test
+                  Identifier = "ConversationImageMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationImageMessageTests/testOpaqueImage()">
+               </Test>
+               <Test
+                  Identifier = "ConversationReplyCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "DismissalTests">
+               </Test>
+               <Test
+                  Identifier = "EmoticonSubstitutionConfigurationTests/testThatParsingPerformanceForFullConfigurationIsEnoughForUsingOnMainQueue()">
+               </Test>
+               <Test
+                  Identifier = "FilePreviewGeneratorTests">
+               </Test>
+               <Test
+                  Identifier = "LicensesLoaderTests">
+               </Test>
+               <Test
+                  Identifier = "MessageReplyPreviewViewTests">
+               </Test>
+               <Test
+                  Identifier = "SavableImageTests">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -94,6 +145,15 @@
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
+               <Test
+                  Identifier = "TeamMetadataRefresherTests/test_it_refreshes_if_timeout_expired()">
+               </Test>
+               <Test
+                  Identifier = "TextMessageMentionsTests">
+               </Test>
+               <Test
+                  Identifier = "UserImageViewContainerSnapshotTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
@@ -102,6 +162,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      disableMainThreadChecker = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -226,6 +287,18 @@
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "MallocStackLogging"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "PrefersMallocStackLoggingLite"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -33,7 +33,8 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         message.sender = otherUser
         
         // THEN
-        verify(message: message, waitForImagesToLoad: true)
+        verify(message: message, waitForImagesToLoad: true) ///TODO: crash when Userimage view deinit, fix deinit not help, related to Wire.BackgroundViewController.
+        // disable BackgroundViewControllerTests not help
     }
     
     func testOpaqueImage() {

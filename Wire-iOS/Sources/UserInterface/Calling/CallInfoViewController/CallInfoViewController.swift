@@ -78,7 +78,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
-        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())///TODO: inject mock self user?
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
         actionsView.delegate = self
