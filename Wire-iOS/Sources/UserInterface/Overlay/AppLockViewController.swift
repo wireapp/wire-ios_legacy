@@ -128,9 +128,10 @@ extension AppLockViewController: AppLockUserInterface {
     }
     
     func presentUnlockScreen(with message: String,
+                             useCustomPasscode: Bool,
                              callback: @escaping RequestPasswordController.Callback) {
-        
-        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+
+        if useCustomPasscode {
             presentCustomPassCodeUnlockScreenIfNeeded(message: message, callback: callback)
         } else {
             presentRequestPasswordController(message: message, callback: callback)
