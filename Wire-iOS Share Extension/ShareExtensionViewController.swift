@@ -147,11 +147,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     private func recreateSharingSession(account: Account?) throws {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
             let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
-            let accountIdentifier = account?.userIdentifier,
-            let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
-            let configuration = SharingSessionConfiguration.load(from: url)
+            let accountIdentifier = account?.userIdentifier
             else { return }
-        
+        let configuration = AppLockRules.fromBundle()
         let appLockConfig = AppLockController.Config(useBiometricsOrAccountPassword: configuration.useBiometricsOrAccountPassword,
                                                      useCustomCodeInsteadOfAccountPassword: configuration.useCustomCodeInsteadOfAccountPassword,
                                                      forceAppLock: configuration.forceAppLock,
