@@ -41,13 +41,10 @@ extension IconImageStyle {
     }
 }
 
-class PulsatingIconImageView: IconImageView {
-    var pulsatingLayer = CAShapeLayer()
+class PulsingIconImageView: IconImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.addSublayer(pulsatingLayer)
-        pulsatingLayer.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -55,45 +52,13 @@ class PulsatingIconImageView: IconImageView {
     }
     
     override func set(style: IconImageStyle? = nil, size: StyleKitIcon.Size? = nil, color: UIColor? = nil) {
-        super.set(style: style, size: size, color: color)
-        setLayer()
+        super.set(style: style, size: size, color: .accent())
     }
 
-    private func setLayer() {
-        let size = self.size.rawValue
-        let path = UIBezierPath(
-            arcCenter: .zero ,
-            radius: size / 2 + 2,
-            startAngle: 0,
-            endAngle: 2 * .pi,
-            clockwise: true
-        )
-        
-        pulsatingLayer.path = path.cgPath
-        pulsatingLayer.strokeColor = UIColor.clear.cgColor
-        pulsatingLayer.lineWidth = 1
-        pulsatingLayer.fillColor = color.withAlphaComponent(0.2).cgColor
-        pulsatingLayer.position = CGPoint(x: size / 2 , y: size / 2)
-    }
-    
-    private var pulsatingAnimation: CABasicAnimation {
-        let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.toValue = 1.5
-        animation.duration = 1
-        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        animation.autoreverses = true
-        animation.repeatCount = .infinity
-        return animation
-    }
-    
     func startPulsing() {
-        pulsatingLayer.isHidden = false
-        pulsatingLayer.add(pulsatingAnimation, forKey: "pulsating")
     }
     
     func stopPulsing() {
-        pulsatingLayer.isHidden = true
-        pulsatingLayer.removeAnimation(forKey: "pulsating")
     }
 }
 
