@@ -147,14 +147,22 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     private func recreateSharingSession(account: Account?) throws {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
             let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
-            let accountIdentifier = account?.userIdentifier
+            let accountIdentifier = account?.userIdentifier,
+            let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
+            let configuration = SharingSessionConfiguration.load(from: url)
             else { return }
-
+        
+        let appLockConfig = AppLockController.Config(useBiometricsOrAccountPassword: configuration.useBiometricsOrAccountPassword,
+                                                     useCustomCodeInsteadOfAccountPassword: configuration.useCustomCodeInsteadOfAccountPassword,
+                                                     forceAppLock: configuration.forceAppLock,
+                                                     timeOut: configuration.appLockTimeout)
+        
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier,
-            environment: BackendEnvironment.shared
+            environment: BackendEnvironment.shared,
+            appLockConfig: appLockConfig
         )
     }
 
@@ -471,7 +479,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         guard
             let sharingSession = sharingSession,
-            AppLock.isActive || sharingSession.encryptMessagesAtRest
+            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
         else {
             localAuthenticationStatus = .disabled
             callback(localAuthenticationStatus)
@@ -483,16 +491,16 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
         
-        let scenario: AppLock.AuthenticationScenario
+        let scenario: AppLockController.AuthenticationScenario
         
         if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
-            scenario = .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                                   grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrAccountPassword,
+                                   grantAccessIfPolicyCannotBeEvaluated: !sharingSession.appLockController.config.forceAppLock)
         }
         
-        AppLock.evaluateAuthentication(scenario: scenario,
+        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
                                        description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {

@@ -136,36 +136,6 @@ public class AppLock {
     }
 }
 
-public class BiometricsState {
-    private static var lastPolicyDomainState: Data? {
-        get {
-            return UserDefaults.standard.data(forKey: UserDefaultsDomainStateKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsDomainStateKey)
-        }
-    }
-    
-    private static var currentPolicyDomainState: Data?
-    
-    // Tells us if biometrics database has changed (ex: fingerprints added or removed)
-    public static func biometricsChanged(in context: LAContext) -> Bool {
-        currentPolicyDomainState = context.evaluatedPolicyDomainState
-        guard let currentState = currentPolicyDomainState,
-            let lastState = lastPolicyDomainState,
-            currentState == lastState else {
-                return true
-        }
-        return false
-    }
-    
-    /// Persists the state of the biometric credentials.
-    /// Should be called after a successful unlock with account password
-    public static func persist() {
-        lastPolicyDomainState = currentPolicyDomainState
-    }
-}
-
 public struct AppLockRules: Decodable {
     public let useBiometricsOrAccountPassword: Bool
     public let useCustomCodeInsteadOfAccountPassword: Bool
