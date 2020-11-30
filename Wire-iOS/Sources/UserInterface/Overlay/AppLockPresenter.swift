@@ -115,19 +115,7 @@ final class AppLockPresenter {
             break
         }
     }
-
-    private var appLock: AppLockController? {
-        return ZMUserSession.shared()?.appLockController
-    }
-
-    private var useCustomPasscode: Bool {
-        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
-    }
-
-    private var lastUnlockDate: Date {
-        return appLock?.lastUnlockedDate ?? Date()
-    }
-
+    
 }
 
 // MARK: - Account password helper
@@ -279,7 +267,7 @@ extension AppLockPresenter {
         userInterface?.dismissUnlockScreen()
         
         authenticationState = .authenticated
-        appLock?.lastUnlockedDate = Date()
+        appLockInteractorInput.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 }

@@ -27,6 +27,8 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
+    var useCustomPasscode: Bool { get }
+    var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
     func verify(customPasscode: String)
@@ -34,15 +36,24 @@ protocol AppLockInteractorInput: class {
 }
 
 protocol AppLockInteractorOutput: class {
-    func authenticationEvaluated(with result: AppLock.AuthenticationResult)
+    func authenticationEvaluated(with result: AppLockController.AuthenticationResult)
     func passwordVerified(with result: VerifyPasswordResult?)
 }
+
+protocol AppLockType {
+
+    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
+                                description: String,
+                                with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void)
+    func persistBiometrics()
+}
+
 
 final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests
-    var appLock: AppLock.Type = AppLock.self
+//    var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     var _userSession: AppLockInteractorUserSession?
     
@@ -53,22 +64,52 @@ final class AppLockInteractor {
     }
     
     var appState: AppState?
+
+    private var appLock: AppLockController? {
+        return ZMUserSession.shared()?.appLockController
+    }
+
+    var isAppLockActive: Bool {
+        return appLock?.isActive ?? false
+    }
+
+    var useCustomPasscode: Bool {
+        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
+    }
+
+    var lastUnlockedDate: Date {
+        get { appLock?.lastUnlockedDate ?? Date() }
+        set { appLock?.lastUnlockedDate = newValue }
+    }
+
+    var isAppLockForced: Bool {
+        return appLock?.config.forceAppLock ?? false
+    }
+
+    var shouldUseBiometricsOrAccountPassword: Bool {
+        return appLock?.config.useBiometricsOrAccountPassword ?? false
+    }
+
+    var timeout: UInt {
+        return appLock?.config.appLockTimeout ?? .max
+    }
+
 }
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
-        return AppLock.isCustomPasscodeNotSet
+        return appLock?.isCustomPasscodeNotSet ?? false
     }
     
     var isAuthenticationNeeded: Bool {
-        let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        let screenLockIsActive = isAppLockActive && isLockTimeoutReached && isAppStateAuthenticated
         
         return screenLockIsActive || isDatabaseLocked
     }
     
     var isDimmingScreenWhenInactive: Bool {
-        return AppLock.isActive || userSession?.encryptMessagesAtRest == true
+        return isAppLockActive || userSession?.encryptMessagesAtRest == true
     }
     
     func evaluateAuthentication(description: String) {
@@ -116,7 +157,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         if let state = appState,
             case AppState.unauthenticated(error: _) = state,
             case AppState.authenticated(completedRegistration: _) = newState {
-            AppLock.lastUnlockedDate = Date()
+            lastUnlockedDate = Date()
         }
         appState = newState
     }
@@ -125,12 +166,12 @@ extension AppLockInteractor: AppLockInteractorInput {
 // MARK: - Helpers
 extension AppLockInteractor {
     
-    private var authenticationScenario: AppLock.AuthenticationScenario {
+    private var authenticationScenario: AppLockController.AuthenticationScenario {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword,
+                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced)
         }
     }
     
@@ -157,11 +198,11 @@ extension AppLockInteractor {
     }
     
     private var isLockTimeoutReached: Bool {
-        let lastAuthDate = appLock.lastUnlockedDate
+        let lastAuthDate = lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        let isWithinTimeoutWindow = (0..<Double(timeout)).contains(timeSinceAuth)
         return !isWithinTimeoutWindow
     }
 }

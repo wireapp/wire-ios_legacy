@@ -17,12 +17,11 @@
 //
 
 import Foundation
-import WireCommonComponents
+import WireDataModel
 import WireUtilities
 
-extension AppLock {
-    static var isCustomPasscodeNotSet: Bool {
-        return AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
-               Keychain.fetchPasscode() == nil
+extension AppLockController {
+    var isCustomPasscodeNotSet: Bool {
+        return config.useCustomCodeInsteadOfAccountPassword && Keychain.fetchPasscode() == nil
     }
 }
