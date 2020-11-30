@@ -27,7 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      enableUBSanitizer = "YES"
+      disableMainThreadChecker = "YES"
       codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -38,33 +38,6 @@
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-         <AdditionalOption
-            key = "MallocGuardEdges"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
-            key = "MallocStackLogging"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
-            key = "DYLD_INSERT_LIBRARIES"
-            value = "/usr/lib/libgmalloc.dylib"
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
-            key = "MallocScribble"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
-      </AdditionalOptions>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -113,16 +86,46 @@
                   Identifier = "ConversationInputBarViewControllerTests">
                </Test>
                <Test
+                  Identifier = "ConversationListCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationOptionsViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationRenamedCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationRenamedCellTests/testThatItRendersRenamedCellCorrectlySelf()">
+               </Test>
+               <Test
                   Identifier = "ConversationReplyCellTests">
                </Test>
                <Test
+                  Identifier = "ConversationStatusLineTests_Muting/testStatusShowSummaryForMultipleVariousMessagesWhenNoNotifications()">
+               </Test>
+               <Test
+                  Identifier = "ConversationStatusTests">
+               </Test>
+               <Test
                   Identifier = "ConversationTextMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTitleViewTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTitleViewTests/testThatItDoesNotRenderTheDownArrowForOutgoingConnections()">
                </Test>
                <Test
                   Identifier = "ConversationVideoMessageCellTests">
                </Test>
                <Test
                   Identifier = "Data_ImageTypeTests/testThatItIdentifiesJPEG()">
+               </Test>
+               <Test
+                  Identifier = "DecodeImageOperationTests">
+               </Test>
+               <Test
+                  Identifier = "DestructionCountdownViewTests/testThatItRendersCorrectly_50_Percent_Progress()">
                </Test>
                <Test
                   Identifier = "DismissalTests">
@@ -146,7 +149,28 @@
                   Identifier = "MessageReplyPreviewViewTests">
                </Test>
                <Test
+                  Identifier = "MessageToolboxViewTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkConditionHelperTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkConditionHelperTests/testThatSharedInstanceReturnQualityTypeWifi()">
+               </Test>
+               <Test
                   Identifier = "SavableImageTests">
+               </Test>
+               <Test
+                  Identifier = "SearchResultLabelTests">
+               </Test>
+               <Test
+                  Identifier = "SearchResultLabelTests/testThatItShowsStringWithoutHighlight()">
+               </Test>
+               <Test
+                  Identifier = "SearchResultLabelTests/testThatItShowsStringWithoutHighlightInDarkTheme()">
+               </Test>
+               <Test
+                  Identifier = "SettingsTableViewControllerSnapshotTests/testForOptionsGroupFullTableView()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -162,6 +186,9 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()">
@@ -182,13 +209,31 @@
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
                <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests()">
+               </Test>
+               <Test
                   Identifier = "TeamMetadataRefresherTests/test_it_refreshes_if_timeout_expired()">
                </Test>
                <Test
                   Identifier = "TextMessageMentionsTests">
                </Test>
                <Test
+                  Identifier = "TypingIndicatorViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "TypingIndicatorViewSnapshotTests/testThatLabelAndLineAreShownWhenAnimated()">
+               </Test>
+               <Test
+                  Identifier = "UserCellTests/testGuestUser_Wireless()">
+               </Test>
+               <Test
                   Identifier = "UserImageViewContainerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "UserSearchResultsViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "UserSearchResultsViewControllerTests/testThatHighlightedTopMostItemUpdatesAfterSelectedTopMostUser()">
                </Test>
                <Test
                   Identifier = "ZClientViewControllerTests">
@@ -333,13 +378,6 @@
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
-      <AdditionalOptions>
-         <AdditionalOption
-            key = "MallocStackLogging"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
