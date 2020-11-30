@@ -46,6 +46,7 @@ XCODE_VERSION=( ${version//./ } )
 rm -rf ${TMPDIR}/TemporaryItems/*carthage*
 
 echo "ℹ️  Carthage bootstrap. This might take a while..."
+echo "⚠️  Using patched Carthage script for Xcode12"
 bash ./carthageXcode12.sh bootstrap --cache-builds --platform ios
 echo ""
 
