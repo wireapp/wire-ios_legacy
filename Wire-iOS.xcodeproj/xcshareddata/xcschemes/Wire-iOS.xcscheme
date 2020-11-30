@@ -53,6 +53,9 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingSmallWidth()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests">
                </Test>
                <Test
@@ -72,6 +75,9 @@
                </Test>
                <Test
                   Identifier = "CallViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ContactsDataSourceTests/testPerformanceExample()">
                </Test>
                <Test
                   Identifier = "ConversationCellSnapshotTestCase">
