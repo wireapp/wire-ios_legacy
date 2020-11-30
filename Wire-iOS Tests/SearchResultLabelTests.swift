@@ -19,11 +19,12 @@
 import XCTest
 @testable import Wire
 
-class SearchResultLabelTests: ZMSnapshotTestCase {
+class SearchResultLabelTests: ZMSnapshotTestCase {///TODO: regen
     var sut: SearchResultLabel!
 
     override func setUp() {
         super.setUp()
+        recordMode = true
         accentColor = .violet
     }
 

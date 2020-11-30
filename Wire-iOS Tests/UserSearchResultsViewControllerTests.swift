@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
+final class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: UserSearchResultsViewController!
     var serviceUser: ZMUser!
@@ -108,6 +108,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: view)
     }
 
+    ///TODO: crash
     func testThatHighlightedTopMostItemUpdatesAfterSelectedTopMostUser() {
         createSUT()
 
