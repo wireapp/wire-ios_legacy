@@ -84,6 +84,11 @@ class AppStateCalculator {
             completion?()
         })
     }
+    
+    private func transitionToAnauthenticated(error: Error? = nil) {
+        loadingAccount = nil
+        transition(to: .unauthenticated(error: error  as? NSError))
+    }
 }
 
 // MARK: - ApplicationStateObserving
@@ -115,21 +120,20 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func sessionManagerDidFailToLogin(account: Account?,
-                                      from selectedAccount: Account?,
-                                      error: Error) {
-        var authenticationError: NSError?
-        // We only care about the error if it concerns the selected account, or the loading account.
-        if account != nil && (selectedAccount == account || loadingAccount == account) {
-            authenticationError = error as NSError
-        }
-        // When the account is nil, we care about the error if there are some accounts in accountManager
-        else if account == nil && selectedAccount != nil {
-            authenticationError = error as NSError
-        }
-
-        loadingAccount = nil
-        transition(to: .unauthenticated(error: authenticationError))
+    func sessionManagerDidFailToLogin(error: Error) {
+        transitionToAnauthenticated(error: error)
+    }
+    
+    func sessionManagerDidFailToFetchUserIdentifier() {
+        transitionToAnauthenticated()
+    }
+    
+    func sessionManagerDidFailLoadSession(error: Error) {
+        transitionToAnauthenticated(error: error)
+    }
+    
+    func sessionManagerDidFailToRegisterClient(error: Error) {
+        transitionToAnauthenticated(error: error)
     }
         
     func sessionManagerDidBlacklistCurrentVersion() {
