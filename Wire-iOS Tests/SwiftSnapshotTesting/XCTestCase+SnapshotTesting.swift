@@ -242,6 +242,7 @@ extension XCTestCase {
     }
 
     func verify(matching value: UIViewController,
+                customSize: CGSize? = nil,
                 named name: String? = nil,
                 record recording: Bool = false,
                 file: StaticString = #file,
@@ -249,7 +250,7 @@ extension XCTestCase {
                 line: UInt = #line) {
 
         let failure = verifySnapshot(matching: value,
-                                     as: .image,
+                                     as: customSize == nil ? .image : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
                                      named: name,
                                      record: recording,
                                      snapshotDirectory: snapshotDirectory(file: file),

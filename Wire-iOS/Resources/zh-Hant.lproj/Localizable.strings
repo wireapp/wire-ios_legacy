@@ -1803,7 +1803,7 @@
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "建立密碼鎖";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.info_label.highlighted" = "它無法恢復。";
 "create_passcode.create_button.title" = "建立密碼鎖";
 
 // Custom app lock - create passcode validation
@@ -1822,7 +1822,7 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
+"wipe_database.title_label" = "重設為新設備使用";
 "wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
@@ -1832,7 +1832,7 @@
 
 "wipe_database.alert.description" = "Confirm database deletion";
 "wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
-"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.placeholder" = "輸入「Delete」";
 "wipe_database.alert.confirm" = "刪除";
 "wipe_database.alert.confirm_input" = "刪除";
 

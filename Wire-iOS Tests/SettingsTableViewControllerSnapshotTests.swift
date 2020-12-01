@@ -71,17 +71,20 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         verify(group: group)
     }
 
-    func testForOptionsGroupScrollToBottom() {
+    func testForOptionsGroupFullTableView() {
         setToLightTheme()
         
         let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
+        
+        // set the width of the VC, to calculate the height on content size
+        sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
+        sut.view.layoutIfNeeded()
 
-        sut.tableView.setContentOffset(CGPoint(x:0, y:CGFloat.greatestFiniteMagnitude), animated: false)
 
-        verify(matching: sut)
+        verify(matching: sut, customSize: CGSize(width: CGSize.iPhoneSize.iPhone4_7.width, height: sut.tableView.contentSize.height))
     }
 
     // MARK: - dark theme

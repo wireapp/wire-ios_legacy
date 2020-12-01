@@ -113,11 +113,9 @@ final class CallViewController: UIViewController {
     }
 
     @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
-
         guard !isOverlayVisible else { return }
 
-        let location = sender.location(in: self.view)
-        videoGridViewController.switchFillMode(location: location)
+        videoGridViewController.handleDoubleTap(gesture: sender)
     }
 
     deinit {
