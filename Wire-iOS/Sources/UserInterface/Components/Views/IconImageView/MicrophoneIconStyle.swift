@@ -20,12 +20,14 @@ import Foundation
 import WireCommonComponents
 import WireSyncEngine
 
-enum MicrophoneIconStyle: String, IconImageStyle {
+enum MicrophoneIconStyle: String {
     case muted
     case unmuted
     case active
     case hidden
+}
 
+extension MicrophoneIconStyle: IconImageStyle {
     var icon: StyleKitIcon? {
         switch self {
         case .muted:
@@ -40,7 +42,7 @@ enum MicrophoneIconStyle: String, IconImageStyle {
     var tintColor: UIColor? {
         switch self {
         case .active:
-            return .green
+            return .accent()
         default:
             return nil
         }
@@ -53,6 +55,10 @@ enum MicrophoneIconStyle: String, IconImageStyle {
     var accessibilitySuffix: String {
         return rawValue
     }
+}
+
+extension MicrophoneIconStyle: PulsingIconImageStyle {
+    var shouldPulse: Bool { return self == .active }
 }
 
 extension MicrophoneIconStyle {

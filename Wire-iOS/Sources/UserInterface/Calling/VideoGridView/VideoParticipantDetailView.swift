@@ -65,7 +65,6 @@ final class VideoParticipantDetailsView: UIView {
             $0.clipsToBounds = true
             addSubview($0)
         }
-        microphoneIconView.clipsToBounds = false
     }
     
     func createConstraints() {

@@ -41,35 +41,6 @@ extension IconImageStyle {
     }
 }
 
-class PulsingIconImageView: IconImageView {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func set(style: IconImageStyle? = nil, size: StyleKitIcon.Size? = nil, color: UIColor? = nil) {
-        super.set(style: style, size: size, color: .accent())
-    }
-
-    func startPulsing() {
-        UIView.animate(
-            withDuration: 1,
-            delay: 0,
-            options: [.repeat, .autoreverse, .curveEaseOut],
-            animations: {
-                self.alpha = 0.1
-        })
-    }
-    
-    func stopPulsing() {
-        stopAnimating()
-    }
-}
-
 class IconImageView: UIImageView {
     private(set) var size: StyleKitIcon.Size = .tiny
     private(set) var color: UIColor = UIColor.from(scheme: .iconGuest)
