@@ -45,7 +45,6 @@ final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests
-//    var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     var _userSession: AppLockInteractorUserSession?
     
