@@ -68,7 +68,7 @@ final class SelfProfileViewController: UIViewController {
 
     init(selfUser: SettingsSelfUser,
          userRightInterfaceType: UserRightInterface.Type = UserRight.self,
-         userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+         userSession: UserSessionInterface? = ZMUserSession.shared()) {
         
         self.selfUser = selfUser
 

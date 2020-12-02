@@ -56,7 +56,7 @@ final class AppLockInteractor {
     
     var appState: AppState?
 
-    var appLock: AppLockController? {
+    var appLock: AppLockType? {
         return userSession?.appLockController
     }
 
@@ -69,8 +69,12 @@ final class AppLockInteractor {
     }
 
     var lastUnlockedDate: Date {
-        get { appLock?.lastUnlockedDate ?? Date() }
-        set { appLock?.lastUnlockedDate = newValue }
+        get { userSession?.appLockController.lastUnlockedDate ?? Date() }
+        set {
+            if var session = userSession {
+                session.appLockController.lastUnlockedDate = newValue
+            }
+        }
     }
 
     var isAppLockForced: Bool {

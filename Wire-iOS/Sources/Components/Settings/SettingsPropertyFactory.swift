@@ -63,7 +63,7 @@ final class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
-    weak var userSession: ZMUserSessionInterface?
+    weak var userSession: UserSessionInterface?
     var selfUser: SettingsSelfUser?
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
@@ -83,11 +83,11 @@ final class SettingsPropertyFactory {
         SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
     ]
     
-    convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
+    convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
     }
     
-    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
+    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
         self.mediaManager = mediaManager

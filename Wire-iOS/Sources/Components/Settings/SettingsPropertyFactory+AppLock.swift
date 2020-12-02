@@ -21,13 +21,13 @@ import WireSyncEngine
 // MARK: - AppLock helper
 extension SettingsPropertyFactory {
     
-    private var appLock: AppLockController? {
-        return ZMUserSession.shared()?.appLockController
+    private var appLock: AppLockType? {
+        return userSession?.appLockController
     }
 
     var isAppLockActive: Bool {
-        get { appLock?.isActive ?? false }
-        set { appLock?.isActive = newValue }
+        get { userSession?.appLockController.isActive ?? false }
+        set { userSession?.appLockController.isActive = newValue }
     }
     
     var useCustomPasscode: Bool {

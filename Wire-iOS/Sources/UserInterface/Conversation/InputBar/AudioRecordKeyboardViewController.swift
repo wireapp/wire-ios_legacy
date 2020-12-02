@@ -71,7 +71,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     private var currentEffect: AVSAudioEffectType = .none
     private var currentEffectFilePath: String?
     
-    private var appLock: AppLockController? {
+    private var appLock: AppLockType? {
         return ZMUserSession.shared()?.appLockController
     }
     

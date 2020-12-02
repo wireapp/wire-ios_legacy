@@ -38,11 +38,13 @@ private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
 
 private final class UserSessionMock: AppLockInteractorUserSession {
     
-    var appLockController: AppLockController
+    var appLockController: AppLockType = AppLockMock()
     
     var encryptMessagesAtRest: Bool = false
     
     var isDatabaseLocked: Bool = false
+    
+    var result: VerifyPasswordResult? = .denied
     
     func unlockDatabase(with context: LAContext) throws {
         isDatabaseLocked = false
@@ -52,30 +54,28 @@ private final class UserSessionMock: AppLockInteractorUserSession {
         return "token"
     }
     
-    var result: VerifyPasswordResult? = .denied
     func verify(password: String, completion: @escaping (VerifyPasswordResult?) -> Void) {
         completion(result)
     }
-    
-    init(selfUser: ZMUser) {
-        let config = AppLockController.Config(useBiometricsOrAccountPassword: false,
-                                                     useCustomCodeInsteadOfAccountPassword: false,
-                                                     forceAppLock: false,
-                                                     timeOut: 900)
-        self.appLockController = AppLockMock(config: config, selfUser: selfUser)
-    }
 }
 
-private final class AppLockMock: AppLockController {
+final class AppLockMock: AppLockType {
+    
+    var isActive: Bool = false
+    var lastUnlockedDate: Date = Date()
+    var isCustomPasscodeNotSet: Bool = false
+    var config: AppLockController.Config = AppLockController.Config(useBiometricsOrAccountPassword: false,
+                                                                    useCustomCodeInsteadOfAccountPassword: false,
+                                                                    forceAppLock: false,
+                                                                    timeOut: 900)
+    
     static var authenticationResult: AppLockController.AuthenticationResult = .granted
-    override func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
-                                description: String,
-                                with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
+    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario, description: String, with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
         callback(AppLockMock.authenticationResult, LAContext())
     }
     
     static var didPersistBiometrics: Bool = false
-    override func persistBiometrics() {
+    func persistBiometrics() {
         AppLockMock.didPersistBiometrics = true
     }
 }
@@ -88,7 +88,7 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        userSessionMock = UserSessionMock(selfUser: ZMUser.selfUser(in: uiMOC))
+        userSessionMock = UserSessionMock()
         sut = AppLockInteractor()
         sut._userSession = userSessionMock
         sut.output = appLockInteractorOutputMock
