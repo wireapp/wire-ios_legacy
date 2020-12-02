@@ -57,12 +57,12 @@ private final class UserSessionMock: AppLockInteractorUserSession {
         completion(result)
     }
     
-    init(moc: NSManagedObjectContext) {
+    init(selfUser: ZMUser) {
         let config = AppLockController.Config(useBiometricsOrAccountPassword: false,
                                                      useCustomCodeInsteadOfAccountPassword: false,
                                                      forceAppLock: false,
                                                      timeOut: 900)
-        self.appLockController = AppLockMock(config: config, selfUser: ZMUser.selfUser(in: moc))
+        self.appLockController = AppLockMock(config: config, selfUser: selfUser)
     }
 }
 
@@ -88,7 +88,7 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        userSessionMock = UserSessionMock(moc: uiMOC)
+        userSessionMock = UserSessionMock(selfUser: ZMUser.selfUser(in: uiMOC))
         sut = AppLockInteractor()
         sut._userSession = userSessionMock
         sut.output = appLockInteractorOutputMock
