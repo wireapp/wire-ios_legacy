@@ -45,6 +45,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
     var shouldFill: Bool {
         return isMaximized ? false : videoKind.shouldFill
     }
+    
+    override var stream: Stream {
+        didSet {
+            updateVideoKind()
+        }
+    }
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -81,7 +87,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
+
     // MARK: - Fill mode
 
     private var videoKind: VideoKind = .none {

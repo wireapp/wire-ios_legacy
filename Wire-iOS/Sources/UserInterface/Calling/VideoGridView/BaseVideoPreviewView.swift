@@ -79,7 +79,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
@@ -88,6 +88,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
     
     func setupViews() {
+        layer.borderColor = UIColor.accent().cgColor
         backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
@@ -104,6 +105,10 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
+    private func setBorder(visible: Bool) {
+        layer.borderWidth = visible ? 2 : 0
+    }
+    
     // MARK: - Orientation & Layout
     
     override func layoutSubviews() {
