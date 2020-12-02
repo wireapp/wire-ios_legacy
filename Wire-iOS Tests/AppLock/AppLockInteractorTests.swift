@@ -18,14 +18,15 @@
 
 import XCTest
 import WireSyncEngine
+import WireDataModel
 import LocalAuthentication
 @testable import Wire
 @testable import WireCommonComponents
 
 private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
     
-    var authenticationResult: AppLock.AuthenticationResult?
-    func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
+    var authenticationResult: AppLockController.AuthenticationResult?
+    func authenticationEvaluated(with result: AppLockController.AuthenticationResult) {
         authenticationResult = result
     }
     
@@ -36,6 +37,9 @@ private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
 }
 
 private final class UserSessionMock: AppLockInteractorUserSession {
+    
+    var appLockController: AppLockController
+    
     var encryptMessagesAtRest: Bool = false
     
     var isDatabaseLocked: Bool = false
@@ -52,22 +56,31 @@ private final class UserSessionMock: AppLockInteractorUserSession {
     func verify(password: String, completion: @escaping (VerifyPasswordResult?) -> Void) {
         completion(result)
     }
+    
+    init(moc: NSManagedObjectContext) {
+        let config = AppLockController.Config(useBiometricsOrAccountPassword: false,
+                                                     useCustomCodeInsteadOfAccountPassword: false,
+                                                     forceAppLock: false,
+                                                     timeOut: 900)
+        self.appLockController = AppLockMock(config: config, selfUser: ZMUser.selfUser(in: moc))
+    }
 }
 
-private final class AppLockMock: AppLock {
-    static var authenticationResult: AuthenticationResult = .granted
-
-    override final class func evaluateAuthentication(scenario: AuthenticationScenario, description: String, with callback: @escaping (AuthenticationResult, LAContext) -> Void) {
-        callback(authenticationResult, LAContext())
+private final class AppLockMock: AppLockController {
+    static var authenticationResult: AppLockController.AuthenticationResult = .granted
+    override func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
+                                description: String,
+                                with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
+        callback(AppLockMock.authenticationResult, LAContext())
     }
     
     static var didPersistBiometrics: Bool = false
-    override final class func persistBiometrics() {
-        didPersistBiometrics = true
+    override func persistBiometrics() {
+        AppLockMock.didPersistBiometrics = true
     }
 }
 
-final class AppLockInteractorTests: XCTestCase {
+final class AppLockInteractorTests: ZMSnapshotTestCase {
     var sut: AppLockInteractor!
     private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
     private var userSessionMock: UserSessionMock!
@@ -75,11 +88,10 @@ final class AppLockInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        userSessionMock = UserSessionMock()
+        userSessionMock = UserSessionMock(moc: uiMOC)
         sut = AppLockInteractor()
         sut._userSession = userSessionMock
         sut.output = appLockInteractorOutputMock
-        sut.appLock = AppLockMock.self
     }
     
     override func tearDown() {
@@ -232,21 +244,20 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatStateChangeFromUnauthenticatedToAuthenticationUpdatesLastUnlockedDate() {
         //given
-        AppLock.lastUnlockedDate = Date(timeIntervalSince1970: 0)
+        sut.lastUnlockedDate = Date(timeIntervalSince1970: 0)
         sut.appState = AppState.unauthenticated(error: nil)
         //when
         sut.appStateDidTransition(to: AppState.authenticated(completedRegistration: false, isDatabaseLocked: false))
         //then
-        XCTAssert(AppLock.lastUnlockedDate > Date(timeIntervalSince1970: 0))
+        XCTAssert(sut.lastUnlockedDate > Date(timeIntervalSince1970: 0))
     }
 }
 
 extension AppLockInteractorTests {
     func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
-        AppLock.isActive = appLockActive
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
-        let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
+        userSessionMock.appLockController.isActive = appLockActive
+        let timeInterval = timeoutReached ? -Double(userSessionMock.appLockController.config.appLockTimeout)-100 : -10
+        userSessionMock.appLockController.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
         sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false, isDatabaseLocked: databaseIsLocked) : AppState.unauthenticated(error: nil)
     }
 }

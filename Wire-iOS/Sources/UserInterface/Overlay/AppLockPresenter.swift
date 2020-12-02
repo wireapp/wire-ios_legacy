@@ -133,14 +133,14 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
-        userInterface?.presentUnlockScreen(with: message, useCustomPasscode: useCustomPasscode) { [weak self] password in
+        userInterface?.presentUnlockScreen(with: message, useCustomPasscode: appLockInteractorInput.useCustomPasscode) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
 
                 guard let password = password,
                       self.checkPassword(password: password) else { return }
 
-                if self.useCustomPasscode {
+                if self.appLockInteractorInput.useCustomPasscode {
                     self.appLockInteractorInput.verify(customPasscode: password)
                 } else {
                     self.appLockInteractorInput.verify(password: password)
@@ -229,7 +229,7 @@ extension AppLockPresenter {
     
     @objc func applicationDidEnterBackground() {
         if self.authenticationState == .authenticated {
-            appLock?.lastUnlockedDate = Date()
+            appLockInteractorInput.lastUnlockedDate = Date()
         }
         if appLockInteractorInput.isDimmingScreenWhenInactive {
             userInterface?.setContents(dimmed: true)

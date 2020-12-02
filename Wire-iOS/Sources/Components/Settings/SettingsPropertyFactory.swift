@@ -334,7 +334,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    return SettingsPropertyValue(AppLock.isActive)
+                    return SettingsPropertyValue(self.isAppLockActive)
             },
                 setAction: { _, value in
                     switch value {
@@ -342,7 +342,7 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                            AppLock.isActive = result
+                        self.isAppLockActive = result
                         })                        
 
                     default:
@@ -420,4 +420,3 @@ final class SettingsPropertyFactory {
         fatalError("Cannot create SettingsProperty for \(propertyName)")
     }
 }
-

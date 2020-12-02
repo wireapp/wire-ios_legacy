@@ -20,8 +20,9 @@ import Foundation
 import UIKit
 import WireCommonComponents
 import WireSyncEngine
+import LocalAuthentication
 
-typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface
+typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
@@ -40,15 +41,6 @@ protocol AppLockInteractorOutput: class {
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-protocol AppLockType {
-
-    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
-                                description: String,
-                                with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void)
-    func persistBiometrics()
-}
-
-
 final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
@@ -65,8 +57,8 @@ final class AppLockInteractor {
     
     var appState: AppState?
 
-    private var appLock: AppLockController? {
-        return ZMUserSession.shared()?.appLockController
+    var appLock: AppLockController? {
+        return userSession?.appLockController
     }
 
     var isAppLockActive: Bool {
@@ -113,7 +105,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func evaluateAuthentication(description: String) {
-        appLock.evaluateAuthentication(scenario: authenticationScenario,
+        appLock?.evaluateAuthentication(scenario: authenticationScenario,
                                        description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
                         
@@ -130,7 +122,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     private func processVerifyResult(result: VerifyPasswordResult?) {
         notifyPasswordVerified(with: result)
         if case .validated = result {
-            appLock.persistBiometrics()
+            appLock?.persistBiometrics()
         }
     }
     
