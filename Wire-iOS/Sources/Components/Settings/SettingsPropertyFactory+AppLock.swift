@@ -42,4 +42,8 @@ extension SettingsPropertyFactory {
         return appLock?.config.forceAppLock ?? false
     }
     
+    var isAppLockAvailable: Bool {
+        return appLock?.config.isAvailable ?? false
+    }
+    
 }
