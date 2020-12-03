@@ -352,10 +352,6 @@ final class SettingsValueCell: SettingsTableCell {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // MARK: - Properties observing
     
     @objc func onPropertyChanged(_ notification: Notification) {

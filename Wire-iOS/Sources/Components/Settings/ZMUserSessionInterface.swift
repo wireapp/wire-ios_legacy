@@ -30,7 +30,7 @@ protocol ZMUserSessionInterface: class {
 
     var isNotificationContentHidden : Bool { get set }
     
-    var encryptMessagesAtRest : Bool { get set }    
+    var encryptMessagesAtRest : Bool { get }
 }
 
 // an interface for ZMUserSession's Swift-only functions
