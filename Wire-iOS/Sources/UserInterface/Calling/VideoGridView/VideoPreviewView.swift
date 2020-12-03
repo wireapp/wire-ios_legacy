@@ -30,10 +30,14 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var shouldFill: Bool = true {
+    var isMaximized: Bool = false {
         didSet {
             updateFillMode()
         }
+    }
+    
+    var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
     }
 
     private var previewView: AVSVideoView?
@@ -51,6 +55,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     override init(stream: Stream, isCovered: Bool) {
         super.init(stream: stream, isCovered: isCovered)
         updateState()
+        updateVideoKind()
     }
     
     // MARK: - Setup
@@ -73,7 +78,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
 
     override func streamDidChange() {
         super.streamDidChange()
-        videoKind = VideoKind(videoState: stream.videoState)
+        updateVideoKind()
     }
     
     // MARK: - Fill mode
@@ -81,9 +86,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var videoKind: VideoKind = .none {
         didSet {
             guard oldValue != videoKind else { return }
-            shouldFill = videoKind.shouldFill
             updateFillMode()
         }
+    }
+
+    private func updateVideoKind() {
+        videoKind = VideoKind(videoState: stream.videoState)
     }
 
     private func updateFillMode() {
@@ -155,7 +163,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
-        preview.shouldFill = videoKind.shouldFill
+        preview.shouldFill = shouldFill
         
         previewView = preview
     }

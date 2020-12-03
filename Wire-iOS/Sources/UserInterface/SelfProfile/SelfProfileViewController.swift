@@ -68,7 +68,7 @@ final class SelfProfileViewController: UIViewController {
 
     init(selfUser: SettingsSelfUser,
          userRightInterfaceType: UserRightInterface.Type = UserRight.self,
-         userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+         userSession: UserSessionInterface? = ZMUserSession.shared()) {
         
         self.selfUser = selfUser
 
@@ -214,7 +214,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else {
+        guard
+            let appLock = ZMUserSession.shared()?.appLockController,
+            appLock.config.useCustomCodeInsteadOfAccountPassword
+        else {
             callback(newValue)
             return
         }

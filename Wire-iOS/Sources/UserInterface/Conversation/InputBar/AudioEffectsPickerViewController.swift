@@ -17,12 +17,10 @@
 // 
 
 
-import Foundation
 import Cartography
 import WireCommonComponents
 import UIKit
 import avs
-import WireSystem
 import WireDataModel
 
 protocol AudioEffectsPickerDelegate: class {
@@ -31,7 +29,7 @@ protocol AudioEffectsPickerDelegate: class {
 
 final class AudioEffectsPickerViewController: UIViewController {
     
-    public let recordingPath: String
+    let recordingPath: String
     fileprivate let duration: TimeInterval
     weak var delegate: AudioEffectsPickerDelegate?
     
@@ -104,11 +102,11 @@ final class AudioEffectsPickerViewController: UIViewController {
         tearDown()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder) is not implemented")
     }
     
-    public init(recordingPath: String, duration: TimeInterval) {
+    init(recordingPath: String, duration: TimeInterval) {
         self.duration = duration
         self.recordingPath = recordingPath
         super.init(nibName: .none, bundle: .none)
@@ -126,7 +124,7 @@ final class AudioEffectsPickerViewController: UIViewController {
     let progressView = WaveformProgressView()
     fileprivate let subtitleLabel = UILabel()
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.createCollectionView()
@@ -158,8 +156,11 @@ final class AudioEffectsPickerViewController: UIViewController {
             subtitleLabel.edges == statusBoxView.edges
         }
         
-        self.loadLevels()
-        
+        /// Do not load in tests, which may cause exception break point to break when loading audio assets
+        if !ProcessInfo.processInfo.isRunningTests {
+             loadLevels()
+        }
+  
         self.setState(.time, animated: false)
     }
     
@@ -190,12 +191,12 @@ final class AudioEffectsPickerViewController: UIViewController {
         }
     }
     
-    public override func removeFromParent() {
+    override func removeFromParent() {
         tearDown()
         super.removeFromParent()
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectCurrentFilter()
         delay(2) {
@@ -205,12 +206,12 @@ final class AudioEffectsPickerViewController: UIViewController {
         }
     }
     
-    public override func viewDidDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         tearDown()
     }
     
-    public override func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
             self.lastLayoutSize = self.view.bounds.size
@@ -300,15 +301,15 @@ final class AudioEffectsPickerViewController: UIViewController {
 }
 
 extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.effects.count
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AudioEffectCell.reuseIdentifier, for: indexPath) as! AudioEffectCell
         cell.effect = self.effects[indexPath.item]
         let lastColumn = ((indexPath as NSIndexPath).item % type(of: self).effectColumns) == type(of: self).effectColumns - 1
@@ -318,12 +319,12 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
         return cell
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: CGFloat(Int(collectionView.bounds.width) / type(of: self).effectColumns),
                           height: CGFloat(Int(collectionView.bounds.height) / type(of: self).effectRows))
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedAudioEffect = self.effects[indexPath.item]
     }
 }
