@@ -470,6 +470,7 @@ extension AppRootRouter: AudioPermissionsObserving {
 // MARK: - Post notifications
 extension AppRootRouter {
     private func updateTeamFeature() {
+        ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
     }
 }
 
