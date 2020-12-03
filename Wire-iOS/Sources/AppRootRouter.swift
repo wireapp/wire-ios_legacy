@@ -29,7 +29,6 @@ extension AppRootRouter {
 public class AppRootRouter: NSObject {
     
     // MARK: - Public Property
-    let callWindow = CallWindow(frame: UIScreen.main.bounds)
     let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
     
     // MARK: - Private Property
@@ -43,9 +42,14 @@ public class AppRootRouter: NSObject {
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
     private let foregroundNotificationFilter: ForegroundNotificationFilter
     private var quickActionsManager: QuickActionsManager
+    private var authenticatedRouter: AuthenticatedRouter? {
+        didSet {
+            setupAnalyticsSharing()
+        }
+    }
     
     private var observerTokens: [NSObjectProtocol] = []
-    private var authenticatedBlocks : [() -> Void] = []
+    private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
 
     // MARK: - Private Set Property
@@ -124,8 +128,6 @@ public class AppRootRouter: NSObject {
     }
     
     private func setupAdditionalWindows() {
-        callWindow.makeKeyAndVisible()
-        callWindow.isHidden = true
         overlayWindow.makeKeyAndVisible()
         overlayWindow.isHidden = true
     }
@@ -203,16 +205,10 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
-            rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
-            
-            AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
-            
+            configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
-            
         case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
-            rootViewController.view.window?.tintColor = UIColor.accent()
-            
-            UIColor.setAccentOverride(.undefined)
+            configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
@@ -254,8 +250,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 }
 
-// MARK: - Navigation Helper
 extension AppRootRouter {
+    // MARK: - Navigation Helpers
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
@@ -309,29 +305,17 @@ extension AppRootRouter {
     }
     
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
-        guard let selectedAccount = SessionManager.shared?.accountManager.selectedAccount else {
+        guard
+            let selectedAccount = SessionManager.shared?.accountManager.selectedAccount,
+            let authenticatedRouter = buildAuthenticatedRouter(account: selectedAccount,
+                                                               isComingFromRegistration: isComingFromRegistration)
+        else {
             return
         }
         
-        let clientViewController = ZClientViewController(account: selectedAccount,
-                                                         selfUser: ZMUser.selfUser())
-        clientViewController.isComingFromRegistration = isComingFromRegistration
+        self.authenticatedRouter = authenticatedRouter
         
-        /// show the dialog only when lastAppState is .unauthenticated and the user is not a team member, i.e. the user not in a team login to a new device
-        clientViewController.needToShowDataUsagePermissionDialog = false
-        
-        if case .unauthenticated(_) = self.appStateCalculator.previousAppState {
-            if SelfUser.current.isTeamMember {
-                TrackingManager.shared.disableCrashSharing = true
-                TrackingManager.shared.disableAnalyticsSharing = false
-            } else {
-                clientViewController.needToShowDataUsagePermissionDialog = true
-            }
-        }
-        
-        Analytics.shared.selfUser = SelfUser.current
-        
-        rootViewController.set(childViewController: clientViewController,
+        rootViewController.set(childViewController: authenticatedRouter.viewController,
                                completion: completion)
     }
     
@@ -339,6 +323,44 @@ extension AppRootRouter {
         let skeletonViewController = SkeletonViewController(from: fromAccount, to: toAccount)
         rootViewController.set(childViewController: skeletonViewController,
                                completion: completion)
+    }
+    
+    // MARK: - Helpers
+    private func configureUnauthenticatedAppearance() {
+        rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
+        AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
+    }
+    
+    private func configureAuthenticatedAppearance() {
+        rootViewController.view.window?.tintColor = .accent()
+        UIColor.setAccentOverride(.undefined)
+    }
+    
+    private func setupAnalyticsSharing() {
+        Analytics.shared.selfUser = SelfUser.current
+        
+        guard
+            appStateCalculator.wasUnauthenticated,
+            Analytics.shared.selfUser?.isTeamMember ?? false
+        else {
+            return
+        }
+        
+        TrackingManager.shared.disableCrashSharing = true
+        TrackingManager.shared.disableAnalyticsSharing = false
+    }
+    
+    private func buildAuthenticatedRouter(account: Account,
+                                           isComingFromRegistration: Bool) -> AuthenticatedRouter? {
+        
+        let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnauthenticated
+                                                    && !SelfUser.current.isTeamMember
+        
+        return AuthenticatedRouter(rootViewController: rootViewController,
+                                   account: account,
+                                   selfUser: ZMUser.selfUser(),
+                                   isComingFromRegistration: isComingFromRegistration,
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
     }
 }
 
@@ -349,7 +371,6 @@ extension AppRootRouter {
             if AppDelegate.shared.shouldConfigureSelfUserProvider {
                 SelfUser.provider = ZMUserSession.shared()
             }
-            callWindow.callController.transitionToLoggedInSession()
         }
         
         let colorScheme = ColorScheme.default
@@ -359,9 +380,9 @@ extension AppRootRouter {
     
     private func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
-            callWindow.callController.presentCallCurrentlyInProgress()
-            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.openDeepLink(needsAuthentication: true)
+            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
@@ -442,5 +463,86 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+
+protocol AuthenticatedRouterProtocol: class {
+    func updateActiveCallPresentationState()
+    func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
+}
+
+// MARK: - Class AuthenticatedRouter
+
+class AuthenticatedRouter: NSObject {
+    
+    // MARK: - Private Property
+    
+    private let builder: AuthenticatedWireFrame
+    private let rootViewController: RootViewController
+    private let activeCallRouter: ActiveCallRouter
+    private weak var _viewController: ZClientViewController?
+    
+    // MARK: - Public Property
+
+    var viewController: UIViewController {
+        let viewController = _viewController ?? builder.build(router: self)
+        _viewController = viewController
+        return viewController
+    }
+    
+    // MARK: - Init
+    
+    init(rootViewController: RootViewController,
+         account: Account,
+         selfUser: SelfUserType,
+         isComingFromRegistration: Bool,
+         needToShowDataUsagePermissionDialog: Bool) {
+        
+        self.rootViewController = rootViewController
+        activeCallRouter = ActiveCallRouter(rootviewController: rootViewController)
+        
+        builder = AuthenticatedWireFrame(account: account,
+                                         selfUser: selfUser,
+                                         isComingFromRegistration: needToShowDataUsagePermissionDialog,
+                                         needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+    }
+}
+
+// MARK: - AuthenticatedRouterProtocol
+extension AuthenticatedRouter: AuthenticatedRouterProtocol {
+    func updateActiveCallPresentationState() {
+        activeCallRouter.updateActiveCallPresentationState()
+    }
+    
+    func minimizeCallOverlay(animated: Bool,
+                             withCompletion completion: Completion?) {
+        activeCallRouter.minimizeCall(animated: animated, completion: completion)
+    }
+}
+
+// MARK: - AuthenticatedWireFrame
+struct AuthenticatedWireFrame {
+    private var account: Account
+    private var selfUser: SelfUserType
+    private var isComingFromRegistration: Bool
+    private var needToShowDataUsagePermissionDialog: Bool
+    
+    init(account: Account,
+         selfUser: SelfUserType,
+         isComingFromRegistration: Bool,
+         needToShowDataUsagePermissionDialog: Bool) {
+        self.account = account
+        self.selfUser = selfUser
+        self.isComingFromRegistration = isComingFromRegistration
+        self.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
+    }
+    
+    func build(router: AuthenticatedRouterProtocol) -> ZClientViewController {
+        let viewController = ZClientViewController(account: account, selfUser: selfUser)
+        viewController.isComingFromRegistration = isComingFromRegistration
+        viewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
+        viewController.router =  router
+        return viewController
     }
 }

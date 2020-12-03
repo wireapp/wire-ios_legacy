@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
+final class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     var sut: AudioEffectsPickerViewController! = .none
     
     

@@ -18,9 +18,8 @@
 
 import XCTest
 @testable import Wire
-import UIKit
 
-final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
+final class LegalHoldAlertFactoryTests: XCTestCase {
 
     var user: MockUserType!
 
@@ -36,23 +35,18 @@ final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
 
     func testThatItCanCreateLegalHoldActivatedAlert() {
         let alert = LegalHoldAlertFactory.makeLegalHoldActivatedAlert(for: user, suggestedStateChangeHandler: nil)
-        verifyAlertController(alert)
+        verify(matching: alert)
     }
 
     func testThatItCanCreateLegalHoldDeactivatedAlert() {
         let alert = LegalHoldAlertFactory.makeLegalHoldDeactivatedAlert(for: user, suggestedStateChangeHandler: nil)
-        verifyAlertController(alert)
+        verify(matching: alert)
     }
 
     func testThatItCanCreateLegalHoldPendingAlert() {
         let prekey = LegalHoldRequest.Prekey(id: 65535, key: Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!)
         let request = LegalHoldRequest(target: UUID(), requester: UUID(), clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
         let alert = LegalHoldAlertFactory.makeLegalHoldActivationAlert(for: request, user: user, suggestedStateChangeHandler: nil)
-        verifyAlertController(alert)
+        verify(matching: alert)
     }
-
-    private func ignorePresentation(_ viewController: UIViewController, animated: Bool, completionHandler: (() -> Void)?) {
-        // no-op
-    }
-
 }

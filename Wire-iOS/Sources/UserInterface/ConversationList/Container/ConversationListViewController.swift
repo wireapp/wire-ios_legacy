@@ -245,7 +245,11 @@ final class ConversationListViewController: UIViewController {
             contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             
-            topBarView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            networkStatusViewController.view.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            networkStatusViewController.view.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            networkStatusViewController.view.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            
+            topBarView.topAnchor.constraint(equalTo: networkStatusViewController.view.bottomAnchor),
             topBarView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             topBarView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
             
@@ -266,11 +270,7 @@ final class ConversationListViewController: UIViewController {
             noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
             noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
         ]
-        
-        ///TODO: merge this method and activate the constraints in a batch
-        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView,
-                                                                        controller: self)
-        
+                
         NSLayoutConstraint.activate(constraints)
     }
 

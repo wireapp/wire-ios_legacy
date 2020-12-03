@@ -73,7 +73,6 @@ final class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-        NotificationCenter.default.removeObserver(self)
     }
 
     override func loadView() {
@@ -109,16 +108,6 @@ final class NetworkStatusViewController : UIViewController {
         if let userSession = ZMUserSession.shared() {
             enqueue(state: viewState(from: userSession.networkState))
         }
-    }
-
-    func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
-        constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
-            networkStatusViewControllerView.leading == containerView.leading
-            networkStatusViewControllerView.trailing == containerView.trailing
-            bottomView.top == networkStatusViewControllerView.bottom
-        }
-        
-        view.topAnchor.constraint(equalTo: controller.safeTopAnchor).isActive = true
     }
 
     func showOfflineAlert() {
