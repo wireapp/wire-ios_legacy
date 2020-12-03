@@ -58,7 +58,6 @@ class AppStateCalculator {
     }
     
     // MARK: - Private Property
-    private var loadingAccount: Account?
     private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
     private var hasEnteredForeground: Bool = false
@@ -83,11 +82,6 @@ class AppStateCalculator {
         delegate?.appStateCalculator(self, didCalculate: appState, completion: {
             completion?()
         })
-    }
-    
-    private func transitionToAnauthenticated(error: Error? = nil) {
-        loadingAccount = nil
-        transition(to: .unauthenticated(error: error  as? NSError))
     }
 }
 
@@ -120,20 +114,8 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
     
-    func sessionManagerDidFailToLogin(error: Error) {
-        transitionToAnauthenticated(error: error)
-    }
-    
-    func sessionManagerDidFailToFetchUserIdentifier() {
-        transitionToAnauthenticated()
-    }
-    
-    func sessionManagerDidFailLoadSession(error: Error) {
-        transitionToAnauthenticated(error: error)
-    }
-    
-    func sessionManagerDidFailToRegisterClient(error: Error) {
-        transitionToAnauthenticated(error: error)
+    func sessionManagerDidFailToLogin(error: Error?) {
+        transition(to: .unauthenticated(error: error as NSError?))
     }
         
     func sessionManagerDidBlacklistCurrentVersion() {
@@ -151,7 +133,6 @@ extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerWillOpenAccount(_ account: Account,
                                        from selectedAccount: Account?,
                                        userSessionCanBeTornDown: @escaping () -> Void) {
-        loadingAccount = account
         let appState: AppState = .loading(account: account,
                                           from: selectedAccount)
         transition(to: appState,
@@ -159,7 +140,6 @@ extension AppStateCalculator: SessionManagerDelegate {
     }
     
     func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
-        loadingAccount = nil
         isDatabaseLocked = isLocked
         let appState: AppState = .authenticated(completedRegistration: false,
                                                 isDatabaseLocked: isLocked)
@@ -183,10 +163,5 @@ extension AppStateCalculator {
     public func testHelper_setAppState(_ appState: AppState) {
         self.appState = appState
         transition(to: appState)
-    }
-    
-    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
-    public func testHelper_setLoadingAccount(_ loadingAccount: Account) {
-        self.loadingAccount = loadingAccount
     }
 }

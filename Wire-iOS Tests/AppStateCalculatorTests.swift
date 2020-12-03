@@ -66,7 +66,6 @@ final class AppStateCalculatorTests: XCTestCase {
         let account = Account(userName: "dummy", userIdentifier: UUID())
         let selectedAccount = Account(userName: "selectedDummy", userIdentifier: UUID())
         sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
-        sut.testHelper_setLoadingAccount(account)
         delegate.wasNotified = false
         sut.applicationDidBecomeActive()
         
@@ -98,44 +97,6 @@ final class AppStateCalculatorTests: XCTestCase {
         
         // WHEN
         sut.sessionManagerDidFailToLogin(error: error)
-
-        // THEN
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(delegate.wasNotified)
-    }
-    
-    func testThatAppStateChanges_OnDidFailToFetchUserIdentifier() {
-        // GIVEN
-        sut.applicationDidBecomeActive()
-        
-        // WHEN
-        sut.sessionManagerDidFailToFetchUserIdentifier()
-
-        // THEN
-        XCTAssertEqual(sut.appState, .unauthenticated(error: nil))
-        XCTAssertTrue(delegate.wasNotified)
-    }
-    
-    func testThatAppStateChanges_OnDidFailLoadSession(error: Error) {
-        // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
-        sut.applicationDidBecomeActive()
-        
-        // WHEN
-        sut.sessionManagerDidFailLoadSession(error: error)
-
-        // THEN
-        XCTAssertEqual(sut.appState, .unauthenticated(error: error))
-        XCTAssertTrue(delegate.wasNotified)
-    }
-    
-    func testThatAppStateChanges_OnDidFailToRegisterClient(error: Error) {
-        // GIVEN
-        let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
-        sut.applicationDidBecomeActive()
-        
-        // WHEN
-        sut.sessionManagerDidFailToRegisterClient(error: error)
 
         // THEN
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
