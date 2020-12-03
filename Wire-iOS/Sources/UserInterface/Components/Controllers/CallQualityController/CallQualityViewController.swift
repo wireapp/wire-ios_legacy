@@ -56,16 +56,6 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
 
     // MARK: Initialization
     
-    static func configureSurveyController(callDuration: TimeInterval) -> CallQualityViewController {
-        let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""),
-                                                   callDuration: Int(callDuration))
-
-        controller.modalPresentationCapturesStatusBarAppearance = true
-        controller.modalPresentationStyle = .overFullScreen
-        return controller
-        
-    }
-    
     init(questionLabelText: String, callDuration: Int) {
         self.questionLabelText = questionLabelText
         self.callDuration = callDuration
@@ -191,14 +181,6 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
     }
     
     // MARK: Dismiss Events
-
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let window = view.window
-        super.dismiss(animated: flag) {
-            completion?()
-            (window as? CallWindow)?.hideWindowIfNeeded()
-        }
-    }
 
     @objc func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
@@ -344,3 +326,14 @@ class QualityScoreSelectorView : UIView {
     }
 }
 
+class CallQualityAnimator: NSObject, UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
+    }
+}

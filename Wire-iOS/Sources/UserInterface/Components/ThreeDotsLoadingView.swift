@@ -32,10 +32,6 @@ final class ThreeDotsLoadingView: UIView {
     let dot2 = UIView()
     let dot3 = UIView()
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         

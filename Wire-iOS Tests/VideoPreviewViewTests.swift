@@ -31,14 +31,14 @@ class VideoPreviewViewTests: XCTestCase {
         super.tearDown()
     }
     
-    private func stream(muted: Bool) -> Wire.Stream {
+    private func stream(muted: Bool, videoState: VideoState = .started) -> Wire.Stream {
         let client = AVSClient(userId: UUID(), clientId: UUID().transportString())
 
         return Wire.Stream(
             streamId: client,
             participantName: "Bob",
             microphoneState: muted ? .muted : .unmuted,
-            videoState: .started
+            videoState: videoState
         )
     }
     
@@ -47,6 +47,33 @@ class VideoPreviewViewTests: XCTestCase {
         view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
         view.backgroundColor = .graphite
         return view
+    }
+    
+    func testThatItShouldNotFill_WhenMaximized() {
+        // GIVEN
+        sut = createView(from: stream(muted: false), isCovered: false)
+        
+        // WHEN
+        sut.isMaximized = true
+        
+        // THEN
+        XCTAssertFalse(sut.shouldFill)
+    }
+    
+    func testThatItShouldFill_WhenSharingVideo_AndNotMaximized() {
+        // GIVEN / WHEN
+        sut = createView(from: stream(muted: false), isCovered: false)
+        
+        // THEN
+        XCTAssertTrue(sut.shouldFill)
+    }
+    
+    func testThatItShouldNotFill_WhenScreenSharing_AndNotMaximized() {
+        // GIVEN / WHEN
+        sut = createView(from: stream(muted: false, videoState: .screenSharing), isCovered: false)
+        
+        // THEN
+        XCTAssertFalse(sut.shouldFill)
     }
     
     func testDefaultState() {

@@ -71,7 +71,7 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidBecomeActive()
         
         // WHEN
-        sut.sessionManagerWillMigrateAccount()
+        sut.sessionManagerWillMigrateAccount(userSessionCanBeTornDown: {})
         
         // THEN
         XCTAssertEqual(sut.appState, .migrating)

@@ -31,10 +31,6 @@ final class FileBackupExcluder: BackupExcluder {
         (.libraryDirectory, ".")
     ]
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillEnterForeground(_:)),
@@ -49,11 +45,13 @@ final class FileBackupExcluder: BackupExcluder {
         self.excludeFilesFromBackup()
     }
     
-    @objc func applicationWillEnterForeground(_ sender: AnyObject!) {
+    @objc
+    private func applicationWillEnterForeground(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     
-    @objc func applicationWillResignActive(_ sender: AnyObject!) {
+    @objc
+    private func applicationWillResignActive(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     

@@ -45,6 +45,13 @@ private final class UserSessionMock: AppLockInteractorUserSession {
     var isDatabaseLocked: Bool = false
     
     var result: VerifyPasswordResult? = .denied
+    func setEncryptionAtRest(enabled: Bool) throws {
+        encryptMessagesAtRest = enabled
+    }
+    
+    func setEncryptionAtRest(enabled: Bool, skipMigration: Bool) throws {
+        encryptMessagesAtRest = enabled
+    }
     
     func unlockDatabase(with context: LAContext) throws {
         isDatabaseLocked = false
