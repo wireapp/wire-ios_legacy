@@ -53,6 +53,9 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingSmallSize()">
+               </Test>
+               <Test
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingSmallWidth()">
                </Test>
                <Test
@@ -107,6 +110,9 @@
                   Identifier = "ConversationReplyCellTests">
                </Test>
                <Test
+                  Identifier = "ConversationStatusLineTests/testStatusSecondReplyDoesNotSummarize()">
+               </Test>
+               <Test
                   Identifier = "ConversationStatusLineTests_Muting/testStatusShowSummaryForMultipleVariousMessagesWhenNoNotifications()">
                </Test>
                <Test
@@ -147,6 +153,9 @@
                </Test>
                <Test
                   Identifier = "FullscreenImageViewControllerSnapshotTests/testThatVeryLargeImageIsLoadedToImageView()">
+               </Test>
+               <Test
+                  Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
                   Identifier = "LicensesLoaderTests">
