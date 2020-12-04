@@ -314,6 +314,7 @@ extension AppRootRouter {
         }
         
         self.authenticatedRouter = authenticatedRouter
+        updateTeamFeature()
         
         rootViewController.set(childViewController: authenticatedRouter.viewController,
                                completion: completion)
