@@ -60,10 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return SessionManager.shared?.unauthenticatedSession
     }
 
-    var callWindowRootViewController: CallWindowRootViewController? {
-        return appRootRouter?.callWindow.rootViewController as? CallWindowRootViewController
-    }
-
     var notificationsWindow: UIWindow? {
         return appRootRouter?.overlayWindow
     }

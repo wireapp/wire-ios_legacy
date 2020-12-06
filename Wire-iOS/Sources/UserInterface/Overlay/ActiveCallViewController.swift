@@ -24,14 +24,15 @@ import WireSyncEngine
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
+protocol ActiveCallViewControllerDelegate: class {
+    func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
+                                              for conversation: ZMConversation?)
+}
+
 /// ViewController container for CallViewControllers. Displays the active the controller for active or incoming calls.
 final class ActiveCallViewController : UIViewController {
     
-    weak var dismisser: ViewControllerDismisser? {
-        didSet {
-            visibleVoiceChannelViewController.dismisser = dismisser
-        }
-    }
+    weak var delegate: ActiveCallViewControllerDelegate?
     
     var callStateObserverToken : Any?
     
@@ -60,10 +61,6 @@ final class ActiveCallViewController : UIViewController {
         }
     }
     
-    override func loadView() {
-        view = PassthroughTouchesView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,6 +70,7 @@ final class ActiveCallViewController : UIViewController {
         }
         
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
+        visibleVoiceChannelViewController.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,14 +91,6 @@ final class ActiveCallViewController : UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        let window = view.window
-        super.dismiss(animated: flag) {
-            completion?()
-            (window as? CallWindow)?.hideWindowIfNeeded()
-        }
-    }
-
     func updateVisibleVoiceChannelViewController() {
         guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {
@@ -108,7 +98,7 @@ final class ActiveCallViewController : UIViewController {
         }
         
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
-        visibleVoiceChannelViewController.dismisser = dismisser
+        visibleVoiceChannelViewController.delegate = self
     }
     
     func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {
@@ -144,4 +134,11 @@ extension ActiveCallViewController : WireCallCenterCallStateObserver {
         updateVisibleVoiceChannelViewController()
     }
     
+}
+
+extension ActiveCallViewController: CallViewControllerDelegate {
+    func callViewControllerDidDisappear(_ callController: CallViewController,
+                                        for conversation: ZMConversation?) {
+        delegate?.activeCallViewControllerDidDisappear(self, for: conversation)
+    }
 }

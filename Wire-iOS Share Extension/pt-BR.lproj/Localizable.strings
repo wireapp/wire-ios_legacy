@@ -37,8 +37,8 @@
 "share_extension.timeout.message" = "Verifique sua conexão de Internet e tente novamente. Os anexos foram salvos na conversa.";
 
 "content.file.too_big" = "Você pode enviar arquivos de até %@";
-"content.file.unsupported_attachment" = "Unsupported attachment";
-"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+"content.file.unsupported_attachment" = "Anexo não suportado";
+"share_extension.error.conversation_does_not_exist.message" = "Por favor, selecione uma conversa para compartilhar";
 
 "share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
 "share_extension.logged_out.title" = "Você foi deslogado dessa conta.";

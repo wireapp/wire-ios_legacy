@@ -20,7 +20,12 @@ import UIKit
 
 final class PinnableThumbnailViewController: UIViewController {
 
-    private let thumbnailView = RoundedView()
+    private let thumbnailView: RoundedView = {
+        let view = RoundedView()
+        view.accessibilityIdentifier = "ThumbnailView"
+        return view
+    }()
+
     private let thumbnailContainerView = UIView()
     private(set) var contentView: OrientableView?
 
@@ -76,10 +81,6 @@ final class PinnableThumbnailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
