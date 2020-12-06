@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -15,21 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireUtilities
+import WireSyncEngine
 
-extension Keychain {
-    static func deletePasscode() {
-        try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
+// MARK: - AppLock helper
+extension SettingsPropertyFactory {
+    
+    private var appLock: AppLockType? {
+        return userSession?.appLockController
     }
 
-    static func fetchPasscode() -> Data? {
-        let data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode)
-
-        if data?.isEmpty == true {
-            return nil
-        }
-
-        return data
+    var isAppLockActive: Bool {
+        get { userSession?.appLockController.isActive ?? false }
+        set { userSession?.appLockController.isActive = newValue }
     }
+    
+    var useCustomPasscode: Bool {
+        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
+    }
+    
+    var timeout: UInt {
+        return appLock?.config.appLockTimeout ?? .max
+    }
+    
+    var isAppLockForced: Bool {
+        return appLock?.config.forceAppLock ?? false
+    }
+    
 }

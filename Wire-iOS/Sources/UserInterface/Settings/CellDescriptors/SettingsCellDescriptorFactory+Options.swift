@@ -223,12 +223,13 @@ extension SettingsCellDescriptorFactory {
     
     private var appLockSection: SettingsSectionDescriptorType {
         let appLockToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.lockApp))
-        appLockToggle.settingsProperty.enabled = !AppLock.rules.forceAppLock
+
+        appLockToggle.settingsProperty.enabled = !settingsPropertyFactory.isAppLockForced
         
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
             headerGenerator: { return nil },
-            footerGenerator: { return SettingsCellDescriptorFactory.appLockSectionSubtitle },
+            footerGenerator: { return self.appLockSectionSubtitle },
             visibilityAction: { _ in
                 return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil)
             }
@@ -334,8 +335,8 @@ extension SettingsCellDescriptorFactory {
         return formatter
     }
     
-    private static var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLock.rules.appLockTimeout)
+    private var appLockSectionSubtitle: String {
+        let timeout = TimeInterval(settingsPropertyFactory.timeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {
@@ -348,7 +349,7 @@ extension SettingsCellDescriptorFactory {
         
         var components = [lockDescription, typeKey.localized]
         
-        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+        if settingsPropertyFactory.useCustomPasscode {
             let reminderKey = "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder"
             components.append(reminderKey.localized)
         }

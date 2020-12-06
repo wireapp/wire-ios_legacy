@@ -31,6 +31,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var presentCreatePasscodeScreenCalled: Bool = false
     
     func presentUnlockScreen(with message: String,
+                             useCustomPasscode: Bool,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
@@ -68,6 +69,9 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
+    
+    var useCustomPasscode: Bool = false
+    var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {
         passwordToVerify = password
@@ -100,7 +104,6 @@ final class AppLockPresenterTests: XCTestCase {
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
     }
     
     override func tearDown() {
@@ -329,39 +332,39 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
         //given
-        AppLock.lastUnlockedDate = Date()
+        appLockInteractor.lastUnlockedDate = Date()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .authenticated)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertTrue(Date() > AppLock.lastUnlockedDate)
+        XCTAssertTrue(Date() > appLockInteractor.lastUnlockedDate)
     }
     
     func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
         //given
         let date = Date()
-        AppLock.lastUnlockedDate = date
+        appLockInteractor.lastUnlockedDate = date
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .cancelled)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .needed)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .pendingPassword)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
     }
     
     func testThatApplicationDidEnterBackgroundDimsContentIfAppLockActive() {

@@ -25,13 +25,15 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
     var settingsPropertyFactory: SettingsPropertyFactory!
+    var userSessionMock: MockZMUserSession!
 
 	override func setUp() {
 		super.setUp()
 
         coreDataFixture = CoreDataFixture()
+        userSessionMock = MockZMUserSession()
 
-		settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: nil)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
 
 		MockUserRight.isPermitted = true
@@ -43,6 +45,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 		settingsPropertyFactory = nil
 
         coreDataFixture = nil
+        userSessionMock = nil
 
         super.tearDown()
 	}

@@ -63,7 +63,7 @@ final class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
-    weak var userSession: ZMUserSessionInterface?
+    weak var userSession: UserSessionInterface?
     var selfUser: SettingsSelfUser?
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
@@ -83,11 +83,11 @@ final class SettingsPropertyFactory {
         SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
     ]
     
-    convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
+    convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
     }
     
-    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
+    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
         self.mediaManager = mediaManager
@@ -334,7 +334,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    return SettingsPropertyValue(AppLock.isActive)
+                    return SettingsPropertyValue(self.isAppLockActive)
             },
                 setAction: { _, value in
                     switch value {
@@ -342,7 +342,7 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                            AppLock.isActive = result
+                        self.isAppLockActive = result
                         })                        
 
                     default:
@@ -420,4 +420,3 @@ final class SettingsPropertyFactory {
         fatalError("Cannot create SettingsProperty for \(propertyName)")
     }
 }
-
