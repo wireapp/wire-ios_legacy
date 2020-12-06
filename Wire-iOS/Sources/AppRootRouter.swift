@@ -472,8 +472,8 @@ extension AppRootRouter: AudioPermissionsObserving {
     }
 }
 
-// MARK: - Post notifications
 extension AppRootRouter {
+    //TODO: katerina we should do it in our slow sync
     private func updateTeamFeature() {
         ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
     }
