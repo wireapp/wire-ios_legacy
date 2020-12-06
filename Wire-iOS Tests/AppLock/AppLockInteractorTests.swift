@@ -71,10 +71,14 @@ final class AppLockMock: AppLockType {
     var isActive: Bool = false
     var lastUnlockedDate: Date = Date()
     var isCustomPasscodeNotSet: Bool = false
-    var config: AppLockController.Config = AppLockController.Config(useBiometricsOrAccountPassword: false,
-                                                                    useCustomCodeInsteadOfAccountPassword: false,
-                                                                    forceAppLock: false,
-                                                                    timeOut: 900)
+    var config: AppLockController.Config
+    
+    init(config: AppLockController.Config = AppLockController.Config(useBiometricsOrAccountPassword: false,
+                                                                     useCustomCodeInsteadOfAccountPassword: false,
+                                                                     forceAppLock: false,
+                                                                     timeOut: 900)) {
+        self.config = config
+    }
     
     static var authenticationResult: AppLockController.AuthenticationResult = .granted
     func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario, description: String, with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {

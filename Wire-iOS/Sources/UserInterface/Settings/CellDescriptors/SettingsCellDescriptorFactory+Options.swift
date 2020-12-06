@@ -38,7 +38,7 @@ extension SettingsCellDescriptorFactory {
             externalAppsSection,
             popularDemandSendButtonSection,
             popularDemandDarkThemeSection,
-            SecurityFlags.forceEncryptionAtRest.isEnabled ? nil : appLockSection,
+            isAppLockAvailable ? appLockSection : nil,
             SecurityFlags.generateLinkPreviews.isEnabled ? linkPreviewSection : nil
         ].compactMap { $0 }
         
@@ -355,5 +355,13 @@ extension SettingsCellDescriptorFactory {
         }
         
         return components.joined(separator: " ")
+    }
+}
+
+// MARK: - Helpers
+extension SettingsCellDescriptorFactory {
+    // Encryption at rest will trigger its own variant of AppLock.
+    var isAppLockAvailable: Bool {
+        return !SecurityFlags.forceEncryptionAtRest.isEnabled && settingsPropertyFactory.isAppLockAvailable
     }
 }
