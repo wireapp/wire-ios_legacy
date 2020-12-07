@@ -489,17 +489,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
         
-        let scenario: AppLockController.AuthenticationScenario
-        
-        if sharingSession.encryptMessagesAtRest {
-            scenario = .databaseLock
-        } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrAccountPassword,
-                                   grantAccessIfPolicyCannotBeEvaluated: !sharingSession.appLockController.config.forceAppLock)
-        }
-        
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                       description: "share_extension.privacy_security.lock_app.description".localized)
+        sharingSession.appLockController.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {
                 if case .granted = result {
