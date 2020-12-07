@@ -66,7 +66,7 @@ final class AppLockInteractor {
     }
 
     var useCustomPasscode: Bool {
-        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
+        return true//appLock?.config.useCustomCodeInsteadOfAccountPassword == true
     }
 
     var lastUnlockedDate: Date {
