@@ -20,9 +20,14 @@ import UIKit
 import WireSyncEngine
 import avs
 
+protocol CallViewControllerDelegate: class {
+    func callViewControllerDidDisappear(_ callController: CallViewController,
+                                        for conversation: ZMConversation?)
+}
+
 final class CallViewController: UIViewController {
 
-    weak var dismisser: ViewControllerDismisser?
+    weak var delegate: CallViewControllerDelegate?
     fileprivate var tapRecognizer: UITapGestureRecognizer!
     fileprivate let mediaManager: AVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
@@ -146,13 +151,13 @@ final class CallViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
 
         if isInteractiveDismissal {
-            dismisser?.dismiss(viewController: self, completion: nil)
+            delegate?.callViewControllerDidDisappear(self, for: conversation)
         }
     }
 
     override func accessibilityPerformEscape() -> Bool {
-        guard let dismisser = self.dismisser else { return false }
-        dismisser.dismiss(viewController: self, completion: nil)
+        guard let delegate = delegate else { return false }
+        delegate.callViewControllerDidDisappear(self, for: conversation)
         return true
     }
 
@@ -191,13 +196,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func minimizeOverlay() {
-        weak var window = view.window
-        weak var rootViewController = view.window?.rootViewController
-        dismiss(animated: true, completion: {
-            self.dismisser?.dismiss(viewController: self, completion: nil)
-            rootViewController?.setNeedsStatusBarAppearanceUpdate()
-            window?.isHidden = true
-        })
+        delegate?.callViewControllerDidDisappear(self, for: conversation)
     }
 
     fileprivate func acceptDegradedCall() {
