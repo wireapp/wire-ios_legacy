@@ -123,6 +123,17 @@
         "BackgroundViewControllerTests\/testThatItShowsUserWithImage()",
         "BackgroundViewControllerTests\/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()",
         "BackgroundViewControllerTests\/testThatItUpdatesForUserImageUpdate_fromAccentColor()",
+        "ConversationFileMessageTests",
+        "ConversationImageMessageTests",
+        "ConversationPingMessageTests",
+        "ConversationReplyCellTests",
+        "ConversationSystemMessageTests",
+        "ConversationTextMessageTests",
+        "ConversationVideoMessageCellTests",
+        "DismissalTests",
+        "EmoticonSubstitutionConfigurationTests",
+        "LocationMessageCellTests",
+        "MarkDownSnapshotTests",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_FileMessage()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_File_DarkMode()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Image_DarkMode()",
@@ -133,7 +144,8 @@
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()",
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests()",
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()"
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()",
+        "TextMessageMentionsTests"
       ],
       "target" : {
         "containerPath" : "container:Wire-iOS.xcodeproj",
