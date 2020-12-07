@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ import avs
 private let zmLog = ZMSLog(tag: "UI")
 
 extension String {
-    @discardableResult public func deleteFileAtPath() -> Bool {
+    @discardableResult func deleteFileAtPath() -> Bool {
         do {
             try FileManager.default.removeItem(atPath: self)
         }
@@ -119,7 +119,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
         }
     }
     
-    public static let displayedEffects: [AVSAudioEffectType] = [.none,
+    static let displayedEffects: [AVSAudioEffectType] = [.none,
                                                                 .pitchupInsane,
                                                                 .pitchdownInsane,
                                                                 .paceupMed,
@@ -130,7 +130,10 @@ extension AVSAudioEffectType: CustomStringConvertible {
     
     static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
     
-    public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
+    func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
+        guard !ProcessInfo.processInfo.isRunningTests else {
+            return
+        }
         
         type(of: self).wr_convertQueue.async {
             
