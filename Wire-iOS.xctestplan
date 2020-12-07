@@ -120,11 +120,14 @@
     {
       "skippedTests" : [
         "AVURLAsset_conversionTests",
+        "AudioEffectsPickerViewControllerTests",
+        "AudioRecordKeyboardViewControllerTests",
         "BackgroundViewControllerTests\/testThatItShowsUserWithImage()",
         "BackgroundViewControllerTests\/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()",
         "BackgroundViewControllerTests\/testThatItUpdatesForUserImageUpdate_fromAccentColor()",
         "ConversationFileMessageTests",
         "ConversationImageMessageTests",
+        "ConversationInputBarViewControllerAudioRecorderSnapshotTests",
         "ConversationPingMessageTests",
         "ConversationReplyCellTests",
         "ConversationSystemMessageTests",
@@ -132,8 +135,12 @@
         "ConversationVideoMessageCellTests",
         "DismissalTests",
         "EmoticonSubstitutionConfigurationTests",
+        "FilePreviewGeneratorTests",
+        "LicensesLoaderTests",
         "LocationMessageCellTests",
         "MarkDownSnapshotTests",
+        "MessageReplyPreviewViewTests",
+        "SavableImageTests",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_FileMessage()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_File_DarkMode()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Image_DarkMode()",
@@ -145,7 +152,13 @@
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests()",
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()",
         "StartedConversationCellTests\/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()",
-        "TextMessageMentionsTests"
+        "TeamMetadataRefresherTests",
+        "TextMessageMentionsTests",
+        "UserImageViewContainerSnapshotTests",
+        "WirelessExpirationTimeFormatterTests",
+        "ZClientViewControllerTests",
+        "ZMUserMentionsTest",
+        "ZipFileTests"
       ],
       "target" : {
         "containerPath" : "container:Wire-iOS.xcodeproj",
