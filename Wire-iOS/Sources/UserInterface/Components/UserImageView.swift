@@ -67,7 +67,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     }
 
     /// The user to display the avatar of.
-    var user: UserType? {
+    weak var user: UserType? {
         didSet {
             updateUser()
         }
@@ -232,8 +232,8 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
         let defaultAvatar = Avatar.text(initials.localizedUppercase)
         setAvatar(defaultAvatar, user: user, animated: false)
-
-        if let userSession = userSession as? ZMUserSession {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = userSession as? ZMUserSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 
