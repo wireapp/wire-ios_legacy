@@ -318,17 +318,6 @@ final class ConversationInputBarViewController: UIViewController,
         gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
 
-        if !ProcessInfo.processInfo.isRunningTests {
-            if conversationObserverToken == nil {
-                conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
-            }
-
-            if let connectedUser = conversation.connectedUser,
-                let userSession = ZMUserSession.shared() {
-                userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
-            }
-        }
-
         updateAccessoryViews()
         updateInputBarVisibility()
         updateTypingIndicator()
@@ -342,6 +331,23 @@ final class ConversationInputBarViewController: UIViewController,
         if #available(iOS 11.0, *) {
             let interaction = UIDropInteraction(delegate: self)
             inputBar.textView.addInteraction(interaction)
+        }
+        
+        setupObservers()
+    }
+    
+    private func setupObservers() {
+        guard !ProcessInfo.processInfo.isRunningTests else {
+            return
+        }
+        
+        if conversationObserverToken == nil {
+            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+        }
+        
+        if let connectedUser = conversation.connectedUser,
+           let userSession = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
         }
     }
 

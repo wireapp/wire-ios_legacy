@@ -30,7 +30,6 @@ final class BackgroundViewController: UIViewController {
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
     private let user: UserType
-    private let userSession: ZMUserSession?
     
     var darkMode: Bool = false {
         didSet {
@@ -38,21 +37,25 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    init(user: UserType, userSession: ZMUserSession?) {
+    init(user: UserType,
+         userSession: ZMUserSession?) {
         self.user = user
-        self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
-        if !ProcessInfo.processInfo.isRunningTests {
-            if let userSession = userSession {
-                userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
-            }
-            
-            NotificationCenter.default.addObserver(self,
-                                                   selector: #selector(colorSchemeChanged),
-                                                   name: .SettingsColorSchemeChanged,
-                                                   object: nil)
+        setupObservers(userSession: userSession)
+    }
+    
+    private func setupObservers(userSession: ZMUserSession?) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+
+        if let userSession = userSession {
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(colorSchemeChanged),
+                                               name: .SettingsColorSchemeChanged,
+                                               object: nil)
     }
     
     @available(*, unavailable)
