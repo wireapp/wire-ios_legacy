@@ -268,8 +268,10 @@ final class ConversationInputBarViewController: UIViewController,
 
         super.init(nibName: nil, bundle: nil)
 
-        conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
-        typingObserverToken = conversation.addTypingObserver(self)
+        if !ProcessInfo.processInfo.isRunningTests {
+            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            typingObserverToken = conversation.addTypingObserver(self)
+        }
 
         setupNotificationCenter()
         setupInputLanguageObserver()
@@ -280,6 +282,14 @@ final class ConversationInputBarViewController: UIViewController,
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        textfieldObserverToken = nil
+        conversationObserverToken = nil
+        typingObserverToken = nil
+        conversationObserverToken = nil
+        userObserverToken = nil
+    }///TODO: test crash
 
     // MARK: - view life cycle
 
@@ -308,13 +318,15 @@ final class ConversationInputBarViewController: UIViewController,
         gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
 
-        if conversationObserverToken == nil {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
-        }
+        if !ProcessInfo.processInfo.isRunningTests {
+            if conversationObserverToken == nil {
+                conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            }
 
-        if let connectedUser = conversation.connectedUser,
-            let userSession = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
+            if let connectedUser = conversation.connectedUser,
+                let userSession = ZMUserSession.shared() {
+                userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
+            }
         }
 
         updateAccessoryViews()

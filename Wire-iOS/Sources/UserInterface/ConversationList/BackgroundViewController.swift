@@ -18,13 +18,11 @@
 
 
 import UIKit
-import Cartography
 import WireSyncEngine
-
 
 final class BackgroundViewController: UIViewController {
     
-    var dispatchGroup: DispatchGroup = DispatchGroup()
+    lazy var dispatchGroup: DispatchGroup = DispatchGroup()
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
@@ -45,19 +43,25 @@ final class BackgroundViewController: UIViewController {
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
-        if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+        if !ProcessInfo.processInfo.isRunningTests {
+            if let userSession = userSession {
+                userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            }
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(colorSchemeChanged),
+                                                   name: .SettingsColorSchemeChanged,
+                                                   object: nil)
         }
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(colorSchemeChanged),
-                                               name: .SettingsColorSchemeChanged,
-                                               object: nil)
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        userObserverToken = nil
     }
 
     override func viewDidLoad() {
@@ -163,10 +167,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        guard imageMediumDataChanged || accentColorValueChanged else {
-            return
-        }
-        
+
         if imageMediumDataChanged {
             updateForUserImage()
         }
@@ -193,8 +194,8 @@ final class BackgroundViewController: UIViewController {
 }
 
 extension BackgroundViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
                        accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }
