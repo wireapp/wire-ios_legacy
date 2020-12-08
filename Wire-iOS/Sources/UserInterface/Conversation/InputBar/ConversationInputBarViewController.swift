@@ -289,7 +289,7 @@ final class ConversationInputBarViewController: UIViewController,
         typingObserverToken = nil
         conversationObserverToken = nil
         userObserverToken = nil
-    }///TODO: test crash
+    }
 
     // MARK: - view life cycle
 
