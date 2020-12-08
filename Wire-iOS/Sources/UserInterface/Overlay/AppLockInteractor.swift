@@ -65,8 +65,9 @@ final class AppLockInteractor {
         return appLock?.isActive ?? false
     }
 
+    // Use custom passcode only for lock screen
     var useCustomPasscode: Bool {
-        return true//appLock?.config.useCustomCodeInsteadOfAccountPassword == true
+        return !isDatabaseLocked
     }
 
     var lastUnlockedDate: Date {
