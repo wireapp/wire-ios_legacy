@@ -112,7 +112,7 @@ final class SenderCellComponent: UIView {
             ])
     }
     
-    func configure(with user: UserType, conversation: ZMConversation?) {
+    func configure(with user: UserType) {
         avatar.user = user
         
         configureNameLabel(for: user)
