@@ -32,7 +32,9 @@ extension AVSVideoView: AVSIdentifierProvider {
             streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
             participantName: nil,
             microphoneState: .unmuted,
-            videoState: .none)
+            videoState: .none,
+            audioLevel: 0
+        )
     }
 }
 
@@ -84,7 +86,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, audioLevel: stream.audioLevel)
         userDetailsView.alpha = userDetailsAlpha
     }
     

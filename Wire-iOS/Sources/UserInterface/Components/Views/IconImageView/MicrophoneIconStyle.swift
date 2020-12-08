@@ -62,12 +62,14 @@ extension MicrophoneIconStyle: PulsingIconImageStyle {
 }
 
 extension MicrophoneIconStyle {
-    init(state: MicrophoneState?) {
+    init(state: MicrophoneState?, audioLevel: Int) {
         guard let state = state else {
             self = .hidden
             return
         }
         switch state {
+        case .unmuted where audioLevel > 50:
+            self = .active
         case .unmuted:
             self = .unmuted
         case .muted:

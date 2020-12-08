@@ -26,7 +26,12 @@ protocol CallParticipantsCellConfigurationConfigurable: Reusable {
 }
 
 enum CallParticipantsCellConfiguration: Hashable {
-    case callParticipant(user: ZMUser, videoState: VideoState?, microphoneState: MicrophoneState?)
+    case callParticipant(
+        user: ZMUser,
+        videoState: VideoState?,
+        microphoneState: MicrophoneState?,
+        audioLevel: Int
+    )
     case showAll(totalCount: Int)
     
     var cellType: CallParticipantsCellConfigurationConfigurable.Type {
@@ -110,13 +115,13 @@ extension CallParticipantsView: UICollectionViewDataSource {
 extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .callParticipant(user, videoState, microphoneState) = configuration else { preconditionFailure() }
+        guard case let .callParticipant(user, videoState, microphoneState, audioLevel) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
-        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState))
+        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, audioLevel: audioLevel))
         videoIconView.set(style: VideoIconStyle(state: videoState))
     }
     
