@@ -67,7 +67,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     }
 
     /// The user to display the avatar of.
-    weak var user: UserType? {
+    unowned var user: UserType? {
         didSet {
             updateUser()
         }
