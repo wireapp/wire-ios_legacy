@@ -66,8 +66,9 @@ final class AppLockInteractor {
         return appLock?.isActive ?? false
     }
 
+    // Use custom passcode only for lock screen
     var useCustomPasscode: Bool {
-        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
+        return !isDatabaseLocked
     }
 
     var lastUnlockedDate: Date {
@@ -122,7 +123,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     
     func evaluateAuthentication(description: String) {
         appLock?.evaluateAuthentication(scenario: authenticationScenario,
-                                       description: description.localized) { [weak self] result, context in
+                                        description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
                         
             self.dispatchQueue.async {

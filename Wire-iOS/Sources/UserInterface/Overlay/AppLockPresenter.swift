@@ -144,7 +144,7 @@ extension AppLockPresenter {
                 guard let password = password,
                       self.checkPassword(password: password) else { return }
 
-                if self.appLockInteractorInput.useCustomPasscode {
+                if self.appLockInteractorInput.useCustomPasscode { //TODO: katerina ... + applock
                     self.appLockInteractorInput.verify(customPasscode: password)
                 } else {
                     self.appLockInteractorInput.verify(password: password)
@@ -163,7 +163,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
 
         if case .needAccountPassword = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
-            if appLockInteractorInput.isCustomPasscodeNotSet {
+            if appLockInteractorInput.isCustomPasscodeNotSet { //TODO: katerina check if it's applock feature
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
                     // user need to enter the newly created passcode after creation
                     self.setContents(dimmed: true, withReauth: true)
