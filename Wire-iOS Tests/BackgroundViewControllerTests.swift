@@ -24,13 +24,17 @@ final class BackgroundViewControllerTests: XCTestCase {
     var selfUser: MockUserType!
     var sut: BackgroundViewController!
     var snapshotExpectation: XCTestExpectation!
+    var firstTrigger = true
 
     override func setUp() {
         super.setUp()
         accentColor = .violet
         selfUser = MockUserType.createSelfUser(name: "")
         selfUser.accentColorValue = .violet
-    }
+        snapshotExpectation = expectation(description: "snapshot verified")
+        
+        firstTrigger = true
+   }
 
     override func tearDown() {
         selfUser = nil
@@ -42,7 +46,7 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItShowsUserWithoutImage() {
         // GIVEN
-        snapshotExpectation = expectation(description: "snapshot verified")
+        
         let userImageLoaded: Completion = {
             // WHEN & THEN
             self.verify(matching: self.sut)
@@ -56,7 +60,6 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItShowsUserWithImage() {
         // GIVEN
-        snapshotExpectation = expectation(description: "snapshot verified")
         let userImageLoaded: Completion = {
             // WHEN
             ///TODO: hacks to make below line passes
@@ -99,22 +102,8 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
-        snapshotExpectation = expectation(description: "snapshot verified")
-        var firstTrigger = true
-        let userImageLoaded: Completion = {
-            if firstTrigger {
-                firstTrigger = false
-                return
-            }
-
-            // THEN
-            self.verify(matching: self.sut)
-            self.snapshotExpectation.fulfill()
-        }
-
-        // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
 
         // WHEN
         selfUser.accentColorValue = .brightOrange
@@ -127,21 +116,9 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
-        snapshotExpectation = expectation(description: "snapshot verified")
-        var firstTrigger = true
-        let userImageLoaded: Completion = {
-            if firstTrigger {
-                firstTrigger = false
-                return
-            }
-
-            // THEN
-            self.verify(matching: self.sut)
-            self.snapshotExpectation.fulfill()
-        }
 
         selfUser.completeImageData = nil
-        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
         // WHEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
 
@@ -153,25 +130,30 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
-        snapshotExpectation = expectation(description: "snapshot verified")
-        var firstTrigger = true
-        let userImageLoaded: Completion = {
-            if firstTrigger {
-                firstTrigger = false
-                return
-            }
-
-            // THEN
-            self.verify(matching: self.sut)
-            self.snapshotExpectation.fulfill()
-        }
 
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
         // WHEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
         sut.updateFor(user: selfUser, imageMediumDataChanged: true, accentColorValueChanged: false)
 
         waitForExpectations(timeout: 10)
+    }
+    
+    private func createIgnoreFirstTriggerVerifyClosure(file: StaticString = #file,
+                                                       testName: String = #function,
+                                                       line: UInt = #line) -> Completion {
+        let userImageLoaded: Completion = {
+            if self.firstTrigger {
+                self.firstTrigger = false
+                return
+            }
+            
+            // THEN
+            self.verify(matching: self.sut, file: file, testName: testName, line: line)
+            self.snapshotExpectation.fulfill()
+        }
+        
+        return userImageLoaded
     }
 }
