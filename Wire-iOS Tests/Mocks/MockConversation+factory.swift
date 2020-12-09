@@ -53,9 +53,8 @@ extension MockConversation {
         return mockConversation
     }
     
-    static func groupConversation() -> MockConversation {
-        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
-        let otherUser = MockUser.mockUsers().first!
+    static func groupConversation(selfUser: UserType = MockUser.mockSelf(),
+                                  otherUser: UserType = MockUser.mockUsers().first!) -> MockConversation {
         let mockConversation = MockConversation()
         mockConversation.conversationType = .group
         mockConversation.displayName = otherUser.name
