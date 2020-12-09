@@ -41,6 +41,8 @@ protocol AppLockUserInterface: class {
     /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
     func presentCreatePasscodeScreen(callback: ResultHandler?)
     
+    func presentWarningScreen(isApplockForced: Bool, delegate: AppLockInteractorInput)
+    
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
@@ -108,7 +110,9 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            appLockInteractorInput.needsToNotify
+                ? userInterface?.presentWarningScreen(isApplockForced: appLockInteractorInput.isAppLockForced, delegate: appLockInteractorInput)
+                : appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:

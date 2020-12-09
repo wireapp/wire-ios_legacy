@@ -29,6 +29,8 @@ protocol AppLockInteractorInput: class {
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
     var useCustomPasscode: Bool { get }
+    var isAppLockForced: Bool { get }
+    var needsToNotify: Bool { get set }
     var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -79,6 +81,17 @@ final class AppLockInteractor {
 
     var isAppLockForced: Bool {
         return appLock?.config.forceAppLock ?? false
+    }
+    
+    var needsToNotify: Bool {
+        get {
+            return appLock?.needsToNotifyUserOfFeatureChange ?? false
+        }
+        set {
+            if var session = userSession {
+                session.appLockController.needsToNotifyUserOfFeatureChange = newValue
+            }
+        }
     }
 
     var shouldUseBiometricsOrAccountPassword: Bool {
@@ -165,8 +178,8 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword,
-                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword/*,
+                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced*/)
         }
     }
     

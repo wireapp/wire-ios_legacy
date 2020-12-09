@@ -1180,6 +1180,10 @@
 "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Unlock";
 
+"self.settings.privacy_security.lock_app.warning.title" = "There was a change in Wire";
+"self.settings.privacy_security.lock_app.warning.force" = "Your organization needs to lock you app when Wire is not in used to keep the Team safe.\n\nNext time, unlock Wire the same way you unlock your phone.";
+"self.settings.privacy_security.lock_app.warning.unforce" = "Your organisation doesn't need app lock anymore. From now, you can access Wire without any obstacles.";
+
 "self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
