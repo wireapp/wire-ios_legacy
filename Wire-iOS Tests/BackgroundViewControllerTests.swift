@@ -31,7 +31,6 @@ final class BackgroundViewControllerTests: XCTestCase {
         accentColor = .violet
         selfUser = MockUserType.createSelfUser(name: "")
         selfUser.accentColorValue = .violet
-        snapshotExpectation = expectation(description: "snapshot verified")
         
         firstTrigger = true
    }
@@ -46,7 +45,8 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItShowsUserWithoutImage() {
         // GIVEN
-        
+        snapshotExpectation = expectation(description: "snapshot verified")
+
         let userImageLoaded: Completion = {
             // WHEN & THEN
             self.verify(matching: self.sut)
@@ -60,6 +60,8 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItShowsUserWithImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+
         let userImageLoaded: Completion = {
             // WHEN
             ///TODO: hacks to make below line passes
@@ -102,6 +104,8 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
 
@@ -116,6 +120,8 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+
 
         selfUser.completeImageData = nil
         sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
@@ -130,6 +136,7 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
 
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: createIgnoreFirstTriggerVerifyClosure())
