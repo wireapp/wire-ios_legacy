@@ -30,7 +30,6 @@ final class BackgroundViewControllerTests: XCTestCase {
         accentColor = .violet
         selfUser = MockUserType.createSelfUser(name: "")
         selfUser.accentColorValue = .violet
-        snapshotExpectation = expectation(description: "snapshot verified")
     }
 
     override func tearDown() {
@@ -43,6 +42,7 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItShowsUserWithoutImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
         let userImageLoaded: Completion = {
             // WHEN & THEN
             self.verify(matching: self.sut)
@@ -53,29 +53,31 @@ final class BackgroundViewControllerTests: XCTestCase {
 
         waitForExpectations(timeout: 5)
     }
-/*
+
     func testThatItShowsUserWithImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+        let userImageLoaded: Completion = {
+            // WHEN
+            ///TODO: hacks to make below line passes
+            self.selfUser.accentColorValue = self.selfUser.accentColorValue
+
+            // THEN
+            self.verify(matching: self.sut)
+            self.snapshotExpectation.fulfill()
+        }
+
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        sut.dispatchGroup = DispatchGroup()
-        // make sure view is loaded
-        _ = sut.view
-        // WHEN
-        ///TODO: hacks to make below line passes
-        selfUser.accentColorValue = selfUser.accentColorValue
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup!], timeout: 10))
-
-        // WHEN & THEN
-        verify(matching: sut)
+        waitForExpectations(timeout: 5)
     }
 
     
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
         // GIVEN
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        _ = sut.view
+        sut = BackgroundViewController(user: selfUser, userSession: .none)
+
         // WHEN
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(user: selfUser, imageMediumDataChanged: false, accentColorValueChanged: true)
@@ -87,8 +89,7 @@ final class BackgroundViewControllerTests: XCTestCase {
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        _ = sut.view
+        sut = BackgroundViewController(user: selfUser, userSession: .none)
         // WHEN
         selfUser.completeImageData = nil
         selfUser.accentColorValue = .brightOrange
@@ -99,44 +100,79 @@ final class BackgroundViewControllerTests: XCTestCase {
 
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+        var firstTrigger = true
+        let userImageLoaded: Completion = {
+            if firstTrigger {
+                firstTrigger = false
+                return
+            }
+
+            // THEN
+            self.verify(matching: self.sut)
+            self.snapshotExpectation.fulfill()
+        }
+
+        // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        sut.dispatchGroup = DispatchGroup()
-        _ = sut.view
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
+
         // WHEN
         selfUser.accentColorValue = .brightOrange
+        
+        ///This triggers user image updating again, we skip the first snapshot triggered by sut init
         sut.updateFor(user: selfUser, imageMediumDataChanged: true, accentColorValueChanged: true)
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup!]))
 
-        // THEN
-        verify(matching: sut)
+        waitForExpectations(timeout: 10)
     }
 
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+        var firstTrigger = true
+        let userImageLoaded: Completion = {
+            if firstTrigger {
+                firstTrigger = false
+                return
+            }
+
+            // THEN
+            self.verify(matching: self.sut)
+            self.snapshotExpectation.fulfill()
+        }
+
         selfUser.completeImageData = nil
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        sut.dispatchGroup = DispatchGroup()
-        _ = sut.view
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
         // WHEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
+
+        ///This triggers user image updating again, we skip the first snapshot triggered by sut init
         sut.updateFor(user: selfUser, imageMediumDataChanged: true, accentColorValueChanged: false)
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup!]))
-        // THEN
-        verify(matching: sut)
+
+        waitForExpectations(timeout: 10)
     }
 
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
+        snapshotExpectation = expectation(description: "snapshot verified")
+        var firstTrigger = true
+        let userImageLoaded: Completion = {
+            if firstTrigger {
+                firstTrigger = false
+                return
+            }
+            
+            // THEN
+            self.verify(matching: self.sut)
+            self.snapshotExpectation.fulfill()
+        }
+
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
-        let sut = BackgroundViewController(user: selfUser, userSession: .none)
-        sut.dispatchGroup = DispatchGroup()
-        _ = sut.view
+        sut = BackgroundViewController(user: selfUser, userSession: .none, userImageLoaded: userImageLoaded)
         // WHEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
         sut.updateFor(user: selfUser, imageMediumDataChanged: true, accentColorValueChanged: false)
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup!]))
-        // THEN
-        verify(matching: sut)
-    }*/
+
+        waitForExpectations(timeout: 10)
+    }
 }
