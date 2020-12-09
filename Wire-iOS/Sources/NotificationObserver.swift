@@ -31,6 +31,10 @@ protocol ApplicationStateObserving: ObserverTokenStore {
 }
 
 extension ApplicationStateObserving {
+    func applicationDidBecomeActive() {}
+    func applicationDidEnterBackground() {}
+    func applicationWillEnterForeground() {}
+    
     func setupApplicationNotifications() {
         addObserverToken(NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                                 object: nil,
