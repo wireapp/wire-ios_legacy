@@ -44,7 +44,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let verifiedIconView = UIImageView()
     let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
-    let microphoneIconView = IconImageView()
+    let microphoneIconView = PulsingIconImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
