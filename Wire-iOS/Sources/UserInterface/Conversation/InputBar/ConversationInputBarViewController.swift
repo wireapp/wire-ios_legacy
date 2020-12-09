@@ -282,14 +282,6 @@ final class ConversationInputBarViewController: UIViewController,
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        textfieldObserverToken = nil
-        conversationObserverToken = nil
-        typingObserverToken = nil
-        conversationObserverToken = nil
-        userObserverToken = nil
-    }
 
     // MARK: - view life cycle
 
