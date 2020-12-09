@@ -347,7 +347,7 @@ final class SettingsPropertyFactory {
                         }
                         self.isAppLockActive = result
                         })                        
-                        
+
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
