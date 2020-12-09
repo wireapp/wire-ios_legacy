@@ -40,7 +40,6 @@ protocol AppLockUserInterface: class {
     
     /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
     func presentCreatePasscodeScreen(callback: ResultHandler?)
-    func presentWarningScreen()
     
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
@@ -134,10 +133,6 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
-        // Warning screen
-//        if appLockInteractorInput.needsToInformOfChange {
-//            userInterface?.presentWarningScreen()
-//        }
         userInterface?.presentUnlockScreen(with: message, useCustomPasscode: appLockInteractorInput.useCustomPasscode) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
