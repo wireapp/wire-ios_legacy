@@ -71,6 +71,7 @@ final class AppLockMock: AppLockType {
     var isActive: Bool = false
     var lastUnlockedDate: Date = Date()
     var isCustomPasscodeNotSet: Bool = false
+    var needsToNotifyUserOfFeatureChange: Bool = false
     var config: AppLockController.Config
     
     init(config: AppLockController.Config = AppLockController.Config(useBiometricsOrAccountPassword: false,

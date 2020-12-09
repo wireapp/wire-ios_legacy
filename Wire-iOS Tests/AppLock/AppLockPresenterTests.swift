@@ -41,6 +41,10 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
         presentCreatePasscodeScreenCalled = true
     }
     
+    func presentWarningScreen(isApplockForced: Bool, delegate: AppLockInteractorInput) {
+        
+    }
+    
     var spinnerAnimating: Bool?
     func setSpinner(animating: Bool) {
         spinnerAnimating = animating
@@ -71,6 +75,8 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     var customPasscodeToVerify: String?
     
     var useCustomPasscode: Bool = false
+    var needsToNotify: Bool = false
+    var isAppLockForced: Bool = false
     var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {
