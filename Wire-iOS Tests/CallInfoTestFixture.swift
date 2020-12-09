@@ -193,7 +193,7 @@ struct CallInfoTestFixture {
             userEnabledCBR: true
         )
     }
-    
+
     var oneToOneAudioEstablishedVBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -639,7 +639,7 @@ struct CallInfoTestFixture {
             userEnabledCBR: false
         )
     }
-    
+
     var groupVideoEstablishedPoorConnection: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -683,7 +683,6 @@ struct CallInfoTestFixture {
             userEnabledCBR: false
         )
     }
-
 
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
@@ -729,7 +728,6 @@ struct CallInfoTestFixture {
         )
     }
 
-    
     var groupVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
         let permissions = MockCallPermissions.videoPendingApproval
         return MockCallInfoViewControllerInput(
@@ -777,4 +775,3 @@ struct CallInfoTestFixture {
     }
 
 }
-
