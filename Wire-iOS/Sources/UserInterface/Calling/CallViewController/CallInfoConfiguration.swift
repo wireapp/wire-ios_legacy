@@ -60,7 +60,8 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    func canToggleMediaType(with permissions: CallPermissionsConfiguration) -> Bool {
+    func canToggleMediaType(with permissions: CallPermissionsConfiguration,
+                            selfUser: UserType) -> Bool {
         switch state {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
@@ -69,7 +70,7 @@ fileprivate extension VoiceChannel {
             
             // The user can only re-enable their video if the conversation allows GVC
             if videoState == .stopped {
-                return canUpgradeToVideo
+                return canUpgradeToVideo(selfUser: selfUser)
             }
             
             // If the user already enabled video, they should be able to disable it
@@ -133,8 +134,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
-        userEnabledCBR: Bool
-        ) {
+        userEnabledCBR: Bool,
+        selfUser: UserType = ZMUser.selfUser()) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager
@@ -143,7 +144,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
-        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
+        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
@@ -220,7 +221,7 @@ extension CallParticipantState {
 
 fileprivate extension VoiceChannel {
     
-    var canUpgradeToVideo: Bool {
+    func canUpgradeToVideo(selfUser: UserType) -> Bool {
         guard !isConferenceCall else {
             return true
         }
@@ -233,7 +234,7 @@ fileprivate extension VoiceChannel {
             return false
         }
 
-        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+        return selfUser.isTeamMember || isAnyParticipantSendingVideo
     }
     
     var isAnyParticipantSendingVideo: Bool {
