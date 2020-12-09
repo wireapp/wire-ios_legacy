@@ -73,7 +73,6 @@ final class BackgroundViewControllerTests: XCTestCase {
         waitForExpectations(timeout: 5)
     }
 
-    
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
         // GIVEN
         sut = BackgroundViewController(user: selfUser, userSession: .none)
@@ -119,7 +118,7 @@ final class BackgroundViewControllerTests: XCTestCase {
 
         // WHEN
         selfUser.accentColorValue = .brightOrange
-        
+
         ///This triggers user image updating again, we skip the first snapshot triggered by sut init
         sut.updateFor(user: selfUser, imageMediumDataChanged: true, accentColorValueChanged: true)
 
@@ -161,7 +160,7 @@ final class BackgroundViewControllerTests: XCTestCase {
                 firstTrigger = false
                 return
             }
-            
+
             // THEN
             self.verify(matching: self.sut)
             self.snapshotExpectation.fulfill()
