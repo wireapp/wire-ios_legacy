@@ -534,15 +534,16 @@
 "content.system.missing_messages.subtitle_start" = "Meanwhile,";
 
 "content.system.cannot_decrypt" = "A message from %@ was not received.";
-
 "content.system.cannot_decrypt.you_part" = "you";
-"content.system.cannot_decrypt.why_part" = "Why?";
-
 "content.system.cannot_decrypt.identity" = "%@ device identity changed. Undelivered message.";
 "content.system.cannot_decrypt.identity.you_part" = "Your";
 "content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Learn More";
-"content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "See error details";
+
+"content.system.cannot_decrypt.alert.title" = "Error info";
+"content.system.cannot_decrypt.alert.message" = "If the error persists please contact us.";
+"content.system.cannot_decrypt.alert.contact_us" = "Contact us";
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";

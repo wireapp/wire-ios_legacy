@@ -131,6 +131,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         let attributedText: NSAttributedString?
         let showLine: Bool
         let url: URL
+        let urlHandler: ((_ url: URL) -> Void)?
     }
 
     var lastConfiguration: Configuration?
@@ -150,9 +151,11 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 extension LinkConversationSystemMessageCell {
 
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-
-        if let itemURL = lastConfiguration?.url {
-            UIApplication.shared.open(itemURL)
+        
+        if let handler = lastConfiguration?.urlHandler {
+            handler(url)
+        } else {
+            UIApplication.shared.open(url)
         }
 
         return false
@@ -711,8 +714,8 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     typealias View = LinkConversationSystemMessageCell
     let configuration: View.Configuration
 
-    static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
-    static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
+    static fileprivate let resetSessionURL: URL = URL(string: "action://reset-session")!
+    static fileprivate let errorDetailsURL: URL = URL(string: "action://error-details")!
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
@@ -742,7 +745,27 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
                 link: link
             )
 
-        configuration = View.Configuration(icon: icon, attributedText: title, showLine: false, url: link)
+        configuration = View.Configuration(icon: icon,
+                                           attributedText: title,
+                                           showLine: false,
+                                           url: link,
+                                           urlHandler: { URL in
+                                            
+                                            let client = data.clients.first as? UserClient
+                                            
+                                            switch URL {
+                                            case Self.resetSessionURL:
+                                                client?.resetSession()
+                                            case Self.errorDetailsURL:
+                                                let errorCode = data.decryptionErrorCode?.intValue
+                                                let alert = UIAlertController.decryptionErrorDetails(client: client,
+                                                                                                     errorCode: errorCode)
+                                                
+                                                ZClientViewController.shared?.present(alert, animated: true)
+                                            default:
+                                                break
+                                            }
+        })
         actionController = nil
     }
 
@@ -754,21 +777,19 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: UserType, remoteIDChanged: Bool, link: URL) -> NSAttributedString {
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
 
-        let why = NSAttributedString(string: localizedWhyPart(remoteIDChanged),
-                                     attributes: [.font: UIFont.mediumFont, .link: link as AnyObject, .foregroundColor: UIColor.from(scheme: .textForeground)])
-
-        let device : NSAttributedString
-        if Bundle.developerModeEnabled {
-            device = "\n" + NSAttributedString(string: localizedDevice(systemMessage.clients.first as? UserClient),
-                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textDimmed)])
-        } else {
-            device = NSAttributedString()
-        }
-
         let messageString = NSAttributedString(string: localizedWhatPart(remoteIDChanged, name: name),
                                                attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
-
-        let fullString = messageString + " " + why + device
+        
+        let resetSessionString = NSAttributedString(string: localizedResetSession(),
+                                              attributes: [.link : resetSessionURL,
+                                                           .font: UIFont.mediumSemiboldFont])
+        
+        let errorDetailsString = NSAttributedString(string: localizedErrorDetails(),
+                                                    attributes: [.link : errorDetailsURL,
+                                                                 .foregroundColor: UIColor.from(scheme: .textForeground)])
+        
+        let fullString = messageString + "\n" + resetSessionString + "\n" + errorDetailsString
+        
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }
 
@@ -786,13 +807,17 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static func localizedWhatPart(_ remoteIDChanged: Bool, name: String) -> String {
         return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "")).localized(args: name)
     }
-
-    private static func localizedWhyPart(_ remoteIDChanged: Bool) -> String {
-        return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "")+".why_part").localized
-    }
-
+    
     private static func localizedDevice(_ device: UserClient?) -> String {
         return (BaseLocalizationString + ".otherDevice_part").localized(args: device?.remoteIdentifier ?? "-")
+    }
+    
+    private static func localizedErrorDetails() -> String {
+           return (BaseLocalizationString + ".error_details").localized
+       }
+    
+    private static func localizedResetSession() -> String {
+        return (BaseLocalizationString + ".reset_session").localized.localizedUppercase
     }
 
 }
