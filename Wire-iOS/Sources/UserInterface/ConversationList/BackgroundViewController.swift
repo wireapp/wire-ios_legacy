@@ -18,21 +18,17 @@
 
 
 import UIKit
-import Cartography
 import WireSyncEngine
-
 
 final class BackgroundViewController: UIViewController {
     
-    var dispatchGroup: DispatchGroup = DispatchGroup()
+    let userImageLoaded: Completion?
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
-    private let user: UserType
-    private let userSession: ZMUserSession?
     
     var darkMode: Bool = false {
         didSet {
@@ -40,19 +36,26 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    init(user: UserType, userSession: ZMUserSession?) {
-        self.user = user
-        self.userSession = userSession
+    init(user: UserType,
+         userSession: ZMUserSession?,
+         userImageLoaded: Completion? = nil) {
+        self.userImageLoaded = userImageLoaded
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(colorSchemeChanged),
                                                name: .SettingsColorSchemeChanged,
                                                object: nil)
+
+        configureViews()
+        createConstraints()
+        
+        updateForUser(user: user)
+        updateForColorScheme()
     }
     
     @available(*, unavailable)
@@ -60,16 +63,6 @@ final class BackgroundViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.configureViews()
-        self.createConstraints()
-        
-        self.updateForUser()
-        self.updateForColorScheme()
-    }
-    
     private var child: UIViewController? {
         return children.first
     }
@@ -130,17 +123,16 @@ final class BackgroundViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
-    private func updateForUser() {
-        guard self.isViewLoaded else {
+    private func updateForUser(user: UserType) {
+        guard isViewLoaded else {
             return
         }
         
-        updateForUserImage()
-        updateForAccentColor()
+        updateForUserImage(user: user)
+        updateForAccentColor(user: user)
     }
 
-    private func updateForUserImage() {
-        dispatchGroup.enter()
+    private func updateForUserImage(user: UserType) {
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
@@ -149,12 +141,12 @@ final class BackgroundViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.imageView.image = image
-                self?.dispatchGroup.leave()
+                self?.userImageLoaded?()
             }
         }
     }
     
-    private func updateForAccentColor() {
+    private func updateForAccentColor(user: UserType) {
         setBackground(color: UIColor(fromZMAccentColor: user.accentColorValue))
     }
     
@@ -162,17 +154,17 @@ final class BackgroundViewController: UIViewController {
         darkMode = ColorScheme.default.variant == .dark
     }
     
-    func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
+    func updateFor(user: UserType, imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
         guard imageMediumDataChanged || accentColorValueChanged else {
             return
         }
         
         if imageMediumDataChanged {
-            updateForUserImage()
+            updateForUserImage(user: user)
         }
         
         if accentColorValueChanged {
-            updateForAccentColor()
+            updateForAccentColor(user: user)
         }
     }
     
@@ -194,8 +186,9 @@ final class BackgroundViewController: UIViewController {
 
 extension BackgroundViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
-                       accentColorValueChanged: changeInfo.accentColorValueChanged)
+        updateFor(user: changeInfo.user,
+                  imageMediumDataChanged: changeInfo.imageMediumDataChanged,
+                  accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }
 
