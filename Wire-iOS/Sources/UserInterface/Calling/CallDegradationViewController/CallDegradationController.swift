@@ -22,8 +22,21 @@ import WireDataModel
 
 enum CallDegradationState: Equatable {
     case none
-    case incoming(degradedUser: ZMUser?)
-    case outgoing(degradedUser: ZMUser?)
+    case incoming(degradedUser: UserType?)
+    case outgoing(degradedUser: UserType?)
+
+    static func == (lhs: CallDegradationState, rhs: CallDegradationState) -> Bool {
+        switch (lhs, rhs) {
+        case (.incoming(let lhsUser), .incoming(let rhsUser)):
+            return (lhsUser as? NSObject) == (rhsUser as? NSObject)
+        case (.outgoing(let lhsUser), .outgoing(let rhsUser)):
+            return (lhsUser as? NSObject) == (rhsUser as? NSObject)
+        case (.none, .none):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 protocol CallDegradationControllerDelegate: class {

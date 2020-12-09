@@ -18,7 +18,7 @@
 
 import Foundation
 
-class MockVoiceChannel: NSObject, VoiceChannel {
+final class MockVoiceChannel: NSObject, VoiceChannel {
 
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
@@ -30,7 +30,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var mockVideoState: VideoState = .stopped
     var mockNetworkQuality: NetworkQuality = .normal
     var mockIsConferenceCall: Bool = false
-    var mockFirstDegradedUser: ZMUser? = nil
+    var mockFirstDegradedUser: UserType? = nil
 
     required init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -110,7 +110,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return mockIsConferenceCall
     }
     
-    var firstDegradedUser: ZMUser? {
+    var firstDegradedUser: UserType? {
         return mockFirstDegradedUser
     }
     

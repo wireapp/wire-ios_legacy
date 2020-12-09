@@ -30,10 +30,10 @@ struct CallInfoTestFixture {
         case small = 4
     }
 
-    let otherUser: ZMUser
+    let otherUser: UserType
     let groupSize: GroupSize
 
-    init(otherUser: ZMUser, groupSize: GroupSize = .small) {
+    init(otherUser: UserType, groupSize: GroupSize = .small) {
         self.otherUser = otherUser
         self.groupSize = groupSize
     }

@@ -28,7 +28,7 @@ fileprivate extension VoiceChannel {
         
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return (initiator as? ZMUser).map { .avatar($0) } ?? .none
+            return initiator.map { .avatar($0) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:

@@ -19,10 +19,24 @@
 import WireDataModel
 
 enum CallInfoViewControllerAccessoryType: Equatable {
-    case none
-    case avatar(ZMUser)
-    case participantsList(CallParticipantsList)
     
+    case none
+    case avatar(UserType)
+    case participantsList(CallParticipantsList)
+
+    static func == (lhs: CallInfoViewControllerAccessoryType, rhs: CallInfoViewControllerAccessoryType) -> Bool {
+        switch (lhs, rhs) {
+        case (.avatar(let lhsUser), .avatar(let rhsUser)):
+            return (lhsUser as? NSObject) == (rhsUser as? NSObject)
+        case (.participantsList(let lhsList), .participantsList(let rhsList)):
+            return lhsList == rhsList
+        case (.none, .none):
+            return true
+        default:
+            return false
+        }
+    }
+        
     var showParticipantList: Bool {
         if case .participantsList = self {
             return true
