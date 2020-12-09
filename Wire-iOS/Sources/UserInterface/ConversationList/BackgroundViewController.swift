@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@ import WireSyncEngine
 
 final class BackgroundViewController: UIViewController {
     
+    
+    /// call back when user image view's image is loaded. It may call multiple times.
+    /// First time occurs after view is loaded if user has image data
     let userImageLoaded: Completion?
     
     fileprivate let imageView = UIImageView()
@@ -40,8 +43,21 @@ final class BackgroundViewController: UIViewController {
          userSession: ZMUserSession?,
          userImageLoaded: Completion? = nil) {
         self.userImageLoaded = userImageLoaded
+        
         super.init(nibName: .none, bundle: .none)
         
+        configureViews()
+        createConstraints()
+        
+        updateForUser(user: user)
+        updateForColorScheme()
+
+        setupObservers(user: user, userSession: userSession)
+    }
+    
+    private func setupObservers(user: UserType, userSession: ZMUserSession?) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+
         if let userSession = userSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
@@ -50,12 +66,6 @@ final class BackgroundViewController: UIViewController {
                                                selector: #selector(colorSchemeChanged),
                                                name: .SettingsColorSchemeChanged,
                                                object: nil)
-
-        configureViews()
-        createConstraints()
-        
-        updateForUser(user: user)
-        updateForColorScheme()
     }
     
     @available(*, unavailable)
@@ -155,9 +165,6 @@ final class BackgroundViewController: UIViewController {
     }
     
     func updateFor(user: UserType, imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        guard imageMediumDataChanged || accentColorValueChanged else {
-            return
-        }
         
         if imageMediumDataChanged {
             updateForUserImage(user: user)
@@ -185,7 +192,7 @@ final class BackgroundViewController: UIViewController {
 }
 
 extension BackgroundViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         updateFor(user: changeInfo.user,
                   imageMediumDataChanged: changeInfo.imageMediumDataChanged,
                   accentColorValueChanged: changeInfo.accentColorValueChanged)
