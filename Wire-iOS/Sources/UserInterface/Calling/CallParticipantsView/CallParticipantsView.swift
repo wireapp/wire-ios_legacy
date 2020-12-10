@@ -26,9 +26,34 @@ protocol CallParticipantsCellConfigurationConfigurable: Reusable {
 }
 
 enum CallParticipantsCellConfiguration: Hashable {
-    case callParticipant(user: ZMUser, videoState: VideoState?, microphoneState: MicrophoneState?)
+    
+    case callParticipant(user: UserType, videoState: VideoState?, microphoneState: MicrophoneState?)
     case showAll(totalCount: Int)
     
+    // MARK: - Hashable
+    
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .showAll(let totalCount):
+            hasher.combine(totalCount)
+        case .callParticipant(let user, let videoState, let microphoneState):
+            hasher.combine(user as? NSObject)
+            hasher.combine(videoState)
+            hasher.combine(microphoneState)
+        }
+    }
+
+    static func == (lhs: CallParticipantsCellConfiguration, rhs: CallParticipantsCellConfiguration) -> Bool {
+        switch (lhs, rhs) {
+        case (.showAll(let lhsTotalCount), .showAll(let rhsTotalCount)):
+            return lhsTotalCount == rhsTotalCount
+        case (.callParticipant(let lhsUser, let lhsVideoState, let lhsMicrophoneState), .callParticipant(let rhsUser, let rhsVideoState, let rhsMicrophoneState)):
+            return lhsUser as? NSObject == rhsUser as? NSObject && lhsVideoState == rhsVideoState && lhsMicrophoneState == rhsMicrophoneState
+        default:
+            return false
+        }
+    }
+
     var cellType: CallParticipantsCellConfigurationConfigurable.Type {
         switch self {
         case .callParticipant: return UserCell.self
