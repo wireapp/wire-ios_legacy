@@ -753,6 +753,10 @@
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
 		A92E731C2407F54A007C1FFE /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		A92E731E2407F587007C1FFE /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E731D2407F587007C1FFE /* String+Localized.swift */; };
+		A931567225828DE100CF9CE0 /* DismissalTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931567125828DE100CF9CE0 /* DismissalTests.xctestplan */; };
+		A931567825828FD700CF9CE0 /* MeasureTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */; };
+		A93156802582925300CF9CE0 /* testsWithWait.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */; };
+		A93156882582956100CF9CE0 /* ConversationInputBarViewController.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */; };
 		A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */; };
 		A937863423EB3BF00039987B /* CountryCodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */; };
 		A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */; };
@@ -2418,6 +2422,10 @@
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A92E731D2407F587007C1FFE /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		A931567125828DE100CF9CE0 /* DismissalTests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DismissalTests.xctestplan; sourceTree = "<group>"; };
+		A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MeasureTests.xctestplan; sourceTree = "<group>"; };
+		A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testsWithWait.xctestplan; sourceTree = "<group>"; };
+		A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ConversationInputBarViewController.xctestplan; sourceTree = "<group>"; };
 		A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvisibleInputAccessoryView.swift; sourceTree = "<group>"; };
 		A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewController.swift; sourceTree = "<group>"; };
 		A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -5830,6 +5838,10 @@
 		A9E7A45025827FA50016A9AC /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
+				A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */,
+				A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */,
+				A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */,
+				A931567125828DE100CF9CE0 /* DismissalTests.xctestplan */,
 				A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */,
 				A9E7A45B258287030016A9AC /* ConversationCellSnapshot.xctestplan */,
 				A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */,
@@ -7120,6 +7132,7 @@
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
 				DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */,
 				EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */,
+				A931567225828DE100CF9CE0 /* DismissalTests.xctestplan in Resources */,
 				8735AE722036CBF900DCE66E /* huge.pdf in Resources */,
 				A9E7A45325827FA50016A9AC /* CallInfo.xctestplan in Resources */,
 				1E2268041B395722003980E3 /* people-01.json in Resources */,
@@ -7134,11 +7147,14 @@
 				BFF9447220F64B4200531BC3 /* unsplash_vertical_pano.jpg in Resources */,
 				1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */,
 				A9E7A45C258287040016A9AC /* ConversationCellSnapshot.xctestplan in Resources */,
+				A93156882582956100CF9CE0 /* ConversationInputBarViewController.xctestplan in Resources */,
 				1E2268061B3957A7003980E3 /* conversations-01.json in Resources */,
+				A93156802582925300CF9CE0 /* testsWithWait.xctestplan in Resources */,
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
 				EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */,
 				EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */,
+				A931567825828FD700CF9CE0 /* MeasureTests.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
