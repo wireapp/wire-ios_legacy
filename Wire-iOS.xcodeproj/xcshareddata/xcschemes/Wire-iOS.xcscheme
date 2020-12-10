@@ -46,6 +46,9 @@
          <TestPlanReference
             reference = "container:Wire-iOS Tests/TestPlans/CellSnapshot.xctestplan">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/ConversationCellSnapshot.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

@@ -863,6 +863,7 @@
 		A9E674DB24F51A5C0058FC72 /* WireEmailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E674D924F51A190058FC72 /* WireEmailTests.swift */; };
 		A9E7A45325827FA50016A9AC /* CallInfo.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */; };
 		A9E7A45425827FA50016A9AC /* Wire-iOS.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */; };
+		A9E7A45C258287040016A9AC /* ConversationCellSnapshot.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A45B258287030016A9AC /* ConversationCellSnapshot.xctestplan */; };
 		A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722223C1581A00DA8240 /* ContactsViewController.swift */; };
 		A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722423C3A47B00DA8240 /* AppDelegate.swift */; };
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
@@ -2516,6 +2517,7 @@
 		A9E674D924F51A190058FC72 /* WireEmailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireEmailTests.swift; sourceTree = "<group>"; };
 		A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CallInfo.xctestplan; sourceTree = "<group>"; };
 		A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Wire-iOS.xctestplan"; sourceTree = "<group>"; };
+		A9E7A45B258287030016A9AC /* ConversationCellSnapshot.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ConversationCellSnapshot.xctestplan; sourceTree = "<group>"; };
 		A9EB722223C1581A00DA8240 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		A9EB722423C3A47B00DA8240 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -5828,8 +5830,9 @@
 		A9E7A45025827FA50016A9AC /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */,
 				A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */,
+				A9E7A45B258287030016A9AC /* ConversationCellSnapshot.xctestplan */,
+				A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
@@ -7130,6 +7133,7 @@
 				EF2C9545214983BB000E4960 /* video.mp4 in Resources */,
 				BFF9447220F64B4200531BC3 /* unsplash_vertical_pano.jpg in Resources */,
 				1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */,
+				A9E7A45C258287040016A9AC /* ConversationCellSnapshot.xctestplan in Resources */,
 				1E2268061B3957A7003980E3 /* conversations-01.json in Resources */,
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
