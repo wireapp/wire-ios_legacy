@@ -127,6 +127,7 @@
         "CallInfoRootViewControllerTests",
         "CallInfoViewControllerSnapshotTests",
         "ConversationImageMessageTests",
+        "ConversationReplyCellTests",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_FileMessage()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_File_DarkMode()",
         "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Image_DarkMode()",
