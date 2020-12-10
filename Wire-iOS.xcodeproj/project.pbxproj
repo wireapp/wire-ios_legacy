@@ -861,7 +861,8 @@
 		A9E674D524F508B70058FC72 /* WireEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E674D424F508B70058FC72 /* WireEmail.swift */; };
 		A9E674D724F514710058FC72 /* email.json in Resources */ = {isa = PBXBuildFile; fileRef = A9E674D624F514700058FC72 /* email.json */; };
 		A9E674DB24F51A5C0058FC72 /* WireEmailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E674D924F51A190058FC72 /* WireEmailTests.swift */; };
-		A9E7A44A25827EBE0016A9AC /* CallInfo.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A44925827EBE0016A9AC /* CallInfo.xctestplan */; };
+		A9E7A45325827FA50016A9AC /* CallInfo.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */; };
+		A9E7A45425827FA50016A9AC /* Wire-iOS.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */; };
 		A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722223C1581A00DA8240 /* ContactsViewController.swift */; };
 		A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722423C3A47B00DA8240 /* AppDelegate.swift */; };
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
@@ -2431,7 +2432,6 @@
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
 		A95B63EF24250DA8008A2974 /* FileManager+TempDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+TempDirectory.swift"; sourceTree = "<group>"; };
-		A95BD6A3257F827800679024 /* Wire-iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Wire-iOS.xctestplan"; sourceTree = "<group>"; };
 		A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationButtonMessageCell.swift; sourceTree = "<group>"; };
 		A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeMessageCellTests.swift; sourceTree = "<group>"; };
 		A95DFDC024E6D2E20005DC0E /* CGSize+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Const.swift"; sourceTree = "<group>"; };
@@ -2514,7 +2514,8 @@
 		A9E674D424F508B70058FC72 /* WireEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireEmail.swift; sourceTree = "<group>"; };
 		A9E674D624F514700058FC72 /* email.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = email.json; sourceTree = "<group>"; };
 		A9E674D924F51A190058FC72 /* WireEmailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireEmailTests.swift; sourceTree = "<group>"; };
-		A9E7A44925827EBE0016A9AC /* CallInfo.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CallInfo.xctestplan; sourceTree = "<group>"; };
+		A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CallInfo.xctestplan; sourceTree = "<group>"; };
+		A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Wire-iOS.xctestplan"; sourceTree = "<group>"; };
 		A9EB722223C1581A00DA8240 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		A9EB722423C3A47B00DA8240 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -5665,15 +5666,6 @@
 			path = URL;
 			sourceTree = "<group>";
 		};
-		A95BD6A6257F828D00679024 /* TestPlans */ = {
-			isa = PBXGroup;
-			children = (
-				A9E7A44925827EBE0016A9AC /* CallInfo.xctestplan */,
-				A95BD6A3257F827800679024 /* Wire-iOS.xctestplan */,
-			);
-			path = TestPlans;
-			sourceTree = "<group>";
-		};
 		A95C76BE240E871F0047CD29 /* Poll */ = {
 			isa = PBXGroup;
 			children = (
@@ -5833,6 +5825,15 @@
 			path = Bundle;
 			sourceTree = "<group>";
 		};
+		A9E7A45025827FA50016A9AC /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				A9E7A45125827FA50016A9AC /* CallInfo.xctestplan */,
+				A9E7A45225827FA50016A9AC /* Wire-iOS.xctestplan */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
 		A9E844F723730CC7001D1C47 /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -5844,7 +5845,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A95BD6A6257F828D00679024 /* TestPlans */,
+				A9E7A45025827FA50016A9AC /* TestPlans */,
 				A99E3E8D2519F23700E4FD3E /* Analytics */,
 				A9E5725524C640A100CBE0D7 /* CustomAppLock */,
 				A9E674D824F519C60058FC72 /* Bundle */,
@@ -7104,6 +7105,7 @@
 				EF8DD90A211C840800E970F1 /* 20000x20000.gif in Resources */,
 				7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */,
 				5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */,
+				A9E7A45425827FA50016A9AC /* Wire-iOS.xctestplan in Resources */,
 				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
 				7C374E4E1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg in Resources */,
 				1E18C2BE1AFBB8590043F3CF /* emo-test-01.json in Resources */,
@@ -7112,11 +7114,11 @@
 				BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */,
 				87656FCF1FB5FEDC00D5286C /* 0x0.pdf in Resources */,
 				1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */,
-				A9E7A44A25827EBE0016A9AC /* CallInfo.xctestplan in Resources */,
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
 				DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */,
 				EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */,
 				8735AE722036CBF900DCE66E /* huge.pdf in Resources */,
+				A9E7A45325827FA50016A9AC /* CallInfo.xctestplan in Resources */,
 				1E2268041B395722003980E3 /* people-01.json in Resources */,
 				BFF9447120F64B4200531BC3 /* unsplash_square.jpg in Resources */,
 				EF640EB82111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg in Resources */,
