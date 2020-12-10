@@ -25,7 +25,7 @@
 @class MockLegalHoldDataSource;
 
 @interface MockUser : NSObject<UserType, Mockable>
-+ (NSArray <ZMUser *> *)mockUsers;
++ (NSArray <ZMUser *> *)mockUsers __attribute__((deprecated("please use SwiftMockLoader.mockUsers()")));
 + (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockServiceUser;

@@ -18,7 +18,6 @@
 
 import Foundation
 @testable import Wire
-//import WireSyncEngine
 
 final class CallParticipantsListHelper {
     static func participants(count participantCount: Int,
