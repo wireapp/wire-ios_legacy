@@ -81,7 +81,7 @@ final class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     func testEffectSelectedState() {
         let preparedView = self.prepareForSnapshot()
 
-        self.sut.selectedAudioEffect = AVSAudioEffectType.chorusMax
+        sut.selectedAudioEffect = AVSAudioEffectType.chorusMax
         self.verify(view: preparedView)
     }
 }

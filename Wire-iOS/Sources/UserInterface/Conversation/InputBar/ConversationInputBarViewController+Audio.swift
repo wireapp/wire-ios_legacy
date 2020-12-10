@@ -28,7 +28,8 @@ import WireCommonComponents
 extension ConversationInputBarViewController {
 
     func setupCallStateObserver() {
-        if let userSession = ZMUserSession.shared() {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
         }
     }
