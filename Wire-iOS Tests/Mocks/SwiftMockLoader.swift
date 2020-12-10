@@ -18,8 +18,11 @@
 
 import Foundation
 
-class SwiftMockLoader {
+final class SwiftMockLoader {
 
+    
+    /// replace objc Mock user loader
+    /// - Returns: array of MockUserType
     class func mockUsers() -> [MockUserType] {
         return mockUsers(fromResource: "people-01.json")
     }

@@ -19,7 +19,7 @@
 import Foundation
 @testable import Wire
 
-class CallParticipantsViewTests: ZMSnapshotTestCase {
+final class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     var sut: CallParticipantsViewController!
     
@@ -32,21 +32,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    
-
-    static func participants(count participantCount: Int,
-                                 videoState: VideoState? = nil,
-                                 microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
-        return (0..<participantCount)
-            .lazy
-            .map { MockUser.mockUsers()[$0] }
-            .sorted { $0.name < $1.name }
-            .map { CallParticipantsCellConfiguration.callParticipant(user: $0,
-                                                                     videoState: videoState,
-                                                                     microphoneState: microphoneState)
-        }
-    }
-    
+        
     func testCallParticipants_Overflowing_Light() {
         // When
         sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)

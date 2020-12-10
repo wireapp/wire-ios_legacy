@@ -69,5 +69,4 @@ extension MockUserType {
         user.teamRole = teamID != nil ? .member : .none
         return user
     }
-
 }
