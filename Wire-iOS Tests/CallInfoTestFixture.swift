@@ -628,7 +628,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, videoState: .screenSharing)),
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .screenSharing)),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
