@@ -544,6 +544,10 @@
 "content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
 "content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
+"content.system.session_reset" = "%@ was unable to decrypt some of your messages but has solved the issue.";
+"content.system.session_reset.self" = "You was unable to decrypt some of your messages but has solved the issue.";
+"content.system.session_reset.affected" = "This affected all conversation you share together.";
+
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
 "content.file.uploading" = "Uploading…";
