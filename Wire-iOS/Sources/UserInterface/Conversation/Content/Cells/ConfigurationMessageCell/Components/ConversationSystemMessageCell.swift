@@ -723,8 +723,8 @@ class ConversationSessionResetSystemMessageCellDescription: ConversationMessageC
     var supportsActions: Bool = false
     var showEphemeralTimer: Bool = false
     var containsHighlightableContent: Bool = false
-    var accessibilityIdentifier: String? = nil
-    var accessibilityLabel: String? = nil
+    var accessibilityIdentifier: String?
+    var accessibilityLabel: String?
     
     var configuration: ConversationSystemMessageCell.Configuration
     
@@ -975,4 +975,3 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     }
     
 }
-
