@@ -143,6 +143,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         lineView.isHidden = !object.showLine
         imageView.image = object.icon
         attributedText = object.attributedText
+        textLabel.linkTextAttributes = [:]
     }
 }
 
@@ -780,15 +781,20 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         let messageString = NSAttributedString(string: localizedWhatPart(remoteIDChanged, name: name),
                                                attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
         
-        let resetSessionString = NSAttributedString(string: localizedResetSession(),
-                                              attributes: [.link : resetSessionURL,
-                                                           .font: UIFont.mediumSemiboldFont])
+        let resetSessionString =
+            NSAttributedString(string: localizedResetSession(),
+                               attributes: [.link : resetSessionURL,
+                                            .foregroundColor: UIColor.accent(),
+                                            .font: UIFont.mediumSemiboldFont])
         
-        let errorDetailsString = NSAttributedString(string: localizedErrorDetails(),
-                                                    attributes: [.link : errorDetailsURL,
-                                                                 .foregroundColor: UIColor.from(scheme: .textForeground)])
+        let errorDetailsString =
+            NSAttributedString(string: localizedErrorDetails(),
+                               attributes: [.link : errorDetailsURL,
+                                            .foregroundColor: UIColor.from(scheme: .textForeground),
+                                            .underlineStyle: NSUnderlineStyle.single.rawValue])
         
-        let fullString = messageString + "\n" + resetSessionString + "\n" + errorDetailsString
+        var fullString = messageString + "\n" + resetSessionString + "\n" + errorDetailsString
+        fullString = fullString && .lineSpacing(NSAttributedString.Wire.defaultParagraphSpacing)
         
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }
