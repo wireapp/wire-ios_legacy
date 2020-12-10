@@ -757,6 +757,9 @@
 		A931567825828FD700CF9CE0 /* MeasureTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */; };
 		A93156802582925300CF9CE0 /* testsWithWait.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */; };
 		A93156882582956100CF9CE0 /* ConversationInputBarViewController.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */; };
+		A931568E25829C2000CF9CE0 /* AutoreleasePool.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A931568D25829C1F00CF9CE0 /* AutoreleasePool.xctestplan */; };
+		A93156942582AD4A00CF9CE0 /* MediaAssetCache.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A93156932582AD4A00CF9CE0 /* MediaAssetCache.xctestplan */; };
+		A93156982582AE6000CF9CE0 /* SenderCellComponent.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = A93156972582AE6000CF9CE0 /* SenderCellComponent.xctestplan */; };
 		A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */; };
 		A937863423EB3BF00039987B /* CountryCodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */; };
 		A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */; };
@@ -2426,6 +2429,9 @@
 		A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MeasureTests.xctestplan; sourceTree = "<group>"; };
 		A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testsWithWait.xctestplan; sourceTree = "<group>"; };
 		A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ConversationInputBarViewController.xctestplan; sourceTree = "<group>"; };
+		A931568D25829C1F00CF9CE0 /* AutoreleasePool.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoreleasePool.xctestplan; sourceTree = "<group>"; };
+		A93156932582AD4A00CF9CE0 /* MediaAssetCache.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MediaAssetCache.xctestplan; sourceTree = "<group>"; };
+		A93156972582AE6000CF9CE0 /* SenderCellComponent.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SenderCellComponent.xctestplan; sourceTree = "<group>"; };
 		A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvisibleInputAccessoryView.swift; sourceTree = "<group>"; };
 		A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewController.swift; sourceTree = "<group>"; };
 		A937A5C223D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -5838,6 +5844,9 @@
 		A9E7A45025827FA50016A9AC /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
+				A93156972582AE6000CF9CE0 /* SenderCellComponent.xctestplan */,
+				A93156932582AD4A00CF9CE0 /* MediaAssetCache.xctestplan */,
+				A931568D25829C1F00CF9CE0 /* AutoreleasePool.xctestplan */,
 				A93156872582956100CF9CE0 /* ConversationInputBarViewController.xctestplan */,
 				A931567F2582925300CF9CE0 /* testsWithWait.xctestplan */,
 				A931567725828FD700CF9CE0 /* MeasureTests.xctestplan */,
@@ -7130,6 +7139,7 @@
 				87656FCF1FB5FEDC00D5286C /* 0x0.pdf in Resources */,
 				1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */,
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
+				A93156982582AE6000CF9CE0 /* SenderCellComponent.xctestplan in Resources */,
 				DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */,
 				EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */,
 				A931567225828DE100CF9CE0 /* DismissalTests.xctestplan in Resources */,
@@ -7143,6 +7153,7 @@
 				BFF9447020F64B4200531BC3 /* unsplash_pano.jpg in Resources */,
 				7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */,
 				EF30524B2088927D00613C45 /* transparent.png in Resources */,
+				A93156942582AD4A00CF9CE0 /* MediaAssetCache.xctestplan in Resources */,
 				EF2C9545214983BB000E4960 /* video.mp4 in Resources */,
 				BFF9447220F64B4200531BC3 /* unsplash_vertical_pano.jpg in Resources */,
 				1E18C2C11AFBC0AB0043F3CF /* emo-test-02.json in Resources */,
@@ -7153,6 +7164,7 @@
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
 				EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */,
+				A931568E25829C2000CF9CE0 /* AutoreleasePool.xctestplan in Resources */,
 				EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */,
 				A931567825828FD700CF9CE0 /* MeasureTests.xctestplan in Resources */,
 			);

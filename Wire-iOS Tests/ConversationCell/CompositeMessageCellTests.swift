@@ -18,7 +18,7 @@
 import XCTest
 @testable import Wire
 
-final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
+final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {///TODO: disable this to prevent SenderCellComponent?
 
     typealias CellConfiguration = (MockMessage) -> Void
 
