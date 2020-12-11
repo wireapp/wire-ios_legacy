@@ -794,7 +794,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
                                             .underlineStyle: NSUnderlineStyle.single.rawValue])
         
         var fullString = messageString + "\n" + resetSessionString + "\n" + errorDetailsString
-        fullString = fullString && .lineSpacing(NSAttributedString.Wire.defaultParagraphSpacing)
+        fullString = fullString && .lineSpacing(CGFloat.MessageCell.paragraphSpacing)
         
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }

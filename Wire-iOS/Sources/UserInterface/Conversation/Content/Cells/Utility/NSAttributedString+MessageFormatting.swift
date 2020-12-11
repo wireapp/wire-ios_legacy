@@ -24,11 +24,7 @@ import WireDataModel
 
 
 extension NSAttributedString {
-    
-    struct Wire {
-        static var defaultParagraphSpacing: CGFloat = 8
-    }
-    
+        
     static var paragraphStyle: NSParagraphStyle = {
         return defaultParagraphStyle()
     }()
@@ -66,7 +62,7 @@ extension NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         
         paragraphStyle.minimumLineHeight = 22 * UIFont.wr_preferredContentSizeMultiplier(for: UIApplication.shared.preferredContentSizeCategory)
-        paragraphStyle.paragraphSpacing = Wire.defaultParagraphSpacing
+        paragraphStyle.paragraphSpacing = CGFloat.MessageCell.paragraphSpacing
         
         return paragraphStyle
     }
