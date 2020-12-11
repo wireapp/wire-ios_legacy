@@ -20,7 +20,7 @@ github "wireapp/wire-ios-data-model" "refactor/applock-needToInformUserOfFeature
 github "wireapp/wire-ios-images" "32.0.0"
 github "wireapp/wire-ios-link-preview" "28.0.0"
 github "wireapp/wire-ios-protos" "25.0.0"
-github "wireapp/wire-ios-request-strategy" "feature/set-needsToNotifyUser-applock"
+github "wireapp/wire-ios-request-strategy" "feature/feature-configuration-main"
 github "wireapp/wire-ios-share-engine" "feature/feature-configuration-main"
 github "wireapp/wire-ios-sync-engine" "feature/feature-configuration-main"
 github "wireapp/wire-ios-system" "31.1.0"

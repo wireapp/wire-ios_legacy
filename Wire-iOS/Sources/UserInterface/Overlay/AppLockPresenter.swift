@@ -109,9 +109,10 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.needsToNotify
-                ? userInterface?.presentWarningScreen(isApplockForced: appLockInteractorInput.isAppLockForced, delegate: appLockInteractorInput)
-                : appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+//            appLockInteractorInput.needsToNotify
+//                ? userInterface?.presentWarningScreen(isApplockForced: appLockInteractorInput.isAppLockForced, delegate: appLockInteractorInput)
+//                : appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
