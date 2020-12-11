@@ -214,13 +214,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-//        guard
-//            let appLock = ZMUserSession.shared()?.appLockController,
-//            appLock.config.useCustomCodeInsteadOfAccountPassword
-//        else {
-//            callback(newValue)
-//            return
-//        }
+        guard AuthenticationType.current == .unavailable else {
+            callback(newValue)
+            return
+        }
         
         guard newValue else {
             Keychain.deletePasscode()

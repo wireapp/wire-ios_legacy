@@ -31,7 +31,6 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var presentCreatePasscodeScreenCalled: Bool = false
     
     func presentUnlockScreen(with message: String,
-                             useCustomPasscode: Bool,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
@@ -70,7 +69,6 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
     
-    var useCustomPasscode: Bool = false
     var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {

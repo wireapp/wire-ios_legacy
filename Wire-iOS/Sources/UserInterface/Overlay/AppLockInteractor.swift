@@ -28,7 +28,6 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
-    var useCustomPasscode: Bool { get }
     var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -62,11 +61,6 @@ final class AppLockInteractor {
 
     var isAppLockActive: Bool {
         return appLock?.isActive ?? false
-    }
-
-    // Use custom passcode only for lock screen
-    var useCustomPasscode: Bool {
-        return !isDatabaseLocked
     }
 
     var lastUnlockedDate: Date {
