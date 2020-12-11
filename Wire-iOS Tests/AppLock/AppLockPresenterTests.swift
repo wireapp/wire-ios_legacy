@@ -279,43 +279,43 @@ final class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertNil(userInterface.requestPasswordMessage)
     }
-    
-    func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
-        //given
-        appLockInteractor._isAuthenticationNeeded = true
-        let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        sut.dispatchQueue = queue
-        setupPasswordVerificationTest()
-
-        //when
-        sut.authenticationEvaluated(with: .needCustomPasscode)
-
-        //then
-        assertPasswordVerification(on: queue)
-        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.unlock")
-        
-        //given
-        setupPasswordVerificationTest()
-        
-        //when
-        sut.passwordVerified(with: .denied)
-        
-        //then
-        assertPasswordVerification(on: queue)
-        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
-
-
-        //given
-        setupPasswordVerificationTest()
-        
-        //when
-        sut.passwordVerified(with: .unknown)
-        
-        //then
-        assertPasswordVerification(on: queue)
-        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
-    }
+//    
+//    func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
+//        //given
+//        appLockInteractor._isAuthenticationNeeded = true
+//        let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
+//        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+//        sut.dispatchQueue = queue
+//        setupPasswordVerificationTest()
+//
+//        //when
+//        sut.authenticationEvaluated(with: .needCustomPasscode)
+//
+//        //then
+//        assertPasswordVerification(on: queue)
+//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.unlock")
+//        
+//        //given
+//        setupPasswordVerificationTest()
+//        
+//        //when
+//        sut.passwordVerified(with: .denied)
+//        
+//        //then
+//        assertPasswordVerification(on: queue)
+//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+//
+//
+//        //given
+//        setupPasswordVerificationTest()
+//        
+//        //when
+//        sut.passwordVerified(with: .unknown)
+//        
+//        //then
+//        assertPasswordVerification(on: queue)
+//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+//    }
 
     func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
         //given
