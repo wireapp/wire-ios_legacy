@@ -89,10 +89,6 @@ final class AppLockInteractor {
         }
     }
 
-    var shouldUseBiometricsOrAccountPassword: Bool {
-        return appLock?.config.useBiometricsOrAccountPassword ?? false
-    }
-
     var timeout: UInt {
         return appLock?.config.appLockTimeout ?? .max
     }
@@ -173,7 +169,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
+            return .screenLock(requireBiometrics: true)
         }
     }
     
