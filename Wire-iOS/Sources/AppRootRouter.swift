@@ -302,7 +302,6 @@ extension AppRootRouter {
         
         rootViewController.set(childViewController: navigationController,
                                completion: completion)
-        Keychain.deletePasscode()
     }
     
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {

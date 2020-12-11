@@ -342,9 +342,6 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                        if !result {
-                            Keychain.deletePasscode()
-                        }
                         self.isAppLockActive = result
                         })                        
 

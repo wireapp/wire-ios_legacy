@@ -30,10 +30,6 @@ extension SettingsPropertyFactory {
         set { userSession?.appLockController.isActive = newValue }
     }
     
-    var useCustomPasscode: Bool {
-        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
-    }
-    
     var timeout: UInt {
         return appLock?.config.appLockTimeout ?? .max
     }

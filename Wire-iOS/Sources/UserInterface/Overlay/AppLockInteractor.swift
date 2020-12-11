@@ -28,7 +28,6 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
-    var useCustomPasscode: Bool { get }
     var isAppLockForced: Bool { get }
     var needsToNotify: Bool { get set }
     var lastUnlockedDate: Date { get set }
@@ -66,11 +65,6 @@ final class AppLockInteractor {
         return appLock?.isActive ?? false
     }
 
-    // Use custom passcode only for lock screen
-    var useCustomPasscode: Bool {
-        return !isDatabaseLocked
-    }
-
     var lastUnlockedDate: Date {
         get { userSession?.appLockController.lastUnlockedDate ?? Date() }
         set {
@@ -86,11 +80,11 @@ final class AppLockInteractor {
     
     var needsToNotify: Bool {
         get {
-            return appLock?.needsToNotifyUserOfFeatureChange ?? false
+            return appLock?.needsToNotifyUser ?? false
         }
         set {
             if var session = userSession {
-                session.appLockController.needsToNotifyUserOfFeatureChange = newValue
+                session.appLockController.needsToNotifyUser = newValue
             }
         }
     }
@@ -179,8 +173,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword/*,
-                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced*/)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
         }
     }
     

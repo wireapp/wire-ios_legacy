@@ -32,7 +32,6 @@ protocol AppLockUserInterface: class {
     ///   - message: message to show on unlock UI, it should be a member of `presentRequestPasswordController`
     ///   - callback: callback to return the inputed passcode
     func presentUnlockScreen(with message: String,
-                             useCustomPasscode: Bool,
                              callback: @escaping RequestPasswordController.Callback)
     
     func dismissUnlockScreen()
@@ -58,7 +57,7 @@ enum AuthenticationState {
         switch result {
         case .denied:
             self = .cancelled
-        case .needAccountPassword:
+        case .needCustomPasscode:
             self = .pendingPassword
         default:
             break
@@ -137,18 +136,14 @@ extension AppLockPresenter {
     }
     
     private func requestAccountPassword(with message: String) {
-        userInterface?.presentUnlockScreen(with: message, useCustomPasscode: appLockInteractorInput.useCustomPasscode) { [weak self] password in
+        userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
-
+                
                 guard let password = password,
-                      self.checkPassword(password: password) else { return }
-
-                if self.appLockInteractorInput.useCustomPasscode { //TODO: katerina ... + applock
-                    self.appLockInteractorInput.verify(customPasscode: password)
-                } else {
-                    self.appLockInteractorInput.verify(password: password)
-                }
+                    self.checkPassword(password: password) else { return }
+                
+                self.appLockInteractorInput.verify(customPasscode: password)
             }
         }
     }
@@ -161,9 +156,9 @@ extension AppLockPresenter: AppLockInteractorOutput {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
-        if case .needAccountPassword = result {
+        if case .needCustomPasscode = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
-            if appLockInteractorInput.isCustomPasscodeNotSet { //TODO: katerina check if it's applock feature
+            if appLockInteractorInput.isCustomPasscodeNotSet {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
                     // user need to enter the newly created passcode after creation
                     self.setContents(dimmed: true, withReauth: true)

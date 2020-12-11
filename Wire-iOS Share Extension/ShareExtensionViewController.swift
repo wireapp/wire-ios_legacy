@@ -490,7 +490,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         }
         
         let scenario: AppLockController.AuthenticationScenario
-
+        
         if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
