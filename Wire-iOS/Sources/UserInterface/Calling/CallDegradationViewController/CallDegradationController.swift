@@ -28,9 +28,11 @@ enum CallDegradationState: Equatable {
     static func == (lhs: CallDegradationState, rhs: CallDegradationState) -> Bool {
         switch (lhs, rhs) {
         case (.incoming(let lhsUser), .incoming(let rhsUser)):
-            return (lhsUser as? NSObject) == (rhsUser as? NSObject)
+            return (lhsUser as? ZMUser) == (rhsUser as? ZMUser) ||
+                   (lhsUser as? NSObject) == (rhsUser as? NSObject)
         case (.outgoing(let lhsUser), .outgoing(let rhsUser)):
-            return (lhsUser as? NSObject) == (rhsUser as? NSObject)
+            return (lhsUser as? ZMUser) == (rhsUser as? ZMUser) ||
+                (lhsUser as? NSObject) == (rhsUser as? NSObject)
         case (.none, .none):
             return true
         default:
