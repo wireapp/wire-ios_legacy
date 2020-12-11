@@ -23,7 +23,6 @@ github "wireapp/wire-ios-protos" "25.0.0"
 github "wireapp/wire-ios-request-strategy" "feature/feature-configuration-main"
 github "wireapp/wire-ios-share-engine" "feature/feature-configuration-main"
 github "wireapp/wire-ios-sync-engine" "feature/feature-configuration-main"
->>>>>>> develop
 github "wireapp/wire-ios-system" "31.1.0"
 github "wireapp/wire-ios-testing" "22.0.0"
 github "wireapp/wire-ios-transport" "72.0.0"
