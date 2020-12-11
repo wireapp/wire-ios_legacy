@@ -49,6 +49,30 @@
          <TestPlanReference
             reference = "container:Wire-iOS Tests/TestPlans/ConversationCellSnapshot.xctestplan">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/SenderCellComponent.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/MediaAssetCache.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/AutoreleasePool.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/ConversationInputBarViewController.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/testsWithWait.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/MeasureTests.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/DismissalTests.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/CallInfo.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
