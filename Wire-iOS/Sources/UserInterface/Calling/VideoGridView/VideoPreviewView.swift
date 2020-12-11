@@ -30,12 +30,18 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var isMaximized: Bool = false {
+    override var isMaximized: Bool {
         didSet {
             updateFillMode()
         }
     }
     
+    override var stream: Stream {
+        didSet {
+            updateVideoKind()
+        }
+    }
+
     var shouldFill: Bool {
         return isMaximized ? false : videoKind.shouldFill
     }
@@ -74,11 +80,6 @@ final class VideoPreviewView: BaseVideoPreviewView {
         blurView.fitInSuperview()
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-    }
-
-    override func streamDidChange() {
-        super.streamDidChange()
-        updateVideoKind()
     }
     
     // MARK: - Fill mode

@@ -98,6 +98,8 @@ extension ConversationInputBarViewController {
     }
 
     func registerForTextFieldSelectionChange() {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+        
         textfieldObserverToken = inputBar.textView.observe(\MarkdownTextView.selectedTextRange, options: [.new]) { [weak self] (textView: MarkdownTextView, change: NSKeyValueObservedChange<UITextRange?>) -> Void in
             let newValue = change.newValue ?? nil
             self?.triggerMentionsIfNeeded(from: textView, with: newValue)
