@@ -166,8 +166,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword/*,
-                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced*/)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
         }
     }
     

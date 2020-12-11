@@ -56,7 +56,7 @@ enum AuthenticationState {
         switch result {
         case .denied:
             self = .cancelled
-        case .needAccountPassword:
+        case .needCustomPasscode:
             self = .pendingPassword
         default:
             break
@@ -157,7 +157,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
-        if case .needAccountPassword = result {
+        if case .needCustomPasscode = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
             if appLockInteractorInput.isCustomPasscodeNotSet { //TODO: katerina check if it's applock feature
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
