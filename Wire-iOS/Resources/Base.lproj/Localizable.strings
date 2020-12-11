@@ -533,10 +533,6 @@
 "content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
 "content.system.missing_messages.subtitle_start" = "Meanwhile,";
 
-"content.system.session_reset" = "%@ was unable to decrypt some of your messages but has solved the issue.";
-"content.system.session_reset.self" = "You was unable to decrypt some of your messages but has solved the issue.";
-"content.system.session_reset.affected" = "This affected all conversation you share together.";
-
 "content.system.cannot_decrypt" = "A message from %@ was not received.";
 
 "content.system.cannot_decrypt.you_part" = "you";
