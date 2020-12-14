@@ -51,7 +51,7 @@ final class PasscodeSetupViewController: UIViewController {
 
     private lazy var createButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
-        button.accessibilityIdentifier = "Create passcode button"
+        button.accessibilityIdentifier = "createPasscodeButton"
 
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
@@ -74,7 +74,7 @@ final class PasscodeSetupViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
         label.text = "create_passcode.title_label".localized
-        label.accessibilityIdentifier = "Create passcode title"
+        label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
     }()
@@ -276,6 +276,7 @@ final class PasscodeSetupViewController: UIViewController {
 
     lazy var closeItem: UIBarButtonItem = {
         let closeItem = UIBarButtonItem.createCloseItem()
+        closeItem.accessibilityIdentifier = "closeButton"
         closeItem.tintColor = .white
 
         closeItem.target = self
