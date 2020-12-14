@@ -20,6 +20,7 @@ import WireSyncEngine
 
 struct VideoConfiguration: VideoGridConfiguration {
 
+    fileprivate static let maxActiveSpeakers: Int = 4
     fileprivate static let maxVideoStreams: Int = 12
 
     let floatingVideoStream: VideoStream?
@@ -44,7 +45,7 @@ extension CallParticipant {
 extension VoiceChannel {
 
     private var sortedParticipants: [CallParticipant] {
-        return participants.sorted {
+        return participants(activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers).sorted {
             $0.streamId == selfStreamId ||
             $0.user.name?.lowercased() < $1.user.name?.lowercased()
         }
@@ -64,7 +65,7 @@ extension VoiceChannel {
                             participantName: name,
                             microphoneState: .unmuted,
                             videoState: videoState,
-                            audioLevel: 0)
+                            isParticipantActive: false)
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
@@ -119,7 +120,7 @@ extension VoiceChannel {
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState,
                                     videoState: videoState,
-                                    audioLevel: participant.audioLevel)
+                                    isParticipantActive: participant.isActiveSpeaker)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil

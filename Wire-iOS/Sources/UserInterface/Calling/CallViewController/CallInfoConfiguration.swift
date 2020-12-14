@@ -44,7 +44,7 @@ fileprivate extension VoiceChannel {
                         user: $0.user,
                         videoState: $0.state.videoState,
                         microphoneState: $0.state.microphoneState,
-                        audioLevel: $0.audioLevel
+                        isActiveSpeaker: $0.isActiveSpeaker
                     )
                 })
                
@@ -109,6 +109,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
+    fileprivate static let maxActiveSpeakers: Int = 1
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
@@ -261,7 +262,9 @@ fileprivate extension VoiceChannel {
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants.filter { $0.state.isConnected }
+        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter {
+            $0.state.isConnected
+        }
     }
 
     var degradationState: CallDegradationState {

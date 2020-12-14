@@ -30,7 +30,7 @@ enum CallParticipantsCellConfiguration: Hashable {
         user: ZMUser,
         videoState: VideoState?,
         microphoneState: MicrophoneState?,
-        audioLevel: Int
+        isActiveSpeaker: Bool
     )
     case showAll(totalCount: Int)
     
@@ -115,13 +115,13 @@ extension CallParticipantsView: UICollectionViewDataSource {
 extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .callParticipant(user, videoState, microphoneState, audioLevel) = configuration else { preconditionFailure() }
+        guard case let .callParticipant(user, videoState, microphoneState, isActiveSpeaker) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
-        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, audioLevel: audioLevel))
+        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, isActive: isActiveSpeaker))
         videoIconView.set(style: VideoIconStyle(state: videoState))
     }
     
