@@ -64,6 +64,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return "token"
     }
     
+    func addActiveSpeakersObserver(_ observer: ActiveSpeakersObserver) -> Any {
+        return "token"
+    }
+    
     var state: CallState {
         return mockCallState
     }
@@ -77,6 +81,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     }
     
     var participants: [CallParticipant] {
+        return mockParticipants
+    }
+    
+    func participants(activeSpeakersLimit limit: Int?) -> [CallParticipant] {
         return mockParticipants
     }
     

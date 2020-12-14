@@ -43,7 +43,8 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
             .sorted { $0.name < $1.name }
             .map { CallParticipantsCellConfiguration.callParticipant(user: $0,
                                                                      videoState: videoState,
-                                                                     microphoneState: microphoneState)
+                                                                     microphoneState: microphoneState,
+                                                                     isActiveSpeaker: false)
         }
     }
     
