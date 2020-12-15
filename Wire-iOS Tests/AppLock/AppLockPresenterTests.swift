@@ -491,7 +491,7 @@ extension AppLockPresenterTests {
         let expectation = XCTestExpectation(description: "verify password")
         
         queue.async {
-            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.passwordToVerify)
+            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.customPasscodeToVerify)
             expectation.fulfill()
         }
         
