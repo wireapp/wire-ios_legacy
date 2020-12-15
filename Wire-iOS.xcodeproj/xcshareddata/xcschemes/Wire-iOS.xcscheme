@@ -53,6 +53,15 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
