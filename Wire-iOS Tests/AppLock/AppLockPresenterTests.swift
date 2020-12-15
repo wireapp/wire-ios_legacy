@@ -29,6 +29,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var passwordInput: String?
     var requestPasswordMessage: String?
     var presentCreatePasscodeScreenCalled: Bool = false
+    var presentWarningScreenCalled: Bool = false
     
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
@@ -40,8 +41,8 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
         presentCreatePasscodeScreenCalled = true
     }
     
-    func presentWarningScreen(isApplockForced: Bool, delegate: AppLockInteractorInput) {
-        
+    func presentWarningScreen(callback: ResultHandler?) {
+        presentWarningScreenCalled = true
     }
     
     var spinnerAnimating: Bool?
@@ -73,8 +74,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
     
-    var needsToNotify: Bool = false
-    var isAppLockForced: Bool = false
+    var needsToNotifyUser: Bool = false
 
     var lastUnlockedDate: Date = Date()
 
@@ -279,43 +279,43 @@ final class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertNil(userInterface.requestPasswordMessage)
     }
-//    
-//    func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
-//        //given
-//        appLockInteractor._isAuthenticationNeeded = true
-//        let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
-//        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-//        sut.dispatchQueue = queue
-//        setupPasswordVerificationTest()
-//
-//        //when
-//        sut.authenticationEvaluated(with: .needCustomPasscode)
-//
-//        //then
-//        assertPasswordVerification(on: queue)
-//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.unlock")
-//        
-//        //given
-//        setupPasswordVerificationTest()
-//        
-//        //when
-//        sut.passwordVerified(with: .denied)
-//        
-//        //then
-//        assertPasswordVerification(on: queue)
-//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
-//
-//
-//        //given
-//        setupPasswordVerificationTest()
-//        
-//        //when
-//        sut.passwordVerified(with: .unknown)
-//        
-//        //then
-//        assertPasswordVerification(on: queue)
-//        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
-//    }
+    
+    func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
+        //given
+        appLockInteractor._isAuthenticationNeeded = true
+        let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
+        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        sut.dispatchQueue = queue
+        setupPasswordVerificationTest()
+
+        //when
+        sut.authenticationEvaluated(with: .needCustomPasscode)
+
+        //then
+        assertPasswordVerification(on: queue)
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.unlock")
+        
+        //given
+        setupPasswordVerificationTest()
+        
+        //when
+        sut.passwordVerified(with: .denied)
+        
+        //then
+        assertPasswordVerification(on: queue)
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+
+
+        //given
+        setupPasswordVerificationTest()
+        
+        //when
+        sut.passwordVerified(with: .unknown)
+        
+        //then
+        assertPasswordVerification(on: queue)
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+    }
 
     func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
         //given
@@ -462,6 +462,33 @@ final class AppLockPresenterTests: XCTestCase {
         XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
         
     }
+    
+     //MARK: - warning screen
+    func testThatAppLockShowsWarningScreen_IfNeedsToNotifyUserIsTrue() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = true
+        resetMocksValues()
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertTrue(userInterface.presentWarningScreenCalled)
+    }
+    
+    func testThatAppLockDoesNotShowWarningScreen_IfNeedsToNotifyUserIsFalse() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = false
+        resetMocksValues()
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertFalse(userInterface.presentWarningScreenCalled)
+    }
 }
 
 extension AppLockPresenterTests {
@@ -498,7 +525,7 @@ extension AppLockPresenterTests {
         let expectation = XCTestExpectation(description: "verify password")
         
         queue.async {
-            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.passwordToVerify)
+            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.customPasscodeToVerify)
             expectation.fulfill()
         }
         
