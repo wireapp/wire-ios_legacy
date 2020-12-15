@@ -180,7 +180,7 @@ final class AppLockPresenterTests: XCTestCase {
         //given
         resetMocksValues()
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         //then
         assert(contentsDimmed: true, reauthVisibile: false)
     }
@@ -282,7 +282,7 @@ final class AppLockPresenterTests: XCTestCase {
         setupPasswordVerificationTest()
 
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //then
         assertPasswordVerification(on: queue)
@@ -437,7 +437,7 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = true
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //THEN
         XCTAssert( userInterface.presentCreatePasscodeScreenCalled)
@@ -449,7 +449,7 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = false
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         
         //THEN
         XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
