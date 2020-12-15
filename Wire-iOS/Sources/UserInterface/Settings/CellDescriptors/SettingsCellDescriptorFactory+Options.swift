@@ -229,8 +229,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
             headerGenerator: { return nil },
-            footerGenerator: { return self.appLockSectionSubtitle },
-            visibilityAction: .none
+            footerGenerator: { return self.appLockSectionSubtitle }
         )
     }
     
