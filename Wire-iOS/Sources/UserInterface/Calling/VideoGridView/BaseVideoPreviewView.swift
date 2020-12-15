@@ -43,6 +43,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
+            setBorder(visible: stream.isParticipantActive)
         }
     }
     
@@ -71,6 +72,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateUserDetails()
+        setBorder(visible: stream.isParticipantActive)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
