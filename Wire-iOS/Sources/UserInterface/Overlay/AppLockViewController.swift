@@ -120,9 +120,6 @@ final class AppLockViewController: UIViewController {
         present(passwordController.alertController, animated: true)
     }
     
-    func presentWarningScreen(isApplockForced: Bool, delegate: AppLockInteractorInput) {
-        present(WarningViewController(isApplockForced: true, delegate: delegate), animated: false)
-    }
 }
 
 // MARK: - AppLockManagerDelegate
@@ -141,6 +138,10 @@ extension AppLockViewController: AppLockUserInterface {
         present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: callback, variant: .dark),
                 animated: false)
     }
+    
+    func presentWarningScreen(callback: ResultHandler?) {
+        present(WarningViewController(callback: callback), animated: false)
+    }
 
     func setSpinner(animating: Bool) {
         if animating {
@@ -158,13 +159,3 @@ extension AppLockViewController: AppLockUserInterface {
         dimContents = dimmed
     }
 }
-
-//extension AppLockViewController: WarningScreenCallback {
-//    func evaluateAuthentication() {
-//        appLockPresenter?.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
-//    }
-//}
-//
-//protocol WarningScreenCallback {
-//    func evaluateAuthentication()
-//}

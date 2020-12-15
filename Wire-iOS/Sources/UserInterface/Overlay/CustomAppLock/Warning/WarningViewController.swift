@@ -18,23 +18,36 @@
 
 import Foundation
 import UIKit
+import WireDataModel
+import WireSyncEngine
 import WireCommonComponents
 
-class WarningViewController: UIViewController {
+final class WarningViewController: UIViewController {
 
     private let contentView: UIView = UIView()
+    
+    private lazy var confirmButton: Button = {
+        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
+        button.setBackgroundImageColor(.strongBlue, for: .normal)
+        
+        button.accessibilityIdentifier = "confirmButton"
+        button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
+        button.addTarget(self, action: #selector(onOkCodeButtonPressed), for: .touchUpInside)
 
+        return button
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
-        label.text = "self.settings.privacy_security.lock_app.warning.title".localized
+        label.text = "warning_screen.title_label".localized
 
         return label
     }()
     
     private lazy var messageLabel: UILabel = {
-        let text = isApplockForced
-            ? "self.settings.privacy_security.lock_app.warning.force".localized
-            : "self.settings.privacy_security.lock_app.warning.unforce".localized
+        let text = isAppLockActive
+            ? "warning_screen.info_label.forced_applock".localized
+            : "warning_screen.info_label.non_forced_apploc".localized
         let label = UILabel(key: text,
                             size: .normal,
                             weight: .regular,
@@ -46,54 +59,56 @@ class WarningViewController: UIViewController {
 
         return label
     }()
-
-    private lazy var createButton: Button = {
-        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
-
-        button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
-
-        button.addTarget(self, action: #selector(onOkCodeButtonPressed), for: .touchUpInside)
-
-        return button
-    }()
-      private let variant: ColorSchemeVariant
-      private let isApplockForced: Bool
-      private let delegate: AppLockInteractorInput
     
+    private let variant: ColorSchemeVariant
+    private var callback: ResultHandler?
+    
+    private var appLock: AppLockType? {
+        return ZMUserSession.shared()?.appLockController
+    }
+
+    private var isAppLockActive: Bool {
+        return appLock?.isActive ?? false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
     }
-
-    required init(isApplockForced: Bool, delegate: AppLockInteractorInput, variant: ColorSchemeVariant? = nil) {
-        self.isApplockForced = isApplockForced
+    
+    /// init with parameters
+    /// - Parameters:
+    ///   - callback: callback for authentication
+    ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
+    required init(callback: ResultHandler?,
+                  variant: ColorSchemeVariant? = nil) {
         self.variant = variant ?? ColorScheme.default.variant
-        self.delegate = delegate
+        self.callback = callback
 
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: variant)
 
         view.addSubview(contentView)
         
         contentView.addSubview(titleLabel)
-        contentView.addSubview(createButton)
+        contentView.addSubview(confirmButton)
         contentView.addSubview(messageLabel)
                 
         createConstraints()
     }
 
     private func createConstraints() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        createButton.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-       
-        
+        [contentView,
+         titleLabel,
+         confirmButton,
+         messageLabel].disableAutoresizingMaskTranslation()
+
+        let contentPadding: CGFloat = 24
+                
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -102,19 +117,19 @@ class WarningViewController: UIViewController {
 
             // title Label
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 150),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentPadding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentPadding),
             
             // message Label
-            messageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: contentPadding),
+            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentPadding),
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentPadding),
 
-            // create Button
-            createButton.heightAnchor.constraint(equalToConstant: CGFloat.WipeCompletion.buttonHeight),
-            createButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
-            createButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
-            createButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)
+            // confirm Button
+            confirmButton.heightAnchor.constraint(equalToConstant: CGFloat.WipeCompletion.buttonHeight),
+            confirmButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -contentPadding),
+            confirmButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentPadding),
+            confirmButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentPadding)
         ])
     }
 
@@ -124,12 +139,8 @@ class WarningViewController: UIViewController {
 
     @objc
     private func onOkCodeButtonPressed(sender: AnyObject?) {
-        delegate.needsToNotify = false
+        callback?(true)
         dismiss(animated: true)
-        if isApplockForced {
-            delegate.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
-        }
     }
 
 }
-
