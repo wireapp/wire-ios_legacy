@@ -264,11 +264,11 @@ extension VoiceChannel {
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser)
+            return CallDegradationState.incoming(degradedUser: firstDegradedUser)
         case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser)
+            return CallDegradationState.outgoing(degradedUser: firstDegradedUser)
         default:
-            return .none
+            return CallDegradationState.none
         }
     }
 
