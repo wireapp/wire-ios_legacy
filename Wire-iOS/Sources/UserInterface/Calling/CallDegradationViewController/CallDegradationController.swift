@@ -20,25 +20,10 @@ import Foundation
 import UIKit
 import WireDataModel
 
-enum CallDegradationState: Equatable {
+enum CallDegradationState<User: Equatable>: Equatable {
     case none
-    case incoming(degradedUser: UserType?)
-    case outgoing(degradedUser: UserType?)
-
-    static func == (lhs: CallDegradationState, rhs: CallDegradationState) -> Bool {
-        switch (lhs, rhs) {
-        case (.incoming(let lhsUser), .incoming(let rhsUser)):
-            return (lhsUser as? ZMUser) == (rhsUser as? ZMUser) ||
-                   (lhsUser as? NSObject) == (rhsUser as? NSObject)
-        case (.outgoing(let lhsUser), .outgoing(let rhsUser)):
-            return (lhsUser as? ZMUser) == (rhsUser as? ZMUser) ||
-                (lhsUser as? NSObject) == (rhsUser as? NSObject)
-        case (.none, .none):
-            return true
-        default:
-            return false
-        }
-    }
+    case incoming(degradedUser: User?)
+    case outgoing(degradedUser: User?)
 }
 
 protocol CallDegradationControllerDelegate: class {
@@ -56,7 +41,7 @@ final class CallDegradationController: UIViewController {
     // the view is ready.
     private var viewIsReady = false
     
-    var state: CallDegradationState = .none {
+    var state: CallDegradationState<NSObject> = .none {
         didSet {
             guard oldValue != state else { return }
             
@@ -67,7 +52,7 @@ final class CallDegradationController: UIViewController {
     fileprivate func updateState() {
         switch state {
         case .outgoing(degradedUser: let degradeduser):
-            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser, confirmationBlock: { [weak self] (continueDegradedCall) in
+            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser as? UserType, confirmationBlock: { [weak self] (continueDegradedCall) in
                 continueDegradedCall ? self?.delegate?.continueDegradedCall(): self?.delegate?.cancelDegradedCall()
             })
         case .none, .incoming(degradedUser: _):

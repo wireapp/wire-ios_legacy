@@ -117,7 +117,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let isMuted: Bool
     let mediaState: MediaState
     let accessoryType: CallInfoViewControllerAccessoryType
-    let degradationState: CallDegradationState
+    let degradationState: CallDegradationState<NSObject>
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
     let cameraType: CaptureDevice
@@ -262,7 +262,7 @@ extension VoiceChannel {
         return participants.filter { $0.state.isConnected }
     }
 
-    var degradationState: CallDegradationState {
+    var degradationState: CallDegradationState<NSObject> {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
             return .incoming(degradedUser: firstDegradedUser)
