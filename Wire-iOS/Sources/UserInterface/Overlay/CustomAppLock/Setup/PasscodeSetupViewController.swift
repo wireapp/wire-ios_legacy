@@ -73,7 +73,7 @@ final class PasscodeSetupViewController: UIViewController {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
-        label.text = "create_passcode.title_label".localized
+        label.text = "warning_screen.title_label".localized
         label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
@@ -110,7 +110,7 @@ final class PasscodeSetupViewController: UIViewController {
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && regularFont
+        let headingText = NSAttributedString(string: "create_passcode.info_label_v2".localized) && baseAttributes && regularFont
 
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && heightFont
 
