@@ -31,18 +31,18 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
         sut.validationUpdated(sender: sut.passcodeTextField, error: nil)
     }
 
-//    func testForInitState() {
-//        verifyAllIPhoneSizes(createSut: { size in
-//            let vc = PasscodeSetupViewController(callback: nil,
-//                                                 useCompactLayout: size.height <= CGFloat.iPhone4Inch.height)
-//            return vc
-//        })
-//    }
-//
-//    func testForInitStateInDarkTheme() {
-//        sut = PasscodeSetupViewController(callback: nil, variant: .dark, useCompactLayout: false)
-//        verify(matching: sut)
-//    }
+    func testForInitState() {
+        verifyAllIPhoneSizes(createSut: { size in
+            let vc = PasscodeSetupViewController(callback: nil,
+                                                 useCompactLayout: size.height <= CGFloat.iPhone4Inch.height)
+            return vc
+        })
+    }
+
+    func testForInitStateInDarkTheme() {
+        sut = PasscodeSetupViewController(callback: nil, variant: .dark, useCompactLayout: false)
+        verify(matching: sut)
+    }
 
     func testForPasscodePassed() {
         // GIVEN
