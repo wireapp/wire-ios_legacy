@@ -37,7 +37,7 @@ struct VideoConfiguration: VideoGridConfiguration {
 
 extension CallParticipant {
     var streamId: AVSClient {
-        return AVSClient(userId: user.remoteIdentifier, clientId: clientId)
+        return AVSClient(userId: (user as! ZMUser).remoteIdentifier, clientId: clientId)
     }
 }
 

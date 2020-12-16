@@ -29,7 +29,7 @@ extension ZMConversation {
     
     var firstCallingParticipantOtherThanSelf : ZMUser? {
         let participant = voiceChannel?.participants.first { !$0.user.isSelfUser }
-        return participant?.user
+        return participant?.user as? ZMUser
     }
     
     func startAudioCall() {
