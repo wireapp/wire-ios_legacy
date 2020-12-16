@@ -21,10 +21,15 @@ import WireSyncEngine
 
 extension ZClientViewController {
     
-    func showAFeatureChangeWarningScreenIfNeeded(callback: ResultHandler?) {
-        let warningVC = WarningViewController(callback: callback)
-        warningVC.modalPresentationStyle = .fullScreen
-        present(warningVC, animated: false)
+    func notifyUserOfDisabledAppLockIfNeeded() {
+        guard let appLock = ZMUserSession.shared()?.appLockController else {
+            return
+        }
+        if appLock.needsToNotifyUser && !appLock.isActive {
+            let warningVC = AppLockChangeWarningViewController()
+            warningVC.modalPresentationStyle = .fullScreen
+            present(warningVC, animated: false)
+        }
     }
     
 }

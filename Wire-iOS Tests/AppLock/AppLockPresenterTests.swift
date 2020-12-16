@@ -468,7 +468,6 @@ final class AppLockPresenterTests: XCTestCase {
         //given
         set(authNeeded: true, authenticationState: .authenticated)
         appLockInteractor.needsToNotifyUser = true
-        resetMocksValues()
         
         //when
         sut.requireAuthenticationIfNeeded()
@@ -481,7 +480,6 @@ final class AppLockPresenterTests: XCTestCase {
         //given
         set(authNeeded: true, authenticationState: .authenticated)
         appLockInteractor.needsToNotifyUser = false
-        resetMocksValues()
         
         //when
         sut.requireAuthenticationIfNeeded()

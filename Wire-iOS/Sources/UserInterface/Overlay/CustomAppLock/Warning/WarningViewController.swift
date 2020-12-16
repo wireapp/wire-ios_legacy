@@ -22,7 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-final class WarningViewController: UIViewController {
+final class AppLockChangeWarningViewController: UIViewController {
 
     private let contentView: UIView = UIView()
     
@@ -32,7 +32,7 @@ final class WarningViewController: UIViewController {
         
         button.accessibilityIdentifier = "confirmButton"
         button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
-        button.addTarget(self, action: #selector(onOkCodeButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
 
         return button
     }()
@@ -63,9 +63,7 @@ final class WarningViewController: UIViewController {
     private let variant: ColorSchemeVariant
     private var callback: ResultHandler?
     
-    private var appLock: AppLockType? {
-        return ZMUserSession.shared()?.appLockController
-    }
+    private var appLock: AppLockType? = ZMUserSession.shared()?.appLockController
 
     private var isAppLockActive: Bool {
         return appLock?.isActive ?? false
@@ -81,9 +79,9 @@ final class WarningViewController: UIViewController {
     /// - Parameters:
     ///   - callback: callback for authentication
     ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
-    required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant? = nil) {
-        self.variant = variant ?? ColorScheme.default.variant
+    required init(callback: ResultHandler? = nil,
+                  variant: ColorSchemeVariant = ColorScheme.default.variant) {
+        self.variant = variant
         self.callback = callback
 
         super.init(nibName: nil, bundle: nil)
@@ -138,7 +136,8 @@ final class WarningViewController: UIViewController {
     }
 
     @objc
-    private func onOkCodeButtonPressed(sender: AnyObject?) {
+    private func confirmButtonTapped(sender: AnyObject?) {
+        appLock?.needsToNotifyUser = false
         callback?(true)
         dismiss(animated: true)
     }

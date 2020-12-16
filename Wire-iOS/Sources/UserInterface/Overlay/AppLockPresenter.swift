@@ -114,7 +114,6 @@ final class AppLockPresenter {
                 ? userInterface?.presentWarningScreen(callback: { [weak self] _ in
                     guard let `self` = self else { return }
                     
-                    self.appLockInteractorInput.needsToNotifyUser = false
                     self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
                 })
                 : appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)

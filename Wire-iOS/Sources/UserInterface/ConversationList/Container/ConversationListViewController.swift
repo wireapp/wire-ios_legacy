@@ -166,7 +166,7 @@ final class ConversationListViewController: UIViewController {
             viewDidAppearCalled = true
             ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
-            showAFeatureChangeWarningScreenIfNeeded()
+            ZClientViewController.shared?.notifyUserOfDisabledAppLockIfNeeded()
         }
     }
 
@@ -367,17 +367,6 @@ final class ConversationListViewController: UIViewController {
         return usernameTakeoverViewController != nil
     }
     
-    private func showAFeatureChangeWarningScreenIfNeeded() {
-        guard var appLock = ZMUserSession.shared()?.appLockController else {
-            return
-        }
-        if appLock.needsToNotifyUser && !appLock.isActive {
-            ZClientViewController.shared?.showAFeatureChangeWarningScreenIfNeeded(callback: { _ in
-                appLock.needsToNotifyUser = false
-            })
-        }
-    }
-
 }
 
 fileprivate extension NSAttributedString {

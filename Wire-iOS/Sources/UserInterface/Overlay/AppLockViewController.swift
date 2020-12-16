@@ -140,7 +140,7 @@ extension AppLockViewController: AppLockUserInterface {
     }
     
     func presentWarningScreen(callback: ResultHandler?) {
-        let warningVC = WarningViewController(callback: callback)
+        let warningVC = AppLockChangeWarningViewController(callback: callback)
         warningVC.modalPresentationStyle = .fullScreen
         present(warningVC, animated: false)
     }
