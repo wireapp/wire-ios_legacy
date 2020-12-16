@@ -214,10 +214,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard
-            let appLock = ZMUserSession.shared()?.appLockController,
-            appLock.config.useCustomCodeInsteadOfAccountPassword
-        else {
+        guard AuthenticationType.current == .unavailable else {
             callback(newValue)
             return
         }
@@ -243,7 +240,12 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
                     
         wrappedViewController.presentationController?.delegate = passcodeSetupViewController
         
-        UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            wrappedViewController.modalPresentationStyle = .popover
+            present(wrappedViewController, animated: true)
+        } else {
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        }
     }
 }
 

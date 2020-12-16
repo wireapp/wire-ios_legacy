@@ -229,10 +229,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
             headerGenerator: { return nil },
-            footerGenerator: { return self.appLockSectionSubtitle },
-            visibilityAction: { _ in
-                return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil)
-            }
+            footerGenerator: { return self.appLockSectionSubtitle }
         )
     }
     
@@ -349,7 +346,7 @@ extension SettingsCellDescriptorFactory {
         
         var components = [lockDescription, typeKey.localized]
         
-        if settingsPropertyFactory.useCustomPasscode {
+        if AuthenticationType.current == .unavailable {
             let reminderKey = "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder"
             components.append(reminderKey.localized)
         }

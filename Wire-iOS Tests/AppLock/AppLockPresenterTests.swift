@@ -31,7 +31,6 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var presentCreatePasscodeScreenCalled: Bool = false
     
     func presentUnlockScreen(with message: String,
-                             useCustomPasscode: Bool,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
@@ -70,7 +69,6 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
     
-    var useCustomPasscode: Bool = false
     var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {
@@ -182,7 +180,7 @@ final class AppLockPresenterTests: XCTestCase {
         //given
         resetMocksValues()
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         //then
         assert(contentsDimmed: true, reauthVisibile: false)
     }
@@ -284,7 +282,7 @@ final class AppLockPresenterTests: XCTestCase {
         setupPasswordVerificationTest()
 
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //then
         assertPasswordVerification(on: queue)
@@ -439,7 +437,7 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = true
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //THEN
         XCTAssert( userInterface.presentCreatePasscodeScreenCalled)
@@ -451,7 +449,7 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = false
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         
         //THEN
         XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
@@ -493,7 +491,7 @@ extension AppLockPresenterTests {
         let expectation = XCTestExpectation(description: "verify password")
         
         queue.async {
-            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.passwordToVerify)
+            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.customPasscodeToVerify)
             expectation.fulfill()
         }
         

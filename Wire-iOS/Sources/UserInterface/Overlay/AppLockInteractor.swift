@@ -28,7 +28,6 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
-    var useCustomPasscode: Bool { get }
     var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -62,10 +61,6 @@ final class AppLockInteractor {
 
     var isAppLockActive: Bool {
         return appLock?.isActive ?? false
-    }
-
-    var useCustomPasscode: Bool {
-        return appLock?.config.useCustomCodeInsteadOfAccountPassword == true
     }
 
     var lastUnlockedDate: Date {
@@ -109,7 +104,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     
     func evaluateAuthentication(description: String) {
         appLock?.evaluateAuthentication(scenario: authenticationScenario,
-                                       description: description.localized) { [weak self] result, context in
+                                        description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
                         
             self.dispatchQueue.async {
@@ -165,8 +160,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword,
-                               grantAccessIfPolicyCannotBeEvaluated: !isAppLockForced)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
         }
     }
     
