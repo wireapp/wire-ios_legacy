@@ -8967,6 +8967,7 @@
 				EXCLUDED_ARCHS = "i386 arm64";
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -8977,6 +8978,7 @@
 				EXCLUDED_ARCHS = "i386 arm64";
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
