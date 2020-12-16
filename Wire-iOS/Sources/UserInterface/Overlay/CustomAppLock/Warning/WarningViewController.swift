@@ -47,7 +47,7 @@ final class WarningViewController: UIViewController {
     private lazy var messageLabel: UILabel = {
         let text = isAppLockActive
             ? "warning_screen.info_label.forced_applock".localized
-            : "warning_screen.info_label.non_forced_apploc".localized
+            : "warning_screen.info_label.non_forced_applock".localized
         let label = UILabel(key: text,
                             size: .normal,
                             weight: .regular,

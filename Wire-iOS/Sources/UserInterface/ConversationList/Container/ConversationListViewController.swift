@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum ConversationListState {
     case conversationList
@@ -165,6 +166,7 @@ final class ConversationListViewController: UIViewController {
             viewDidAppearCalled = true
             ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
+            showAFeatureChangeWarningScreenIfNeeded()
         }
     }
 
@@ -364,6 +366,18 @@ final class ConversationListViewController: UIViewController {
     var hasUsernameTakeoverViewController: Bool {
         return usernameTakeoverViewController != nil
     }
+    
+    private func showAFeatureChangeWarningScreenIfNeeded() {
+        guard var appLock = ZMUserSession.shared()?.appLockController else {
+            return
+        }
+        if appLock.needsToNotifyUser && !appLock.isActive {
+            ZClientViewController.shared?.showAFeatureChangeWarningScreenIfNeeded(callback: { _ in
+                appLock.needsToNotifyUser = false
+            })
+        }
+    }
+
 }
 
 fileprivate extension NSAttributedString {
