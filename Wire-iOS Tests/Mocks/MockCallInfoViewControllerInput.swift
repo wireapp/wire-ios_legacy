@@ -22,7 +22,7 @@ import Foundation
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var videoPlaceholderState: CallVideoPlaceholderState
     var permissions: CallPermissionsConfiguration
-    var degradationState: CallDegradationState
+    var degradationState: CallDegradationState<NSObject>
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
     var isMuted: Bool

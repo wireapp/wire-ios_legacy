@@ -88,7 +88,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
-            degradationState: .outgoing(degradedUser: otherUser),
+            degradationState: .outgoing(degradedUser: otherUser as! NSObject),
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
@@ -110,7 +110,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
-            degradationState: .incoming(degradedUser: otherUser),
+            degradationState: .incoming(degradedUser: otherUser as? NSObject),
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
