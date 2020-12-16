@@ -268,11 +268,6 @@ extension AnalyticsCountlyProvider: ApplicationStateObserving {
         guard isRecording else { return }
         endSession()
     }
-
-    func applicationWillEnterForeground() {
-        // No op
-    }
-
 }
 
 // MARK: - Helpers
