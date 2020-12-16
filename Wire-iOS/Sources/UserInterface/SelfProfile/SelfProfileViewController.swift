@@ -214,7 +214,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AuthenticationType.current == .passcode else {
+        guard AuthenticationType.current == .unavailable || (UIDevice.isSimulator && AuthenticationType.current == .passcode) else {
             callback(newValue)
             return
         }
