@@ -110,13 +110,9 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.needsToNotifyUser
-                ? userInterface?.presentWarningScreen(callback: { [weak self] _ in
-                    guard let `self` = self else { return }
-                    
-                    self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
-                })
-                : appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            presentWarningIfNeeded {
+                self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            }
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
@@ -124,6 +120,16 @@ final class AppLockPresenter {
         }
     }
     
+    private func presentWarningIfNeeded(then block: @escaping () -> Void) {
+        guard appLockInteractorInput.needsToNotifyUser else {
+            block()
+            return
+        }
+        
+        userInterface?.presentWarningScreen(callback: { _ in
+            block()
+        })
+    }
 }
 
 // MARK: - Account password helper
