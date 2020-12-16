@@ -105,10 +105,6 @@ extension AppStateCalculator: ApplicationStateObserving {
         hasEnteredForeground = true
         transition(to: pendingAppState ?? appState)
     }
-    
-    func applicationDidEnterBackground() { }
-    
-    func applicationWillEnterForeground() { }
 }
 
 // MARK: - SessionManagerDelegate

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
@@ -48,15 +47,14 @@ private enum TextKind {
     }
 }
 
-class SenderCellComponent: UIView {
+final class SenderCellComponent: UIView {
     
     let avatarSpacer = UIView()
     let avatar = UserImageView()
     let authorLabel = UILabel()
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
-    var observerToken: Any? = nil
-    var conversation: ZMConversation? = nil
+    var observerToken: Any?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +74,7 @@ class SenderCellComponent: UIView {
         authorLabel.accessibilityIdentifier = "author.name"
         authorLabel.numberOfLines = 1
 
+        
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial
         avatar.size = .badge
@@ -113,18 +112,18 @@ class SenderCellComponent: UIView {
             ])
     }
     
-    func configure(with user: UserType, conversation: ZMConversation?) {
-        self.conversation = conversation
-        self.avatar.user = user
+    func configure(with user: UserType) {
+        avatar.user = user
         
-        configureNameLabel(for: user, conversation: conversation)
+        configureNameLabel(for: user)
         
-        if let userSession = ZMUserSession.shared() {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
     }
     
-    func configureNameLabel(for user: UserType, conversation: ZMConversation?) {
+    private func configureNameLabel(for user: UserType) {
         let fullName =  user.name ?? ""
         
         var attributedString: NSAttributedString
@@ -167,7 +166,7 @@ extension SenderCellComponent: ZMUserObserver {
             return
         }
         
-        configureNameLabel(for: changeInfo.user, conversation: conversation)
+        configureNameLabel(for: changeInfo.user)
     }
     
 }

@@ -141,9 +141,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Accessibility for automation
     override var accessibilityIdentifier: String? {
         get {
-            let clientId = stream.streamId.clientId.readableHash
+            let name = stream.participantName ?? ""
             let state = isMaximized ? "maximized" : "minimized"
-            return "VideoView.\(clientId).\(state)"
+            return "VideoView.\(name).\(state)"
         }
         set {}
     }

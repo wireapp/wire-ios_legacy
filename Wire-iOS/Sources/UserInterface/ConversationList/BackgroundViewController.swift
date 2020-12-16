@@ -18,13 +18,11 @@
 
 
 import UIKit
-import Cartography
 import WireSyncEngine
-
 
 final class BackgroundViewController: UIViewController {
     
-    var dispatchGroup: DispatchGroup = DispatchGroup()
+    lazy var dispatchGroup: DispatchGroup = DispatchGroup()
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
@@ -32,7 +30,6 @@ final class BackgroundViewController: UIViewController {
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
     private let user: UserType
-    private let userSession: ZMUserSession?
     
     var darkMode: Bool = false {
         didSet {
@@ -40,13 +37,19 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    init(user: UserType, userSession: ZMUserSession?) {
+    init(user: UserType,
+         userSession: ZMUserSession?) {
         self.user = user
-        self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
+        setupObservers(userSession: userSession)
+    }
+    
+    private func setupObservers(userSession: ZMUserSession?) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
@@ -163,10 +166,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        guard imageMediumDataChanged || accentColorValueChanged else {
-            return
-        }
-        
+
         if imageMediumDataChanged {
             updateForUserImage()
         }
@@ -193,8 +193,8 @@ final class BackgroundViewController: UIViewController {
 }
 
 extension BackgroundViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
                        accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }
