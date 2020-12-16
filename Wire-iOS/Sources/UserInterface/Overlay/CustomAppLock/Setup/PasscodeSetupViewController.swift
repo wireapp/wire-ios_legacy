@@ -188,6 +188,7 @@ final class PasscodeSetupViewController: UIViewController {
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
                 label.attributedText = $0.descriptionWithInvalidIcon
+                label.isEnabled = false
 
                 stackView.addArrangedSubview(label)
             }
@@ -335,6 +336,7 @@ extension PasscodeSetupViewController: TextFieldValidationDelegate {
 extension PasscodeSetupViewController: PasscodeSetupUserInterface {
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool) {
         validationLabels[errorReason]?.attributedText = passed ? errorReason.descriptionWithPassedIcon : errorReason.descriptionWithInvalidIcon
+        validationLabels[errorReason]?.isEnabled = passed
     }
 
     var createButtonEnabled: Bool {
