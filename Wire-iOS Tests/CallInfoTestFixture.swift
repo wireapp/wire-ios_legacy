@@ -39,13 +39,17 @@ struct CallInfoTestFixture {
     }
 
     // MARK: - OneToOne Audio
+    
+    private var hashBoxOtherUser: HashBoxUser {
+        return HashBox(value: otherUser)
+    }
 
     var oneToOneOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.outgoing,
@@ -67,7 +71,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.incoming,
@@ -84,16 +88,12 @@ struct CallInfoTestFixture {
         )
     }
     
-    private var hashBoxOtherUser: HashBoxUser {
-        return HashBox(value: otherUser)
-    }
-
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .outgoing(degradedUser: hashBoxOtherUser),
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.outgoing,
@@ -115,7 +115,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .incoming(degradedUser: hashBoxOtherUser),
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.incoming,
@@ -137,7 +137,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.connecting,
@@ -159,7 +159,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
@@ -181,7 +181,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
@@ -203,7 +203,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
@@ -225,7 +225,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
@@ -427,7 +427,7 @@ struct CallInfoTestFixture {
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .avatar(otherUser),
+            accessoryType: .avatar(hashBoxOtherUser),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.incoming,
