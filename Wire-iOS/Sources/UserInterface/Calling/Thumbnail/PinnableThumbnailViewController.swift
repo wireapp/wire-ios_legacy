@@ -20,12 +20,7 @@ import UIKit
 
 final class PinnableThumbnailViewController: UIViewController {
 
-    private let thumbnailView: RoundedView = {
-        let view = RoundedView()
-        view.accessibilityIdentifier = "ThumbnailView"
-        return view
-    }()
-
+    private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()
     private(set) var contentView: OrientableView?
 
@@ -51,11 +46,13 @@ final class PinnableThumbnailViewController: UIViewController {
     func removeCurrentThumbnailContentView() {
         contentView?.removeFromSuperview()
         contentView = nil
+        thumbnailView.accessibilityIdentifier = nil
     }
 
     func setThumbnailContentView(_ contentView: OrientableView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
         thumbnailView.addSubview(contentView)
+        thumbnailView.accessibilityIdentifier = "ThumbnailView"
         self.contentView = contentView
 
         self.thumbnailContentSize = contentSize
