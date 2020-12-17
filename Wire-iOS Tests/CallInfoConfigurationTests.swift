@@ -25,10 +25,20 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
 }
 
 final class CallInfoConfigurationTests: XCTestCase {
+<<<<<<< HEAD
 
     var mockOtherUser: MockUserType!
     var mockSelfUser: MockUserType!
 
+=======
+    
+    var mockOtherUser: MockUser!
+    var mockSelfUser: MockUser!
+    
+    var selfUser: ZMUser!
+    var otherUser: ZMUser!
+    
+>>>>>>> 34c5ca9ea64e9fe1512de2044985d5cdf2386b71
     override func setUp() {
         super.setUp()
 
@@ -53,8 +63,12 @@ final class CallInfoConfigurationTests: XCTestCase {
     func mockCallParticipants(count: Int, state: CallParticipantState) -> [CallParticipant] {
         return (MockUser.mockUsers()[0..<count]).map({ CallParticipant(user: $0,
                                                                        userId: UUID(),
+<<<<<<< HEAD
                                                                        clientId: "123",
                                                                        state: state) })
+=======
+                                                                       clientId: "123", state: state) })
+>>>>>>> 34c5ca9ea64e9fe1512de2044985d5cdf2386b71
     }
 
     // MARK: - OneToOne Audio
