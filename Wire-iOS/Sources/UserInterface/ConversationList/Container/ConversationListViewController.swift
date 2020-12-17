@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import WireDataModel
-import WireSyncEngine
 
 enum ConversationListState {
     case conversationList
@@ -366,7 +365,6 @@ final class ConversationListViewController: UIViewController {
     var hasUsernameTakeoverViewController: Bool {
         return usernameTakeoverViewController != nil
     }
-    
 }
 
 fileprivate extension NSAttributedString {

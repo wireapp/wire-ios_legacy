@@ -119,7 +119,6 @@ final class AppLockViewController: UIViewController {
         self.passwordController = passwordController
         present(passwordController.alertController, animated: true)
     }
-    
 }
 
 // MARK: - AppLockManagerDelegate
