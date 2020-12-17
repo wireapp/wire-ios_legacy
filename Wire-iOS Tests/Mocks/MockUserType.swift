@@ -42,6 +42,7 @@ class MockUserType: NSObject, UserType, Decodable {
     }
 
     // MARK: - MockHelpers
+    var isTrusted: Bool = true
 
     let legalHoldDataSource = MockLegalHoldDataSource()
 

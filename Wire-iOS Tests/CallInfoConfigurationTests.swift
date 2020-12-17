@@ -23,7 +23,7 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
     return lhs.isEqual(toConfiguration: rhs)
 }
 
-class CallInfoConfigurationTests: XCTestCase {
+final class CallInfoConfigurationTests: XCTestCase {
     
     var mockOtherUser: MockUser!
     var mockSelfUser: MockUser!
@@ -56,7 +56,9 @@ class CallInfoConfigurationTests: XCTestCase {
     }
     
     func mockCallParticipants(count: Int, state: CallParticipantState) -> [CallParticipant] {
-        return (MockUser.mockUsers()[0..<count]).map({ CallParticipant(user: $0, clientId: "123", state: state) })
+        return (MockUser.mockUsers()[0..<count]).map({ CallParticipant(user: $0,
+                                                                       userId: UUID(),
+                                                                       clientId: "123", state: state) })
     }
     
     // MARK: - OneToOne Audio
