@@ -34,7 +34,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     }
     
 
-    private static func participants(count participantCount: Int,
+    static func participants(count participantCount: Int,
                                  videoState: VideoState? = nil,
                                  microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
         let sortedParticipants = (0..<participantCount)
