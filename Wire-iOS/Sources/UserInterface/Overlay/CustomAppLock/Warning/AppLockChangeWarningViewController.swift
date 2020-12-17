@@ -137,7 +137,9 @@ final class AppLockChangeWarningViewController: UIViewController {
 
     @objc
     private func confirmButtonTapped(sender: AnyObject?) {
-        appLock?.needsToNotifyUser = false
+        ZMUserSession.shared()?.perform {
+            self.appLock?.needsToNotifyUser = false
+        }
         callback?(true)
         dismiss(animated: true)
     }
