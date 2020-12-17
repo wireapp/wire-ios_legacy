@@ -95,8 +95,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     
     func testThatApplockIsAvailableInOptionsGroup_WhenIsAvailableInConfig() {
         // given
-        var config = AppLockController.Config(useBiometricsOrAccountPassword: false,
-                                              useCustomCodeInsteadOfAccountPassword: false,
+        var config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
                                               forceAppLock: false,
                                               timeOut: 900)
         // when
@@ -114,8 +113,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     
     func testThatApplockIsNotAvailableInOptionsGroup_WhenIsNotAvailableInConfig() {
         // given
-        var config = AppLockController.Config(useBiometricsOrAccountPassword: false,
-                                              useCustomCodeInsteadOfAccountPassword: false,
+        var config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
                                               forceAppLock: false,
                                               timeOut: 900)
         // when
