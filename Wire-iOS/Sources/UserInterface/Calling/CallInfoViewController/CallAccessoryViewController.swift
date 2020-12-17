@@ -90,7 +90,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     private func updateState() {
         switch configuration.accessoryType {
         case .avatar(let user):
-            avatarView.user = user
+            avatarView.user = user.value
         case .participantsList(let participants):
             participantsViewController.variant = configuration.effectiveColorVariant
             participantsViewController.participants = participants

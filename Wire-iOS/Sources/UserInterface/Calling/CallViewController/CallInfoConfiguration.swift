@@ -28,25 +28,30 @@ fileprivate extension VoiceChannel {
         
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return initiator.map { .avatar($0) } ?? .none
+            return initiator.map { .avatar(HashBox(value:$0)) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
             if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value:remoteParticipant))
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
+        case .unknown,
+             .none,
+             .terminating,
+             .mediaStopped,
+             .established,
+             .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants().map {
-                    .callParticipant(user: $0.user as! ZMUser,
+                    .callParticipant(user: HashBox(value:$0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState)
                 })
                
             } else if let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value: remoteParticipant))
             } else {
                 return .none
             }
