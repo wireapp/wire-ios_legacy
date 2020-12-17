@@ -227,7 +227,9 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         }
         
         self.callback = callback
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
+                                                                      variant: .dark,
+                                                                      context: .createPasscode)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
         
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
@@ -78,7 +77,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     /// init with parameters
     /// - Parameters:
     ///   - callback: callback for authentication
-    ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
+    ///   - variant: color variant for this screen
     required init(callback: ResultHandler? = nil,
                   variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant

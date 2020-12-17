@@ -35,7 +35,12 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
 }
 
 final class PasscodeSetupViewController: UIViewController {
-
+    
+    enum Context {
+        case forcedForTeam
+        case createPasscode
+    }
+    
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
@@ -73,7 +78,13 @@ final class PasscodeSetupViewController: UIViewController {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
-        label.text = "warning_screen.title_label".localized
+        switch context {
+        case .createPasscode:
+            label.text = "create_passcode.title_label".localized
+        case .forcedForTeam:
+            label.text = "warning_screen.title_label".localized
+        }
+        
         label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
@@ -109,8 +120,16 @@ final class PasscodeSetupViewController: UIViewController {
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
-
-        let headingText = NSAttributedString(string: "create_passcode.info_label_v2".localized) && baseAttributes && regularFont
+        
+        let headingString: String
+        switch context {
+        case .createPasscode:
+            headingString = "create_passcode.info_label".localized
+        case .forcedForTeam:
+            headingString = "create_passcode.forced_by_team_admin.info_label".localized
+        }
+        
+        let headingText = NSAttributedString(string: headingString) && baseAttributes && regularFont
 
         let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && heightFont
 
@@ -132,8 +151,8 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private var callback: ResultHandler?
-
     private let variant: ColorSchemeVariant
+    private let context: Context
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -146,10 +165,12 @@ final class PasscodeSetupViewController: UIViewController {
     ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
     ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
     required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant? = nil,
-                  useCompactLayout: Bool? = nil) {
+                  variant: ColorSchemeVariant = ColorScheme.default.variant,
+                  useCompactLayout: Bool? = nil,
+                  context: Context) {
         self.callback = callback
-        self.variant = variant ?? ColorScheme.default.variant
+        self.variant = variant
+        self.context = context
 
         self.useCompactLayout = useCompactLayout ??
                                 (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
@@ -262,9 +283,11 @@ final class PasscodeSetupViewController: UIViewController {
     // MARK: - keyboard avoiding
 
     static func createKeyboardAvoidingFullScreenView(callback: ResultHandler?,
-                                                     variant: ColorSchemeVariant? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
+                                                     variant: ColorSchemeVariant = ColorScheme.default.variant,
+                                                     context: Context) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
-                                                                      variant: variant)
+                                                                      variant: variant,
+                                                                      context: context)
 
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
 
