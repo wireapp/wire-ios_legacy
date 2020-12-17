@@ -35,8 +35,7 @@ class MockUserType: NSObject, UserType, Decodable {
         connectionRequestMessage = try? container.decode(String.self, forKey: .connectionRequestMessage)
 
         if let rawAccentColorValue = try? container.decode(Int16.self, forKey: .accentColorValue),
-           let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue)
-        {
+           let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue) {
             self.accentColorValue = accentColorValue
         }
     }
@@ -67,15 +66,15 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: Basic Properties
 
-    var name: String? = nil
+    var name: String?
 
     var displayName: String = ""
 
-    var initials: String? = nil
+    var initials: String?
 
-    var handle: String? = nil
+    var handle: String?
 
-    var emailAddress: String? = nil
+    var emailAddress: String?
 
     var phoneNumber: String? = "+123456789"
 
@@ -85,13 +84,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var allClients: [UserClientType] = []
 
-    var smallProfileImageCacheKey: String? = nil
+    var smallProfileImageCacheKey: String?
 
-    var mediumProfileImageCacheKey: String? = nil
+    var mediumProfileImageCacheKey: String?
 
-    var previewImageData: Data? = nil
+    var previewImageData: Data?
 
-    var completeImageData: Data? = nil
+    var completeImageData: Data?
 
     var richProfile: [UserRichProfileField] = []
 
@@ -99,7 +98,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Conversations
 
-    var oneToOneConversation: ZMConversation? = nil
+    var oneToOneConversation: ZMConversation?
 
     var activeConversations: Set<ZMConversation> = Set()
 
@@ -120,14 +119,14 @@ class MockUserType: NSObject, UserType, Decodable {
     }
 
     var hasDigitalSignatureEnabled: Bool = false
-    
-    var teamName: String? = nil
+
+    var teamName: String?
 
     var teamRole: TeamRole = .none
 
     // MARK: - Connections
 
-    var connectionRequestMessage: String? = nil
+    var connectionRequestMessage: String?
 
     var canBeConnected: Bool = false
 
