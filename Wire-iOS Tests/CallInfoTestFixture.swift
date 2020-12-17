@@ -83,12 +83,16 @@ struct CallInfoTestFixture {
             userEnabledCBR: false
         )
     }
+    
+    private var hashBoxOtherUser: HashBoxUser {
+        return HashBox(value: otherUser)
+    }
 
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
-            degradationState: .outgoing(degradedUser: otherUser as! NSObject),
+            degradationState: .outgoing(degradedUser: hashBoxOtherUser),
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
@@ -110,7 +114,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
-            degradationState: .incoming(degradedUser: otherUser as? NSObject),
+            degradationState: .incoming(degradedUser: hashBoxOtherUser),
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,

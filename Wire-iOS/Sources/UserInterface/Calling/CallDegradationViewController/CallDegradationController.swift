@@ -20,10 +20,10 @@ import Foundation
 import UIKit
 import WireDataModel
 
-enum CallDegradationState<User: Equatable>: Equatable {
+enum CallDegradationState: Equatable {
     case none
-    case incoming(degradedUser: User?)
-    case outgoing(degradedUser: User?)
+    case incoming(degradedUser: HashBoxUser?)
+    case outgoing(degradedUser: HashBoxUser?)
 }
 
 protocol CallDegradationControllerDelegate: class {
@@ -41,7 +41,7 @@ final class CallDegradationController: UIViewController {
     // the view is ready.
     private var viewIsReady = false
     
-    var state: CallDegradationState<NSObject> = .none {
+    var state: CallDegradationState = .none {
         didSet {
             guard oldValue != state else { return }
             

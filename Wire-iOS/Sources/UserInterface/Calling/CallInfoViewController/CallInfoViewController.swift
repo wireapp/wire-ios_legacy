@@ -26,7 +26,7 @@ protocol CallInfoViewControllerDelegate: class {
 
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
-    var degradationState: CallDegradationState<NSObject> { get }
+    var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
 }
