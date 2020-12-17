@@ -1803,7 +1803,7 @@
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label_v2" = " Your organization needs to lock you app when Wire is not in used to keep the Team safe.\n\nCreate a passcode to unlock Wire. Please, remember it, as ";
+"create_passcode.info_label_v2" = "Your organization needs to lock your app when Wire is not in use to keep the Team safe.\n\nCreate a passcode to unlock Wire. Please, remember it, as ";
 "create_passcode.info_label.highlighted" = "it can not be recovered.";
 "create_passcode.create_button.title" = "create passcode";
 
@@ -1846,4 +1846,3 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
-
