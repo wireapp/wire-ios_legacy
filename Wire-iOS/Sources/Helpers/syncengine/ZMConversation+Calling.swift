@@ -27,7 +27,7 @@ extension ZMConversation {
         return localParticipants.count > 1
     }
     
-    var firstCallingParticipantOtherThanSelf : ZMUser? {
+    var firstCallingParticipantOtherThanSelf : UserType? {
         let participant = voiceChannel?.participants.first { !$0.user.isSelfUser }
         return participant?.user
     }
