@@ -110,7 +110,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return mockIsConferenceCall
     }
     
-    var firstDegradedUser: ZMUser? {
+    var firstDegradedUser: UserType? {
         return mockFirstDegradedUser
     }
     

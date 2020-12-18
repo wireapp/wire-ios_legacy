@@ -191,7 +191,6 @@
 		54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */; };
 		54D355E025559BFC0004DAC7 /* ActiveCallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D355DF25559BFC0004DAC7 /* ActiveCallRouter.swift */; };
 		54D5E01924E1286B00B982F6 /* Bundle+SecurityFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */; };
-		54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */; };
 		54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
 		5501FFAB22B28F330050D8FC /* MockSelfLegalHoldSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFA922B28D210050D8FC /* MockSelfLegalHoldSubject.swift */; };
@@ -503,7 +502,6 @@
 		7CED307C1FD97895009F0DAC /* AvailabilityStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */; };
 		7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
-		8701221C20F7923E001E6342 /* Analytics+LinearGroupCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8701221B20F7923D001E6342 /* Analytics+LinearGroupCreation.swift */; };
 		87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87071CBF1CB68BDA0039388A /* ProgressView.swift */; };
 		870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815851BF4E76A00D321BC /* SettingsCell.swift */; };
 		870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870815871BF4EAD100D321BC /* SettingsTableViewController.swift */; };
@@ -1790,7 +1788,6 @@
 		54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
 		54D355DF25559BFC0004DAC7 /* ActiveCallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallRouter.swift; sourceTree = "<group>"; };
 		54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SecurityFlags.swift"; sourceTree = "<group>"; };
-		54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+ErrorTracking.swift"; sourceTree = "<group>"; };
 		54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelper.swift; sourceTree = "<group>"; };
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
 		5501FFA922B28D210050D8FC /* MockSelfLegalHoldSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSelfLegalHoldSubject.swift; sourceTree = "<group>"; };
@@ -2117,7 +2114,6 @@
 		7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilder.swift; sourceTree = "<group>"; };
 		7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityTitleViewTests.swift; sourceTree = "<group>"; };
 		848DE12A1A83D20000E154B1 /* emoticons.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emoticons.min.json; path = ../Sources/emoticons.min.json; sourceTree = "<group>"; };
-		8701221B20F7923D001E6342 /* Analytics+LinearGroupCreation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+LinearGroupCreation.swift"; sourceTree = "<group>"; };
 		870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverflowSeparatorView.swift; sourceTree = "<group>"; };
 		870534001DD6265100A7F822 /* AttributedStringOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringOperators.swift; sourceTree = "<group>"; };
 		87071CBF1CB68BDA0039388A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -4331,7 +4327,6 @@
 		871BBFC31D34F56300DF0793 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				8701221B20F7923D001E6342 /* Analytics+LinearGroupCreation.swift */,
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
 				871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */,
@@ -5148,7 +5143,6 @@
 				8FC8516F199245760008B66B /* UserInterface */,
 				87DCF4741D34E95B00BB420F /* Permissions */,
 				A9EB722423C3A47B00DA8240 /* AppDelegate.swift */,
-				54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */,
 				163495881F015389004E80DB /* AppDelegate+Network.swift */,
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
@@ -7363,7 +7357,6 @@
 				543DF685252DD7F0001F6EA6 /* NotificationObserver.swift in Sources */,
 				BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */,
 				5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */,
-				8701221C20F7923E001E6342 /* Analytics+LinearGroupCreation.swift in Sources */,
 				EF46ECCD231D5B4B00D425DA /* ConversationListViewControllerViewModel+StartUIDelegate.swift in Sources */,
 				5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */,
 				8750A00F21934F1A00DC8DB6 /* AnimatedListMenuView.swift in Sources */,
@@ -7843,7 +7836,6 @@
 				5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */,
 				A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */,
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
-				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				EF2E2F6F223BB6560038D7D9 /* NotificationWindowRootViewController.swift in Sources */,
 				EFEE97C1232271FF007A4702 /* ConversationViewController+ViewLifeCycle.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
