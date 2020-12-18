@@ -25,28 +25,33 @@ fileprivate extension VoiceChannel {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
-        
+
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return (initiator as? ZMUser).map { .avatar($0) } ?? .none
+            return initiator.map { .avatar(HashBox(value: $0)) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
             if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value: remoteParticipant))
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
+        case .unknown,
+             .none,
+             .terminating,
+             .mediaStopped,
+             .established,
+             .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants().map {
-                    .callParticipant(user: $0.user as! ZMUser,
+                    .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState)
                 })
-               
+
             } else if let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value: remoteParticipant))
             } else {
                 return .none
             }
@@ -60,7 +65,8 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    func canToggleMediaType(with permissions: CallPermissionsConfiguration) -> Bool {
+    func canToggleMediaType(with permissions: CallPermissionsConfiguration,
+                            selfUser: UserType) -> Bool {
         switch state {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
@@ -69,7 +75,7 @@ fileprivate extension VoiceChannel {
             
             // The user can only re-enable their video if the conversation allows GVC
             if videoState == .stopped {
-                return canUpgradeToVideo
+                return canUpgradeToVideo(selfUser: selfUser)
             }
             
             // If the user already enabled video, they should be able to disable it
@@ -133,8 +139,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
-        userEnabledCBR: Bool
-        ) {
+        userEnabledCBR: Bool,
+        selfUser: UserType = ZMUser.selfUser()) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager
@@ -143,7 +149,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
-        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
+        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
@@ -220,7 +226,7 @@ extension CallParticipantState {
 
 fileprivate extension VoiceChannel {
     
-    var canUpgradeToVideo: Bool {
+    func canUpgradeToVideo(selfUser: UserType) -> Bool {
         guard !isConferenceCall else {
             return true
         }
@@ -233,7 +239,7 @@ fileprivate extension VoiceChannel {
             return false
         }
 
-        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+        return selfUser.isTeamMember || isAnyParticipantSendingVideo
     }
     
     var isAnyParticipantSendingVideo: Bool {
@@ -261,12 +267,20 @@ extension VoiceChannel {
         return participants.filter { $0.state.isConnected }
     }
 
+    private var hashboxFirstDegradedUser: HashBoxUser? {
+        guard let firstDegradedUser = firstDegradedUser else {
+            return nil
+        }
+        
+        return HashBox(value: firstDegradedUser)
+    }
+    
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser as! ZMUser)
+            return .incoming(degradedUser: hashboxFirstDegradedUser)
         case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser as! ZMUser)
+            return .outgoing(degradedUser: hashboxFirstDegradedUser)
         default:
             return .none
         }

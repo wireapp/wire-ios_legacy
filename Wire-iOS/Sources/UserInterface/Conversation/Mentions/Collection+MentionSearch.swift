@@ -36,7 +36,7 @@ extension Collection where Iterator.Element: UserType {
             { $0.handle?.lowercased().normalizedForMentionSearch()?.contains(query) ?? false }
         ]
 
-        var foundUsers = Set<HashBox<UserType>>()
+        var foundUsers = Set<HashBoxUser>()
         var results: [UserType] = []
 
         rules.forEach { rule in
