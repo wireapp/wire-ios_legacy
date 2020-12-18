@@ -95,7 +95,6 @@ final class PasscodeSetupViewController: UIViewController {
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
-        label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
@@ -135,6 +134,7 @@ final class PasscodeSetupViewController: UIViewController {
 
         label.text = " "
         label.attributedText = headingText + highlightText
+        label.textAlignment = .center
 
         return label
     }()
