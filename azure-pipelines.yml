@@ -13,7 +13,7 @@ pr:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_12.2.app
+    sudo xcode-select -switch /Applications/Xcode_12.3.app
     fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
