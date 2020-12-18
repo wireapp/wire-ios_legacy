@@ -1824,7 +1824,7 @@
 // Custom app lock - warning screen
 "warning_screen.title_label" = "There was a change in Wire";
 "warning_screen.info_label.forced_applock" = "Your organization needs to lock you app when Wire is not in used to keep the Team safe.\n\nNext time, unlock Wire the same way you unlock your phone.";
-"warning_screen.info_label.non_forced_applock" = "Your organisation doesn't need app lock anymore. From now, you can access Wire without any obstacles.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
