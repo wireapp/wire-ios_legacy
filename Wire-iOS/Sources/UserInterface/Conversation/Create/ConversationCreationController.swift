@@ -125,32 +125,21 @@ final class ConversationCreationController: UIViewController {
     fileprivate var navBarBackgroundView = UIView()
 
     fileprivate var values = ConversationCreationValues()
-    fileprivate let source: LinearGroupCreationFlowEvent.Source
 
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: UserSet?
     
     public convenience init(preSelectedParticipants: UserSet) {
-        self.init(source: .conversationDetails)
+        self.init(nibName: nil, bundle: nil)
         self.preSelectedParticipants = preSelectedParticipants
     }
-    
-    public init(source: LinearGroupCreationFlowEvent.Source = .startUI) {
-        self.source = source
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override public var prefersStatusBarHidden: Bool {
         return false
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.shared.tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
         title = "conversation.create.group_name.title".localized(uppercased: true)
@@ -243,9 +232,7 @@ final class ConversationCreationController: UIViewController {
             if let parts = preSelectedParticipants {
                 values.participants = parts
             }
-            
-            Analytics.shared.tagLinearGroupSelectParticipantsOpened(with: self.source)
-            
+
             let participantsController = AddParticipantsViewController(context: .create(values), variant: colorSchemeVariant)
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
@@ -276,8 +263,6 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
         case .create:
             var allParticipants = values.participants
             allParticipants.insert(ZMUser.selfUser())
-            Analytics.shared.tagLinearGroupCreated(with: self.source, isEmpty: values.participants.isEmpty, allowGuests: values.allowGuests)
-            Analytics.shared.tagAddParticipants(source: self.source, allParticipants, allowGuests: values.allowGuests, in: nil)
             
             delegate?.conversationCreationController(
                 self,
