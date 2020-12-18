@@ -150,8 +150,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let accountIdentifier = account?.userIdentifier
             else { return }
         let configuration = AppLockRules.fromBundle()
-        let appLockConfig = AppLockController.Config(useBiometricsOrAccountPassword: configuration.useBiometricsOrAccountPassword,
-                                                     useCustomCodeInsteadOfAccountPassword: configuration.useCustomCodeInsteadOfAccountPassword,
+        let appLockConfig = AppLockController.Config(useBiometricsOrCustomPasscode: configuration.useBiometricsOrCustomPasscode,
                                                      forceAppLock: configuration.forceAppLock,
                                                      timeOut: configuration.appLockTimeout)
         
@@ -494,7 +493,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrAccountPassword)
+            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
         }
         
         sharingSession.appLockController.evaluateAuthentication(scenario: scenario,

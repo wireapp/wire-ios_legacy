@@ -73,8 +73,8 @@ final class AppLockInteractor {
         }
     }
     
-    var shouldUseBiometricsOrAccountPassword: Bool {
-        return appLock?.config.useBiometricsOrAccountPassword ?? false
+    var shouldUseBiometricsOrCustomPasscode: Bool {
+        return appLock?.config.useBiometricsOrCustomPasscode ?? false
     }
     
     var needsToNotifyUser: Bool {
@@ -168,7 +168,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrCustomPasscode)
         }
     }
     

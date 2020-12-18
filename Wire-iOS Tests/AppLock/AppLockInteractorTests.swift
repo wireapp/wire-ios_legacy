@@ -74,8 +74,7 @@ final class AppLockMock: AppLockType {
     var needsToNotifyUser: Bool = false
     var config: AppLockController.Config
     
-    init(config: AppLockController.Config = AppLockController.Config(useBiometricsOrAccountPassword: false,
-                                                                     useCustomCodeInsteadOfAccountPassword: false,
+    init(config: AppLockController.Config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
                                                                      forceAppLock: false,
                                                                      timeOut: 900)) {
         self.config = config
