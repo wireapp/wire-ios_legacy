@@ -178,7 +178,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if launchOptions[UIApplication.LaunchOptionsKey.remoteNotification] != nil {
             launchType = .push
         }
-        trackErrors()
     }
 
     // MARK: - URL handling

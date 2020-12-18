@@ -22,15 +22,14 @@ import WireSyncEngine
 
 final class BackgroundViewController: UIViewController {
     
-//    lazy var dispatchGroup: DispatchGroup! = DispatchGroup()
+    lazy var dispatchGroup: DispatchGroup = DispatchGroup()
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
-    private weak var user: UserType!
-    private weak var userSession: ZMUserSession?
+    private let user: UserType
     
     var darkMode: Bool = false {
         didSet {
@@ -38,11 +37,17 @@ final class BackgroundViewController: UIViewController {
         }
     }
     
-    init(user: UserType, userSession: ZMUserSession?) {
-        self.user = user///1st: testGroupAudioConnecting
-        self.userSession = userSession
+    init(user: UserType,
+         userSession: ZMUserSession?) {
+        self.user = user
         super.init(nibName: .none, bundle: .none)
         
+        setupObservers(userSession: userSession)
+    }
+    
+    private func setupObservers(userSession: ZMUserSession?) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+
         if let userSession = userSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
@@ -51,13 +56,6 @@ final class BackgroundViewController: UIViewController {
                                                selector: #selector(colorSchemeChanged),
                                                name: .SettingsColorSchemeChanged,
                                                object: nil)
-    }
-    
-    deinit {
-//        dispatchGroup = nil
-        userObserverToken = nil
-//        user = nil
-        userSession = nil
     }
     
     @available(*, unavailable)
@@ -145,7 +143,7 @@ final class BackgroundViewController: UIViewController {
     }
 
     private func updateForUserImage() {
-//        dispatchGroup.enter()
+        dispatchGroup.enter()
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
@@ -154,7 +152,7 @@ final class BackgroundViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.imageView.image = image
-//                self?.dispatchGroup.leave()
+                self?.dispatchGroup.leave()
             }
         }
     }
@@ -168,10 +166,7 @@ final class BackgroundViewController: UIViewController {
     }
     
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        guard imageMediumDataChanged || accentColorValueChanged else {
-            return
-        }
-        
+
         if imageMediumDataChanged {
             updateForUserImage()
         }
@@ -198,8 +193,8 @@ final class BackgroundViewController: UIViewController {
 }
 
 extension BackgroundViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
                        accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }

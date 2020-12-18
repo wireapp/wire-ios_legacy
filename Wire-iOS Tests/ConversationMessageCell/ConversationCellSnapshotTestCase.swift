@@ -62,6 +62,36 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         super.tearDown()
     }
     
+    private func createUIStackView(
+        message: ZMConversationMessage,
+        context: ConversationMessageContext?,
+        waitForImagesToLoad: Bool,
+        waitForTextViewToLoad: Bool,
+        snapshotBackgroundColor: UIColor?
+    ) -> UIStackView {
+        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
+
+        let section = ConversationMessageSectionController(message: message, context: context)
+        let views = section.cellDescriptions.map({ $0.makeView() })
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        
+        if waitForImagesToLoad {
+            XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+        }
+        
+        if waitForTextViewToLoad {
+            // We need to run the run loop for UITextView to highlight detected links
+            let delay = Date().addingTimeInterval(1)
+            RunLoop.main.run(until: delay)
+        }
+        
+        return stackView
+
+    }
+    
     /**
      * Performs a snapshot test for a message
      */
@@ -76,32 +106,10 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 testName: String = #function,
                 line: UInt = #line) {
         
-        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
-        
-        let createViewClosure: () -> UIView = {
-            let section = ConversationMessageSectionController(message: message, context: context)
-            let views = section.cellDescriptions.map({ $0.makeView() })
-            let stackView = UIStackView(arrangedSubviews: views)
-            stackView.axis = .vertical
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-            
-            if waitForImagesToLoad {
-                XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-            }
-            
-            if waitForTextViewToLoad {
-                // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
-                RunLoop.main.run(until: delay)
-            }
-            
-            return stackView
-        }
         
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            verify(matching: createViewClosure(),
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
                    allWidths: allWidths,
@@ -110,7 +118,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                    line: line)
 
             ColorScheme.default.variant = .light
-            verify(matching: createViewClosure(),
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
                    allWidths: allWidths,
@@ -118,7 +126,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                    testName: testName,
                    line: line)            
         } else {
-            verify(matching: createViewClosure(),
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
                    file: file,

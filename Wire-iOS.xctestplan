@@ -1,0 +1,171 @@
+{
+  "configurations" : [
+    {
+      "id" : "61C2E66E-B599-4165-A257-C2BF627ECE5B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-com.apple.CoreData.ConcurrencyDebug 1"
+      },
+      {
+        "argument" : "--disable-interactive-keyboard-dismissal",
+        "enabled" : false
+      },
+      {
+        "argument" : "-com.apple.CoreData.SQLDebug 1",
+        "enabled" : false
+      },
+      {
+        "argument" : "--disable-call-quality-survey",
+        "enabled" : false
+      },
+      {
+        "argument" : "--debug-data-to-install=\/Users\/xxxxxxx\/Database2.41",
+        "enabled" : false
+      },
+      {
+        "argument" : "--addressbook-on-simulator",
+        "enabled" : false
+      },
+      {
+        "argument" : "--addressbook-search-delay 20",
+        "enabled" : false
+      },
+      {
+        "argument" : "--debug-log-network",
+        "enabled" : false
+      },
+      {
+        "argument" : "OPTIN_STDERR YES"
+      },
+      {
+        "argument" : "-DisableAppCenterUpdates 1",
+        "enabled" : false
+      },
+      {
+        "argument" : "-SkipFirstTimeUseChecks 1",
+        "enabled" : false
+      },
+      {
+        "argument" : "--use-app-center=0",
+        "enabled" : false
+      },
+      {
+        "argument" : "-BackendEnvironmentTypeOverrideKey staging",
+        "enabled" : false
+      },
+      {
+        "argument" : "--persist-backend-type",
+        "enabled" : false
+      },
+      {
+        "argument" : "-UseAnalytics 1",
+        "enabled" : false
+      },
+      {
+        "argument" : "-ConsoleAnalytics",
+        "enabled" : false
+      }
+    ],
+    "environmentVariableEntries" : [
+      {
+        "enabled" : false,
+        "key" : "DYLD_PRINT_RPATHS",
+        "value" : ""
+      },
+      {
+        "key" : "RECORDING_SNAPSHOTS",
+        "value" : "NO"
+      },
+      {
+        "key" : "IMAGE_DIFF_DIR",
+        "value" : "$(SOURCE_ROOT)\/SnapshotResults"
+      },
+      {
+        "key" : "FB_REFERENCE_IMAGE_DIR",
+        "value" : "$(SOURCE_ROOT)\/$(PROJECT_NAME) Tests\/ReferenceImages"
+      },
+      {
+        "key" : "SNAPSHOT_REFERENCE_DIR",
+        "value" : "$(SOURCE_ROOT)\/$(PROJECT_NAME) Tests\/ReferenceImages"
+      },
+      {
+        "key" : "SNAPSHOT_ARTIFACTS",
+        "value" : "$(SOURCE_ROOT)\/SnapshotResults"
+      },
+      {
+        "key" : "ZMLOG_TAGS",
+        "value" : "Network,Authentication,Performance,event-processing,Message Processing"
+      },
+      {
+        "enabled" : false,
+        "key" : "DYLD_PRINT_LIBRARIES",
+        "value" : ""
+      }
+    ],
+    "mainThreadCheckerEnabled" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Wire-iOS.xcodeproj",
+      "identifier" : "8F42C537199244A700288E4D",
+      "name" : "Wire-iOS"
+    }
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "AVURLAsset_conversionTests",
+        "AudioEffectsPickerViewControllerTests",
+        "AudioRecordKeyboardViewControllerTests",
+        "BackgroundViewControllerTests\/testThatItShowsUserWithImage()",
+        "BackgroundViewControllerTests\/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()",
+        "BackgroundViewControllerTests\/testThatItUpdatesForUserImageUpdate_fromAccentColor()",
+        "ConversationFileMessageTests",
+        "ConversationImageMessageTests",
+        "ConversationInputBarViewControllerAudioRecorderSnapshotTests",
+        "ConversationPingMessageTests",
+        "ConversationReplyCellTests",
+        "ConversationSystemMessageTests",
+        "ConversationTextMessageTests",
+        "ConversationVideoMessageCellTests",
+        "DismissalTests",
+        "EmoticonSubstitutionConfigurationTests",
+        "FilePreviewGeneratorTests",
+        "LicensesLoaderTests",
+        "LocationMessageCellTests",
+        "MarkDownSnapshotTests",
+        "MessageReplyPreviewViewTests",
+        "SavableImageTests",
+        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_FileMessage()",
+        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_File_DarkMode()",
+        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Image_DarkMode()",
+        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Photos()",
+        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Video_DarkMode()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()",
+        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()",
+        "TeamMetadataRefresherTests",
+        "TextMessageMentionsTests",
+        "UserImageViewContainerSnapshotTests",
+        "WirelessExpirationTimeFormatterTests",
+        "ZClientViewControllerTests",
+        "ZMUserMentionsTest",
+        "ZipFileTests"
+      ],
+      "target" : {
+        "containerPath" : "container:Wire-iOS.xcodeproj",
+        "identifier" : "BACB88501AF7C48900DDCDB0",
+        "name" : "Wire-iOS-Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

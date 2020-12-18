@@ -46,7 +46,7 @@ final class ZClientViewController: UIViewController {
     private var contentTopCompactConstraint: NSLayoutConstraint!
     // init value = false which set to true, set to false after data usage permission dialog is displayed
     var dataUsagePermissionDialogDisplayed = false
-    let backgroundViewController: BackgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+    let backgroundViewController: BackgroundViewController
 
     private let colorSchemeController: ColorSchemeController = ColorSchemeController()
     private var incomingApnsObserver: Any?
@@ -59,7 +59,9 @@ final class ZClientViewController: UIViewController {
     ///   - account: an Account object
     ///   - selfUser: a SelfUserType object
     required init(account: Account,
-                  selfUser: SelfUserType) {
+                  selfUser: SelfUserType,
+                  userSession: ZMUserSession? = ZMUserSession.shared()) {
+        backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession)
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
         
         super.init(nibName:nil, bundle:nil)

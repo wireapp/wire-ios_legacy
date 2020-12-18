@@ -22,8 +22,8 @@ import WireDataModel
 
 enum CallDegradationState: Equatable {
     case none
-    case incoming(degradedUser: ZMUser?)
-    case outgoing(degradedUser: ZMUser?)
+    case incoming(degradedUser: HashBoxUser?)
+    case outgoing(degradedUser: HashBoxUser?)
 }
 
 protocol CallDegradationControllerDelegate: class {
@@ -52,7 +52,7 @@ final class CallDegradationController: UIViewController {
     fileprivate func updateState() {
         switch state {
         case .outgoing(degradedUser: let degradeduser):
-            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser, confirmationBlock: { [weak self] (continueDegradedCall) in
+            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser?.value, confirmationBlock: { [weak self] (continueDegradedCall) in
                 continueDegradedCall ? self?.delegate?.continueDegradedCall(): self?.delegate?.cancelDegradedCall()
             })
         case .none, .incoming(degradedUser: _):
@@ -83,4 +83,3 @@ final class CallDegradationController: UIViewController {
         targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
     }
 }
-

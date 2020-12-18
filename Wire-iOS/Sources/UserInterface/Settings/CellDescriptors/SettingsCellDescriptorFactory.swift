@@ -59,7 +59,6 @@ class SettingsCellDescriptorFactory {
                                                     presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        Analytics.shared.tagOpenManageTeamURL()
                                                         return BrowserViewController(url: URL.manageTeam(source: .settings))
                                                     },
                                                     previewGenerator: nil,
