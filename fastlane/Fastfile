@@ -76,9 +76,9 @@ platform :ios do
             xcversion(version: xcode_version)
 
             if xcode_version == "11.4"
-                ios_version = "14.2"
+                ios_version = "13.4"
             elsif xcode_version == "11.4.1"
-                ios_version = "14.2"
+                ios_version = "13.4.1"
             end
         end
 
