@@ -76,8 +76,8 @@ final class AppLockInteractor {
         return appLock?.config.forceAppLock ?? false
     }
 
-    var shouldUseBiometricsOrAccountPassword: Bool {
-        return appLock?.config.useBiometricsOrAccountPassword ?? false
+    var shouldUseBiometricsOrCustomPasscode: Bool {
+        return appLock?.config.useBiometricsOrCustomPasscode ?? false
     }
 
     var timeout: UInt {
@@ -160,7 +160,7 @@ extension AppLockInteractor {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: shouldUseBiometricsOrAccountPassword)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrCustomPasscode)
         }
     }
     
