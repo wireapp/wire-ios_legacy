@@ -134,9 +134,9 @@ extension AppLockViewController: AppLockUserInterface {
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
-        present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: callback,
-                                                                                 variant: .dark,
-                                                                                 context: .forcedForTeam),
+        present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(variant: .dark,
+                                                                                 context: .forcedForTeam,
+                                                                                 callback: callback),
                 animated: false)
     }
     

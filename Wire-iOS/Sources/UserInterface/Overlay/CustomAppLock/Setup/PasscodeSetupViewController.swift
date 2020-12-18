@@ -161,13 +161,14 @@ final class PasscodeSetupViewController: UIViewController {
 
     /// init with parameters
     /// - Parameters:
-    ///   - callback: callback for storing passcode result.
     ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
     ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
-    required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant = ColorScheme.default.variant,
+    ///   - context: context  for this screen. Depending on the context, there are a different title and info message.
+    ///   - callback: callback for storing passcode result.
+    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
                   useCompactLayout: Bool? = nil,
-                  context: Context) {
+                  context: Context,
+                  callback: ResultHandler?) {
         self.callback = callback
         self.variant = variant
         self.context = context
@@ -282,17 +283,17 @@ final class PasscodeSetupViewController: UIViewController {
 
     // MARK: - keyboard avoiding
 
-    static func createKeyboardAvoidingFullScreenView(callback: ResultHandler?,
-                                                     variant: ColorSchemeVariant = ColorScheme.default.variant,
-                                                     context: Context) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
-                                                                      variant: variant,
-                                                                      context: context)
-
+    static func createKeyboardAvoidingFullScreenView(variant: ColorSchemeVariant = ColorScheme.default.variant,
+                                                     context: Context,
+                                                     callback: ResultHandler?) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
+        let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
+                                                                      context: context,
+                                                                      callback: callback)
+        
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
-
+        
         keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-
+        
         return keyboardAvoidingViewController
     }
 

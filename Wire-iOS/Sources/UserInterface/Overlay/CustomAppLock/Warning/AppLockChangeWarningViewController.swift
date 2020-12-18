@@ -78,8 +78,8 @@ final class AppLockChangeWarningViewController: UIViewController {
     /// - Parameters:
     ///   - callback: callback for authentication
     ///   - variant: color variant for this screen
-    required init(callback: ResultHandler? = nil,
-                  variant: ColorSchemeVariant = ColorScheme.default.variant) {
+    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
+                  callback: ResultHandler? = nil) {
         self.variant = variant
         self.callback = callback
 
