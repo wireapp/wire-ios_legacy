@@ -68,7 +68,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// The user to display the avatar of.
     var user: UserType? {
-        didSet {
+        didSet { ///TODO: from core fixture, other user
             updateUser()
         }
     }

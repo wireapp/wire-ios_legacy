@@ -175,7 +175,7 @@ final class ConversationImageMessageCellDescription: ConversationMessageCellDesc
 
     init(message: ZMConversationMessage, image: ZMImageMessageData) {
         self.message = message
-        self.configuration = View.Configuration(image: image, message: message)
+        self.configuration = View.Configuration(image: image, message: message)///TODO: user from?
     }
 
 }

@@ -20,8 +20,15 @@ import XCTest
 @testable import Wire
 
 final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
+    var mockOtherUser: MockUserType!
+
+    override func setUp() {
+        super.setUp()
+        mockOtherUser = MockUserType.createUser(name: "Alice", inTeam: nil)
+    }
 
     override func tearDown() {
+        mockOtherUser = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         super.tearDown()
     }
@@ -30,7 +37,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "transparent.png")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.sender = mockOtherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: true)
@@ -40,7 +47,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.sender = mockOtherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: true)
@@ -50,7 +57,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.sender = mockOtherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: false)
@@ -61,7 +68,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
         message.isObfuscated = true
-        message.sender = otherUser
+        message.sender = mockOtherUser
         
         // THEN
         verify(message: message)
