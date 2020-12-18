@@ -40,7 +40,7 @@ fileprivate extension VoiceChannel {
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants().map {
-                    .callParticipant(user: $0.user,
+                    .callParticipant(user: $0.user as! ZMUser,
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState)
                 })
@@ -264,9 +264,9 @@ extension VoiceChannel {
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser)
+            return .incoming(degradedUser: firstDegradedUser as! ZMUser)
         case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser)
+            return .outgoing(degradedUser: firstDegradedUser as! ZMUser)
         default:
             return .none
         }

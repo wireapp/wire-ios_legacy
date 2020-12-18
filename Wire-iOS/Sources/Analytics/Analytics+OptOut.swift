@@ -34,8 +34,6 @@ extension Analytics {
             }
 
             if newValue {
-                tagEvent("settings.opted_out_tracking")
-
                 provider?.flush {
                     self.provider?.isOptedOut = newValue
                     self.provider = nil
@@ -43,7 +41,6 @@ extension Analytics {
             } else {
                 provider = AnalyticsProviderFactory.shared.analyticsProvider()
                 selfUser = SelfUser.current
-                tagEvent("settings.opted_in_tracking")
             }
         }
     }

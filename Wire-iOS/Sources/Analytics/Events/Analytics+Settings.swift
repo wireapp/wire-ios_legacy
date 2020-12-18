@@ -35,7 +35,4 @@ extension Analytics {
         tagEvent(settingsChangeEvent, attributes: attributes)
     }
 
-    func tagOpenManageTeamURL() {
-        self.tagEvent("settings.opened_manage_team")
-    }
 }
