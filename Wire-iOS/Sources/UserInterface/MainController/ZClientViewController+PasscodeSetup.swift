@@ -24,9 +24,7 @@ extension ZClientViewController {
     func setUpCustomPasscodeIfNeeded(then block: @escaping () -> Void) {
         guard
             let appLock = ZMUserSession.shared()?.appLockController,
-            appLock.config.useBiometricsOrCustomPasscode,
-            appLock.config.forceAppLock,
-            appLock.isCustomPasscodeNotSet
+            appLock.needsToSetUpCustomPasscode
         else {
             block()
             return
@@ -35,6 +33,15 @@ extension ZClientViewController {
         let callBack: ResultHandler = { _ in block() }
         let viewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: callBack)
         present(viewController, animated: true)
+    }
+
+}
+
+private extension AppLockType {
+
+    var needsToSetUpCustomPasscode: Bool {
+        let isCustomPasscodeRequired = config.useBiometricsOrCustomPasscode || AuthenticationType.current == .unavailable
+        return config.forceAppLock && isCustomPasscodeRequired && isCustomPasscodeNotSet
     }
 
 }
