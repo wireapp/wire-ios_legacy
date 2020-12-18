@@ -52,7 +52,7 @@ final class CallDegradationController: UIViewController {
     fileprivate func updateState() {
         switch state {
         case .outgoing(degradedUser: let degradeduser):
-            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser as? UserType, confirmationBlock: { [weak self] (continueDegradedCall) in
+            visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser?.value, confirmationBlock: { [weak self] (continueDegradedCall) in
                 continueDegradedCall ? self?.delegate?.continueDegradedCall(): self?.delegate?.cancelDegradedCall()
             })
         case .none, .incoming(degradedUser: _):
@@ -83,4 +83,3 @@ final class CallDegradationController: UIViewController {
         targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
     }
 }
-
