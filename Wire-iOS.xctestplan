@@ -119,21 +119,6 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "AVURLAsset_conversionTests",
-        "BackgroundViewControllerTests\/testThatItShowsUserWithImage()",
-        "BackgroundViewControllerTests\/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()",
-        "BackgroundViewControllerTests\/testThatItUpdatesForUserImageUpdate_fromAccentColor()",
-        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_FileMessage()",
-        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_File_DarkMode()",
-        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Image_DarkMode()",
-        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Photos()",
-        "ShareViewControllerTests\/testThatItRendersCorrectlyShareViewController_Video_DarkMode()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()",
-        "StartedConversationCellTests\/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()"
       ],
       "target" : {
         "containerPath" : "container:Wire-iOS.xcodeproj",
