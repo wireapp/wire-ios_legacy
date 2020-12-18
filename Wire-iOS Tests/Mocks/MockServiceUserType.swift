@@ -18,7 +18,7 @@
 
 import Foundation
 
-class MockServiceUserType: MockUserType, ServiceUser {
+final class MockServiceUserType: MockUserType, ServiceUser {
 
     var providerIdentifier: String?
 

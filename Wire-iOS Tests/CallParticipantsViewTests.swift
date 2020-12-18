@@ -37,11 +37,12 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     static func participants(count participantCount: Int,
                                  videoState: VideoState? = nil,
                                  microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
-        return (0..<participantCount)
-            .lazy
-            .map { MockUser.mockUsers()[$0] }
-            .sorted { $0.name < $1.name }
-            .map { CallParticipantsCellConfiguration.callParticipant(user: $0,
+        let sortedParticipants = (0..<participantCount)
+                                .lazy
+                                .map { MockUser.mockUsers()[$0] }
+                                .sorted { $0.name < $1.name }
+        
+        return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
                                                                      videoState: videoState,
                                                                      microphoneState: microphoneState)
         }
