@@ -39,7 +39,7 @@ platform :ios do
             build.update_avs_version()
 
             if cache_carthage == "Yes"
-                sh "cp ~/tmp/cache/Carthage ."
+                sh "cp -r ~/tmp/cache/Carthage ."
             end
 
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
@@ -47,7 +47,7 @@ platform :ios do
             build.process_icon()
 
             if cache_carthage == "Yes"
-                sh "cp ./Carthage ~/tmp/cache"
+                sh "cp -r ./Carthage ~/tmp/cache"
             end
         end
     end
