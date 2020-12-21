@@ -48,7 +48,7 @@ platform :ios do
 
             if cache_carthage == "Yes"
                 sh "rm -rf ~/tmp/cache/Carthage"
-                sh "cp -r ./Carthage ~/tmp/cache/Carthage"
+                sh "cp -R ./Carthage ~/tmp/cache/Carthage"
             end
         end
     end
