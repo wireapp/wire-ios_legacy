@@ -5,6 +5,7 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
+        cache_carthage = options[:cache_carthage]
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -39,6 +40,10 @@ platform :ios do
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
+
+            if cache_carthage == "Yes"
+                sh "cp ./Carthage ~/tmp/cache"
+            end
         end
     end
 
