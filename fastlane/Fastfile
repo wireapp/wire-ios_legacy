@@ -37,6 +37,11 @@ platform :ios do
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
+
+            if cache_carthage == "Yes"
+                sh "cp ~/tmp/cache/Carthage ."
+            end
+
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
