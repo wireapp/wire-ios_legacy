@@ -39,7 +39,7 @@ platform :ios do
             build.update_avs_version()
 
             if cache_carthage == "Yes"
-                sh "cp -R ~/tmp/cache/Carthage ./Carthage || echo ⚠️ Carthage cache not exist, skip copying"
+                sh "cd .. && cp -R ~/tmp/cache/Carthage ./Carthage || echo ⚠️ Carthage cache not exist, skip copying"
             end
 
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
@@ -48,7 +48,7 @@ platform :ios do
 
             if cache_carthage == "Yes"
                 sh "rm -rf ~/tmp/cache/Carthage"
-                sh "cp -R ./Carthage ~/tmp/cache/Carthage"
+                sh "cd .. && cp -R ./Carthage ~/tmp/cache/Carthage"
             end
         end
     end
