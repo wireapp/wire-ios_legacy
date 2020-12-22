@@ -129,7 +129,7 @@ final class PasscodeSetupViewController: UIViewController {
             highlightString = "create_passcode.info_label.highlighted".localized
         case .forcedForTeam:
             headingString = "warning_screen.main_info.forced_applock".localized + "\n\n" + "create_passcode.info_label_forced_applock".localized
-            highlightString = "create_passcode.info_label.forced_applock.highlighted".localized
+            highlightString = "create_passcode.info_label_forced_applock.highlighted".localized
         }
         
         let headingText = NSAttributedString(string: headingString) && baseAttributes && regularFont
