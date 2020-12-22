@@ -35,7 +35,12 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
 }
 
 final class PasscodeSetupViewController: UIViewController {
-
+    
+    enum Context {
+        case forcedForTeam
+        case createPasscode
+    }
+    
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
@@ -51,6 +56,7 @@ final class PasscodeSetupViewController: UIViewController {
 
     private lazy var createButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
+        button.accessibilityIdentifier = "createPasscodeButton"
 
         button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
         button.isEnabled = false
@@ -72,7 +78,14 @@ final class PasscodeSetupViewController: UIViewController {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel(variant: variant)
-        label.text = "create_passcode.title_label".localized
+        switch context {
+        case .createPasscode:
+            label.text = "create_passcode.title_label".localized
+        case .forcedForTeam:
+            label.text = "warning_screen.title_label".localized
+        }
+        
+        label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
     }()
@@ -82,7 +95,6 @@ final class PasscodeSetupViewController: UIViewController {
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.configMultipleLineLabel()
-        label.textAlignment = .center
 
         let textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
@@ -107,13 +119,25 @@ final class PasscodeSetupViewController: UIViewController {
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
+        
+        let headingString: String
+        let highlightString: String
 
-        let headingText = NSAttributedString(string: "create_passcode.info_label".localized) && baseAttributes && regularFont
-
-        let highlightText = NSAttributedString(string: "create_passcode.info_label.highlighted".localized) && baseAttributes && heightFont
+        switch context {
+        case .createPasscode:
+            headingString = "create_passcode.info_label".localized
+            highlightString = "create_passcode.info_label.highlighted".localized
+        case .forcedForTeam:
+            headingString = "warning_screen.main_info.forced_applock".localized + "\n\n" + "create_passcode.info_label_forced_applock".localized
+            highlightString = "create_passcode.info_label_forced_applock.highlighted".localized
+        }
+        
+        let headingText = NSAttributedString(string: headingString) && baseAttributes && regularFont
+        let highlightText = NSAttributedString(string: highlightString) && baseAttributes && heightFont
 
         label.text = " "
         label.attributedText = headingText + highlightText
+        label.textAlignment = .center
 
         return label
     }()
@@ -130,8 +154,8 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private var callback: ResultHandler?
-
     private let variant: ColorSchemeVariant
+    private let context: Context
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -140,14 +164,17 @@ final class PasscodeSetupViewController: UIViewController {
 
     /// init with parameters
     /// - Parameters:
-    ///   - callback: callback for storing passcode result.
     ///   - variant: color variant for this screen. When it is nil, apply app's current scheme
     ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
-    required init(callback: ResultHandler?,
-                  variant: ColorSchemeVariant? = nil,
-                  useCompactLayout: Bool? = nil) {
+    ///   - context: context  for this screen. Depending on the context, there are a different title and info message.
+    ///   - callback: callback for storing passcode result.
+    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
+                  useCompactLayout: Bool? = nil,
+                  context: Context,
+                  callback: ResultHandler?) {
         self.callback = callback
-        self.variant = variant ?? ColorScheme.default.variant
+        self.variant = variant
+        self.context = context
 
         self.useCompactLayout = useCompactLayout ??
                                 (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
@@ -186,6 +213,7 @@ final class PasscodeSetupViewController: UIViewController {
                 label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
                 label.numberOfLines = 0
                 label.attributedText = $0.descriptionWithInvalidIcon
+                label.isEnabled = false
 
                 stackView.addArrangedSubview(label)
             }
@@ -258,15 +286,17 @@ final class PasscodeSetupViewController: UIViewController {
 
     // MARK: - keyboard avoiding
 
-    static func createKeyboardAvoidingFullScreenView(callback: ResultHandler?,
-                                                     variant: ColorSchemeVariant? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback,
-                                                                      variant: variant)
-
+    static func createKeyboardAvoidingFullScreenView(variant: ColorSchemeVariant = ColorScheme.default.variant,
+                                                     context: Context,
+                                                     callback: ResultHandler?) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
+        let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
+                                                                      context: context,
+                                                                      callback: callback)
+        
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
-
+        
         keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-
+        
         return keyboardAvoidingViewController
     }
 
@@ -274,6 +304,7 @@ final class PasscodeSetupViewController: UIViewController {
 
     lazy var closeItem: UIBarButtonItem = {
         let closeItem = UIBarButtonItem.createCloseItem()
+        closeItem.accessibilityIdentifier = "closeButton"
         closeItem.tintColor = .white
 
         closeItem.target = self
@@ -332,6 +363,7 @@ extension PasscodeSetupViewController: TextFieldValidationDelegate {
 extension PasscodeSetupViewController: PasscodeSetupUserInterface {
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool) {
         validationLabels[errorReason]?.attributedText = passed ? errorReason.descriptionWithPassedIcon : errorReason.descriptionWithInvalidIcon
+        validationLabels[errorReason]?.isEnabled = passed
     }
 
     var createButtonEnabled: Bool {

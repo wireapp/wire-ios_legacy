@@ -40,6 +40,9 @@ protocol AppLockUserInterface: class {
     /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
     func presentCreatePasscodeScreen(callback: ResultHandler?)
     
+     /// Present warning screen (when the user should be informed about applock config changes)
+    func presentWarningScreen(callback: ResultHandler?)
+    
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
@@ -107,7 +110,9 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            presentWarningIfNeeded {
+                self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            }
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
@@ -115,6 +120,16 @@ final class AppLockPresenter {
         }
     }
     
+    private func presentWarningIfNeeded(then block: @escaping () -> Void) {
+        guard appLockInteractorInput.needsToNotifyUser else {
+            block()
+            return
+        }
+        
+        userInterface?.presentWarningScreen(callback: { _ in
+            block()
+        })
+    }
 }
 
 // MARK: - Account password helper
