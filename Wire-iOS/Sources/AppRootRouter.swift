@@ -475,7 +475,9 @@ extension AppRootRouter: AudioPermissionsObserving {
 extension AppRootRouter {
     //TODO: katerina we should do it in our slow sync
     private func updateTeamFeature() {
-        ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
+        ZMUserSession.shared()?.perform {
+            ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
+        }
     }
 }
 
