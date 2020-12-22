@@ -161,6 +161,8 @@ final class ConversationListViewController: UIViewController {
 
         shouldAnimateNetworkStatusView = true
 
+        ZClientViewController.shared?.notifyUserOfDisabledAppLockIfNeeded()
+
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
 

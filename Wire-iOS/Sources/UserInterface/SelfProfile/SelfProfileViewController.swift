@@ -214,7 +214,8 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AuthenticationType.current == .unavailable else {
+        //There is an additional check for the simulator because there's no way to disable the device passcode on the simulator. We need it for testing.
+        guard AuthenticationType.current == .unavailable || (UIDevice.isSimulator && AuthenticationType.current == .passcode) else {
             callback(newValue)
             return
         }
@@ -227,7 +228,9 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         }
         
         self.callback = callback
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+        let passcodeSetupViewController = PasscodeSetupViewController(variant: .dark,
+                                                                      context: .createPasscode,
+                                                                      callback: callback)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
         
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)

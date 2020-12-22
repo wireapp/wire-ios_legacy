@@ -29,6 +29,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var passwordInput: String?
     var requestPasswordMessage: String?
     var presentCreatePasscodeScreenCalled: Bool = false
+    var presentWarningScreenCalled: Bool = false
     
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
@@ -38,6 +39,10 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
         presentCreatePasscodeScreenCalled = true
+    }
+    
+    func presentWarningScreen(callback: ResultHandler?) {
+        presentWarningScreenCalled = true
     }
     
     var spinnerAnimating: Bool?
@@ -69,6 +74,8 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
     
+    var needsToNotifyUser: Bool = false
+
     var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {
@@ -454,6 +461,31 @@ final class AppLockPresenterTests: XCTestCase {
         //THEN
         XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
         
+    }
+    
+     //MARK: - warning screen
+    func testThatAppLockShowsWarningScreen_IfNeedsToNotifyUserIsTrue() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = true
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertTrue(userInterface.presentWarningScreenCalled)
+    }
+    
+    func testThatAppLockDoesNotShowWarningScreen_IfNeedsToNotifyUserIsFalse() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = false
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertFalse(userInterface.presentWarningScreenCalled)
     }
 }
 

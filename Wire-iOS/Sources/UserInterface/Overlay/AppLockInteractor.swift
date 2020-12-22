@@ -28,6 +28,7 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
+    var needsToNotifyUser: Bool { get set }
     var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
@@ -71,13 +72,20 @@ final class AppLockInteractor {
             }
         }
     }
-
-    var isAppLockForced: Bool {
-        return appLock?.config.forceAppLock ?? false
-    }
-
+    
     var shouldUseBiometricsOrCustomPasscode: Bool {
         return appLock?.config.useBiometricsOrCustomPasscode ?? false
+    }
+    
+    var needsToNotifyUser: Bool {
+        get {
+            return appLock?.needsToNotifyUser ?? false
+        }
+        set {
+            if var session = userSession {
+                session.appLockController.needsToNotifyUser = newValue
+            }
+        }
     }
 
     var timeout: UInt {
