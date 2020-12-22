@@ -31,7 +31,7 @@ extension ZClientViewController {
         }
 
         let callBack: ResultHandler = { _ in block() }
-        let viewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: callBack)
+        let viewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(context: .createPasscode, callback: callBack)
         present(viewController, animated: true)
     }
 
