@@ -17,70 +17,74 @@
 //
 
 import XCTest
-import UIKit
 @testable import Wire
 
-class DismissalTests: ZMSnapshotTestCase {
+final class DismissalTests: XCTestCase {
 
-    var viewController: UIViewController!
+    var sut: UIViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = UIViewController()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
     // MARK: - Detection
 
     func testThatItAllowsDismissalForViewController() {
         // GIVEN
-        let viewController = UIViewController()
 
         // WHEN
-        presentViewController(viewController)
+        presentViewController(sut)
 
         // THEN
-        XCTAssertTrue(viewController.canBeDismissed)
+        XCTAssertTrue(sut.canBeDismissed)
     }
 
     func testThatItDoesNotAllowDismissalForUnpresentedViewController() {
         // GIVEN
-        let viewController = UIViewController()
 
         // THEN
-        XCTAssertFalse(viewController.canBeDismissed)
+        XCTAssertFalse(sut.canBeDismissed)
     }
 
     func testThatItDoesNotAllowDismissalForDismissedViewController() {
         // GIVEN
-        let viewController = UIViewController()
-        presentViewController(viewController) {
+        presentViewController(sut) {
             // WHEN
-            self.dismissViewController(viewController) {
+            self.dismissViewController(self.sut) {
             
                 // THEN
-                XCTAssertFalse(viewController.canBeDismissed)
+                XCTAssertFalse(self.sut.canBeDismissed)
             }
         }
     }
 
     func testThatItAllowsDismissalForControllerInNavigationController() {
         // GIVEN
-        let viewController = UIViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(rootViewController: sut)
 
         // WHEN
         presentViewController(navigationController)
 
         // THEN
-        XCTAssertTrue(viewController.canBeDismissed)
+        XCTAssertTrue(sut.canBeDismissed)
         XCTAssertTrue(navigationController.canBeDismissed)
     }
 
     func testThatItDoesAllowDismissalForNavigationControllerAfterChildDismissed() {
         // GIVEN
-        let viewController = UIViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(rootViewController: sut)
 
         // WHEN
         presentViewController(navigationController) {
-            self.dismissViewController(viewController) {
+            self.dismissViewController(self.sut) {
                 // THEN
-                XCTAssertFalse(viewController.canBeDismissed)
+                XCTAssertFalse(self.sut.canBeDismissed)
                 XCTAssertFalse(navigationController.canBeDismissed)
             }
         }
@@ -90,13 +94,12 @@ class DismissalTests: ZMSnapshotTestCase {
 
     func testThatItCallsHandlerAfterDismissing() {
         // GIVEN
-        let viewController = UIViewController()
-        presentViewController(viewController)
+        presentViewController(sut)
 
         // WHEN
         let dismissalExpectation = expectation(description: "The handler is called.")
 
-        viewController.dismissIfNeeded(animated: false) {
+        sut.dismissIfNeeded(animated: false) {
             dismissalExpectation.fulfill()
         }
 
@@ -106,14 +109,13 @@ class DismissalTests: ZMSnapshotTestCase {
 
     func testThatItCallsHandlerForAlreadyDismissedViewController() {
         // GIVEN
-        let viewController = UIViewController()
-        presentViewController(viewController)
-        dismissViewController(viewController)
+        presentViewController(sut)
+        dismissViewController(sut)
 
         // WHEN
         let dismissalExpectation = expectation(description: "The handler is called.")
 
-        viewController.dismissIfNeeded(animated: false) {
+        sut.dismissIfNeeded(animated: false) {
             dismissalExpectation.fulfill()
         }
 
