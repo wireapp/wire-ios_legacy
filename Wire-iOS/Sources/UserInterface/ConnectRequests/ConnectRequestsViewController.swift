@@ -38,7 +38,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
-        if let userSession = ZMUserSession.shared() {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
             let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
             
             pendingConnectionsListObserverToken = ConversationListChangeInfo.add(observer: self,
