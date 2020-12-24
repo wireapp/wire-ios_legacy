@@ -100,7 +100,7 @@ public class AppRootRouter: NSObject {
     
     public func start(launchOptions: LaunchOptions) {
         transition(to: .headless, completion: {
-            Analytics.shared.tagEvent("app.open")
+            Analytics.shared?.tagEvent("app.open")
         })
         createAndStartSessionManager(launchOptions: launchOptions)
     }
@@ -337,11 +337,11 @@ extension AppRootRouter {
     }
     
     private func setupAnalyticsSharing() {
-        Analytics.shared.selfUser = SelfUser.current
+        Analytics.shared?.selfUser = SelfUser.current
         
         guard
             appStateCalculator.wasUnauthenticated,
-            Analytics.shared.selfUser?.isTeamMember ?? false
+            Analytics.shared?.selfUser?.isTeamMember ?? false
         else {
             return
         }

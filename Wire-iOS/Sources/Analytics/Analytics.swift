@@ -30,7 +30,7 @@ final class Analytics: NSObject {
     private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
     private var userObserverToken: Any?
 
-    static var shared: Analytics!
+    static var shared: Analytics?
 
     required init(optedOut: Bool) {
         zmLog.info("Analytics initWithOptedOut: \(optedOut)")

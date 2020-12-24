@@ -48,6 +48,6 @@ extension Analytics {
 
 extension Event {
     func track() {
-        Analytics.shared.tag(self)
+        Analytics.shared?.tag(self)
     }
 }
