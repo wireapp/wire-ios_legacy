@@ -193,6 +193,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupAudioEstablished_LargeGroup() {
         // given
+        let otherUser = MockUserType.createConnectedUser(name: "Bruno", inTeam: nil)
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
 
         // when
