@@ -54,14 +54,19 @@ final class DismissalTests: XCTestCase {
 
     func testThatItDoesNotAllowDismissalForDismissedViewController() {
         // GIVEN
+        let dismissalExpectation = expectation(description: "SUT is dismissed")
+
         presentViewController(sut) {
             // WHEN
             self.dismissViewController(self.sut) {
             
                 // THEN
                 XCTAssertFalse(self.sut.canBeDismissed)
+                dismissalExpectation.fulfill()
             }
         }
+
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
     func testThatItAllowsDismissalForControllerInNavigationController() {
@@ -81,13 +86,17 @@ final class DismissalTests: XCTestCase {
         let navigationController = UINavigationController(rootViewController: sut)
 
         // WHEN
+        let dismissalExpectation = expectation(description: "SUT is dismissed")
         presentViewController(navigationController) {
             self.dismissViewController(self.sut) {
                 // THEN
                 XCTAssertFalse(self.sut.canBeDismissed)
                 XCTAssertFalse(navigationController.canBeDismissed)
+                dismissalExpectation.fulfill()
             }
         }
+
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
     // MARK: - Dismissal
