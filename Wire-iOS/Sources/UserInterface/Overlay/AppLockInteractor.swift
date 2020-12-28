@@ -136,7 +136,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         
         let result: VerifyPasswordResult
         
-        if let data: Data = Keychain.fetchPasscode() {
+        if let data = appLock?.fetchPasscode() {
             result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
         } else {
             result = .unknown

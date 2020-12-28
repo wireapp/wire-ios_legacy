@@ -38,6 +38,8 @@ extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
     }
 
     func deletePasscode() {
-        Keychain.deletePasscode()
+        // TODO: [John] Inject the app lock controller.
+        guard let appLock = ZMUserSession.shared()?.appLockController else { return }
+        try? appLock.deletePasscode()
     }
 }

@@ -219,11 +219,10 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             callback(newValue)
             return
         }
-        
+
         guard newValue else {
-            Keychain.deletePasscode()
+            try? settingsPropertyFactory.userSession?.appLockController.deletePasscode()
             callback(newValue)
-            
             return
         }
         

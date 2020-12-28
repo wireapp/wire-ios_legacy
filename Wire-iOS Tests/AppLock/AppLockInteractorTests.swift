@@ -89,6 +89,18 @@ final class AppLockMock: AppLockType {
     func persistBiometrics() {
         AppLockMock.didPersistBiometrics = true
     }
+
+    func storePasscode(_ passcode: String) throws {
+
+    }
+
+    func fetchPasscode() -> Data? {
+        return nil
+    }
+
+    func deletePasscode() throws {
+
+    }
 }
 
 final class AppLockInteractorTests: ZMSnapshotTestCase {
