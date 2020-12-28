@@ -92,7 +92,8 @@ final class AppLockViewController: UIViewController {
     private func presentCustomPassCodeUnlockScreenIfNeeded(message: String,
                                                            callback: @escaping RequestPasswordController.Callback) {
         if unlockViewController == nil {
-            let viewController = UnlockViewController()
+            // TODO: [John] Avoid static methods.
+            let viewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
             let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
