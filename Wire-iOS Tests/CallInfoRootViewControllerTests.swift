@@ -193,7 +193,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
 
     func testGroupAudioEstablished_LargeGroup() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: mockOtherUser, groupSize: .large)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser,
+                                          groupSize: .large,
+                                          mockUsers: SwiftMockLoader.mockUsers())
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)

@@ -32,10 +32,12 @@ struct CallInfoTestFixture {
 
     let otherUser: UserType
     let groupSize: GroupSize
+    let mockUsers: [UserType]
 
-    init(otherUser: UserType, groupSize: GroupSize = .small) {
+    init(otherUser: UserType, groupSize: GroupSize = .small, mockUsers: [UserType] = MockUser.mockUsers()) {
         self.otherUser = otherUser
         self.groupSize = groupSize
+        self.mockUsers = mockUsers
     }
 
     // MARK: - OneToOne Audio
