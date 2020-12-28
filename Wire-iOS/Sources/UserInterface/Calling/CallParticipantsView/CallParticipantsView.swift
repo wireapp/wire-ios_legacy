@@ -22,7 +22,9 @@ import WireSyncEngine
 typealias CallParticipantsList = [CallParticipantsCellConfiguration]
 
 protocol CallParticipantsCellConfigurationConfigurable: Reusable {
-    func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant)
+    func configure(with configuration: CallParticipantsCellConfiguration,
+                   variant: ColorSchemeVariant,
+                   selfUser: UserType)
 }
 
 enum CallParticipantsCellConfiguration: Hashable {
@@ -52,7 +54,8 @@ enum CallParticipantsCellConfiguration: Hashable {
     }
 }
 
-class CallParticipantsView: UICollectionView, Themeable {
+final class CallParticipantsView: UICollectionView, Themeable {
+    let selfUser: UserType
     
     var rows = CallParticipantsList() {
         didSet {
@@ -71,13 +74,16 @@ class CallParticipantsView: UICollectionView, Themeable {
         reloadData()
     }
     
-    override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: collectionViewLayout)
+    init(collectionViewLayout: UICollectionViewLayout, selfUser: UserType) {
+        self.selfUser = selfUser
+        super.init(frame: .zero, collectionViewLayout: collectionViewLayout)
+
         self.dataSource = self
         backgroundColor = .clear
         isOpaque = false
     }
-    
+        
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -99,7 +105,9 @@ extension CallParticipantsView: UICollectionViewDataSource {
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellConfiguration.cellType.reuseIdentifier, for: indexPath)
 
         if let configurableCell = cell as? CallParticipantsCellConfigurationConfigurable {
-            configurableCell.configure(with: cellConfiguration, variant: colorSchemeVariant)
+            configurableCell.configure(with: cellConfiguration,
+                                       variant: colorSchemeVariant,
+                                       selfUser: selfUser)
         }
         
         return cell
@@ -109,12 +117,14 @@ extension CallParticipantsView: UICollectionViewDataSource {
 
 extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
-    func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CallParticipantsCellConfiguration,
+                   variant: ColorSchemeVariant,
+                   selfUser: UserType) {
         guard case let .callParticipant(user, videoState, microphoneState) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
-        configure(with: user.value)
+        configure(with: user.value, selfUser: selfUser)
         accessoryIconView.isHidden = true
         microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState))
         videoIconView.set(style: VideoIconStyle(state: videoState))

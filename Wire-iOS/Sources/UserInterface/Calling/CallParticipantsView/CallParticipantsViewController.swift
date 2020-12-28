@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 protocol CallParticipantsViewControllerDelegate: class {
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController)
@@ -28,6 +29,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?
     weak var delegate: CallParticipantsViewControllerDelegate?
+    private let selfUser: UserType
     
     var participants: CallParticipantsList {
         didSet {
@@ -44,18 +46,25 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         }
     }
     
-    init(participants: CallParticipantsList, allowsScrolling: Bool) {
+    init(participants: CallParticipantsList,
+         allowsScrolling: Bool,
+         selfUser: UserType) {
         self.participants = participants
         self.allowsScrolling = allowsScrolling
+        self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput) {
-        self.init(participants: configuration.accessoryType.participants, allowsScrolling: true)
+    convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput,
+                     selfUser: UserType = ZMUser.selfUser()) {
+        self.init(participants: configuration.accessoryType.participants,
+                  allowsScrolling: true,
+                  selfUser: selfUser)
         variant = configuration.effectiveColorVariant
         view.backgroundColor = configuration.overlayBackgroundColor
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,7 +92,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        let collectionView = CallParticipantsView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = CallParticipantsView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = allowsScrolling
         collectionView.delegate = self

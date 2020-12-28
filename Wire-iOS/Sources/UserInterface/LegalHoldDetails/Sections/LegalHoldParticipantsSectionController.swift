@@ -84,7 +84,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         let showSeparator = (viewModel.participants.count - 1) != indexPath.row
         
-        cell.configure(with: participant, conversation: conversation)
+        cell.configure(with: participant, selfUser: ZMUser.selfUser(), conversation: conversation)
         cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         cell.showSeparator = showSeparator
