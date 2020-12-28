@@ -169,7 +169,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupAudioConnecting() {///TODO: cpv?
+    func testGroupAudioConnecting() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
@@ -191,7 +191,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupAudioEstablished_LargeGroup() {///TODO: cell?
+    func testGroupAudioEstablished_LargeGroup() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
 

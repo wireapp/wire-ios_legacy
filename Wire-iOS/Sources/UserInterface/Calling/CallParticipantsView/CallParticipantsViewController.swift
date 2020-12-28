@@ -48,7 +48,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     
     init(participants: CallParticipantsList,
          allowsScrolling: Bool,
-         selfUser: UserType = ZMUser.selfUser()) {
+         selfUser: UserType) {
         self.participants = participants
         self.allowsScrolling = allowsScrolling
         self.selfUser = selfUser

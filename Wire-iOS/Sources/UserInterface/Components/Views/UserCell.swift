@@ -215,7 +215,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     func configure(with user: UserType,
-                   selfUser: UserType = ZMUser.selfUser(),
+                   selfUser: UserType,
                    subtitle overrideSubtitle: NSAttributedString? = nil,
                    conversation: ZMConversation? = nil) {
         

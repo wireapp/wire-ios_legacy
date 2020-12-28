@@ -75,7 +75,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     init(configuration: CallInfoViewControllerInput,
-         selfUser: UserType = ZMUser.selfUser(),
+         selfUser: UserType,
          userSession: ZMUserSession? = ZMUserSession.shared()) {
         self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)

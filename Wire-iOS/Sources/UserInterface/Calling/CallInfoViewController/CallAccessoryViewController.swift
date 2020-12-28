@@ -44,7 +44,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     }
 
     init(configuration: CallInfoViewControllerInput,
-         selfUser: UserType = ZMUser.selfUser()) {
+         selfUser: UserType) {
         self.configuration = configuration
         participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants,
                                                                     allowsScrolling: false,
