@@ -71,7 +71,7 @@ final class CallViewController: UIViewController {
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
 
-        callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
+        callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
 
         super.init(nibName: nil, bundle: nil)

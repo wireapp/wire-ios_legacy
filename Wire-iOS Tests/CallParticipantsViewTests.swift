@@ -50,7 +50,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -61,7 +61,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Overflowing_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
@@ -74,7 +74,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Truncated_Light() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         
         // Then
@@ -83,7 +83,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Truncated_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)

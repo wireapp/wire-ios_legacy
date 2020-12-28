@@ -54,7 +54,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.teamRole = .partner
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser, conversation: conversation)
+            cell.configure(with: mockUser,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
 
@@ -64,7 +66,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.isServiceUser = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser, conversation: conversation)
+            cell.configure(with: mockUser,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -72,7 +76,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: user,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -83,7 +89,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         _ = mockUser.feature(withUserClients: 1)
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser, conversation: conversation)
+            cell.configure(with: mockUser,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -94,7 +102,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.isGuestInConversation = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser, conversation: conversation)
+            cell.configure(with: mockUser,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -106,7 +116,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.handle = nil
 
         verifyInAllColorSchemes(view: cell {
-            $0.configure(with: mockUser, conversation: conversation)
+            $0.configure(with: mockUser,
+                         selfUser: MockUser.mockSelf(),
+                         conversation: conversation)
         })
     }
     
@@ -120,7 +132,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         _ = mockUser.feature(withUserClients: 1)
 
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser, conversation: conversation)
+            cell.configure(with: mockUser,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -128,7 +142,9 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[10]
         
         verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
+            cell.configure(with: user,
+                           selfUser: MockUser.mockSelf(),
+                           conversation: conversation)
         }))
     }
     
@@ -137,7 +153,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
             let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted)
-            cell.configure(with: config, variant: .dark)
+            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }
     
@@ -145,7 +161,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
             let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted)
-            cell.configure(with: config, variant: .dark)
+            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }
     

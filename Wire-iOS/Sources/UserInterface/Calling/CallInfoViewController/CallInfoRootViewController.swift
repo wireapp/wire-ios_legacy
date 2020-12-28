@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import SafariServices
+import WireDataModel
 
 protocol CallInfoRootViewControllerDelegate: class {
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
@@ -51,9 +52,10 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         }
     }
     
-    init(configuration: CallInfoViewControllerInput) {
+    init(configuration: CallInfoViewControllerInput,
+         selfUser: UserType) {
         self.configuration = configuration
-        contentController = CallInfoViewController(configuration: configuration)
+        contentController = CallInfoViewController(configuration: configuration, selfUser: selfUser)
         contentNavigationController = contentController.wrapInNavigationController()
         callDegradationController = CallDegradationController()
         

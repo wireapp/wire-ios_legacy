@@ -199,12 +199,13 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         updateTitleLabel()
     }
     
-    private func updateTitleLabel() {
-        guard let user = user else {
+    private func updateTitleLabel(selfUser: UserType? = nil) {
+        guard let user = user,
+              let selfUser = selfUser else {
             return
         }
         
-        var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: selfUser)
         
         if user.isSelfUser, let title = attributedTitle {
             attributedTitle = title + "user_cell.title.you_suffix".localized
@@ -214,6 +215,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     func configure(with user: UserType,
+                   selfUser: UserType,
                    subtitle overrideSubtitle: NSAttributedString? = nil,
                    conversation: ZMConversation? = nil) {
         
@@ -227,9 +229,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         self.user = user
 
         avatar.user = user
-        updateTitleLabel()
+        updateTitleLabel(selfUser: selfUser)
 
-        let style = UserTypeIconStyle(conversation: conversation, user: user)
+        let style = UserTypeIconStyle(conversation: conversation, user: user, selfUser: selfUser)
         userTypeIconView.set(style: style)
 
         verifiedIconView.isHidden = !user.isVerified
@@ -271,10 +273,10 @@ extension UserCell {
 
 extension UserType {
     
-    func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
-        if ZMUser.selfUser().isTeamMember {
+    func nameIncludingAvailability(color: UIColor, selfUser: UserType) -> NSAttributedString? {
+        if selfUser.isTeamMember {
             return AvailabilityStringBuilder.string(for: self, with: .list, color: color)
-        } else if let name = name{
+        } else if let name = name {
             return name && color
         }
 
