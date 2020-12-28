@@ -48,7 +48,8 @@ final class BackgroundViewController: UIViewController {
     private func setupObservers(userSession: ZMUserSession?) {
         guard !ProcessInfo.processInfo.isRunningTests else { return }
 
-        if let userSession = userSession {
+        if !ProcessInfo.processInfo.isRunningTests,
+            let userSession = userSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
