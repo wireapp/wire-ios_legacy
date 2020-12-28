@@ -53,9 +53,9 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     }
     
     init(configuration: CallInfoViewControllerInput,
-         user: UserType = ZMUser.selfUser()) {
+         selfUser: UserType = ZMUser.selfUser()) {
         self.configuration = configuration
-        contentController = CallInfoViewController(configuration: configuration, user: user)
+        contentController = CallInfoViewController(configuration: configuration, selfUser: selfUser)
         contentNavigationController = contentController.wrapInNavigationController()
         callDegradationController = CallDegradationController()
         

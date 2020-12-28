@@ -40,7 +40,7 @@ final class CallInfoViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTest
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
         // when
-        let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, user: coreDataFixture.selfUser)
+        let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, selfUser: coreDataFixture.selfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
