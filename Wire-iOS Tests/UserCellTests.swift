@@ -153,7 +153,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
             let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted)
-            cell.configure(with: config, variant: .dark, selfUser: ZMUser.selfUser())
+            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }
     
@@ -161,7 +161,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
             let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted)
-            cell.configure(with: config, variant: .dark, selfUser: ZMUser.selfUser())
+            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }
     
