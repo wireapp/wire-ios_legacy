@@ -26,7 +26,7 @@ protocol CallParticipantsCellConfigurationConfigurable: Reusable {
 }
 
 enum CallParticipantsCellConfiguration: Hashable {
-    case callParticipant(user: ZMUser, videoState: VideoState?, microphoneState: MicrophoneState?)
+    case callParticipant(user: HashBoxUser, videoState: VideoState?, microphoneState: MicrophoneState?)
     case showAll(totalCount: Int)
     
     var cellType: CallParticipantsCellConfigurationConfigurable.Type {
@@ -114,7 +114,7 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
-        configure(with: user)
+        configure(with: user.value)
         accessoryIconView.isHidden = true
         microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState))
         videoIconView.set(style: VideoIconStyle(state: videoState))

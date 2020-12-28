@@ -141,7 +141,7 @@ extension CallController: WireCallCenterCallStateObserver {
         }
         switch degradationState {
         case .incoming(degradedUser: let user):
-            router?.presentSecurityDegradedAlert(degradedUser: user)
+            router?.presentSecurityDegradedAlert(degradedUser: user?.value)
         default:
             break
         }
