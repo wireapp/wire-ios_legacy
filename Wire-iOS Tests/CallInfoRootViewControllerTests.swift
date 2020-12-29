@@ -20,23 +20,23 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+final class CallInfoRootViewControllerTests: XCTestCase {
 
-    var coreDataFixture: CoreDataFixture!
     var sut: CallInfoRootViewController!
     var mockSelfUser: MockUserType!
+    var otherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
 
-        mockSelfUser = MockUserType.createSelfUser(name: "Bob")
-        coreDataFixture = CoreDataFixture()
+        mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        otherUser = MockUserType.createUser(name: "Bruno")
     }
 
     override func tearDown() {
         sut = nil
-        coreDataFixture = nil
         mockSelfUser = nil
+        otherUser = nil
 
         super.tearDown()
     }
@@ -59,7 +59,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
         // when
-        sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioConnecting, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioConnecting, selfUser: mockSelfUser) //TODO: created a hash box unreleased
 
         // then
         verifyAllIPhoneSizes(matching: sut)
