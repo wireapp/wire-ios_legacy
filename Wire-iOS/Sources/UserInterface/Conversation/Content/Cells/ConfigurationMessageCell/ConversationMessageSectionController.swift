@@ -226,12 +226,13 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     private func createCellDescriptions(in context: ConversationMessageContext) {
         cellDescriptions.removeAll()
         
-        let isSenderVisible = self.isSenderVisible(in: context) && message.sender != nil
+        let isSenderVisible = self.isSenderVisible(in: context) && message.senderUser != nil
         
         if isBurstTimestampVisible(in: context) {
             add(description: BurstTimestampSenderMessageCellDescription(message: message, context: context))
         }
-        if isSenderVisible, let sender = message.sender {
+        if isSenderVisible,
+           let sender = message.senderUser {
             add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
         }
         
@@ -273,7 +274,9 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     }
     
     func isSenderVisible(in context: ConversationMessageContext) -> Bool {
-        guard message.sender != nil, !message.isKnock, !message.isSystem else {
+        guard message.senderUser != nil,
+              !message.isKnock,
+              !message.isSystem else {
             return false
         }
         

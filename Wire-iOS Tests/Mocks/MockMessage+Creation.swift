@@ -35,10 +35,10 @@ final class MockMessageFactory: NSObject {
         if let sender = sender as? ZMUser {
             message.sender = sender
         } else {
-            message.sender = (MockUser.mockSelf() as Any) as? ZMUser
+            message.senderUser = MockUserType.createSelfUser(name: "Alice")
         }
         
-        conversation?.activeParticipants = [message.sender!]
+        conversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }
