@@ -21,16 +21,27 @@ import XCTest
 
 final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
 
+    var image: UIImage!
+    var message: MockMessage!
+
+    override func setUp() {
+        super.setUp()
+        
+        image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        message = MockMessageFactory.imageMessage(with: image)!
+        message.senderUser = MockUserType.createUser(name: "Bob")
+    }
+
     override func tearDown() {
+        image = nil
+        message = nil
+        
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         super.tearDown()
     }
     
     func testTransparentImage() {
         // GIVEN
-        let image = self.image(inTestBundleNamed: "transparent.png")
-        let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: true)
@@ -38,9 +49,6 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     
     func testOpaqueImage() {
         // GIVEN
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: true)
@@ -48,9 +56,6 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     
     func testNotDownloadedImage() {
         // GIVEN
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
         
         // THEN
         verify(message: message, waitForImagesToLoad: false)
@@ -58,10 +63,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     
     func testObfuscatedImage() {
         // GIVEN
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
         message.isObfuscated = true
-        message.sender = otherUser
         
         // THEN
         verify(message: message)
