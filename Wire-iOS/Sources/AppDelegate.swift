@@ -42,7 +42,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Private Property
-    private static var sharedAppDelegate: AppDelegate!
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
         TrackingOperation(),
@@ -76,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var launchOptions: LaunchOptions = [:]
 
     static var shared: AppDelegate {
-        return sharedAppDelegate!
+        return UIApplication.shared.delegate as! AppDelegate
     }
 
     var mediaPlaybackManager: MediaPlaybackManager? {
@@ -94,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     override init() {
         super.init()
-        AppDelegate.sharedAppDelegate = self
     }
 
     func application(_ application: UIApplication,
