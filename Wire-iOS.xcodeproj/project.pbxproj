@@ -188,6 +188,7 @@
 		5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489E20D252C84BE0010461D /* AppStateCalculator.swift */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
+		54B27986258113FD0043ED25 /* AuthenticatedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B27985258113FD0043ED25 /* AuthenticatedRouter.swift */; };
 		54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */; };
 		54D355E025559BFC0004DAC7 /* ActiveCallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D355DF25559BFC0004DAC7 /* ActiveCallRouter.swift */; };
 		54D5E01924E1286B00B982F6 /* Bundle+SecurityFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */; };
@@ -1785,6 +1786,7 @@
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Security-Flags.xcconfig"; sourceTree = "<group>"; };
 		54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperOptionsController.swift; sourceTree = "<group>"; };
+		54B27985258113FD0043ED25 /* AuthenticatedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedRouter.swift; sourceTree = "<group>"; };
 		54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
 		54D355DF25559BFC0004DAC7 /* ActiveCallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallRouter.swift; sourceTree = "<group>"; };
 		54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+SecurityFlags.swift"; sourceTree = "<group>"; };
@@ -5150,6 +5152,7 @@
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
+				54B27985258113FD0043ED25 /* AuthenticatedRouter.swift */,
 				543DF6B125309E52001F6EA6 /* RootViewController.swift */,
 				546EEA8C2536DDF500195097 /* URLActionRouter.swift */,
 				546EEA8E2536DFAB00195097 /* SwitchingAccountRouter.swift */,
@@ -7704,6 +7707,7 @@
 				EFA145F4231EA4980073BA5E /* ConversationListViewController.swift in Sources */,
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */,
+				54B27986258113FD0043ED25 /* AuthenticatedRouter.swift in Sources */,
 				EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */,
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
 				87F18BBA1E01551600C69D9B /* VideoMessageView.swift in Sources */,

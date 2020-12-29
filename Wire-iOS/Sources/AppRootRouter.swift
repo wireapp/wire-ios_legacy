@@ -33,12 +33,12 @@ public class AppRootRouter: NSObject {
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
-    private var appStateCalculator = AppStateCalculator()
+    private var appStateCalculator: AppStateCalculator
+    private var urlActionRouter: URLActionRouter
     private var deepLinkURL: URL?
     
     private var authenticationCoordinator: AuthenticationCoordinator?
     private var switchingAccountRouter: SwitchingAccountRouter
-    private var urlActionRouter: URLActionRouter
     private var sessionManagerLifeCycleObserver: SessionManagerLifeCycleObserver
     private let foregroundNotificationFilter: ForegroundNotificationFilter
     private var quickActionsManager: QuickActionsManager
@@ -53,21 +53,7 @@ public class AppRootRouter: NSObject {
     private let teamMetadataRefresher = TeamMetadataRefresher()
 
     // MARK: - Private Set Property
-    private(set) var sessionManager: SessionManager? {
-        didSet {
-            guard let sessionManager = sessionManager else { return }
-            urlActionRouter.sessionManager = sessionManager
-            sessionManagerLifeCycleObserver.sessionManager = sessionManager
-            foregroundNotificationFilter.sessionManager = sessionManager
-            quickActionsManager.sessionManager = sessionManager
-            
-            sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
-            sessionManager.switchingDelegate = switchingAccountRouter
-            sessionManager.presentationDelegate = urlActionRouter
-            createLifeCycleObserverTokens()
-            setCallingSettings()
-        }
-    }
+    private(set) var sessionManager: SessionManager
 
     //TO DO: This should be private
     private(set) var rootViewController: RootViewController
@@ -76,33 +62,58 @@ public class AppRootRouter: NSObject {
     
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
+         sessionManager: SessionManager,
+         appStateCalculator: AppStateCalculator,
          deepLinkURL: URL? = nil) {
         self.rootViewController = viewController
         self.navigator = navigator
+        self.sessionManager = sessionManager
+        self.appStateCalculator = appStateCalculator
         self.deepLinkURL = deepLinkURL
         self.urlActionRouter = URLActionRouter(viewController: viewController,
-                                               authenticationCoordinator: authenticationCoordinator,
                                                url: deepLinkURL)
         self.switchingAccountRouter = SwitchingAccountRouter()
         self.quickActionsManager = QuickActionsManager()
         self.foregroundNotificationFilter = ForegroundNotificationFilter()
         self.sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
+        
+        urlActionRouter.sessionManager = sessionManager
+        sessionManagerLifeCycleObserver.sessionManager = sessionManager
+        foregroundNotificationFilter.sessionManager = sessionManager
+        quickActionsManager.sessionManager = sessionManager
+        
+        sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
+        sessionManager.switchingDelegate = switchingAccountRouter
+        sessionManager.presentationDelegate = urlActionRouter
+        
         super.init()
         
         setupAppStateCalculator()
+        setupURLActionRouter()
         setupNotifications()
         setupAdditionalWindows()
         
         AppRootRouter.configureAppearance()
+        
+        createLifeCycleObserverTokens()
+        setCallingSettings()
     }
     
     // MARK: - Public implementation
     
     public func start(launchOptions: LaunchOptions) {
-        transition(to: .headless, completion: {
-            Analytics.shared.tagEvent("app.open")
-        })
-        createAndStartSessionManager(launchOptions: launchOptions)
+        guard let deepLinkURL = deepLinkURL else {
+            showInitial(launchOptions: launchOptions)
+            return
+        }
+        
+        guard
+            let action = try? URLAction(url: deepLinkURL),
+            action.requiresAuthentication == true
+        else {
+            return
+        }
+        showInitial(launchOptions: launchOptions)
     }
     
     public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
@@ -121,6 +132,10 @@ public class AppRootRouter: NSObject {
         appStateCalculator.delegate = self
     }
     
+    private func setupURLActionRouter() {
+        urlActionRouter.delegate = self
+    }
+    
     private func setupNotifications() {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
@@ -136,38 +151,9 @@ public class AppRootRouter: NSObject {
         sessionManagerLifeCycleObserver.createLifeCycleObserverTokens()
     }
     
-    private func createAndStartSessionManager(launchOptions: LaunchOptions) {
-        guard
-            let appVersion = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String,
-            let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
-            let configuration = SessionManagerConfiguration.load(from: url),
-            let mediaManager = AVSMediaManager.sharedInstance()
-        else {
-            return
-        }
-        
-        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
-        let jailbreakDetector = JailbreakDetector()
-        
-        SessionManager.clearPreviousBackups()
-        SessionManager.create(appVersion: appVersion,
-                              mediaManager: mediaManager,
-                              analytics: Analytics.shared,
-                              delegate: appStateCalculator,
-                              presentationDelegate: urlActionRouter,
-                              application: UIApplication.shared,
-                              environment: BackendEnvironment.shared,
-                              configuration: configuration,
-                              detector: jailbreakDetector) { [weak self] sessionManager in
-                self?.sessionManager = sessionManager
-                self?.sessionManager?.start(launchOptions: launchOptions)
-                self?.urlActionRouter.openDeepLink(needsAuthentication: false)
-        }
-    }
-    
     private func setCallingSettings() {
-        sessionManager?.updateCallNotificationStyleFromSettings()
-        sessionManager?.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
+        sessionManager.updateCallNotificationStyleFromSettings()
+        sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
     }
@@ -252,6 +238,13 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 
 extension AppRootRouter {
     // MARK: - Navigation Helpers
+    private func showInitial(launchOptions: LaunchOptions) {
+        transition(to: .headless, completion: { [weak self] in
+            Analytics.shared.tagEvent("app.open")
+            self?.sessionManager.start(launchOptions: launchOptions)
+        })
+    }
+    
     private func showBlacklisted(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .blacklist)
         rootViewController.set(childViewController: blockerViewController,
@@ -382,6 +375,7 @@ extension AppRootRouter {
         if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.openDeepLink(needsAuthentication: true)
+            
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
@@ -409,6 +403,13 @@ extension AppRootRouter {
     }
 }
 
+// MARK: - URLActionRouterDelegete
+extension AppRootRouter: URLActionRouterDelegete {
+    func urlActionRouterWillShowCompanyLoginError() {
+        authenticationCoordinator?.cancelCompanyLogin()
+    }
+}
+
 // MARK: - ApplicationStateObserving
 extension AppRootRouter: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
@@ -421,7 +422,7 @@ extension AppRootRouter: ApplicationStateObserving {
     }
     
     func applicationDidEnterBackground() {
-        let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
+        let unreadConversations = sessionManager.accountManager.totalUnreadCount
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
     }
     
@@ -462,87 +463,6 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 // MARK: - AudioPermissionsObserving
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
-        sessionManager?.updateCallNotificationStyleFromSettings()
-    }
-}
-
-
-protocol AuthenticatedRouterProtocol: class {
-    func updateActiveCallPresentationState()
-    func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
-}
-
-// MARK: - Class AuthenticatedRouter
-
-class AuthenticatedRouter: NSObject {
-    
-    // MARK: - Private Property
-    
-    private let builder: AuthenticatedWireFrame
-    private let rootViewController: RootViewController
-    private let activeCallRouter: ActiveCallRouter
-    private weak var _viewController: ZClientViewController?
-    
-    // MARK: - Public Property
-
-    var viewController: UIViewController {
-        let viewController = _viewController ?? builder.build(router: self)
-        _viewController = viewController
-        return viewController
-    }
-    
-    // MARK: - Init
-    
-    init(rootViewController: RootViewController,
-         account: Account,
-         selfUser: SelfUserType,
-         isComingFromRegistration: Bool,
-         needToShowDataUsagePermissionDialog: Bool) {
-        
-        self.rootViewController = rootViewController
-        activeCallRouter = ActiveCallRouter(rootviewController: rootViewController)
-        
-        builder = AuthenticatedWireFrame(account: account,
-                                         selfUser: selfUser,
-                                         isComingFromRegistration: needToShowDataUsagePermissionDialog,
-                                         needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
-    }
-}
-
-// MARK: - AuthenticatedRouterProtocol
-extension AuthenticatedRouter: AuthenticatedRouterProtocol {
-    func updateActiveCallPresentationState() {
-        activeCallRouter.updateActiveCallPresentationState()
-    }
-    
-    func minimizeCallOverlay(animated: Bool,
-                             withCompletion completion: Completion?) {
-        activeCallRouter.minimizeCall(animated: animated, completion: completion)
-    }
-}
-
-// MARK: - AuthenticatedWireFrame
-struct AuthenticatedWireFrame {
-    private var account: Account
-    private var selfUser: SelfUserType
-    private var isComingFromRegistration: Bool
-    private var needToShowDataUsagePermissionDialog: Bool
-    
-    init(account: Account,
-         selfUser: SelfUserType,
-         isComingFromRegistration: Bool,
-         needToShowDataUsagePermissionDialog: Bool) {
-        self.account = account
-        self.selfUser = selfUser
-        self.isComingFromRegistration = isComingFromRegistration
-        self.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
-    }
-    
-    func build(router: AuthenticatedRouterProtocol) -> ZClientViewController {
-        let viewController = ZClientViewController(account: account, selfUser: selfUser)
-        viewController.isComingFromRegistration = isComingFromRegistration
-        viewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
-        viewController.router =  router
-        return viewController
+        sessionManager.updateCallNotificationStyleFromSettings()
     }
 }
