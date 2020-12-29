@@ -27,6 +27,7 @@ protocol ConversationCreationValuesConfigurable: class {
 final class ConversationCreationValues {
 
     private var unfilteredParticipants: UserSet
+    private let selfUser: UserType
     
     var allowGuests: Bool
     var enableReceipts: Bool
@@ -48,11 +49,16 @@ final class ConversationCreationValues {
         }
     }
     
-    init (name: String = "", participants: UserSet = UserSet(), allowGuests: Bool = true, enableReceipts: Bool = true) {
+    init (name: String = "",
+          participants: UserSet = UserSet(),
+          allowGuests: Bool = true,
+          enableReceipts: Bool = true,
+          selfUser: UserType) {
         self.name = name
         self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
         self.enableReceipts = enableReceipts
+        self.selfUser = selfUser
     }
 }
 
@@ -121,12 +127,16 @@ final class ConversationCreationController: UIViewController {
     
     fileprivate var navBarBackgroundView = UIView()
 
-    fileprivate var values = ConversationCreationValues()
+    fileprivate lazy var values = ConversationCreationValues(selfUser: selfUser)
 
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: UserSet?
     
-    init(preSelectedParticipants: UserSet, selfUser: UserType) {
+    convenience init() {
+        self.init(preSelectedParticipants: nil, selfUser: ZMUser.selfUser())
+    }
+    
+    init(preSelectedParticipants: UserSet?, selfUser: UserType) {
         self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
         self.preSelectedParticipants = preSelectedParticipants
@@ -186,7 +196,7 @@ final class ConversationCreationController: UIViewController {
         collectionViewController.collectionView = collectionView
         collectionViewController.sections = [nameSection, errorSection]
         
-        if selfUser.team != nil {
+        if selfUser.isTeamMember {
             collectionViewController.sections.append(contentsOf: [
                 optionsSection,
                 guestsSection,

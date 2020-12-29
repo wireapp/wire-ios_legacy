@@ -26,7 +26,8 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = ConversationCreationController()
+        let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        sut = ConversationCreationController(preSelectedParticipants: nil, selfUser: mockSelfUser)
         accentColor = .violet
     }
     
