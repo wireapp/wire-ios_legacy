@@ -24,14 +24,6 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     var image: UIImage!
     var message: MockMessage!
 
-    override func setUp() {
-        super.setUp()
-        
-        image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        message = MockMessageFactory.imageMessage(with: image)!
-        message.senderUser = MockUserType.createUser(name: "Bob")
-    }
-
     override func tearDown() {
         image = nil
         message = nil
@@ -40,8 +32,17 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         super.tearDown()
     }
     
+    private func createSut(imageName: String) {
+        image = image(inTestBundleNamed: imageName)
+        message = MockMessageFactory.imageMessage(with: image)!
+        let sender = MockUserType.createUser(name: "Bruno")
+        sender.accentColorValue = .brightOrange
+        message.senderUser = sender
+    }
+    
     func testTransparentImage() {
         // GIVEN
+        createSut(imageName: "transparent.png")
         
         // THEN
         verify(message: message, waitForImagesToLoad: true)
@@ -49,20 +50,23 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     
     func testOpaqueImage() {
         // GIVEN
-        
+        createSut(imageName: "unsplash_matterhorn.jpg")
+
         // THEN
         verify(message: message, waitForImagesToLoad: true)
     }
     
     func testNotDownloadedImage() {
         // GIVEN
-        
+        createSut(imageName: "unsplash_matterhorn.jpg")
+
         // THEN
         verify(message: message, waitForImagesToLoad: false)
     }
     
     func testObfuscatedImage() {
         // GIVEN
+        createSut(imageName: "unsplash_matterhorn.jpg")
         message.isObfuscated = true
         
         // THEN

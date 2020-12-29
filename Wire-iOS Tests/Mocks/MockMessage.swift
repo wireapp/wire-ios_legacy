@@ -267,7 +267,9 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .none
+    var sender: ZMUser?
+    var senderUser: UserType?
+
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none
