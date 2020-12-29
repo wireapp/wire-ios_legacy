@@ -102,7 +102,10 @@ public class AppRootRouter: NSObject {
     // MARK: - Public implementation
     
     public func start(launchOptions: LaunchOptions) {
-        guard let deepLinkURL = deepLinkURL else { showInitial(launchOptions: launchOptions); return; }
+        guard let deepLinkURL = deepLinkURL else {
+            showInitial(launchOptions: launchOptions);
+            return;
+        }
         
         guard
             let action = try? URLAction(url: deepLinkURL),

@@ -220,6 +220,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
+        guard appRootRouter == nil else { return }
         createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions)
     }
 }
