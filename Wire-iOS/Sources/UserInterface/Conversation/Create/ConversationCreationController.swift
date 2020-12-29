@@ -17,16 +17,14 @@
 //
 
 import Foundation
-
 import UIKit
-import Cartography
 import WireDataModel
 
 protocol ConversationCreationValuesConfigurable: class {
     func configure(with values: ConversationCreationValues)
 }
 
-final public class ConversationCreationValues {
+final class ConversationCreationValues {
 
     private var unfilteredParticipants: UserSet
     
@@ -38,9 +36,7 @@ final public class ConversationCreationValues {
             if allowGuests {
                 return unfilteredParticipants
             } else {
-                let selfUser = ZMUser.selfUser()
                 let filteredParticipants = unfilteredParticipants.filter {
-                    guard let selfUser = selfUser else { return false }
                     return $0.isOnSameTeam(otherUser: selfUser)
                 }
 
@@ -72,6 +68,7 @@ protocol ConversationCreationControllerDelegate: class {
 
 final class ConversationCreationController: UIViewController {
 
+    private let selfUser: UserType
     static let mainViewHeight: CGFloat = 56
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
     
@@ -129,16 +126,22 @@ final class ConversationCreationController: UIViewController {
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: UserSet?
     
-    public convenience init(preSelectedParticipants: UserSet) {
-        self.init(nibName: nil, bundle: nil)
+    init(preSelectedParticipants: UserSet, selfUser: UserType) {
+        self.selfUser = selfUser
+        super.init(nibName: nil, bundle: nil)
         self.preSelectedParticipants = preSelectedParticipants
     }
-
-    override public var prefersStatusBarHidden: Bool {
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var prefersStatusBarHidden: Bool {
         return false
     }
 
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
@@ -157,7 +160,7 @@ final class ConversationCreationController: UIViewController {
         return ColorScheme.default.statusBarStyle
     }
 
-    override public func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         nameSection.becomeFirstResponder()
     }
@@ -183,7 +186,7 @@ final class ConversationCreationController: UIViewController {
         collectionViewController.collectionView = collectionView
         collectionViewController.sections = [nameSection, errorSection]
         
-        if ZMUser.selfUser()?.team != nil {
+        if selfUser.team != nil {
             collectionViewController.sections.append(contentsOf: [
                 optionsSection,
                 guestsSection,
@@ -255,14 +258,14 @@ final class ConversationCreationController: UIViewController {
 
 extension ConversationCreationController: AddParticipantsConversationCreationDelegate {
     
-    public func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
+    func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
             values.participants = users
 
         case .create:
             var allParticipants = values.participants
-            allParticipants.insert(ZMUser.selfUser())
+            allParticipants.insert(selfUser)
             
             delegate?.conversationCreationController(
                 self,

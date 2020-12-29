@@ -20,8 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
-    var coreDataFixture: CoreDataFixture!
+final class ConversationCreationControllerSnapshotTests: XCTestCase {
 
     var sut: ConversationCreationController!
     
@@ -29,13 +28,11 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
         super.setUp()
         sut = ConversationCreationController()
         accentColor = .violet
-        coreDataFixture = CoreDataFixture()
     }
     
     override func tearDown() {
         sut = nil
         ColorScheme.default.variant = .light
-        coreDataFixture = nil
         super.tearDown()
     }
 
@@ -51,32 +48,32 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFix
     }
     
     func testTeamGroupOptionsCollapsed() {
-        teamTest {
+//        teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.viewDidAppear(false)
 
             verify(matching: sut)
-        }
+//        }
     }
 
     func testTeamGroupOptionsCollapsed_dark() {
         ColorScheme.default.variant = .dark
 
-        teamTest {
+//        teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.viewDidAppear(false)
 
             sut.view.backgroundColor = .black
             verify(matching: sut)
-        }
+//        }
     }
 
     func testTeamGroupOptionsExpanded() {        
-        teamTest {
+//        teamTest {
             self.sut.loadViewIfNeeded()
             self.sut.optionsExpanded = true
             
             verify(matching: sut)
-        }
+//        }
     }
 }
