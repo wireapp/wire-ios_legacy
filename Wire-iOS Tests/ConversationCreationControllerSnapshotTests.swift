@@ -36,19 +36,13 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     }
     
     private func createSut(isTeamMember: Bool) {
-        let mockSelfUser = isTeamMember ? MockUserType.createSelfUser(name: "Alice", inTeam:
-            UUID()) : MockUserType.createSelfUser(name: "Alice")
+        let mockSelfUser = MockUserType.createSelfUser(name: "Alice", inTeam:
+            isTeamMember ? UUID() : nil)
         sut = ConversationCreationController(preSelectedParticipants: nil, selfUser: mockSelfUser)
     }
     
     func testForEditingTextField() {
         createSut(isTeamMember: false)
-        
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(false, animated: false)
-        sut.endAppearanceTransition()
-        
-        sut.viewDidAppear(false)
         
         verify(matching: sut)
     }
@@ -64,9 +58,6 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
         
         ColorScheme.default.variant = .dark
         
-        self.sut.loadViewIfNeeded()
-        self.sut.viewDidAppear(false)
-        
         sut.view.backgroundColor = .black
         verify(matching: sut)
     }
@@ -74,8 +65,7 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     func testTeamGroupOptionsExpanded() {        
         createSut(isTeamMember: true)
         
-        self.sut.loadViewIfNeeded()
-        self.sut.optionsExpanded = true
+        sut.optionsExpanded = true
         
         verify(matching: sut)
     }
