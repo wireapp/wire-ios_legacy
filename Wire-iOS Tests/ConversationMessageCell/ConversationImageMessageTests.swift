@@ -37,6 +37,7 @@ final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
         message = MockMessageFactory.imageMessage(with: image)!
         let sender = MockUserType.createUser(name: "Bruno")
         sender.accentColorValue = .brightOrange
+        sender.isConnected = true
         message.senderUser = sender
     }
     
