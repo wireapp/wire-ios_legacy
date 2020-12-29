@@ -21,52 +21,52 @@ import XCTest
 @testable import Wire
 
 final class ConversationCreationControllerSnapshotTests: XCTestCase {
-    
+
     var sut: ConversationCreationController!
-    
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
     }
-    
+
     override func tearDown() {
         sut = nil
         ColorScheme.default.variant = .light
         super.tearDown()
     }
-    
+
     private func createSut(isTeamMember: Bool) {
         let mockSelfUser = MockUserType.createSelfUser(name: "Alice", inTeam:
             isTeamMember ? UUID() : nil)
         sut = ConversationCreationController(preSelectedParticipants: nil, selfUser: mockSelfUser)
     }
-    
+
     func testForEditingTextField() {
         createSut(isTeamMember: false)
-        
+
         verify(matching: sut)
     }
-    
+
     func testTeamGroupOptionsCollapsed() {
         createSut(isTeamMember: true)
-        
+
         verify(matching: sut)
     }
-    
+
     func testTeamGroupOptionsCollapsed_dark() {
         createSut(isTeamMember: true)
-        
+
         ColorScheme.default.variant = .dark
-        
+
         sut.view.backgroundColor = .black
         verify(matching: sut)
     }
-    
-    func testTeamGroupOptionsExpanded() {        
+
+    func testTeamGroupOptionsExpanded() {
         createSut(isTeamMember: true)
-        
+
         sut.optionsExpanded = true
-        
+
         verify(matching: sut)
     }
 }
