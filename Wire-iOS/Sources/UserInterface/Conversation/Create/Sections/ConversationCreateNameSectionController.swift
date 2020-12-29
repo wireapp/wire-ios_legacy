@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-class ConversationCreateNameSectionController: NSObject, CollectionViewSectionController {
+final class ConversationCreateNameSectionController: NSObject, CollectionViewSectionController {
     
     typealias Cell = ConversationCreateNameCell
     
@@ -34,13 +34,16 @@ class ConversationCreateNameSectionController: NSObject, CollectionViewSectionCo
     private weak var nameCell: Cell?
     private weak var textFieldDelegate: SimpleTextFieldDelegate?
     private var footer = SectionFooter(frame: .zero)
+    private let selfUser: UserType
     
     private lazy var footerText: String = {
         return "participants.section.name.footer".localized(args: ZMConversation.maxParticipants)
     }()
     
-    init(delegate: SimpleTextFieldDelegate? = nil) {
+    init(selfUser: UserType,
+         delegate: SimpleTextFieldDelegate? = nil) {
         textFieldDelegate = delegate
+        self.selfUser = selfUser
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
@@ -55,9 +58,8 @@ class ConversationCreateNameSectionController: NSObject, CollectionViewSectionCo
     func resignFirstResponder() {
         nameCell?.textField.resignFirstResponder()
     }
-}
 
-extension ConversationCreateNameSectionController {
+    //MARK: - collectionView
     
     func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -81,7 +83,10 @@ extension ConversationCreateNameSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard ZMUser.selfUser().hasTeam else { return .zero }
+        guard selfUser.isTeamMember else {
+            return .zero
+        }
+        
         footer.titleLabel.text = footerText
         footer.size(fittingWidth: collectionView.bounds.width)
         return footer.bounds.size

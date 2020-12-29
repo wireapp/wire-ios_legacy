@@ -36,7 +36,8 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     }
     
     private func createSut(isTeamMember: Bool) {
-        let mockSelfUser = MockUserType.createSelfUser(name: "Alice", inTeam: isTeamMember ? UUID() : nil)
+        let mockSelfUser = isTeamMember ? MockUserType.createSelfUser(name: "Alice", inTeam:
+            UUID()) : MockUserType.createSelfUser(name: "Alice")
         sut = ConversationCreationController(preSelectedParticipants: nil, selfUser: mockSelfUser)
     }
     
@@ -54,9 +55,6 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     
     func testTeamGroupOptionsCollapsed() {
         createSut(isTeamMember: true)
-        
-        sut.loadViewIfNeeded()
-        sut.viewDidAppear(false)
         
         verify(matching: sut)
     }

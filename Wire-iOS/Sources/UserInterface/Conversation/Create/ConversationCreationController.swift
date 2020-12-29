@@ -80,9 +80,7 @@ final class ConversationCreationController: UIViewController {
     
     private let collectionViewController = SectionCollectionViewController()
 
-    private lazy var nameSection: ConversationCreateNameSectionController = {
-        return ConversationCreateNameSectionController(delegate: self)
-    }()
+    private lazy var nameSection: ConversationCreateNameSectionController = ConversationCreateNameSectionController(selfUser: selfUser, delegate: self)
     
     private lazy var errorSection: ConversationCreateErrorSectionController = {
         return ConversationCreateErrorSectionController()
