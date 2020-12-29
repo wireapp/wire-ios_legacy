@@ -104,7 +104,7 @@ public class AppRootRouter: NSObject {
     public func start(launchOptions: LaunchOptions) {
         guard let deepLinkURL = deepLinkURL else {
             showInitial(launchOptions: launchOptions)
-            return;
+            return
         }
         
         guard
