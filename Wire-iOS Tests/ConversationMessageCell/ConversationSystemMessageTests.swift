@@ -132,7 +132,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testReadReceiptIsOnByThirdPerson() {
         let message = MockMessageFactory.systemMessage(with: .readReceiptsEnabled)!
-        message.sender = MockUser.mockUsers()?.first
+        message.senderUser = SwiftMockLoader.mockUsers().first
 
         verify(message: message)
     }
