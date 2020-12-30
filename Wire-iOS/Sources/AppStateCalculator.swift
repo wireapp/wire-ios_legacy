@@ -145,6 +145,9 @@ extension AppStateCalculator: SessionManagerDelegate {
     func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
         isDatabaseLocked = isLocked
 
+        // TODO: [John] Check that we app lock needs to be shown.
+        // TODO: [John] Set last unlock date.
+
         if isLocked {
             transition(to: .locked)
         } else {
