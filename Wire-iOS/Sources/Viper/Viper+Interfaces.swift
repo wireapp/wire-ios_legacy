@@ -29,7 +29,7 @@ protocol ModuleInterface {
     associatedtype Router where Router: RouterInterface
     associatedtype Interactor where Interactor: InteractorInterface
     associatedtype Presenter where Presenter: PresenterInterface
-    associatedtype View where View: ViewInterface
+    associatedtype View where View: UIViewController & ViewInterface
 
     /// Assembles the module by connecting each component together.
 
@@ -40,7 +40,7 @@ protocol ModuleInterface {
 extension ModuleInterface {
 
     func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View) {
-        router.presenter = (presenter as! Self.Router.PresenterRouter)
+        router.viewController = view
         interactor.presenter = (presenter as! Self.Interactor.PresenterInteractor)
         presenter.interactor = (interactor as! Self.Presenter.InteractorPresenter)
         presenter.router = (router as! Self.Presenter.RouterPresenter)
@@ -57,11 +57,9 @@ extension ModuleInterface {
 
 protocol RouterInterface: RouterPresenterInterface {
 
-    associatedtype PresenterRouter
+    /// A weak reference to the view controller
 
-    /// A weak reference to the presenter
-
-    var presenter: PresenterRouter! { get set }
+    var viewController: UIViewController? { get set }
 
 }
 
@@ -86,7 +84,7 @@ protocol InteractorInterface: InteractorPresenterInterface {
 /// and presenting it in the view, and 2) responding to ui by engaging with the
 /// interactor or router.
 
-protocol PresenterInterface: PresenterRouterInterface & PresenterInteractorInterface & PresenterViewInterface {
+protocol PresenterInterface: PresenterInteractorInterface & PresenterViewInterface {
 
     associatedtype RouterPresenter
     associatedtype InteractorPresenter

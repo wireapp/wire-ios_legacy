@@ -49,7 +49,3 @@ protocol ViewPresenterInterface: class { }
 /// Typically contains methods to react to navigation requests.
 
 protocol RouterPresenterInterface: class { }
-
-/// Interface of the presenter from the perspective of the router.
-
-protocol PresenterRouterInterface: class { }
