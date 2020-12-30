@@ -17,11 +17,9 @@
 
 import Foundation
 import WireSyncEngine
-import WireUtilities
 
 protocol WipeDatabaseInteractorInput: class {
-    func deleteAccounts()
-    func deletePasscode()
+    func deleteAccount()
 }
 
 protocol WipeDatabaseInteractorOutput: class {
@@ -33,13 +31,14 @@ final class WipeDatabaseInteractor {
 
 // MARK: - Interface
 extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
-    func deleteAccounts() {
-        SessionManager.shared?.wipeDatabase()
-    }
+    func deleteAccount() {
+        guard
+            let sessionManager = SessionManager.shared,
+            let account = sessionManager.accountManager.selectedAccount
+        else {
+            return
+        }
 
-    func deletePasscode() {
-        // TODO: [John] Inject the app lock controller.
-        guard let appLock = ZMUserSession.shared()?.appLockController else { return }
-        try? appLock.deletePasscode()
+        sessionManager.delete(account: account)
     }
 }
