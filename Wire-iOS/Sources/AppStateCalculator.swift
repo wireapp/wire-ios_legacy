@@ -21,6 +21,7 @@ import WireSyncEngine
 
 enum AppState: Equatable {
     case headless
+    case locked
     case authenticated(completedRegistration: Bool, isDatabaseLocked: Bool)
     case unauthenticated(error : NSError?)
     case blacklisted
@@ -143,9 +144,12 @@ extension AppStateCalculator: SessionManagerDelegate {
     
     func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
         isDatabaseLocked = isLocked
-        let appState: AppState = .authenticated(completedRegistration: false,
-                                                isDatabaseLocked: isLocked)
-        transition(to: appState)
+
+        if isLocked {
+            transition(to: .locked)
+        } else {
+            transition(to: .authenticated(completedRegistration: false, isDatabaseLocked: isLocked))
+        }
     }
     
     func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) { }

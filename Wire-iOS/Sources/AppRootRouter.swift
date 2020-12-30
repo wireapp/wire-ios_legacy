@@ -204,9 +204,11 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             showSkeleton(fromAccount: fromAccount,
                          toAccount: toAccount,
                          completion: completionBlock)
+        case .locked:
+            showAppLock()
         }
     }
-    
+
     private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
         switch state {
         case .unauthenticated:
@@ -319,6 +321,10 @@ extension AppRootRouter {
         let skeletonViewController = SkeletonViewController(from: fromAccount, to: toAccount)
         rootViewController.set(childViewController: skeletonViewController,
                                completion: completion)
+    }
+
+    private func showAppLock() {
+        rootViewController.set(childViewController: AppLockViewController())
     }
     
     // MARK: - Helpers
