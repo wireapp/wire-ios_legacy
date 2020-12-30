@@ -38,7 +38,9 @@ final class MockMessageFactory: NSObject {
         } else if let sender = sender {
             message.senderUser = sender
         } else {
-            message.senderUser = MockUserType.createSelfUser(name: "Alice")
+            let user = MockUserType.createSelfUser(name: "Tarja Turunen")
+            user.accentColorValue = .strongBlue
+            message.senderUser = user            
         }
         
         conversation?.activeParticipants = [message.senderUser as! MockUserType]
