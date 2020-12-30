@@ -22,7 +22,7 @@ import WireCommonComponents
 import WireSyncEngine
 import LocalAuthentication
 
-typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
+typealias AppLockInteractorUserSession = UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
@@ -30,7 +30,6 @@ protocol AppLockInteractorInput: class {
     var needsToNotifyUser: Bool { get set }
     var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
-    func verify(password: String)
     func verify(customPasscode: String)
     func appStateDidTransition(to newState: AppState)
 }
@@ -138,12 +137,6 @@ extension AppLockInteractor: AppLockInteractorInput {
         processVerifyResult(result: result)
     }
 
-    func verify(password: String) {
-        userSession?.verify(password: password) { [weak self] result in
-            self?.processVerifyResult(result: result)
-        }
-    }
-    
     func appStateDidTransition(to newState: AppState) {
         if let state = appState,
             case AppState.unauthenticated(error: _) = state,
