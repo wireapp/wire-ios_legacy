@@ -34,32 +34,6 @@ extension ConversationInputBarViewController {
         }
     }
 
-    func setupAppLockedObserver() {
-
-        NotificationCenter.default.addObserver(self,
-        selector: #selector(revealRecordKeyboardWhenAppLocked),
-        name: .appUnlocked,
-        object: .none)
-
-        // If the app is locked and not yet reach the time to unlock and the app became active, reveal the keyboard (it was dismissed when app resign active)
-        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc
-    private func revealRecordKeyboardWhenAppLocked() {
-        guard
-            let appLock = ZMUserSession.shared()?.appLockController,
-            appLock.isActive,
-            !AppLockViewController.isLocked,
-            mode == .audioRecord,
-            !self.inputBar.textView.isFirstResponder
-        else {
-            return
-        }
-
-        displayRecordKeyboard()
-    }
-
     @objc
     func audioButtonPressed(_ sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {
