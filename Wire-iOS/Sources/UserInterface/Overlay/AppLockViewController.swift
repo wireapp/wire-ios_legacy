@@ -72,6 +72,8 @@ final class AppLockViewController: UIViewController {
         constrain(view, spinner) { view, spinner in
             spinner.center == view.center
         }
+
+        appLockPresenter?.requireAuthenticationIfNeeded()
     }
 
     // MARK: - Methods

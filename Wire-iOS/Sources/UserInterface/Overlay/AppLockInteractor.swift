@@ -26,7 +26,6 @@ typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & Us
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
-    var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
     var needsToNotifyUser: Bool { get set }
     var lastUnlockedDate: Date { get set }
@@ -99,13 +98,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
         return appLock?.isCustomPasscodeNotSet ?? false
     }
-    
-    var isAuthenticationNeeded: Bool {
-        let screenLockIsActive = isAppLockActive && isLockTimeoutReached && isAppStateAuthenticated
-        
-        return screenLockIsActive || isDatabaseLocked
-    }
-    
+
     var isDimmingScreenWhenInactive: Bool {
         return isAppLockActive || userSession?.encryptMessagesAtRest == true
     }

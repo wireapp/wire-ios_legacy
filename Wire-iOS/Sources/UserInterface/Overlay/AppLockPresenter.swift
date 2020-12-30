@@ -93,17 +93,13 @@ final class AppLockPresenter {
         self.appLockInteractorInput = appLockInteractorInput
         self.authenticationState = authenticationState
     }
-    
+
     func requireAuthentication() {
         authenticationState = .needed
         requireAuthenticationIfNeeded()
     }
     
     func requireAuthenticationIfNeeded() {
-        guard appLockInteractorInput.isAuthenticationNeeded else {
-            setContents(showReauth: false)
-            return
-        }
         switch authenticationState {
         case .needed, .authenticated:
             authenticationState = .needed
@@ -188,7 +184,6 @@ extension AppLockPresenter: AppLockInteractorOutput {
             setContents(showReauth: true)
             return
         }
-        let authNeeded = appLockInteractorInput.isAuthenticationNeeded
 
         setContents(showReauth: false)
 
@@ -196,11 +191,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
         case .validated:
             appUnlocked()
         case .denied, .unknown, .timeout:
-            if authNeeded {
-                requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
-            } else {
-                authenticationState = .needed
-            }
+            requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
         }
     }
 }

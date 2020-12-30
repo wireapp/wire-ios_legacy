@@ -148,7 +148,12 @@ extension AppStateCalculator: SessionManagerDelegate {
         // TODO: [John] Check that we app lock needs to be shown.
         // TODO: [John] Set last unlock date.
 
-        if isLocked {
+        let isAppLockActive = true
+        let isLockTimeoutReached = true
+        let screenLockIsActive = isAppLockActive && isLockTimeoutReached
+        let isAppLocked = screenLockIsActive || isDatabaseLocked
+
+        if isAppLocked {
             transition(to: .locked)
         } else {
             transition(to: .authenticated(completedRegistration: false, isDatabaseLocked: isLocked))
