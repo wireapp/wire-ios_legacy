@@ -19,30 +19,9 @@
 import UIKit
 
 final class NotificationWindowRootViewController: UIViewController {
-    private(set) var appLockViewController: AppLockViewController?
-
-    deinit {
-        if appLockViewController?.parent == self {
-            appLockViewController?.wr_removeFromParentViewController()
-        }
-    }
 
     override func loadView() {
         view = PassthroughTouchesView()
-
-        appLockViewController = AppLockViewController.shared
-        if nil != appLockViewController?.parent {
-            appLockViewController?.wr_removeFromParentViewController()
-        }
-
-        add(appLockViewController, to: view)
-
-        setupConstraints()
-    }
-
-    private func setupConstraints() {
-        appLockViewController?.view.translatesAutoresizingMaskIntoConstraints = false
-        appLockViewController?.view.fitInSuperview()
     }
 
     // MARK: - Rotation handling (should match up with root)
@@ -66,27 +45,9 @@ final class NotificationWindowRootViewController: UIViewController {
     }
     
     // MARK: - status bar
-    
-    override var childForStatusBarStyle: UIViewController? {
-        return appLockViewController
-    }
-    
-    override var childForStatusBarHidden: UIViewController? {
-        return appLockViewController
-    }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
-}
-
-// MARK : - Child
-fileprivate extension UIViewController {
-    func wr_removeFromParentViewController() {
-        willMove(toParent: nil)
-        view.removeFromSuperview()
-        removeFromParent()
-    }
-
 }
