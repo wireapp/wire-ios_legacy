@@ -24,6 +24,9 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class AppLockViewController: UIViewController {
+
+    // MARK: - Properties
+
     private var lockView: AppLockView!
     private let spinner = UIActivityIndicatorView(style: .white)
 
@@ -35,43 +38,45 @@ final class AppLockViewController: UIViewController {
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
 
-    static let shared = AppLockViewController()
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    // MARK: - Life cycle
 
     convenience init() {
         self.init(nibName:nil, bundle:nil)
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.appLockPresenter = AppLockPresenter(userInterface: self)
-
+        appLockPresenter = AppLockPresenter(userInterface: self)
         lockView = AppLockView()
-        self.lockView.onReauthRequested = { [weak self] in
+
+        lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }
             self.appLockPresenter?.requireAuthentication()
         }
 
-        self.spinner.hidesWhenStopped = true
-        self.spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
 
-        self.view.addSubview(self.lockView)
-        self.view.addSubview(self.spinner)
+        view.addSubview(self.lockView)
+        view.addSubview(self.spinner)
 
-        constrain(self.view, self.lockView) { view, lockView in
+        constrain(view, lockView) { view, lockView in
             lockView.edges == view.edges
         }
-        constrain(self.view, self.spinner) { view, spinner in
+
+        constrain(view, spinner) { view, spinner in
             spinner.center == view.center
         }
     }
+
+    // MARK: - Methods
     
-    private func presentCustomPassCodeUnlockScreenIfNeeded(message: String,
-                                                           callback: @escaping RequestPasswordController.Callback) {
+    private func presentUnlockScreenIfNeeded(message: String, callback: @escaping RequestPasswordController.Callback) {
         if unlockViewController == nil {
             // TODO: [John] Avoid static methods.
             let viewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
@@ -94,32 +99,29 @@ final class AppLockViewController: UIViewController {
         unlockViewController.callback = callback
     }
     
-    private func presentRequestPasswordController(message: String,
-                                                  callback: @escaping RequestPasswordController.Callback) {
-        let passwordController = RequestPasswordController(context: .unlock(message: message.localized),
-                                                           callback: callback)
+    private func presentRequestPasswordController(message: String, callback: @escaping RequestPasswordController.Callback) {
+        let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
         self.passwordController = passwordController
         present(passwordController.alertController, animated: true)
     }
 }
 
 // MARK: - AppLockManagerDelegate
+
 extension AppLockViewController: AppLockUserInterface {
     func dismissUnlockScreen() {
         unlockScreenWrapper?.dismiss(animated: false)
     }
     
-    func presentUnlockScreen(with message: String,
-                             callback: @escaping RequestPasswordController.Callback) {
-        
-        presentCustomPassCodeUnlockScreenIfNeeded(message: message, callback: callback)
+    func presentUnlockScreen(with message: String, callback: @escaping RequestPasswordController.Callback) {
+        presentUnlockScreenIfNeeded(message: message, callback: callback)
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
-        present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(variant: .dark,
-                                                                                 context: .forcedForTeam,
-                                                                                 callback: callback),
-                animated: false)
+        let viewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(variant: .dark,
+                                                                                              context: .forcedForTeam,
+                                                                                              callback: callback)
+        present(viewController, animated: false)
     }
     
     func presentWarningScreen(callback: ResultHandler?) {
