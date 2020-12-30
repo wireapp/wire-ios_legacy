@@ -35,7 +35,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func createMockMessage(type: ZMSystemMessageType) {
+    private func createMockMessage(type: ZMSystemMessageType) {
         mockMessage = MockMessageFactory.systemMessage(with: type)!
     }
 
