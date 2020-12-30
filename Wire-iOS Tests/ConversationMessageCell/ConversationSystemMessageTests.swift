@@ -162,10 +162,10 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     // MARK: - Legal Hold
 
     func testThatItRendersLegalHoldEnabledInConversation() {
-        let mockUser = MockUser.createSelfUser(name: "John Doe", inTeam: nil)
+        let mockUser = MockUserType.createSelfUser(name: "John Doe", inTeam: nil)
         mockUser.isUnderLegalHold = true
         let message = MockMessageFactory.systemMessage(with: .legalHoldEnabled, users: 2, clients: 2, sender: mockUser)!
-        XCTAssertTrue(message.sender?.isUnderLegalHold ?? false)
+        XCTAssertTrue(message.senderUser?.isUnderLegalHold ?? false)
         verify(message: message)
     }
 
