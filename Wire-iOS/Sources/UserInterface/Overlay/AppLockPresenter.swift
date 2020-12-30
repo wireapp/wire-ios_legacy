@@ -159,9 +159,11 @@ extension AppLockPresenter: AppLockInteractorOutput {
     
     func authenticationEvaluated(with result: AppLockController.AuthenticationResult) {
         authenticationState.update(with: result)
-        setContents(showReauth: result == .unavailable)
 
-        if case .needCustomPasscode = result {
+        switch result {
+        case .granted:
+            appUnlocked()
+        case .needCustomPasscode:
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
             if appLockInteractorInput.isCustomPasscodeNotSet {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
@@ -171,10 +173,8 @@ extension AppLockPresenter: AppLockInteractorOutput {
             } else {
                 requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
             }
-        }
-        
-        if case .granted = result {
-            appUnlocked()
+        default:
+            setContents(showReauth: true)
         }
     }
     
