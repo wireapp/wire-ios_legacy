@@ -30,7 +30,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         super.setUp()
 
         mockSelfUser = MockUserType.createSelfUser(name: "Alice")
-        mockOtherUser = MockUserType.createUser(name: "Bruno")
+        mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
     }
 
     override func tearDown() {
