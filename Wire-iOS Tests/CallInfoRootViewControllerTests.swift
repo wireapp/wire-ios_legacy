@@ -20,23 +20,23 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+final class CallInfoRootViewControllerTests: XCTestCase {
 
-    var coreDataFixture: CoreDataFixture!
     var sut: CallInfoRootViewController!
     var mockSelfUser: MockUserType!
+    var mockOtherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
 
-        mockSelfUser = MockUserType.createSelfUser(name: "Bob")
-        coreDataFixture = CoreDataFixture()
+        mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
     }
 
     override func tearDown() {
         sut = nil
-        coreDataFixture = nil
         mockSelfUser = nil
+        mockOtherUser = nil
 
         super.tearDown()
     }
@@ -45,7 +45,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneOutgoingAudioRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneOutgoingAudioRinging, selfUser: mockSelfUser)
@@ -56,7 +56,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneAudioConnecting() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioConnecting, selfUser: mockSelfUser)
@@ -67,7 +67,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneAudioEstablished() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished, selfUser: mockSelfUser)
@@ -78,7 +78,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneAudioEstablishedCBR() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedCBR, selfUser: mockSelfUser)
@@ -89,7 +89,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     
     func testOneToOneAudioEstablishedVBR() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
         
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedVBR, selfUser: mockSelfUser)
@@ -101,7 +101,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished, selfUser: mockSelfUser)
@@ -112,7 +112,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneAudioEstablishedPoorConnection() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedPoorNetwork, selfUser: mockSelfUser)
@@ -125,7 +125,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneIncomingVideoRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingVideoRinging, selfUser: mockSelfUser)
@@ -136,7 +136,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneVideoConnecting() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneVideoConnecting, selfUser: mockSelfUser)
@@ -147,7 +147,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testOneToOneVideoEstablished() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.oneToOneVideoEstablished, selfUser: mockSelfUser)
@@ -160,7 +160,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupOutgoingAudioRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupOutgoingAudioRinging, selfUser: mockSelfUser)
@@ -171,7 +171,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupAudioConnecting() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupAudioConnecting, selfUser: mockSelfUser)
@@ -182,7 +182,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupAudioEstablished_SmallGroup() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .small)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser, groupSize: .small)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)
@@ -193,7 +193,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupAudioEstablished_LargeGroup() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser, groupSize: .large)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)
@@ -206,7 +206,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupIncomingVideoRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupIncomingVideoRinging, selfUser: mockSelfUser)
@@ -217,7 +217,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupOutgoingVideoRinging() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupOutgoingVideoRinging, selfUser: mockSelfUser)
@@ -228,7 +228,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoEstablished() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished, selfUser: mockSelfUser)
@@ -239,7 +239,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     
     func testGroupVideoEstablishedScreenSharing() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedScreenSharing, selfUser: mockSelfUser)
@@ -250,7 +250,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoEstablishedPoorConnection() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedPoorConnection, selfUser: mockSelfUser)
@@ -261,7 +261,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoEstablishedCBR() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedCBR, selfUser: mockSelfUser)
@@ -272,7 +272,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoEstablishedVBR() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
         
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedVBR, selfUser: mockSelfUser)
@@ -286,7 +286,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoUndeterminedVideoPermissions() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingUndeterminedPermissions, selfUser: mockSelfUser)
@@ -297,7 +297,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testGroupVideoDeniedVideoPermissions() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingDeniedPermissions, selfUser: mockSelfUser)
