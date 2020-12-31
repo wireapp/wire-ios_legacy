@@ -22,10 +22,24 @@ import WireLinkPreview
 
 final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
 
+    var mockOtherUser: MockUserType!
+    
+    override func setUp() {
+        super.setUp()
+        
+        mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
+    }
+    
+    override func tearDown() {
+        mockOtherUser = nil
+        
+        super.tearDown()
+    }
+    
     func testPlainText() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. ")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         
         // THEN
         verify(message: message)
@@ -43,7 +57,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         }
         let article = ArticleMetadata(protocolBuffer: linkPreview)
         let message = MockMessageFactory.textMessage(withText: "http://www.example.com")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
@@ -62,7 +76,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         }
         let article = ArticleMetadata(protocolBuffer: linkPreview)
         let message = MockMessageFactory.textMessage(withText: "What do you think about this http://www.example.com")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
@@ -75,7 +89,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         let quote = try! conversation.appendText(content: "Who is responsible for this!")
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.backingTextMessageData.hasQuote = true
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
@@ -98,7 +112,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         let quote = try! conversation.appendText(content: "Who is responsible for this!")
         (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am http://www.example.com")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.hasQuote = true
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
@@ -110,7 +124,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testMediaPreviewAttachment() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "https://www.youtube.com/watch?v=l7aqpSTa234")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.linkAttachments = [
             LinkAttachment(type: .youTubeVideo, title: "Lagar mat med Fernando Di Luca",
                            permalink: URL(string: "https://www.youtube.com/watch?v=l7aqpSTa234")!,
@@ -124,7 +138,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testSoundCloudMediaPreviewAttachment() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "https://soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.linkAttachments = [
             LinkAttachment(type: .soundCloudTrack, title: "Bridgit Mendler - Atlantis feat. Kaiydo",
                            permalink: URL(string: "https://soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo")!,
@@ -138,7 +152,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     func testSoundCloudSetMediaPreviewAttachment() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "https://soundcloud.com/playback/sets/2019-artists-to-watch")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.linkAttachments = [
             LinkAttachment(type: .soundCloudPlaylist, title: "Artists To Watch 2019",
                            permalink: URL(string: "https://soundcloud.com/playback/sets/2019-artists-to-watch")!,
@@ -161,7 +175,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         }
         let article = ArticleMetadata(protocolBuffer: linkPreview)
         let message = MockMessageFactory.textMessage(withText: "Look at this! https://www.youtube.com/watch?v=l7aqpSTa234")!
-        message.sender = otherUser
+        message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
         message.linkAttachments = [
             LinkAttachment(type: .youTubeVideo, title: "Lagar mat med Fernando Di Luca",
