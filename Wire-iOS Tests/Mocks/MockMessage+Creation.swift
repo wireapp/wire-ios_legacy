@@ -56,7 +56,7 @@ final class MockMessageFactory {
         return message
     }
 
-    class func imageMessage(with image: UIImage?) -> MockMessage? {
+    class func imageMessage(sender: UserType? = nil, with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
         if let image = image, let data = image.imageData {
             imageData.mockImageData = data
@@ -66,24 +66,24 @@ final class MockMessageFactory {
             imageData.isDownloaded = false
         }
 
-        let message: MockMessage? = self.imageMessage()
+        let message: MockMessage? = imageMessage(sender: sender)
         message?.imageMessageData = imageData
 
         return message
     }
 
-    class func imageMessage() -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate()
+    class func imageMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
 
         message?.imageMessageData = MockImageMessageData()
 
         return message
     }
 
-    class func pendingImageMessage() -> MockMessage? {
+    class func pendingImageMessage(sender: UserType? = nil) -> MockMessage? {
         let imageData = MockImageMessageData()
 
-        let message: MockMessage? = self.imageMessage()
+        let message: MockMessage? = imageMessage(sender: sender)
         message?.imageMessageData = imageData
 
         return message

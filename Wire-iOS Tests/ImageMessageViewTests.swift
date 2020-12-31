@@ -21,9 +21,14 @@ import XCTest
 
 final class ImageMessageViewTests: XCTestCase {
     var sut: ImageMessageView!
+    var mockSelfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
+
+        mockSelfUser = MockUserType.createSelfUser(name: "Tarja Turunen")
+        mockSelfUser.accentColorValue = .vividRed
+
         sut = ImageMessageView()
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
     }
@@ -36,28 +41,31 @@ final class ImageMessageViewTests: XCTestCase {
 
     func testThatItRendersSmallImage() {
         // GIVEN & WHEN
-        sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_small.jpg"))
+        sut.message = MockMessageFactory.imageMessage(sender: mockSelfUser,
+                                                      with: image(inTestBundleNamed: "unsplash_small.jpg"))
         // THEN
         verify(matching: sut)
     }
     
     func testThatItRendersPortraitImage() {
         // GIVEN & WHEN
-        sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_burger.jpg"))
+        sut.message = MockMessageFactory.imageMessage(sender: mockSelfUser,
+                                                      with: image(inTestBundleNamed: "unsplash_burger.jpg"))
         // THEN
         verify(matching: sut)
     }
     
     func testThatItRendersLandscapeImage() {
         // GIVEN & WHEN
-        sut.message = MockMessageFactory.imageMessage(with: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
+        sut.message = MockMessageFactory.imageMessage(sender: mockSelfUser,
+                                                      with: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
         // THEN
         verify(matching: sut)
     }
     
     func testThatItShowsLoadingIndicator() {
         // GIVEN & WHEN
-        sut.message = MockMessageFactory.pendingImageMessage()
+        sut.message = MockMessageFactory.pendingImageMessage(sender: mockSelfUser)
         // THEN
         verify(matching: sut)
     }
