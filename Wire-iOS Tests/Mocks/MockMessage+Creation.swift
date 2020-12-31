@@ -132,8 +132,9 @@ final class MockMessageFactory {
         return message
     }
 
-    class func videoMessage(previewImage: UIImage? = nil) -> MockMessage? {
-        let message: MockMessage? = self.fileTransferMessage()
+    class func videoMessage(sender: UserType? = nil,
+                            previewImage: UIImage? = nil) -> MockMessage? {
+        let message: MockMessage? = fileTransferMessage(sender: sender)
         message?.backingFileMessageData.mimeType = "video/mp4"
         message?.backingFileMessageData.filename = "vacation.mp4"
         message?.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
