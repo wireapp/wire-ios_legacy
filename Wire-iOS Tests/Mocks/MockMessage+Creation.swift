@@ -49,8 +49,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func fileTransferMessage() -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate()
+    class func fileTransferMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
 
         message?.backingFileMessageData = MockFileMessageData()
         return message
@@ -140,8 +140,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func audioMessage() -> MockMessage? {
-        let message: MockMessage? = self.fileTransferMessage()
+    class func audioMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = fileTransferMessage(sender: sender)
         message?.backingFileMessageData.mimeType = "audio/x-m4a"
         return message
     }

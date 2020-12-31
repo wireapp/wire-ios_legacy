@@ -22,22 +22,12 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
     
-    var mockSelfUser: MockUserType!
-
     override func setUp() {
         super.setUp()
 
         // make sure the button's color is alarm red, not accent color
         coreDataFixture.accentColor = .strongBlue
         
-        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
-        mockSelfUser.accentColorValue = .vividRed
-    }
-
-    override func tearDown() {
-        mockSelfUser = nil
-        
-        super.tearDown()
     }
 
     func testThatItRendersErrorMessage() {
