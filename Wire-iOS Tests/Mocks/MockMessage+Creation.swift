@@ -20,15 +20,13 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
-final class MockMessageFactory: NSObject {
+final class MockMessageFactory {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil,
-                               defaultSelfUserName: String = "Tarja Turunen",
-                               defaultAccentColorValue: ZMAccentColor = .strongBlue) -> MockMessage {
+    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
         let message = MockMessage()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
@@ -41,8 +39,8 @@ final class MockMessageFactory: NSObject {
         } else if let sender = sender {
             message.senderUser = sender
         } else {
-            let user = MockUserType.createSelfUser(name: defaultSelfUserName)
-            user.accentColorValue = defaultAccentColorValue
+            let user = MockUserType.createSelfUser(name: "Tarja Turunen")
+            user.accentColorValue = .strongBlue
             message.senderUser = user            
         }
         
@@ -129,8 +127,8 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
-    class var compositeMessage: MockMessage {
-        let message = MockMessageFactory.messageTemplate()
+    class func compositeMessage(sender: UserType? = nil) -> MockMessage {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
         return message
     }
 
