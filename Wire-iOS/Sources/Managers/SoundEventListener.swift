@@ -17,13 +17,12 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 import avs
 
 extension ZMConversationMessage {
     var isSentBySelfUser: Bool {
-        return self.sender?.isSelfUser ?? false
+        return senderUser?.isSelfUser ?? false
     }
     
     var isRecentMessage: Bool {
