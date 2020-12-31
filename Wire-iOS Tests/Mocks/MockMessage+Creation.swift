@@ -120,8 +120,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func locationMessage() -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func locationMessage(sender: MockUserType? = nil) -> MockMessage? {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
 
         message.backingLocationMessageData = MockLocationMessageData()
         return message

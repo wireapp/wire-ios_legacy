@@ -35,9 +35,9 @@ final class ImageMessageViewTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        mockSelfUser = nil
         super.tearDown()
     }
-
 
     func testThatItRendersSmallImage() {
         // GIVEN & WHEN
