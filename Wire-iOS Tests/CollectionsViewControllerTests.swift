@@ -135,7 +135,7 @@ final class CollectionsViewControllerTests: XCTestCase {
 
     // MARK: - Expiration
 
-    func testImagesSectionWhenExpired() {
+    func testImagesSectionWhenExpired() {///TODO: bg color should be red, not blue
         let assetCollection = MockCollection(messages: [
             MockCollection.onlyImagesCategory: [expiredImageMessage],
             MockCollection.onlyVideosCategory: [videoMessage, expiredVideoMessage]])

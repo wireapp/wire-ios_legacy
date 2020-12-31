@@ -23,9 +23,12 @@ import WireLinkPreview
 final class MockMessageFactory: NSObject {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
+    /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
+    class func messageTemplate(sender: UserType? = nil,
+                               defaultSelfUserName: String = "Tarja Turunen",
+                               defaultAccentColorValue: ZMAccentColor = .strongBlue) -> MockMessage {
         let message = MockMessage()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
@@ -38,8 +41,8 @@ final class MockMessageFactory: NSObject {
         } else if let sender = sender {
             message.senderUser = sender
         } else {
-            let user = MockUserType.createSelfUser(name: "Tarja Turunen")
-            user.accentColorValue = .strongBlue
+            let user = MockUserType.createSelfUser(name: defaultSelfUserName)
+            user.accentColorValue = defaultAccentColorValue
             message.senderUser = user            
         }
         
