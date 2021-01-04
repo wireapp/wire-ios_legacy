@@ -125,7 +125,7 @@ private struct ParticipantsSectionViewModel {
 extension UserCell: ParticipantsCellConfigurable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
         guard case let .user(user) = rowType else { preconditionFailure() }
-        configure(with: user, conversation: conversation)
+        configure(with: user, selfUser: ZMUser.selfUser(), conversation: conversation)
         accessoryIconView.isHidden = user.isSelfUser
         accessibilityIdentifier = identifier
         self.showSeparator = showSeparator

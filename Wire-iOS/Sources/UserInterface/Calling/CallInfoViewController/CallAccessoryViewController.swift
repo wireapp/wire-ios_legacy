@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 protocol CallAccessoryViewControllerDelegate: class {
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)
@@ -42,9 +43,12 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         }
     }
 
-    init(configuration: CallInfoViewControllerInput) {
+    init(configuration: CallInfoViewControllerInput,
+         selfUser: UserType) {
         self.configuration = configuration
-        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
+        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants,
+                                                                    allowsScrolling: false,
+                                                                    selfUser: selfUser)
         super.init(nibName: nil, bundle: nil)
         participantsViewController.delegate = self
     }
@@ -90,7 +94,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     private func updateState() {
         switch configuration.accessoryType {
         case .avatar(let user):
-            avatarView.user = user
+            avatarView.user = user.value
         case .participantsList(let participants):
             participantsViewController.variant = configuration.effectiveColorVariant
             participantsViewController.participants = participants
