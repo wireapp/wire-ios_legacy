@@ -20,25 +20,31 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+final class MockCnnectionRequest: ConnectionRequest {
+    var connectedUser: UserType?
+}
+
+final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConnectRequestsViewController!
-    var mockConversation: ZMConversation!
+    var mockConversation: MockConversation!
 
-    var coreDataFixture: CoreDataFixture!
-    
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
+        UIColor.setAccentOverride(.vividRed)
 
         sut = ConnectRequestsViewController()
 
         sut.loadViewIfNeeded()
 
-        mockConversation = otherUserConversation
-
-        sut.connectionRequests = [mockConversation]
+        let mockCnnectionRequest = MockCnnectionRequest()
+        let mockUser = MockUserType.createSelfUser(name: "Bruno")
+        mockUser.accentColorValue = .brightOrange
+        mockUser.handle = "bruno"
+        mockCnnectionRequest.connectedUser = mockUser
+        
+        sut.connectionRequests = [mockCnnectionRequest]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
@@ -47,7 +53,6 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
     override func tearDown() {
         sut = nil
         mockConversation = nil
-        coreDataFixture = nil
 
         super.tearDown()
     }
@@ -56,18 +61,15 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         verify(matching: sut)
     }
 
-    func testForTwoRequests() {
-        let otherUser = ZMUser.insertNewObject(in: coreDataFixture.uiMOC)
-        otherUser.remoteIdentifier = UUID()
-        otherUser.name = "Bill"
-        otherUser.setHandle("bill")
+    /*func testForTwoRequests() {
+        let otherUser = MockUserType.createUser(name: "Bill")
         otherUser.accentColorValue = .brightYellow
         
-        let requestConversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser)
+        let requestConversation = MockConversation.oneOnOneConversation()
         
-        sut.connectionRequests = [requestConversation, mockConversation]
+        sut.connectionRequests = [requestConversation.convertToRegularConversation(), mockConversation.convertToRegularConversation()]
         sut.reload(animated: false)
         
         verify(matching: sut)
-    }
+    }*/
 }
