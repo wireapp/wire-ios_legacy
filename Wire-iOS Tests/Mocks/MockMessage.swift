@@ -18,6 +18,7 @@
 
 import Foundation
 import WireLinkPreview
+import XCTest
 
 final class MockCompositeMessageData: NSObject, CompositeMessageData {
     var items: [CompositeMessageItem] = []
@@ -267,7 +268,16 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser?
+    var sender: ZMUser? {
+        get {
+            XCTAssert(false, "UI project should not access MockMessage.sender")
+            return nil
+        }
+        
+        set {
+            XCTAssert(false, "UI project should not access MockMessage.sender")
+        }
+    }
     var senderUser: UserType?
 
     var serverTimestamp: Date? = .none
