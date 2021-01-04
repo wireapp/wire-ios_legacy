@@ -31,7 +31,7 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-public extension ZMConversation {
+extension ZMConversation { ///TODO: abstact
 
     var destructionTimeout: MessageDestructionTimeoutValue? {
         switch messageDestructionTimeout {

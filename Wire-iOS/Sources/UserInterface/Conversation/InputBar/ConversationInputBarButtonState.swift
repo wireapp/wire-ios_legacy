@@ -22,7 +22,7 @@ import WireDataModel
 private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false
 
-extension ZMConversation {
+extension ZMConversation { ///TODO: abstract
     var hasSyncedMessageDestructionTimeout: Bool {
         switch messageDestructionTimeout {
         case .synced(_)?:
