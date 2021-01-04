@@ -24,7 +24,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
 
     var sut: CallInfoRootViewController!
     var mockSelfUser: MockUserType!
-    var mockOtherUser: UserType!
+    var mockOtherUser: MockUserType!
 
     override func setUp() {
         super.setUp()

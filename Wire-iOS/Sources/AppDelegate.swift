@@ -19,6 +19,7 @@
 import UIKit
 import WireCommonComponents
 import WireSyncEngine
+import avs
 
 enum ApplicationLaunchType {
     case unknown
@@ -40,6 +41,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    // MARK: - Private Property
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
         TrackingOperation(),
@@ -51,8 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MediaManagerOperation(),
         FileBackupExcluderOperation()
     ]
+    private var appStateCalculator = AppStateCalculator()
     
+    // MARK: - Private Set Property
     private(set) var appRootRouter: AppRootRouter?
+    private(set) var launchType: ApplicationLaunchType = .unknown
+    
+    // MARK: - Public Set Property
     var window: UIWindow?
     
     // Singletons
@@ -64,15 +71,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appRootRouter?.overlayWindow
     }
 
-    private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
-
-    var launchOptions: [AnyHashable: Any] = [:]
-
-    private static var sharedAppDelegate: AppDelegate!
+    var launchOptions: LaunchOptions = [:]
 
     static var shared: AppDelegate {
-        return sharedAppDelegate!
+        return UIApplication.shared.delegate as! AppDelegate
     }
 
     var mediaPlaybackManager: MediaPlaybackManager? {
@@ -90,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     override init() {
         super.init()
-        AppDelegate.sharedAppDelegate = self
     }
 
     func application(_ application: UIApplication,
@@ -114,8 +116,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
              
         self.launchOptions = launchOptions ?? [:]
         
-        createAppRootRouter(launchOptions: launchOptions ?? [:])
-        queueInitializationOperations(launchOptions: launchOptions ?? [:])
+        if UIApplication.shared.isProtectedDataAvailable || ZMPersistentCookieStorage.hasAccessibleAuthenticationCookieData() {
+            createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions ?? [:])
+        }
         
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
@@ -213,19 +216,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }
+    
+    func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
+        guard appRootRouter == nil else { return }
+        createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions)
+    }
 }
 
 // MARK: - Private Helpers
 private extension AppDelegate {
+    private func createAppRootRouterAndInitialiazeOperations(launchOptions: LaunchOptions) {
+        createAppRootRouter(launchOptions: launchOptions)
+        queueInitializationOperations(launchOptions: launchOptions)
+    }
+    
     private func createAppRootRouter(launchOptions: LaunchOptions) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }
         
+        guard let sessionManager = createSessionManager(launchOptions: launchOptions) else {
+            fatalError("sessionManager is not created")
+        }
+        
         let navigator = Navigator(NoBackTitleNavigationController())
         appRootRouter = AppRootRouter(viewController: viewController,
                                       navigator: navigator,
+                                      sessionManager: sessionManager,
+                                      appStateCalculator: appStateCalculator,
                                       deepLinkURL: launchOptions[.url] as? URL)
+    }
+    
+    private func createSessionManager(launchOptions: LaunchOptions) -> SessionManager? {
+        guard
+            let appVersion = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String,
+            let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
+            let configuration = SessionManagerConfiguration.load(from: url),
+            let mediaManager = AVSMediaManager.sharedInstance()
+        else {
+            return nil
+        }
+        
+        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
+        let jailbreakDetector = JailbreakDetector()
+        
+        let sessionManager = SessionManager(appVersion: appVersion,
+                                            mediaManager: mediaManager,
+                                            analytics: Analytics.shared,
+                                            delegate: appStateCalculator,
+                                            application: UIApplication.shared,
+                                            environment: BackendEnvironment.shared,
+                                            configuration: configuration,
+                                            detector: jailbreakDetector)
+        return sessionManager
     }
     
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
