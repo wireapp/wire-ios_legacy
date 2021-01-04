@@ -21,14 +21,14 @@ import XCTest
 import SnapshotTesting
 import WireDataModel
 
-final class MockCnnectionRequest: ConnectionRequest {
+final class MockConnectionRequest: ConnectionRequest {
     var connectedUserType: UserType?
 }
 
 final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConnectRequestsViewController!
-    var mockConnectionRequest: MockCnnectionRequest!
+    var mockConnectionRequest: MockConnectionRequest!
 
     override func setUp() {
         super.setUp()
@@ -39,7 +39,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
 
         sut.loadViewIfNeeded()
 
-        mockConnectionRequest = MockCnnectionRequest()
+        mockConnectionRequest = MockConnectionRequest()
         let mockUser = MockUserType.createSelfUser(name: "Bruno")
         mockUser.accentColorValue = .brightOrange
         mockUser.handle = "bruno"
@@ -67,7 +67,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         otherUser.accentColorValue = .brightYellow
         otherUser.handle = "bill"
 
-        let secondConnectionRequest = MockCnnectionRequest()
+        let secondConnectionRequest = MockConnectionRequest()
         secondConnectionRequest.connectedUserType = otherUser
 
 
