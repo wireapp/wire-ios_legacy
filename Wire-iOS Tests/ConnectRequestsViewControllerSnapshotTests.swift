@@ -19,15 +19,16 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireDataModel
 
 final class MockCnnectionRequest: ConnectionRequest {
-    var connectedUser: UserType?
+    var connectedUserType: UserType?
 }
 
 final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConnectRequestsViewController!
-    var mockConversation: MockConversation!
+    var mockConnectionRequest: MockCnnectionRequest!
 
     override func setUp() {
         super.setUp()
@@ -38,13 +39,13 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
 
         sut.loadViewIfNeeded()
 
-        let mockCnnectionRequest = MockCnnectionRequest()
+        mockConnectionRequest = MockCnnectionRequest()
         let mockUser = MockUserType.createSelfUser(name: "Bruno")
         mockUser.accentColorValue = .brightOrange
         mockUser.handle = "bruno"
-        mockCnnectionRequest.connectedUser = mockUser
+        mockConnectionRequest.connectedUserType = mockUser
         
-        sut.connectionRequests = [mockCnnectionRequest]
+        sut.connectionRequests = [mockConnectionRequest]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
@@ -52,7 +53,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     
     override func tearDown() {
         sut = nil
-        mockConversation = nil
+        mockConnectionRequest = nil
 
         super.tearDown()
     }
@@ -61,15 +62,18 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    /*func testForTwoRequests() {
-        let otherUser = MockUserType.createUser(name: "Bill")
+    func testForTwoRequests() {
+        let otherUser = MockUserType.createConnectedUser(name: "Bill")
         otherUser.accentColorValue = .brightYellow
-        
-        let requestConversation = MockConversation.oneOnOneConversation()
-        
-        sut.connectionRequests = [requestConversation.convertToRegularConversation(), mockConversation.convertToRegularConversation()]
+        otherUser.handle = "bill"
+
+        let secondConnectionRequest = MockCnnectionRequest()
+        secondConnectionRequest.connectedUserType = otherUser
+
+
+        sut.connectionRequests = [secondConnectionRequest, mockConnectionRequest]
         sut.reload(animated: false)
         
         verify(matching: sut)
-    }*/
+    }
 }
