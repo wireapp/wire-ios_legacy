@@ -65,8 +65,12 @@ echo "ℹ️  [CodeGen] Update StyleKit Icons..."
 swift run --package-path Scripts/updateStylekit
 echo ""
 
-echo "ℹ️  Update Licenses File..."
+echo "ℹ️ Update Licenses File..."
 swift run --package-path ./Scripts/updateLicenses
+echo ""
+
+echo "ℹ️  Installing template files..."
+./Scripts/install-templates.sh
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
