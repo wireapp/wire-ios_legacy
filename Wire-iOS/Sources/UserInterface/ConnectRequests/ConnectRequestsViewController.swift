@@ -20,8 +20,18 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
+protocol ConnectionRequest {
+    var connectedUserType: UserType? { get }
+}
+
+extension ZMConversation: ConnectionRequest {
+    var connectedUserType: UserType? {
+        return connectedUser
+    }
+}
+
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var connectionRequests: [ZMConversation] = []
+    var connectionRequests: [ConnectionRequest] = []
     
     private var userObserverToken: Any?
     private var pendingConnectionsListObserverToken: Any?
@@ -47,7 +57,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             
             userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
             
-            connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
+            connectionRequests = pendingConnectionsList as? [ConnectionRequest] ?? []
         }
         
         reload()
@@ -109,7 +119,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         /// get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
         
-        let user = request.connectedUser
+        let user = request.connectedUserType
         cell.user = user
         cell.selectionStyle = .none
         cell.separatorInset = .zero
@@ -145,7 +155,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if let userSession = ZMUserSession.shared() {
             let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
             
-            connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
+            connectionRequests = pendingConnectionsList as? [ConnectionRequest] ?? []
         }
         
         tableView.reloadData()
