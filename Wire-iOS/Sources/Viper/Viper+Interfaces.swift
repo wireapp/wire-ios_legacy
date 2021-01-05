@@ -33,13 +33,13 @@ protocol ModuleInterface {
 
     /// Assembles the module by connecting each component together.
 
-    func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View)
+    static func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View)
 
 }
 
 extension ModuleInterface {
 
-    func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View) {
+    static func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View) {
         router.viewController = view
         interactor.presenter = (presenter as! Self.Interactor.PresenterInteractor)
         presenter.interactor = (interactor as! Self.Presenter.InteractorPresenter)

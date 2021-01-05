@@ -18,14 +18,14 @@
 
 import Foundation
 
-final class ___FILEBASENAMEASIDENTIFIER___: ModuleInterface {
+enum ___FILEBASENAMEASIDENTIFIER___: ModuleInterface {
 
     typealias Router = ___VARIABLE_productName:identifier___Router
     typealias Interactor = ___VARIABLE_productName:identifier___Interactor
     typealias Presenter = ___VARIABLE_productName:identifier___Presenter
     typealias View = ___VARIABLE_productName:identifier___View
 
-    func build() -> View {
+    static func build() -> View {
         let router = Router()
         let interactor = Interactor()
         let presenter = Presenter()
