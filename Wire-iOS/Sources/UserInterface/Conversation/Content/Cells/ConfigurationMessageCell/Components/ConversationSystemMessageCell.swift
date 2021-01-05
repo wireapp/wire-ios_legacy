@@ -20,6 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireDataModel
 import WireSyncEngine
+import Down
 
 // MARK: - Cells
 
@@ -712,7 +713,6 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let configuration: View.Configuration
 
     static fileprivate let resetSessionURL: URL = URL(string: "action://reset-session")!
-    static fileprivate let errorDetailsURL: URL = URL(string: "action://error-details")!
 
     var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
@@ -752,12 +752,6 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
                                             switch URL {
                                             case Self.resetSessionURL:
                                                 client?.resetSession()
-                                            case Self.errorDetailsURL:
-                                                let errorCode = data.decryptionErrorCode?.intValue
-                                                let alert = UIAlertController.decryptionErrorDetails(client: client,
-                                                                                                     errorCode: errorCode)
-                                                
-                                                ZClientViewController.shared?.present(alert, animated: true)
                                             default:
                                                 break
                                             }
@@ -821,28 +815,15 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static func messageString(_ systemMessageType: ZMSystemMessageType, sender: UserType) -> NSAttributedString {
         
         let name = sender.name ?? ""
-        var localizationKey1 = self.localizationKey(systemMessageType)
-        var localizationKey2 = localizationKey1 + ".resend"
+        var localizationKey = self.localizationKey(systemMessageType)
 
         if sender.isSelfUser {
-            localizationKey1 += ".self"
-            localizationKey2 += ".self"
+            localizationKey += ".self"
         } else {
-            localizationKey1 += ".other"
-            localizationKey2 += ".other"
+            localizationKey += ".other"
         }
         
-        var string = NSAttributedString(string: localizationKey1.localized(args: name),
-                                        attributes: [.font: UIFont.mediumFont,
-                                                     .foregroundColor: UIColor.from(scheme: .textForeground)])
-         
-        if systemMessageType == .decryptionFailedResolved {
-            string += NSAttributedString(string: localizationKey2.localized(args: name),
-                                         attributes: [.font: UIFont.mediumSemiboldFont,
-                                                      .foregroundColor: UIColor.from(scheme: .textForeground)])
-        }
-            
-        return string.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
+        return NSMutableAttributedString.markdown(from: localizationKey.localized(args: name), style: .systemMessage)
     }
     
     private static func resetSessionString() -> NSAttributedString {
@@ -859,7 +840,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         
         return NSAttributedString(string: string,
                                   attributes: [.foregroundColor: UIColor.from(scheme: .textPlaceholder),
-                                               .font: UIFont.mediumSemiboldFont])
+                                               .font: UIFont.mediumFont])
     }
 
 }
