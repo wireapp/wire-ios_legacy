@@ -130,7 +130,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
-        let url: URL
+//        let url: URL
         let urlHandler: ((_ url: URL) -> Void)?
     }
 
@@ -315,12 +315,8 @@ final class ConversationSystemMessageCellDescription {
             let shieldCell = ConversationVerifiedSystemMessageSectionDescription()
             return [AnyConversationMessageCellDescription(shieldCell)]
 
-        case .decryptionFailed:
-            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: false)
-            return [AnyConversationMessageCellDescription(decryptionCell)]
-
-        case .decryptionFailed_RemoteIdentityChanged:
-            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: true)
+        case .decryptionFailed, .decryptionFailedResolved, .decryptionFailed_RemoteIdentityChanged:
+            let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender)
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
         case .newClient, .usingNewDevice, .reactivatedDevice:
@@ -732,24 +728,23 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType, remoteIdentityChanged: Bool) {
-        let exclamationColor = UIColor(for: .vividRed)
-        let icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: exclamationColor)
-        let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
-
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType) {
+        let icon: UIImage
+        if data.systemMessageType == .decryptionFailedResolved {
+            icon = StyleKitIcon.checkmark.makeImage(size: 16, color: .strongLimeGreen)
+        } else {
+            icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
+        }
+        
         let title = ConversationCannotDecryptSystemMessageCellDescription
             .makeAttributedString(
                 systemMessage: data,
-                sender: sender,
-                remoteIDChanged:
-                remoteIdentityChanged,
-                link: link
+                sender: sender
             )
 
         configuration = View.Configuration(icon: icon,
                                            attributedText: title,
                                            showLine: false,
-                                           url: link,
                                            urlHandler: { URL in
                                             
                                             let client = data.clients.first as? UserClient
@@ -775,55 +770,96 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static let BaseLocalizationString = "content.system.cannot_decrypt"
     private static let IdentityString = ".identity"
 
-    private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: UserType, remoteIDChanged: Bool, link: URL) -> NSAttributedString {
-        let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
-
-        let messageString = NSAttributedString(string: localizedWhatPart(remoteIDChanged, name: name),
-                                               attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)])
+    private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: UserType) -> NSAttributedString {
         
-        let resetSessionString =
-            NSAttributedString(string: localizedResetSession(),
-                               attributes: [.link : resetSessionURL,
-                                            .foregroundColor: UIColor.accent(),
-                                            .font: UIFont.mediumSemiboldFont])
+        let messageString = self.messageString(systemMessage.systemMessageType, sender: sender)
+        let resetSessionString = self.resetSessionString()
+        let errorDetailsString = self.errorDetailsString(
+            errorCode: systemMessage.decryptionErrorCode?.intValue ?? 0,
+            clientIdentifier: (systemMessage.senderClientID ?? "N/A"))
         
-        let errorDetailsString =
-            NSAttributedString(string: localizedErrorDetails(),
-                               attributes: [.link : errorDetailsURL,
-                                            .foregroundColor: UIColor.from(scheme: .textForeground),
-                                            .underlineStyle: NSUnderlineStyle.single.rawValue])
+        var components: [NSAttributedString]
         
-        var fullString = messageString + "\n" + resetSessionString + "\n" + errorDetailsString
-        fullString = fullString && .lineSpacing(CGFloat.MessageCell.paragraphSpacing)
-        
-        return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
-    }
-
-    private static func localizedWhoPart(_ sender: UserType, remoteIDChanged: Bool) -> String {
-        switch (sender.isSelfUser, remoteIDChanged) {
-        case (true, _):
-            return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "") + ".you_part").localized
-        case (false, true):
-            return (BaseLocalizationString + IdentityString + ".otherUser_part").localized(args: sender.name ?? "")
-        case (false, false):
-            return sender.name ?? ""
+        switch systemMessage.systemMessageType {
+        case .decryptionFailed:
+            components = [
+                messageString,
+                resetSessionString
+            ]
+        case .decryptionFailedResolved:
+            components = [
+                messageString,
+                errorDetailsString
+            ]
+        case .decryptionFailed_RemoteIdentityChanged:
+            components = [
+                messageString
+            ]
+        default:
+            fatal("Incorrect cell configuration")
         }
+        
+        return components.joined(separator: NSAttributedString(string: "\n") && .lineSpacing(CGFloat.MessageCell.paragraphSpacing))
     }
+    
+    private static func localizationKey(_ systemMessageType: ZMSystemMessageType) -> String {
+        let localizationKey: String
+        switch systemMessageType {
+        case .decryptionFailed:
+            localizationKey = BaseLocalizationString
+        case .decryptionFailedResolved:
+            localizationKey = BaseLocalizationString + "_resolved"
+        case .decryptionFailed_RemoteIdentityChanged:
+            localizationKey = BaseLocalizationString + "_identity_changed"
+        default:
+            fatal("Incorrect cell configuration")
+        }
+        
+        return localizationKey
+    }
+        
+    private static func messageString(_ systemMessageType: ZMSystemMessageType, sender: UserType) -> NSAttributedString {
+        
+        let name = sender.name ?? ""
+        var localizationKey1 = self.localizationKey(systemMessageType)
+        var localizationKey2 = localizationKey1 + ".resend"
 
-    private static func localizedWhatPart(_ remoteIDChanged: Bool, name: String) -> String {
-        return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "")).localized(args: name)
+        if sender.isSelfUser {
+            localizationKey1 += ".self"
+            localizationKey2 += ".self"
+        } else {
+            localizationKey1 += ".other"
+            localizationKey2 += ".other"
+        }
+        
+        var string = NSAttributedString(string: localizationKey1.localized(args: name),
+                                        attributes: [.font: UIFont.mediumFont,
+                                                     .foregroundColor: UIColor.from(scheme: .textForeground)])
+         
+        if systemMessageType == .decryptionFailedResolved {
+            string += NSAttributedString(string: localizationKey2.localized(args: name),
+                                         attributes: [.font: UIFont.mediumSemiboldFont,
+                                                      .foregroundColor: UIColor.from(scheme: .textForeground)])
+        }
+            
+        return string.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }
     
-    private static func localizedDevice(_ device: UserClient?) -> String {
-        return (BaseLocalizationString + ".otherDevice_part").localized(args: device?.remoteIdentifier ?? "-")
+    private static func resetSessionString() -> NSAttributedString {
+        let string = (BaseLocalizationString + ".reset_session").localized.localizedUppercase
+        
+        return NSAttributedString(string: string,
+                                  attributes: [.link : resetSessionURL,
+                                               .foregroundColor: UIColor.accent(),
+                                               .font: UIFont.mediumSemiboldFont])
     }
     
-    private static func localizedErrorDetails() -> String {
-           return (BaseLocalizationString + ".error_details").localized
-       }
-    
-    private static func localizedResetSession() -> String {
-        return (BaseLocalizationString + ".reset_session").localized.localizedUppercase
+    private static func errorDetailsString(errorCode: Int, clientIdentifier: String) -> NSAttributedString {
+        let string = (BaseLocalizationString + ".error_details").localized(args: errorCode, clientIdentifier)
+        
+        return NSAttributedString(string: string,
+                                  attributes: [.foregroundColor: UIColor.from(scheme: .textPlaceholder),
+                                               .font: UIFont.mediumSemiboldFont])
     }
 
 }
