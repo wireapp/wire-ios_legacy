@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2021 Wire Swiss GmbH
 //
@@ -23,15 +22,14 @@ protocol InputBarConversation {
     var typingUsers: [UserType] { get }
     var hasDraftMessage: Bool { get }
     var draftMessage: DraftMessage? { get }
-    
+
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
-    
+
     var conversationType: ZMConversationType { get }
-    var hasSyncedMessageDestructionTimeout: Bool { get }
-        
+
     func setIsTyping(_ isTyping: Bool)
-    
+
     var isReadOnly: Bool { get }
     var displayName: String { get }
 }

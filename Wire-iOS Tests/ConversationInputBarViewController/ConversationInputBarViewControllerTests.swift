@@ -22,26 +22,24 @@ import WireCommonComponents
 
 final class MockInputBarConversationType: InputBarConversationType {
     var typingUsers: [UserType] = []
-    
+
     var hasDraftMessage: Bool = false
-    
+
     var connectedUserType: UserType?
-    
+
     var draftMessage: DraftMessage?
-    
+
     var messageDestructionTimeoutValue: TimeInterval = 0
     var messageDestructionTimeout: MessageDestructionTimeout?
 
     var conversationType: ZMConversationType = .group
-    
-    var hasSyncedMessageDestructionTimeout: Bool = false
-    
+
     func setIsTyping(_ isTyping: Bool) {
         //no-op
     }
-    
+
     var isReadOnly: Bool = false
-    
+
     var displayName: String = ""
 }
 
@@ -52,7 +50,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         UIColor.setAccentOverride(.vividRed)
 
         mockConversation = MockInputBarConversationType()
@@ -62,7 +60,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     override func tearDown() {
         sut = nil
         mockConversation = nil
-        
+
         super.tearDown()
     }
 
@@ -74,7 +72,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     }
 
     // MARK: - Typing indication
-    
+
     func testTypingIndicationIsShown() {
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
@@ -112,14 +110,14 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         mockConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeInterval))
         mockConversation.messageDestructionTimeoutValue = timeInterval
     }
-    
+
     func testEphemeralTime10Second() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
         setMessageDestructionTimeout(timeInterval: 10)
-        
+
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
