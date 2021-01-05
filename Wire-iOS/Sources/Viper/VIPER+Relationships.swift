@@ -18,6 +18,20 @@
 
 import Foundation
 
+/// Naming convention:
+///
+/// The names of all relationship protocols follow the format:
+///
+///  <module name><implementer><caller>Interface
+/// 
+/// For example, the name FooInteractorPresenterInterface is the relationship
+/// implemented by the interactor, called by the presenter, and located in the
+/// "Foo" module.
+///
+/// This format is designed to make it easy to search for a particular relationship protocol.
+/// If you are searching for a particular protocol, type first the module name, then the
+/// component that implements the methods, then the component that calls the methods.
+
 /// Interface of the interactor from the perspective of the presenter.
 ///
 /// Typically contains methods fetch data and perform business logic.
