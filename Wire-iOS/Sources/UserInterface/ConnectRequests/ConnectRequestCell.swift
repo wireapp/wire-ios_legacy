@@ -26,7 +26,7 @@ final class ConnectRequestCell: UITableViewCell {
 
     private var connectRequestViewController: IncomingConnectionViewController?
 
-    var user: ZMUser! {
+    var user: UserType! {
         didSet {
             guard let user = user else { return }
             

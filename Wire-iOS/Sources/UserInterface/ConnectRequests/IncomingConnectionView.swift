@@ -38,18 +38,18 @@ final class IncomingConnectionView: UIView {
     private let acceptButton = Button(style: .full)
     private let ignoreButton = Button(style: .empty)
 
-    var user: ZMUser {
+    var user: UserType {
         didSet {
             self.setupLabelText()
             self.userImageView.user = self.user
         }
     }
 
-    typealias UserAction = (ZMUser) -> Void
+    typealias UserAction = (UserType) -> Void
     var onAccept: UserAction?
     var onIgnore: UserAction?
 
-    init(user: ZMUser) {
+    init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
 
@@ -88,7 +88,7 @@ final class IncomingConnectionView: UIView {
         let viewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: "",
-            addressBookName: user.addressBookEntry?.cachedName
+            addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
         
         usernameLabel.attributedText = viewModel.title
