@@ -36,8 +36,6 @@ final class MockInputBarConversationType: InputBarConversationType {
     
     var hasSyncedMessageDestructionTimeout: Bool = false
     
-    var disabledTimeoutImage: UIImage?
-    
     func setIsTyping(_ isTyping: Bool) {
         //no-op
     }
@@ -45,8 +43,6 @@ final class MockInputBarConversationType: InputBarConversationType {
     var isReadOnly: Bool = false
     
     var displayName: String = ""
-    
-    
 }
 
 final class ConversationInputBarViewControllerTests: XCTestCase {
@@ -112,14 +108,18 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(matching: sut.view)
     }
 
+    private func setMessageDestructionTimeout(timeInterval: TimeInterval) {
+        mockConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeInterval))
+        mockConversation.messageDestructionTimeoutValue = timeInterval
+    }
+    
     func testEphemeralTime10Second() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(10)
-        mockConversation.messageDestructionTimeoutValue = 10
-
+        setMessageDestructionTimeout(timeInterval: 10)
+        
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
@@ -131,7 +131,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(300)
+        setMessageDestructionTimeout(timeInterval: 300)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -144,7 +144,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(7200)
+        setMessageDestructionTimeout(timeInterval: 7200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -157,7 +157,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(259200)
+        setMessageDestructionTimeout(timeInterval: 259200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -170,7 +170,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(2419200)
+        setMessageDestructionTimeout(timeInterval: 2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -183,14 +183,14 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        mockConversation.messageDestructionTimeout = .local(2419200)
+        setMessageDestructionTimeout(timeInterval: 2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         let shortText = "Lorem ipsum dolor"
         sut.inputBar.textView.text = shortText
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
 // MARK: - file action sheet
