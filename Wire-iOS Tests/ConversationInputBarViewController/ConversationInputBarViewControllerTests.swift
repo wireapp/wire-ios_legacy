@@ -19,16 +19,47 @@
 import XCTest
 @testable import Wire
 
+final class MockInputBarConversationType: InputBarConversationType {
+    var typingUsers: [UserType] = []
+    
+    var hasDraftMessage: Bool = false
+    
+    var connectedUserType: UserType?
+    
+    var draftMessage: DraftMessage?
+    
+    var messageDestructionTimeoutValue: TimeInterval = 0
+    var messageDestructionTimeout: MessageDestructionTimeout?
+
+    var conversationType: ZMConversationType = .group
+    
+    var hasSyncedMessageDestructionTimeout: Bool = false
+    
+    var timeoutImage: UIImage?
+    
+    var disabledTimeoutImage: UIImage?
+    
+    func setIsTyping(_ isTyping: Bool) {
+        //no-op
+    }
+    
+    var isReadOnly: Bool = false
+    
+    var displayName: String = ""
+    
+    
+}
+
 final class ConversationInputBarViewControllerTests: XCTestCase {
 
     var sut: ConversationInputBarViewController!
-    var mockConversation: MockConversation!
+    var mockConversation: MockInputBarConversationType!
 
     override func setUp() {
         super.setUp()
         
-        mockConversation = MockConversation.oneOnOneConversation()
-        sut = ConversationInputBarViewController(conversation: mockConversation.convertToRegularConversation())
+        mockConversation = MockInputBarConversationType()
+        sut = ConversationInputBarViewController(conversation: mockConversation)
     }
 
     override func tearDown() {
@@ -44,23 +75,21 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
                        widths: tabletWidths(), snapshotBackgroundColor: .white)
 
     }
-}
 
-// MARK: - Typing indication
-extension ConversationInputBarViewControllerTests {
+    // MARK: - Typing indication
+    
     func testTypingIndicationIsShown() {
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
-        sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Alice")]
+        sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
         sut.typingIndicatorView.setHidden(false, animated: false)
 
         // THEN
         verifyInAllPhoneWidths(matching: sut.view)
     }
-}
 
-// MARK: - Ephemeral indicator button
-extension ConversationInputBarViewControllerTests {
+    // MARK: - Ephemeral indicator button
+
     func testEphemeralIndicatorButton() {
         // GIVEN
 
@@ -77,18 +106,17 @@ extension ConversationInputBarViewControllerTests {
         // WHEN
         sut.mode = .timeoutConfguration
         mockConversation.messageDestructionTimeout = .local(.none)
-        //TODO:     public var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout?
 
         // THEN
         verifyInAllPhoneWidths(matching: sut.view)
     }
-/*
+
     func testEphemeralTime10Second() {
         // GIVEN
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(10)
+        mockConversation.messageDestructionTimeout = .local(10)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -101,7 +129,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(300)
+        mockConversation.messageDestructionTimeout = .local(300)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -114,7 +142,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(7200)
+        mockConversation.messageDestructionTimeout = .local(7200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -127,7 +155,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(259200)
+        mockConversation.messageDestructionTimeout = .local(259200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -140,7 +168,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
+        mockConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -153,7 +181,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
+        mockConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         let shortText = "Lorem ipsum dolor"
@@ -169,5 +197,5 @@ extension ConversationInputBarViewControllerTests {
         let alert: UIAlertController = sut.createDocUploadActionSheet()
 
         verify(matching: alert)
-    }*/
+    }
 }
