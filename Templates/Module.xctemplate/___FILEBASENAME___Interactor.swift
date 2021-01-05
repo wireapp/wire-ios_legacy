@@ -24,6 +24,6 @@ final class ___FILEBASENAMEASIDENTIFIER___: InteractorInterface {
 
 }
 
-// MARK: - API for prsenter
+// MARK: - API for presenter
 
 extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___InteractorPresenterInterface {}
