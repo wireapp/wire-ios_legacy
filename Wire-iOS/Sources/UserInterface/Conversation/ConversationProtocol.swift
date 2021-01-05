@@ -19,10 +19,9 @@
 import Foundation
 import WireDataModel
 
-protocol InputBarConversationType {
+protocol InputBarConversation {
     var typingUsers: [UserType] { get }
     var hasDraftMessage: Bool { get }
-    var connectedUserType: UserType? { get } ///TODO: merge with ConnectionRequest protocol
     var draftMessage: DraftMessage? { get }
     
     var messageDestructionTimeoutValue: TimeInterval { get }
@@ -37,4 +36,16 @@ protocol InputBarConversationType {
     var displayName: String { get }
 }
 
-extension ZMConversation: InputBarConversationType {}
+protocol ConnectedUserContainer {
+    var connectedUserType: UserType? { get }
+}
+
+typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer
+
+extension ZMConversation: ConnectedUserContainer {
+    var connectedUserType: UserType? {
+        return connectedUser
+    }
+}
+
+extension ZMConversation: InputBarConversation {}

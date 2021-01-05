@@ -31,7 +31,7 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-extension InputBarConversationType {
+extension InputBarConversation {
 
     var destructionTimeout: MessageDestructionTimeoutValue? {
         switch messageDestructionTimeout {
