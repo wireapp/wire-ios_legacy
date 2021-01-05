@@ -30,10 +30,7 @@ protocol InputBarConversationType {
     
     var conversationType: ZMConversationType { get }
     var hasSyncedMessageDestructionTimeout: Bool { get }
-    
-    var timeoutImage: UIImage? { get }
-    var disabledTimeoutImage: UIImage? { get }
-    
+        
     func setIsTyping(_ isTyping: Bool)
     
     var isReadOnly: Bool { get }

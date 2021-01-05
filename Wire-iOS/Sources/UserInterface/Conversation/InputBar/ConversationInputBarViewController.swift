@@ -29,26 +29,6 @@ enum ConversationInputBarViewControllerMode {
     case timeoutConfguration
 }
 
-protocol InputBarConversationType {
-    var typingUsers: [UserType] { get }
-    var hasDraftMessage: Bool { get }
-    var connectedUserType: UserType? { get } ///TODO: merge with ConnectionRequest protocol
-    var draftMessage: DraftMessage? { get }
-    var messageDestructionTimeoutValue: TimeInterval { get }
-    var conversationType: ZMConversationType { get }
-    var hasSyncedMessageDestructionTimeout: Bool { get }
-    
-    var timeoutImage: UIImage? { get }
-    var disabledTimeoutImage: UIImage? { get }
-    
-    func setIsTyping(_ isTyping: Bool)
-    
-    var isReadOnly: Bool { get }
-    var displayName: String { get }
-}
-
-extension ZMConversation: InputBarConversationType {}
-
 final class ConversationInputBarViewController: UIViewController,
                                             UIPopoverPresentationControllerDelegate,
                                                 PopoverPresenter {
@@ -281,7 +261,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - Input views handling
 
-    /// init with a ZMConversation objcet
+    /// init with a InputBarConversationType objcet
     /// - Parameter conversation: provide nil only for tests
     init(conversation: InputBarConversationType) {
         self.conversation = conversation

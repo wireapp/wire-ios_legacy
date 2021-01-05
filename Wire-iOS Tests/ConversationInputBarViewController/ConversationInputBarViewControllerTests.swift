@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import WireCommonComponents
 
 final class MockInputBarConversationType: InputBarConversationType {
     var typingUsers: [UserType] = []
@@ -34,8 +35,6 @@ final class MockInputBarConversationType: InputBarConversationType {
     var conversationType: ZMConversationType = .group
     
     var hasSyncedMessageDestructionTimeout: Bool = false
-    
-    var timeoutImage: UIImage?
     
     var disabledTimeoutImage: UIImage?
     
@@ -58,6 +57,8 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
+        UIColor.setAccentOverride(.vividRed)
+
         mockConversation = MockInputBarConversationType()
         sut = ConversationInputBarViewController(conversation: mockConversation)
     }
@@ -117,6 +118,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         // WHEN
         sut.mode = .timeoutConfguration
         mockConversation.messageDestructionTimeout = .local(10)
+        mockConversation.messageDestructionTimeoutValue = 10
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
