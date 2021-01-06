@@ -54,7 +54,7 @@ final class ServicesSectionController: GroupDetailsSectionController {
         let user = serviceUsers[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
-        cell.configure(with: user, conversation: conversation)
+        cell.configure(with: user, selfUser: ZMUser.selfUser(), conversation: conversation)
         cell.showSeparator = (serviceUsers.count - 1) != indexPath.row
         cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.services.cell"

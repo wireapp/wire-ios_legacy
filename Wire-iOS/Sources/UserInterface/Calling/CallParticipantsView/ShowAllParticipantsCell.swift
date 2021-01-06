@@ -104,7 +104,8 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
 }
 
 extension ShowAllParticipantsCell: CallParticipantsCellConfigurationConfigurable {
-    func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant,
+                   selfUser: UserType) {
         guard case let .showAll(totalCount: totalCount) = configuration else { preconditionFailure() }
         
         self.variant = variant

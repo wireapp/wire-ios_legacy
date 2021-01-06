@@ -42,13 +42,13 @@ enum UserTypeIconStyle: String, IconImageStyle {
 }
 
 extension UserTypeIconStyle {
-    init(conversation: ZMConversation?, user: UserType) {
+    init(conversation: ZMConversation?, user: UserType, selfUser: UserType) {
         if user.isExternalPartner {
             self = .external
         } else if let conversation = conversation {
             self = !user.isGuest(in: conversation) || user.isSelfUser ? .member : .guest
         } else {
-            self = !ZMUser.selfUser().isTeamMember
+            self = !selfUser.isTeamMember
                 || user.isTeamMember
                 || user.isServiceUser
                 ? .member

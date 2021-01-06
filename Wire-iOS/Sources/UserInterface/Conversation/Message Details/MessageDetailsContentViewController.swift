@@ -257,7 +257,7 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
         let description = cells[indexPath.item]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
 
-        cell.configure(with: description.user, subtitle: description.attributedSubtitle, conversation: conversation)
+        cell.configure(with: description.user, selfUser: ZMUser.selfUser(), subtitle: description.attributedSubtitle, conversation: conversation)
         cell.showSeparator = indexPath.item != (cells.endIndex - 1)
         cell.subtitleLabel.accessibilityLabel = description.accessibleSubtitleLabel
         cell.subtitleLabel.accessibilityValue = description.accessibleSubtitleValue

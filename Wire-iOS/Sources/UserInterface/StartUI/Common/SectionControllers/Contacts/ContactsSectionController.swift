@@ -65,7 +65,7 @@ class ContactsSectionController : SearchSectionController {
         let user = contacts[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
-        cell.configure(with: user)
+        cell.configure(with: user, selfUser: ZMUser.selfUser())
         cell.showSeparator = (contacts.count - 1) != indexPath.row
         cell.checkmarkIconView.isHidden = !allowsSelection
         cell.accessoryIconView.isHidden = true
