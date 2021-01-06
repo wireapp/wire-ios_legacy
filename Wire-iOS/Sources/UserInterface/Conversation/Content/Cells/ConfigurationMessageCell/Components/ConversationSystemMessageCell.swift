@@ -838,7 +838,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static func errorDetailsString(errorCode: Int, clientIdentifier: String) -> NSAttributedString {
         let string = (BaseLocalizationString + ".error_details").localized(args: errorCode, clientIdentifier)
         
-        return NSAttributedString(string: string,
+        return NSAttributedString(string: string.localizedUppercase,
                                   attributes: [.foregroundColor: UIColor.from(scheme: .textPlaceholder),
                                                .font: UIFont.mediumFont])
     }
