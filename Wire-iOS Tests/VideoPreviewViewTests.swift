@@ -39,7 +39,7 @@ class VideoPreviewViewTests: XCTestCase {
             participantName: "Bob",
             microphoneState: muted ? .muted : .unmuted,
             videoState: videoState,
-            isParticipantActive: active
+            isParticipantActiveSpeaker: active
         )
     }
     

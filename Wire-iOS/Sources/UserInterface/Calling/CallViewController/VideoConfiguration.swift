@@ -65,7 +65,7 @@ extension VoiceChannel {
                             participantName: name,
                             microphoneState: .unmuted,
                             videoState: videoState,
-                            isParticipantActive: false)
+                            isParticipantActiveSpeaker: false)
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
@@ -120,7 +120,7 @@ extension VoiceChannel {
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState,
                                     videoState: videoState,
-                                    isParticipantActive: participant.isActiveSpeaker)
+                                    isParticipantActiveSpeaker: participant.isActiveSpeaker)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil

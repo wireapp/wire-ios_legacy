@@ -42,7 +42,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     
     override func updateUserDetails() {
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState,
-                                                                  isActive: stream.isParticipantActive)
+                                                                  shouldPulse: stream.isParticipantActiveSpeaker)
         
         guard let name = stream.participantName else {
             return

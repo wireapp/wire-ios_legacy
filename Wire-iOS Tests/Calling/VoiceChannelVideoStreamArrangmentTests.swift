@@ -159,7 +159,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
                             participantName: nil,
                             microphoneState: .none,
                             videoState: .none,
-                            isParticipantActive: false)
+                            isParticipantActiveSpeaker: false)
         return VideoStream(stream: stream,
                            isPaused: false)
     }

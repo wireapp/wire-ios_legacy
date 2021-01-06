@@ -262,9 +262,7 @@ fileprivate extension VoiceChannel {
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter {
-            $0.state.isConnected
-        }
+        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
     }
 
     var degradationState: CallDegradationState {

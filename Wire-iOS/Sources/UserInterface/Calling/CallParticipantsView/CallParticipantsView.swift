@@ -121,7 +121,7 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
         hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
-        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, isActive: isActiveSpeaker))
+        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, shouldPulse: isActiveSpeaker))
         videoIconView.set(style: VideoIconStyle(state: videoState))
     }
     

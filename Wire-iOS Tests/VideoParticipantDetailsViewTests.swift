@@ -40,19 +40,19 @@ class VideoParticipantDetailsViewTests: XCTestCase {
     }
     
     func testUnmutedState() {
-        sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, isActive: false)
+        sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, shouldPulse: false)
 
         verify(matching: sut)
     }
     
     func testMutedState() {
-        sut.microphoneIconStyle = MicrophoneIconStyle(state: .muted, isActive: false)
+        sut.microphoneIconStyle = MicrophoneIconStyle(state: .muted, shouldPulse: false)
         
         verify(matching: sut)
     }
     
-    func testActiveState() {
-        sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, isActive: true)
+    func testPulsingState() {
+        sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, shouldPulse: true)
 
         verify(matching: sut)
     }
