@@ -295,7 +295,10 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate func updateSelectionValues() {
         // Update view model after selection changed
         if case .create(let values) = viewModel.context {
-            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users, allowGuests: true)
+            let updated = ConversationCreationValues(name: values.name,
+                                                     participants: userSelection.users,
+                                                     allowGuests: true,
+                                                     selfUser: ZMUser.selfUser())
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 

@@ -269,7 +269,6 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var isPlainText: Bool = true
     var sender: ZMUser?
     var senderUser: UserType?
-
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none
