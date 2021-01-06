@@ -324,7 +324,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
-            guard let user = systemMessageData.users.first else { fallthrough }
+            guard let user = systemMessageData.userTypes.first as? UserType else { fallthrough }
             let ignoredClientCell = ConversationIgnoredDeviceSystemMessageCellDescription(message: message, data: systemMessageData, user: user)
             return [AnyConversationMessageCellDescription(ignoredClientCell)]
             

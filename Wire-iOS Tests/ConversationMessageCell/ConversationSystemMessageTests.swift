@@ -154,7 +154,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testIgnoredClient_other() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([SwiftMockLoader.mockUsers().last])
 
         verify(message: message)
     }

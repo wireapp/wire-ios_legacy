@@ -57,7 +57,15 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
 
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
-    var users: Set<ZMUser> = Set()
+    var users: Set<ZMUser> {
+        get {
+          return Set()
+        }
+        
+        set {
+            
+        }
+    }
     var userTypes: Set<AnyHashable> = Set()
     var clients: Set<AnyHashable> = Set()
     var addedUsers: Set<ZMUser> = Set()
