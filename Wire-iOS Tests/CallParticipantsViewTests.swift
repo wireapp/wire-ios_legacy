@@ -32,7 +32,8 @@ final class CallParticipantsListHelper {
         
         return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
                                                                                           videoState: videoState,
-                                                                                          microphoneState: microphoneState)
+                                                                                          microphoneState: microphoneState,
+                                                                                          isActiveSpeaker: false)
         }
     }
 
@@ -54,7 +55,6 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
         mockParticipants = nil
         super.tearDown()
     }
-    
     
     func testCallParticipants_Overflowing_Light() {
         // When

@@ -47,7 +47,8 @@ fileprivate extension VoiceChannel {
                 return .participantsList(sortedConnectedParticipants().map {
                     .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
-                                     microphoneState: $0.state.microphoneState)
+                                     microphoneState: $0.state.microphoneState,
+                                     isActiveSpeaker: $0.isActiveSpeaker)
                 })
 
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -112,6 +113,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
+    fileprivate static let maxActiveSpeakers: Int = 1
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
@@ -264,7 +266,7 @@ fileprivate extension VoiceChannel {
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants.filter { $0.state.isConnected }
+        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
     }
 
     private var hashboxFirstDegradedUser: HashBoxUser? {
