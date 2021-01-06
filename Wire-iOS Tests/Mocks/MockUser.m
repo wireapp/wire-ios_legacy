@@ -89,7 +89,7 @@ static id<UserType> mockSelfUser = nil;
     return (MockUser *)mockSelfUser;
 }
 
-+ (MockUser *)mockServiceUser
++ (MockUser *)mockServiceUser ///TODO: cp to swift mock user
 {
     return [[MockUser alloc] initWithJSONObject:@{@"name": @"GitHub",
                                                   @"displayName": @"GitHub",

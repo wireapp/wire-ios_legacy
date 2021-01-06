@@ -46,6 +46,8 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
+        //TODO:
+//        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.mockServiceUser()])
 
         verify(message: message)
     }
@@ -85,14 +87,14 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testNewClient_selfUser_oneClient() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
 
     func testNewClient_selfUser_manyClients() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 2)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
@@ -111,7 +113,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testUsingNewDevice() {
         let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
@@ -187,6 +189,8 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
         message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        ///TODO:
+//        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers()!.prefix(1)))
 
         verify(message: message)
     }
