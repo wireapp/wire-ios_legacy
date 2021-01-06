@@ -19,38 +19,46 @@
 import Foundation
 @testable import Wire
 
-class CallParticipantsViewTests: ZMSnapshotTestCase {
+
+final class CallParticipantsListHelper {
+    static func participants(count participantCount: Int,
+                             videoState: VideoState? = nil,
+                             microphoneState: MicrophoneState? = nil,
+                             mockUsers: [UserType] = MockUser.mockUsers()) -> CallParticipantsList {
+        let sortedParticipants = (0..<participantCount)
+            .lazy
+            .map { mockUsers[$0] }
+            .sorted { $0.name < $1.name }
+        
+        return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
+                                                                                          videoState: videoState,
+                                                                                          microphoneState: microphoneState)
+        }
+    }
+
+}
+
+final class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     var sut: CallParticipantsViewController!
+    var mockParticipants: CallParticipantsList!
     
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
+        mockParticipants = CallParticipantsListHelper.participants(count: 10)
     }
     
     override func tearDown() {
         sut = nil
+        mockParticipants = nil
         super.tearDown()
     }
     
-
-    static func participants(count participantCount: Int,
-                                 videoState: VideoState? = nil,
-                                 microphoneState: MicrophoneState? = nil) -> CallParticipantsList {
-        let sortedParticipants = (0..<participantCount)
-                                .lazy
-                                .map { MockUser.mockUsers()[$0] }
-                                .sorted { $0.name < $1.name }
-        
-        return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
-                                                                     videoState: videoState,
-                                                                     microphoneState: microphoneState)
-        }
-    }
     
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -61,7 +69,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Overflowing_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
@@ -74,7 +82,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Truncated_Light() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         
         // Then
@@ -83,7 +91,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Truncated_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)

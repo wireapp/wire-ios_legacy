@@ -29,8 +29,8 @@ final class CallInfoRootViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        mockOtherUser = MockUserType.createConnectedUser(name: "Bruno", inTeam: nil)
         mockSelfUser = MockUserType.createSelfUser(name: "Alice")
-        mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
     }
 
     override func tearDown() {
@@ -193,7 +193,8 @@ final class CallInfoRootViewControllerTests: XCTestCase {
 
     func testGroupAudioEstablished_LargeGroup() {
         // given
-        let fixture = CallInfoTestFixture(otherUser: mockOtherUser, groupSize: .large)
+        let fixture = CallInfoTestFixture(otherUser: mockOtherUser,
+                                          groupSize: .large)
 
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)
