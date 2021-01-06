@@ -793,7 +793,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
             fatal("Incorrect cell configuration")
         }
         
-        return components.joined(separator: NSAttributedString(string: "\n") && .lineSpacing(CGFloat.MessageCell.paragraphSpacing))
+        return components.joined(separator: NSAttributedString(string: "\n"))
     }
     
     private static func localizationKey(_ systemMessageType: ZMSystemMessageType) -> String {

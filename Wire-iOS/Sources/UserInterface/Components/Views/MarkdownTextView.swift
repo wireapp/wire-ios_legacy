@@ -635,7 +635,7 @@ extension DownStyle {
         style.baseFont = FontSpec(.medium, .none).font!
         style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
-        style.baseParagraphStyle = NSParagraphStyle.default
+        style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
         style.listItemPrefixSpacing = 8
         return style
     }()
