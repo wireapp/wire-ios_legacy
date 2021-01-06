@@ -40,7 +40,7 @@ extension ZClientViewController {
 private extension AppLockType {
 
     var needsToSetUpCustomPasscode: Bool {
-        let isCustomPasscodeRequired = config.useBiometricsOrCustomPasscode || AuthenticationType.current == .unavailable
+        let isCustomPasscodeRequired = config.useBiometricsOrCustomPasscode
         return config.forceAppLock && isCustomPasscodeRequired && isCustomPasscodeNotSet
     }
 
