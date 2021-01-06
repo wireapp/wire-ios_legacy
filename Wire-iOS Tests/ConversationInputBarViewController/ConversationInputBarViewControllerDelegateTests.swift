@@ -22,6 +22,8 @@ import XCTest
 final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
 
     var coreDataFixture: CoreDataFixture!
+    private var mockDelegate: MockDelegate!
+    var sut: ConversationInputBarViewController!
 
     override func setUp() {
         super.setUp()
@@ -30,16 +32,20 @@ final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
 
     override func tearDown() {
         coreDataFixture = nil
+        mockDelegate = nil
+        sut = nil
+        
         super.tearDown()
     }
 
     func testThatDismissingQuoteUpdatesDraftAndNotifiesDelegate() {
         // Given
         let conversation = coreDataFixture.otherUserConversation!
-        let sut = ConversationInputBarViewController(conversation: conversation)
+        sut = ConversationInputBarViewController(conversation: conversation)
 
-        let delegate = MockDelegate()
-        sut.delegate = delegate
+        mockDelegate = MockDelegate()
+        
+        sut.delegate = mockDelegate
 
         let message = try! conversation.appendText(content: "Boo")
         conversation.draftMessage = DraftMessage(text: "Goo", mentions: [], quote: message as? ZMMessage)
@@ -50,8 +56,8 @@ final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
         sut.removeReplyComposingView()
 
         // Then the delegate was called with the updated draft.
-        XCTAssertEqual(delegate.composedDrafts.count, 1)
-        XCTAssertEqual(delegate.composedDrafts[0], DraftMessage(text: "Goo", mentions: [], quote: nil))
+        XCTAssertEqual(mockDelegate.composedDrafts.count, 1)
+        XCTAssertEqual(mockDelegate.composedDrafts[0], DraftMessage(text: "Goo", mentions: [], quote: nil))
     }
 
 }

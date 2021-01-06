@@ -136,7 +136,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Actions
     private func bringUpConversationCreationFlow() {
 
-        let controller = ConversationCreationController(preSelectedParticipants: viewModel.fullUserSet)
+        let controller = ConversationCreationController(preSelectedParticipants: viewModel.fullUserSet, selfUser: ZMUser.selfUser())
         controller.delegate = self
         
         let wrappedController = controller.wrapInNavigationController()

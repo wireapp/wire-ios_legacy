@@ -42,9 +42,11 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     var stream: Stream {
         didSet {
-            streamDidChange()
+            updateUserDetails()
         }
     }
+    
+    var isMaximized: Bool = false
     
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
@@ -76,11 +78,6 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Handle Stream changes
-    func streamDidChange() {
-        updateUserDetails()
     }
     
     // MARK: - Setup
@@ -141,6 +138,16 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
             animations: {
                 self.userDetailsView.alpha = self.userDetailsAlpha
         })
+    }
+    
+    // MARK: - Accessibility for automation
+    override var accessibilityIdentifier: String? {
+        get {
+            let name = stream.participantName ?? ""
+            let state = isMaximized ? "maximized" : "minimized"
+            return "VideoView.\(name).\(state)"
+        }
+        set {}
     }
 }
 
