@@ -18,6 +18,7 @@
 
 import Foundation
 import WireLinkPreview
+import XCTest
 
 final class MockCompositeMessageData: NSObject, CompositeMessageData {
     var items: [CompositeMessageItem] = []
