@@ -272,7 +272,7 @@ final class ConversationSystemMessageCellDescription {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.senderUser,
             let conversation = message.conversation else {
-            preconditionFailure("Invalid system message")///TODO: crash, sender nil
+            preconditionFailure("Invalid system message")
         }
 
         switch systemMessageData.systemMessageType {
