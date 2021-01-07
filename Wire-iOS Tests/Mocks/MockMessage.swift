@@ -18,6 +18,7 @@
 
 import Foundation
 import WireLinkPreview
+import XCTest
 
 final class MockCompositeMessageData: NSObject, CompositeMessageData {
     var items: [CompositeMessageItem] = []
@@ -59,6 +60,7 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser> {
         get {
+        XCTAssert(false, "This property should not be used in tests")
           return Set()
         }
         
@@ -70,6 +72,7 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var clients: Set<AnyHashable> = Set()
     var addedUsers: Set<ZMUser> {
         get {
+            XCTAssert(false, "This property should not be used in tests")
             return Set()
         }
         
