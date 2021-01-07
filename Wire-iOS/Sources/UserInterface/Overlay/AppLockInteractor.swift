@@ -20,13 +20,16 @@ import Foundation
 import UIKit
 import WireCommonComponents
 import WireSyncEngine
+import LocalAuthentication
 
-typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface
+typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
 
 protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
+    var needsToNotifyUser: Bool { get set }
+    var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(password: String)
     func verify(customPasscode: String)
@@ -34,7 +37,7 @@ protocol AppLockInteractorInput: class {
 }
 
 protocol AppLockInteractorOutput: class {
-    func authenticationEvaluated(with result: AppLock.AuthenticationResult)
+    func authenticationEvaluated(with result: AppLockController.AuthenticationResult)
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
@@ -42,7 +45,6 @@ final class AppLockInteractor {
     weak var output: AppLockInteractorOutput?
     
     // For tests
-    var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     var _userSession: AppLockInteractorUserSession?
     
@@ -53,27 +55,64 @@ final class AppLockInteractor {
     }
     
     var appState: AppState?
+
+    var appLock: AppLockType? {
+        return userSession?.appLockController
+    }
+
+    var isAppLockActive: Bool {
+        return appLock?.isActive ?? false
+    }
+
+    var lastUnlockedDate: Date {
+        get { userSession?.appLockController.lastUnlockedDate ?? Date() }
+        set {
+            if var session = userSession {
+                session.appLockController.lastUnlockedDate = newValue
+            }
+        }
+    }
+    
+    var shouldUseBiometricsOrCustomPasscode: Bool {
+        return appLock?.config.useBiometricsOrCustomPasscode ?? false
+    }
+    
+    var needsToNotifyUser: Bool {
+        get {
+            return appLock?.needsToNotifyUser ?? false
+        }
+        set {
+            if var session = userSession {
+                session.appLockController.needsToNotifyUser = newValue
+            }
+        }
+    }
+
+    var timeout: UInt {
+        return appLock?.config.appLockTimeout ?? .max
+    }
+
 }
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
-        return AppLock.isCustomPasscodeNotSet
+        return appLock?.isCustomPasscodeNotSet ?? false
     }
     
     var isAuthenticationNeeded: Bool {
-        let screenLockIsActive = appLock.isActive && isLockTimeoutReached && isAppStateAuthenticated
+        let screenLockIsActive = isAppLockActive && isLockTimeoutReached && isAppStateAuthenticated
         
         return screenLockIsActive || isDatabaseLocked
     }
     
     var isDimmingScreenWhenInactive: Bool {
-        return AppLock.isActive || userSession?.encryptMessagesAtRest == true
+        return isAppLockActive || userSession?.encryptMessagesAtRest == true
     }
     
     func evaluateAuthentication(description: String) {
-        appLock.evaluateAuthentication(scenario: authenticationScenario,
-                                       description: description.localized) { [weak self] result, context in
+        appLock?.evaluateAuthentication(scenario: authenticationScenario,
+                                        description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
                         
             self.dispatchQueue.async {
@@ -89,7 +128,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     private func processVerifyResult(result: VerifyPasswordResult?) {
         notifyPasswordVerified(with: result)
         if case .validated = result {
-            appLock.persistBiometrics()
+            appLock?.persistBiometrics()
         }
     }
     
@@ -97,7 +136,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         
         let result: VerifyPasswordResult
         
-        if let data: Data = Keychain.fetchPasscode() {
+        if let data = appLock?.fetchPasscode() {
             result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
         } else {
             result = .unknown
@@ -116,7 +155,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         if let state = appState,
             case AppState.unauthenticated(error: _) = state,
             case AppState.authenticated(completedRegistration: _) = newState {
-            AppLock.lastUnlockedDate = Date()
+            lastUnlockedDate = Date()
         }
         appState = newState
     }
@@ -125,12 +164,11 @@ extension AppLockInteractor: AppLockInteractorInput {
 // MARK: - Helpers
 extension AppLockInteractor {
     
-    private var authenticationScenario: AppLock.AuthenticationScenario {
+    private var authenticationScenario: AppLockController.AuthenticationScenario {
         if isDatabaseLocked {
             return .databaseLock
         } else {
-            return .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                               grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+            return .screenLock(requireBiometrics: shouldUseBiometricsOrCustomPasscode)
         }
     }
     
@@ -157,11 +195,11 @@ extension AppLockInteractor {
     }
     
     private var isLockTimeoutReached: Bool {
-        let lastAuthDate = appLock.lastUnlockedDate
+        let lastAuthDate = lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        let isWithinTimeoutWindow = (0..<Double(timeout)).contains(timeSinceAuth)
         return !isWithinTimeoutWindow
     }
 }

@@ -33,11 +33,15 @@ protocol AppLockUserInterface: class {
     ///   - callback: callback to return the inputed passcode
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback)
+    
     func dismissUnlockScreen()
     
     
     /// Present create passcode screen (when the user first time use the app after updating from a version not support passcode)
     func presentCreatePasscodeScreen(callback: ResultHandler?)
+    
+     /// Present warning screen (when the user should be informed about applock config changes)
+    func presentWarningScreen(callback: ResultHandler?)
     
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
@@ -50,11 +54,11 @@ enum AuthenticationState {
     case authenticated
     case pendingPassword
 
-    fileprivate mutating func update(with result: AppLock.AuthenticationResult) {
+    fileprivate mutating func update(with result: AppLockController.AuthenticationResult) {
         switch result {
         case .denied:
             self = .cancelled
-        case .needAccountPassword:
+        case .needCustomPasscode:
             self = .pendingPassword
         default:
             break
@@ -106,12 +110,25 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            presentWarningIfNeeded {
+                self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            }
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
             break
         }
+    }
+    
+    private func presentWarningIfNeeded(then block: @escaping () -> Void) {
+        guard appLockInteractorInput.needsToNotifyUser else {
+            block()
+            return
+        }
+        
+        userInterface?.presentWarningScreen(callback: { _ in
+            block()
+        })
     }
 }
 
@@ -133,15 +150,11 @@ extension AppLockPresenter {
         userInterface?.presentUnlockScreen(with: message) { [weak self] password in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
-
+                
                 guard let password = password,
-                      self.checkPassword(password: password) else { return }
-
-                if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-                    self.appLockInteractorInput.verify(customPasscode: password)
-                } else {
-                    self.appLockInteractorInput.verify(password: password)
-                }
+                    self.checkPassword(password: password) else { return }
+                
+                self.appLockInteractorInput.verify(customPasscode: password)
             }
         }
     }
@@ -150,11 +163,11 @@ extension AppLockPresenter {
 // MARK: - AppLockInteractorOutput
 extension AppLockPresenter: AppLockInteractorOutput {
     
-    func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
+    func authenticationEvaluated(with result: AppLockController.AuthenticationResult) {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
-        if case .needAccountPassword = result {
+        if case .needCustomPasscode = result {
             // When upgrade form a version not support custom passcode, ask the user to create a new passcode
             if appLockInteractorInput.isCustomPasscodeNotSet {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
@@ -226,7 +239,7 @@ extension AppLockPresenter {
     
     @objc func applicationDidEnterBackground() {
         if self.authenticationState == .authenticated {
-            AppLock.lastUnlockedDate = Date()
+            appLockInteractorInput.lastUnlockedDate = Date()
         }
         if appLockInteractorInput.isDimmingScreenWhenInactive {
             userInterface?.setContents(dimmed: true)
@@ -264,7 +277,7 @@ extension AppLockPresenter {
         userInterface?.dismissUnlockScreen()
         
         authenticationState = .authenticated
-        AppLock.lastUnlockedDate = Date()
+        appLockInteractorInput.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 }
