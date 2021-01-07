@@ -45,12 +45,6 @@ final class VideoPreviewView: BaseVideoPreviewView {
     var shouldFill: Bool {
         return isMaximized ? false : videoKind.shouldFill
     }
-    
-    override var stream: Stream {
-        didSet {
-            updateVideoKind()
-        }
-    }
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
