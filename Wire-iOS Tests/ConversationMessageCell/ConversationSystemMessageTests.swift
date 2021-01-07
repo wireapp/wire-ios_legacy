@@ -71,8 +71,38 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
-    func testDecryptionFailed() {
+    func testDecryptionFailed_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailed_Other() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: otherUser)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedResolved_Self() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedResolved_Other() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0, sender: otherUser)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedIdentifyChanged_Self() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedIdentifyChanged_Other() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0, sender: otherUser)!
 
         verify(message: message)
     }
