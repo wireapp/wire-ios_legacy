@@ -131,10 +131,10 @@ class ParticipantsCellViewModel {
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
     lazy var sortedUsers: [UserType] = {
-        guard let sender = message.senderUser as? ZMUser else { return [] }
+        guard let sender = message.senderUser else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
-        return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
+        return systemMessage.users.subtracting([sender as? AnyHashable]).sorted { name(for: $0) < name(for: $1) } ///TODO: wait for other PR
     }()
 
     init(

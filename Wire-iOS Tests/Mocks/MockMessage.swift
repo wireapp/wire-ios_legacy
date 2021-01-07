@@ -279,12 +279,22 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
             XCTAssert(false, "This property should not be used in tests")
         }
     }
+    
+    var _senderUser: UserType?
     var senderUser: UserType? {
+        get {
+            return _senderUser
+        }
+        
+        set {
+            _senderUser = newValue
+        }
+        /*
         didSet {
             if senderUser is ZMUser {
                 XCTAssert(false, "ZMUser should not created for tests")
             }
-        }
+        }*/
     }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
