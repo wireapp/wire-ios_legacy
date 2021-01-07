@@ -132,7 +132,7 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         let attributedText: NSAttributedString?
         let showLine: Bool
 //        let url: URL
-        let urlHandler: ((_ url: URL) -> Void)?
+        let urlHandler: ((_ url: URL, _ cell: LinkConversationSystemMessageCell) -> Void)?
     }
 
     var lastConfiguration: Configuration?
@@ -155,7 +155,7 @@ extension LinkConversationSystemMessageCell {
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         
         if let handler = lastConfiguration?.urlHandler {
-            handler(url)
+            handler(url, self)
         } else {
             UIApplication.shared.open(url)
         }
@@ -745,18 +745,27 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         configuration = View.Configuration(icon: icon,
                                            attributedText: title,
                                            showLine: false,
-                                           urlHandler: { URL in
-                                            
-                                            let client = data.clients.first as? UserClient
-                                            
+                                           urlHandler: { URL, cell in                                 
                                             switch URL {
                                             case Self.resetSessionURL:
-                                                client?.resetSession()
+                                                cell.delegate?.perform(action: .resetSession, for: message, view: cell)
                                             default:
                                                 break
                                             }
         })
         actionController = nil
+    }
+    
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherDescription = other as? ConversationCannotDecryptSystemMessageCellDescription else {
+            return false
+        }
+        
+        return configuration.attributedText == otherDescription.configuration.attributedText
+
+//        return message?.systemMessageData?.systemMessageType == otherDescription.message?.systemMessageData?.systemMessageType
+        
+//        return self.configuration == otherDescription.configuration
     }
 
     // MARK: - Localization
