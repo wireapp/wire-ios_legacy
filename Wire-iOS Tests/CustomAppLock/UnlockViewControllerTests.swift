@@ -23,7 +23,8 @@ final class UnlockViewControllerTests: XCTestCase {
     var sut: UnlockViewController!
 
     override func setUp() {
-        sut = UnlockViewController()
+        let selfUser = MockUserType.createSelfUser(name: "Bobby McFerrin")
+        sut = UnlockViewController(selfUser: selfUser)
     }
 
     override func tearDown() {

@@ -19,8 +19,8 @@
 import Foundation
 @testable import Wire
 
-final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
-
+final class MockZMUserSession: NSObject, UserSessionInterface {
+    
     func perform(_ changes: @escaping () -> Swift.Void) {
         changes()
     }
@@ -42,4 +42,6 @@ final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
     var isNotificationContentHidden: Bool = false
     
     var encryptMessagesAtRest: Bool = false
+    
+    var appLockController: AppLockType = AppLockMock()
 }
