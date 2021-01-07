@@ -631,8 +631,9 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
         let boldFont = UIFont.mediumSemiboldFont
         let color = UIColor.from(scheme: .textForeground)
         
-        func attributedLocalizedUppercaseString(_ localizationKey: String, _ users: [UserType]) -> NSAttributedString? {
-            guard users.count > 0 else { return nil }
+        func attributedLocalizedUppercaseString(_ localizationKey: String, _ users: [AnyHashable]) -> NSAttributedString? {
+            guard !users.isEmpty,
+                  let users = users as? [UserType] else { return nil }
             let userNames = users.compactMap { $0.name }.joined(separator: ", ")
             let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
@@ -642,11 +643,11 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
         var title = "content.system.missing_messages.title".localized && font && color
         
         // We only want to display the subtitle if we have the final added and removed users and either one is not empty
-        let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
+        let addedOrRemovedUsers = !systemMessageData.addedUserTypes.isEmpty || !systemMessageData.removedUserTypes.isEmpty
         if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
             title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && font && color
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", Array(systemMessageData.addedUsers))
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", Array(systemMessageData.removedUsers))
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", Array(systemMessageData.addedUserTypes))
+            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", Array(systemMessageData.removedUserTypes))
         }
         
         return title

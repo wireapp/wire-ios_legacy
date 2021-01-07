@@ -68,8 +68,18 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     }
     var userTypes: Set<AnyHashable> = Set()
     var clients: Set<AnyHashable> = Set()
-    var addedUsers: Set<ZMUser> = Set()
+    var addedUsers: Set<ZMUser> {
+        get {
+            return Set()
+        }
+        
+        set {
+            
+        }
+    }
+    var addedUserTypes: Set<AnyHashable> = Set()
     var removedUsers: Set<ZMUser> = Set()
+    var removedUserTypes: Set<AnyHashable> = Set()
     var text: String? = ""
     var needsUpdatingUsers: Bool = false
     var userIsTheSender: Bool = false

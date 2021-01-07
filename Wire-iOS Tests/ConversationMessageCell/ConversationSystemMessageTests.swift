@@ -188,9 +188,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
-        ///TODO:
-//        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers()!.prefix(1)))
+        message.backingSystemMessageData?.addedUserTypes = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers().prefix(1)))
 
         verify(message: message)
     }
