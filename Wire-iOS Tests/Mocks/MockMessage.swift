@@ -65,7 +65,7 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
         }
         
         set {
-            
+            XCTAssert(false, "This property should not be used in tests")
         }
     }
     var userTypes: Set<AnyHashable> = Set()
@@ -77,11 +77,20 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
         }
         
         set {
-            
+            XCTAssert(false, "This property should not be used in tests")
         }
     }
     var addedUserTypes: Set<AnyHashable> = Set()
-    var removedUsers: Set<ZMUser> = Set()
+    var removedUsers: Set<ZMUser> {
+        get {
+            XCTAssert(false, "This property should not be used in tests")
+            return Set()
+        }
+        
+        set {
+            XCTAssert(false, "This property should not be used in tests")
+        }
+    }
     var removedUserTypes: Set<AnyHashable> = Set()
     var text: String? = ""
     var needsUpdatingUsers: Bool = false

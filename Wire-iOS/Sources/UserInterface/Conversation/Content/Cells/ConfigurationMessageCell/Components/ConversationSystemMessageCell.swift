@@ -842,7 +842,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
             (a.name ?? "").compare(b.name ?? "") == ComparisonResult.orderedAscending
         })
         
-        if !systemMessage.addedUsers.isEmpty {
+        if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
             return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
