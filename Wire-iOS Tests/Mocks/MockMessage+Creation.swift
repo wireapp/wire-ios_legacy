@@ -34,7 +34,6 @@ final class MockMessageFactory {
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
         
         if let sender = sender as? ZMUser {
-            message.sender = sender
             message.senderUser = sender
         } else if let sender = sender {
             message.senderUser = sender
