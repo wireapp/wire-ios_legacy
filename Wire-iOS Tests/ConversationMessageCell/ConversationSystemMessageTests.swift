@@ -42,12 +42,12 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
-    func testAddParticipant_Service() {
+    func testAddParticipant_Service() {///TODO: wait for senderUser injection merged
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
-        //TODO:
-//        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.mockServiceUser()])
+//        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
+
 
         verify(message: message)
     }
