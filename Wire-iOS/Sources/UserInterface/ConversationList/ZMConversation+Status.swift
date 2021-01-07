@@ -534,7 +534,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
         else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                    if let _ = $0.sender,
+                    if let _ = $0.senderUser,
                        let type = StatusMessageType(message: $0),
                        let _ = matchedTypesDescriptions[type] {
                         return true
@@ -542,7 +542,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
                         return false
                     }
                 }),
-                    let sender = message.sender,
+                    let sender = message.senderUser,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
                 return "" && Swift.type(of: self).regularStyle
@@ -593,7 +593,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                if let _ = $0.sender,
+                if let _ = $0.senderUser,
                    let type = StatusMessageType(message: $0),
                    let _ = matchedTypesDescriptions[type] {
                     return true
@@ -639,7 +639,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
-           let sender = message.sender,
+           let sender = message.senderUser,
            !sender.isSelfUser {
             
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
@@ -655,7 +655,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
         
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
-           let sender = message.sender,
+           let sender = message.senderUser,
            !sender.isSelfUser{
 
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
@@ -695,7 +695,7 @@ final class StartConversationMatcher: TypedConversationStatusMatcher {
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
-              let sender = message.sender,
+              let sender = message.senderUser,
               !sender.isSelfUser
             else {
             return .none

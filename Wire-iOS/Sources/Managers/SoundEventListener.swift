@@ -128,7 +128,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             
             let isRecentMessage = (message.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
             let isSilenced = message.isSilenced
-            let isSentBySelfUser = message.sender?.isSelfUser ?? false
+            let isSentBySelfUser = message.senderUser?.isSelfUser ?? false
             
             guard message.isKnock && isRecentMessage && !isSilenced && !isSentBySelfUser else {
                 continue

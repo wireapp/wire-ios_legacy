@@ -131,7 +131,7 @@ class ParticipantsCellViewModel {
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
     lazy var sortedUsers: [UserType] = {
-        guard let sender = message.sender else { return [] }
+        guard let sender = message.senderUser as? ZMUser else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
         return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
@@ -189,7 +189,7 @@ class ParticipantsCellViewModel {
     func attributedHeading() -> NSAttributedString? {
         guard
             case let .started(withName: conversationName?) = action,
-            let sender = message.sender,
+            let sender = message.senderUser,
             let formatter = formatter(for: message)
             else { return nil }
         
@@ -199,7 +199,7 @@ class ParticipantsCellViewModel {
 
     func attributedTitle() -> NSAttributedString? {
         guard
-            let sender = message.sender,
+            let sender = message.senderUser,
             let formatter = formatter(for: message)
             else { return nil }
         
