@@ -43,7 +43,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
-            setBorder(visible: stream.isParticipantActiveSpeaker && stream.microphoneState == .unmuted)
+            updateBorderVisibility()
         }
     }
     
@@ -72,7 +72,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateUserDetails()
-        setBorder(visible: stream.isParticipantActiveSpeaker)
+        updateBorderVisibility()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -107,7 +107,10 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
-    private func setBorder(visible: Bool) {
+    // MARK: - Frame Border
+    
+    private func updateBorderVisibility() {
+        let visible = stream.isParticipantActiveSpeaker && stream.microphoneState == .unmuted
         layer.borderWidth = visible ? 2 : 0
     }
     
