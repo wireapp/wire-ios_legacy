@@ -109,7 +109,6 @@
 		16814840228C6E120069F16F /* UserClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1681483F228C6E120069F16F /* UserClientCell.swift */; };
 		16814842228C74C10069F16F /* UserClientCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16814841228C74C10069F16F /* UserClientCellTests.swift */; };
 		16814844228D89EC0069F16F /* UserClientListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16814843228D89EC0069F16F /* UserClientListViewController.swift */; };
-		1682463C257E394D002AF17B /* UIAlertController+DecryptionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682463B257E394C002AF17B /* UIAlertController+DecryptionError.swift */; };
 		16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16829EDE2010D60800F579A0 /* InviteTeamMemberSection.swift */; };
 		1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEB520480C80003A052A /* UIViewController+Navigation.swift */; };
 		1682AEB920483CC5003A052A /* RenameGroupSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */; };
@@ -1697,7 +1696,6 @@
 		1681483F228C6E120069F16F /* UserClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClientCell.swift; sourceTree = "<group>"; };
 		16814841228C74C10069F16F /* UserClientCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClientCellTests.swift; sourceTree = "<group>"; };
 		16814843228D89EC0069F16F /* UserClientListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClientListViewController.swift; sourceTree = "<group>"; };
-		1682463B257E394C002AF17B /* UIAlertController+DecryptionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+DecryptionError.swift"; sourceTree = "<group>"; };
 		16829EDE2010D60800F579A0 /* InviteTeamMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteTeamMemberSection.swift; sourceTree = "<group>"; };
 		1682AEB520480C80003A052A /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		1682AEB820483CC5003A052A /* RenameGroupSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameGroupSectionController.swift; sourceTree = "<group>"; };
@@ -4672,7 +4670,6 @@
 				87CB36B91D74782B007AB4E5 /* LikeButton.swift */,
 				87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */,
 				A90BECF024A23E6500E5C008 /* LinkViewDelegate.swift */,
-				1682463B257E394C002AF17B /* UIAlertController+DecryptionError.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -7601,7 +7598,6 @@
 				8759E2C51FC86090008E17C9 /* UIAlertController+TOS.swift in Sources */,
 				874E27CB1E2912860079573D /* ConversationImagesViewController.swift in Sources */,
 				5EF7BA65221AEB1B00815625 /* ProfileDetailsContentController.swift in Sources */,
-				1682463C257E394D002AF17B /* UIAlertController+DecryptionError.swift in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */,
 				546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */,
