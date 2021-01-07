@@ -632,9 +632,8 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
         let color = UIColor.from(scheme: .textForeground)
         
         func attributedLocalizedUppercaseString(_ localizationKey: String, _ users: [AnyHashable]) -> NSAttributedString? {
-            guard !users.isEmpty,
-                  let users = users as? [UserType] else { return nil }
-            let userNames = users.compactMap { $0.name }.joined(separator: ", ")
+            guard !users.isEmpty else { return nil }
+            let userNames = users.compactMap { ($0 as? UserType)?.name }.joined(separator: ", ")
             let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
             return string.addAttributes([.font: boldFont], toSubstring: userNames)
@@ -838,17 +837,17 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
         let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
-        let users = (Array(systemMessage.userTypes) as? [UserType])!.sorted(by: { (a: UserType, b: UserType) -> Bool in
-            (a.name ?? "").compare(b.name ?? "") == ComparisonResult.orderedAscending
-        })
+        let users: [UserType] = systemMessage.userTypes.sorted(by: { (a, b) -> Bool in
+            ((a as? UserType)?.name ?? "").compare((b as? UserType)?.name ?? "") == .orderedAscending
+        }) as? [UserType] ?? []
         
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
             return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
-        } else if let user = users.first , user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
+        } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
-        } else if users.count == 1, let user = users.first , user.isSelfUser {
+        } else if users.count == 1, let user = users.first, user.isSelfUser {
             return configureForNewClientOfSelfUser(user, clients: clients, attributes: textAttributes)
         } else {
             return configureForOtherUsers(users, conversation: conversation, clients: clients, attributes: textAttributes)
