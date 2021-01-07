@@ -161,11 +161,17 @@ final class ConversationListViewController: UIViewController {
 
         shouldAnimateNetworkStatusView = true
 
+        ZClientViewController.shared?.notifyUserOfDisabledAppLockIfNeeded()
+
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
-            ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
-            ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
+
+            ZClientViewController.shared?.setUpCustomPasscodeIfNeeded(then: {
+                ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
+                ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
+            })
         }
+
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

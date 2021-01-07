@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -18,27 +19,29 @@
 import Foundation
 import WireSyncEngine
 
-protocol WipeDatabaseInteractorInput: class {
-    func deleteAccount()
-}
+extension ZClientViewController {
 
-protocol WipeDatabaseInteractorOutput: class {
-}
-
-final class WipeDatabaseInteractor {
-    weak var output: WipeDatabaseInteractorOutput?
-}
-
-// MARK: - Interface
-extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
-    func deleteAccount() {
+    func setUpCustomPasscodeIfNeeded(then block: @escaping () -> Void) {
         guard
-            let sessionManager = SessionManager.shared,
-            let account = sessionManager.accountManager.selectedAccount
+            let appLock = ZMUserSession.shared()?.appLockController,
+            appLock.needsToSetUpCustomPasscode
         else {
+            block()
             return
         }
 
-        sessionManager.delete(account: account)
+        let callBack: ResultHandler = { _ in block() }
+        let viewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(context: .createPasscode, callback: callBack)
+        present(viewController, animated: true)
     }
+
+}
+
+private extension AppLockType {
+
+    var needsToSetUpCustomPasscode: Bool {
+        let isCustomPasscodeRequired = config.useBiometricsOrCustomPasscode
+        return config.forceAppLock && isCustomPasscodeRequired && isCustomPasscodeNotSet
+    }
+
 }

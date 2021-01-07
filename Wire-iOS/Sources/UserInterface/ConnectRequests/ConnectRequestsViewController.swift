@@ -20,18 +20,8 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-protocol ConnectionRequest {
-    var connectedUserType: UserType? { get }
-}
-
-extension ZMConversation: ConnectionRequest {
-    var connectedUserType: UserType? {
-        return connectedUser
-    }
-}
-
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var connectionRequests: [ConnectionRequest] = []
+    var connectionRequests: [ConnectedUserContainer] = []
     
     private var userObserverToken: Any?
     private var pendingConnectionsListObserverToken: Any?
@@ -57,7 +47,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             
             userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
             
-            connectionRequests = pendingConnectionsList as? [ConnectionRequest] ?? []
+            connectionRequests = pendingConnectionsList as? [ConnectedUserContainer] ?? []
         }
         
         reload()
@@ -155,7 +145,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if let userSession = ZMUserSession.shared() {
             let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
             
-            connectionRequests = pendingConnectionsList as? [ConnectionRequest] ?? []
+            connectionRequests = pendingConnectionsList as? [ConnectedUserContainer] ?? []
         }
         
         tableView.reloadData()

@@ -36,7 +36,7 @@ final class ConversationInputBarViewController: UIViewController,
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
-    let conversation: ZMConversation
+    let conversation: InputBarConversationType
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
     private(set) var inputController: UIViewController? {
@@ -261,14 +261,15 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - Input views handling
 
-    /// init with a ZMConversation objcet
+    /// init with a InputBarConversationType objcet
     /// - Parameter conversation: provide nil only for tests
-    init(conversation: ZMConversation) {
+    init(conversation: InputBarConversationType) {
         self.conversation = conversation
 
         super.init(nibName: nil, bundle: nil)
 
-        if !ProcessInfo.processInfo.isRunningTests {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let conversation = conversation as? ZMConversation {
             conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
             typingObserverToken = conversation.addTypingObserver(self)
         }
@@ -333,11 +334,12 @@ final class ConversationInputBarViewController: UIViewController,
             return
         }
         
-        if conversationObserverToken == nil {
+        if conversationObserverToken == nil,
+           let conversation = conversation as? ZMConversation {
             conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         }
         
-        if let connectedUser = conversation.connectedUser,
+        if let connectedUser = conversation.connectedUserType as? ZMUser,
            let userSession = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
         }
@@ -413,7 +415,13 @@ final class ConversationInputBarViewController: UIViewController,
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-        sendButtonState.update(textLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+        sendButtonState.update(textLength: trimmed.count,
+                               editing: nil != editingMessage,
+                               markingDown: inputBar.isMarkingDown,
+                               destructionTimeout: conversation.messageDestructionTimeoutValue,
+                               conversationType: conversation.conversationType,
+                               mode: mode,
+                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
 
         sendButton.isHidden = sendButtonState.sendButtonHidden
         hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
@@ -450,7 +458,7 @@ final class ConversationInputBarViewController: UIViewController,
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
             conversation.conversationType == .oneOnOne,
-            let connectedUser = conversation.connectedUser else {
+            let connectedUser = conversation.connectedUserType else {
                 return
         }
 
@@ -522,16 +530,18 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: - PingButton
 
     @objc
-    func pingButtonPressed(_ button: UIButton?) {
+    private func pingButtonPressed(_ button: UIButton?) {
         appendKnock()
     }
 
     private func appendKnock() {
+        guard let conversation = conversation as? ZMConversation else { return }
+        
         notificationFeedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
-                try self.conversation.appendKnock()
-                Analytics.shared.tagMediaActionCompleted(.ping, inConversation: self.conversation)
+                try conversation.appendKnock()
+                Analytics.shared.tagMediaActionCompleted(.ping, inConversation: conversation)
 
                 AVSMediaManager.sharedInstance().playKnockSound()
                 self.notificationFeedbackGenerator.notificationOccurred(.success)
@@ -558,7 +568,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     @objc
     private func giphyButtonPressed(_ sender: Any?) {
-        guard !AppDelegate.isOffline else { return }
+        guard !AppDelegate.isOffline, let conversation = conversation as? ZMConversation else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self

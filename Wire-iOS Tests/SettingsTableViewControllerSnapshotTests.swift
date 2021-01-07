@@ -25,13 +25,17 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
     var settingsPropertyFactory: SettingsPropertyFactory!
+    var userSessionMock: MockZMUserSession!
+    var selfUser: MockZMEditableUser!
 
 	override func setUp() {
 		super.setUp()
 
         coreDataFixture = CoreDataFixture()
+        userSessionMock = MockZMUserSession()
+        selfUser = MockZMEditableUser()
 
-		settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
+		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: nil)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
 
 		MockUserRight.isPermitted = true
@@ -43,6 +47,8 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 		settingsPropertyFactory = nil
 
         coreDataFixture = nil
+        userSessionMock = nil
+        selfUser = nil
 
         super.tearDown()
 	}
@@ -87,6 +93,40 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
 
         verify(matching: sut, customSize: CGSize(width: CGSize.iPhoneSize.iPhone4_7.width, height: sut.tableView.contentSize.height))
+    }
+    
+    func testThatApplockIsAvailableInOptionsGroup_WhenIsAvailableInConfig() {
+        // given
+        var config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
+                                              forceAppLock: false,
+                                              timeOut: 900)
+        // when
+        config.isAvailable = true
+        userSessionMock.appLockController = AppLockMock(config: config)
+        settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: selfUser)
+        settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory,
+                                                                      userRightInterfaceType: MockUserRight.self)
+        
+        // then
+        XCTAssertTrue(settingsCellDescriptorFactory.isAppLockAvailable)
+        
+        
+    }
+    
+    func testThatApplockIsNotAvailableInOptionsGroup_WhenIsNotAvailableInConfig() {
+        // given
+        var config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
+                                              forceAppLock: false,
+                                              timeOut: 900)
+        // when
+        config.isAvailable = false
+        userSessionMock.appLockController = AppLockMock(config: config)
+        settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: selfUser)
+        settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory,
+                                                                      userRightInterfaceType: MockUserRight.self)
+        
+        // then
+        XCTAssertFalse(settingsCellDescriptorFactory.isAppLockAvailable)
     }
 
     // MARK: - dark theme
