@@ -45,7 +45,9 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testAddParticipant_Service() {///TODO: wait for senderUser injection merged
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
+        ///TODO: rm
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
 //        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 
 
@@ -184,11 +186,11 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
-
+    
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.addedUserTypes = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers().prefix(1)))
+        message.assignMockAddedUser()
 
         verify(message: message)
     }
@@ -204,10 +206,16 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedAndRemovedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.assignMockAddedUser()
         message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
 
         verify(message: message)
     }
 
+}
+
+extension MockMessage {
+    func assignMockAddedUser() {
+        backingSystemMessageData?.addedUserTypes = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers().prefix(1)))
+    }
 }
