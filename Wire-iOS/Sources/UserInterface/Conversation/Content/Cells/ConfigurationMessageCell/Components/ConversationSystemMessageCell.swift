@@ -737,23 +737,16 @@ class ConversationSessionResetSystemMessageCellDescription: ConversationMessageC
     }
     
     static func makeAttributedString(_ sender: UserType) -> NSAttributedString {
-        let part1 = NSAttributedString(string: localizedMessagePart1(sender), attributes: [.font: UIFont.mediumFont])
-        let part2 = NSAttributedString(string: localizedMessagePart2(), attributes: [.font: UIFont.mediumSemiboldFont])
-        
-        return part1 + " " + part2
-    }
-    
-    static func localizedMessagePart1(_ sender: UserType) -> String {
+        let string: String
         if sender.isSelfUser {
-            return "content.system.session_reset.self".localized
+            string =  "content.system.session_reset.self".localized
         } else {
-            return "content.system.session_reset".localized(args: sender.name ?? "")
+            string = "content.system.session_reset.other".localized(args: sender.name ?? "")
         }
+        
+        return NSMutableAttributedString.markdown(from: string, style: .systemMessage)
     }
     
-    static func localizedMessagePart2() -> String {
-        return "content.system.session_reset.affected".localized
-    }
 }
 
 class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {

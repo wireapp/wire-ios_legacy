@@ -71,13 +71,13 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
-    func testSessionReset() {
+    func testSessionReset_Other() {
         let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: otherUser)!
 
         verify(message: message)
     }
     
-    func testSessionReset_SelfUser() {
+    func testSessionReset_Self() {
         let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: selfUser)!
          
         verify(message: message)
