@@ -47,7 +47,6 @@ final class SettingsClientViewController: UIViewController,
     fileprivate static let verifiedCellReuseIdentifier: String = "VerifiedCellReuseIdentifier"
     
     let userClient: UserClient
-    var resetSessionPending: Bool = false
     
     var userClientToken: NSObjectProtocol!
     var credentials: ZMEmailCredentials?
@@ -294,7 +293,7 @@ final class SettingsClientViewController: UIViewController,
         switch clientSection {
         case .resetSession:
             self.userClient.resetSession()
-            self.resetSessionPending = true
+            isLoadingViewVisible = true
             break
             
         case .removeDevice:
@@ -383,15 +382,14 @@ final class SettingsClientViewController: UIViewController,
             tableView.reloadData()
         }
         
-        // This means the fingerprint is acquired
-        if self.resetSessionPending && self.userClient.fingerprint != .none {
+        if changeInfo.sessionHasBeenReset {
+            isLoadingViewVisible = false
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
             let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
                 alert.dismiss(animated: true, completion: .none)
             })
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: .none)
-            self.resetSessionPending = false
         }
     }
 }
