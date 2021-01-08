@@ -131,7 +131,6 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
-//        let url: URL
         let urlHandler: ((_ url: URL, _ cell: LinkConversationSystemMessageCell) -> Void)?
     }
 
