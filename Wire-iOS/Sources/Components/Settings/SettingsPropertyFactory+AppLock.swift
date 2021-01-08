@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,13 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireCommonComponents
-import WireUtilities
+import WireSyncEngine
 
-extension AppLock {
-    static var isCustomPasscodeNotSet: Bool {
-        return AppLock.rules.useCustomCodeInsteadOfAccountPassword &&
-               Keychain.fetchPasscode() == nil
+// MARK: - AppLock helper
+extension SettingsPropertyFactory {
+    
+    private var appLock: AppLockType? {
+        return userSession?.appLockController
     }
+
+    var isAppLockActive: Bool {
+        get { userSession?.appLockController.isActive ?? false }
+        set { userSession?.appLockController.isActive = newValue }
+    }
+    
+    var timeout: UInt {
+        return appLock?.config.appLockTimeout ?? .max
+    }
+    
+    var isAppLockForced: Bool {
+        return appLock?.config.forceAppLock ?? false
+    }
+    
+    var isAppLockAvailable: Bool {
+        return appLock?.config.isAvailable ?? false
+    }
+    
 }

@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireCommonComponents
+import WireDataModel
 
 /// UnlockViewController
 /// 
@@ -25,6 +26,9 @@ import WireCommonComponents
 final class UnlockViewController: UIViewController {
 
     var callback: RequestPasswordController.Callback?
+
+    private let selfUser: UserType
+    private var userSession: ZMUserSessionInterface?
 
     private let shieldView = UIView.shieldView()
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
@@ -66,6 +70,31 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
+    private lazy var accountIndicator: UIView = {
+        let view = UIView()
+        view.addSubview(userImageView)
+        view.addSubview(nameLabel)
+        return view
+    }()
+
+    private lazy var userImageView: UIView = {
+        let imageView = UserImageView(size: .small)
+        imageView.user = selfUser
+        imageView.userSession = userSession
+        return imageView
+    }()
+
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = FontSpec(.medium, .regular).font!
+        label.textColor = ColorScheme.default.color(named: .textForeground, variant: .dark)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.text = selfUser.name ?? ""
+        return label
+    }()
+
     private static let errorFont = FontSpec(.small, .light).font!.withSize(10)
     private let errorLabel: UILabel = {
         let label = UILabel()
@@ -88,8 +117,11 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
+    init(selfUser: UserType, userSession: ZMUserSessionInterface? = nil) {
+        self.selfUser = selfUser
+        self.userSession = userSession
+
+        super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = .black
 
@@ -111,24 +143,22 @@ final class UnlockViewController: UIViewController {
 
         contentView.addSubview(stackView)
 
-        [titleLabel,
+        [accountIndicator,
+         titleLabel,
          UILabel.createHintLabel(variant: .dark),
          accessoryTextField,
          errorLabel,
-         SpacingView(5),
-         wipeButton].forEach {
-            upperStackView.addArrangedSubview($0)
-        }
+         wipeButton].forEach(upperStackView.addArrangedSubview)
 
-        [upperStackView,
-         SpacingView(25),
-         unlockButton].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        [upperStackView, unlockButton].forEach(stackView.addArrangedSubview)
 
         createConstraints()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - status bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -142,7 +172,9 @@ final class UnlockViewController: UIViewController {
 
     private func createConstraints() {
 
-        [shieldView,
+        [userImageView,
+         nameLabel,
+         shieldView,
          blurView,
          contentView,
          upperStackView,
@@ -180,7 +212,14 @@ final class UnlockViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
             // unlock Button
-            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight)
+            unlockButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
+
+            // account indicator
+            userImageView.topAnchor.constraint(equalTo: accountIndicator.topAnchor),
+            userImageView.centerXAnchor.constraint(equalTo: accountIndicator.centerXAnchor),
+            nameLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 11),
+            nameLabel.centerXAnchor.constraint(equalTo: accountIndicator.centerXAnchor),
+            nameLabel.bottomAnchor.constraint(equalTo: accountIndicator.bottomAnchor)
         ])
     }
 

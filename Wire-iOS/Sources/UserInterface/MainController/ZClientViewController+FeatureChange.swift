@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,20 +17,20 @@
 //
 
 import Foundation
-import WireUtilities
+import WireSyncEngine
 
-extension Keychain {
-    static func deletePasscode() {
-        try? Keychain.deleteItem(PasscodeKeychainItem.passcode)
-    }
-
-    static func fetchPasscode() -> Data? {
-        let data = try? Keychain.fetchItem(PasscodeKeychainItem.passcode)
-
-        if data?.isEmpty == true {
-            return nil
+extension ZClientViewController {
+    
+    func notifyUserOfDisabledAppLockIfNeeded() {
+        guard let appLock = ZMUserSession.shared()?.appLockController else {
+            return
         }
-
-        return data
+        if appLock.needsToNotifyUser && !appLock.isActive {
+            let warningVC = AppLockChangeWarningViewController()
+            warningVC.modalPresentationStyle = .fullScreen
+            present(warningVC, animated: false)
+        }
     }
+    
 }
+

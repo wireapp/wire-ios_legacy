@@ -149,12 +149,17 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
             let accountIdentifier = account?.userIdentifier
             else { return }
-
+        let configuration = AppLockRules.fromBundle()
+        let appLockConfig = AppLockController.Config(useBiometricsOrCustomPasscode: configuration.useBiometricsOrCustomPasscode,
+                                                     forceAppLock: configuration.forceAppLock,
+                                                     timeOut: configuration.appLockTimeout)
+        
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier,
-            environment: BackendEnvironment.shared
+            environment: BackendEnvironment.shared,
+            appLockConfig: appLockConfig
         )
     }
 
@@ -471,7 +476,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         guard
             let sharingSession = sharingSession,
-            AppLock.isActive || sharingSession.encryptMessagesAtRest
+            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
         else {
             localAuthenticationStatus = .disabled
             callback(localAuthenticationStatus)
@@ -483,17 +488,16 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
         
-        let scenario: AppLock.AuthenticationScenario
+        let scenario: AppLockController.AuthenticationScenario
         
         if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
-            scenario = .screenLock(requireBiometrics: AppLock.rules.useBiometricsOrAccountPassword,
-                                   grantAccessIfPolicyCannotBeEvaluated: !AppLock.rules.forceAppLock)
+            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
         }
         
-        AppLock.evaluateAuthentication(scenario: scenario,
-                                       description: "share_extension.privacy_security.lock_app.description".localized)
+        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
+                                                                description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {
                 if case .granted = result {

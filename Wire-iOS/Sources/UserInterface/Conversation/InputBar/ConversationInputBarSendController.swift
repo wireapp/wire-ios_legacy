@@ -21,62 +21,69 @@ import UIKit
 import WireSyncEngine
 
 final class ConversationInputBarSendController: NSObject {
-    let conversation: ZMConversation
+    let conversation: InputBarConversationType
     private let feedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 
-    @objc
-    init(conversation: ZMConversation) {
+    init(conversation: InputBarConversationType) {
         self.conversation = conversation
         super.init()
     }
 
-    func sendMessage(withImageData imageData: Data, completion completionHandler: Completion? = nil) {
+    func sendMessage(withImageData imageData: Data,
+                     completion completionHandler: Completion? = nil) {
+        
+        guard let conversation = conversation as? ZMConversation else { return }
+        
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
-                try self.conversation.appendImage(from:imageData)
+                try conversation.appendImage(from:imageData)
                 self.feedbackGenerator.impactOccurred()
             } catch {
                 Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
                 completionHandler?()
-            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: conversation)
         })
     }
     
     func sendTextMessage(_ text: String,
                          mentions: [Mention],
                          replyingTo message: ZMConversationMessage?) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         ZMUserSession.shared()?.enqueue({
             let shouldFetchLinkPreview = !Settings.disableLinkPreviews
 
             do {
-                try self.conversation.appendText(content:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
-                self.conversation.draftMessage = nil
+                try conversation.appendText(content:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
+                conversation.draftMessage = nil
             } catch {
                 Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
-            Analytics.shared.tagMediaActionCompleted(.text, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.text, inConversation: conversation)
             
         })
     }
     
     func sendTextMessage(_ text: String, mentions: [Mention], withImageData data: Data) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         let shouldFetchLinkPreview = !Settings.disableLinkPreviews
         
         ZMUserSession.shared()?.enqueue({
             do {
-                try self.conversation.appendText(content: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
-                try self.conversation.appendImage(from: data)
-                self.conversation.draftMessage = nil
+                try conversation.appendText(content: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
+                try conversation.appendImage(from: data)
+                conversation.draftMessage = nil
             } catch {
                 Logging.messageProcessing.warn("Failed to append text message with image data. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
-            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
-            Analytics.shared.tagMediaActionCompleted(.text, inConversation: self.conversation)
+            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: conversation)
+            Analytics.shared.tagMediaActionCompleted(.text, inConversation: conversation)
         })
     }
 }

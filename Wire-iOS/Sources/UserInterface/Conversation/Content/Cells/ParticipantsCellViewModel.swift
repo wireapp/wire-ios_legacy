@@ -94,8 +94,10 @@ class ParticipantsCellViewModel {
     
     private var showServiceUserWarning: Bool {
         guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversation else { return false }
-        let selfAddedToServiceConversation = messageData.users.any(\.isSelfUser) && conversation.areServicesPresent
-        let serviceAdded = messageData.users.any(\.isServiceUser)
+        guard let users = Array(messageData.userTypes) as? [UserType] else { return false }
+        
+        let selfAddedToServiceConversation = users.any(\.isSelfUser) && conversation.areServicesPresent
+        let serviceAdded = users.any(\.isServiceUser)
         return selfAddedToServiceConversation || serviceAdded
     }
     
@@ -134,7 +136,11 @@ class ParticipantsCellViewModel {
         guard let sender = message.sender else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
-        return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
+        
+        let usersWithoutSender: Set<AnyHashable> = systemMessage.userTypes.subtracting([sender])
+        guard let users = Array(usersWithoutSender) as? [UserType] else { return [] }
+        
+        return users.sorted { name(for: $0) < name(for: $1) }
     }()
 
     init(

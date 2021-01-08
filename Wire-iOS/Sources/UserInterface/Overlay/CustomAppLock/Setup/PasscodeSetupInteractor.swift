@@ -19,6 +19,7 @@ import Foundation
 import WireUtilities
 import WireCommonComponents
 import WireTransport
+import WireSyncEngine
 
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
@@ -40,10 +41,11 @@ final class PasscodeSetupInteractor {
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
-    func storePasscode(passcode: String) throws {
-        guard let data = passcode.data(using: .utf8) else { return }
 
-        try Keychain.updateItem(PasscodeKeychainItem.passcode, value: data)
+    func storePasscode(passcode: String) throws {
+        // TODO: [John] Inject the app lock controller.
+        guard let appLock = ZMUserSession.shared()?.appLockController else { return }
+        try appLock.storePasscode(passcode)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
