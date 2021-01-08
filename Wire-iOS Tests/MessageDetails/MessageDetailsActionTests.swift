@@ -66,7 +66,6 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     func testThatDetailsAreAvailableInTeamGroup_WithoutReceipts_OtherUserMessage() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.senderUser = MockUserType.createUser(name: "Bob")
-            
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
