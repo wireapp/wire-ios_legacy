@@ -300,19 +300,19 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var isPlainText: Bool = true
     var sender: ZMUser? {
         get {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
             
             return nil
         }
         
         set {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
         }
     }
     var senderUser: UserType? {
         didSet {
             if senderUser is ZMUser {
-                XCTAssert(false, "ZMUser should not created for tests")
+                XCTFail("ZMUser should not created for tests")
             }
         }
     }

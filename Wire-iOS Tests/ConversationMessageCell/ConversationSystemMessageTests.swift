@@ -30,21 +30,21 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
-        message.sender = MockUser.mockUsers()?.first
+        message.senderUser = SwiftMockLoader.mockUsers().first
 
         verify(message: message)
     }
 
     func testAddParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message)
     }
 
-    func testAddParticipant_Service() {///TODO: wait for senderUser injection merged
+    func testAddParticipant_Service() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.senderUser = SwiftMockLoader.mockUsers().last
         message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 
         verify(message: message)
@@ -52,21 +52,21 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testAddManyParticipants() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message)
     }
 
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message, allColorSchemes: true)
     }
 
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message)
     }
@@ -171,7 +171,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testThatItRendersLegalHoldDisabledInConversation() {
         let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
-        XCTAssertFalse(message.sender?.isUnderLegalHold ?? false)
+        XCTAssertFalse(message.senderUser?.isUnderLegalHold ?? false)
         verify(message: message)
     }
 
