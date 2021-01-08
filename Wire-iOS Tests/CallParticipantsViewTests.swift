@@ -58,7 +58,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers()), allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
