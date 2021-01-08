@@ -54,7 +54,7 @@ final class UnlockViewController: UIViewController {
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
         textField.placeholder = "unlock.textfield.placeholder".localized
         textField.delegate = self
-        button.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
+        textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
 
         return textField
     }()
