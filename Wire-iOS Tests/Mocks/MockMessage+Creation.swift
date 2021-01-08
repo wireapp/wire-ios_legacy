@@ -95,14 +95,14 @@ final class MockMessageFactory: NSObject {
 
 
         if numUsers > 0 {
-            mockSystemMessageData.users = Set(MockUser.mockUsers()[0...numUsers - 1])
+            mockSystemMessageData.userTypes = Set(MockUser.mockUsers()[0...numUsers - 1])
         } else {
-            mockSystemMessageData.users = Set()
+            mockSystemMessageData.userTypes = Set()
         }
 
         var userClients: [AnyHashable] = []
 
-        for user: Any in mockSystemMessageData.users {
+        for user: Any in mockSystemMessageData.userTypes {
             if let client = (user as? MockUser)?.feature(withUserClients: numClients) {
                 userClients.append(contentsOf: client)
             }
