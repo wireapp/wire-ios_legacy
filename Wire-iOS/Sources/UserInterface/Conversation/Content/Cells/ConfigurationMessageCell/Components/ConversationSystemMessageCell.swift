@@ -762,10 +762,6 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         }
         
         return configuration.attributedText == otherDescription.configuration.attributedText
-
-//        return message?.systemMessageData?.systemMessageType == otherDescription.message?.systemMessageData?.systemMessageType
-        
-//        return self.configuration == otherDescription.configuration
     }
 
     // MARK: - Localization
