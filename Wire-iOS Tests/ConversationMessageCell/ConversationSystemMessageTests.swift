@@ -42,10 +42,10 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
 
-    func testAddParticipant_Service() {
+    func testAddParticipant_Service() {///TODO: wait for senderUser injection merged
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 
         verify(message: message)
     }
@@ -85,14 +85,14 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testNewClient_selfUser_oneClient() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
 
     func testNewClient_selfUser_manyClients() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 2)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
@@ -111,7 +111,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testUsingNewDevice() {
         let message = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
@@ -147,14 +147,14 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testIgnoredClient_self() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockUserType.createSelfUser(name: "")])
 
         verify(message: message)
     }
 
     func testIgnoredClient_other() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
+        message.backingSystemMessageData?.userTypes = Set<AnyHashable>([SwiftMockLoader.mockUsers().last])
 
         verify(message: message)
     }
@@ -186,7 +186,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.assignMockAddedUser()
 
         verify(message: message)
     }
@@ -194,7 +194,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_removedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.assignMockRemovedUsers(users: SwiftMockLoader.mockUsers().prefix(1))
 
         verify(message: message)
     }
@@ -202,10 +202,20 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedAndRemovedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
+        message.assignMockAddedUser()
+        message.assignMockRemovedUsers(users: SwiftMockLoader.mockUsers().suffix(1))
 
         verify(message: message)
     }
 
+}
+
+extension MockMessage {
+    func assignMockAddedUser() {
+        backingSystemMessageData?.addedUserTypes = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers().prefix(1)))
+    }
+
+    func assignMockRemovedUsers(users: ArraySlice<MockUserType>) {
+        backingSystemMessageData?.removedUserTypes = Set<MockUserType>(users)
+    }
 }

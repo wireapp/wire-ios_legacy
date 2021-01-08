@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireCommonComponents
+import Down
 
 protocol PasscodeSetupUserInterface: class {
     var createButtonEnabled: Bool { get set }
@@ -39,6 +40,16 @@ final class PasscodeSetupViewController: UIViewController {
     enum Context {
         case forcedForTeam
         case createPasscode
+
+        var infoLabelString: String {
+            switch self {
+            case .createPasscode:
+                return "create_passcode.info_label".localized
+
+            case .forcedForTeam:
+                return "warning_screen.main_info.forced_applock".localized + "\n\n" + "create_passcode.info_label_forced_applock".localized
+            }
+        }
     }
     
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
@@ -93,52 +104,11 @@ final class PasscodeSetupViewController: UIViewController {
     private let useCompactLayout: Bool
 
     private lazy var infoLabel: UILabel = {
+        let style = DownStyle.infoLabelStyle(compact: useCompactLayout, variant: variant)
         let label = UILabel()
         label.configMultipleLineLabel()
-
-        let textColor = UIColor.from(scheme: .textForeground, variant: variant)
-
-        let regularFont: UIFont
-        let heightFont: UIFont
-        let lineHeight: CGFloat
-
-        if useCompactLayout {
-            regularFont = FontSpec(.small, .regular).font!
-            heightFont = FontSpec(.small, .bold).font!
-            lineHeight = 14
-        } else {
-            regularFont = UIFont.normalRegularFont
-            heightFont = FontSpec(.normal, .bold).font!
-            lineHeight = 20
-        }
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = lineHeight
-        paragraphStyle.maximumLineHeight = lineHeight
-
-        let baseAttributes: [NSAttributedString.Key: Any] = [
-            .paragraphStyle: paragraphStyle,
-            .foregroundColor: textColor]
-        
-        let headingString: String
-        let highlightString: String
-
-        switch context {
-        case .createPasscode:
-            headingString = "create_passcode.info_label".localized
-            highlightString = "create_passcode.info_label.highlighted".localized
-        case .forcedForTeam:
-            headingString = "warning_screen.main_info.forced_applock".localized + "\n\n" + "create_passcode.info_label_forced_applock".localized
-            highlightString = "create_passcode.info_label_forced_applock.highlighted".localized
-        }
-        
-        let headingText = NSAttributedString(string: headingString) && baseAttributes && regularFont
-        let highlightText = NSAttributedString(string: highlightString) && baseAttributes && heightFont
-
-        label.text = " "
-        label.attributedText = headingText + highlightText
+        label.attributedText = .markdown(from: context.infoLabelString, style: style)
         label.textAlignment = .center
-
         return label
     }()
 
@@ -395,6 +365,24 @@ extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate 
                 return .none
             }
         }
+    }
+
+}
+
+private extension DownStyle {
+
+    static func infoLabelStyle(compact: Bool, variant: ColorSchemeVariant) -> DownStyle {
+        let style = DownStyle()
+        style.baseFont = compact ? .smallRegularFont : .normalRegularFont
+        style.baseFontColor = .from(scheme: .textForeground, variant: variant)
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = compact ? 14 : 20
+        paragraphStyle.maximumLineHeight = compact ? 14 : 20
+        paragraphStyle.paragraphSpacing = compact ? 14 : 20
+        style.baseParagraphStyle = paragraphStyle
+
+        return style
     }
 
 }
