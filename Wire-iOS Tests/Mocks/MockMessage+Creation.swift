@@ -109,7 +109,7 @@ final class MockMessageFactory {
         var userClients: [AnyHashable] = []
 
         for user: Any in mockSystemMessageData.userTypes {
-            if let client = (user as? MockUser)?.feature(withUserClients: numClients) {
+            if let client = (user as? MockUserType)?.feature(withUserClients: numClients) {
                 userClients.append(contentsOf: client)
             }
         }

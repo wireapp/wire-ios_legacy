@@ -40,6 +40,8 @@ class MockUserType: NSObject, UserType, Decodable {
         }
     }
 
+    var _clients: Set<AnyHashable>!
+    
     // MARK: - MockHelpers
     var isTrusted: Bool = true
 

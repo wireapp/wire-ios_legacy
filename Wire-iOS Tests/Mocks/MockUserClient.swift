@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import XCTest
 
 final class MockUserClient: NSObject, UserClientType {
 
@@ -41,8 +42,18 @@ final class MockUserClient: NSObject, UserClientType {
 
     var verified: Bool = false
 
-    var user: ZMUser? = nil
-    
+    var user: ZMUser? {
+        get {
+            XCTFail("This property should not be used in tests")
+            return nil
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var userType: UserType?
+
     var deviceClass: DeviceClass? = .phone
     
     func isSelfClient() -> Bool {
