@@ -185,7 +185,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         let fixture = CallInfoTestFixture(otherUser: mockOtherUser, groupSize: .small)
 
         // when
-        sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished(mockUsers: SwiftMockLoader.mockUsers()), selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -197,7 +197,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
                                           groupSize: .large)
 
         // when
-        sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished(mockUsers: SwiftMockLoader.mockUsers()), selfUser: mockSelfUser)
 
         // then
         verify(matching: sut)

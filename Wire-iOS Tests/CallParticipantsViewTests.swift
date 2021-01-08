@@ -24,7 +24,7 @@ final class CallParticipantsListHelper {
     static func participants(count participantCount: Int,
                              videoState: VideoState? = nil,
                              microphoneState: MicrophoneState? = nil,
-                             mockUsers: [UserType] = MockUser.mockUsers()) -> CallParticipantsList {
+                             mockUsers: [UserType]) -> CallParticipantsList {
         let sortedParticipants = (0..<participantCount)
             .lazy
             .map { mockUsers[$0] }
@@ -46,7 +46,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        mockParticipants = CallParticipantsListHelper.participants(count: 10)
+        mockParticipants = CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers())
     }
     
     override func tearDown() {

@@ -424,7 +424,7 @@ final class CallInfoConfigurationTests: XCTestCase {
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false)
 
         // then
-        assertEquals(fixture.groupAudioEstablished, configuration)
+        assertEquals(fixture.groupAudioEstablished(mockUsers: SwiftMockLoader.mockUsers()), configuration)
     }
 
     func testGroupAudioEstablishedNonTeamUser() {
