@@ -315,6 +315,10 @@ final class ConversationSystemMessageCellDescription {
         case .conversationIsSecure:
             let shieldCell = ConversationVerifiedSystemMessageSectionDescription()
             return [AnyConversationMessageCellDescription(shieldCell)]
+            
+        case .sessionReset:
+            let sessionResetCell = ConversationSessionResetSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender)
+            return [AnyConversationMessageCellDescription(sessionResetCell)]
 
         case .decryptionFailed, .decryptionFailedResolved, .decryptionFailed_RemoteIdentityChanged:
             let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender)
@@ -708,6 +712,43 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     
 }
 
+class ConversationSessionResetSystemMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationSystemMessageCell
+    
+    var message: ZMConversationMessage?
+    var delegate: ConversationMessageCellDelegate?
+    var actionController: ConversationMessageActionController?
+    
+    var topMargin: Float = 0
+    var isFullWidth: Bool = true
+    var supportsActions: Bool = false
+    var showEphemeralTimer: Bool = false
+    var containsHighlightableContent: Bool = false
+    var accessibilityIdentifier: String?
+    var accessibilityLabel: String?
+    
+    var configuration: ConversationSystemMessageCell.Configuration
+    
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType) {
+        let icon = StyleKitIcon.envelope.makeImage(size: .tiny, color: UIColor.Wire.primaryLabel)
+        configuration = View.Configuration(icon: icon,
+                                           attributedText: Self.makeAttributedString(sender),
+                                           showLine: true)
+    }
+    
+    static func makeAttributedString(_ sender: UserType) -> NSAttributedString {
+        let string: String
+        if sender.isSelfUser {
+            string =  "content.system.session_reset.self".localized
+        } else {
+            string = "content.system.session_reset.other".localized(args: sender.name ?? "")
+        }
+        
+        return NSMutableAttributedString.markdown(from: string, style: .systemMessage)
+    }
+    
+}
+
 class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = LinkConversationSystemMessageCell
     let configuration: View.Configuration
@@ -975,4 +1016,3 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     }
     
 }
-

@@ -70,6 +70,18 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
+    
+    func testSessionReset_Other() {
+        let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: otherUser)!
+
+        verify(message: message)
+    }
+    
+    func testSessionReset_Self() {
+        let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: selfUser)!
+         
+        verify(message: message)
+    }
 
     func testDecryptionFailed_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0)!
