@@ -125,13 +125,12 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
     }
 }
 
-class LinkConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+class CannotDecryptSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
         let icon: UIImage?
         let attributedText: NSAttributedString?
         let showLine: Bool
-        let urlHandler: ((_ url: URL, _ cell: LinkConversationSystemMessageCell) -> Void)?
     }
 
     var lastConfiguration: Configuration?
@@ -149,15 +148,11 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
 
 // MARK: - UITextViewDelegate
 
-extension LinkConversationSystemMessageCell {
+extension CannotDecryptSystemMessageCell {
 
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         
-        if let handler = lastConfiguration?.urlHandler {
-            handler(url, self)
-        } else {
-            UIApplication.shared.open(url)
-        }
+        delegate?.perform(action: .resetSession, for: message, view: self)
 
         return false
     }
@@ -708,7 +703,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
 }
 
 class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
-    typealias View = LinkConversationSystemMessageCell
+    typealias View = CannotDecryptSystemMessageCell
     let configuration: View.Configuration
 
     static fileprivate let resetSessionURL: URL = URL(string: "action://reset-session")!
@@ -743,15 +738,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
         configuration = View.Configuration(icon: icon,
                                            attributedText: title,
-                                           showLine: false,
-                                           urlHandler: { URL, cell in                                 
-                                            switch URL {
-                                            case Self.resetSessionURL:
-                                                cell.delegate?.perform(action: .resetSession, for: message, view: cell)
-                                            default:
-                                                break
-                                            }
-        })
+                                           showLine: false)
         actionController = nil
     }
     
