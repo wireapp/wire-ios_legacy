@@ -837,9 +837,9 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
         let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
-        let users: [UserType] = systemMessage.userTypes.sorted(by: { (a, b) -> Bool in
-            ((a as? UserType)?.name ?? "").compare((b as? UserType)?.name ?? "") == .orderedAscending
-        }) as? [UserType] ?? []
+        let users = systemMessage.userTypes.lazy
+            .compactMap { $0 as? UserType }
+            .sorted { $0.name < $1.name }
         
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)

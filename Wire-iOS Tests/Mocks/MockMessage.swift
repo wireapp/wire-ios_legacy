@@ -60,35 +60,35 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser> {
         get {
-        XCTAssert(false, "This property should not be used in tests")
+        XCTFail("This property should not be used in tests")
           return Set()
         }
         
         set {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
         }
     }
     var userTypes: Set<AnyHashable> = Set()
     var clients: Set<AnyHashable> = Set()
     var addedUsers: Set<ZMUser> {
         get {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
             return Set()
         }
         
         set {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
         }
     }
     var addedUserTypes: Set<AnyHashable> = Set()
     var removedUsers: Set<ZMUser> {
         get {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
             return Set()
         }
         
         set {
-            XCTAssert(false, "This property should not be used in tests")
+            XCTFail("This property should not be used in tests")
         }
     }
     var removedUserTypes: Set<AnyHashable> = Set()
