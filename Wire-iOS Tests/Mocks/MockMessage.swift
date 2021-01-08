@@ -60,10 +60,10 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser> {
         get {
-        XCTFail("This property should not be used in tests")
-          return Set()
+            XCTFail("This property should not be used in tests")
+            return Set()
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }
@@ -75,7 +75,7 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
             XCTFail("This property should not be used in tests")
             return Set()
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }
@@ -86,7 +86,7 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
             XCTFail("This property should not be used in tests")
             return Set()
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }
@@ -156,7 +156,7 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
-    
+
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
@@ -180,11 +180,11 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -220,7 +220,7 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
-    
+
     var v3_isImage: Bool {
         return false
     }
@@ -240,11 +240,11 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -292,7 +292,7 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
-    typealias UsersByReaction = Dictionary<String, [ZMUser]>
+    typealias UsersByReaction = [String: [ZMUser]]
 
     // MARK: - ZMConversationMessage
     var nonce: UUID? = UUID()

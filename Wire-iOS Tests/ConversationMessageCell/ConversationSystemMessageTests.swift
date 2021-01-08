@@ -47,7 +47,6 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         message.sender = MockUser.mockUsers()?.last
         message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 
-
         verify(message: message)
     }
 
@@ -183,7 +182,7 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
-    
+
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
@@ -215,7 +214,7 @@ extension MockMessage {
     func assignMockAddedUser() {
         backingSystemMessageData?.addedUserTypes = Set<AnyHashable>(Array(SwiftMockLoader.mockUsers().prefix(1)))
     }
-    
+
     func assignMockRemovedUsers(users: ArraySlice<MockUserType>) {
         backingSystemMessageData?.removedUserTypes = Set<MockUserType>(users)
     }
