@@ -27,6 +27,8 @@ import SnapshotTesting
 class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
     
+    var mockSelfUser: MockUserType!
+
     fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
                                                                        isTimeIntervalSinceLastMessageSignificant: false,
                                                                        isFirstMessageOfTheDay: false,
@@ -45,6 +47,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         }
     }
     
+    
     override class func tearDown() {
         ColorScheme.default.variant = .light
     }
@@ -55,10 +58,14 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         
         ColorScheme.default.variant = .light
         
+        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.accentColorValue = .vividRed
     }
-    
+
     override func tearDown() {
         coreDataFixture = nil
+        mockSelfUser = nil
+
         super.tearDown()
     }
     

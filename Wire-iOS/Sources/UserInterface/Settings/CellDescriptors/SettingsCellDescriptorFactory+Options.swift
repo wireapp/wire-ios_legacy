@@ -38,7 +38,7 @@ extension SettingsCellDescriptorFactory {
             externalAppsSection,
             popularDemandSendButtonSection,
             popularDemandDarkThemeSection,
-            SecurityFlags.forceEncryptionAtRest.isEnabled ? nil : appLockSection,
+            isAppLockAvailable ? appLockSection : nil,
             SecurityFlags.generateLinkPreviews.isEnabled ? linkPreviewSection : nil
         ].compactMap { $0 }
         
@@ -223,15 +223,13 @@ extension SettingsCellDescriptorFactory {
     
     private var appLockSection: SettingsSectionDescriptorType {
         let appLockToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.lockApp))
-        appLockToggle.settingsProperty.enabled = !AppLock.rules.forceAppLock
+
+        appLockToggle.settingsProperty.enabled = !settingsPropertyFactory.isAppLockForced
         
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
             headerGenerator: { return nil },
-            footerGenerator: { return SettingsCellDescriptorFactory.appLockSectionSubtitle },
-            visibilityAction: { _ in
-                return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil)
-            }
+            footerGenerator: { return self.appLockSectionSubtitle }
         )
     }
     
@@ -334,8 +332,8 @@ extension SettingsCellDescriptorFactory {
         return formatter
     }
     
-    private static var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLock.rules.appLockTimeout)
+    private var appLockSectionSubtitle: String {
+        let timeout = TimeInterval(settingsPropertyFactory.timeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {
@@ -348,11 +346,19 @@ extension SettingsCellDescriptorFactory {
         
         var components = [lockDescription, typeKey.localized]
         
-        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
+        if AuthenticationType.current == .unavailable {
             let reminderKey = "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder"
             components.append(reminderKey.localized)
         }
         
         return components.joined(separator: " ")
+    }
+}
+
+// MARK: - Helpers
+extension SettingsCellDescriptorFactory {
+    // Encryption at rest will trigger its own variant of AppLock.
+    var isAppLockAvailable: Bool {
+        return !SecurityFlags.forceEncryptionAtRest.isEnabled && settingsPropertyFactory.isAppLockAvailable
     }
 }

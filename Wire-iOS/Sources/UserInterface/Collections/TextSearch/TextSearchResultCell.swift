@@ -143,7 +143,7 @@ class TextSearchResultCell: UITableViewCell {
         message = newMessage
         queries = newQueries
         
-        userImageView.user = newMessage.sender
+        userImageView.user = newMessage.senderUser
         footerView.message = newMessage
         if let userSession = ZMUserSession.shared() {
             observerToken = MessageChangeInfo.add(observer: self,

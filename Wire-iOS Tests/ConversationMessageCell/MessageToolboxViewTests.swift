@@ -220,7 +220,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysTimestamp_Countdown_OtherUser() {
         // GIVEN
         message.conversation = createGroupConversation()
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.isEphemeral = true
         message.destructionDate = Date().addingTimeInterval(10)
 
@@ -234,7 +234,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysTimestamp_ReadReceipts_Countdown_SelfUser() {
         // GIVEN
         message.conversation = createGroupConversation()
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.readReceipts = [MockReadReceipt(user: otherUser)]
         message.deliveryState = .read
         message.isEphemeral = true
@@ -252,7 +252,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let conversation = createGroupConversation()
         message.conversation = conversation
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
 
         let remoteUser = createUser(name: "Esteban Julio Ricardo Montoya de la Rosa Ramírez")
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser, remoteUser]]

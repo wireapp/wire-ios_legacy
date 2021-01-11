@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 // MARK: SplitViewController reveal
 
@@ -35,7 +36,9 @@ extension ConversationInputBarViewController {
 }
 
 extension ConversationInputBarViewController: UITextViewDelegate {
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         // In case the conversation isDeleted
         if conversation.managedObjectContext == nil {
             return
@@ -47,7 +50,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateRightAccessoryView()
     }
 
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return textAttachment.image == nil
     }
 

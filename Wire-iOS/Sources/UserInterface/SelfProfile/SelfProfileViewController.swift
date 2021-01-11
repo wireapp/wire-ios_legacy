@@ -68,7 +68,7 @@ final class SelfProfileViewController: UIViewController {
 
     init(selfUser: SettingsSelfUser,
          userRightInterfaceType: UserRightInterface.Type = UserRight.self,
-         userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+         userSession: UserSessionInterface? = ZMUserSession.shared()) {
         
         self.selfUser = selfUser
 
@@ -214,20 +214,22 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else {
+        //There is an additional check for the simulator because there's no way to disable the device passcode on the simulator. We need it for testing.
+        guard AuthenticationType.current == .unavailable || (UIDevice.isSimulator && AuthenticationType.current == .passcode) else {
             callback(newValue)
             return
         }
-        
+
         guard newValue else {
-            Keychain.deletePasscode()
+            try? settingsPropertyFactory.userSession?.appLockController.deletePasscode()
             callback(newValue)
-            
             return
         }
         
         self.callback = callback
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+        let passcodeSetupViewController = PasscodeSetupViewController(variant: .dark,
+                                                                      context: .createPasscode,
+                                                                      callback: callback)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
         
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
@@ -240,7 +242,12 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
                     
         wrappedViewController.presentationController?.delegate = passcodeSetupViewController
         
-        UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            wrappedViewController.modalPresentationStyle = .popover
+            present(wrappedViewController, animated: true)
+        } else {
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        }
     }
 }
 

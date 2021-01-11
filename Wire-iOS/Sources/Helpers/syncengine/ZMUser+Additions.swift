@@ -18,6 +18,11 @@
 
 import WireDataModel
 
+extension UserType {
+    var nameAccentColor: UIColor? {
+        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
+    }
+}
 
 extension ZMUser {
 
@@ -27,10 +32,6 @@ extension ZMUser {
         #else
         return hasTeam
         #endif
-    }
-
-    var nameAccentColor: UIColor? {
-        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
     }
 
     /// Blocks user if not already blocked and vice versa.

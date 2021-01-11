@@ -28,7 +28,7 @@ class AvatarImageView: UIControl {
      * The different, mutually-exclusive forms of avatars
      */
 
-    public enum Avatar: Equatable {
+    enum Avatar: Equatable {
         case image(UIImage)
         case text(String)
     }
@@ -37,14 +37,14 @@ class AvatarImageView: UIControl {
      * The different shapes of avatars.
      */
 
-    public enum Shape {
+    enum Shape {
         case rectangle, circle, relative
     }
 
     // MARK: - Properties
 
     /// The avatar to display.
-    public var avatar: Avatar? {
+    var avatar: Avatar? {
         didSet {
             if avatar != oldValue {
                 updateAvatar()
@@ -53,7 +53,7 @@ class AvatarImageView: UIControl {
     }
 
     /// The shape of the avatar
-    public var shape: Shape = .circle {
+    var shape: Shape = .circle {
         didSet {
             if shape != oldValue {
                 updateShape()
@@ -62,7 +62,7 @@ class AvatarImageView: UIControl {
     }
 
     /// Whether to allow initials.
-    public var allowsInitials: Bool = true {
+    var allowsInitials: Bool = true {
         didSet {
             if allowsInitials != oldValue {
                 updateAvatar()
@@ -73,7 +73,9 @@ class AvatarImageView: UIControl {
     /// The background color for the image.
     var imageBackgroundColor: UIColor? {
         get { return container.backgroundColor }
-        set { container.backgroundColor = newValue }
+        set {
+            container.backgroundColor = newValue
+        }
     }
 
     /// The font to use of the initials label.
@@ -104,13 +106,13 @@ class AvatarImageView: UIControl {
 
     // MARK: - Initialization
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
         configureConstraints()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configureSubviews()
         configureConstraints()
@@ -171,7 +173,7 @@ class AvatarImageView: UIControl {
      * - parameter hugging: The content hugging priority.
      */
 
-    public func setImageConstraint(resistance: Float, hugging: Float) {
+    func setImageConstraint(resistance: Float, hugging: Float) {
         imageView.setContentHuggingPriority(UILayoutPriority(rawValue: hugging), for: .vertical)
         imageView.setContentHuggingPriority(UILayoutPriority(rawValue: hugging), for: .horizontal)
         imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: resistance), for: .vertical)

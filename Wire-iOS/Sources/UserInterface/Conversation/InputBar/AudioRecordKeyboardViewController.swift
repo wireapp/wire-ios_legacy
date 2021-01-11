@@ -71,6 +71,13 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     private var currentEffect: AVSAudioEffectType = .none
     private var currentEffectFilePath: String?
     
+    private var appLock: AppLockType? {
+        return ZMUserSession.shared()?.appLockController
+    }
+    
+    private var isAppLockActive: Bool {
+        return appLock?.isActive ?? false
+    }
     // MARK: - Life Cycle
     
     convenience init() {
@@ -99,7 +106,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
-        if AppLock.isActive { UIApplication.shared.keyWindow?.endEditing(true) }
+        if isAppLockActive { UIApplication.shared.keyWindow?.endEditing(true) }
     }
     
     // MARK: - View Configuration

@@ -99,7 +99,7 @@ class MessageToolboxDataSource {
     func updateContent(forceShowTimestamp: Bool, widthConstraint: CGFloat) -> SlideDirection? {
         // Compute the state
         let likers = message.likers()
-        let isSentBySelfUser = message.sender?.isSelfUser == true
+        let isSentBySelfUser = message.senderUser?.isSelfUser == true
         let failedToSend = message.deliveryState == .failedToSend && isSentBySelfUser
         let showTimestamp = forceShowTimestamp || likers.isEmpty
         let previousContent = self.content
@@ -227,7 +227,7 @@ class MessageToolboxDataSource {
 
     /// Returns the status for the sender of the message.
     fileprivate func selfStatus(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let sender = message.sender,
+        guard let sender = message.senderUser,
             sender.isSelfUser else { return nil }
 
         var deliveryStateString: String
