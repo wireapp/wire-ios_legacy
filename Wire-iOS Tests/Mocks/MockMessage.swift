@@ -298,8 +298,24 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .none
-    var senderUser: UserType?
+    var sender: ZMUser? {
+        get {
+            XCTFail("This property should not be used in tests")
+            
+            return nil
+        }
+        
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var senderUser: UserType? {
+        didSet {
+            if senderUser is ZMUser {
+                XCTFail("ZMUser should not created for tests")
+            }
+        }
+    }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none

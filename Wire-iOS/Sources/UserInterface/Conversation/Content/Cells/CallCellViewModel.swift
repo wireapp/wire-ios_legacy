@@ -38,7 +38,7 @@ struct CallCellViewModel {
 
     func attributedTitle() -> NSAttributedString? {
         guard let systemMessageData = message.systemMessageData,
-            let sender = message.sender,
+            let sender = message.senderUser,
             let labelFont = font,
             let labelBoldFont = boldFont,
             let labelTextColor = textColor,

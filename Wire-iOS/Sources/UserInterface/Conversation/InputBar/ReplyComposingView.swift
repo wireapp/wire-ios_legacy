@@ -27,7 +27,7 @@ protocol ReplyComposingViewDelegate: class {
 fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
         let contentDescriptionText: String
-        let senderDescriptionText = self.sender?.name ?? ""
+        let senderDescriptionText = senderUser?.name ?? ""
         
         if let textData = textMessageData {
             contentDescriptionText = textData.messageText ?? ""

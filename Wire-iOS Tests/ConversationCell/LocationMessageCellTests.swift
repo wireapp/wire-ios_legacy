@@ -23,6 +23,15 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
+    var sut: ImageMessageView!
+    
+    override func setUp() {
+        super.setUp()
+        
+        mockSelfUser.name = "selfUser"
+        mockSelfUser.accentColorValue = .vividRed
+    }
+    
     /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
     func disabled_testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
@@ -37,15 +46,15 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
     }
 
     func testThatItRendersLocationCellObfuscated() {
-        verify(message: makeMessage {
+        verify(message: makeMessage() {
             $0.isObfuscated = true
         })
     }
 
     // MARK: - Helpers
 
-    func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let locationMessage = MockMessageFactory.locationMessage()!
+    private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
+        let locationMessage = MockMessageFactory.locationMessage(sender: mockSelfUser)!
         locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
 
         config?(locationMessage)

@@ -22,13 +22,22 @@ import XCTest
 
 final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
 
+    var message: MockMessage!
+    
+    override func setUp() {
+        super.setUp()
+        
+        message = MockMessageFactory.fileTransferMessage(sender: mockSelfUser)!
+    }
+    
     override func tearDown() {
+        message = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+        
         super.tearDown()
     }
 
     func testUploadedCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
@@ -36,7 +45,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadedCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
 
@@ -44,8 +52,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadedCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
 
@@ -53,8 +60,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadedCell_fromThisDevice_longFileName() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         message.backingFileMessageData.filename = "Etiam lacus elit, tempor at blandit sit amet, faucibus in erat. Mauris faucibus scelerisque mattis.pdf"
@@ -63,7 +69,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadedCell_fromThisDevice_bigFileSize() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
         (message.backingFileMessageData as! MockFileMessageData).size = UInt64(1024 * 1024 * 25)
@@ -72,7 +77,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadingCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
@@ -80,7 +84,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadingCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
 
@@ -88,8 +91,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testUploadingCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
 
@@ -97,7 +99,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadingCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -107,7 +108,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadingCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -117,8 +117,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadingCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -128,7 +127,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadedCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -137,7 +135,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadedCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = nil
@@ -146,8 +143,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testDownloadedCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = nil
@@ -166,7 +162,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedDownloadCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -175,7 +170,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedDownloadCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = nil
@@ -184,8 +178,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedDownloadCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = nil
@@ -194,7 +187,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedUploadCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
@@ -202,7 +194,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedUploadCell_fromOtherDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = nil
 
@@ -210,8 +201,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testFailedUploadCell_fromOtherUser() {
-        let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = nil
 
@@ -221,7 +211,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     // MARK : Upload Cancelled
 
     func testCancelledUploadCell_fromThisDevice() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploadingCancelled
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
@@ -231,7 +220,6 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     // MARK : Obfuscated
 
     func testObfuscatedFileTransferCell() {
-        let message = MockMessageFactory.fileTransferMessage()!
         message.isObfuscated = true
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL

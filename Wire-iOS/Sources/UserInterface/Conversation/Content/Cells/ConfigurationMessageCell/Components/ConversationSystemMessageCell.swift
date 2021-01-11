@@ -270,7 +270,7 @@ final class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
-            let sender = message.sender,
+            let sender = message.senderUser,
             let conversation = message.conversation else {
             preconditionFailure("Invalid system message")
         }
