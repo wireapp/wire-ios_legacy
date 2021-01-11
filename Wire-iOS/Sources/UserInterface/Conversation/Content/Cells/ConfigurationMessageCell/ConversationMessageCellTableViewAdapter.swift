@@ -94,8 +94,8 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     var showsMenu = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.cellView = C.View()
-        self.cellView.translatesAutoresizingMaskIntoConstraints = false
+        cellView = C.View(selfUser: ZMUser.selfUser())
+        cellView.translatesAutoresizingMaskIntoConstraints = false
         self.ephemeralCountdownView = EphemeralCountdownView()
         self.ephemeralCountdownView.translatesAutoresizingMaskIntoConstraints = false
         
