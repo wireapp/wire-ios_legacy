@@ -76,8 +76,8 @@ final class ConversationTextMessageCell: UIView,
         return messageTextView.layoutManager.usedRect(for: messageTextView.textContainer)
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         setup()
     }
 

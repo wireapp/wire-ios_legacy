@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
 
     typealias AnimationBlock = (_ animationBlock: Any, _ reps: Int) -> Void
     var animationBlock: AnimationBlock?
@@ -30,6 +30,15 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
         let pingColor: UIColor
         let pingText: NSAttributedString
         var message: ZMConversationMessage?
+    }
+    
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configure(with object: Configuration, animated: Bool) {

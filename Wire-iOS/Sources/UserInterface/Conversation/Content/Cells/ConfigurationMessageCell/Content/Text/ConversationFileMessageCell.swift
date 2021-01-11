@@ -19,7 +19,7 @@
 import UIKit
 import WireDataModel
 
-class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
+final class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     struct Configuration {
         let message: ZMConversationMessage
@@ -36,16 +36,15 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     var isSelected: Bool = false
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureSubviews() {

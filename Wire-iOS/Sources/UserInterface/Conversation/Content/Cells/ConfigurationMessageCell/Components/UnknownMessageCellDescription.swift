@@ -20,8 +20,8 @@ import Foundation
 import UIKit
 import WireDataModel
 
-extension CustomMessageView: ConversationMessageCell {
-
+extension CustomMessageView {
+    
     var selectionView: UIView? {
         return messageLabel
     }

@@ -43,16 +43,16 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell,
 
     var configuration: Configuration?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+        
         configureSubviews()
         configureConstraints()
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureSubviews() {

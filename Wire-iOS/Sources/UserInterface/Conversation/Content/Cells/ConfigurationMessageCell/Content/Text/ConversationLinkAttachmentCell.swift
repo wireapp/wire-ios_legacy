@@ -47,8 +47,8 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
 
     // MARK: - Initialization
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }

@@ -64,16 +64,15 @@ final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
     weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureSubviews() {

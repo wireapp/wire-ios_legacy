@@ -144,7 +144,7 @@ final class ConversationReplyContentView: UIView {
 
 }
 
-class ConversationReplyCell: UIView, ConversationMessageCell {
+final class ConversationReplyCell: UIView, ConversationMessageCell {
     typealias Configuration = ConversationReplyContentView.Configuration
     var isSelected: Bool = false
 
@@ -154,14 +154,15 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
     weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
 
-    override init(frame: CGRect) {
+    init(selfUser: UserType) {
         contentView = ConversationReplyContentView()
         container = ReplyRoundCornersView(containedView: contentView)
-        super.init(frame: frame)
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
-
+    
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

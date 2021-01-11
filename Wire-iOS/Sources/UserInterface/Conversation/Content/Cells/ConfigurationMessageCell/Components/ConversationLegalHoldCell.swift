@@ -31,16 +31,16 @@ final class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, C
         var conversation: ZMConversation?
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         setupView()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupView() {
         lineView.isHidden = true
     }

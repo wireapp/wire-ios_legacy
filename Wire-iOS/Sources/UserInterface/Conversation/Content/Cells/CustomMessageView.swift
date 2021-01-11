@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-class CustomMessageView: UIView {
+final class CustomMessageView: UIView, ConversationMessageCell {
     public var isSelected: Bool = false
     
     weak var delegate: ConversationMessageCellDelegate? = nil
@@ -33,17 +33,18 @@ class CustomMessageView: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init(selfUser: UserType) {
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
         messageLabel.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
                                        NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor]
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         addSubview(messageLabel)
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
 

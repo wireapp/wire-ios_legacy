@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireDataModel
 
-class ConversationSenderMessageCell: UIView, ConversationMessageCell {
+final class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 
     struct Configuration {
         let user: UserType
@@ -38,16 +38,15 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 
     private var indicatorImageViewTrailing: NSLayoutConstraint!
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configure(with object: Configuration, animated: Bool) {

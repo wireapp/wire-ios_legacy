@@ -64,12 +64,13 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
     let inviteButton = InviteButton()
     var isSelected: Bool = false
         
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         setupViews()
         createConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

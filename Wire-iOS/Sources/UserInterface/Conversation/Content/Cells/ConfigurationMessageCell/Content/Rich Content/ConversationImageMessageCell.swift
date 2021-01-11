@@ -63,8 +63,8 @@ final class ConversationImageMessageCell: UIView,
         return containerView
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureViews()
         createConstraints()
     }

@@ -54,8 +54,8 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         return containerView
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureViews()
         createConstraints()
 
@@ -65,6 +65,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

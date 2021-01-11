@@ -18,12 +18,11 @@
 
 import UIKit
 import WireCommonComponents
-import WireDataModel
 import WireSyncEngine
 
 // MARK: - Cells
 
-class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration: Equatable {
         let icon: UIImage?
@@ -32,7 +31,15 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
     }
 
     // MARK: - Configuration
-
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configure(with object: Configuration, animated: Bool) {
         lineView.isHidden = !object.showLine
         imageView.image = object.icon
@@ -41,7 +48,7 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
 
 }
 
-class ConversationStartedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ConversationStartedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
     struct Configuration {
         let title: NSAttributedString?
@@ -53,6 +60,15 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
     private let titleLabel = UILabel()
     private var selectedUsers: [UserType] = []
     
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func configureSubviews() {
         super.configureSubviews()
         
@@ -88,7 +104,7 @@ extension ConversationStartedSystemMessageCell {
 
 }
 
-class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
     struct Configuration: Equatable {
         let icon: UIImage?
@@ -99,6 +115,15 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
     
     private let warningLabel = UILabel()
     
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func configureSubviews() {
         super.configureSubviews()
         warningLabel.numberOfLines = 0
@@ -124,7 +149,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
     }
 }
 
-class LinkConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class LinkConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
         let icon: UIImage?
@@ -134,6 +159,15 @@ class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conversation
     }
 
     var lastConfiguration: Configuration?
+
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Configuration
 
@@ -178,18 +212,16 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
         var linkTarget: LinkTarget
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-       setupView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         setupView()
     }
     
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func setupView() {
         lineView.isHidden = false
     }
@@ -206,7 +238,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
 extension NewDeviceSystemMessageCell {
 
-    public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         guard let linkTarget = linkTarget,
               url == type(of: self).userClientURL,
@@ -224,7 +256,7 @@ extension NewDeviceSystemMessageCell {
 
 }
 
-class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
         let attributedText: NSAttributedString
@@ -233,6 +265,15 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
     var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
+
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func configureSubviews() {
         super.configureSubviews()
