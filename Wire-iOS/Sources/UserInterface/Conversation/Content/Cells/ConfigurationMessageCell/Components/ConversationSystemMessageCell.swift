@@ -195,7 +195,7 @@ extension LinkConversationSystemMessageCell {
 }
 
 
-class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
     static let userClientURL: URL = URL(string: "settings://user-client")!
     
