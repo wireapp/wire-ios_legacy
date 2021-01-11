@@ -70,6 +70,11 @@ protocol ConversationMessageCell: class {
     
     /// Called after the cell as been moved off screen.
     func didEndDisplaying()
+
+    
+    /// allow injection self user when testing a ConversationMessageCell
+    /// - Parameter selfUser: self user for configuration
+    init(selfUser: UserType)
 }
 
 extension ConversationMessageCell {
