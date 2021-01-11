@@ -32,13 +32,8 @@ final class ConversationPingCell: ConversationIconBasedCell, ConversationMessage
         var message: ZMConversationMessage?
     }
     
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(selfUser: UserType) {
+        super.init(selfUser: selfUser)
     }
 
     func configure(with object: Configuration, animated: Bool) {

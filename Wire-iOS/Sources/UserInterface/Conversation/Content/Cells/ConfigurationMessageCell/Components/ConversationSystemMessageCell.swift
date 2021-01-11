@@ -31,14 +31,6 @@ final class ConversationSystemMessageCell: ConversationIconBasedCell, Conversati
     }
 
     // MARK: - Configuration
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     func configure(with object: Configuration, animated: Bool) {
         lineView.isHidden = !object.showLine
@@ -60,15 +52,6 @@ final class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Con
     private let titleLabel = UILabel()
     private var selectedUsers: [UserType] = []
     
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func configureSubviews() {
         super.configureSubviews()
         
@@ -115,15 +98,6 @@ final class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell
     
     private let warningLabel = UILabel()
     
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func configureSubviews() {
         super.configureSubviews()
         warningLabel.numberOfLines = 0
@@ -159,15 +133,6 @@ final class LinkConversationSystemMessageCell: ConversationIconBasedCell, Conver
     }
 
     var lastConfiguration: Configuration?
-
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     // MARK: - Configuration
 
@@ -212,16 +177,11 @@ final class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationM
         var linkTarget: LinkTarget
     }
     
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
+    override init(selfUser: UserType) {
+        super.init(selfUser: selfUser)
         setupView()
     }
     
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func setupView() {
         lineView.isHidden = false
     }
@@ -265,15 +225,6 @@ final class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Con
 
     var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
-
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func configureSubviews() {
         super.configureSubviews()

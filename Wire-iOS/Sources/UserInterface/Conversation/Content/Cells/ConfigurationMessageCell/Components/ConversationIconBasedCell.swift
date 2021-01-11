@@ -66,16 +66,17 @@ class ConversationIconBasedCell: UIView {
         return -conversationHorizontalMargins.right * 2
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    /// allow injection self user when testing a ConversationMessageCell
+    /// - Parameter selfUser: self user for configuration
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configureSubviews() {

@@ -31,14 +31,9 @@ final class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, C
         var conversation: ZMConversation?
     }
     
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
+    override init(selfUser: UserType) {
+        super.init(selfUser: selfUser)
         setupView()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     func setupView() {

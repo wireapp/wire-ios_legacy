@@ -70,7 +70,6 @@ protocol ConversationMessageCell: class {
     
     /// Called after the cell as been moved off screen.
     func didEndDisplaying()
-
     
     /// allow injection self user when testing a ConversationMessageCell
     /// - Parameter selfUser: self user for configuration
@@ -172,7 +171,7 @@ extension ConversationMessageCellDescription {
     }
     
     func makeView() -> UIView {
-        let view = View(selfUser: ZMUser.selfUser()) ///TODO: inject
+        let view = View()
         let container = UIView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
