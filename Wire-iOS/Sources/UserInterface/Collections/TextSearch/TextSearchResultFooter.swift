@@ -26,7 +26,7 @@ import UIKit
 public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {
+            guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.senderUser else {
                 return
             }
             

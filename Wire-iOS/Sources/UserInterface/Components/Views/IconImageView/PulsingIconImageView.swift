@@ -54,11 +54,11 @@ class PulsingIconImageView: IconImageView {
     func startPulsing() {
         alpha = 1
         UIView.animate(
-            withDuration: 1,
+            withDuration: 0.7,
             delay: 0,
-            options: [.repeat, .autoreverse, .curveEaseOut],
+            options: [.repeat, .autoreverse, .curveEaseInOut],
             animations: {
-                self.alpha = 0.1
+                self.alpha = 0.2
         })
     }
     
