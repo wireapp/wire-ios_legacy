@@ -23,6 +23,7 @@ import MobileCoreServices
 import WireDataModel
 import WireCommonComponents
 import WireLinkPreview
+import LocalAuthentication
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -496,13 +497,16 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
         }
         
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                                description: "share_extension.privacy_security.lock_app.description".localized)
+        guard let appLockController = sharingSession.appLockController as? AppLockController else {
+            return
+        }
+        appLockController.evaluateAuthentication(scenario: scenario,
+                                                 description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {
                 if case .granted = result {
                     self?.localAuthenticationStatus = .granted
-                    try? self?.sharingSession?.unlockDatabase(with: context)
+                    try? self?.sharingSession?.unlockDatabase(with: context as! LAContext)
                 } else {
                     self?.localAuthenticationStatus = .denied
                 }
