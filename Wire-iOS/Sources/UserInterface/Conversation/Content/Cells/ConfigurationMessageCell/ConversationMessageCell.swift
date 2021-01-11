@@ -171,7 +171,7 @@ extension ConversationMessageCellDescription {
     }
     
     func makeView() -> UIView {
-        let view = View()
+        let view = View(selfUser: ZMUser.selfUser())
         let container = UIView()
         
         view.translatesAutoresizingMaskIntoConstraints = false

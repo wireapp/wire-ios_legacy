@@ -103,28 +103,20 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         let hasError: Bool
     }
 
-    convenience init() {
-        self.init(frame: .zero)
-    }
-
-    override init(frame: CGRect) {
+    init(selfUser: UserType) {
         super.init(frame: .zero)
-
+        
         configureViews()
         createConstraints()
-
+        
         button.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
     }
-
+    
     @objc
     private func buttonTouched(sender: Any) {
         buttonAction?()
     }
 
-    init(selfUser: UserType) {
-        super.init(frame: .zero)
-    }
-    
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
