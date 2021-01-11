@@ -498,7 +498,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         }
         
         sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                 description: "share_extension.privacy_security.lock_app.description".localized)
+                                                                description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {
                 if case .granted = result {

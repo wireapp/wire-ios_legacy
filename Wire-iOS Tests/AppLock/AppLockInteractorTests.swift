@@ -200,7 +200,6 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         let expectation = XCTestExpectation(description: "evaluate authentication")
 
         //when
-        
         sut.evaluateAuthentication(description: "")
 
         //then
