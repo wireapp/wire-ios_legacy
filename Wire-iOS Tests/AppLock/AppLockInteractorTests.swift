@@ -81,7 +81,9 @@ final class AppLockMock: AppLockType {
     }
     
     static var authenticationResult: AppLockController.AuthenticationResult = .granted
-    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario, description: String, context: LAContextProtocol, with callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
+    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
+                                description: String,
+                                context: LAContextProtocol, with callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
         callback(AppLockMock.authenticationResult, LAContext())
     }
     
@@ -198,6 +200,7 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         let expectation = XCTestExpectation(description: "evaluate authentication")
 
         //when
+        
         sut.evaluateAuthentication(description: "")
 
         //then

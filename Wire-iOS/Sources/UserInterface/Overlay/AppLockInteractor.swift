@@ -111,10 +111,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func evaluateAuthentication(description: String) {
-        guard let appLockController = appLock as? AppLockController else {
-            return
-        }
-        appLockController.evaluateAuthentication(scenario: authenticationScenario,
+        appLock?.evaluateAuthentication(scenario: authenticationScenario,
                                         description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
                         

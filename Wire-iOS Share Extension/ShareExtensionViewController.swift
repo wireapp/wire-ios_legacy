@@ -497,10 +497,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
         }
         
-        guard let appLockController = sharingSession.appLockController as? AppLockController else {
-            return
-        }
-        appLockController.evaluateAuthentication(scenario: scenario,
+        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
                                                  description: "share_extension.privacy_security.lock_app.description".localized)
         { [weak self] (result, context) in
             DispatchQueue.main.async {
