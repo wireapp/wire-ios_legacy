@@ -512,12 +512,12 @@ struct CallInfoTestFixture {
         )
     }
 
-    var groupAudioEstablishedVideoUnavailable: CallInfoViewControllerInput {
+    func groupAudioEstablishedVideoUnavailable(mockUsers: [MockUserType]) ->  CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .stopped, microphoneState: .unmuted, mockUsers: SwiftMockLoader.mockUsers())),
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
             canToggleMediaType: false,
             isMuted: false,
             callState: CallStateMock.ongoing,
