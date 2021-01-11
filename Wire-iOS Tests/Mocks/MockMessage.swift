@@ -18,6 +18,7 @@
 
 import Foundation
 import WireLinkPreview
+import XCTest
 
 final class MockCompositeMessageData: NSObject, CompositeMessageData {
     var items: [CompositeMessageItem] = []
@@ -57,10 +58,40 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
 
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
-    var users: Set<ZMUser> = Set()
+    var users: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var userTypes: Set<AnyHashable> = Set()
     var clients: Set<AnyHashable> = Set()
-    var addedUsers: Set<ZMUser> = Set()
-    var removedUsers: Set<ZMUser> = Set()
+    var addedUsers: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var addedUserTypes: Set<AnyHashable> = Set()
+    var removedUsers: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var removedUserTypes: Set<AnyHashable> = Set()
     var text: String? = ""
     var needsUpdatingUsers: Bool = false
     var userIsTheSender: Bool = false
@@ -127,7 +158,7 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
-    
+
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
@@ -151,11 +182,11 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -191,7 +222,7 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
-    
+
     var v3_isImage: Bool {
         return false
     }
@@ -211,11 +242,11 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -263,14 +294,30 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
-    typealias UsersByReaction = Dictionary<String, [ZMUser]>
+    typealias UsersByReaction = [String: [ZMUser]]
 
     // MARK: - ZMConversationMessage
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .none
-    var senderUser: UserType?
+    var sender: ZMUser? {
+        get {
+            XCTFail("This property should not be used in tests")
+            
+            return nil
+        }
+        
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var senderUser: UserType? {
+        didSet {
+            if senderUser is ZMUser {
+                XCTFail("ZMUser should not created for tests")
+            }
+        }
+    }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none

@@ -24,7 +24,7 @@ final class CallParticipantsListHelper {
     static func participants(count participantCount: Int,
                              videoState: VideoState? = nil,
                              microphoneState: MicrophoneState? = nil,
-                             mockUsers: [UserType] = MockUser.mockUsers()) -> CallParticipantsList {
+                             mockUsers: [UserType]) -> CallParticipantsList {
         let sortedParticipants = (0..<participantCount)
             .lazy
             .map { mockUsers[$0] }
@@ -32,7 +32,8 @@ final class CallParticipantsListHelper {
         
         return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
                                                                                           videoState: videoState,
-                                                                                          microphoneState: microphoneState)
+                                                                                          microphoneState: microphoneState,
+                                                                                          isActiveSpeaker: false)
         }
     }
 
@@ -46,7 +47,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        mockParticipants = CallParticipantsListHelper.participants(count: 10)
+        mockParticipants = CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers())
     }
     
     override func tearDown() {
@@ -55,10 +56,9 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers()), allowsScrolling: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()

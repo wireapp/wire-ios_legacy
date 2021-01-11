@@ -23,8 +23,8 @@ final class ConversationPingMessageTests: ConversationCellSnapshotTestCase {
 
     func testPing() {
         // GIVEN
-        let message = MockMessageFactory.pingMessage()!
-        message.sender = selfUser
+        let message = MockMessageFactory.pingMessage()! ///TODO mockmessage?
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
 
         // THEN
         verify(message: message)

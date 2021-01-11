@@ -22,15 +22,25 @@ import XCTest
 
 final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase {
 
+    var message: MockMessage!
+    
+    override func setUp() {
+        super.setUp()
+        
+        message = MockMessageFactory.videoMessage(sender: mockSelfUser,
+                                                  previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
+    }
+    
     override func tearDown() {
+        message = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+        
         super.tearDown()
     }
 
     // MARK : Uploaded (File not downloaded)
     
     func testUploadedCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         
@@ -38,8 +48,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testUploadedCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
         
@@ -48,7 +57,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     
     func testUploadedCell_fromOtherUser_withoutPreview() {
         let message = MockMessageFactory.videoMessage()!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
         
@@ -56,7 +65,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testUploadedCell_fromThisDevice_bigFileSize() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         (message.backingFileMessageData as! MockFileMessageData).size = UInt64(1024 * 1024 * 25)
@@ -68,7 +76,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Uploading
     
     func testUploadingCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -78,7 +85,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     
     func testUploadingCell_fromOtherUser_withoutPreview() {
         let message = MockMessageFactory.videoMessage()!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
         
@@ -86,8 +93,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testUploadingCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
         
@@ -97,7 +103,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Downloading
     
     func testDownloadingCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -107,8 +112,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testDownloadingCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.fileURL = nil
@@ -119,7 +123,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Downloaded
     
     func testDownloadedCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -128,8 +131,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testDownloadedCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = nil
@@ -140,7 +142,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Download Failed
     
     func testFailedDownloadCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -149,8 +150,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testFailedDownloadCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = nil
@@ -161,7 +161,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Upload Failed
     
     func testFailedUploadCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         
@@ -169,8 +168,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testFailedUploadCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = nil
         
@@ -180,7 +178,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Upload Cancelled
     
     func testCancelledUploadCell_fromThisDevice() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploadingCancelled
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         
@@ -188,8 +185,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testCancelledUploadCell_fromOtherUser() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
-        message.sender = MockUser.mockUsers().first!
+        message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploadingCancelled
         message.backingFileMessageData.fileURL = nil
         
@@ -199,7 +195,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK: No Duration
     
     func testDownloadedCell_fromThisDevice_NoDuration() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -211,7 +206,6 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     // MARK : Obfuscated
     
     func testObfuscatedFileTransferCell() {
-        let message = MockMessageFactory.videoMessage(previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
         message.isObfuscated = true
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL

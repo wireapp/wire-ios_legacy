@@ -77,8 +77,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     func testThatItTriggersCorrectEventWhenAParticipantJoins() {
         // given
     
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
-        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
         
         sut.updateParticipants([first])
         
@@ -95,8 +95,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenTheSameUserJoinsWithDifferentDevice() {
         // given
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
-        let second = CallParticipant(user: firstUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+        let second = CallParticipant(user: firstUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
         
         sut.updateParticipants([first])
 
@@ -113,8 +113,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantLeaves() {
         // given
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
-        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
        
         sut.updateParticipants([
             first,
@@ -131,8 +131,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenAUserLeavesFromOneOfItsDevices() {
         // given
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
-        let second = CallParticipant(user: firstUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+        let second = CallParticipant(user: firstUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
         
         sut.updateParticipants([
             first,
@@ -149,8 +149,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOnHerVideoStream() {
         // given
-        let stopped = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .stopped, microphoneState: .unmuted))
-        let started = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let stopped = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .stopped, microphoneState: .unmuted), isActiveSpeaker: false)
+        let started = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
         sut.updateParticipants([stopped])
         
         // when
@@ -163,8 +163,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOffHerVideoStream() {
         // given
-        let stopped = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .stopped, microphoneState: .unmuted))
-        let started = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let stopped = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .stopped, microphoneState: .unmuted), isActiveSpeaker: false)
+        let started = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
         sut.updateParticipants([
             started
         ])
@@ -193,8 +193,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItDoesNotTriggerAnEventWhenTheParticipantsDoNotChange() {
         // given
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
-        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+        let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
 
         sut.updateParticipants([
             first,
@@ -214,7 +214,7 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItDoesNotTriggerAnEventWhenTheParticipantsVideoStateDoesNotChange() {
         // given
-        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted))
+        let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
 
         sut.updateParticipants([
             first

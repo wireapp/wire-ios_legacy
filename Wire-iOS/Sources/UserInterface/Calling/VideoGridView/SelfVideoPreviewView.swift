@@ -29,10 +29,10 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     }
     
     override func setupViews() {
+        super.setupViews()
         previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(previewView)
-        super.setupViews()
+        insertSubview(previewView, belowSubview: userDetailsView)
     }
     
     override func createConstraints() {
@@ -41,7 +41,8 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     }
     
     override func updateUserDetails() {
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState,
+                                                                  shouldPulse: stream.isParticipantActiveSpeaker)
         
         guard let name = stream.participantName else {
             return

@@ -33,7 +33,7 @@ enum ProfileViewControllerContext {
 }
 
 final class ProfileViewControllerViewModel: NSObject {
-    let bareUser: UserType
+    let user: UserType
     let conversation: ZMConversation?
     let viewer: UserType
     let context: ProfileViewControllerContext
@@ -50,64 +50,55 @@ final class ProfileViewControllerViewModel: NSObject {
     private var observerToken: Any?
     weak var viewModelDelegate: ProfileViewControllerViewModelDelegate?
 
-    init(bareUser: UserType,
+    init(user: UserType,
          conversation: ZMConversation?,
          viewer: UserType,
          context: ProfileViewControllerContext) {
-        self.bareUser = bareUser
+        self.user = user
         self.conversation = conversation
         self.viewer = viewer
         self.context = context
 
         super.init()
         
-        if let fullUser = fullUser,
+        if let user = user as? ZMUser,
            let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: fullUser, in: userSession)
+            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
-    }
-    
-    var fullUser: ZMUser? {
-        return (bareUser as? ZMUser) ?? (bareUser as? ZMSearchUser)?.user
     }
 
     var hasLegalHoldItem: Bool {
-        return bareUser.isUnderLegalHold || conversation?.isUnderLegalHold == true
+        return user.isUnderLegalHold || conversation?.isUnderLegalHold == true
     }
     
     var shouldShowVerifiedShield: Bool {
-        return bareUser.isVerified && context != .deviceList
+        return user.isVerified && context != .deviceList
     }
     
     var hasUserClientListTab: Bool {
-        return nil != self.fullUser &&
-            context != .search &&
+        return context != .search &&
             context != .profileViewer
     }
     
-    var fullUserSet: UserSet {
-        if let fullUser = fullUser {
-            return UserSet(arrayLiteral: fullUser)
-        } else {
-            return UserSet()
-
-        }
+    var userSet: UserSet {
+        return UserSet(arrayLiteral: user)
     }
     
     var incomingRequestFooterHidden: Bool {
-        return !bareUser.isPendingApprovalBySelfUser
+        return !user.isPendingApprovalBySelfUser
     }
     
     var blockTitle: String? {
-        return BlockResult.title(for: bareUser)
+        return BlockResult.title(for: user)
     }
     
     var allBlockResult: [BlockResult] {
-        return BlockResult.all(isBlocked: bareUser.isBlocked)
+        return BlockResult.all(isBlocked: user.isBlocked)
     }
     
     func cancelConnectionRequest(completion: @escaping Completion) {
-        let user = fullUser
+        let user = self.user as? ZMUser
+        
         ZMUserSession.shared()?.enqueue({
             user?.cancelConnectionRequest()
             completion()
@@ -115,18 +106,18 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     func toggleBlocked() {
-        fullUser?.toggleBlocked()
+        (user as? ZMUser)?.toggleBlocked()
     }
     
     func openOneToOneConversation() {
-        guard let fullUser = fullUser else {
+        guard let user = user as? ZMUser else {
             zmLog.error("No user to open conversation with")
             return
         }
         var conversation: ZMConversation? = nil
         
         ZMUserSession.shared()?.enqueue({
-            conversation = fullUser.oneToOneConversation
+            conversation = user.oneToOneConversation
         }, completionHandler: {
             guard let conversation = conversation else { return }
             
@@ -200,26 +191,27 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Factories
     
     func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.name ?? "", addressBookName: fullUser?.addressBookEntry?.cachedName)
+        //TODO: add addressBookEntry to ZMUser
+        return UserNameDetailViewModel(user: user, fallbackName: user.name ?? "", addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName)
     }
     
     var profileActionsFactory: ProfileActionsFactory {
-        return ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
+        return ProfileActionsFactory(user: user, viewer: viewer, conversation: conversation, context: context)
     }
     
     // MARK: Connect
     
     func sendConnectionRequest() {
         let connect: (String) -> Void = {
-            if let user = self.fullUser {
+            if let user = self.user as? ZMUser {
                 user.connect(message: $0)
-            } else if let searchUser = self.bareUser as? ZMSearchUser {
+            } else if let searchUser = self.user as? ZMSearchUser {
                 searchUser.connect(message: $0)
             }
         }
         
         ZMUserSession.shared()?.enqueue {
-            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.name ?? "", self.viewer.name ?? "")
+            let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
             connect(messageText)
             // update the footer view to display the cancel request button
             self.viewModelDelegate?.updateFooterViews()
@@ -227,7 +219,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     func acceptConnectionRequest() {
-        guard let user = self.fullUser else { return }
+        guard let user = self.user as? ZMUser else { return }
         ZMUserSession.shared()?.enqueue {
             user.accept()
             user.refreshData()
@@ -236,7 +228,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     func ignoreConnectionRequest() {
-        guard let user = self.fullUser else { return }
+        guard let user = self.user as? ZMUser else { return }
         ZMUserSession.shared()?.enqueue {
             user.ignore()
             self.viewModelDelegate?.returnToPreviousScreen()
@@ -267,7 +259,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
 
 extension ProfileViewControllerViewModel: BackButtonTitleDelegate {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return bareUser.name?.uppercasedWithCurrentLocale
+        return user.name?.uppercasedWithCurrentLocale
     }
 }
 

@@ -430,6 +430,7 @@
 		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
 		6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903723AA8D480081802B /* AppLockPresenterTests.swift */; };
 		631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */; };
+		631ED088257558A400EFDD05 /* PulsingIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631ED087257558A400EFDD05 /* PulsingIconImageView.swift */; };
 		63256D8224D46456009FC58B /* BitRateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256D8124D46455009FC58B /* BitRateLabel.swift */; };
 		6328283C24A1100F000748D2 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328283B24A1100F000748D2 /* IconImageView.swift */; };
 		6328283F24A110CF000748D2 /* MicrophoneIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328283E24A110CF000748D2 /* MicrophoneIconStyle.swift */; };
@@ -447,6 +448,7 @@
 		636AD79C23A91A57004A3050 /* AppLockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79B23A91A57004A3050 /* AppLockInteractor.swift */; };
 		636B716C23C39D6700B624D6 /* AppLockViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636B716923C39D0600B624D6 /* AppLockViewControllerSnapshotTests.swift */; };
 		636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */; };
+		6370DA212577934C00B5C8F1 /* PulsingIconImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6370DA202577934C00B5C8F1 /* PulsingIconImageViewTests.swift */; };
 		6372AAA72492719100C5F307 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372AAA62492719100C5F307 /* GridCell.swift */; };
 		6372AAAA249A4F2600C5F307 /* Int+Even.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372AAA9249A4F2600C5F307 /* Int+Even.swift */; };
 		638332EA250282D200D18F42 /* OrientationDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638332E9250282D200D18F42 /* OrientationDelta.swift */; };
@@ -2042,6 +2044,7 @@
 		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
 		6306903723AA8D480081802B /* AppLockPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenterTests.swift; sourceTree = "<group>"; };
 		631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateExtending.swift; sourceTree = "<group>"; };
+		631ED087257558A400EFDD05 /* PulsingIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingIconImageView.swift; sourceTree = "<group>"; };
 		63256D8124D46455009FC58B /* BitRateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitRateLabel.swift; sourceTree = "<group>"; };
 		6328283B24A1100F000748D2 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		6328283E24A110CF000748D2 /* MicrophoneIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneIconStyle.swift; sourceTree = "<group>"; };
@@ -2059,6 +2062,7 @@
 		636AD79B23A91A57004A3050 /* AppLockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractor.swift; sourceTree = "<group>"; };
 		636B716923C39D0600B624D6 /* AppLockViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilderTests.swift; sourceTree = "<group>"; };
+		6370DA202577934C00B5C8F1 /* PulsingIconImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingIconImageViewTests.swift; sourceTree = "<group>"; };
 		6372AAA62492719100C5F307 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		6372AAA9249A4F2600C5F307 /* Int+Even.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Even.swift"; sourceTree = "<group>"; };
 		638332E9250282D200D18F42 /* OrientationDelta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDelta.swift; sourceTree = "<group>"; };
@@ -4196,6 +4200,7 @@
 			isa = PBXGroup;
 			children = (
 				6328283B24A1100F000748D2 /* IconImageView.swift */,
+				631ED087257558A400EFDD05 /* PulsingIconImageView.swift */,
 				6328283E24A110CF000748D2 /* MicrophoneIconStyle.swift */,
 				6328284024A110DC000748D2 /* VideoIconStyle.swift */,
 				6328284224A11847000748D2 /* UserTypeIconStyle.swift */,
@@ -4209,6 +4214,14 @@
 				6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */,
 			);
 			path = Calling;
+			sourceTree = "<group>";
+		};
+		6370DA1F2577933400B5C8F1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6370DA202577934C00B5C8F1 /* PulsingIconImageViewTests.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		7C25D7532149118D002E22BF /* Mentions */ = {
@@ -5845,6 +5858,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6370DA1F2577933400B5C8F1 /* Views */,
 				A99E3E8D2519F23700E4FD3E /* Analytics */,
 				A9E5725524C640A100CBE0D7 /* CustomAppLock */,
 				A9E674D824F519C60058FC72 /* Bundle */,
@@ -7960,6 +7974,7 @@
 				546EEA8F2536DFAB00195097 /* SwitchingAccountRouter.swift in Sources */,
 				8742C2E21E51BD7900329FB6 /* TextSearchInputView.swift in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
+				631ED088257558A400EFDD05 /* PulsingIconImageView.swift in Sources */,
 				5E0F75BE2268A0B6006C991E /* ColorScheme+Helper.swift in Sources */,
 				EF1ABCA82310147C00496A1B /* UIViewController+Invite.swift in Sources */,
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
@@ -8648,6 +8663,7 @@
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				EE52379123F557B900D4FE79 /* MockServiceUserType+Creation.swift in Sources */,
 				5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */,
+				6370DA212577934C00B5C8F1 /* PulsingIconImageViewTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,
 				EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */,
 				EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */,

@@ -44,8 +44,8 @@ final class UnlockViewController: UIViewController {
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
-
         button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
+        button.accessibilityIdentifier = "unlock_screen.button.unlock"
 
         return button
     }()
@@ -54,6 +54,7 @@ final class UnlockViewController: UIViewController {
         let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
         textField.placeholder = "unlock.textfield.placeholder".localized
         textField.delegate = self
+        textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
 
         return textField
     }()

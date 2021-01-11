@@ -81,7 +81,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
+
     // MARK: - Fill mode
 
     private var videoKind: VideoKind = .none {

@@ -26,7 +26,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate var clients: [UserClientType]
     fileprivate var tokens: [Any?] = []
-    fileprivate var user: ZMUser
+    fileprivate var user: UserType
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -36,7 +36,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
         return ColorScheme.default.statusBarStyle
     }
     
-    init(user: ZMUser) {
+    init(user: UserType) {
         self.user = user
         self.clients = UserClientListViewController.clientsSortedByRelevance(for: user)
         self.headerView = ParticipantDeviceHeaderView(userName: user.name ?? "")
@@ -66,12 +66,12 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        user.fetchUserClients()
+        (user as? ZMUser)?.fetchUserClients()
     }
     
     private func setupViews() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.showUnencryptedLabel = user.clients.count == 0
+        headerView.showUnencryptedLabel = (user as? ZMUser)?.clients.count == 0
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -93,7 +93,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
         ])
     }
     
-    fileprivate static func clientsSortedByRelevance(for user: ZMUser) -> [UserClientType] {
+    fileprivate static func clientsSortedByRelevance(for user: UserType) -> [UserClientType] {
         return user.allClients.sortedByRelevance().filter({ !$0.isSelfClient() })
     }
     
@@ -148,7 +148,8 @@ extension UserClientListViewController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.clientsChanged || changeInfo.trustLevelChanged else { return }
         
-        headerView.showUnencryptedLabel = user.clients.count == 0
+        ///TODO: add clients to userType
+        headerView.showUnencryptedLabel = (user as? ZMUser)?.clients.isEmpty == true
         clients = UserClientListViewController.clientsSortedByRelevance(for: user)
         collectionView.reloadData()
     }

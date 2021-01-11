@@ -30,7 +30,7 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
     let clientId2: String = "ClientId2"
 
     func callParticipant(clientId: String, videoState: VideoState) -> CallParticipant {
-        return CallParticipant(user: otherUser, clientId: clientId, state: .connected(videoState: videoState, microphoneState: .unmuted))
+        return CallParticipant(user: otherUser, clientId: clientId, state: .connected(videoState: videoState, microphoneState: .unmuted), isActiveSpeaker: false)
     }
 
     override func setUp() {
