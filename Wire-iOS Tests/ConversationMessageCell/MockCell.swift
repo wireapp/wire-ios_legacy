@@ -19,7 +19,7 @@
 import UIKit
 @testable import Wire
 
-class MockCell: UIView, ConversationMessageCell {
+final class MockCell: UIView, ConversationMessageCell {
     struct Configuration {
         let backgroundColor: UIColor
     }
@@ -30,6 +30,15 @@ class MockCell: UIView, ConversationMessageCell {
     var isConfigured: Bool  = false
     var isSelected: Bool = false
 
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configure(with object: Configuration, animated: Bool) {
         isConfigured = true
         backgroundColor = object.backgroundColor

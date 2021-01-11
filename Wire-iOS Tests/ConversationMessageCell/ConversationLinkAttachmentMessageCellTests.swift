@@ -46,7 +46,7 @@ final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshot
         let configuration = ConversationLinkAttachmentCell.Configuration(attachment: attachment, thumbnailResource: mockThumbnail)
 
         // WHEN
-        let cell = ConversationLinkAttachmentCell()
+        let cell = ConversationLinkAttachmentCell(selfUser: selfUser)
         cell.configure(with: configuration, animated: false)
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
@@ -64,7 +64,7 @@ final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshot
         let configuration = ConversationLinkAttachmentCell.Configuration(attachment: attachment, thumbnailResource: mockThumbnail)
 
         // WHEN
-        let cell = ConversationLinkAttachmentCell()
+        let cell = ConversationLinkAttachmentCell(selfUser: selfUser)
         cell.configure(with: configuration, animated: false)
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
@@ -82,7 +82,7 @@ final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshot
         let configuration = ConversationLinkAttachmentCell.Configuration(attachment: attachment, thumbnailResource: mockThumbnail)
 
         // WHEN
-        let cell = ConversationLinkAttachmentCell()
+        let cell = ConversationLinkAttachmentCell(selfUser: selfUser)
         cell.configure(with: configuration, animated: false)
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
