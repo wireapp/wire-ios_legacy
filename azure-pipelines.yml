@@ -1,5 +1,5 @@
 pool:
-   vmImage: 'macOS-11'
+   vmImage: 'macOS-11.1'
    
 trigger:
   branches:
