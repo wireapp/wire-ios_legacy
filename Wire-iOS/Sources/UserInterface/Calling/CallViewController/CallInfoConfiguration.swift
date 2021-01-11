@@ -140,7 +140,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         cameraType: CaptureDevice,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
         userEnabledCBR: Bool,
-        selfUser: UserType = ZMUser.selfUser()) {
+        selfUser: UserType) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager

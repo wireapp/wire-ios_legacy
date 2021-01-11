@@ -52,7 +52,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
 
     func testSelfUserUnderLegalHold() {
-        let conversation = MockConversation.groupConversation()
+        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
         let selfUser = MockUser.mockSelf()
         selfUser?.isUnderLegalHold = true
 
@@ -60,7 +60,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
     
     func testOtherUserUnderLegalHold() {
-        let conversation = MockConversation.groupConversation()
+        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
         conversation.sortedActiveParticipants.forEach({ user in
             let mockUser = user as? MockUser
 
@@ -69,7 +69,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
             }
         })
 
-        verifyInColorThemes(conversation: conversation)
+        verifyInColorThemes(conversation: conversation) ///TODO: crash
     }
 
 }

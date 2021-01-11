@@ -37,7 +37,7 @@ final class ActiveCallViewController : UIViewController {
     var callStateObserverToken : Any?
     
     init(voiceChannel: VoiceChannel) {
-        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
+        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
         
         super.init(nibName: nil, bundle: nil)
         
@@ -97,7 +97,7 @@ final class ActiveCallViewController : UIViewController {
             return
         }
         
-        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
+        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
         visibleVoiceChannelViewController.delegate = self
     }
     
