@@ -38,6 +38,12 @@ extension AVSVideoView: AVSIdentifierProvider {
     }
 }
 
+private extension Stream {
+    var isParticipantUnmutedAndActiveSpeaker: Bool {
+        return isParticipantActiveSpeaker && microphoneState == .unmuted
+    }
+}
+
 class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     var stream: Stream {
@@ -110,8 +116,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Frame Border
     
     private func updateBorderVisibility() {
-        let visible = stream.isParticipantActiveSpeaker && stream.microphoneState == .unmuted
-        layer.borderWidth = visible ? 1 : 0
+        layer.borderWidth = stream.isParticipantUnmutedAndActiveSpeaker ? 1 : 0
     }
     
     // MARK: - Orientation & Layout
@@ -154,8 +159,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     override var accessibilityIdentifier: String? {
         get {
             let name = stream.participantName ?? ""
-            let state = isMaximized ? "maximized" : "minimized"
-            return "VideoView.\(name).\(state)"
+            let maximizationState = isMaximized ? "maximized" : "minimized"
+            let activityState = stream.isParticipantUnmutedAndActiveSpeaker ? "active" : "inactive"
+            return "VideoView.\(name).\(maximizationState).\(activityState)"
         }
         set {}
     }
