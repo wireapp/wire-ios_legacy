@@ -38,7 +38,6 @@
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
- 
       <Testables>
          <TestableReference
             skipped = "NO">
