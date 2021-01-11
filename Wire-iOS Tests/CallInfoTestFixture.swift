@@ -490,12 +490,12 @@ struct CallInfoTestFixture {
         )
     }
 
-    var groupAudioEstablishedRemoteTurnedVideoOn: CallInfoViewControllerInput {
+    func groupAudioEstablishedRemoteTurnedVideoOn(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted, mockUsers: SwiftMockLoader.mockUsers())),
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted, mockUsers: mockUsers)),
             canToggleMediaType: true,
             isMuted: false,
             callState: CallStateMock.ongoing,
@@ -668,7 +668,7 @@ struct CallInfoTestFixture {
         )
     }
 
-    var groupVideoEstablished: CallInfoViewControllerInput {
+    func groupVideoEstablished(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,

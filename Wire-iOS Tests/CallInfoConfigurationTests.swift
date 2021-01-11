@@ -468,10 +468,10 @@ final class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockParticipants = mockCallParticipants(mockUsers: mockUsers, count: fixture.groupSize.rawValue, state: .connected(videoState: .started, microphoneState: .unmuted))
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser) ///TODO: inject self user
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
 
         // then
-        assertEquals(fixture.groupAudioEstablishedRemoteTurnedVideoOn, configuration)
+        assertEquals(fixture.groupAudioEstablishedRemoteTurnedVideoOn(mockUsers: mockUsers), configuration)
     }
 
     func testGroupAudioEstablishedLargeGroup() {
@@ -607,7 +607,7 @@ final class CallInfoConfigurationTests: XCTestCase {
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
 
         // then
-        assertEquals(fixture.groupVideoEstablished, configuration)
+        assertEquals(fixture.groupVideoEstablished(mockUsers: mockUsers), configuration)
     }
 
     // MARK: - Video Placeholder

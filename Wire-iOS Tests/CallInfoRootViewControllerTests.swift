@@ -235,7 +235,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         let fixture = CallInfoTestFixture(otherUser: mockOtherUser, mockUsers: mockUsers)
 
         // when
-        sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished(mockUsers: mockUsers), selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
