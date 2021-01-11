@@ -324,7 +324,8 @@ extension AppRootRouter {
     }
 
     private func showAppLock() {
-        rootViewController.set(childViewController: AppLockViewController())
+        guard let session = ZMUserSession.shared() else { fatalError() }
+        rootViewController.set(childViewController: AppLockViewController(session: session))
     }
     
     // MARK: - Helpers

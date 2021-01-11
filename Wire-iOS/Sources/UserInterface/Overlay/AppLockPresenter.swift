@@ -80,8 +80,8 @@ final class AppLockPresenter {
     
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     
-    convenience init(userInterface: AppLockUserInterface) {
-        let appLockInteractor = AppLockInteractor()
+    convenience init(userInterface: AppLockUserInterface, session: AppLockInteractorUserSession) {
+        let appLockInteractor = AppLockInteractor(session: session)
         self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
         appLockInteractor.output = self
     }

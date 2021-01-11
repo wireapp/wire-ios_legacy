@@ -39,41 +39,44 @@ protocol AppLockInteractorOutput: class {
 }
 
 final class AppLockInteractor {
+
+    // MARK: - Properties
+
     weak var output: AppLockInteractorOutput?
     
     // For tests
     var dispatchQueue: DispatchQueue = DispatchQueue.main
-    var _userSession: AppLockInteractorUserSession?
-    
-    // Workaround because accessing `ZMUserSession.shared()` crashes
-    // if done at init (RootViewController won't be instantianted)
-    private var userSession: AppLockInteractorUserSession? {
-        return _userSession ?? ZMUserSession.shared()
-    }
+
+    var session: AppLockInteractorUserSession
     
     var appState: AppState?
 
-    var appLock: AppLockType? {
-        return userSession?.appLockController
+    var appLock: AppLockType {
+        return session.appLockController
     }
 
     var isAppLockActive: Bool {
-        return appLock?.isActive ?? false
+        return appLock.isActive
     }
 
     var shouldUseBiometricsOrCustomPasscode: Bool {
-        return appLock?.requiresBiometrics ?? false
+        return appLock.requiresBiometrics
     }
     
     var needsToNotifyUser: Bool {
         get {
-            return appLock?.needsToNotifyUser ?? false
+            return appLock.needsToNotifyUser
         }
+
         set {
-            if var session = userSession {
-                session.appLockController.needsToNotifyUser = newValue
-            }
+            session.appLockController.needsToNotifyUser = newValue
         }
+    }
+
+    // MARK: - Life cycle
+
+    init(session: AppLockInteractorUserSession) {
+        self.session = session
     }
 
 }
@@ -81,21 +84,21 @@ final class AppLockInteractor {
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
-        return appLock?.isCustomPasscodeNotSet ?? false
+        return appLock.isCustomPasscodeNotSet
     }
 
     var isDimmingScreenWhenInactive: Bool {
-        return isAppLockActive || userSession?.encryptMessagesAtRest == true
+        return isAppLockActive || session.encryptMessagesAtRest
     }
     
     func evaluateAuthentication(description: String) {
-        appLock?.evaluateAuthentication(scenario: authenticationScenario,
-                                        description: description.localized) { [weak self] result, context in
+        appLock.evaluateAuthentication(scenario: authenticationScenario,
+                                       description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
 
             self.dispatchQueue.async {
                 if case .granted = result {
-                    try? self.userSession?.unlockDatabase(with: context)
+                    try? self.session.unlockDatabase(with: context)
                 }
                 
                 self.output?.authenticationEvaluated(with: result)
@@ -107,7 +110,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         notifyPasswordVerified(with: result)
         if case .validated = result {
             // We need to communicate this unlocking with the app lock controller.
-            appLock?.persistBiometrics()
+            appLock.persistBiometrics()
         }
     }
     
@@ -115,7 +118,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         
         let result: VerifyPasswordResult
         
-        if let data = appLock?.fetchPasscode() {
+        if let data = appLock.fetchPasscode() {
             result = customPasscode == String(data: data, encoding: .utf8) ? .validated : .denied
         } else {
             result = .unknown
