@@ -34,7 +34,7 @@ struct CallInfoTestFixture {
     let groupSize: GroupSize
     let mockUsers: [UserType]
 
-    init(otherUser: UserType, groupSize: GroupSize = .small, mockUsers: [UserType] = SwiftMockLoader.mockUsers()) {
+    init(otherUser: UserType, groupSize: GroupSize = .small, mockUsers: [UserType]) {
         self.otherUser = otherUser
         self.groupSize = groupSize
         self.mockUsers = mockUsers
