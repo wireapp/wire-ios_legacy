@@ -111,7 +111,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     
     private func updateBorderVisibility() {
         let visible = stream.isParticipantActiveSpeaker && stream.microphoneState == .unmuted
-        layer.borderWidth = visible ? 2 : 0
+        layer.borderWidth = visible ? 1 : 0
     }
     
     // MARK: - Orientation & Layout
