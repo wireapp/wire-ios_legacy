@@ -43,6 +43,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
+            updateBorderVisibility()
         }
     }
     
@@ -71,6 +72,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateUserDetails()
+        updateBorderVisibility()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -79,7 +81,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
@@ -88,6 +90,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
     
     func setupViews() {
+        layer.borderColor = UIColor.accent().cgColor
         backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
@@ -104,6 +107,13 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
+    // MARK: - Frame Border
+    
+    private func updateBorderVisibility() {
+        let visible = stream.isParticipantActiveSpeaker && stream.microphoneState == .unmuted
+        layer.borderWidth = visible ? 1 : 0
+    }
+    
     // MARK: - Orientation & Layout
     
     override func layoutSubviews() {
