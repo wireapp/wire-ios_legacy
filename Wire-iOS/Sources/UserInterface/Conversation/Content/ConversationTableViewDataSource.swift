@@ -467,7 +467,7 @@ extension ConversationTableViewDataSource {
             !Message.isKnock(message) else { return false }
         
         guard let previousMessage = messagePrevious(to: message, at: index),
-            previousMessage.senderUser as? ZMUser == message.senderUser as? ZMUser,
+            previousMessage.senderUser === message.senderUser,
             Message.isNormal(previousMessage) else { return false }
         
         return true
