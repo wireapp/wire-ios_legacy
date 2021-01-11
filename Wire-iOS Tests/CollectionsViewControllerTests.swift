@@ -27,7 +27,7 @@ extension MockMessage {
     }
 }
 
-final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+final class CollectionsViewControllerTests: XCTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!
@@ -48,15 +48,8 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
     var deletedFileMessage: ZMConversationMessage!
     var deletedLinkMessage: ZMConversationMessage!
 
-    var coreDataFixture: CoreDataFixture!
-    
     override func setUp() {
         super.setUp()
-
-        coreDataFixture = CoreDataFixture()
-
-        MockUser.mockSelf()?.name = "Tarja Turunen"
-        MockUser.mockSelf()?.accentColorValue = .strongBlue
 
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
@@ -102,7 +95,6 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
         deletedFileMessage = nil
         deletedLinkMessage = nil
 
-        coreDataFixture = nil
         super.tearDown()
     }
     

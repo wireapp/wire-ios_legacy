@@ -41,7 +41,7 @@ extension AnyConversationMessageCellDescription: Differentiable {
 
 extension ZMConversationMessage {
     var isSentFromThisDevice: Bool {
-        guard let sender = sender else {
+        guard let sender = senderUser else {
             return false
         }
         return sender.isSelfUser && deliveryState == .pending
@@ -467,7 +467,7 @@ extension ConversationTableViewDataSource {
             !Message.isKnock(message) else { return false }
         
         guard let previousMessage = messagePrevious(to: message, at: index),
-            previousMessage.sender == message.sender,
+            previousMessage.senderUser === message.senderUser,
             Message.isNormal(previousMessage) else { return false }
         
         return true

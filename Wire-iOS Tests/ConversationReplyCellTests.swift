@@ -32,7 +32,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersShortMessage_30() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Message contents")!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -47,7 +47,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "@Bruno is the annual report ready to go?")!
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -62,7 +62,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "@selfUser is the annual report ready to go?")!
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 9), user: selfUser)]
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -77,7 +77,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "@Bruno do we have the latest mockup files ready to go for the annual report? Once we have the copy finalized I would like to drop it in and get this out as quickly as possible. We can also add more lines to the test message if we need.")!
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -98,7 +98,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -120,7 +120,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -142,7 +142,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -164,7 +164,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -186,7 +186,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownWithTitle)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -205,7 +205,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -226,7 +226,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         """
 
         let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -240,7 +240,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersEmojiInLargeFont_33() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "🌮🌮🌮")!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -255,7 +255,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "@Bruno is the annual report ready to go?")!
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
         message.updatedAt = Date()
 
@@ -274,7 +274,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "https://apple.com/de/apple-pay")!
         message.backingTextMessageData?.backingLinkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -290,7 +290,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "There you go! https://apple.com/de/apple-pay")!
         message.backingTextMessageData?.backingLinkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 14)
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -305,7 +305,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let image = UIImage()
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -320,7 +320,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -335,7 +335,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -350,7 +350,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -368,7 +368,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         message.backingFileMessageData!.filename = "Video.mp4"
         message.backingFileMessageData!.mimeType = "video/mp4"
         message.backingFileMessageData!.previewData = image.jpegData(compressionQuality: 1)
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -384,7 +384,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData!.filename = "Annual Report.pdf"
         message.backingFileMessageData!.mimeType = "application/pdf"
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -400,7 +400,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData!.filename = "ImportantMessage.m4a"
         message.backingFileMessageData!.mimeType = "audio/x-m4a"
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -415,7 +415,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.locationMessage()!
         message.backingLocationMessageData.name = "Rosenthaler Str. 40-41, 10178 Berlin"
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -430,7 +430,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         // GIVEN
         let message = MockMessageFactory.locationMessage()!
         message.backingLocationMessageData.name = "Hackesher Markt, Rosenthaler Str. 40-41, 10178 Berlin, Germany"
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -444,7 +444,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysErrorForUnsupportedMessageType_57() {
         // GIVEN
         let message = MockMessageFactory.pingMessage()!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
@@ -472,7 +472,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItHighlightsCellOnTouchInside_60() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Message contents")!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
         // WHEN
