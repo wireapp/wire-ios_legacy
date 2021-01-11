@@ -30,8 +30,8 @@ final class MockCell: UIView, ConversationMessageCell {
     var isConfigured: Bool  = false
     var isSelected: Bool = false
 
-    override init(selfUser: UserType) {
-        super.init(selfUser: selfUser)
+    init(selfUser: UserType) {
+        super.init(frame: .zero)
     }
     
     @available(*, unavailable)
