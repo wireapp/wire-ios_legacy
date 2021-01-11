@@ -493,7 +493,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         if sharingSession.encryptMessagesAtRest {
             scenario = .databaseLock
         } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
+            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.requiresBiometrics)
         }
         
         sharingSession.appLockController.evaluateAuthentication(scenario: scenario,

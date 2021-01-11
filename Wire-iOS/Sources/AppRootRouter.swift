@@ -193,7 +193,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .unauthenticated(error: let error):
             configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
-        case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
+        case .authenticated(completedRegistration: let completedRegistration):
             configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
             showAuthenticated(isComingFromRegistration: completedRegistration,

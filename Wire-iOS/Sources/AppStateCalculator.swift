@@ -22,7 +22,7 @@ import WireSyncEngine
 enum AppState: Equatable {
     case headless
     case locked
-    case authenticated(completedRegistration: Bool, isDatabaseLocked: Bool)
+    case authenticated(completedRegistration: Bool)
     case unauthenticated(error : NSError?)
     case blacklisted
     case jailbroken
@@ -65,7 +65,6 @@ class AppStateCalculator {
     }
     
     // MARK: - Private Property
-    private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
     private var hasEnteredForeground: Bool = false
     
@@ -141,33 +140,30 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
     }
-    
+
+    // Temporary solution.
+
     func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
-        isDatabaseLocked = isLocked
-
-        // TODO: [John] Check that we app lock needs to be shown.
-        // TODO: [John] Set last unlock date.
-
-        let isAppLockActive = true
-        let isLockTimeoutReached = true
-        let screenLockIsActive = isAppLockActive && isLockTimeoutReached
-        let isAppLocked = screenLockIsActive || isDatabaseLocked
-
-        if isAppLocked {
+        if isLocked {
             transition(to: .locked)
         } else {
-            transition(to: .authenticated(completedRegistration: false, isDatabaseLocked: isLocked))
+            transition(to: .authenticated(completedRegistration: false))
         }
     }
     
-    func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) { }
+    func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) {
+        if userSession.isLocked {
+            transition(to: .locked)
+        } else {
+            transition(to: .authenticated(completedRegistration: false))
+        }
+    }
 }
 
 // MARK: - AuthenticationCoordinatorDelegate
 extension AppStateCalculator: AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
-        let appState: AppState = .authenticated(completedRegistration: addedAccount,
-                                                isDatabaseLocked: isDatabaseLocked)
+        let appState: AppState = .authenticated(completedRegistration: addedAccount)
         transition(to: appState)
     }
 }

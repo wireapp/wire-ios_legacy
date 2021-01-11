@@ -28,7 +28,6 @@ protocol AppLockInteractorInput: class {
     var isCustomPasscodeNotSet: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
     var needsToNotifyUser: Bool { get set }
-    var lastUnlockedDate: Date { get set }
     func evaluateAuthentication(description: String)
     func verify(customPasscode: String)
     func appStateDidTransition(to newState: AppState)
@@ -62,17 +61,8 @@ final class AppLockInteractor {
         return appLock?.isActive ?? false
     }
 
-    var lastUnlockedDate: Date {
-        get { userSession?.appLockController.lastUnlockedDate ?? Date() }
-        set {
-            if var session = userSession {
-                session.appLockController.lastUnlockedDate = newValue
-            }
-        }
-    }
-    
     var shouldUseBiometricsOrCustomPasscode: Bool {
-        return appLock?.config.useBiometricsOrCustomPasscode ?? false
+        return appLock?.requiresBiometrics ?? false
     }
     
     var needsToNotifyUser: Bool {
@@ -84,10 +74,6 @@ final class AppLockInteractor {
                 session.appLockController.needsToNotifyUser = newValue
             }
         }
-    }
-
-    var timeout: UInt {
-        return appLock?.config.appLockTimeout ?? .max
     }
 
 }
@@ -106,7 +92,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         appLock?.evaluateAuthentication(scenario: authenticationScenario,
                                         description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
-                        
+
             self.dispatchQueue.async {
                 if case .granted = result {
                     try? self.userSession?.unlockDatabase(with: context)
@@ -120,6 +106,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     private func processVerifyResult(result: VerifyPasswordResult?) {
         notifyPasswordVerified(with: result)
         if case .validated = result {
+            // We need to communicate this unlocking with the app lock controller.
             appLock?.persistBiometrics()
         }
     }
@@ -141,7 +128,7 @@ extension AppLockInteractor: AppLockInteractorInput {
         if let state = appState,
             case AppState.unauthenticated(error: _) = state,
             case AppState.authenticated(completedRegistration: _) = newState {
-            lastUnlockedDate = Date()
+            //lastUnlockedDate = Date()
         }
         appState = newState
     }
@@ -165,10 +152,6 @@ extension AppLockInteractor {
     }
     
     private var isDatabaseLocked: Bool {
-        guard let state = appState else { return false }
-        if case AppState.authenticated(completedRegistration: _, isDatabaseLocked: let isDatabaseLocked) = state {
-            return isDatabaseLocked
-        }
         return false
     }
     
@@ -179,13 +162,6 @@ extension AppLockInteractor {
         }
         return false
     }
-    
-    private var isLockTimeoutReached: Bool {
-        let lastAuthDate = lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(timeout)).contains(timeSinceAuth)
-        return !isWithinTimeoutWindow
-    }
+
 }
+    

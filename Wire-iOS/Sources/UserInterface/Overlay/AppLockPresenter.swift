@@ -207,7 +207,6 @@ extension AppLockPresenter {
         userInterface?.dismissUnlockScreen()
         
         authenticationState = .authenticated
-        appLockInteractorInput.lastUnlockedDate = Date()
         NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 }
