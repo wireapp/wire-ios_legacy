@@ -1072,6 +1072,11 @@
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08025ADA3D5001DB205 /* AppLockModule.swift */; };
+		EE01D08625ADA3D5001DB205 /* AppLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08125ADA3D5001DB205 /* AppLockPresenter.swift */; };
+		EE01D08725ADA3D5001DB205 /* AppLockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockRouter.swift */; };
+		EE01D08825ADA3D5001DB205 /* AppLockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockInteractor.swift */; };
+		EE01D08925ADA3D5001DB205 /* AppLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockView.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
@@ -2807,6 +2812,11 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		EE01D08025ADA3D5001DB205 /* AppLockModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.swift; sourceTree = "<group>"; };
+		EE01D08125ADA3D5001DB205 /* AppLockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenter.swift; sourceTree = "<group>"; };
+		EE01D08225ADA3D5001DB205 /* AppLockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockRouter.swift; sourceTree = "<group>"; };
+		EE01D08325ADA3D5001DB205 /* AppLockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractor.swift; sourceTree = "<group>"; };
+		EE01D08425ADA3D5001DB205 /* AppLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockView.swift; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
@@ -5544,6 +5554,7 @@
 				8736F1831E4B67F0001CBA62 /* OldAppLockView.swift */,
 				636AD79923A916CB004A3050 /* OldAppLockPresenter.swift */,
 				636AD79B23A91A57004A3050 /* OldAppLockInteractor.swift */,
+				EE01D07F25ADA3AD001DB205 /* App Lock */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -6346,6 +6357,18 @@
 				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
 			);
 			path = InputBar;
+			sourceTree = "<group>";
+		};
+		EE01D07F25ADA3AD001DB205 /* App Lock */ = {
+			isa = PBXGroup;
+			children = (
+				EE01D08025ADA3D5001DB205 /* AppLockModule.swift */,
+				EE01D08225ADA3D5001DB205 /* AppLockRouter.swift */,
+				EE01D08325ADA3D5001DB205 /* AppLockInteractor.swift */,
+				EE01D08125ADA3D5001DB205 /* AppLockPresenter.swift */,
+				EE01D08425ADA3D5001DB205 /* AppLockView.swift */,
+			);
+			path = "App Lock";
 			sourceTree = "<group>";
 		};
 		EE5F54CF259B777B00F11F3C /* Viper */ = {
@@ -7683,6 +7706,7 @@
 				D525426F209363DC001C04C1 /* CallActionAppearance.swift in Sources */,
 				5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */,
 				EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */,
+				EE01D08825ADA3D5001DB205 /* AppLockInteractor.swift in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
 				EF864A0D236AEB400074DFF7 /* ZMConversation+Additions.swift in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
@@ -7716,6 +7740,7 @@
 				634497DB24A49BF80000131D /* BaseVideoPreviewView.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				EF471BE62326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift in Sources */,
+				EE01D08625ADA3D5001DB205 /* AppLockPresenter.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */,
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
@@ -7977,6 +8002,7 @@
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
 				5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */,
 				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
+				EE01D08725ADA3D5001DB205 /* AppLockRouter.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				A9E674D524F508B70058FC72 /* WireEmail.swift in Sources */,
 				631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */,
@@ -8037,6 +8063,7 @@
 				5E8DA75C211B085A00360979 /* AnyAuthenticationEventHandler.swift in Sources */,
 				1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */,
 				7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */,
+				EE01D08925ADA3D5001DB205 /* AppLockView.swift in Sources */,
 				D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */,
 				5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */,
 				BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */,
@@ -8273,6 +8300,7 @@
 				16E0FBAA2331119F000E3235 /* SettingsSignOutCellDescriptor.swift in Sources */,
 				5EA73D8920D901000001D106 /* ImageContainer.swift in Sources */,
 				5E8DA768211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift in Sources */,
+				EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */,
 				5E769C5A21AE97E600785EB7 /* MessageDetailsViewController.swift in Sources */,
 				164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */,
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
