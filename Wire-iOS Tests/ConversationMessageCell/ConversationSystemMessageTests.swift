@@ -78,9 +78,14 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     }
 
     func testNewClient_oneUser_oneClient() {
-        let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
-
-        verify(message: message)
+        let numUsers = 1
+        let (message, mockSystemMessageData) = MockMessageFactory.systemMessageAndData(with: .newClient, users: numUsers)
+        
+        let userClients: [AnyHashable] = [MockUserClient()]
+        
+        message!.update(mockSystemMessageData: mockSystemMessageData, userClients: userClients)
+        
+        verify(message: message!)
     }
 
     func testNewClient_selfUser_oneClient() {
