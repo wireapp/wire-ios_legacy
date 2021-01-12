@@ -32,7 +32,15 @@ extension AVSVideoView: AVSIdentifierProvider {
             streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
             participantName: nil,
             microphoneState: .unmuted,
-            videoState: .none)
+            videoState: .none,
+            isParticipantActiveSpeaker: false
+        )
+    }
+}
+
+private extension Stream {
+    var isParticipantUnmutedAndActiveSpeaker: Bool {
+        return isParticipantActiveSpeaker && microphoneState == .unmuted
     }
 }
 
@@ -41,6 +49,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
+            updateBorderVisibility()
         }
     }
     
@@ -69,6 +78,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateUserDetails()
+        updateBorderVisibility()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -77,15 +87,16 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.isParticipantActiveSpeaker)
         userDetailsView.alpha = userDetailsAlpha
     }
     
     func setupViews() {
+        layer.borderColor = UIColor.accent().cgColor
         backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
@@ -102,6 +113,12 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
+    // MARK: - Frame Border
+    
+    private func updateBorderVisibility() {
+        layer.borderWidth = stream.isParticipantUnmutedAndActiveSpeaker ? 1 : 0
+    }
+    
     // MARK: - Orientation & Layout
     
     override func layoutSubviews() {
@@ -142,8 +159,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     override var accessibilityIdentifier: String? {
         get {
             let name = stream.participantName ?? ""
-            let state = isMaximized ? "maximized" : "minimized"
-            return "VideoView.\(name).\(state)"
+            let maximizationState = isMaximized ? "maximized" : "minimized"
+            let activityState = stream.isParticipantUnmutedAndActiveSpeaker ? "active" : "inactive"
+            return "VideoView.\(name).\(maximizationState).\(activityState)"
         }
         set {}
     }
