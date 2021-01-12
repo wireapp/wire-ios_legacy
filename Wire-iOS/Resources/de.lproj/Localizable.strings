@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Kennwort erstellen";
-"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
-"create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
+"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie es vergessen, **kann es nicht wiederhergestellt werden.**";
+"create_passcode.info_label_forced_applock" = "Erstellen Sie einen Kennwort, um Wire zu entsperren. Merken Sie es sich, da **es nicht wiederhergestellt werden kann**.";
 "create_passcode.create_button.title" = "Kennwort erstellen";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Zugang als neues Gerät";
 "unlock.error_label" = "Falsches Kennwort";
 "unlock.submit_button.title" = "entsperren";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "Es gab eine Änderung bei Wire";
+"warning_screen.main_info.forced_applock" = "Ihre Organisation muss Ihre App sperren, wenn Wire nicht verwendet wird, um die Sicherheit des Teams zu gewährleisten.";
+"warning_screen.info_label.forced_applock" = "Entsperren Sie Wire beim nächsten Mal genauso wie Ihr Telefon.";
+"warning_screen.info_label.non_forced_applock" = "Ihre Organisation braucht keine App-Sperre mehr. Ab jetzt können Sie problemlos auf Wire zugreifen.";
 
 // Wipe database
 

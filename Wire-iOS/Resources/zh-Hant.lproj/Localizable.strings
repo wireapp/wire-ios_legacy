@@ -1267,7 +1267,7 @@
 "landing.header" = "Wire。加入您的帳戶。";
 "landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
 "landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
-"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.title" = "建立新Wire個人帳戶";
 "landing.create_account.infotitle" = "與朋友和家人聊天？";
 "landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "建立密碼鎖";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "它無法恢復。";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "建立密碼鎖";
 
 // Custom app lock - create passcode validation
@@ -1816,9 +1816,15 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "輸入您的通行密碼";
 "unlock.title_label" = "Enter passcode to unlock Wire";
-"unlock.wipe_button" = "Access as new device";
+"unlock.wipe_button" = "重設為新設備使用";
 "unlock.error_label" = "錯誤的解鎖密碼";
 "unlock.submit_button.title" = "解除鎖定";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
@@ -1830,7 +1836,7 @@
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.description" = "確認刪除資料庫";
 "wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
 "wipe_database.alert.placeholder" = "輸入「Delete」";
 "wipe_database.alert.confirm" = "刪除";

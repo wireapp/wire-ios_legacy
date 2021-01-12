@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.info_label" = "Wire のロック解除に使用されます。忘れてしまった場合、**復元できません**";
+"create_passcode.info_label_forced_applock" = "Wire のロック解除用のパスコードを作成します。これは **復元できません** ので、忘れないようにしてください。";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "Wrong passcode";
 "unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "Wire に変更がありました。";
+"warning_screen.main_info.forced_applock" = "あなたの組織は、Wire が使用されていないときはチームの安全確保のためアプリをロックすることを求めています。";
+"warning_screen.info_label.forced_applock" = "次回は、携帯電話のロックを解除するのと同じ方法で Wire をロック解除します。";
+"warning_screen.info_label.non_forced_applock" = "あなたの組織はアプリのロックをもう求めていません。今後は障壁なしで Wire にアクセスできます。";
 
 // Wipe database
 

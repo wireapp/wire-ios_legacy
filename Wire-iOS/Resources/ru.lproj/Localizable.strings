@@ -1164,8 +1164,8 @@
 
 "self.settings.privacy_security.lock_app" = "Блокировка кодом доступа";
 "self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокировать Wire через %@ после перехода в фоновый режим.";
-"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте с помощью Touch ID или введите свой код доступа.";
-"self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте с помощью Face ID или введите свой код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте с помощью Touch ID или введите ваш код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте с помощью Face ID или введите ваш код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Если вы забудете ваш код доступа, восстановить его будет невозможно.";
 
@@ -1175,12 +1175,12 @@
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Неверный пароль. Если вы недавно сменили пароль, подключитесь к интернету и попробуйте еще раз.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокировать Wire с помощью Touch ID или кода доступа";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокируйте Wire с помощью Touch ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Разблокировать Wire с помощью кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
+"self.settings.privacy_security.disable_link_previews.title" = "Показывать предпросмотр отправляемых вами ссылок";
 "self.settings.privacy_security.disable_link_previews.footer" = "Эта опция не влияет на предварительный просмотр ссылок от других пользователей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Создать код доступа";
-"create_passcode.info_label" = "Он будет использоваться для разблокировки Wire. Если вы забудете этот код доступа ";
-"create_passcode.info_label.highlighted" = "восстановить его будет невозможно.";
+"create_passcode.info_label" = "Он будет использован для разблокировки Wire. Если вы забудете этот код доступа **восстановить его будет невозможно.**";
+"create_passcode.info_label_forced_applock" = "Создайте код доступа для разблокировки Wire. Пожалуйста, не забывайте его, так как **восстановить его будет невозможно.**";
 "create_passcode.create_button.title" = "создать код доступа";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Доступ как новое устройство";
 "unlock.error_label" = "Неверный код доступа";
 "unlock.submit_button.title" = "разблокировать";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "В Wire произошли изменения";
+"warning_screen.main_info.forced_applock" = "Для обеспечения безопасности команды ваша организация требует блокировки приложения, когда Wire не используется.";
+"warning_screen.info_label.forced_applock" = "В следующий раз разблокируйте Wire так же, как разблокируете свой телефон.";
+"warning_screen.info_label.non_forced_applock" = "Ваша организация больше не требует блокировки приложения. Теперь вы можете получить доступ к Wire без каких-либо ограничений.";
 
 // Wipe database
 
