@@ -102,17 +102,14 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         changeObservers.removeAll()
     }
 
-    init(selfUser: UserType,
-         message: ZMConversationMessage,
-         context: ConversationMessageContext,
-         selected: Bool = false) {
+    init(message: ZMConversationMessage, context: ConversationMessageContext, selected: Bool = false) {
         self.message = message
         self.context = context
         self.selected = selected
         
         super.init()
         
-        createCellDescriptions(in: context, selfUser: selfUser)
+        createCellDescriptions(in: context)
         
         startObservingChanges(for: message)
         
@@ -123,9 +120,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     
     // MARK: - Content Types
     
-    private func addContent(selfUser: UserType,
-                            context: ConversationMessageContext,
-                            isSenderVisible: Bool) {
+    private func addContent(context: ConversationMessageContext, isSenderVisible: Bool) {
         
         messageCellIndex = cellDescriptions.count
         
@@ -148,7 +143,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         } else if message.isFile {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
-            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, selfUser: selfUser)
+            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -167,7 +162,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     // MARK: - Content Cells
     
     private func addPingMessageCells() -> [AnyConversationMessageCellDescription] {
-        guard let sender = message.senderUser else {
+        guard let sender = message.sender else {
             return []
         }
 
@@ -228,7 +223,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         selected = false
     }
     
-    private func createCellDescriptions(in context: ConversationMessageContext, selfUser: UserType) {
+    private func createCellDescriptions(in context: ConversationMessageContext) {
         cellDescriptions.removeAll()
         
         let isSenderVisible = self.isSenderVisible(in: context) && message.senderUser != nil
@@ -241,7 +236,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
         }
         
-        addContent(selfUser: selfUser, context: context, isSenderVisible: isSenderVisible)
+        addContent(context: context, isSenderVisible: isSenderVisible)
         
         if isToolboxVisible(in: context) {
             add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))
@@ -260,9 +255,9 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         })
     }
     
-    func recreateCellDescriptions(in context: ConversationMessageContext) {
+    public func recreateCellDescriptions(in context: ConversationMessageContext) {
         self.context = context
-        createCellDescriptions(in: context, selfUser: ZMUser.selfUser())
+        createCellDescriptions(in: context)
         updateDelegates()
     }
     
@@ -328,13 +323,13 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             let observer = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
             changeObservers.append(observer)
 
-            if let sender = message.senderUser {
+            if let sender = message.sender {
                 let observer = UserChangeInfo.add(observer: self, for: sender, in: userSession)!
                 changeObservers.append(observer)
             }
 
             if let users = message.systemMessageData?.users {
-                for user in users where user.remoteIdentifier != (message.senderUser as? ZMUser)?.remoteIdentifier {
+                for user in users where user.remoteIdentifier != message.sender?.remoteIdentifier {
                     let observer = UserChangeInfo.add(observer: self, for: user, in: userSession)!
                     changeObservers.append(observer)
                 }
