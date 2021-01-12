@@ -503,7 +503,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             DispatchQueue.main.async {
                 if case .granted = result {
                     self?.localAuthenticationStatus = .granted
-                    try? self?.sharingSession?.unlockDatabase(with: context as! LAContext)
+                    if let context = context as? LAContext {
+                        try? self?.sharingSession?.unlockDatabase(with: context)
+                    }
                 } else {
                     self?.localAuthenticationStatus = .denied
                 }
