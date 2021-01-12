@@ -81,7 +81,9 @@ final class AppLockMock: AppLockType {
     }
     
     static var authenticationResult: AppLockController.AuthenticationResult = .granted
-    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario, description: String, with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
+    func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
+                                description: String,
+                                context: LAContextProtocol, with callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
         callback(AppLockMock.authenticationResult, LAContext())
     }
     
