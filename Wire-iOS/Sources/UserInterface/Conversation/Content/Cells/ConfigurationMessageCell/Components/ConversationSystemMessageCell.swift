@@ -209,7 +209,7 @@ extension NewDeviceSystemMessageCell {
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         guard let linkTarget = linkTarget,
-              url == type(of: self).userClientURL, ///TODO: here?
+              url == type(of: self).userClientURL,
               let zClientViewController = ZClientViewController.shared else { return false }
 
         switch linkTarget {
