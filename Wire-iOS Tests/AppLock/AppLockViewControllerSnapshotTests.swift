@@ -20,12 +20,12 @@ import XCTest
 @testable import Wire
 
 final class AppLockViewControllerSnapshotTests: XCTestCase {
-    var sut: AppLockViewController!
+    var sut: OldAppLockViewController!
     
     override func setUp() {
         super.setUp()
 
-        sut = AppLockViewController(session: MockAppLockUserSession())
+        sut = OldAppLockViewController(session: MockAppLockUserSession())
         sut.viewDidLoad()
     }
     

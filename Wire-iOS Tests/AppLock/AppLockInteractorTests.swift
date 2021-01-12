@@ -111,7 +111,7 @@ final class MockAppLock: AppLockType {
 }
 
 final class AppLockInteractorTests: ZMSnapshotTestCase {
-    var sut: AppLockInteractor!
+    var sut: OldAppLockInteractor!
     private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
     private var userSessionMock: MockAppLockUserSession!
     
@@ -119,7 +119,7 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
         userSessionMock = MockAppLockUserSession()
-        sut = AppLockInteractor(session: userSessionMock)
+        sut = OldAppLockInteractor(session: userSessionMock)
         sut.output = appLockInteractorOutputMock
     }
     

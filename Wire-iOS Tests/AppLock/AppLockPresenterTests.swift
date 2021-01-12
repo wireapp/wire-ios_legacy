@@ -95,7 +95,7 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
 }
 
 final class AppLockPresenterTests: XCTestCase {
-    private var sut: AppLockPresenter!
+    private var sut: OldAppLockPresenter!
     private var userInterface: AppLockUserInterfaceMock!
     private var appLockInteractor: AppLockInteractorMock!
     
@@ -103,7 +103,7 @@ final class AppLockPresenterTests: XCTestCase {
         super.setUp()
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        sut = OldAppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
     }
     
     override func tearDown() {
@@ -222,7 +222,7 @@ final class AppLockPresenterTests: XCTestCase {
     func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
         //given
         let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        sut = OldAppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
         sut.dispatchQueue = queue
         setupPasswordVerificationTest()
 
@@ -353,7 +353,7 @@ extension AppLockPresenterTests {
     }
     
     func set(authenticationState: AuthenticationState) {
-        sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
+        sut = OldAppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
     }
     
     func resetMocksValues() {

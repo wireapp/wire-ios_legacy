@@ -30,7 +30,7 @@ extension UIView {
 
 final class AppLockViewSnapshotTests: XCTestCase {
 
-    var sut: AppLockView!
+    var sut: OldAppLockView!
 
     override func setUp() {
         super.setUp()
@@ -42,28 +42,28 @@ final class AppLockViewSnapshotTests: XCTestCase {
     }
 
     func testForReauthUI_TouchID() {
-        sut = AppLockView(authenticationType: .touchID)
+        sut = OldAppLockView(authenticationType: .touchID)
         sut.showReauth = true
 
         verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
     func testForReauthUI_FaceID() {
-        sut = AppLockView(authenticationType: .faceID)
+        sut = OldAppLockView(authenticationType: .faceID)
         sut.showReauth = true
 
         verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
     func testForReauthUI_Password() {
-        sut = AppLockView(authenticationType: .passcode)
+        sut = OldAppLockView(authenticationType: .passcode)
         sut.showReauth = true
 
         verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
     func testForReauthUI_Unvailable() {
-        sut = AppLockView(authenticationType: .unavailable)
+        sut = OldAppLockView(authenticationType: .unavailable)
         sut.showReauth = true
 
         verifyInAllDeviceSizes(matching: sut.wrapInVicwController)

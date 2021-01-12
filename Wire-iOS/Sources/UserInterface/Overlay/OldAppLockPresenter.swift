@@ -73,7 +73,7 @@ struct AuthenticationMessageKey {
 }
 
 // MARK: - AppLockPresenter
-final class AppLockPresenter {
+final class OldAppLockPresenter {
     private weak var userInterface: AppLockUserInterface?
     private var authenticationState: AuthenticationState
     private var appLockInteractorInput: AppLockInteractorInput
@@ -81,7 +81,7 @@ final class AppLockPresenter {
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     
     convenience init(userInterface: AppLockUserInterface, session: AppLockInteractorUserSession) {
-        let appLockInteractor = AppLockInteractor(session: session)
+        let appLockInteractor = OldAppLockInteractor(session: session)
         self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
         appLockInteractor.output = self
     }
@@ -127,7 +127,7 @@ final class AppLockPresenter {
 }
 
 // MARK: - Account password helper
-extension AppLockPresenter {
+extension OldAppLockPresenter {
     private func checkPassword(password: String) -> Bool {
         guard !password.isEmpty else {
             authenticationState = .cancelled
@@ -155,7 +155,7 @@ extension AppLockPresenter {
 }
 
 // MARK: - AppLockInteractorOutput
-extension AppLockPresenter: AppLockInteractorOutput {
+extension OldAppLockPresenter: AppLockInteractorOutput {
     
     func authenticationEvaluated(with result: AppLockController.AuthenticationResult) {
         authenticationState.update(with: result)
@@ -198,7 +198,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
 
 
 // MARK: - Helpers
-extension AppLockPresenter {
+extension OldAppLockPresenter {
     private func setContents(showReauth: Bool) {
         userInterface?.setReauth(visible: showReauth)
     }

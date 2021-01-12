@@ -38,7 +38,7 @@ protocol AppLockInteractorOutput: class {
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-final class AppLockInteractor {
+final class OldAppLockInteractor {
 
     // MARK: - Properties
 
@@ -82,7 +82,7 @@ final class AppLockInteractor {
 }
 
 // MARK: - Interface
-extension AppLockInteractor: AppLockInteractorInput {
+extension OldAppLockInteractor: AppLockInteractorInput {
     var isCustomPasscodeNotSet: Bool {
         return appLock.isCustomPasscodeNotSet
     }
@@ -138,7 +138,7 @@ extension AppLockInteractor: AppLockInteractorInput {
 }
 
 // MARK: - Helpers
-extension AppLockInteractor {
+extension OldAppLockInteractor {
     
     private var authenticationScenario: AppLockController.AuthenticationScenario {
         if isDatabaseLocked {

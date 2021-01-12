@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSystem
 
-final class AppLockView: UIView {
+final class OldAppLockView: UIView {
     var onReauthRequested: Completion?
 
     let shieldViewContainer = UIView()
@@ -82,7 +82,7 @@ final class AppLockView: UIView {
         }
 
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
-        self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
+        self.authenticateButton.addTarget(self, action: #selector(OldAppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
 
         createConstraints(nibView: shieldView)
 

@@ -23,19 +23,19 @@ import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-final class AppLockViewController: UIViewController {
+final class OldAppLockViewController: UIViewController {
 
     // MARK: - Properties
 
     private let session: AppLockInteractorUserSession
 
-    private var lockView: AppLockView!
+    private var lockView: OldAppLockView!
     private let spinner = UIActivityIndicatorView(style: .white)
 
     // need to hold a reference onto `passwordController`,
     // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
-    private var appLockPresenter: AppLockPresenter?
+    private var appLockPresenter: OldAppLockPresenter?
 
     private weak var unlockViewController: UnlockViewController?
     private weak var unlockScreenWrapper: UIViewController?
@@ -58,8 +58,8 @@ final class AppLockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        appLockPresenter = AppLockPresenter(userInterface: self, session: session)
-        lockView = AppLockView()
+        appLockPresenter = OldAppLockPresenter(userInterface: self, session: session)
+        lockView = OldAppLockView()
 
         lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }
@@ -117,7 +117,7 @@ final class AppLockViewController: UIViewController {
 
 // MARK: - AppLockManagerDelegate
 
-extension AppLockViewController: AppLockUserInterface {
+extension OldAppLockViewController: AppLockUserInterface {
     func dismissUnlockScreen() {
         unlockScreenWrapper?.dismiss(animated: false)
     }
