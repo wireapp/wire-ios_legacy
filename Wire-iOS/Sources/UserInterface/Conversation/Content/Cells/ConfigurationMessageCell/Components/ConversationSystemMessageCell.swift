@@ -268,8 +268,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 final class ConversationSystemMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage,
-                      selfUser: UserType) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.senderUser,
             let conversation = message.conversation else {
@@ -321,7 +320,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
         case .newClient, .usingNewDevice, .reactivatedDevice:
-            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation, selfUser: selfUser)
+            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation)
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
@@ -817,11 +816,8 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage,
-         systemMessageData: ZMSystemMessageData,
-         conversation: ZMConversation,
-         selfUser: UserType) {
-        configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation, selfUser: selfUser)
+    init(message: ZMConversationMessage, systemMessageData: ZMSystemMessageData, conversation: ZMConversation) {
+        configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation)
         actionController = nil
     }
     
@@ -837,9 +833,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
         }
     }
     
-    private static func configuration(for systemMessage: ZMSystemMessageData,
-                                      in conversation: ZMConversation,
-                                      selfUser: UserType) -> View.Configuration {
+    private static func configuration(for systemMessage: ZMSystemMessageData, in conversation: ZMConversation) -> View.Configuration {
         
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
         let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
@@ -850,7 +844,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
-            return configureForReactivatedSelfClient(SelfUser.current, attributes: textAttributes)
+            return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
         } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
         } else if users.count == 1, let user = users.first, user.isSelfUser {
@@ -867,7 +861,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     private static var exclamationMarkIcon: UIImage {
         return StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
     }
-      
+    
     private static func configureForReactivatedSelfClient(_ selfUser: UserType, attributes: TextAttributes) -> View.Configuration {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
         let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && attributes.startedUsingAttributes
