@@ -20,6 +20,16 @@ import XCTest
 @testable import Wire
 
 final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
+    }
+
+    override func tearDown() {
+        SelfUser.provider = nil
+        super.tearDown()
+    }
 
     func testConversationIsSecure() {
         let message = MockMessageFactory.systemMessage(with: .conversationIsSecure)!

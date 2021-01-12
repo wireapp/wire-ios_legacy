@@ -850,7 +850,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
-            return configureForReactivatedSelfClient(selfUser, attributes: textAttributes)
+            return configureForReactivatedSelfClient(SelfUser.current, attributes: textAttributes)
         } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
         } else if users.count == 1, let user = users.first, user.isSelfUser {
@@ -867,7 +867,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     private static var exclamationMarkIcon: UIImage {
         return StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
     }
-    
+      
     private static func configureForReactivatedSelfClient(_ selfUser: UserType, attributes: TextAttributes) -> View.Configuration {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
         let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && attributes.startedUsingAttributes
