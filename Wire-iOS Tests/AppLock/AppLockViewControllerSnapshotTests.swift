@@ -25,17 +25,12 @@ final class AppLockViewControllerSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = AppLockViewController()
+        sut = AppLockViewController(session: MockAppLockUserSession())
         sut.viewDidLoad()
     }
     
     ///TODO: blur view is not visible in updated snapshots
     func testInitialState() {
-        verify(matching: sut)
-    }
-    
-    func testDimmedState() {
-        sut.setContents(dimmed: true)
         verify(matching: sut)
     }
     

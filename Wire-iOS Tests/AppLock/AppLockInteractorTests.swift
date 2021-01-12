@@ -36,9 +36,9 @@ private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
     }
 }
 
-private final class UserSessionMock: AppLockInteractorUserSession {
+final class MockAppLockUserSession: AppLockInteractorUserSession {
     
-    var appLockController: AppLockType = AppLockMock()
+    var appLockController: AppLockType = MockAppLock()
     
     var encryptMessagesAtRest: Bool = false
     
@@ -66,54 +66,60 @@ private final class UserSessionMock: AppLockInteractorUserSession {
     }
 }
 
-final class AppLockMock: AppLockType {
-    
+final class MockAppLock: AppLockType {
+
+    static var authenticationResult: AppLockController.AuthenticationResult = .granted
+    static var didPersistBiometrics: Bool = false
+
+    // MARK: - Properties
+
     var isActive: Bool = false
-    var lastUnlockedDate: Date = Date()
+    var isLocked = false
+    var requiresBiometrics = false
+    var needsToSetCustomPasscode = false
     var isCustomPasscodeNotSet: Bool = false
     var needsToNotifyUser: Bool = false
-    var config: AppLockController.Config
-    
-    init(config: AppLockController.Config = AppLockController.Config(useBiometricsOrCustomPasscode: false,
-                                                                     forceAppLock: false,
-                                                                     timeOut: 900)) {
-        self.config = config
-    }
-    
-    static var authenticationResult: AppLockController.AuthenticationResult = .granted
+    var timeout: UInt = 900
+    var isForced = false
+    var isAvailable = true
+
+    var delegate: AppLockDelegate? = nil
+
+    private var customPasscode: Data?
+
+    // MARK: - Methods
+
     func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario, description: String, with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
-        callback(AppLockMock.authenticationResult, LAContext())
+        callback(MockAppLock.authenticationResult, LAContext())
     }
-    
-    static var didPersistBiometrics: Bool = false
+
     func persistBiometrics() {
-        AppLockMock.didPersistBiometrics = true
+        MockAppLock.didPersistBiometrics = true
     }
 
     func storePasscode(_ passcode: String) throws {
-
+        customPasscode = passcode.data(using: .utf8)
     }
 
     func fetchPasscode() -> Data? {
-        return nil
+        return customPasscode
     }
 
     func deletePasscode() throws {
-
+        customPasscode = nil
     }
 }
 
 final class AppLockInteractorTests: ZMSnapshotTestCase {
     var sut: AppLockInteractor!
     private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
-    private var userSessionMock: UserSessionMock!
+    private var userSessionMock: MockAppLockUserSession!
     
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        userSessionMock = UserSessionMock()
-        sut = AppLockInteractor()
-        sut._userSession = userSessionMock
+        userSessionMock = MockAppLockUserSession()
+        sut = AppLockInteractor(session: userSessionMock)
         sut.output = appLockInteractorOutputMock
     }
     
@@ -122,78 +128,12 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    
-    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenAppLockIsActive() {
-        //given
-        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
-    }
-    
-    func testThatIsDimmingScreenWhenInactiveReturnsTrueWhenEncryptionAtRestIsEnabled() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        userSessionMock.encryptMessagesAtRest = true
-        
-        //when / then
-        XCTAssertTrue(sut.isDimmingScreenWhenInactive)
-    }
-    
-    func testThatIsDimmingScreenWhenInactiveReturnsFalseWhenAppLockIsInactive() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isDimmingScreenWhenInactive)
-    }
-    
-    
-    func testThatIsAuthenticationNeededReturnsTrueIfNeeded() {
-        //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertTrue(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsTrueIfDatabaseIsLocked() {
-        //given
-        set(appLockActive: false, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: true)
-        
-        //when / then
-        XCTAssertTrue(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
-        //given
-        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
-        //given - appLock not active
-        set(appLockActive: false, timeoutReached: true, authenticatedAppState: true, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
-    func testThatIsAuthenticationNeededReturnsFalseIfAppStateNotAuthenticated() {
-        //given
-        set(appLockActive: true, timeoutReached: true, authenticatedAppState: false, databaseIsLocked: false)
-        
-        //when / then
-        XCTAssertFalse(sut.isAuthenticationNeeded)
-    }
-    
+
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
         //given
         let queue = DispatchQueue.main
         sut.dispatchQueue = queue
-        AppLockMock.authenticationResult = .granted
+        MockAppLock.authenticationResult = .granted
         appLockInteractorOutputMock.authenticationResult = nil
         let expectation = XCTestExpectation(description: "evaluate authentication")
 
@@ -203,7 +143,7 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         //then
         queue.async {
             XCTAssertNotNil(self.appLockInteractorOutputMock.authenticationResult)
-            XCTAssertEqual(self.appLockInteractorOutputMock.authenticationResult, AppLockMock.authenticationResult)
+            XCTAssertEqual(self.appLockInteractorOutputMock.authenticationResult, MockAppLock.authenticationResult)
             
             expectation.fulfill()
         }
@@ -215,12 +155,12 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         //given
         let queue = DispatchQueue.main
         sut.dispatchQueue = queue
-        userSessionMock.result = .denied
+        try! userSessionMock.appLockController.storePasscode("foo")
         appLockInteractorOutputMock.passwordVerificationResult = nil
         let expectation = XCTestExpectation(description: "verify password")
         
         //when
-        sut.verify(password: "")
+        sut.verify(customPasscode: "bar")
         
         //then
         queue.async {
@@ -235,13 +175,13 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
     
     func testThatItPersistsBiometricsWhenPasswordIsValid() {
         //given
-        userSessionMock.result = .validated
+        try! userSessionMock.appLockController.storePasscode("foo")
 
         //when
-        sut.verify(password: "")
+        sut.verify(customPasscode: "foo")
         
         //then
-        XCTAssertTrue(AppLockMock.didPersistBiometrics)
+        XCTAssertTrue(MockAppLock.didPersistBiometrics)
     }
     
     func testThatItDoesntPersistBiometricsWhenPasswordIsInvalid() {
@@ -249,38 +189,10 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
         userSessionMock.result = .denied
         
         //when
-        sut.verify(password: "")
+        sut.verify(customPasscode: "")
 
         //then
-        XCTAssertFalse(AppLockMock.didPersistBiometrics)
+        XCTAssertFalse(MockAppLock.didPersistBiometrics)
     }
-    
-    func testThatAppStateDidTransitionToNewAppStateUpdatesAppState() {
-        //given
-        sut.appState = nil
-        let appState = AppState.authenticated(completedRegistration: false, isDatabaseLocked: false)
-        //when
-        sut.appStateDidTransition(to: appState)
-        //the
-        XCTAssertEqual(sut.appState, appState)
-    }
-    
-    func testThatStateChangeFromUnauthenticatedToAuthenticationUpdatesLastUnlockedDate() {
-        //given
-        sut.lastUnlockedDate = Date(timeIntervalSince1970: 0)
-        sut.appState = AppState.unauthenticated(error: nil)
-        //when
-        sut.appStateDidTransition(to: AppState.authenticated(completedRegistration: false, isDatabaseLocked: false))
-        //then
-        XCTAssert(sut.lastUnlockedDate > Date(timeIntervalSince1970: 0))
-    }
-}
 
-extension AppLockInteractorTests {
-    func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
-        userSessionMock.appLockController.isActive = appLockActive
-        let timeInterval = timeoutReached ? -Double(userSessionMock.appLockController.config.appLockTimeout)-100 : -10
-        userSessionMock.appLockController.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
-        sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false, isDatabaseLocked: databaseIsLocked) : AppState.unauthenticated(error: nil)
-    }
 }

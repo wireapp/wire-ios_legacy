@@ -112,23 +112,20 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
 
         // THEN
-        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
-                                                    isDatabaseLocked: isDatabaseLocked))
+        XCTAssertEqual(sut.appState, .locked)
         XCTAssertTrue(delegate.wasNotified)
     }
     
     func testThatAppStateChanges_OnUserAuthenticationDidComplete() {
         // GIVEN
         let addedAccount = false
-        let isDatabaseLocked = false
         sut.applicationDidBecomeActive()
         
         // WHEN
         sut.userAuthenticationDidComplete(addedAccount: addedAccount)
         
         // THEN
-        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: addedAccount,
-                                                    isDatabaseLocked: isDatabaseLocked))
+        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: addedAccount))
         XCTAssertTrue(delegate.wasNotified)
     }
     
@@ -159,8 +156,7 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
 
         // THEN
-        XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false,
-                                                    isDatabaseLocked: isDatabaseLocked))
+        XCTAssertEqual(sut.appState, .locked)
         XCTAssertTrue(delegate.wasNotified)
     }
     
