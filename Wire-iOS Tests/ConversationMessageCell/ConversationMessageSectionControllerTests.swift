@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationMessageSectionControllerTests: XCTestCase {
+final class ConversationMessageSectionControllerTests: XCTestCase {
 
     // MARK: - Dequeuing
     
@@ -40,7 +40,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
     func testThatItReturnsCellsInCorrectOrder_Normal() {
         
         // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
+        let section = ConversationMessageSectionController(selfUser: MockUserType.createSelfUser(name: "Alice"), message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()
         section.useInvertedIndices = false
 
@@ -58,7 +58,7 @@ class ConversationMessageSectionControllerTests: XCTestCase {
 
     func testThatItReturnsCellsInCorrectOrder_UpsideDown() {
         // GIVEN
-        let section = ConversationMessageSectionController(message: MockMessage(), context: context)
+        let section = ConversationMessageSectionController(selfUser: MockUserType.createSelfUser(name: "Alice"), message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()
         section.useInvertedIndices = true
 

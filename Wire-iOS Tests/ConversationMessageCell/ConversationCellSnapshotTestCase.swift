@@ -78,7 +78,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     ) -> UIStackView {
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
 
-        let section = ConversationMessageSectionController(message: message, context: context)
+        let section = ConversationMessageSectionController(selfUser: mockSelfUser, message: message, context: context)
         let views = section.cellDescriptions.map({ $0.makeView() })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical

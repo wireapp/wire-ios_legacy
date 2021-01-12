@@ -209,7 +209,7 @@ extension NewDeviceSystemMessageCell {
     public override func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 
         guard let linkTarget = linkTarget,
-              url == type(of: self).userClientURL,
+              url == type(of: self).userClientURL, ///TODO: here?
               let zClientViewController = ZClientViewController.shared else { return false }
 
         switch linkTarget {
@@ -268,7 +268,8 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 final class ConversationSystemMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage,
+                      selfUser: UserType) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.senderUser,
             let conversation = message.conversation else {
@@ -320,7 +321,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
         case .newClient, .usingNewDevice, .reactivatedDevice:
-            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation)
+            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation, selfUser: selfUser)
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
@@ -797,7 +798,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
 }
 
-class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = NewDeviceSystemMessageCell
     let configuration: View.Configuration
@@ -816,8 +817,11 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage, systemMessageData: ZMSystemMessageData, conversation: ZMConversation) {
-        configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation)
+    init(message: ZMConversationMessage,
+         systemMessageData: ZMSystemMessageData,
+         conversation: ZMConversation,
+         selfUser: UserType) {
+        configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation, selfUser: selfUser)
         actionController = nil
     }
     
@@ -833,7 +837,9 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         }
     }
     
-    private static func configuration(for systemMessage: ZMSystemMessageData, in conversation: ZMConversation) -> View.Configuration {
+    private static func configuration(for systemMessage: ZMSystemMessageData,
+                                      in conversation: ZMConversation,
+                                      selfUser: UserType) -> View.Configuration {
         
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
         let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
@@ -844,7 +850,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
-            return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
+            return configureForReactivatedSelfClient(selfUser, attributes: textAttributes)
         } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
         } else if users.count == 1, let user = users.first, user.isSelfUser {

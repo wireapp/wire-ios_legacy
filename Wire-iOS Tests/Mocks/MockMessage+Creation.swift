@@ -100,7 +100,7 @@ final class MockMessageFactory {
 
 
         if numUsers > 0 {
-            mockSystemMessageData.userTypes = Set(MockUser.mockUsers()[0...numUsers - 1])
+            mockSystemMessageData.userTypes = Set(SwiftMockLoader.mockUsers()[0...numUsers - 1])
         } else {
             mockSystemMessageData.userTypes = Set()
         }

@@ -178,7 +178,8 @@ final class ConversationTableViewDataSource: NSObject {
         }
         
         let context = self.context(for: message, at: index, firstUnreadMessage: firstUnreadMessage, searchQueries: self.searchQueries)
-        let sectionController = ConversationMessageSectionController(message: message,
+        let sectionController = ConversationMessageSectionController(selfUser: ZMUser.selfUser(),
+                                                                     message: message,
                                                                      context: context,
                                                                      selected: message.isEqual(selectedMessage))
         sectionController.useInvertedIndices = true
