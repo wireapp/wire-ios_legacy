@@ -128,9 +128,15 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.canModifyTitleInConversation = true
         mockSelfUser.isGroupAdminInConversation = true
+        mockSelfUser.canModifyEphemeralSettingsInConversation = true
+        
+        let otherUser = MockUserType.createUser(name: "Bruno")
+        otherUser.isConnected = true
+        otherUser.handle = "bruno"
+        otherUser.accentColorValue = .brightOrange
 
         groupConversation.securityLevel = .notSecure
-        groupConversation.sortedOtherParticipants = [MockUserType.createUser(name: "Bruno"), mockSelfUser]
+        groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
         
 //        let actionAddMember = Action.insertNewObject(in: uiMOC)
 //        actionAddMember.name = "add_conversation_member"
