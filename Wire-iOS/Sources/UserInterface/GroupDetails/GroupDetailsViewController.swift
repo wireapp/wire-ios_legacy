@@ -35,6 +35,8 @@ protocol GroupDetailsConversationType {
     
     var allowGuests: Bool { get }
     var hasReadReceiptsEnabled: Bool { get }
+
+    var conversationType: ZMConversationType { get }
 }
 
 extension ZMConversation: GroupDetailsConversationType {}
@@ -242,8 +244,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     
     func footerView(_ view: GroupDetailsFooterView,
                     shouldPerformAction action: GroupDetailsFooterView.Action) {
-        guard let conversation = conversation as? ZMConversation else { return }
-        
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)

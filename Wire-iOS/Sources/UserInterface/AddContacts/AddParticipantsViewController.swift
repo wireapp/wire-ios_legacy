@@ -50,7 +50,7 @@ extension AddParticipantsViewController.Context {
     var includeGuests: Bool {
         switch self {
         case .add(let conversation):
-            return conversation.canAddGuest
+            return (conversation as? ZMConversation)?.canAddGuest ?? false
         case .create(let creationValues):
             return creationValues.allowGuests
         }
@@ -59,7 +59,7 @@ extension AddParticipantsViewController.Context {
     var selectionLimit: Int {
         switch self {
         case .add(let conversation):
-            return conversation.freeParticipantSlots
+            return (conversation as? ZMConversation)?.freeParticipantSlots ?? 0
         case .create:
             return ZMConversation.maxParticipantsExcludingSelf
         }
@@ -70,7 +70,7 @@ extension AddParticipantsViewController.Context {
         let message: String
         switch self {
         case .add(let conversation):
-            let freeSpace = conversation.freeParticipantSlots
+            let freeSpace = (conversation as? ZMConversation)?.freeParticipantSlots ?? 0
             message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
         case .create(_):
             message = "add_participants.alert.message.new_conversation".localized(args: max)
@@ -95,7 +95,7 @@ final class AddParticipantsViewController: UIViewController {
     }
     
     enum Context {
-        case add(ZMConversation)
+        case add(GroupDetailsConversationType)
         case create(ConversationCreationValues)
     }
     
@@ -130,7 +130,7 @@ final class AddParticipantsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(conversation: ZMConversation) {
+    convenience init(conversation: GroupDetailsConversationType) {
         self.init(context: .add(conversation))
     }
     
@@ -143,7 +143,8 @@ final class AddParticipantsViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
+    init(context: Context,
+         variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -399,7 +400,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     @objc func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
             self.dismiss(animated: true) {
-                self.addSelectedParticipants(to: conversation)
+                self.addSelectedParticipants(to: conversation as! ZMConversation) // TODO:
             }
             
         }
@@ -444,7 +445,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,
-            actionType: .addService(conversation),
+            actionType: .addService(conversation as! ZMConversation),
             variant: .init(colorScheme: self.variant, opaque: true)
         ) { [weak self] result in
             guard let `self` = self, let result = result else { return }

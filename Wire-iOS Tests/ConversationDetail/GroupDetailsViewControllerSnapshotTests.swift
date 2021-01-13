@@ -39,6 +39,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: GroupDetailsViewController!
     var groupConversation: MockGroupDetailsConversation!
+    var mockSelfUser: MockUserType!
     
     override func setUp() {
         super.setUp()
@@ -46,11 +47,15 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         groupConversation = MockGroupDetailsConversation()
 //        groupConversation.userDefinedName = "iOS Team"
         groupConversation.displayName = "iOS Team"
+        
+        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
     }
     
     override func tearDown() {
         sut = nil
         groupConversation = nil
+        mockSelfUser = nil
 
         super.tearDown()
     }
@@ -125,7 +130,6 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     func testForOptionsForNonTeamUser() {
         // GIVEN
-        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.canModifyTitleInConversation = true
         mockSelfUser.isGroupAdminInConversation = true
         mockSelfUser.canModifyEphemeralSettingsInConversation = true
@@ -138,46 +142,33 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         groupConversation.securityLevel = .notSecure
         groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
         
-//        let actionAddMember = Action.insertNewObject(in: uiMOC)
-//        actionAddMember.name = "add_conversation_member"
-//
-//        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
-//        actionModifyTimer.name = "modify_conversation_message_timer"
-//
-//        let actionModifyName = Action.insertNewObject(in: uiMOC)
-//        actionModifyName.name = "modify_conversation_name"
-        
 
-        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
-
-//            let groupRole = mockSelfUser.role(in: groupConversation)
-//            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
             
             // THEN
             verify(matching: sut)
     }
 
-    /*func verifyConversationActionController(file: StaticString = #file,
+    private func verifyConversationActionController(file: StaticString = #file,
                                             line: UInt = #line) {
         sut = GroupDetailsViewController(conversation: groupConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
         verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
 
-    func testForActionMenu() {
+    /*func testForActionMenu() {
         teamTest {
             verifyConversationActionController()
         }
-    }
+    }*/
 
     func testForActionMenu_NonTeam() {
-        nonTeamTest {
+//        nonTeamTest {
             verifyConversationActionController()
-        }
+//        }
     }
 
-    func testForOptionsForTeamUserInTeamConversation_Admins() {
+    /*func testForOptionsForTeamUserInTeamConversation_Admins() {
         // GIVEN
         let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
         let actionAddMember = Action.insertNewObject(in: uiMOC)

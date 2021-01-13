@@ -31,14 +31,14 @@ struct AddParticipantsViewModel {
     var botCanBeAdded: Bool {
         switch context {
         case .create: return false
-        case .add(let conversation): return conversation.botCanBeAdded
+        case .add(let conversation): return (conversation as? ZMConversation)?.botCanBeAdded ?? false
         }
     }
     
     var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
-            return conversation.connectedUser.map { [$0] } ?? []
+            return (conversation as? ZMConversation)?.connectedUser.map { [$0] } ?? []
         case .create(let values): return values.participants
         default: return []
         }
@@ -52,7 +52,7 @@ struct AddParticipantsViewModel {
     
     var filterConversation: ZMConversation? {
         switch context {
-        case .add(let conversation) where conversation.conversationType == .group: return conversation
+        case .add(let conversation) where conversation.conversationType == .group: return conversation as? ZMConversation
         default: return nil
         }
     }
