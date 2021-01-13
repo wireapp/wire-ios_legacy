@@ -59,14 +59,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
         
-        let canModifyTitle: Bool
-                        if let conversation = conversation as? ZMConversation {
-        canModifyTitle = SelfUser.current.canModifyTitle(in: conversation)
-                        } else {
-                            canModifyTitle = false ///TODO: change canModifyTitle
-                        }
-        //TODO: change canModifyTitle to accept protocol, or inject canModifyTitle
-                    cell.configure(for: conversation, editable: canModifyTitle)
+        cell.configure(for: conversation, editable: SelfUser.current.canModifyTitle(in: conversation as? ZMConversation))
         cell.titleTextField.textFieldDelegate = self
         renameCell = cell
         return cell
@@ -83,8 +76,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        ///TODO: mock hasTeam
-        guard (SelfUser.current as? ZMUser)?.hasTeam == true else { return .zero }
+        guard SelfUser.current.hasTeam else { return .zero }
         sizingFooter.titleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants)
         sizingFooter.size(fittingWidth: collectionView.bounds.width)
         return sizingFooter.bounds.size
@@ -95,14 +87,6 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
 }
-
-//TODO: add has team to UserType
-//extension UserType {
-//    var hasTeam: Bool {
-//        /// Other users won't have a team object, but a teamIdentifier.
-//        return nil != team || nil != teamIdentifier
-//    }
-//}
 
 extension RenameGroupSectionController : ZMConversationObserver {
     

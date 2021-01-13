@@ -41,6 +41,8 @@ class MockUserType: NSObject, UserType, Decodable {
     }
 
     // MARK: - MockHelpers
+    var hasTeam: Bool = false
+    
     var isTrusted: Bool = true
 
     let legalHoldDataSource = MockLegalHoldDataSource()
@@ -206,7 +208,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyOtherMemberInConversation
     }
 
-    func canModifyTitle(in conversation: ZMConversation) -> Bool {
+    func canModifyTitle(in conversation: ZMConversation?) -> Bool {
         return canModifyTitleInConversation
     }
 

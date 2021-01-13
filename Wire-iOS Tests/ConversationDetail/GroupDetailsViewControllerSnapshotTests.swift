@@ -123,6 +123,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     func testForOptionsForNonTeamUser() {
         // GIVEN
+        groupConversation.securityLevel = .notSecure
+        
 //        let actionAddMember = Action.insertNewObject(in: uiMOC)
 //        actionAddMember.name = "add_conversation_member"
 //
@@ -133,6 +135,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 //        actionModifyName.name = "modify_conversation_name"
         
         let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        mockSelfUser.canModifyTitleInConversation = true
+
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
 
 //            let groupRole = mockSelfUser.role(in: groupConversation)
