@@ -166,6 +166,9 @@ final class UserCellTests: ZMSnapshotTestCase {
     }
     
     func testThatAccessIDIsGenerated() {
+        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
+        
         let user = MockUser.mockUsers().map(ParticipantsRowType.init)[0]
         
         let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
