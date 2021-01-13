@@ -24,7 +24,7 @@ import WireSyncEngine
 final class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     fileprivate var validName: String? = nil
-    fileprivate var conversation: ZMConversation
+    fileprivate var conversation: GroupDetailsConversationType
     fileprivate var renameCell: GroupDetailsRenameCell?
     fileprivate var token: AnyObject?
     private var sizingFooter = SectionFooter(frame: .zero)
@@ -33,10 +33,13 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
         return false
     }
     
-    init(conversation: ZMConversation) {
+    init(conversation: GroupDetailsConversationType) {
         self.conversation = conversation
         super.init()
-        self.token = ConversationChangeInfo.add(observer: self, for: conversation)
+        
+        if let conversation = conversation as? ZMConversation {
+            token = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
     }
     
     func focus() {
@@ -54,6 +57,9 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let conversation = conversation as? ZMConversation else {
+            return UICollectionViewCell()
+        }
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
         cell.configure(for: conversation, editable: SelfUser.current.canModifyTitle(in: conversation) )
         cell.titleTextField.textFieldDelegate = self
@@ -97,6 +103,8 @@ extension RenameGroupSectionController : ZMConversationObserver {
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.securityLevelChanged || changeInfo.nameChanged else { return }
         
+        guard let conversation = conversation as? ZMConversation else { return }
+        
         renameCell?.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyTitle(in: conversation) ?? false)
     }
     
@@ -126,6 +134,8 @@ extension RenameGroupSectionController: SimpleTextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
+//        guard let conversation = conversation as? ZMConversation else { return }
+        
         if let newName = validName {
             ZMUserSession.shared()?.enqueue {
                 self.conversation.userDefinedName = newName
