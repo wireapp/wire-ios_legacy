@@ -169,13 +169,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                     sections.append(adminSection)
                 } else {
                     let adminSection = ParticipantsSectionController(participants: admins,
-                                                                     conversationRole: .admin, conversation: conversation as! ZMConversation,
+                                                                     conversationRole: .admin, conversation: conversation,
                                                                      delegate: self, totalParticipantsCount: participants.count, clipSection: false)
                     sections.append(adminSection)
                     if members.count <= (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count) { // Don't display the ShowAll button
                         if !members.isEmpty {
                             let memberSection = ParticipantsSectionController(participants: members,
-                                                                              conversationRole: .member, conversation: conversation as! ZMConversation,
+                                                                              conversationRole: .member, conversation: conversation,
                                                                               delegate: self, totalParticipantsCount: participants.count, clipSection: false)
                             sections.append(memberSection)
                         }
@@ -322,7 +322,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
+    func presentFullParticipantsList(for users: [UserType], in conversation: GroupDetailsConversationType) {
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     

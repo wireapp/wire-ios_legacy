@@ -25,7 +25,7 @@ protocol GroupDetailsUserDetailPresenter: class {
 }
 
 protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter {
-    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation)
+    func presentFullParticipantsList(for users: [UserType], in conversation: GroupDetailsConversationType)
 }
 
 class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
