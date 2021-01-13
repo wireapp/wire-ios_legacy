@@ -30,7 +30,9 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     var sortedServiceUsers: [UserType] = []
     
     var securityLevel: ZMConversationSecurityLevel = .secure
-
+    
+    var allowGuests: Bool = false
+    var hasReadReceiptsEnabled: Bool = false
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {

@@ -216,19 +216,19 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyReadReceiptSettingsInConversation
     }
 
-    func canModifyEphemeralSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyEphemeralSettings(in conversation: ZMConversation?) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    func canModifyNotificationSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyNotificationSettings(in conversation: ZMConversation?) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyAccessControlSettings(in conversation: ZMConversation?) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    func isGroupAdmin(in conversation: ZMConversation) -> Bool {
+    func isGroupAdmin(in conversation: ZMConversation?) -> Bool {
         return isGroupAdminInConversation
     }
 

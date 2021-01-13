@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireDataModel
 
-class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
+final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func setUp() {
         super.setUp()
@@ -28,8 +28,8 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
         title = "group_details.timeout_options_cell.title".localized
     }
 
-    func configure(with conversation: ZMConversation) {
-        switch conversation.messageDestructionTimeout {
+    func configure(with conversation: GroupDetailsConversationType) {
+        switch (conversation as? ZMConversation)?.messageDestructionTimeout {
         case .synced(let value)?:
             status = value.displayString
         default:

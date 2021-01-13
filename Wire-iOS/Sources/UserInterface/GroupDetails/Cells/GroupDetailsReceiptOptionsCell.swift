@@ -42,7 +42,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 }
 
 extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
-    func configure(with conversation: ZMConversation) {
+    func configure(with conversation: GroupDetailsConversationType) {
          isOn = conversation.hasReadReceiptsEnabled
     }
 }
