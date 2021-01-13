@@ -116,7 +116,7 @@ extension AppLockInteractor: AppLockInteractorInput {
             guard let `self` = self else { return }
                         
             self.dispatchQueue.async {
-                if case .granted = result {
+                if case .granted = result, let context = context as? LAContext {
                     try? self.userSession?.unlockDatabase(with: context)
                 }
                 

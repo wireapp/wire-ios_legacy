@@ -113,7 +113,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
-    fileprivate static let maxActiveSpeakers: Int = 1
+    fileprivate static let maxActiveSpeakers: Int = 4
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool

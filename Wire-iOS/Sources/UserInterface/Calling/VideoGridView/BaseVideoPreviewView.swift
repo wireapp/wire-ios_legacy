@@ -97,6 +97,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     
     func setupViews() {
         layer.borderColor = UIColor.accent().cgColor
+        layer.borderWidth = 0
         backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
@@ -115,7 +116,10 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - Frame Border
     
+    private let isActiveSpeakerFrameEnabled = false
+    
     private func updateBorderVisibility() {
+        guard isActiveSpeakerFrameEnabled else { return }
         layer.borderWidth = stream.isParticipantUnmutedAndActiveSpeaker ? 1 : 0
     }
     

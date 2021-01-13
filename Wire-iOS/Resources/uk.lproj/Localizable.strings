@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Створити код допуску";
-"create_passcode.info_label" = "Його буде використано для розблокування Wire. Якщо ви забудете цей код,  ";
-"create_passcode.info_label.highlighted" = "його неможливо буде відновити.";
+"create_passcode.info_label" = "Він буде використаний для розблокування Wire. Якщо ви забудете цей пароль, то **його неможливо буде відновити.**";
+"create_passcode.info_label_forced_applock" = "Створіть пароль для розблокування Wire. Будь ласка,  запам'ятайте, що **його неможливо буде відновити.**";
 "create_passcode.create_button.title" = "створити код допуску";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Доступ як з нового пристрою";
 "unlock.error_label" = "Невірний код допуску";
 "unlock.submit_button.title" = "розблокувати";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "У Wire відбулися зміни";
+"warning_screen.main_info.forced_applock" = "Ваша організація має заблокувати Wire, якщо додаток не використовується, для підтримки безпеки всієї команди.";
+"warning_screen.info_label.forced_applock" = "Наступного разу, розблокуйте Wire так само, як ви розблоковуєте свій телефон.";
+"warning_screen.info_label.non_forced_applock" = "Ваша організація більше не потребує блокування Wire. З цього моменту ви можете мати безперешкодний доступ до додатку.";
 
 // Wipe database
 

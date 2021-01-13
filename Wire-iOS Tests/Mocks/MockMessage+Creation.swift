@@ -20,6 +20,15 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
+extension MockMessage {
+    func update(mockSystemMessageData: MockSystemMessageData,
+                userClients: [AnyHashable]) {
+        mockSystemMessageData.clients = Set(userClients)
+
+        backingSystemMessageData = mockSystemMessageData
+    }
+}
+
 final class MockMessageFactory {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
@@ -32,7 +41,7 @@ final class MockMessageFactory {
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
-        
+
         if let sender = sender as? ZMUser {
             message.senderUser = sender
         } else if let sender = sender {
@@ -40,9 +49,9 @@ final class MockMessageFactory {
         } else {
             let user = MockUserType.createSelfUser(name: "Tarja Turunen")
             user.accentColorValue = .strongBlue
-            message.senderUser = user            
+            message.senderUser = user
         }
-        
+
         conversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
@@ -88,22 +97,30 @@ final class MockMessageFactory {
         return message
     }
 
-    class func systemMessage(with systemMessageType: ZMSystemMessageType,
-                             users numUsers: Int = 0,
-                             clients numClients: Int = 0,
-                             sender: UserType? = nil) -> MockMessage? {
+    class func systemMessageAndData(with systemMessageType: ZMSystemMessageType,
+                                    users numUsers: Int = 0,
+                                    sender: UserType? = nil) -> (MockMessage?, MockSystemMessageData) {
         let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
 
         message.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
 
-
         if numUsers > 0 {
-            mockSystemMessageData.userTypes = Set(MockUser.mockUsers()[0...numUsers - 1])
+            mockSystemMessageData.userTypes = Set(SwiftMockLoader.mockUsers()[0...numUsers - 1])
         } else {
             mockSystemMessageData.userTypes = Set()
         }
+
+        return (message, mockSystemMessageData)
+    }
+
+    class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             users numUsers: Int = 0,
+                             clients numClients: Int = 0,
+                             sender: UserType? = nil) -> MockMessage? {
+
+        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType, users: numUsers, sender: sender)
 
         var userClients: [AnyHashable] = []
 
@@ -113,9 +130,7 @@ final class MockMessageFactory {
             }
         }
 
-        mockSystemMessageData.clients = Set(userClients)
-
-        message.backingSystemMessageData = mockSystemMessageData
+        message!.update(mockSystemMessageData: mockSystemMessageData, userClients: userClients)
         return message
     }
 
@@ -215,27 +230,27 @@ final class MockMessageFactory {
         message?.hasBeenDeleted = true
         return message
     }
-    
+
     class func deletedImageMessage() -> MockMessage? {
         return self.deletedMessage(from: self.imageMessage())
     }
-    
+
     class func deletedVideoMessage() -> MockMessage? {
         return self.deletedMessage(from: self.videoMessage())
     }
-    
+
     class func deletedAudioMessage() -> MockMessage? {
         return self.deletedMessage(from: self.audioMessage())
     }
-    
+
     class func deletedFileMessage() -> MockMessage? {
         return self.deletedMessage(from: self.fileTransferMessage())
     }
-    
+
     class func deletedLinkMessage() -> MockMessage? {
         return self.deletedMessage(from: self.linkMessage())
     }
-    
+
     class func passFileTransferMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
         message.backingFileMessageData = MockPassFileMessageData()

@@ -685,7 +685,7 @@
 "call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
 
-"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.title" = "通话结束";
 "call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
 "call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
 "call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
@@ -1194,7 +1194,7 @@
 "self.settings.advanced.debugging_tools.title" = "调试工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一个未读对话";
 "self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
-"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "输入除错指令";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助于Wire诊断通话问题，并改善整个应用体验。";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
@@ -1802,13 +1802,13 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "创建密码";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
-"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_lowercase_char" = "小写字母";
 "create_passcode.validation.no_uppercase_char" = "An uppercase letter";
 "create_passcode.validation.no_number" = "一个数字";
 "create_passcode.validation.no_special_char" = "A special character";
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "Wrong passcode";
 "unlock.submit_button.title" = "解锁";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 

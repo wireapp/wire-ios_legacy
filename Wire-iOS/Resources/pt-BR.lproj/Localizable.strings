@@ -1802,8 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Crie uma senha";
-"create_passcode.info_label" = "Será usado para desbloquear o Wire. Se você esquecer esta senha ";
-"create_passcode.info_label.highlighted" = "ela não pode ser recuperada.";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "criar senha";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1819,12 @@
 "unlock.wipe_button" = "Acessar como novo dispositivo";
 "unlock.error_label" = "Senha incorreta";
 "unlock.submit_button.title" = "desbloquear";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
