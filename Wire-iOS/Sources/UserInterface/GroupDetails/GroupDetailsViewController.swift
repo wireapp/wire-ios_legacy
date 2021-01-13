@@ -27,6 +27,11 @@ protocol GroupDetailsConversationType {
     
     //TODO: merge with other protocol
     var displayName: String { get }
+    
+    var securityLevel: ZMConversationSecurityLevel { get }
+    
+    var sortedOtherParticipants: [UserType] { get }
+    var sortedServiceUsers: [UserType] { get }
 }
 
 extension ZMConversation: GroupDetailsConversationType {}
@@ -143,9 +148,11 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
 
-        guard let conversation = conversation as? ZMConversation else { return sections } ///TODO: need casting?
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+
+        guard let conversation = conversation as? ZMConversation else { return sections } ///TODO: need casting?
+        
         if !participants.isEmpty {
             
             let admins = participants.filter({$0.isGroupAdmin(in: conversation)})

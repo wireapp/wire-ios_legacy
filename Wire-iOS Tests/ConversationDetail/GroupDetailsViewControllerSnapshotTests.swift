@@ -25,6 +25,12 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     var userDefinedName: String?
     
     var displayName: String = ""
+
+    var sortedOtherParticipants: [UserType] = []
+    var sortedServiceUsers: [UserType] = []
+    
+    var securityLevel: ZMConversationSecurityLevel = .secure
+
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
@@ -36,7 +42,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         super.setUp()
 
         groupConversation = MockGroupDetailsConversation()
-        groupConversation.userDefinedName = "iOS Team"
+//        groupConversation.userDefinedName = "iOS Team"
         groupConversation.displayName = "iOS Team"
     }
     
@@ -127,7 +133,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 //        actionModifyName.name = "modify_conversation_name"
         
         let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
-        
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
+
 //            let groupRole = mockSelfUser.role(in: groupConversation)
 //            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)

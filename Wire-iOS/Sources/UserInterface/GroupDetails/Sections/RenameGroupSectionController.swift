@@ -57,11 +57,16 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let conversation = conversation as? ZMConversation else {
-            return UICollectionViewCell()
-        }
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
-        cell.configure(for: conversation, editable: SelfUser.current.canModifyTitle(in: conversation) )
+        
+        let canModifyTitle: Bool
+                        if let conversation = conversation as? ZMConversation {
+        canModifyTitle = SelfUser.current.canModifyTitle(in: conversation)
+                        } else {
+                            canModifyTitle = false ///TODO: change canModifyTitle
+                        }
+        //TODO: change canModifyTitle to accept protocol, or inject canModifyTitle
+                    cell.configure(for: conversation, editable: canModifyTitle)
         cell.titleTextField.textFieldDelegate = self
         renameCell = cell
         return cell
@@ -78,6 +83,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        ///TODO: mock hasTeam
         guard (SelfUser.current as? ZMUser)?.hasTeam == true else { return .zero }
         sizingFooter.titleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants)
         sizingFooter.size(fittingWidth: collectionView.bounds.width)
