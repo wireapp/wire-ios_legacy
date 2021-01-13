@@ -33,6 +33,8 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     
     var allowGuests: Bool = false
     var hasReadReceiptsEnabled: Bool = false
+
+    var conversationType: ZMConversationType = .group
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
@@ -45,7 +47,6 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         super.setUp()
 
         groupConversation = MockGroupDetailsConversation()
-//        groupConversation.userDefinedName = "iOS Team"
         groupConversation.displayName = "iOS Team"
         
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
@@ -156,16 +157,13 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
 
-    /*func testForActionMenu() {
-        teamTest {
-            verifyConversationActionController()
-        }
-    }*/
+    func testForActionMenu() {
+        mockSelfUser.hasTeam = true
+        verifyConversationActionController()
+    }
 
     func testForActionMenu_NonTeam() {
-//        nonTeamTest {
-            verifyConversationActionController()
-//        }
+        verifyConversationActionController()
     }
 
     /*func testForOptionsForTeamUserInTeamConversation_Admins() {
