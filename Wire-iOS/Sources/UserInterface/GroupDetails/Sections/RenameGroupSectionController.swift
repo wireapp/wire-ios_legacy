@@ -55,7 +55,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
-        cell.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyTitle(in: conversation) ?? false)
+        cell.configure(for: conversation, editable: SelfUser.current.canModifyTitle(in: conversation) )
         cell.titleTextField.textFieldDelegate = self
         renameCell = cell
         return cell
@@ -72,7 +72,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard ZMUser.selfUser().hasTeam else { return .zero }
+        guard (SelfUser.current as? ZMUser)?.hasTeam == true else { return .zero }
         sizingFooter.titleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants)
         sizingFooter.size(fittingWidth: collectionView.bounds.width)
         return sizingFooter.bounds.size
@@ -83,6 +83,14 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     }
     
 }
+
+//TODO: add has team to UserType
+//extension UserType {
+//    var hasTeam: Bool {
+//        /// Other users won't have a team object, but a teamIdentifier.
+//        return nil != team || nil != teamIdentifier
+//    }
+//}
 
 extension RenameGroupSectionController : ZMConversationObserver {
     
