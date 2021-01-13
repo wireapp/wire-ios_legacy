@@ -797,7 +797,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
 
 }
 
-class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = NewDeviceSystemMessageCell
     let configuration: View.Configuration
@@ -844,7 +844,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
         } else if systemMessage.systemMessageType == .reactivatedDevice {
-            return configureForReactivatedSelfClient(ZMUser.selfUser(), attributes: textAttributes)
+            return configureForReactivatedSelfClient(SelfUser.current, attributes: textAttributes)
         } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
             return configureForNewCurrentDeviceOfSelfUser(user, attributes: textAttributes)
         } else if users.count == 1, let user = users.first, user.isSelfUser {
