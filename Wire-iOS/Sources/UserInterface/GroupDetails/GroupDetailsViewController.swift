@@ -158,8 +158,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
-
-//        guard let conversation = conversation as? ZMConversation else { return sections } ///TODO: need casting?
         
         if !participants.isEmpty {
             

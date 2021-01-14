@@ -73,13 +73,17 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
     }
     
     func testForOptionsForTeamUserInNonTeamConversation() {
+        // GIVEN & WHEN
         mockSelfUser.isGroupAdminInConversation = false
 
         mockSelfUser.canModifyTitleInConversation = false
         mockSelfUser.canModifyNotificationSettingsInConversation = true
         mockSelfUser.canAddUserToConversation = false
         
+        // self user has team
         mockSelfUser.hasTeam = true
+        mockSelfUser.teamIdentifier = UUID()
+        
         mockSelfUser.isGroupAdminInConversation = true
         mockSelfUser.teamRole = .partner
 
@@ -88,11 +92,10 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
         groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
 
+        sut = GroupDetailsViewController(conversation: groupConversation)
 
-
-            sut = GroupDetailsViewController(conversation: groupConversation)
-
-            verify(matching: sut)
+        // THEN
+        verify(matching: sut)
     }
 /*
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
