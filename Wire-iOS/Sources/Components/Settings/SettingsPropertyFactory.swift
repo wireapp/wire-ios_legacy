@@ -339,11 +339,7 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        self.delegate?.appLockOptionDidChange(self,
-                                                              newValue: lockApp.boolValue,
-                                                              callback: { result in
-                        self.isAppLockActive = result
-                        })                        
+                        self.isAppLockActive = lockApp.boolValue
 
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
