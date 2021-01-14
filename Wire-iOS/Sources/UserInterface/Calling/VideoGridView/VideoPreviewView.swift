@@ -85,6 +85,11 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
+    
+    // MARK: - Video scaling
+    override func tranformVideo(withScale scale: CGFloat) {
+        previewView?.transform.scaledBy(x: scale, y: scale)
+    }
 
     // MARK: - Fill mode
 
