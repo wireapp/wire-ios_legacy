@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 import UIKit
 
-class ConversationCreateGuestsCell: IconToggleCell {
+final class ConversationCreateGuestsCell: IconToggleCell {
     
     override func setUp() {
         super.setUp()

@@ -40,7 +40,9 @@ protocol GroupDetailsConversationType {
     
     var mutedMessageTypes: MutedMessageTypes { get }
     
-    var freeParticipantSlots: Int { get }    
+    var freeParticipantSlots: Int { get }
+    
+    var teamRemoteIdentifier: UUID? { get }
 }
 
 extension ZMConversation: GroupDetailsConversationType {}
@@ -204,10 +206,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(optionsSectionController)
         }
         
-        ///TODO: canModifyReadReceiptSettings with optional
-        ///TODO: mock teamRemoteIdentifier?
-        if (conversation as? ZMConversation)?.teamRemoteIdentifier != nil && SelfUser.current.canModifyReadReceiptSettings(in: conversation as! ZMConversation) {
-            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation as! ZMConversation,//TODO
+        if conversation.teamRemoteIdentifier != nil &&
+            SelfUser.current.canModifyReadReceiptSettings(in: conversation as? ZMConversation) {
+            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,
                                                                                   presentingViewController: self)

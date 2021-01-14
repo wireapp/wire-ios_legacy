@@ -27,7 +27,7 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     var userDefinedName: String?
     
     var displayName: String = ""
-
+    
     var sortedOtherParticipants: [UserType] = []
     var sortedServiceUsers: [UserType] = []
     
@@ -35,25 +35,27 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     
     var allowGuests: Bool = false
     var hasReadReceiptsEnabled: Bool = false
-
+    
     var conversationType: ZMConversationType = .group
     var mutedMessageTypes: MutedMessageTypes = .none
+    
+    var teamRemoteIdentifier: UUID? = nil
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
-
+    
     var sut: GroupDetailsViewController!
     var mockConversation: MockGroupDetailsConversation!
     var mockSelfUser: MockUserType!
     var otherUser: MockUserType!
-
+    
     override func setUp() {
         super.setUp()
-
+        
         mockConversation = MockGroupDetailsConversation()
         mockConversation.displayName = "iOS Team"
         mockConversation.securityLevel = .notSecure
-
+        
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
         
@@ -68,7 +70,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockConversation = nil
         mockSelfUser = nil
         otherUser = nil
-
+        
         super.tearDown()
     }
     
@@ -78,88 +80,79 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockSelfUser.isGroupAdminInConversation = true
         mockSelfUser.canModifyNotificationSettingsInConversation = true
     }
-
+    
     private func createGroupConversation() {
         mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
     }
     
     func testForOptionsForTeamUserInNonTeamConversation() {
         // GIVEN & WHEN
-
+        
         mockSelfUser.canModifyTitleInConversation = true
         mockSelfUser.canAddUserToConversation = true
         mockSelfUser.canModifyEphemeralSettingsInConversation = true
-
+        
         // self user has team
         setSelfUserInTeam()
-
+        
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .none
-
+        
         createGroupConversation()
-
+        
         sut = GroupDetailsViewController(conversation: mockConversation)
-
+        
         // THEN
         verify(matching: sut)
     }
-
+    
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
         // GIVEN & WHEN
         setSelfUserInTeam()
         mockSelfUser.canAddUserToConversation = false
-
+        
         mockSelfUser.teamRole = .partner
         
         createGroupConversation()
         
-            sut = GroupDetailsViewController(conversation: mockConversation)
+        sut = GroupDetailsViewController(conversation: mockConversation)
         
         //THEN
-            verify(matching: sut)
+        verify(matching: sut)
     }
-
-    /*
+    
     func testForOptionsForTeamUserInTeamConversation() {
         // GIVEN
-        let actionAddMember = Action.insertNewObject(in: uiMOC)
-        actionAddMember.name = "add_conversation_member"
-
-        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
-        actionModifyTimer.name = "modify_conversation_message_timer"
-
-        let actionModifyName = Action.insertNewObject(in: uiMOC)
-        actionModifyName.name = "modify_conversation_name"
-
-        let actionModifyAccess = Action.insertNewObject(in: uiMOC)
-        actionModifyAccess.name = "modify_conversation_access"
-
-        let actionReceiptMode = Action.insertNewObject(in: uiMOC)
-        actionReceiptMode.name = "modify_conversation_receipt_mode"
-
-        teamTest {
-            selfUser.membership?.setTeamRole(.member)
-            groupConversation.team =  selfUser.team
-            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            let groupRole = selfUser.role(in: groupConversation)
-            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName, actionModifyAccess, actionReceiptMode])
-            sut = GroupDetailsViewController(conversation: groupConversation)
-
-            // THEN
-            verify(matching: sut)
-        }
+        setSelfUserInTeam()
+        mockSelfUser.teamRole = .member
+        
+        mockSelfUser.canModifyTitleInConversation = true
+        mockSelfUser.canModifyEphemeralSettingsInConversation = true
+        mockSelfUser.canModifyNotificationSettingsInConversation = true
+        mockSelfUser.canModifyReadReceiptSettingsInConversation = true
+        mockSelfUser.canModifyAccessControlSettings = true
+        
+        createGroupConversation()
+        mockConversation.teamRemoteIdentifier = UUID()
+        mockConversation.allowGuests = true
+        
+        sut = GroupDetailsViewController(conversation: mockConversation)
+        
+        // THEN
+        verify(matching: sut)
     }
-
-    func testForOptionsForTeamUserInTeamConversation_Partner() {
-        teamTest {
-            selfUser.membership?.setTeamRole(.partner)
-            groupConversation.team =  selfUser.team
-            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            sut = GroupDetailsViewController(conversation: groupConversation)
-            verify(matching: sut)
-        }
-    }*/
-
+    
+    /*
+     func testForOptionsForTeamUserInTeamConversation_Partner() {
+     teamTest {
+     selfUser.membership?.setTeamRole(.partner)
+     groupConversation.team =  selfUser.team
+     groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+     sut = GroupDetailsViewController(conversation: groupConversation)
+     verify(matching: sut)
+     }
+     }*/
+    
     func testForOptionsForNonTeamUser() {
         // GIVEN
         mockSelfUser.canModifyTitleInConversation = true
@@ -168,51 +161,42 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         
         mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
         
-
-            sut = GroupDetailsViewController(conversation: mockConversation)
-            
-            // THEN
-            verify(matching: sut)
+        
+        sut = GroupDetailsViewController(conversation: mockConversation)
+        
+        // THEN
+        verify(matching: sut)
     }
-
+    
     private func verifyConversationActionController(file: StaticString = #file,
-                                            line: UInt = #line) {
+                                                    line: UInt = #line) {
         sut = GroupDetailsViewController(conversation: mockConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
         verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
-
+    
     func testForActionMenu() {
         mockSelfUser.hasTeam = true
         verifyConversationActionController()
     }
-
+    
     func testForActionMenu_NonTeam() {
         verifyConversationActionController()
     }
-
-    /*func testForOptionsForTeamUserInTeamConversation_Admins() {
+    
+    func testForOptionsForTeamUserInTeamConversation_Admins() {
         // GIVEN
-        let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
-        let actionAddMember = Action.insertNewObject(in: uiMOC)
-        actionAddMember.name = "add_conversation_member"
-
-        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
-        actionModifyTimer.name = "modify_conversation_message_timer"
-
-        let actionModifyName = Action.insertNewObject(in: uiMOC)
-        actionModifyName.name = "modify_conversation_name"
-
-        teamTest {
-            selfUser.membership?.setTeamRole(.admin)
-            groupConversationAdmin.team =  selfUser.team
-            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            let groupRole = selfUser.role(in: groupConversationAdmin)
-            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
-            sut = GroupDetailsViewController(conversation: groupConversationAdmin)
-
-            // THEN
-            verify(matching: sut)
-        }
-    }*/
+        setSelfUserInTeam()
+        mockSelfUser.teamRole = .admin
+        mockSelfUser.canModifyEphemeralSettingsInConversation = true
+        mockSelfUser.canModifyTitleInConversation = true
+        
+        mockConversation.sortedOtherParticipants = [mockSelfUser]
+        mockConversation.displayName = "Empty group conversation"
+        
+        
+        sut = GroupDetailsViewController(conversation: mockConversation)
+        
+        verify(matching: sut)
+    }
 }

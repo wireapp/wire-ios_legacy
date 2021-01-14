@@ -213,7 +213,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyTitleInConversation
     }
 
-    func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyReadReceiptSettings(in conversation: ZMConversation?) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
 
@@ -239,7 +239,7 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-    func isGuest(in conversation: ZMConversation?) -> Bool {
+    func isGuest(in conversation: ZMConversation) -> Bool {
         return isGuestInConversation
     }
 
