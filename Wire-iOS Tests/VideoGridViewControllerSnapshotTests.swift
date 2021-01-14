@@ -20,6 +20,8 @@ import XCTest
 @testable import Wire
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
+    var isCallOneToOne: Bool = false
+    
     var floatingVideoStream: VideoStream?
 
     var videoStreams: [VideoStream] = []

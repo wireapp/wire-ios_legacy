@@ -96,7 +96,8 @@ class VideoPreviewViewTests: XCTestCase {
     func testActiveState() {
         // GIVEN / WHEN
         sut = createView(from: stream(muted: false, active: true), isCovered: false)
-        
+        sut.shouldShowActiveSpeakerFrame = true
+
         // THEN
         verify(matching: sut)
     }
