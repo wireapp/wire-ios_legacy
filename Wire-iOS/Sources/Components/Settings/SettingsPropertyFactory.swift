@@ -342,11 +342,9 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                         if let userSession = self.userSession as? ZMUserSession {
-                             userSession.perform {
-                                 self.isAppLockActive = result
-                             }
-                         }
+                           self.userSession?.perform {
+                               self.isAppLockActive = result
+                           }
                         })
 
                     default:
