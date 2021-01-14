@@ -473,7 +473,7 @@ final class AppLockPresenterTests: XCTestCase {
         sut.requireAuthenticationIfNeeded()
         
         //then
-        XCTAssertTrue(userInterface.presentWarningScreenCalled)
+        XCTAssertFalse(userInterface.presentWarningScreenCalled)
     }
     
     func testThatAppLockDoesNotShowWarningScreen_IfNeedsToNotifyUserIsFalse() {

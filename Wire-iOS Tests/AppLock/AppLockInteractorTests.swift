@@ -281,8 +281,9 @@ final class AppLockInteractorTests: ZMSnapshotTestCase {
 extension AppLockInteractorTests {
     func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool, databaseIsLocked: Bool) {
         userSessionMock.appLockController.isActive = appLockActive
-        let timeInterval = timeoutReached ? -Double(userSessionMock.appLockController.config.appLockTimeout)-100 : -10
-        userSessionMock.appLockController.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
+        let timeout = 10
+        let timeInterval = timeoutReached ? (timeout - 1) : -1
+        userSessionMock.appLockController.lastUnlockedDate = Date(timeIntervalSinceNow: TimeInterval(timeInterval))
         sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false, isDatabaseLocked: databaseIsLocked) : AppState.unauthenticated(error: nil)
     }
 }
