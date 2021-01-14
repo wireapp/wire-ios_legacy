@@ -23,50 +23,47 @@ import WireCommonComponents
 
 final class AppLockChangeWarningViewController: UIViewController {
 
+    // MARK: - Properties
+
+    private var isAppLockActive: Bool
+
+    private var completion: Completion?
+
     private let contentView: UIView = UIView()
     
     private lazy var confirmButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
         button.setBackgroundImageColor(.strongBlue, for: .normal)
-        
         button.accessibilityIdentifier = "confirmButton"
         button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-
         return button
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel()
         label.text = "warning_screen.title_label".localized
-
         return label
     }()
     
     private lazy var messageLabel: UILabel = {
-        let text = isAppLockActive
-            ? "warning_screen.main_info.forced_applock".localized + "\n\n" + "warning_screen.info_label.forced_applock".localized
-            : "warning_screen.info_label.non_forced_applock".localized
-        let label = UILabel(key: text,
-                            size: .normal,
-                            weight: .regular,
-                            color: .landingScreen)
+        let label = UILabel(size: .normal, weight: .regular, color: .landingScreen)
+        label.text = messageLabelText
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-
         return label
     }()
 
-    private var completion: Completion?
-
-    private var isAppLockActive: Bool
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupViews()
+    private var messageLabelText: String {
+        if isAppLockActive {
+            return "warning_screen.main_info.forced_applock".localized + "\n\n" + "warning_screen.info_label.forced_applock".localized
+        } else {
+            return "warning_screen.info_label.non_forced_applock".localized
+        }
     }
+
+    // MARK: - Life cycle
 
     init(isAppLockActive: Bool, completion: Completion? = nil) {
         self.isAppLockActive = isAppLockActive
@@ -74,6 +71,18 @@ final class AppLockChangeWarningViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupViews()
+    }
+
+    // MARK: - Helpers
     
     private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
@@ -119,9 +128,7 @@ final class AppLockChangeWarningViewController: UIViewController {
         ])
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Actions
 
     @objc
     private func confirmButtonTapped(sender: AnyObject?) {
@@ -130,7 +137,7 @@ final class AppLockChangeWarningViewController: UIViewController {
                 session.appLockController.needsToNotifyUser = false
             }
         }
-        
+
         completion?()
         dismiss(animated: true)
     }
