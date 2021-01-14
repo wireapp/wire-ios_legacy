@@ -115,11 +115,8 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
 
     // MARK: - Frame Border
-    
-    private let isActiveSpeakerFrameEnabled = false
-    
+        
     private func updateBorderVisibility() {
-        guard isActiveSpeakerFrameEnabled else { return }
         layer.borderWidth = stream.isParticipantUnmutedAndActiveSpeaker ? 1 : 0
     }
     
