@@ -110,9 +110,23 @@ final class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            presentWarningIfNeeded {
-                self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+
+            if appLockInteractorInput.needsToCreateCustomPasscode {
+                userInterface?.presentCreatePasscodeScreen(callback: { _ in
+                    // User needs to enter the newly created passcode after creation.
+                    self.setContents(dimmed: true, withReauth: true)
+                    self.appLockInteractorInput.needsToNotifyUser = false
+                })
+            } else if appLockInteractorInput.shouldUseCustomPasscode {
+                presentWarningIfNeeded {
+                    self.requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
+                }
+            } else {
+                presentWarningIfNeeded {
+                    self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+                }
             }
+
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
