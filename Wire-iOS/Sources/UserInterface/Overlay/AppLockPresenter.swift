@@ -41,7 +41,7 @@ protocol AppLockUserInterface: class {
     func presentCreatePasscodeScreen(callback: ResultHandler?)
     
      /// Present warning screen (when the user should be informed about applock config changes)
-    func presentWarningScreen(callback: ResultHandler?)
+    func presentWarningScreen(completion: Completion?)
     
     func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
@@ -126,9 +126,7 @@ final class AppLockPresenter {
             return
         }
         
-        userInterface?.presentWarningScreen(callback: { _ in
-            block()
-        })
+        userInterface?.presentWarningScreen(completion: block)
     }
 }
 

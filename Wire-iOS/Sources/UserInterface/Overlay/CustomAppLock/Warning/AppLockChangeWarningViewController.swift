@@ -37,7 +37,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let label = UILabel.createMultiLineCenterdLabel(variant: variant)
+        let label = UILabel.createMultiLineCenterdLabel()
         label.text = "warning_screen.title_label".localized
 
         return label
@@ -50,44 +50,33 @@ final class AppLockChangeWarningViewController: UIViewController {
         let label = UILabel(key: text,
                             size: .normal,
                             weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+                            color: .landingScreen)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         return label
     }()
-    
-    private let variant: ColorSchemeVariant
-    private var callback: ResultHandler?
-    
-    private var appLock: AppLockType? = ZMUserSession.shared()?.appLockController
 
-    private var isAppLockActive: Bool {
-        return appLock?.isActive ?? false
-    }
+    private var completion: Completion?
+
+    private var isAppLockActive: Bool
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
     }
-    
-    /// init with parameters
-    /// - Parameters:
-    ///   - callback: callback for authentication
-    ///   - variant: color variant for this screen
-    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
-                  callback: ResultHandler? = nil) {
-        self.variant = variant
-        self.callback = callback
+
+    init(isAppLockActive: Bool, completion: Completion? = nil) {
+        self.isAppLockActive = isAppLockActive
+        self.completion = completion
 
         super.init(nibName: nil, bundle: nil)
     }
     
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: variant)
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
 
         view.addSubview(contentView)
         
@@ -136,10 +125,13 @@ final class AppLockChangeWarningViewController: UIViewController {
 
     @objc
     private func confirmButtonTapped(sender: AnyObject?) {
-        ZMUserSession.shared()?.perform {
-            self.appLock?.needsToNotifyUser = false
+        if let session = ZMUserSession.shared() {
+            session.perform {
+                session.appLockController.needsToNotifyUser = false
+            }
         }
-        callback?(true)
+        
+        completion?()
         dismiss(animated: true)
     }
 
