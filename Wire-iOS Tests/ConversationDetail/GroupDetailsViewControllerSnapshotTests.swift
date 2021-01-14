@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class MockGroupDetailsConversation: GroupDetailsConversationType {
-    var freeParticipantSlots: Int = 0
+    var freeParticipantSlots: Int = 1
     
     var isUnderLegalHold: Bool = false
     var isSelfAnActiveMember: Bool = true
@@ -43,16 +43,16 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: GroupDetailsViewController!
-    var groupConversation: MockGroupDetailsConversation!
+    var mockConversation: MockGroupDetailsConversation!
     var mockSelfUser: MockUserType!
     var otherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
 
-        groupConversation = MockGroupDetailsConversation()
-        groupConversation.displayName = "iOS Team"
-        groupConversation.securityLevel = .notSecure
+        mockConversation = MockGroupDetailsConversation()
+        mockConversation.displayName = "iOS Team"
+        mockConversation.securityLevel = .notSecure
 
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
@@ -65,7 +65,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
     
     override func tearDown() {
         sut = nil
-        groupConversation = nil
+        mockConversation = nil
         mockSelfUser = nil
         otherUser = nil
 
@@ -74,25 +74,23 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
     
     func testForOptionsForTeamUserInNonTeamConversation() {
         // GIVEN & WHEN
-        mockSelfUser.isGroupAdminInConversation = false
+        mockSelfUser.isGroupAdminInConversation = true
 
-        mockSelfUser.canModifyTitleInConversation = false
+        mockSelfUser.canModifyTitleInConversation = true
+        mockSelfUser.canAddUserToConversation = true
         mockSelfUser.canModifyNotificationSettingsInConversation = true
-        mockSelfUser.canAddUserToConversation = false
-        
+        mockSelfUser.canModifyEphemeralSettingsInConversation = true
+
         // self user has team
         mockSelfUser.hasTeam = true
         mockSelfUser.teamIdentifier = UUID()
-        
-        mockSelfUser.isGroupAdminInConversation = true
-        mockSelfUser.teamRole = .partner
 
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .none
 
-        groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
+        mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
 
-        sut = GroupDetailsViewController(conversation: groupConversation)
+        sut = GroupDetailsViewController(conversation: mockConversation)
 
         // THEN
         verify(matching: sut)
@@ -152,10 +150,10 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockSelfUser.isGroupAdminInConversation = true
         mockSelfUser.canModifyEphemeralSettingsInConversation = true
         
-        groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
+        mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
         
 
-            sut = GroupDetailsViewController(conversation: groupConversation)
+            sut = GroupDetailsViewController(conversation: mockConversation)
             
             // THEN
             verify(matching: sut)
@@ -163,7 +161,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     private func verifyConversationActionController(file: StaticString = #file,
                                             line: UInt = #line) {
-        sut = GroupDetailsViewController(conversation: groupConversation)
+        sut = GroupDetailsViewController(conversation: mockConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
         verify(matching:(sut?.actionController?.alertController)!, file: file, line: line)
     }
