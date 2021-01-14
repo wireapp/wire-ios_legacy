@@ -342,8 +342,12 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                        self.isAppLockActive = result
-                        })                        
+                         if let userSession = self.userSession as? ZMUserSession {
+                             userSession.perform {
+                                 self.isAppLockActive = result
+                             }
+                         }
+                        })
 
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
