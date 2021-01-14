@@ -72,38 +72,54 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
     
+    private func setSelfUserInTeam() {
+        mockSelfUser.hasTeam = true
+        mockSelfUser.teamIdentifier = UUID()
+        mockSelfUser.isGroupAdminInConversation = true
+        mockSelfUser.canModifyNotificationSettingsInConversation = true
+    }
+
+    private func createGroupConversation() {
+        mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
+    }
+    
     func testForOptionsForTeamUserInNonTeamConversation() {
         // GIVEN & WHEN
-        mockSelfUser.isGroupAdminInConversation = true
 
         mockSelfUser.canModifyTitleInConversation = true
         mockSelfUser.canAddUserToConversation = true
-        mockSelfUser.canModifyNotificationSettingsInConversation = true
         mockSelfUser.canModifyEphemeralSettingsInConversation = true
 
         // self user has team
-        mockSelfUser.hasTeam = true
-        mockSelfUser.teamIdentifier = UUID()
+        setSelfUserInTeam()
 
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .none
 
-        mockConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
+        createGroupConversation()
 
         sut = GroupDetailsViewController(conversation: mockConversation)
 
         // THEN
         verify(matching: sut)
     }
-/*
+
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
-        teamTest {
-            selfUser.membership?.setTeamRole(.partner)
-            sut = GroupDetailsViewController(conversation: groupConversation)
+        // GIVEN & WHEN
+        setSelfUserInTeam()
+        mockSelfUser.canAddUserToConversation = false
+
+        mockSelfUser.teamRole = .partner
+        
+        createGroupConversation()
+        
+            sut = GroupDetailsViewController(conversation: mockConversation)
+        
+        //THEN
             verify(matching: sut)
-        }
     }
 
+    /*
     func testForOptionsForTeamUserInTeamConversation() {
         // GIVEN
         let actionAddMember = Action.insertNewObject(in: uiMOC)
