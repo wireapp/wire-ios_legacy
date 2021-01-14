@@ -17,17 +17,18 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
+
 
 enum AppLockModule: ModuleInterface {
 
-    typealias Router = AppLockRouter
-    typealias Interactor = AppLockInteractor
-    typealias Presenter = AppLockPresenter
-    typealias View = AppLockView
+    typealias Session = UserSessionAppLockInterface & UserSessionEncryptionAtRestInterface
+    typealias AuthenticationResult = AppLockController.AuthenticationResult
 
-    static func build() -> View {
+    static func build(session: Session) -> View {
         let router = Router()
-        let interactor = Interactor()
+        let interactor = Interactor(session: session)
         let presenter = Presenter()
         let view = View()
 
@@ -39,6 +40,10 @@ enum AppLockModule: ModuleInterface {
     }
 
 }
+
+// This module is responsible for displaying the app lock and requesting
+// authentication from the user. The app lock always begins in a locked
+// state.
 
 // MARK: - Router / Presenter
 
@@ -52,13 +57,13 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
 protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
-    /// Presenter API exposed to the interactor.
+    func authenticationEvaluated(with result: AppLockModule.AuthenticationResult)
 
 }
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    /// Interactor API exposed to the presenter.
+    func evaluateAuthentication()
 
 }
 
@@ -72,6 +77,6 @@ protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
 protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
-    /// Presenter API exposed to the view.
+    func start()
 
 }

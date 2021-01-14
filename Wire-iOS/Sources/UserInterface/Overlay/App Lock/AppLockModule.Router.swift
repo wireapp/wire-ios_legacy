@@ -17,13 +17,19 @@
 //
 
 import Foundation
+import UIKit
 
-final class AppLockInteractor: InteractorInterface {
+extension AppLockModule {
 
-    weak var presenter: AppLockPresenterInteractorInterface!
+    final class Router: RouterInterface {
+
+        weak var viewController: UIViewController?
+
+    }
 
 }
 
+
 // MARK: - API for presenter
 
-extension AppLockInteractor: AppLockInteractorPresenterInterface {}
+extension AppLockModule.Router: AppLockRouterPresenterInterface {}

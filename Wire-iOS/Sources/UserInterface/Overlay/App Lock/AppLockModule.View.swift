@@ -19,12 +19,39 @@
 import Foundation
 import UIKit
 
-final class AppLockRouter: RouterInterface {
+extension AppLockModule {
 
-    weak var viewController: UIViewController?
+    final class View: UIViewController, ViewInterface {
+
+        // MARK: - Properties
+
+        var presenter: AppLockPresenterViewInterface!
+
+        private let lockView = OldAppLockView()
+
+        override var prefersStatusBarHidden: Bool { return true }
+
+        // MARK: - Life cycle
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            setUpViews()
+            presenter.start()
+        }
+
+        // MARK: - Methods
+
+        private func setUpViews() {
+            view.addSubview(lockView)
+            lockView.translatesAutoresizingMaskIntoConstraints = false
+            lockView.fitInSuperview()
+        }
+
+    }
 
 }
 
+
 // MARK: - API for presenter
 
-extension AppLockRouter: AppLockRouterPresenterInterface {}
+extension AppLockModule.View: AppLockViewPresenterInterface {}
