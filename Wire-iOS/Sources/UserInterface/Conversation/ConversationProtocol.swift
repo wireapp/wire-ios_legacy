@@ -30,6 +30,8 @@ protocol ConnectedUserContainer {
     var connectedUserType: UserType? { get }
 }
 
+// MARK: - Input Bar View controller
+
 protocol InputBarConversation {
     var typingUsers: [UserType] { get }
     var hasDraftMessage: Bool { get }
@@ -43,28 +45,6 @@ protocol InputBarConversation {
     var isReadOnly: Bool { get }
 }
 
-protocol GroupDetailsConversation {
-    var isUnderLegalHold: Bool { get }
-    var isSelfAnActiveMember: Bool { get }
-    var userDefinedName: String? { get set }
-        
-    var securityLevel: ZMConversationSecurityLevel { get }
-    
-    var sortedOtherParticipants: [UserType] { get }
-    var sortedServiceUsers: [UserType] { get }
-    
-    var allowGuests: Bool { get }
-    var hasReadReceiptsEnabled: Bool { get }
-        
-    var mutedMessageTypes: MutedMessageTypes { get }
-    
-    var freeParticipantSlots: Int { get }
-    
-    var teamRemoteIdentifier: UUID? { get }
-}
-
-//MARK: - For InputBar View controller
-
 typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & ConversationTypeContainer
 
 extension ZMConversation: ConnectedUserContainer {
@@ -75,7 +55,27 @@ extension ZMConversation: ConnectedUserContainer {
 
 extension ZMConversation: InputBarConversation {}
 
-//MARK: - For GroupDetailsConversation View controllers and child VCs
+// MARK: - GroupDetailsConversation View controllers and child VCs
+
+protocol GroupDetailsConversation {
+    var isUnderLegalHold: Bool { get }
+    var isSelfAnActiveMember: Bool { get }
+    var userDefinedName: String? { get set }
+
+    var securityLevel: ZMConversationSecurityLevel { get }
+
+    var sortedOtherParticipants: [UserType] { get }
+    var sortedServiceUsers: [UserType] { get }
+
+    var allowGuests: Bool { get }
+    var hasReadReceiptsEnabled: Bool { get }
+
+    var mutedMessageTypes: MutedMessageTypes { get }
+
+    var freeParticipantSlots: Int { get }
+
+    var teamRemoteIdentifier: UUID? { get }
+}
 
 typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & ConversationTypeContainer
 

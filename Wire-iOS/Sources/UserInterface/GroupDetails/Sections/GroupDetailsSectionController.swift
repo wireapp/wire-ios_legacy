@@ -42,7 +42,7 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         return "section_header"
     }
 
-    func prepareForUse(in collectionView : UICollectionView?) {
+    func prepareForUse(in collectionView: UICollectionView?) {
         collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
 
@@ -73,7 +73,7 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         fatal("Must be overridden")
     }
 
-    //MARK: - UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         fatal("Must be overridden")

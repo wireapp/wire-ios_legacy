@@ -42,13 +42,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - MockHelpers
     var hasTeam: Bool = false
-    
+
     var isTrusted: Bool = true
 
     let legalHoldDataSource = MockLegalHoldDataSource()
 
     var teamIdentifier: UUID?
-    
+
     var canLeaveConversation = false
     var canCreateConversation = true
     var canDeleteConversation = false
