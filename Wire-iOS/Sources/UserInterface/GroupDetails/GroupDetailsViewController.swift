@@ -20,33 +20,6 @@ import UIKit
 import Cartography
 import WireSyncEngine
 
-protocol GroupDetailsConversationType {
-    var isUnderLegalHold: Bool { get }
-    var isSelfAnActiveMember: Bool { get }
-    var userDefinedName: String? { get set }
-    
-    //TODO: merge with other protocol
-    var displayName: String { get }
-    
-    var securityLevel: ZMConversationSecurityLevel { get }
-    
-    var sortedOtherParticipants: [UserType] { get }
-    var sortedServiceUsers: [UserType] { get }
-    
-    var allowGuests: Bool { get }
-    var hasReadReceiptsEnabled: Bool { get }
-
-    var conversationType: ZMConversationType { get }
-    
-    var mutedMessageTypes: MutedMessageTypes { get }
-    
-    var freeParticipantSlots: Int { get }
-    
-    var teamRemoteIdentifier: UUID? { get }
-}
-
-extension ZMConversation: GroupDetailsConversationType {}
-
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController

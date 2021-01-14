@@ -18,6 +18,18 @@
 import Foundation
 import WireDataModel
 
+protocol ConversationTypeContainer {
+    var conversationType: ZMConversationType { get }
+}
+
+protocol DisplayNameContainer {
+    var displayName: String { get }
+}
+
+protocol ConnectedUserContainer {
+    var connectedUserType: UserType? { get }
+}
+
 protocol InputBarConversation {
     var typingUsers: [UserType] { get }
     var hasDraftMessage: Bool { get }
@@ -26,19 +38,34 @@ protocol InputBarConversation {
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
-    var conversationType: ZMConversationType { get }
-
     func setIsTyping(_ isTyping: Bool)
 
     var isReadOnly: Bool { get }
-    var displayName: String { get }
 }
 
-protocol ConnectedUserContainer {
-    var connectedUserType: UserType? { get }
+protocol GroupDetailsConversation {
+    var isUnderLegalHold: Bool { get }
+    var isSelfAnActiveMember: Bool { get }
+    var userDefinedName: String? { get set }
+        
+    var securityLevel: ZMConversationSecurityLevel { get }
+    
+    var sortedOtherParticipants: [UserType] { get }
+    var sortedServiceUsers: [UserType] { get }
+    
+    var allowGuests: Bool { get }
+    var hasReadReceiptsEnabled: Bool { get }
+        
+    var mutedMessageTypes: MutedMessageTypes { get }
+    
+    var freeParticipantSlots: Int { get }
+    
+    var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer
+//MARK: - For InputBar View controller
+
+typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & ConversationTypeContainer
 
 extension ZMConversation: ConnectedUserContainer {
     var connectedUserType: UserType? {
@@ -47,3 +74,9 @@ extension ZMConversation: ConnectedUserContainer {
 }
 
 extension ZMConversation: InputBarConversation {}
+
+//MARK: - For GroupDetailsConversation View controllers and child VCs
+
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & ConversationTypeContainer
+
+extension ZMConversation: GroupDetailsConversationType {}
