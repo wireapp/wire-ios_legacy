@@ -133,7 +133,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockSelfUser.canModifyAccessControlSettings = true
         
         createGroupConversation()
-        mockConversation.teamRemoteIdentifier = UUID()
+        mockConversation.teamRemoteIdentifier = mockSelfUser.teamIdentifier
         mockConversation.allowGuests = true
         
         sut = GroupDetailsViewController(conversation: mockConversation)
@@ -142,16 +142,20 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
     
-    /*
-     func testForOptionsForTeamUserInTeamConversation_Partner() {
-     teamTest {
-     selfUser.membership?.setTeamRole(.partner)
-     groupConversation.team =  selfUser.team
-     groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-     sut = GroupDetailsViewController(conversation: groupConversation)
-     verify(matching: sut)
-     }
-     }*/
+    func testForOptionsForTeamUserInTeamConversation_Partner() {
+        // GIVEN & WHEN
+        setSelfUserInTeam()
+        mockSelfUser.teamRole = .partner
+        mockSelfUser.canAddUserToConversation = false
+        
+        createGroupConversation()
+        mockConversation.teamRemoteIdentifier = mockSelfUser.teamIdentifier
+        
+        sut = GroupDetailsViewController(conversation: mockConversation)
+        
+        // THEN
+        verify(matching: sut)
+    }
     
     func testForOptionsForNonTeamUser() {
         // GIVEN
