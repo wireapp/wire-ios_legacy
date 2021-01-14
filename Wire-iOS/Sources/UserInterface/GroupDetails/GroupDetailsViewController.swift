@@ -37,6 +37,10 @@ protocol GroupDetailsConversationType {
     var hasReadReceiptsEnabled: Bool { get }
 
     var conversationType: ZMConversationType { get }
+    
+    var mutedMessageTypes: MutedMessageTypes { get }
+    
+    var freeParticipantSlots: Int { get }    
 }
 
 extension ZMConversation: GroupDetailsConversationType {}
@@ -111,9 +115,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
-        if let conversation = conversation as? ZMConversation {
-            footerView.update(for: conversation)
-        }
+        footerView.update(for: conversation)
+        
         collectionViewController.sections = computeVisibleSections()
 
     }

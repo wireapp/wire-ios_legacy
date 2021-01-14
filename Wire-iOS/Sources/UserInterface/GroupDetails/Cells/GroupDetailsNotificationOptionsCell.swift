@@ -29,7 +29,7 @@ final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCe
     }
     
     func configure(with conversation: GroupDetailsConversationType) {
-        guard let key = (conversation as? ZMConversation)?.mutedMessageTypes.localizationKey else {
+        guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
         

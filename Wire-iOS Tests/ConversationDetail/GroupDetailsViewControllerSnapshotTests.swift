@@ -20,6 +20,8 @@ import XCTest
 @testable import Wire
 
 final class MockGroupDetailsConversation: GroupDetailsConversationType {
+    var freeParticipantSlots: Int = 0
+    
     var isUnderLegalHold: Bool = false
     var isSelfAnActiveMember: Bool = true
     var userDefinedName: String?
@@ -35,6 +37,7 @@ final class MockGroupDetailsConversation: GroupDetailsConversationType {
     var hasReadReceiptsEnabled: Bool = false
 
     var conversationType: ZMConversationType = .group
+    var mutedMessageTypes: MutedMessageTypes = .none
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
@@ -42,45 +45,56 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
     var sut: GroupDetailsViewController!
     var groupConversation: MockGroupDetailsConversation!
     var mockSelfUser: MockUserType!
-    
+    var otherUser: MockUserType!
+
     override func setUp() {
         super.setUp()
 
         groupConversation = MockGroupDetailsConversation()
         groupConversation.displayName = "iOS Team"
-        
+        groupConversation.securityLevel = .notSecure
+
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
+        
+        otherUser = MockUserType.createUser(name: "Bruno")
+        otherUser.isConnected = true
+        otherUser.handle = "bruno"
+        otherUser.accentColorValue = .brightOrange
     }
     
     override func tearDown() {
         sut = nil
         groupConversation = nil
         mockSelfUser = nil
+        otherUser = nil
 
         super.tearDown()
     }
     
-/*    func testForOptionsForTeamUserInNonTeamConversation() {
-        teamTest {
-            let actionAddMember = Action.insertNewObject(in: uiMOC)
-            actionAddMember.name = "add_conversation_member"
+    func testForOptionsForTeamUserInNonTeamConversation() {
+        mockSelfUser.isGroupAdminInConversation = false
 
-            let actionModifyTimer = Action.insertNewObject(in: uiMOC)
-            actionModifyTimer.name = "modify_conversation_message_timer"
+        mockSelfUser.canModifyTitleInConversation = false
+        mockSelfUser.canModifyNotificationSettingsInConversation = true
+        mockSelfUser.canAddUserToConversation = false
+        
+        mockSelfUser.hasTeam = true
+        mockSelfUser.isGroupAdminInConversation = true
+        mockSelfUser.teamRole = .partner
 
-            let actionModifyName = Action.insertNewObject(in: uiMOC)
-            actionModifyName.name = "modify_conversation_name"
+        otherUser.isGuestInConversation = true
+        otherUser.teamRole = .none
 
-            selfUser.membership?.setTeamRole(.member)
-            let groupRole = selfUser.role(in: groupConversation)
-            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
+        groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
+
+
+
             sut = GroupDetailsViewController(conversation: groupConversation)
 
             verify(matching: sut)
-        }
     }
-
+/*
     func testForOptionsForTeamUserInNonTeamConversation_Partner() {
         teamTest {
             selfUser.membership?.setTeamRole(.partner)
@@ -135,12 +149,6 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockSelfUser.isGroupAdminInConversation = true
         mockSelfUser.canModifyEphemeralSettingsInConversation = true
         
-        let otherUser = MockUserType.createUser(name: "Bruno")
-        otherUser.isConnected = true
-        otherUser.handle = "bruno"
-        otherUser.accentColorValue = .brightOrange
-
-        groupConversation.securityLevel = .notSecure
         groupConversation.sortedOtherParticipants = [otherUser, mockSelfUser]
         
 

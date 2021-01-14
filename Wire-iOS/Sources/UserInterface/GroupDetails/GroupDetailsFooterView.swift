@@ -31,8 +31,8 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
         case more, invite
     }
     
-    func update(for conversation: ZMConversation) {
-        leftButton.isHidden = !SelfUser.current.canAddUser(to: conversation)
+    func update(for conversation: GroupDetailsConversationType) {
+        leftButton.isHidden = !SelfUser.current.canAddUser(to: conversation as? ZMConversation)
         leftButton.isEnabled = conversation.freeParticipantSlots > 0
     }
     

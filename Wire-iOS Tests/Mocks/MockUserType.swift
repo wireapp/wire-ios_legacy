@@ -48,6 +48,7 @@ class MockUserType: NSObject, UserType, Decodable {
     let legalHoldDataSource = MockLegalHoldDataSource()
 
     var teamIdentifier: UUID?
+    
     var canLeaveConversation = false
     var canCreateConversation = true
     var canDeleteConversation = false
@@ -178,7 +179,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    func canAddUser(to conversation: ZMConversation) -> Bool {
+    func canAddUser(to conversation: ZMConversation?) -> Bool {
         return canAddUserToConversation
     }
 
@@ -238,7 +239,7 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-    func isGuest(in conversation: ZMConversation) -> Bool {
+    func isGuest(in conversation: ZMConversation?) -> Bool {
         return isGuestInConversation
     }
 
