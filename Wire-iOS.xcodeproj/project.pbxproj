@@ -1102,6 +1102,13 @@
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
+		EE7F465725B0F6FC001B3EE4 /* AppLockModule.InteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F465525B0F6EB001B3EE4 /* AppLockModule.InteractorTests.swift */; };
+		EE7F466925B1CD60001B3EE4 /* AppLockModule.MockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */; };
+		EE7F466C25B1CE32001B3EE4 /* AppLockModule.MockAppLockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */; };
+		EE7F466E25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466D25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift */; };
+		EE7F467025B1D031001B3EE4 /* AppLockModule.MockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */; };
+		EE7F467225B1D058001B3EE4 /* AppLockModule.MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */; };
+		EE7F467425B1D0BA001B3EE4 /* AppLockModule.MockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */; };
 		EE876CAE23F2FCB100040D75 /* SwiftMockLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876CAC23F2FCA900040D75 /* SwiftMockLoader.swift */; };
 		EE88E00623FAC9EA00D24703 /* SelfUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88E00523FAC9EA00D24703 /* SelfUser.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
@@ -2842,6 +2849,13 @@
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
+		EE7F465525B0F6EB001B3EE4 /* AppLockModule.InteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.InteractorTests.swift; sourceTree = "<group>"; };
+		EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockSession.swift; sourceTree = "<group>"; };
+		EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAppLockController.swift; sourceTree = "<group>"; };
+		EE7F466D25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockRouter.swift; sourceTree = "<group>"; };
+		EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockInteractor.swift; sourceTree = "<group>"; };
+		EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockPresenter.swift; sourceTree = "<group>"; };
+		EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockView.swift; sourceTree = "<group>"; };
 		EE876CAC23F2FCA900040D75 /* SwiftMockLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMockLoader.swift; sourceTree = "<group>"; };
 		EE88E00523FAC9EA00D24703 /* SelfUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfUser.swift; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
@@ -5856,6 +5870,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EE7F465425B0F65E001B3EE4 /* App Lock */,
 				A99E3E8D2519F23700E4FD3E /* Analytics */,
 				A9E5725524C640A100CBE0D7 /* CustomAppLock */,
 				A9E674D824F519C60058FC72 /* Bundle */,
@@ -6378,6 +6393,36 @@
 				EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */,
 			);
 			path = Viper;
+			sourceTree = "<group>";
+		};
+		EE7F465425B0F65E001B3EE4 /* App Lock */ = {
+			isa = PBXGroup;
+			children = (
+				EE7F467525B1D5FF001B3EE4 /* Mocks */,
+				EE7F467625B1D61C001B3EE4 /* Tests */,
+			);
+			path = "App Lock";
+			sourceTree = "<group>";
+		};
+		EE7F467525B1D5FF001B3EE4 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				EE7F466D25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift */,
+				EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */,
+				EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */,
+				EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */,
+				EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */,
+				EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		EE7F467625B1D61C001B3EE4 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				EE7F465525B0F6EB001B3EE4 /* AppLockModule.InteractorTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		EEFF3E7321B6755D000834A6 /* Sections */ = {
@@ -8407,6 +8452,8 @@
 				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
 				5EDF03EA22453AE400C04007 /* ConversationLinkAttachmentMessageCellTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
+				EE7F465725B0F6FC001B3EE4 /* AppLockModule.InteractorTests.swift in Sources */,
+				EE7F466C25B1CE32001B3EE4 /* AppLockModule.MockAppLockController.swift in Sources */,
 				EF17175922D4990800697EB0 /* ConversationAvatarViewModeTests.swift in Sources */,
 				EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */,
 				873F91952189BB3C00E1DBB9 /* MessageReplyPreviewViewTests.swift in Sources */,
@@ -8438,6 +8485,7 @@
 				A99E3E922519F41500E4FD3E /* AnalyticsTests.swift in Sources */,
 				EFE6151C2260E4AA006D48ED /* MultiParagraphSnapshotTests.swift in Sources */,
 				EF237410230D49EC006F53F3 /* NetworkConditionHelperTests.swift in Sources */,
+				EE7F466925B1CD60001B3EE4 /* AppLockModule.MockSession.swift in Sources */,
 				F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */,
 				EFAFCA822133FB59002B31A6 /* ArchivedNavigationBarTests.swift in Sources */,
 				EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */,
@@ -8468,6 +8516,7 @@
 				8758CDB92191A7D60031BE0F /* ReplyComposingViewTests.swift in Sources */,
 				EF1C2E4D2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift in Sources */,
 				EE373FAB23FBF44B008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift in Sources */,
+				EE7F466E25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift in Sources */,
 				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */,
@@ -8495,6 +8544,7 @@
 				A923F1C72428C71A003F361F /* ZipFileTests.swift in Sources */,
 				EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */,
 				5E294595219081A80045ACFA /* Date+Generator.swift in Sources */,
+				EE7F467225B1D058001B3EE4 /* AppLockModule.MockPresenter.swift in Sources */,
 				EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */,
 				EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */,
 				EE876CAE23F2FCB100040D75 /* SwiftMockLoader.swift in Sources */,
@@ -8511,6 +8561,7 @@
 				5EF7BA6C221B273900815625 /* ProfileDetailsViewControllerTests.swift in Sources */,
 				EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */,
 				EEAC654C206BD64700365C0C /* LinkInteractionTextViewTests.swift in Sources */,
+				EE7F467025B1D031001B3EE4 /* AppLockModule.MockInteractor.swift in Sources */,
 				5501FFAB22B28F330050D8FC /* MockSelfLegalHoldSubject.swift in Sources */,
 				5E8FFC0621ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift in Sources */,
 				5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */,
@@ -8555,6 +8606,7 @@
 				EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */,
 				A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */,
 				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
+				EE7F467425B1D0BA001B3EE4 /* AppLockModule.MockView.swift in Sources */,
 				5EBF47C421B2F8710021CFFC /* MessageDetailsActionTests.swift in Sources */,
 				5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
