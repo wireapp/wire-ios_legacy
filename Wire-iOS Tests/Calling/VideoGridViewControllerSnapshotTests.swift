@@ -35,7 +35,8 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockVideoGridConfiguration!
     var selfVideoStream: VideoStream!
-
+    var stubProvider = VideoStreamStubProvider()
+    
     override func setUp() {
         super.setUp()
         recordMode = true
@@ -46,14 +47,8 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
         
-        let selfStream = Wire.Stream(
-            streamId: AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!),
-            participantName: "Alice",
-            microphoneState: .unmuted,
-            videoState: .started,
-            isParticipantActiveSpeaker: true
-        )
-        selfVideoStream = VideoStream(stream: selfStream, isPaused: false)
+        let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
+        selfVideoStream = stubProvider.videoStream(participantName: "Alice", client: client, active: true)
     }
     
     override func tearDown() {
@@ -69,30 +64,9 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
-    
-    func videoStream(participantName: String) -> VideoStream {
-        let stream = Wire.Stream(
-            streamId: AVSClient(userId: UUID(), clientId: UUID().uuidString),
-            participantName: participantName,
-            microphoneState: .unmuted,
-            videoState: .started,
-            isParticipantActiveSpeaker: true
-        )
-        return VideoStream(stream: stream, isPaused: false)
-    }
-    
-    func testForActiveSpeakers_OneToOne() {
-
-        let stream = Wire.Stream(
-            streamId: AVSClient(userId: UUID(), clientId: UUID().uuidString),
-            participantName: "Alice",
-            microphoneState: .unmuted,
-            videoState: .started,
-            isParticipantActiveSpeaker: true
-        )
-        let videoStream = VideoStream(stream: stream, isPaused: false)
         
-        configuration.videoStreams = [videoStream]
+    func testForActiveSpeakers_OneToOne() {
+        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
         configuration.floatingVideoStream = selfVideoStream
         configuration.isCallOneToOne = true
         createSut()
@@ -101,7 +75,14 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
     
     func testForActiveSpeakers_Conference() {
+        configuration.videoStreams = [
+            stubProvider.videoStream(participantName: "Alice", active: true),
+            stubProvider.videoStream(participantName: "Bob", active: true),
+            stubProvider.videoStream(participantName: "Carol", active: true),
+        ]
+        createSut()
         
+        verify(view: sut.view)
     }
 
     func testForBadNetwork(){
