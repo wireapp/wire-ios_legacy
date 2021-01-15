@@ -59,6 +59,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         }
     }
     
+    /// indicates wether or not the view is shown in full in the grid
     var isMaximized: Bool = false {
         didSet {
             updateActiveSpeakerFrame()
