@@ -20,11 +20,6 @@ import Foundation
 
 enum ___FILEBASENAMEASIDENTIFIER___: ModuleInterface {
 
-    typealias Router = ___VARIABLE_productName:identifier___Router
-    typealias Interactor = ___VARIABLE_productName:identifier___Interactor
-    typealias Presenter = ___VARIABLE_productName:identifier___Presenter
-    typealias View = ___VARIABLE_productName:identifier___View
-
     static func build() -> View {
         let router = Router()
         let interactor = Interactor()

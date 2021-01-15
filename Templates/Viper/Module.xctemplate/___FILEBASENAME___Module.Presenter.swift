@@ -17,14 +17,23 @@
 //
 
 import Foundation
-import UIKit
 
-final class ___FILEBASENAMEASIDENTIFIER___: UIViewController, ViewInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    var presenter: ___VARIABLE_productName:identifier___PresenterViewInterface!
+    final class Presenter: PresenterInterface {
+
+        var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
+        var interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface!
+        weak var view: ___VARIABLE_productName:identifier___ViewPresenterInterface!
+
+    }
 
 }
 
-// MARK: - API for presenter
+// MARK: - API for interactor
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___ViewPresenterInterface {}
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface { }
+
+// MARK: - API for view
+
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterViewInterface { }

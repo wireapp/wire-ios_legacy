@@ -19,12 +19,16 @@
 import Foundation
 import UIKit
 
-final class ___FILEBASENAMEASIDENTIFIER___: RouterInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    weak var viewController: UIViewController?
+    final class View: UIViewController, ViewInterface {
+
+        var presenter: ___VARIABLE_productName:identifier___PresenterViewInterface!
+
+    }
 
 }
 
 // MARK: - API for presenter
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___RouterPresenterInterface {}
+extension ___VARIABLE_productName:identifier___Module.View: ___VARIABLE_productName:identifier___ViewPresenterInterface { }

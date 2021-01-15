@@ -18,12 +18,17 @@
 
 import Foundation
 
-final class ___FILEBASENAMEASIDENTIFIER___: InteractorInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    weak var presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface!
+    final class Interactor: InteractorInterface {
+
+        weak var presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface!
+
+    }
 
 }
 
+
 // MARK: - API for presenter
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___InteractorPresenterInterface {}
+extension ___VARIABLE_productName:identifier___Module.Interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface { }

@@ -17,19 +17,18 @@
 //
 
 import Foundation
+import UIKit
 
-final class ___FILEBASENAMEASIDENTIFIER___: PresenterInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
-    var interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface!
-    weak var view: ___VARIABLE_productName:identifier___ViewPresenterInterface!
+    final class Router: RouterInterface {
+
+        weak var viewController: UIViewController?
+
+    }
 
 }
 
-// MARK: - API for interactor
+// MARK: - API for presenter
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___PresenterInteractorInterface {}
-
-// MARK: - API for view
-
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___PresenterViewInterface {}
+extension ___VARIABLE_productName:identifier___Module.Router: ___VARIABLE_productName:identifier___RouterPresenterInterface { }
