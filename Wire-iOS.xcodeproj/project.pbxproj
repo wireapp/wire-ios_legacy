@@ -6420,7 +6420,10 @@
 		EE7F467625B1D61C001B3EE4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */,
 				EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */,
+				EEA2E56F25B2385D00E726C3 /* AppLockModulePresenterTests.swift */,
+				EEA2E57225B23A2B00E726C3 /* AppLockModuleViewTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -8607,6 +8610,7 @@
 				A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */,
 				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
 				EE7F467425B1D0BA001B3EE4 /* AppLockModule.MockView.swift in Sources */,
+				EEA2E57425B23A3100E726C3 /* AppLockModuleViewTests.swift in Sources */,
 				5EBF47C421B2F8710021CFFC /* MessageDetailsActionTests.swift in Sources */,
 				5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
@@ -8677,6 +8681,7 @@
 				7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */,
 				5EDD25462141571600C0E254 /* LicensesLoaderTests.swift in Sources */,
 				5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */,
+				EEA2E57125B2386500E726C3 /* AppLockModulePresenterTests.swift in Sources */,
 				5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */,
 				7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */,
 				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
@@ -8730,6 +8735,7 @@
 				5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,
 				EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */,
+				EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */,
 				EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */,
 				5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */,
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,
