@@ -24,6 +24,7 @@ import WireSyncEngine
 enum AppLockModule: ModuleInterface {
 
     typealias Session = UserSessionAppLockInterface & UserSessionEncryptionAtRestInterface
+    typealias AuthenticationScenario = AppLockController.AuthenticationScenario
     typealias AuthenticationResult = AppLockController.AuthenticationResult
 
     static func build(session: Session) -> View {

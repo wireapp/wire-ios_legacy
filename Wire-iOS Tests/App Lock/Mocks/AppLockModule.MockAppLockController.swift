@@ -24,6 +24,16 @@ extension AppLockModule {
 
     final class MockAppLockController: AppLockType {
 
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Mock helpers
+
+        var _authenticationResult: AppLockController.AuthenticationResult = .unavailable
+        var _evaluationContext = LAContext()
+        var _passcode: String?
+
         // MARK: - Properties
 
         var delegate: AppLockDelegate?
@@ -48,30 +58,49 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        var _authenticationResult: AppLockController.AuthenticationResult = .unavailable
-        var _evaluationContext = LAContext()
-
         func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
                                     description: String,
                                     with callback: @escaping (AppLockController.AuthenticationResult, LAContext) -> Void) {
+
+            methodCalls.evaluateAuthentication.append((scenario, description, callback))
             callback(_authenticationResult, _evaluationContext)
         }
 
         func persistBiometrics() {
-            fatalError("Not implemented")
+            methodCalls.persistBiometrics.append(())
         }
 
         func deletePasscode() throws {
-            fatalError("Not implemented")
+            methodCalls.deletePasscode.append(())
+            _passcode = nil
         }
 
         func storePasscode(_ passcode: String) throws {
-            fatalError("Not implemented")
+            methodCalls.storePasscode.append(passcode)
+            _passcode = passcode
         }
 
         func fetchPasscode() -> Data? {
-            fatalError("Not implemented")
+            methodCalls.fetchPasscode.append(())
+            return _passcode?.data(using: .utf8)
         }
+
+    }
+
+}
+
+extension AppLockModule.MockAppLockController {
+
+    struct MethodCalls {
+
+        typealias Scenario = AppLockModule.AuthenticationScenario
+        typealias Callback = (AppLockModule.AuthenticationResult, LAContext) -> Void
+
+        var evaluateAuthentication: [(scenario: Scenario, description: String, callback: Callback)] = []
+        var persistBiometrics: [Void] = []
+        var deletePasscode: [Void] = []
+        var storePasscode: [String] = []
+        var fetchPasscode: [Void] = []
 
     }
 
