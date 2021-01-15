@@ -194,7 +194,11 @@ final class VideoGridViewController: UIViewController {
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
             view.stream = selfStream
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream, isCovered: isCovered)
+            viewCache[selfStreamId] = SelfVideoPreviewView(
+                stream: selfStream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: !configuration.isCallOneToOne
+            )
         }
     }
 
@@ -346,7 +350,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered)
+            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: !configuration.isCallOneToOne)
             viewCache[streamId] = view
             return view
         }

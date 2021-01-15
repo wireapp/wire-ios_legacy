@@ -58,8 +58,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var snapshotView: UIView?
     
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool) {
-        super.init(stream: stream, isCovered: isCovered)
+    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool = false) {
+        super.init(
+            stream: stream,
+            isCovered: isCovered,
+            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
+        )
         updateState()
         updateVideoKind()
     }

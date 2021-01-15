@@ -53,7 +53,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         }
     }
     
-    var shouldShowActiveSpeakerFrame: Bool = true {
+    var shouldShowActiveSpeakerFrame: Bool {
         didSet {
             updateActiveSpeakerFrame()
         }
@@ -80,10 +80,11 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     
     let userDetailsView = VideoParticipantDetailsView()
     
-    init(stream: Stream, isCovered: Bool) {
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
         self.stream = stream
         self.isCovered = isCovered
-        
+        self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+
         super.init(frame: .zero)
 
         setupViews()
