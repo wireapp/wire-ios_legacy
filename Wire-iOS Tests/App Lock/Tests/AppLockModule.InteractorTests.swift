@@ -78,7 +78,7 @@ extension AppLockModule {
             XCTAssertEqual(session.methodCalls.unlockDatabase.count, 0)
         }
 
-        func test_PresenterIsInformed_OfAllAuthenticationResult() {
+        func test_PresenterIsInformed_OfAllAuthenticationResults() {
             // Given
             let authenticationResults: [AuthenticationResult] = [
                 .granted,
