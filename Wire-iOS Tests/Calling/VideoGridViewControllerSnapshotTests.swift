@@ -39,7 +39,6 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        recordMode = true
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockVideoGridConfiguration()
         
