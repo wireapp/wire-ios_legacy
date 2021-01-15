@@ -59,7 +59,11 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         }
     }
     
-    var isMaximized: Bool = false
+    var isMaximized: Bool = false {
+        didSet {
+            updateActiveSpeakerFrame()
+        }
+    }
     
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
@@ -123,7 +127,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Active Speaker Frame
         
     private func updateActiveSpeakerFrame() {
-        let showFrame = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndActiveSpeaker
+        let showFrame = shouldShowActiveSpeakerFrame
+            && stream.isParticipantUnmutedAndActiveSpeaker
+            && !isMaximized
         layer.borderWidth = showFrame ? 1 : 0
     }
     
