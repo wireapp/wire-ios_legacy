@@ -26,8 +26,6 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 
     var videoStreams: [VideoStream] = []
 
-    var isMuted: Bool = false
-
     var networkQuality: NetworkQuality = .normal
 }
 
@@ -36,15 +34,26 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockVideoGridConfiguration!
+    var selfVideoStream: VideoStream!
 
     override func setUp() {
         super.setUp()
+        recordMode = true
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockVideoGridConfiguration()
         
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
+        
+        let selfStream = Wire.Stream(
+            streamId: AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!),
+            participantName: "Alice",
+            microphoneState: .unmuted,
+            videoState: .started,
+            isParticipantActiveSpeaker: true
+        )
+        selfVideoStream = VideoStream(stream: selfStream, isPaused: false)
     }
     
     override func tearDown() {
@@ -60,11 +69,39 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
+    
+    func videoStream(participantName: String) -> VideoStream {
+        let stream = Wire.Stream(
+            streamId: AVSClient(userId: UUID(), clientId: UUID().uuidString),
+            participantName: participantName,
+            microphoneState: .unmuted,
+            videoState: .started,
+            isParticipantActiveSpeaker: true
+        )
+        return VideoStream(stream: stream, isPaused: false)
+    }
+    
+    func testForActiveSpeakers_OneToOne() {
 
-    func testForMuted(){
-        configuration.isMuted = true
+        let stream = Wire.Stream(
+            streamId: AVSClient(userId: UUID(), clientId: UUID().uuidString),
+            participantName: "Alice",
+            microphoneState: .unmuted,
+            videoState: .started,
+            isParticipantActiveSpeaker: true
+        )
+        let videoStream = VideoStream(stream: stream, isPaused: false)
+        
+        configuration.videoStreams = [videoStream]
+        configuration.floatingVideoStream = selfVideoStream
+        configuration.isCallOneToOne = true
         createSut()
+
         verify(view: sut.view)
+    }
+    
+    func testForActiveSpeakers_Conference() {
+        
     }
 
     func testForBadNetwork(){
