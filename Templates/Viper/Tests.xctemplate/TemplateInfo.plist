@@ -5,9 +5,9 @@
 	<key>Kind</key>
 	<string>Xcode.IDEKit.TextSubstitutionFileTemplateKind</string>
 	<key>Description</key>
-	<string>This generates a complete Viper module.</string>
+	<string>This generates tests and mocks for a Viper module.</string>
 	<key>Summary</key>
-	<string>This generates a complete Viper module.</string>
+	<string>This generates tests and mocks for a Viper module.</string>
 	<key>SortOrder</key>
 	<string>1</string>
 	<key>Platforms</key>
