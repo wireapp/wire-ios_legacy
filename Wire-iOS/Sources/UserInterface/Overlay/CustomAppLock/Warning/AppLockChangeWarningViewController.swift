@@ -23,71 +23,69 @@ import WireCommonComponents
 
 final class AppLockChangeWarningViewController: UIViewController {
 
+    // MARK: - Properties
+
+    private var isAppLockActive: Bool
+
+    private var completion: Completion?
+
     private let contentView: UIView = UIView()
     
     private lazy var confirmButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
         button.setBackgroundImageColor(.strongBlue, for: .normal)
-        
         button.accessibilityIdentifier = "confirmButton"
         button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-
         return button
     }()
     
     private lazy var titleLabel: UILabel = {
-        let label = UILabel.createMultiLineCenterdLabel(variant: variant)
+        let label = UILabel.createMultiLineCenterdLabel()
         label.text = "warning_screen.title_label".localized
-
         return label
     }()
     
     private lazy var messageLabel: UILabel = {
-        let text = isAppLockActive
-            ? "warning_screen.main_info.forced_applock".localized + "\n\n" + "warning_screen.info_label.forced_applock".localized
-            : "warning_screen.info_label.non_forced_applock".localized
-        let label = UILabel(key: text,
-                            size: .normal,
-                            weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+        let label = UILabel(size: .normal, weight: .regular, color: .landingScreen)
+        label.text = messageLabelText
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-
         return label
     }()
-    
-    private let variant: ColorSchemeVariant
-    private var callback: ResultHandler?
-    
-    private var appLock: AppLockType? = ZMUserSession.shared()?.appLockController
 
-    private var isAppLockActive: Bool {
-        return appLock?.isActive ?? false
+    private var messageLabelText: String {
+        if isAppLockActive {
+            return "warning_screen.main_info.forced_applock".localized + "\n\n" + "warning_screen.info_label.forced_applock".localized
+        } else {
+            return "warning_screen.info_label.non_forced_applock".localized
+        }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupViews()
-    }
-    
-    /// init with parameters
-    /// - Parameters:
-    ///   - callback: callback for authentication
-    ///   - variant: color variant for this screen
-    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
-                  callback: ResultHandler? = nil) {
-        self.variant = variant
-        self.callback = callback
+
+    // MARK: - Life cycle
+
+    init(isAppLockActive: Bool, completion: Completion? = nil) {
+        self.isAppLockActive = isAppLockActive
+        self.completion = completion
 
         super.init(nibName: nil, bundle: nil)
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupViews()
+    }
+
+    // MARK: - Helpers
     
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground, variant: variant)
+        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
 
         view.addSubview(contentView)
         
@@ -130,16 +128,17 @@ final class AppLockChangeWarningViewController: UIViewController {
         ])
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Actions
 
     @objc
     private func confirmButtonTapped(sender: AnyObject?) {
-        ZMUserSession.shared()?.perform {
-            self.appLock?.needsToNotifyUser = false
+        if let session = ZMUserSession.shared() {
+            session.perform {
+                session.appLockController.needsToNotifyUser = false
+            }
         }
-        callback?(true)
+
+        completion?()
         dismiss(animated: true)
     }
 

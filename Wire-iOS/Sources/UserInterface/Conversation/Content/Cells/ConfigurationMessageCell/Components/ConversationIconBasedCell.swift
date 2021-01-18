@@ -90,7 +90,7 @@ class ConversationIconBasedCell: UIView {
 
         textLabel.linkTextAttributes = [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
-            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
+            NSAttributedString.Key.foregroundColor: SelfUser.current.accentColor
         ]
 
         lineView.backgroundColor = .from(scheme: .separator)

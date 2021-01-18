@@ -20,11 +20,11 @@ import XCTest
 @testable import Wire
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
+    var isCallOneToOne: Bool = false
+    
     var floatingVideoStream: VideoStream?
 
     var videoStreams: [VideoStream] = []
-
-    var isMuted: Bool = false
 
     var networkQuality: NetworkQuality = .normal
 }
@@ -34,7 +34,9 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockVideoGridConfiguration!
-
+    var selfVideoStream: VideoStream!
+    var stubProvider = VideoStreamStubProvider()
+    
     override func setUp() {
         super.setUp()
         mediaManager = ZMMockAVSMediaManager()
@@ -43,6 +45,9 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
+        
+        let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
+        selfVideoStream = stubProvider.videoStream(participantName: "Alice", client: client, active: true)
     }
     
     override func tearDown() {
@@ -58,10 +63,24 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
-
-    func testForMuted(){
-        configuration.isMuted = true
+        
+    func testForActiveSpeakers_OneToOne() {
+        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
+        configuration.floatingVideoStream = selfVideoStream
+        configuration.isCallOneToOne = true
         createSut()
+
+        verify(view: sut.view)
+    }
+    
+    func testForActiveSpeakers_Conference() {
+        configuration.videoStreams = [
+            stubProvider.videoStream(participantName: "Alice", active: true),
+            stubProvider.videoStream(participantName: "Bob", active: true),
+            stubProvider.videoStream(participantName: "Carol", active: true),
+        ]
+        createSut()
+        
         verify(view: sut.view)
     }
 
