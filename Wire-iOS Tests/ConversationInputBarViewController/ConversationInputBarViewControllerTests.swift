@@ -45,6 +45,10 @@ final class MockInputBarConversationType: NSObject, InputBarConversationType {
     var isSelfAnActiveMember: Bool = true
 
     var teamRemoteIdentifier: UUID?
+
+    func localParticipantsContain(user: UserType) -> Bool {
+        return false
+    }
 }
 
 final class ConversationInputBarViewControllerTests: XCTestCase {

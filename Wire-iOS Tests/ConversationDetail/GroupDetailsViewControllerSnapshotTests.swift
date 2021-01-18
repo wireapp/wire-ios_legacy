@@ -40,6 +40,10 @@ final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType
     var mutedMessageTypes: MutedMessageTypes = .none
 
     var teamRemoteIdentifier: UUID?
+
+    func localParticipantsContain(user: UserType) -> Bool {
+        return false
+    }
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
