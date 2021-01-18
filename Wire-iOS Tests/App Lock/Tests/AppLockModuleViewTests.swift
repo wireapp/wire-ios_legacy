@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
 final class AppLockModuleViewTests: XCTestCase {
@@ -39,7 +40,7 @@ final class AppLockModuleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Tests
+    // MARK: - Life cycle events
 
     func test_ItStartsThePresenter() {
         // When
@@ -47,6 +48,24 @@ final class AppLockModuleViewTests: XCTestCase {
 
         // Then
         XCTAssertEqual(presenter.methodCalls.start.count, 1)
+    }
+
+    // MARK: - View states
+
+    func test_ViewState_Locked() {
+        // Given
+        sut.state = .locked
+
+        // Then
+        verify(matching: sut)
+    }
+
+    func test_ViewState_Authenticating() {
+        // Given
+        sut.state = .authenticating
+
+        // Then
+        verify(matching: sut)
     }
 
 }

@@ -25,7 +25,16 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
+        var propertyCalls = PropertyCalls()
         var methodCalls = MethodCalls()
+
+        // MARK: - Properties
+
+        var state: AppLockModule.ViewState = .locked {
+            didSet {
+                propertyCalls.state.append(state)
+            }
+        }
 
     }
 
@@ -33,8 +42,12 @@ extension AppLockModule {
 
 extension AppLockModule.MockView {
 
-    struct MethodCalls {
+    struct PropertyCalls {
+
+        var state: [AppLockModule.ViewState] = []
 
     }
+
+    struct MethodCalls { }
 
 }

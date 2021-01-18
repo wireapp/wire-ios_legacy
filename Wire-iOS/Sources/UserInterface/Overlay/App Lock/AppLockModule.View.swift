@@ -27,15 +27,24 @@ extension AppLockModule {
 
         var presenter: AppLockPresenterViewInterface!
 
-        private let lockView = OldAppLockView()
+        var state: ViewState = .locked {
+            didSet {
+                refresh()
+            }
+        }
 
-        override var prefersStatusBarHidden: Bool { return true }
+        override var prefersStatusBarHidden: Bool {
+            return true
+        }
+
+        private let lockView = OldAppLockView()
 
         // MARK: - Life cycle
 
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpViews()
+            refresh()
             presenter.start()
         }
 
@@ -47,10 +56,37 @@ extension AppLockModule {
             lockView.fitInSuperview()
         }
 
+        private func refresh() {
+            switch state {
+            case .locked:
+                lockView.showReauth = true
+
+            case .authenticating:
+                lockView.showReauth = false
+            }
+        }
+
     }
 
 }
 
+// MARK: - View state
+
+extension AppLockModule {
+
+    enum ViewState: Equatable {
+
+        /// The screen is currently locked.
+
+        case locked
+
+        /// The user is authenticating.
+
+        case authenticating
+
+    }
+
+}
 
 // MARK: - API for presenter
 

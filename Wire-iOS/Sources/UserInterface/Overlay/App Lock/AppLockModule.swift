@@ -72,7 +72,7 @@ protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
 protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
-    /// View API exposed to the presenter.
+    var state: AppLockModule.ViewState { get set }
 
 }
 

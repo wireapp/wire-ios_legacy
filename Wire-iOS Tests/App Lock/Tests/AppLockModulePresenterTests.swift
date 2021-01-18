@@ -47,14 +47,25 @@ final class AppLockModulePresenterTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Tests
+    // MARK: - Start
 
     func test_ItRequestsToEvaluateAuthentication_WhenItStarts() {
         // When
         sut.start()
 
         // Then
+        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
+    }
+
+    // MARK: - Authentication evaluated
+
+    func test_ItRequestToShowTheAuthenticationButton_WhenAuthenticationDenied() {
+        // When
+        sut.authenticationEvaluated(with: .denied)
+
+        // Then
+        XCTAssertEqual(view.propertyCalls.state, [.locked])
     }
 
 }
