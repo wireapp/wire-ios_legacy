@@ -58,6 +58,10 @@ extension AppLockModule {
 
         // MARK: - Methods
 
+        func open() {
+            methodCalls.open.append(())
+        }
+
         func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
                                     description: String,
                                     context: LAContextProtocol,
@@ -97,6 +101,7 @@ extension AppLockModule.MockAppLockController {
         typealias Scenario = AppLockModule.AuthenticationScenario
         typealias Callback = (AppLockModule.AuthenticationResult, LAContext) -> Void
 
+        var open: [Void] = []
         var evaluateAuthentication: [(scenario: Scenario, description: String, callback: Callback)] = []
         var persistBiometrics: [Void] = []
         var deletePasscode: [Void] = []

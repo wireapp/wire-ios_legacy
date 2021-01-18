@@ -32,4 +32,18 @@ extension AppLockModule {
 
 // MARK: - API for presenter
 
-extension AppLockModule.Router: AppLockRouterPresenterInterface {}
+extension AppLockModule.Router: AppLockRouterPresenterInterface {
+
+    func presentCreatePasscodeModule(completion: @escaping () -> Void) {
+        // TODO: Build from module, when we have one.
+        // TODO: Does it need to be dark?
+        // TODO: Not always forced for team.
+        let passcodeSetupViewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(
+            variant: .dark,
+            context: .forcedForTeam,
+            callback: { _ in completion() })
+
+        viewController?.present(passcodeSetupViewController, animated: true)
+    }
+
+}

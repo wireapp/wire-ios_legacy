@@ -27,10 +27,18 @@ extension AppLockModule {
 
         var methodCalls = MethodCalls()
 
+        // MARK: - Properties
+
+        var needsToCreateCustomPasscode = false
+
         // MARK: - Methods
 
         func evaluateAuthentication() {
             methodCalls.evaluateAuthentication.append(())
+        }
+
+        func openAppLock() {
+            methodCalls.openAppLock.append(())
         }
 
     }
@@ -42,6 +50,7 @@ extension AppLockModule.MockInteractor {
     struct MethodCalls {
 
         var evaluateAuthentication: [Void] = []
+        var openAppLock: [Void] = []
 
     }
 

@@ -50,6 +50,13 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
+    // FIXME: This could be more clearly expressed.
+    // TODO: Make AuthenticationType mockable then test this.
+
+    var needsToCreateCustomPasscode: Bool {
+        return (AuthenticationType.current == .unavailable || appLock.requiresBiometrics) && appLock.isCustomPasscodeNotSet
+    }
+
     // TODO: Pass in scenario.
     // TODO: Use localized description.
 
@@ -65,6 +72,10 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         }
 
         self.presenter.authenticationEvaluated(with: result)
+    }
+
+    func openAppLock() {
+        appLock.open()
     }
 
 }

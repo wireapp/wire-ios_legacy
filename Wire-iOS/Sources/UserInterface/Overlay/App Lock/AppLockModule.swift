@@ -50,7 +50,7 @@ enum AppLockModule: ModuleInterface {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    /// Router API exposed to the presenter.
+    func presentCreatePasscodeModule(completion: @escaping () -> Void)
 
 }
 
@@ -64,7 +64,11 @@ protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
+    var needsToCreateCustomPasscode: Bool { get }
+    
     func evaluateAuthentication()
+
+    func openAppLock()
 
 }
 
