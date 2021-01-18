@@ -21,7 +21,7 @@ import Foundation
 
 class VideoStreamStubProvider {
     func videoStream(
-        participantName: String,
+        participantName: String = "Bob",
         client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
         muted: Bool = false,
         videoState: VideoState = .started,

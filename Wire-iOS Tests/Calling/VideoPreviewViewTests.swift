@@ -25,24 +25,14 @@ import SnapshotTesting
 class VideoPreviewViewTests: XCTestCase {
     
     var sut: VideoPreviewView!
+    var stubProvider = VideoStreamStubProvider()
+    var unmutedStream = VideoStreamStubProvider().videoStream(muted: false).stream
     
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
-    private func stream(muted: Bool, videoState: VideoState = .started, active: Bool = false) -> Wire.Stream {
-        let client = AVSClient(userId: UUID(), clientId: UUID().transportString())
-
-        return Wire.Stream(
-            streamId: client,
-            participantName: "Bob",
-            microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState,
-            isParticipantActiveSpeaker: active
-        )
-    }
-    
+        
     private func createView(from stream: Wire.Stream, isCovered: Bool) -> VideoPreviewView {
         let view = VideoPreviewView(stream: stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: true)
         view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
@@ -52,7 +42,7 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testThatItShouldNotFill_WhenMaximized() {
         // GIVEN
-        sut = createView(from: stream(muted: false), isCovered: false)
+        sut = createView(from: unmutedStream, isCovered: false)
         
         // WHEN
         sut.isMaximized = true
@@ -63,7 +53,7 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testThatItShouldFill_WhenSharingVideo_AndNotMaximized() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: false), isCovered: false)
+        sut = createView(from: unmutedStream, isCovered: false)
         
         // THEN
         XCTAssertTrue(sut.shouldFill)
@@ -71,7 +61,8 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testThatItShouldNotFill_WhenScreenSharing_AndNotMaximized() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: false, videoState: .screenSharing), isCovered: false)
+        let stream = stubProvider.videoStream(muted: false, videoState: .screenSharing).stream
+        sut = createView(from: stream, isCovered: false)
         
         // THEN
         XCTAssertFalse(sut.shouldFill)
@@ -79,7 +70,7 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testDefaultState() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: false), isCovered: false)
+        sut = createView(from: unmutedStream, isCovered: false)
         
         // THEN
         verify(matching: sut)
@@ -87,7 +78,8 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testMutedState() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: true), isCovered: false)
+        let stream = stubProvider.videoStream(muted: true).stream
+        sut = createView(from: stream, isCovered: false)
         
         // THEN
         verify(matching: sut)
@@ -95,7 +87,8 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testActiveState() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: false, active: true), isCovered: false)
+        let stream = stubProvider.videoStream(muted: false, active: true).stream
+        sut = createView(from: stream, isCovered: false)
 
         // THEN
         verify(matching: sut)
@@ -103,7 +96,7 @@ class VideoPreviewViewTests: XCTestCase {
     
     func testPausedState() {
         // GIVEN
-        sut = createView(from: stream(muted: false), isCovered: false)
+        sut = createView(from: unmutedStream, isCovered: false)
 
         // WHEN
         sut.isPaused = true
@@ -114,7 +107,7 @@ class VideoPreviewViewTests: XCTestCase {
 
     func testCoveredState() {
         // GIVEN / WHEN
-        sut = createView(from: stream(muted: false), isCovered: true)
+        sut = createView(from: unmutedStream, isCovered: true)
         
         // THEN
         verify(matching: sut)
@@ -138,7 +131,7 @@ class VideoPreviewViewTests: XCTestCase {
                          line: UInt = #line)
     {
         // GIVEN
-        sut = createView(from: stream(muted: false), isCovered: false)
+        sut = createView(from: unmutedStream, isCovered: false)
 
         let view = UIView(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone5))
         view.addSubview(sut)
