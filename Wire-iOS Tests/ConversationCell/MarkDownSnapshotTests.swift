@@ -16,20 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
+//import SnapshotTesting
 
-final class MarkDownSnapshotTests: ConversationCellSnapshotTestCase {
+final class MarkDownSnapshotTests: XCTestCase {
     var mockOtherUser: MockUserType!
-    
+    var mockSelfUser: MockUserType!
+
     override func setUp() {
         super.setUp()
 
         mockOtherUser = MockUserType.createUser(name: "Bruno")
-        
+        UIColor.setAccentOverride(.vividRed)
+
+        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.accentColorValue = .vividRed
     }
     
     override func tearDown() {
         mockOtherUser = nil
+        mockSelfUser = nil
         
         super.tearDown()
     }

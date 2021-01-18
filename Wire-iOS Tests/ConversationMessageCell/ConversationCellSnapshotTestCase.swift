@@ -20,6 +20,110 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
+extension XCTestCase {
+    /**
+     * Performs a snapshot test for a message
+     */
+    func verify(message: ZMConversationMessage,
+                context: ConversationMessageContext? = nil,
+                waitForImagesToLoad: Bool = false,
+                waitForTextViewToLoad: Bool = false,
+                allColorSchemes: Bool = false,
+                allWidths: Bool = true,
+                snapshotBackgroundColor: UIColor? = nil,
+                file: StaticString = #file,
+                testName: String = #function,
+                line: UInt = #line) {
+        
+        
+        if allColorSchemes {
+            ColorScheme.default.variant = .dark
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   named: "dark",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+            
+            ColorScheme.default.variant = .light
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   named: "light",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        } else {
+            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+
+    private func verify(matching value: UIView,
+                        snapshotBackgroundColor: UIColor?,
+                        named name: String? = nil,
+                        allColorSchemes: Bool = false,
+                        allWidths: Bool = true,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        
+        if allWidths {
+            verifyInAllPhoneWidths(matching:value,
+                                   snapshotBackgroundColor: backgroundColor,
+                                   named: name,
+                                   file: file,
+                                   testName: testName,
+                                   line: line)
+        } else {
+            verifyInWidths(matching:value,
+                           widths: [smallestWidth],
+                           snapshotBackgroundColor: backgroundColor,
+                           named: name,
+                           file: file,
+                           testName: testName,
+                           line: line)
+        }
+    }
+    
+    private func createUIStackView(
+        message: ZMConversationMessage,
+        context: ConversationMessageContext?,
+        waitForImagesToLoad: Bool,
+        waitForTextViewToLoad: Bool,
+        snapshotBackgroundColor: UIColor?
+    ) -> UIStackView {
+        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
+        
+        let section = ConversationMessageSectionController(message: message, context: context)
+        let views = section.cellDescriptions.map({ $0.makeView() })
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        
+        if waitForImagesToLoad {
+            XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+        }
+        
+        if waitForTextViewToLoad {
+            // We need to run the run loop for UITextView to highlight detected links
+            let delay = Date().addingTimeInterval(1)
+            RunLoop.main.run(until: delay)
+        }
+        
+        return stackView
+        
+    }
+
+}
+
 /**
  * A base test class for section-based messages. Use the section property to build
  * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
@@ -68,108 +172,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
 
         super.tearDown()
     }
-    
-    private func createUIStackView(
-        message: ZMConversationMessage,
-        context: ConversationMessageContext?,
-        waitForImagesToLoad: Bool,
-        waitForTextViewToLoad: Bool,
-        snapshotBackgroundColor: UIColor?
-    ) -> UIStackView {
-        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
-
-        let section = ConversationMessageSectionController(message: message, context: context)
-        let views = section.cellDescriptions.map({ $0.makeView() })
-        let stackView = UIStackView(arrangedSubviews: views)
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
         
-        if waitForImagesToLoad {
-            XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        }
-        
-        if waitForTextViewToLoad {
-            // We need to run the run loop for UITextView to highlight detected links
-            let delay = Date().addingTimeInterval(1)
-            RunLoop.main.run(until: delay)
-        }
-        
-        return stackView
-
-    }
-    
-    /**
-     * Performs a snapshot test for a message
-     */
-    func verify(message: ZMConversationMessage,
-                context: ConversationMessageContext? = nil,
-                waitForImagesToLoad: Bool = false,
-                waitForTextViewToLoad: Bool = false,
-                allColorSchemes: Bool = false,
-                allWidths: Bool = true,
-                snapshotBackgroundColor: UIColor? = nil,
-                file: StaticString = #file,
-                testName: String = #function,
-                line: UInt = #line) {
-        
-        
-        if allColorSchemes {
-            ColorScheme.default.variant = .dark
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   named: "dark",
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)
-
-            ColorScheme.default.variant = .light
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   named: "light",
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)            
-        } else {
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
-                   snapshotBackgroundColor: snapshotBackgroundColor,
-                   allWidths: allWidths,
-                   file: file,
-                   testName: testName,
-                   line: line)
-        }
-    }
-    
-    private func verify(matching value: UIView,
-                        snapshotBackgroundColor: UIColor?,
-                        named name: String? = nil,
-                        allColorSchemes: Bool = false,
-                        allWidths: Bool = true,
-                        file: StaticString = #file,
-                        testName: String = #function,
-                        line: UInt = #line) {
-        let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-        
-        if allWidths {
-            verifyInAllPhoneWidths(matching:value,
-                                   snapshotBackgroundColor: backgroundColor,
-                                   named: name,
-                                   file: file,
-                                   testName: testName,
-                                   line: line)
-        } else {
-            verifyInWidths(matching:value,
-                           widths: [smallestWidth],
-                           snapshotBackgroundColor: backgroundColor,
-                           named: name,
-                           file: file,
-                           testName: testName,
-                           line: line)
-        }
-    }
-    
 }
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {
