@@ -36,7 +36,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     private weak var presentingViewController: UIViewController?
     
     override var isHidden: Bool {
-        return !SelfUser.current.canModifyReadReceiptSettings(in: conversation as? ZMConversation)
+        return !SelfUser.current.canModifyReadReceiptSettings(in: conversation)
     }
 
     init(conversation: GroupDetailsConversationType,

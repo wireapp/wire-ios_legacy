@@ -18,9 +18,6 @@
 import Foundation
 import WireDataModel
 
-protocol ConversationTypeContainer {
-    var conversationType: ZMConversationType { get }
-}
 
 protocol DisplayNameContainer {
     var displayName: String { get }
@@ -45,7 +42,7 @@ protocol InputBarConversation {
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & ConversationTypeContainer
+typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & WireDataModel.ConversationType
 
 extension ZMConversation: ConnectedUserContainer {
     var connectedUserType: UserType? {
@@ -59,7 +56,6 @@ extension ZMConversation: InputBarConversation {}
 
 protocol GroupDetailsConversation {
     var isUnderLegalHold: Bool { get }
-    var isSelfAnActiveMember: Bool { get }
     var userDefinedName: String? { get set }
 
     var securityLevel: ZMConversationSecurityLevel { get }
@@ -77,6 +73,7 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & ConversationTypeContainer
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & WireDataModel.ConversationType
 
-extension ZMConversation: GroupDetailsConversationType {}
+extension ZMConversation: DisplayNameContainer {}
+extension ZMConversation: GroupDetailsConversation {}

@@ -136,8 +136,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         
         if !participants.isEmpty {
             
-            let admins = participants.filter({$0.isGroupAdmin(in: conversation as? ZMConversation)})
-            let members = participants.filter({!$0.isGroupAdmin(in: conversation as? ZMConversation)})
+            let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
+            let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
             
             if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
                 if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
@@ -180,7 +180,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         }
         
         if conversation.teamRemoteIdentifier != nil &&
-            SelfUser.current.canModifyReadReceiptSettings(in: conversation as? ZMConversation) {
+            SelfUser.current.canModifyReadReceiptSettings(in: conversation) {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,
