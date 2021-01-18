@@ -24,6 +24,7 @@ protocol VideoGridConfiguration {
     var floatingVideoStream: VideoStream? { get }
     var videoStreams: [VideoStream] { get }
     var networkQuality: NetworkQuality { get }
+    var isCallOneToOne: Bool { get }
 
 }
 
@@ -42,7 +43,8 @@ extension VideoGridConfiguration {
     func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
-            networkQuality == other.networkQuality
+            networkQuality == other.networkQuality &&
+            isCallOneToOne == other.isCallOneToOne
     }
 
 }
