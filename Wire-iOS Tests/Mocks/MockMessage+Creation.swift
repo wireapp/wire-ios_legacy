@@ -169,8 +169,10 @@ final class MockMessageFactory {
         return MockMessageFactory.textMessage(withText: text, includingRichMedia: false)
     }
 
-    class func textMessage(withText text: String?, includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func textMessage(withText text: String?,
+                           sender: UserType? = nil,
+                           includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!

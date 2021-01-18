@@ -20,7 +20,6 @@ import Foundation
 import MobileCoreServices
 import Down
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 extension Notification.Name {
