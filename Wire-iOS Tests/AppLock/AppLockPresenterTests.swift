@@ -531,6 +531,22 @@ final class AppLockPresenterTests: XCTestCase {
         // Then
         XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
     }
+    
+    // Mark: - Creating passcode
+    
+    func testThatItUnlocksAppAfterCreatingAPasscode() {
+        // Given
+        set(authNeeded: true, authenticationState: .needed)
+        appLockInteractor.needsToCreateCustomPasscode = true
+        
+        // When
+        sut.requireAuthenticationIfNeeded()
+        
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+        XCTAssertEqual(userInterface.contentsDimmed, false)
+    }
+
 }
 
 extension AppLockPresenterTests {
