@@ -50,6 +50,9 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
+    // TODO: Pass in scenario.
+    // TODO: Use localized description.
+
     func evaluateAuthentication() {
         appLock.evaluateAuthentication(scenario: .screenLock(requireBiometrics: false),
                                        description: "Unlock Wire",

@@ -42,12 +42,15 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             break
 
         case .denied:
+            // TODO: Show reauthentication UI.
             fatalError("Not implemented")
 
         case .needCustomPasscode:
+            // TODO: Present unlock screen.
             fatalError("Not implemented")
 
         case .unavailable:
+            // TODO: Remove this case, it should never happen.
             fatalError("Not implemented")
         }
     }
@@ -59,6 +62,7 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func start() {
+        // TODO: Create a custom passcode if needed.
         interactor.evaluateAuthentication()
     }
 
