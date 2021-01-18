@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,20 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireSyncEngine
+import XCTest
+@testable import Wire
+import SnapshotTesting
 
-extension ZClientViewController {
-    
-    func notifyUserOfDisabledAppLockIfNeeded() {
-        guard let appLock = ZMUserSession.shared()?.appLockController else {
-            return
-        }
-        if appLock.needsToNotifyUser && !appLock.isActive {
-            let warningVC = AppLockChangeWarningViewController(isAppLockActive: appLock.isActive)
-            warningVC.modalPresentationStyle = .fullScreen
-            present(warningVC, animated: false)
-        }
+class AppLockChangeWarningViewControllerTests: XCTestCase {
+
+    func testWarningThatAppLockIsActive() {
+        verifyInAllColorSchemes(createSut: { AppLockChangeWarningViewController(isAppLockActive: true) })
+
     }
-    
+
+    func testWarningThatAppLockIsNotActive() {
+        verifyInAllColorSchemes(createSut: { AppLockChangeWarningViewController(isAppLockActive: false) })
+    }
+
 }
