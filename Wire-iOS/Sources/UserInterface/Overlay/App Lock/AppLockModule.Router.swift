@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 import UIKit
 
 extension AppLockModule {
@@ -44,6 +45,22 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
             callback: { _ in completion() })
 
         viewController?.present(passcodeSetupViewController, animated: true)
+    }
+
+    func presentInputPasscodeModule(completion: @escaping (_ passcode: String) -> Void) {
+        // TODO: Clean this up.
+        // TODO: Inject these arguments.
+        let unlockViewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+        let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: unlockViewController)
+        let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
+        navigationController.modalPresentationStyle = .fullScreen
+
+        // TODO: The callback shouldn't accept an optional passcode
+        unlockViewController.callback = { passcode in
+            completion(passcode!)
+        }
+
+        viewController?.present(navigationController, animated: false)
     }
 
 }

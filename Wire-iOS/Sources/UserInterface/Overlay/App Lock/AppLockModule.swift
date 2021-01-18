@@ -52,6 +52,8 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
     func presentCreatePasscodeModule(completion: @escaping () -> Void)
 
+    func presentInputPasscodeModule(completion: @escaping (_ passcode: String) -> Void)
+
 }
 
 // MARK: - Interactor / Presenter

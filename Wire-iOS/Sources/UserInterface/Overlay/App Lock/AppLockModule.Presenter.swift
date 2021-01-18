@@ -44,8 +44,11 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             view.state = .locked
 
         case .needCustomPasscode:
-            // TODO: Present unlock screen.
-            fatalError("Not implemented")
+            // TODO: I think the input passcode module should handle
+            // verification.
+            router.presentInputPasscodeModule { passcode in
+                // TODO: Verify passcode.
+            }
 
         case .unavailable:
             // TODO: Remove this case, it should never happen.

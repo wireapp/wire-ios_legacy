@@ -95,4 +95,14 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(view.propertyCalls.state, [.locked])
     }
 
+    func test_itRequestsToInputPasscode_WhenPasscodeIsNeeded() {
+        // When
+        sut.authenticationEvaluated(with: .needCustomPasscode)
+
+        // Then
+        XCTAssertEqual(router.methodCalls.presentInputPasscodeModule.count, 1)
+
+        // TODO: Assert it uses the passcode to authenticate.
+    }
+
 }

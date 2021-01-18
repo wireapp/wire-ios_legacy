@@ -33,6 +33,10 @@ extension AppLockModule {
             methodCalls.presentCreatePasscodeModule.append(completion)
         }
 
+        func presentInputPasscodeModule(completion: @escaping (String) -> Void) {
+            methodCalls.presentInputPasscodeModule.append(completion)
+        }
+
     }
 
 }
@@ -42,6 +46,7 @@ extension AppLockModule.MockRouter {
     struct MethodCalls {
 
         var presentCreatePasscodeModule: [() -> Void] = []
+        var presentInputPasscodeModule: [(String) -> Void] = []
 
     }
 
