@@ -26,7 +26,6 @@ typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & Us
 
 protocol AppLockInteractorInput: class {
     var needsToCreateCustomPasscode: Bool { get }
-    var shouldUseCustomPasscode: Bool { get }
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
@@ -100,11 +99,7 @@ final class AppLockInteractor {
 extension AppLockInteractor: AppLockInteractorInput {
 
     var needsToCreateCustomPasscode: Bool {
-        return (shouldUseCustomPasscode || shouldUseBiometricsOrCustomPasscode) && isCustomPasscodeNotSet
-    }
-
-    var shouldUseCustomPasscode: Bool {
-        return AuthenticationType.current == .unavailable
+        return (AuthenticationType.current == .unavailable || shouldUseBiometricsOrCustomPasscode) && isCustomPasscodeNotSet
     }
 
     var isCustomPasscodeNotSet: Bool {

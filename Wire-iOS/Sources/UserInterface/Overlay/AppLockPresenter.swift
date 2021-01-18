@@ -117,10 +117,6 @@ final class AppLockPresenter {
                     self.setContents(dimmed: true, withReauth: true)
                     self.appLockInteractorInput.needsToNotifyUser = false
                 })
-            } else if appLockInteractorInput.shouldUseCustomPasscode {
-                presentWarningIfNeeded {
-                    self.requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
-                }
             } else {
                 presentWarningIfNeeded {
                     self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)

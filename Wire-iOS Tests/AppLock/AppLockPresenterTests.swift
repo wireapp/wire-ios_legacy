@@ -66,7 +66,6 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
     var needsToCreateCustomPasscode: Bool = false
-    var shouldUseCustomPasscode: Bool = false
     var isCustomPasscodeNotSet: Bool = false
     var _isAuthenticationNeeded: Bool = false
     var didCallIsAuthenticationNeeded: Bool = false
@@ -521,23 +520,10 @@ final class AppLockPresenterTests: XCTestCase {
         XCTAssertFalse(appLockInteractor.needsToNotifyUser)
     }
 
-    func testThatIt_PresentsUnlockScreen() {
-        // Given
-        appLockInteractor._isAuthenticationNeeded = true
-        appLockInteractor.shouldUseCustomPasscode = true
-
-        // When
-        sut.requireAuthentication()
-
-        // Then
-        XCTAssertTrue(userInterface.presentUnlockScreenCalled)
-    }
-
     func testThatIt_AsksToEvaluateAuthentication() {
         // Given
         appLockInteractor._isAuthenticationNeeded = true
         appLockInteractor.needsToCreateCustomPasscode = false
-        appLockInteractor.shouldUseCustomPasscode = false
 
         // When
         sut.requireAuthentication()
