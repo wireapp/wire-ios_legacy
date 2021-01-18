@@ -68,10 +68,10 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol) {
         if case .granted = result, let context = context as? LAContext {
-            try? self.session.unlockDatabase(with: context)
+            try? session.unlockDatabase(with: context)
         }
 
-        self.presenter.authenticationEvaluated(with: result)
+        presenter.authenticationEvaluated(with: result)
     }
 
     func openAppLock() {
