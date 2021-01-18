@@ -180,7 +180,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    func canAddUser(to conversation: WireDataModel.ConversationType) -> Bool {
+    func canAddUser(to conversation: ConversationLike) -> Bool {
         return canAddUserToConversation
     }
 
@@ -210,27 +210,27 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyOtherMemberInConversation
     }
 
-    func canModifyTitle(in conversation: WireDataModel.ConversationType) -> Bool {
+    func canModifyTitle(in conversation: ConversationLike) -> Bool {
         return canModifyTitleInConversation
     }
 
-    func canModifyReadReceiptSettings(in conversation: WireDataModel.ConversationType) -> Bool {
+    func canModifyReadReceiptSettings(in conversation: ConversationLike) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
 
-    func canModifyEphemeralSettings(in conversation: WireDataModel.ConversationType) -> Bool {
+    func canModifyEphemeralSettings(in conversation: ConversationLike) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    func canModifyNotificationSettings(in conversation: WireDataModel.ConversationType) -> Bool {
+    func canModifyNotificationSettings(in conversation: ConversationLike) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyAccessControlSettings(in conversation: WireDataModel.ConversationType) -> Bool {
+    func canModifyAccessControlSettings(in conversation: ConversationLike) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    func isGroupAdmin(in conversation: WireDataModel.ConversationType) -> Bool {
+    func isGroupAdmin(in conversation: ConversationLike) -> Bool {
         return isGroupAdminInConversation
     }
 
@@ -240,7 +240,7 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-    func isGuest(in conversation: ZMConversation) -> Bool {
+    func isGuest(in conversation: ConversationLike) -> Bool {
         return isGuestInConversation
     }
 

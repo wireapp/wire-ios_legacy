@@ -42,7 +42,7 @@ protocol InputBarConversation {
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & WireDataModel.ConversationType
+typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & ConversationLike
 
 extension ZMConversation: ConnectedUserContainer {
     var connectedUserType: UserType? {
@@ -73,7 +73,7 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & WireDataModel.ConversationType
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & ConversationLike
 
 extension ZMConversation: DisplayNameContainer {}
 extension ZMConversation: GroupDetailsConversation {}
