@@ -38,8 +38,7 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
     func authenticationEvaluated(with result: AppLockModule.AuthenticationResult) {
         switch result {
         case .granted:
-            // App becomes unlocked, nothing to do here.
-            break
+            interactor.openAppLock()
 
         case .denied:
             view.state = .locked

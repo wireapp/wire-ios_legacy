@@ -79,7 +79,15 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     // MARK: - Authentication evaluated
 
-    func test_ItRequestToShowTheAuthenticationButton_WhenAuthenticationDenied() {
+    func test_ItRequestToOpenAppLock_WhenAuthenticationGranted() {
+        // When
+        sut.authenticationEvaluated(with: .granted)
+
+        // Then
+        XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
+    }
+
+    func test_ItSetsTheViewStateToLocked_WhenAuthenticationDenied() {
         // When
         sut.authenticationEvaluated(with: .denied)
 
