@@ -152,7 +152,7 @@ final class UserCellTests: ZMSnapshotTestCase {
     func testUserInsideOngoingVideoCall() {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted)
+            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted, isActiveSpeaker: false)
             cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }
@@ -160,7 +160,7 @@ final class UserCellTests: ZMSnapshotTestCase {
     func testUserScreenSharingInsideOngoingVideoCall() {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted)
+            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted, isActiveSpeaker: false)
             cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
         }))
     }

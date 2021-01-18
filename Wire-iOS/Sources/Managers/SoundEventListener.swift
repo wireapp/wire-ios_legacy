@@ -17,13 +17,12 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 import avs
 
 extension ZMConversationMessage {
     var isSentBySelfUser: Bool {
-        return self.sender?.isSelfUser ?? false
+        return senderUser?.isSelfUser ?? false
     }
     
     var isRecentMessage: Bool {
@@ -129,7 +128,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             
             let isRecentMessage = (message.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
             let isSilenced = message.isSilenced
-            let isSentBySelfUser = message.sender?.isSelfUser ?? false
+            let isSentBySelfUser = message.senderUser?.isSelfUser ?? false
             
             guard message.isKnock && isRecentMessage && !isSilenced && !isSentBySelfUser else {
                 continue

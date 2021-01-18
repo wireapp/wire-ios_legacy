@@ -25,6 +25,7 @@ import LocalAuthentication
 typealias AppLockInteractorUserSession = UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
 
 protocol AppLockInteractorInput: class {
+    var needsToCreateCustomPasscode: Bool { get }
     var isCustomPasscodeNotSet: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
     var needsToNotifyUser: Bool { get set }
@@ -62,7 +63,7 @@ final class OldAppLockInteractor {
     var shouldUseBiometricsOrCustomPasscode: Bool {
         return appLock.requiresBiometrics
     }
-    
+
     var needsToNotifyUser: Bool {
         get {
             return appLock.needsToNotifyUser
@@ -83,6 +84,11 @@ final class OldAppLockInteractor {
 
 // MARK: - Interface
 extension OldAppLockInteractor: AppLockInteractorInput {
+
+    var needsToCreateCustomPasscode: Bool {
+        return (AuthenticationType.current == .unavailable || shouldUseBiometricsOrCustomPasscode) && isCustomPasscodeNotSet
+    }
+
     var isCustomPasscodeNotSet: Bool {
         return appLock.isCustomPasscodeNotSet
     }
@@ -97,8 +103,8 @@ extension OldAppLockInteractor: AppLockInteractorInput {
             guard let `self` = self else { return }
 
             self.dispatchQueue.async {
-                if case .granted = result {
-                    try? self.session.unlockDatabase(with: context)
+                if case .granted = result, let context = context as? LAContext {
+                    try? self.userSession?.unlockDatabase(with: context)
                 }
                 
                 self.output?.authenticationEvaluated(with: result)

@@ -31,19 +31,20 @@ class VideoPreviewViewTests: XCTestCase {
         super.tearDown()
     }
     
-    private func stream(muted: Bool, videoState: VideoState = .started) -> Wire.Stream {
+    private func stream(muted: Bool, videoState: VideoState = .started, active: Bool = false) -> Wire.Stream {
         let client = AVSClient(userId: UUID(), clientId: UUID().transportString())
 
         return Wire.Stream(
             streamId: client,
             participantName: "Bob",
             microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState
+            videoState: videoState,
+            isParticipantActiveSpeaker: active
         )
     }
     
     private func createView(from stream: Wire.Stream, isCovered: Bool) -> VideoPreviewView {
-        let view = VideoPreviewView(stream: stream, isCovered: isCovered)
+        let view = VideoPreviewView(stream: stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: true)
         view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
         view.backgroundColor = .graphite
         return view
@@ -88,6 +89,14 @@ class VideoPreviewViewTests: XCTestCase {
         // GIVEN / WHEN
         sut = createView(from: stream(muted: true), isCovered: false)
         
+        // THEN
+        verify(matching: sut)
+    }
+    
+    func testActiveState() {
+        // GIVEN / WHEN
+        sut = createView(from: stream(muted: false, active: true), isCovered: false)
+
         // THEN
         verify(matching: sut)
     }

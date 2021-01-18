@@ -23,6 +23,7 @@ import MobileCoreServices
 import WireDataModel
 import WireCommonComponents
 import WireLinkPreview
+import LocalAuthentication
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -502,7 +503,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             DispatchQueue.main.async {
                 if case .granted = result {
                     self?.localAuthenticationStatus = .granted
-                    try? self?.sharingSession?.unlockDatabase(with: context)
+                    if let context = context as? LAContext {
+                        try? self?.sharingSession?.unlockDatabase(with: context)
+                    }
                 } else {
                     self?.localAuthenticationStatus = .denied
                 }

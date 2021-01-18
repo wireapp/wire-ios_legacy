@@ -45,7 +45,7 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
     func storePasscode(passcode: String) throws {
         // TODO: [John] Inject the app lock controller.
         guard let appLock = ZMUserSession.shared()?.appLockController else { return }
-        try appLock.storePasscode(passcode)
+        try appLock.updatePasscode(passcode)
     }
 
     private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {

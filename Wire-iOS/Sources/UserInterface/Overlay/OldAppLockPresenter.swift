@@ -41,7 +41,7 @@ protocol AppLockUserInterface: class {
     func presentCreatePasscodeScreen(callback: ResultHandler?)
     
      /// Present warning screen (when the user should be informed about applock config changes)
-    func presentWarningScreen(callback: ResultHandler?)
+    func presentWarningScreen(completion: Completion?)
     
     func setSpinner(animating: Bool)
     func setReauth(visible: Bool)
@@ -103,10 +103,20 @@ final class OldAppLockPresenter {
         switch authenticationState {
         case .needed, .authenticated:
             authenticationState = .needed
-            setContents(showReauth: false)
-            presentWarningIfNeeded {
-                self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+            setContents(dimmed: true)
+
+            if appLockInteractorInput.needsToCreateCustomPasscode {
+                userInterface?.presentCreatePasscodeScreen(callback: { _ in
+                    // User needs to enter the newly created passcode after creation.
+                    self.setContents(dimmed: true, withReauth: true)
+                    self.appLockInteractorInput.needsToNotifyUser = false
+                })
+            } else {
+                presentWarningIfNeeded {
+                    self.appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
+                }
             }
+
         case .cancelled:
             setContents(showReauth: true)
         case .pendingPassword:
@@ -120,9 +130,7 @@ final class OldAppLockPresenter {
             return
         }
         
-        userInterface?.presentWarningScreen(callback: { _ in
-            block()
-        })
+        userInterface?.presentWarningScreen(completion: block)
     }
 }
 

@@ -26,11 +26,10 @@ extension ZClientViewController {
             return
         }
         if appLock.needsToNotifyUser && !appLock.isActive {
-            let warningVC = AppLockChangeWarningViewController()
+            let warningVC = AppLockChangeWarningViewController(isAppLockActive: appLock.isActive)
             warningVC.modalPresentationStyle = .fullScreen
             present(warningVC, animated: false)
         }
     }
     
 }
-

@@ -19,19 +19,15 @@
 import XCTest
 @testable import Wire
 
-class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
+final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-    
     // MARK: - Seen
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.deliveryState = .read
         message.needsReadConfirmation = true
@@ -56,7 +52,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.updatedAt = Date(timeIntervalSince1970: 69)
         message.deliveryState = .read
@@ -82,7 +78,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.updatedAt = Date(timeIntervalSince1970: 69)
         message.deliveryState = .read
@@ -108,7 +104,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.deliveryState = .read
         message.needsReadConfirmation = true
@@ -135,7 +131,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.deliveryState = .sent
         message.needsReadConfirmation = true
@@ -153,7 +149,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.readReceipts = []
         message.deliveryState = .sent
@@ -172,7 +168,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.readReceipts = []
         message.deliveryState = .sent
@@ -191,7 +187,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.readReceipts = [MockReadReceipt(user: otherUser)]
         message.deliveryState = .read
@@ -212,7 +208,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.isEphemeral = true
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser]]
@@ -230,7 +226,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = conversation
         message.needsReadConfirmation = false
         
@@ -246,7 +242,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = conversation
         message.needsReadConfirmation = false
         
@@ -262,7 +258,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let conversation = self.createTeamGroupConversation()
         
         let message = MockMessageFactory.pingMessage()!
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.needsReadConfirmation = true
         
@@ -282,7 +278,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             conversation.hasReadReceiptsEnabled = true
             
             let message = MockMessageFactory.textMessage(withText: "Message")!
-            message.sender = selfUser
+            message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = conversation
             
             let users = usernames.prefix(upTo: 5).map(self.createUser)

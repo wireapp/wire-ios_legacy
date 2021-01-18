@@ -82,7 +82,7 @@ final class ProfileViewController: UIViewController {
             profileViewControllerContext = conversation?.conversationType.profileViewControllerContext ?? .oneToOneConversation
         }
 
-        let viewModel = ProfileViewControllerViewModel(bareUser: user,
+        let viewModel = ProfileViewControllerViewModel(user: user,
                                                        conversation: conversation,
                                                        viewer: viewer,
                                                        context: profileViewControllerContext)
@@ -98,7 +98,7 @@ final class ProfileViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName:nil, bundle:nil)
 
-        let user = viewModel.bareUser
+        let user = viewModel.user
 
         if user.isTeamMember {
             user.refreshData()
@@ -136,7 +136,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Actions
     private func bringUpConversationCreationFlow() {
 
-        let controller = ConversationCreationController(preSelectedParticipants: viewModel.fullUserSet, selfUser: ZMUser.selfUser())
+        let controller = ConversationCreationController(preSelectedParticipants: viewModel.userSet, selfUser: ZMUser.selfUser())
         controller.delegate = self
         
         let wrappedController = controller.wrapInNavigationController()
@@ -145,9 +145,9 @@ final class ProfileViewController: UIViewController {
     }
     
     private func bringUpCancelConnectionRequestSheet(from targetView: UIView) {
-        guard let fullUser = viewModel.fullUser else { return }
+        let user = viewModel.user
         
-        let controller = UIAlertController.cancelConnectionRequest(for: fullUser) { canceled in
+        let controller = UIAlertController.cancelConnectionRequest(for: user) { canceled in
             if !canceled {
                 self.viewModel.cancelConnectionRequest() {
                     self.returnToPreviousScreen()
@@ -210,7 +210,7 @@ final class ProfileViewController: UIViewController {
     
     private func setupProfileDetailsViewController() -> ProfileDetailsViewController {
         ///TODO: pass the whole view Model/stuct/context
-        let profileDetailsViewController = ProfileDetailsViewController(user: viewModel.bareUser,
+        let profileDetailsViewController = ProfileDetailsViewController(user: viewModel.user,
                                                                         viewer: viewModel.viewer,
                                                                         conversation: viewModel.conversation,
                                                                         context: viewModel.context)
@@ -225,9 +225,8 @@ final class ProfileViewController: UIViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
         
-        if viewModel.hasUserClientListTab,
-           let fullUser = viewModel.fullUser {
-            let userClientListViewController = UserClientListViewController(user: fullUser)
+        if viewModel.hasUserClientListTab {
+            let userClientListViewController = UserClientListViewController(user: viewModel.user)
             viewControllers.append(userClientListViewController)
         }
         
@@ -383,7 +382,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     @objc
     private func presentLegalHoldDetails() {
-        guard let user = viewModel.fullUser else { return }
+        let user = viewModel.user
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
@@ -431,9 +430,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Remove User
     
     private func presentRemoveUserMenuSheetController(from view: UIView) {
-        guard let otherUser = viewModel.fullUser else {
-            return
-        }
+        let otherUser = viewModel.user
         
         let controller = UIAlertController(
             title: "profile.remove_dialog_message".localized(args: otherUser.name ?? ""),
@@ -493,7 +490,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateTitleView() {
-        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
+        profileTitleView.configure(with: viewModel.user, variant: ColorScheme.default.variant)
     }
     
     func updateShowVerifiedShield() {

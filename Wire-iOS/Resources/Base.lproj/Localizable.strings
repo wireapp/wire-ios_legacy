@@ -1802,10 +1802,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
-"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as ";
-"create_passcode.info_label_forced_applock.highlighted" = "it can not be recovered.";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation

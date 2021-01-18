@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationMessageSectionControllerTests: XCTestCase {
+final class ConversationMessageSectionControllerTests: XCTestCase {
 
     // MARK: - Dequeuing
     
