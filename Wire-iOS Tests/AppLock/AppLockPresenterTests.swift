@@ -352,7 +352,6 @@ final class AppLockPresenterTests: XCTestCase {
 
     func testThatIt_AsksToCreateCustomPasscode() {
         // Given
-        appLockInteractor._isAuthenticationNeeded = true
         appLockInteractor.needsToCreateCustomPasscode = true
 
         // When
@@ -364,7 +363,6 @@ final class AppLockPresenterTests: XCTestCase {
 
     func testThatIt_ResetsNeedsToNotifyUserFlag_AfterDisplayingCreatePasscodeScreen() {
         // Given
-        appLockInteractor._isAuthenticationNeeded = true
         appLockInteractor.needsToNotifyUser = true
         appLockInteractor.needsToCreateCustomPasscode = true
 
@@ -378,7 +376,6 @@ final class AppLockPresenterTests: XCTestCase {
 
     func testThatIt_AsksToEvaluateAuthentication() {
         // Given
-        appLockInteractor._isAuthenticationNeeded = true
         appLockInteractor.needsToCreateCustomPasscode = false
 
         // When

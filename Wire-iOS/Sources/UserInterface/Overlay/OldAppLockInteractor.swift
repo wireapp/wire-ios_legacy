@@ -104,7 +104,7 @@ extension OldAppLockInteractor: AppLockInteractorInput {
 
             self.dispatchQueue.async {
                 if case .granted = result, let context = context as? LAContext {
-                    try? self.userSession?.unlockDatabase(with: context)
+                    try? self.session.unlockDatabase(with: context)
                 }
                 
                 self.output?.authenticationEvaluated(with: result)

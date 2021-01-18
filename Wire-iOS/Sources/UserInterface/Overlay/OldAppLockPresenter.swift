@@ -103,12 +103,12 @@ final class OldAppLockPresenter {
         switch authenticationState {
         case .needed, .authenticated:
             authenticationState = .needed
-            setContents(dimmed: true)
+            setContents(showReauth: false)
 
             if appLockInteractorInput.needsToCreateCustomPasscode {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
                     // User needs to enter the newly created passcode after creation.
-                    self.setContents(dimmed: true, withReauth: true)
+                    self.setContents(showReauth: true)
                     self.appLockInteractorInput.needsToNotifyUser = false
                 })
             } else {
