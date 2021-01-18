@@ -34,8 +34,7 @@ extension XCTestCase {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-        
-        
+
         if allColorSchemes {
             ColorScheme.default.variant = .dark
             verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
@@ -45,7 +44,7 @@ extension XCTestCase {
                    file: file,
                    testName: testName,
                    line: line)
-            
+
             ColorScheme.default.variant = .light
             verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
                    snapshotBackgroundColor: snapshotBackgroundColor,
@@ -73,16 +72,16 @@ extension XCTestCase {
                         testName: String = #function,
                         line: UInt = #line) {
         let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-        
+
         if allWidths {
-            verifyInAllPhoneWidths(matching:value,
+            verifyInAllPhoneWidths(matching: value,
                                    snapshotBackgroundColor: backgroundColor,
                                    named: name,
                                    file: file,
                                    testName: testName,
                                    line: line)
         } else {
-            verifyInWidths(matching:value,
+            verifyInWidths(matching: value,
                            widths: [smallestWidth],
                            snapshotBackgroundColor: backgroundColor,
                            named: name,
@@ -91,7 +90,7 @@ extension XCTestCase {
                            line: line)
         }
     }
-    
+
     private func createUIStackView(
         message: ZMConversationMessage,
         context: ConversationMessageContext?,
@@ -100,26 +99,26 @@ extension XCTestCase {
         snapshotBackgroundColor: UIColor?
     ) -> UIStackView {
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
-        
+
         let section = ConversationMessageSectionController(message: message, context: context)
         let views = section.cellDescriptions.map({ $0.makeView() })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
-        
+
         if waitForImagesToLoad {
             XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         }
-        
+
         if waitForTextViewToLoad {
             // We need to run the run loop for UITextView to highlight detected links
             let delay = Date().addingTimeInterval(1)
             RunLoop.main.run(until: delay)
         }
-        
+
         return stackView
-        
+
     }
 
 }
@@ -130,7 +129,7 @@ extension XCTestCase {
  */
 class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
-    
+
     var mockSelfUser: MockUserType!
 
     fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
@@ -141,27 +140,26 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                                                                        searchQueries: [],
                                                                        previousMessageIsKnock: false,
                                                                        spacing: 0)
-    
+
     override class func setUp() {
         resetDayFormatter()
-        
+
         [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
     }
-    
-    
+
     override class func tearDown() {
         ColorScheme.default.variant = .light
     }
-    
+
     override func setUp() {
         super.setUp()
         coreDataFixture = CoreDataFixture()
-        
+
         ColorScheme.default.variant = .light
-        
+
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.accentColorValue = .vividRed
     }
@@ -172,7 +170,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
 
         super.tearDown()
     }
-        
+
 }
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {

@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import Wire
-//import SnapshotTesting
 
 final class MarkDownSnapshotTests: XCTestCase {
     var mockOtherUser: MockUserType!
@@ -33,14 +32,13 @@ final class MarkDownSnapshotTests: XCTestCase {
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.accentColorValue = .vividRed
     }
-    
+
     override func tearDown() {
         mockOtherUser = nil
         mockSelfUser = nil
-        
+
         super.tearDown()
     }
-
 
     func testMentionInFirstParagraph() {
         let messageText =
@@ -54,13 +52,13 @@ The wretch often disguises himself, but you will know him at once by his rough v
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = messageText
         message.backingTextMessageData = textMessageData
-        
+
         textMessageData.mentions = [mention]
 
         verify(message: message)
     }
 
-    ///compare with above tests, the line spacing should be the same for both case.
+    /// compare with above tests, the line spacing should be the same for both case.
     func testNoMentrionParagraph() {
         let messageText =
         """
@@ -71,7 +69,6 @@ The wretch often disguises himself, but you will know him at once by his rough v
 //        let message = try! otherUserConversation.appendText(content: messageText, mentions: [], fetchLinkPreview: false)
 
         let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)!
-
 
         verify(message: message)
     }
