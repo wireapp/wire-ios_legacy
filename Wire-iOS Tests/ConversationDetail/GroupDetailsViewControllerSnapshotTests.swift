@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MockGroupDetailsConversation: GroupDetailsConversationType {
+final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType {
     var freeParticipantSlots: Int = 1
 
     var isUnderLegalHold: Bool = false

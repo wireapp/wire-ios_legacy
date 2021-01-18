@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 @testable import Wire
 
 class MockUserType: NSObject, UserType, Decodable {
@@ -179,7 +180,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    func canAddUser(to conversation: ZMConversation?) -> Bool {
+    func canAddUser(to conversation: WireDataModel.ConversationType) -> Bool {
         return canAddUserToConversation
     }
 
@@ -209,27 +210,27 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyOtherMemberInConversation
     }
 
-    func canModifyTitle(in conversation: ZMConversation?) -> Bool {
+    func canModifyTitle(in conversation: WireDataModel.ConversationType) -> Bool {
         return canModifyTitleInConversation
     }
 
-    func canModifyReadReceiptSettings(in conversation: ZMConversation?) -> Bool {
+    func canModifyReadReceiptSettings(in conversation: WireDataModel.ConversationType) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
 
-    func canModifyEphemeralSettings(in conversation: ZMConversation?) -> Bool {
+    func canModifyEphemeralSettings(in conversation: WireDataModel.ConversationType) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    func canModifyNotificationSettings(in conversation: ZMConversation?) -> Bool {
+    func canModifyNotificationSettings(in conversation: WireDataModel.ConversationType) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyAccessControlSettings(in conversation: ZMConversation?) -> Bool {
+    func canModifyAccessControlSettings(in conversation: WireDataModel.ConversationType) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    func isGroupAdmin(in conversation: ZMConversation?) -> Bool {
+    func isGroupAdmin(in conversation: WireDataModel.ConversationType) -> Bool {
         return isGroupAdminInConversation
     }
 
