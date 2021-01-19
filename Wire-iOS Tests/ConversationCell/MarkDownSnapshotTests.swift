@@ -29,8 +29,7 @@ final class MarkDownSnapshotTests: XCTestCase {
         mockOtherUser = MockUserType.createUser(name: "Bruno")
         UIColor.setAccentOverride(.vividRed)
 
-        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
-        mockSelfUser.accentColorValue = .vividRed
+        mockSelfUser = MockUserType.createDefaultSelfUser()
     }
 
     override func tearDown() {

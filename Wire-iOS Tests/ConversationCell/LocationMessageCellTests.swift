@@ -19,17 +19,24 @@
 import XCTest
 @testable import Wire
 
-final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
+final class LocationMessageCellTests: XCTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
     var sut: ImageMessageView!
-    
+    var mockSelfUser: MockUserType!
+
     override func setUp() {
         super.setUp()
         
-        mockSelfUser.name = "selfUser"
-        mockSelfUser.accentColorValue = .vividRed
+        mockSelfUser = MockUserType.createDefaultSelfUser()
+    }
+    
+    
+    override func tearDown() {
+        mockSelfUser = nil
+        
+        super.tearDown()
     }
     
     /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
