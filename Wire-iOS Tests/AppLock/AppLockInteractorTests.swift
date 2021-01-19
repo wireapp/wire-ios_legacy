@@ -93,7 +93,7 @@ final class AppLockMock: AppLockType {
     }
 
     func storePasscode(_ passcode: String) throws {
-
+        isCustomPasscodeNotSet = false
     }
 
     func fetchPasscode() -> Data? {
@@ -101,7 +101,7 @@ final class AppLockMock: AppLockType {
     }
 
     func deletePasscode() throws {
-
+        isCustomPasscodeNotSet = true
     }
 }
 

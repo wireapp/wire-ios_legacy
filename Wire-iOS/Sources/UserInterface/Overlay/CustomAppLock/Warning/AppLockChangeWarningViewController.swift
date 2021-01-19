@@ -131,7 +131,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     // MARK: - Actions
 
     @objc
-    private func confirmButtonTapped(sender: AnyObject?) {
+    func confirmButtonTapped(sender: AnyObject?) {
         if let session = ZMUserSession.shared() {
             session.perform {
                 session.appLockController.needsToNotifyUser = false
