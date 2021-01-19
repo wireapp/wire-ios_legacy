@@ -31,6 +31,12 @@ extension AppLockModule {
         let session: Session
         let authenticationType: AuthenticationTypeProvider
 
+        /// The message to display on the OS authentication screen.f
+
+        private let deviceAuthenticationDescription = {
+            "self.settings.privacy_security.lock_app.description".localized
+        }()
+
         // MARK: - Life cycle
 
         init(session: Session, authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector()) {
@@ -60,11 +66,10 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
     }
 
     // TODO: Pass in scenario.
-    // TODO: Use localized description.
 
     func evaluateAuthentication() {
         appLock.evaluateAuthentication(scenario: .screenLock(requireBiometrics: false),
-                                       description: "Unlock Wire",
+                                       description: deviceAuthenticationDescription,
                                        with: handleAuthenticationResult)
     }
 
