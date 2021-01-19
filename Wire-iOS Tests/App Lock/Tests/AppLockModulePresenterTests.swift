@@ -102,7 +102,10 @@ final class AppLockModulePresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(router.methodCalls.presentInputPasscodeModule.count, 1)
 
-        // TODO: Assert it uses the passcode to authenticate.
+        let onGranted = router.methodCalls.presentInputPasscodeModule[0]
+        onGranted()
+
+        XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
     }
 
 }

@@ -19,16 +19,21 @@ import Foundation
 import UIKit
 import WireCommonComponents
 import WireDataModel
+import WireSyncEngine
 
 /// UnlockViewController
 /// 
 /// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
 final class UnlockViewController: UIViewController {
 
+    typealias Session = ZMUserSessionInterface & UserSessionAppLockInterface
+
     var callback: RequestPasswordController.Callback?
 
+    var onGranted: (() -> Void)? = nil
+
     private let selfUser: UserType
-    private var userSession: ZMUserSessionInterface?
+    private var userSession: Session?
 
     private let shieldView = UIView.shieldView()
     private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
@@ -118,7 +123,7 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    init(selfUser: UserType, userSession: ZMUserSessionInterface? = nil) {
+    init(selfUser: UserType, userSession: Session? = nil) {
         self.selfUser = selfUser
         self.userSession = userSession
 
@@ -235,6 +240,24 @@ final class UnlockViewController: UIViewController {
         guard let passcode = accessoryTextField.text else { return false }
 
         callback?(passcode)
+
+        guard let onGranted = onGranted else { return true }
+
+        // TODO: This should ideally be a method on app lock controller.
+        guard
+            let session = userSession,
+            let existingPasscode = session.appLockController.fetchPasscode()
+        else {
+            return false
+        }
+
+        guard passcode.data(using: .utf8) == existingPasscode else {
+            showWrongPasscodeMessage()
+            return false
+        }
+
+        onGranted()
+
         return true
     }
 

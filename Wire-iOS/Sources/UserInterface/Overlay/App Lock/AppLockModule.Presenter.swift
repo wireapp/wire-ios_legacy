@@ -44,11 +44,7 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             view.state = .locked
 
         case .needCustomPasscode:
-            // TODO: I think the input passcode module should handle
-            // verification.
-            router.presentInputPasscodeModule { passcode in
-                // TODO: Verify passcode.
-            }
+            router.presentInputPasscodeModule(onGranted: interactor.openAppLock)
 
         case .unavailable:
             // TODO: Remove this case, it should never happen.

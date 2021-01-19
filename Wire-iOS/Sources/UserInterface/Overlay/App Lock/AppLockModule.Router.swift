@@ -47,19 +47,14 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
         viewController?.present(passcodeSetupViewController, animated: true)
     }
 
-    func presentInputPasscodeModule(completion: @escaping (_ passcode: String) -> Void) {
+    func presentInputPasscodeModule(onGranted: @escaping () -> Void) {
         // TODO: Clean this up.
         // TODO: Inject these arguments.
         let unlockViewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: unlockViewController)
         let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
         navigationController.modalPresentationStyle = .fullScreen
-
-        // TODO: The callback shouldn't accept an optional passcode
-        unlockViewController.callback = { passcode in
-            completion(passcode!)
-        }
-
+        unlockViewController.onGranted = onGranted
         viewController?.present(navigationController, animated: false)
     }
 
