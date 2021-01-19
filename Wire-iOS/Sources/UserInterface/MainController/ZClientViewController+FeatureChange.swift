@@ -27,9 +27,7 @@ extension ZClientViewController {
         }
         if appLock.needsToNotifyUser && !appLock.isActive {
             let warningVC = AppLockChangeWarningViewController(isAppLockActive: appLock.isActive) {
-                if !appLock.isCustomPasscodeNotSet {
-                    try? appLock.deletePasscode()
-                }
+                try? appLock.deletePasscode()
             }
             warningVC.modalPresentationStyle = .fullScreen
             present(warningVC, animated: false)
