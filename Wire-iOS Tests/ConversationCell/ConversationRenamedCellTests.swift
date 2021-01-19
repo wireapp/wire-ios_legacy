@@ -55,7 +55,6 @@ final class ConversationRenamedCellTests: XCTestCase {
         message.backingSystemMessageData.systemMessageType = .conversationNameChanged
         message.backingSystemMessageData.text = name
         message.senderUser = fromSelf ? MockUserType.createSelfUser(name: "Alice") : MockUserType.createUser(name: "Bruno")
-//        message.conversation = otherUserConversation
 
         return message
     }
