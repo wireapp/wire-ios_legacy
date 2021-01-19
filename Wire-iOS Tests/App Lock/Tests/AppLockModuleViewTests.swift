@@ -28,8 +28,8 @@ final class AppLockModuleViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AppLockModule.View()
-        presenter = AppLockModule.MockPresenter()
+        sut = .init()
+        presenter = .init()
 
         sut.presenter = presenter
     }

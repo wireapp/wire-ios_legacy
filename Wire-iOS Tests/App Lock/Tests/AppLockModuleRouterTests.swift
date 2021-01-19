@@ -26,7 +26,7 @@ final class AppLockModuleRouterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AppLockModule.Router()
+        sut = .init()
     }
 
     override func tearDown() {

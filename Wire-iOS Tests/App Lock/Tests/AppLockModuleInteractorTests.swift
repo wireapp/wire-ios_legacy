@@ -30,14 +30,14 @@ final class AppLockModuleInteractorTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        presenter = AppLockModule.MockPresenter()
-        session = AppLockModule.MockSession()
-        appLock = AppLockModule.MockAppLockController()
-        authenticationType = AppLockModule.MockAuthenticationTypeDetector()
+        presenter = .init()
+        session = .init()
+        appLock = .init()
+        authenticationType = .init()
 
         session.appLockController = appLock
 
-        sut = AppLockModule.Interactor(session: session, authenticationType: authenticationType)
+        sut = .init(session: session, authenticationType: authenticationType)
         sut.presenter = presenter
     }
     

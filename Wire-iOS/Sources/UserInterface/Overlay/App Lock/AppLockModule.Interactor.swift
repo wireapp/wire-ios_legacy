@@ -56,12 +56,6 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     var needsToCreateCustomPasscode: Bool {
         guard appLock.isCustomPasscodeNotSet else { return false }
-        if appLock.requiresBiometrics {
-            return true
-        } else if authenticationType.current == .unavailable {
-            return true
-        }
-        return false
         return appLock.requiresBiometrics || authenticationType.current == .unavailable
     }
 

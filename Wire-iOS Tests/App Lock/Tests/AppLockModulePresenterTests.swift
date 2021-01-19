@@ -29,10 +29,10 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AppLockModule.Presenter()
-        router = AppLockModule.MockRouter()
-        interactor = AppLockModule.MockInteractor()
-        view = AppLockModule.MockView()
+        sut = .init()
+        router = .init()
+        interactor = .init()
+        view = .init()
 
         sut.router = router
         sut.interactor = interactor
