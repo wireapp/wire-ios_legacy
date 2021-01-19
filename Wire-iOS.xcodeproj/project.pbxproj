@@ -1085,6 +1085,7 @@
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
+		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
 		EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */; };
 		EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */; };
@@ -1106,6 +1107,7 @@
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
+		EE7F464B25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */; };
 		EE7F465725B0F6FC001B3EE4 /* AppLockModuleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */; };
 		EE7F466925B1CD60001B3EE4 /* AppLockModule.MockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */; };
 		EE7F466C25B1CE32001B3EE4 /* AppLockModule.MockAppLockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */; };
@@ -1113,7 +1115,6 @@
 		EE7F467025B1D031001B3EE4 /* AppLockModule.MockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */; };
 		EE7F467225B1D058001B3EE4 /* AppLockModule.MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */; };
 		EE7F467425B1D0BA001B3EE4 /* AppLockModule.MockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */; };
-		EE7F464B25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */; };
 		EE876CAE23F2FCB100040D75 /* SwiftMockLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876CAC23F2FCA900040D75 /* SwiftMockLoader.swift */; };
 		EE88E00623FAC9EA00D24703 /* SelfUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88E00523FAC9EA00D24703 /* SelfUser.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
@@ -2839,6 +2840,7 @@
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
+		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
 		EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMetadataRefresher.swift; sourceTree = "<group>"; };
 		EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Units.swift"; sourceTree = "<group>"; };
@@ -2860,6 +2862,7 @@
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
+		EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockChangeWarningViewControllerTests.swift; sourceTree = "<group>"; };
 		EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleInteractorTests.swift; sourceTree = "<group>"; };
 		EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockSession.swift; sourceTree = "<group>"; };
 		EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAppLockController.swift; sourceTree = "<group>"; };
@@ -2867,7 +2870,6 @@
 		EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockInteractor.swift; sourceTree = "<group>"; };
 		EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockPresenter.swift; sourceTree = "<group>"; };
 		EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockView.swift; sourceTree = "<group>"; };
-		EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockChangeWarningViewControllerTests.swift; sourceTree = "<group>"; };
 		EE876CAC23F2FCA900040D75 /* SwiftMockLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMockLoader.swift; sourceTree = "<group>"; };
 		EE88E00523FAC9EA00D24703 /* SelfUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfUser.swift; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
@@ -6439,6 +6441,7 @@
 				EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */,
 				EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */,
 				EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */,
+				EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -8706,6 +8709,7 @@
 				BF079A3620EF9E6F00B152DD /* ConversationListCellTests.swift in Sources */,
 				16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */,
 				7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */,
+				EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */,
 				5EDD25462141571600C0E254 /* LicensesLoaderTests.swift in Sources */,
 				5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */,
 				EEA2E57125B2386500E726C3 /* AppLockModulePresenterTests.swift in Sources */,

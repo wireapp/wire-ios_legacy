@@ -29,11 +29,13 @@ extension AppLockModule {
         weak var presenter: AppLockPresenterInteractorInterface!
 
         let session: Session
+        let authenticationType: AuthenticationTypeProvider
 
         // MARK: - Life cycle
 
-        init(session: Session) {
+        init(session: Session, authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector()) {
             self.session = session
+            self.authenticationType = authenticationType
         }
 
         // MARK: - Methods
@@ -51,10 +53,16 @@ extension AppLockModule {
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     // FIXME: This could be more clearly expressed.
-    // TODO: Make AuthenticationType mockable then test this.
 
     var needsToCreateCustomPasscode: Bool {
-        return (AuthenticationType.current == .unavailable || appLock.requiresBiometrics) && appLock.isCustomPasscodeNotSet
+        guard appLock.isCustomPasscodeNotSet else { return false }
+        if appLock.requiresBiometrics {
+            return true
+        } else if authenticationType.current == .unavailable {
+            return true
+        }
+        return false
+        return appLock.requiresBiometrics || authenticationType.current == .unavailable
     }
 
     // TODO: Pass in scenario.

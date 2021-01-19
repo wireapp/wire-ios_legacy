@@ -26,16 +26,18 @@ final class AppLockModuleInteractorTests: XCTestCase {
     private var presenter: AppLockModule.MockPresenter!
     private var session: AppLockModule.MockSession!
     private var appLock: AppLockModule.MockAppLockController!
+    private var authenticationType: AppLockModule.MockAuthenticationTypeDetector!
     
     override func setUp() {
         super.setUp()
+        presenter = AppLockModule.MockPresenter()
         session = AppLockModule.MockSession()
         appLock = AppLockModule.MockAppLockController()
-        presenter = AppLockModule.MockPresenter()
+        authenticationType = AppLockModule.MockAuthenticationTypeDetector()
 
         session.appLockController = appLock
 
-        sut = AppLockModule.Interactor(session: session)
+        sut = AppLockModule.Interactor(session: session, authenticationType: authenticationType)
         sut.presenter = presenter
     }
     
@@ -44,7 +46,46 @@ final class AppLockModuleInteractorTests: XCTestCase {
         presenter = nil
         session = nil
         appLock = nil
+        authenticationType = nil
         super.tearDown()
+    }
+
+    // MARK: - Needs to create passcode
+
+    func test_NeedsToCreatePasscode_IfNoneIsSet_AndBiometricsIsRequired() {
+        // Given
+        appLock.isCustomPasscodeNotSet = true
+        appLock.requiresBiometrics = true
+
+        // Then
+        XCTAssertTrue(sut.needsToCreateCustomPasscode)
+    }
+
+    func test_NeedsToCreatePasscode_IfNoneIsSet_AndNoAuthenticationTypeIsAvailable() {
+        // Given
+        appLock.isCustomPasscodeNotSet = true
+        authenticationType.current = .unavailable
+
+        // Then
+        XCTAssertTrue(sut.needsToCreateCustomPasscode)
+    }
+
+    func test_NoNeedToCreateCustomPasscode_IfOneIsSet() {
+        // Given
+        appLock.isCustomPasscodeNotSet = false
+
+        // Then
+        XCTAssertFalse(sut.needsToCreateCustomPasscode)
+    }
+
+    func test_NoNeedToCreatePasscode_IfNoneIsSet_BiometricsIsNotRequired_DevicePasscodeIsSet() {
+        // Given
+        appLock.isCustomPasscodeNotSet = true
+        appLock.requiresBiometrics = false
+        authenticationType.current = .passcode
+
+        // Then
+        XCTAssertFalse(sut.needsToCreateCustomPasscode)
     }
     
     // MARK: - Evaluate authentication
@@ -95,6 +136,16 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
         // Then
         XCTAssertEqual(presenter.methodCalls.authenticationEvaluated, authenticationResults)
+    }
+
+    // MARK: - Open app lock
+
+    func test_ItOpensAppLock() {
+        // When
+        sut.openAppLock()
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
 }
