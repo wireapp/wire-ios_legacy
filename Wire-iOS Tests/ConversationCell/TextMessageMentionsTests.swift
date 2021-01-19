@@ -23,7 +23,7 @@ import XCTest
 
 final class TextMessageMentionsTests: XCTestCase {
     var otherUser: MockUserType!
-    var mockSelfUser: MockUserType!
+    var selfUser: MockUserType!
 
     /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"
     static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
@@ -32,21 +32,21 @@ final class TextMessageMentionsTests: XCTestCase {
         super.setUp()
         
         otherUser = MockUserType.createUser(name: "Bruno")
-        mockSelfUser = MockUserType.createDefaultSelfUser()
+        selfUser = MockUserType.createDefaultSelfUser()
 
         UIColor.setAccentOverride(.vividRed)
     }
 
     override func tearDown() {
         otherUser = nil
-        mockSelfUser = nil
+        selfUser = nil
         
         resetColorScheme()
         super.tearDown()
     }
     
     private func createMessage(messageText: String, mentions: [Mention]) -> MockMessage{
-        let message = MockMessageFactory.messageTemplate(sender: mockSelfUser)
+        let message = MockMessageFactory.messageTemplate(sender: selfUser)
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = messageText
         message.backingTextMessageData = textMessageData
@@ -80,23 +80,20 @@ final class TextMessageMentionsTests: XCTestCase {
         verify(message: createMessage(messageText: messageText, mentions: [mention1, mention2, mention3]))
     }
 
-    /*
     func testThatItRendersMentions_SelfMention() {
         let messageText = "Hello @Me! I had some questions about my program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 3), user: selfUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
 
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testThatItRendersMentionWithEmoji_MultipleMention() {
         let messageText = "Hello @Bill 👨‍👩‍👧‍👦 & @🏴󠁧󠁢󠁷󠁬󠁳󠁿🀄︎🧘🏿‍♀️其他人! I had some questions about your program. I think I found the bug 🐛."
         let mention1 = Mention(range: NSRange(location: 6, length: 17), user: selfUser)
         let mention2 = Mention(range: NSRange(location: 26, length: 28), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention1, mention2], fetchLinkPreview: false)
 
         /// The emoji 🀄︎ may be rendered on its corner on differnt versions of iOS, set tolerance to 0.01
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention1, mention2]))
     }
 
     func testThatItRendersMentions_SelfMention_LongText() {
@@ -105,10 +102,9 @@ final class TextMessageMentionsTests: XCTestCase {
 She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
 """
         selfUser.name = "Tyler Durden"
+        selfUser.initials = "TD"
         let mention = Mention(range: NSRange(location: 219, length: 6), user: selfUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]), waitForTextViewToLoad: true)
     }
 
     func testThatItRendersMentions_SelfMention_LongText_Dark() {
@@ -118,43 +114,37 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
 She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
 """
         selfUser.name = "Tyler Durden"
+        selfUser.initials = "TD"
         let mention = Mention(range: NSRange(location: 219, length: 6), user: selfUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: createMessage(messageText: messageText,
+                                      mentions: [mention]),
+                                      waitForTextViewToLoad: true,
+                                      snapshotBackgroundColor: .black)
     }
 
     func testThatItRendersMentions_InMarkdown() {
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testThatItRendersMentions_MarkdownInMention_Code() {
         let messageText = "# Hello @`Bruno`"
         let mention = Mention(range: NSRange(location: 8, length: 8), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testThatItRendersMentions_MarkdownInMention_Link() {
         let messageText = "# Hello @[Bruno](http://google.com)"
         let mention = Mention(range: NSRange(location: 8, length: 27), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testThatItRendersMentions_MarkdownInUserName() {
         otherUser.name = "[Hello](http://google.com)"
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testDarkModeSelf() {
@@ -162,9 +152,6 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
 
         let messageText = "@current"
         let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
-
-        verify(message: message)
-    }*/
-
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
+    }
 }
