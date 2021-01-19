@@ -18,16 +18,25 @@
 import XCTest
 @testable import Wire
 
-final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
+final class CompositeMessageCellTests: XCTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
+    
+    var mockSelfUser: MockUserType!
     
     override func setUp() {
         super.setUp()
 
-        // make sure the button's color is alarm red, not accent color
-        coreDataFixture.accentColor = .strongBlue
+        mockSelfUser = MockUserType.createDefaultSelfUser()
         
+        // make sure the button's color is alarm red, not accent color
+        UIColor.setAccentOverride(.strongBlue)
+    }
+    
+    override func tearDown() {
+        mockSelfUser = nil
+        
+        super.tearDown()
     }
 
     func testThatItRendersErrorMessage() {
