@@ -65,7 +65,6 @@ The wretch often disguises himself, but you will know him at once by his rough v
         So she called all seven to her and said: 'Dear children, I have to go into the forest, be on your guard against the wolf; if he comes in, he will devour you all, skin, hair, and everything.
 The wretch often disguises himself, but you will know him at once by his rough voice and his black feet.' The kids said: 'Dear mother, we will take good care of ourselves; you may go away without any anxiety.' Then the old one bleated, and went on her way with an easy mind.
 """
-//        let message = try! otherUserConversation.appendText(content: messageText, mentions: [], fetchLinkPreview: false)
 
         let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)!
 

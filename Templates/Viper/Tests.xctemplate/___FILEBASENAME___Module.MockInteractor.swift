@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,14 +17,24 @@
 //
 
 import Foundation
-import UIKit
+@testable import Wire
 
-final class ___FILEBASENAMEASIDENTIFIER___: UIViewController, ViewInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    var presenter: ___VARIABLE_productName:identifier___PresenterViewInterface!
+    final class MockInteractor: ___VARIABLE_productName:identifier___InteractorPresenterInterface {
+
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Methods
+
+    }
 
 }
 
-// MARK: - API for presenter
+extension ___VARIABLE_productName:identifier___Module.MockInteractor {
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___ViewPresenterInterface {}
+    struct MethodCalls { }
+
+}

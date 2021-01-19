@@ -17,24 +17,18 @@
 //
 
 import Foundation
-@testable import Wire
+import UIKit
 
-class VideoStreamStubProvider {
-    func videoStream(
-        participantName: String = "Bob",
-        client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
-        muted: Bool = false,
-        videoState: VideoState = .started,
-        active: Bool = false,
-        paused: Bool = false) -> VideoStream
-    {        
-        let stream = Wire.Stream(
-            streamId: client,
-            participantName: participantName,
-            microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState,
-            isParticipantActiveSpeaker: active
-        )
-        return VideoStream(stream: stream, isPaused: paused)
+extension ___VARIABLE_productName:identifier___Module {
+
+    final class View: UIViewController, ViewInterface {
+
+        var presenter: ___VARIABLE_productName:identifier___PresenterViewInterface!
+
     }
+
 }
+
+// MARK: - API for presenter
+
+extension ___VARIABLE_productName:identifier___Module.View: ___VARIABLE_productName:identifier___ViewPresenterInterface { }

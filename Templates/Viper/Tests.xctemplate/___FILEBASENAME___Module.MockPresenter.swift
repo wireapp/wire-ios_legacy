@@ -19,22 +19,22 @@
 import Foundation
 @testable import Wire
 
-class VideoStreamStubProvider {
-    func videoStream(
-        participantName: String = "Bob",
-        client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
-        muted: Bool = false,
-        videoState: VideoState = .started,
-        active: Bool = false,
-        paused: Bool = false) -> VideoStream
-    {        
-        let stream = Wire.Stream(
-            streamId: client,
-            participantName: participantName,
-            microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState,
-            isParticipantActiveSpeaker: active
-        )
-        return VideoStream(stream: stream, isPaused: paused)
+extension ___VARIABLE_productName:identifier___Module {
+
+    final class MockPresenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface, ___VARIABLE_productName:identifier___PresenterViewInterface {
+
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Methods
+
     }
+
+}
+
+extension ___VARIABLE_productName:identifier___Module.MockPresenter {
+
+    struct MethodCalls { }
+
 }
