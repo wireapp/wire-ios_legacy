@@ -18,6 +18,9 @@
 
 import Foundation
 
+// TODO: We may need to display a warning. Where should it go?
+// TODO: Use the authentication type to determine what copy to display in the view.
+
 extension AppLockModule {
 
     final class Presenter: PresenterInterface {
