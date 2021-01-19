@@ -30,6 +30,7 @@ final class LocationMessageCellTests: XCTestCase {
         super.setUp()
 
         mockSelfUser = MockUserType.createDefaultSelfUser()
+        UIColor.setAccentOverride(.vividRed)
     }
 
     override func tearDown() {
