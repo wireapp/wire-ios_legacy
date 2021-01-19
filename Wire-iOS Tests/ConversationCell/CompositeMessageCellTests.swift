@@ -21,30 +21,30 @@ import XCTest
 final class CompositeMessageCellTests: XCTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
-    
+
     var mockSelfUser: MockUserType!
-    
+
     override func setUp() {
         super.setUp()
 
         mockSelfUser = MockUserType.createDefaultSelfUser()
-        
+
         // make sure the button's color is alarm red, not accent color
         UIColor.setAccentOverride(.strongBlue)
     }
-    
+
     override func tearDown() {
         mockSelfUser = nil
-        
+
         super.tearDown()
     }
 
     func testThatItRendersErrorMessage() {
         // given
-        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
-                                             createItem(title: "Stone age", state:.unselected, isExpired: true),
-                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
-                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state: .selected),
+                                             createItem(title: "Stone age", state: .unselected, isExpired: true),
+                                             createItem(title: "Ludwig van Beethoven", state: .confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state: .unselected)]
 
         // when & then
         let message = makeMessage(sender: mockSelfUser, items: items)
@@ -63,7 +63,7 @@ final class CompositeMessageCellTests: XCTestCase {
         // given
         let message = makeMessage(sender: mockSelfUser) { config in
             // when
-            let item = self.createItem(title: "J.S. Bach", state:.unselected)
+            let item = self.createItem(title: "J.S. Bach", state: .unselected)
             (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
         }
 
@@ -72,7 +72,7 @@ final class CompositeMessageCellTests: XCTestCase {
     }
 
     // MARK: - Helpers
-    
+
     private func createItem(title: String, state: ButtonMessageState, isExpired: Bool = false) -> CompositeMessageItem {
         let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
         mockButtonMessageData.state = state
@@ -85,7 +85,6 @@ final class CompositeMessageCellTests: XCTestCase {
 
     fileprivate lazy var mockTextMessage = MockMessageFactory.textMessage(withText: "# Question:\nWho is/are your most favourite musician(s)  ?")!
 
-    
     private func makeMessage(sender: UserType? = nil,
                              items: [CompositeMessageItem]) -> MockMessage {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage(sender: sender)
@@ -106,10 +105,10 @@ final class CompositeMessageCellTests: XCTestCase {
         let mockCompositeMessageData = MockCompositeMessageData()
         let textItem: CompositeMessageItem = .text(mockTextMessage.backingTextMessageData)
 
-        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
-                                             createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state:.unselected),
-                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
-                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state: .selected),
+                                             createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state: .unselected),
+                                             createItem(title: "Ludwig van Beethoven", state: .confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state: .unselected)]
 
         mockCompositeMessageData.items = [textItem] + items
 
@@ -126,7 +125,7 @@ final class MockButtonMessageData: ButtonMessageData {
     var state: ButtonMessageState = .unselected
 
     func touchAction() {
-        //no-op
+        // no-op
     }
 
     var isExpired: Bool = false

@@ -27,10 +27,10 @@ final class TextMessageMentionsTests: XCTestCase {
 
     /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"
     static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
-    
+
     override func setUp() {
         super.setUp()
-        
+
         otherUser = MockUserType.createUser(name: "Bruno")
         selfUser = MockUserType.createDefaultSelfUser()
 
@@ -40,19 +40,19 @@ final class TextMessageMentionsTests: XCTestCase {
     override func tearDown() {
         otherUser = nil
         selfUser = nil
-        
+
         resetColorScheme()
         super.tearDown()
     }
-    
-    private func createMessage(messageText: String, mentions: [Mention]) -> MockMessage{
+
+    private func createMessage(messageText: String, mentions: [Mention]) -> MockMessage {
         let message = MockMessageFactory.messageTemplate(sender: selfUser)
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = messageText
         message.backingTextMessageData = textMessageData
-        
+
         textMessageData.mentions = mentions
-        
+
         return message
     }
 

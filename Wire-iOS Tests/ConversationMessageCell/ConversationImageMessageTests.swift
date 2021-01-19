@@ -27,11 +27,11 @@ final class ConversationImageMessageTests: XCTestCase {
     override func tearDown() {
         image = nil
         message = nil
-        
+
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         super.tearDown()
     }
-    
+
     private func createSut(imageName: String) {
         image = image(inTestBundleNamed: imageName)
         message = MockMessageFactory.imageMessage(with: image)!
@@ -40,15 +40,15 @@ final class ConversationImageMessageTests: XCTestCase {
         sender.isConnected = true
         message.senderUser = sender
     }
-    
+
     func testTransparentImage() {
         // GIVEN
         createSut(imageName: "transparent.png")
-        
+
         // THEN
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testOpaqueImage() {
         // GIVEN
         createSut(imageName: "unsplash_matterhorn.jpg")
@@ -56,7 +56,7 @@ final class ConversationImageMessageTests: XCTestCase {
         // THEN
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testNotDownloadedImage() {
         // GIVEN
         createSut(imageName: "unsplash_matterhorn.jpg")
@@ -64,14 +64,14 @@ final class ConversationImageMessageTests: XCTestCase {
         // THEN
         verify(message: message, waitForImagesToLoad: false)
     }
-    
+
     func testObfuscatedImage() {
         // GIVEN
         createSut(imageName: "unsplash_matterhorn.jpg")
         message.isObfuscated = true
-        
+
         // THEN
         verify(message: message)
     }
-    
+
 }

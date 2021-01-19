@@ -28,17 +28,16 @@ final class LocationMessageCellTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         mockSelfUser = MockUserType.createDefaultSelfUser()
     }
-    
-    
+
     override func tearDown() {
         mockSelfUser = nil
-        
+
         super.tearDown()
     }
-    
+
     /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
     func disabled_testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
@@ -53,7 +52,7 @@ final class LocationMessageCellTests: XCTestCase {
     }
 
     func testThatItRendersLocationCellObfuscated() {
-        verify(message: makeMessage() {
+        verify(message: makeMessage {
             $0.isObfuscated = true
         })
     }

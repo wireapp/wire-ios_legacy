@@ -23,12 +23,11 @@ final class ConversationPingMessageTests: XCTestCase {
 
     func testPing() {
         // GIVEN
-        let message = MockMessageFactory.pingMessage()! ///TODO mockmessage?
+        let message = MockMessageFactory.pingMessage()! /// TODO mockmessage?
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
 
         // THEN
         verify(message: message)
     }
-
 
 }

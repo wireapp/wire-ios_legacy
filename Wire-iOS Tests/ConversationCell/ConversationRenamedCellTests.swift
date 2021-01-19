@@ -23,10 +23,10 @@ final class ConversationRenamedCellTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
     }
-    
+
     func testThatItRendersRenamedCellCorrectlySelf() {
         let name = "Amazing Conversation"
         let message = renamedMessage(fromSelf: true, name: name)

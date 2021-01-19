@@ -23,7 +23,7 @@ extension MockUserType {
     class func createDefaultSelfUser() -> MockUserType {
         let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.accentColorValue = .vividRed
-        
+
         return mockSelfUser
     }
 
