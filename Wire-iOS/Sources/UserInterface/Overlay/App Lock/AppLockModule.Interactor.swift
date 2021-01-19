@@ -28,10 +28,10 @@ extension AppLockModule {
 
         weak var presenter: AppLockPresenterInteractorInterface!
 
-        let session: Session
-        let authenticationType: AuthenticationTypeProvider
+        private let session: Session
+        private let authenticationType: AuthenticationTypeProvider
 
-        /// The message to display on the OS authentication screen.f
+        /// The message to display on the OS authentication screen.
 
         private let deviceAuthenticationDescription = {
             "self.settings.privacy_security.lock_app.description".localized
@@ -46,8 +46,19 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        var appLock: AppLockType {
+        private var appLock: AppLockType {
             session.appLockController
+        }
+
+        private var scenario: AuthenticationScenario? {
+            guard let lock = session.lock else { return nil }
+
+            switch lock {
+            case .screen:
+                return .screenLock(requireBiometrics: appLock.requiresBiometrics)
+            case .database:
+                return .databaseLock
+            }
         }
 
     }
@@ -65,15 +76,18 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         return appLock.requiresBiometrics || authenticationType.current == .unavailable
     }
 
-    // TODO: Pass in scenario.
-
     func evaluateAuthentication() {
-        appLock.evaluateAuthentication(scenario: .screenLock(requireBiometrics: false),
+        guard let scenario = scenario else {
+            handleAuthenticationResult(.granted, context: nil)
+            return
+        }
+
+        appLock.evaluateAuthentication(scenario: scenario,
                                        description: deviceAuthenticationDescription,
                                        with: handleAuthenticationResult)
     }
 
-    private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol) {
+    private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol?) {
         if case .granted = result, let context = context as? LAContext {
             try? session.unlockDatabase(with: context)
         }

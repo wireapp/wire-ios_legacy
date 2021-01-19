@@ -44,4 +44,6 @@ final class MockZMUserSession: NSObject, UserSessionInterface {
     var encryptMessagesAtRest: Bool = false
     
     var appLockController: AppLockType = MockAppLock()
+
+    var lock: ZMUserSession.Lock? = nil
 }

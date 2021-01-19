@@ -89,9 +89,66 @@ final class AppLockModuleInteractorTests: XCTestCase {
     }
     
     // MARK: - Evaluate authentication
+
+    func test_AuthenticationIsSuccessful_IfSessionIsAlreadyUnlocked() {
+        // Given
+        session.lock = .none
+
+        // When
+        sut.evaluateAuthentication()
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.methodCalls.authenticationEvaluated, [.granted])
+    }
+
+    func test_EvalutesWithScreenLockScenario_IfSessionHasScreenLock() {
+        // Given
+        session.lock = .screen
+        appLock.requiresBiometrics = false
+
+        // When
+        sut.evaluateAuthentication()
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
+
+        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
+        XCTAssertEqual(scenario, .screenLock(requireBiometrics: false))
+    }
+
+    func test_EvalutesWithBiometricsScreenLockScenario_IfSessionHasScreenLock_AndBiometricsRequired() {
+        // Given
+        session.lock = .screen
+        appLock.requiresBiometrics = true
+
+        // When
+        sut.evaluateAuthentication()
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
+
+        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
+        XCTAssertEqual(scenario, .screenLock(requireBiometrics: true))
+    }
+
+    func test_EvalutesWithDatabaseScenario_IfSessionHasDatabaseLock() {
+        // Given
+        session.lock = .database
+
+        // When
+        sut.evaluateAuthentication()
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
+
+        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
+        XCTAssertEqual(scenario, .databaseLock)
+    }
     
     func test_DatabaseIsUnlocked_IfAuthenticationIsSuccessful() {
         // Given
+        session.lock = .database
         appLock._authenticationResult = .granted
 
         // When
@@ -103,6 +160,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
     
     func test_DatabaseIsNotUnlocked_IfAuthenticationIsNotSuccessful() {
         // Given
+        session.lock = .database
+
         let authenticationResults: [AppLockModule.AuthenticationResult] = [
             .denied,
             .needCustomPasscode,
@@ -121,6 +180,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     func test_PresenterIsInformed_OfAllAuthenticationResults() {
         // Given
+        session.lock = .screen
+
         let authenticationResults: [AppLockModule.AuthenticationResult] = [
             .granted,
             .denied,

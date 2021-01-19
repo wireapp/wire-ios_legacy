@@ -43,6 +43,8 @@ final class MockAppLockUserSession: AppLockInteractorUserSession {
     var encryptMessagesAtRest: Bool = false
     
     var isDatabaseLocked: Bool = false
+
+    var lock: ZMUserSession.Lock? = nil
     
     var result: VerifyPasswordResult? = .denied
     func setEncryptionAtRest(enabled: Bool) throws {
