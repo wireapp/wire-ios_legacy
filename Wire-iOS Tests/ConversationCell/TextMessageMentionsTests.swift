@@ -44,29 +44,31 @@ final class TextMessageMentionsTests: XCTestCase {
         resetColorScheme()
         super.tearDown()
     }
-
-    func testThatItRendersMentions_OnlyMention() {
-        let messageText = "@Bruno"
-        let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
-        
-
+    
+    private func createMessage(messageText: String, mentions: [Mention]) -> MockMessage{
         let message = MockMessageFactory.messageTemplate(sender: mockSelfUser)
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = messageText
         message.backingTextMessageData = textMessageData
         
-        textMessageData.mentions = [mention]
+        textMessageData.mentions = mentions
+        
+        return message
+    }
 
-        verify(message: message,
+    func testThatItRendersMentions_OnlyMention() {
+        let messageText = "@Bruno"
+        let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
+
+        verify(message: createMessage(messageText: messageText, mentions: [mention]),
                allColorSchemes: true)
     }
-/*
+
     func testThatItRendersMentions() {
         let messageText = "Hello @Bruno! I had some questions about your program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 6), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
 
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention]))
     }
 
     func testThatItRendersMentions_DifferentLength() {
@@ -75,11 +77,10 @@ final class TextMessageMentionsTests: XCTestCase {
         let mention2 = Mention(range: NSRange(location: 10, length: 3), user: otherUser)
         let mention3 = Mention(range: NSRange(location: 14, length: 3), user: otherUser)
 
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention1, mention2, mention3], fetchLinkPreview: false)
-
-        verify(message: message)
+        verify(message: createMessage(messageText: messageText, mentions: [mention1, mention2, mention3]))
     }
 
+    /*
     func testThatItRendersMentions_SelfMention() {
         let messageText = "Hello @Me! I had some questions about my program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 3), user: selfUser)
