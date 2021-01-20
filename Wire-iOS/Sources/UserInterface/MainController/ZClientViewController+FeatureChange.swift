@@ -39,8 +39,8 @@ extension ZClientViewController {
         guard 
             let appLock = appLock,
             appLock.needsToNotifyUser,
-            !appLock.isActive
-            let warningVC = changeWarningViewController, else {
+            !appLock.isActive,
+            let warningVC = changeWarningViewController else {
                 return
         }
         

@@ -53,7 +53,6 @@ final class ZClientViewController: UIViewController {
     private var networkAvailabilityObserverToken: Any?
     private var pendingInitialStateRestore = false
     
-    // For tests
     var _userSession: UserSessionInterface?
     
     /// init method for testing allows injecting an Account object and self user
