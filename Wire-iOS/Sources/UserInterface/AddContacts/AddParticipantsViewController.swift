@@ -21,16 +21,16 @@ import Cartography
 import UIKit
 import WireDataModel
 
-extension ZMConversation {
+extension ConversationLike where Self: TeamProvider & AccessProvider {
     var canAddGuest: Bool {
         // If not a team conversation: possible to add any contact.
-        guard let _ = self.team else {
+        guard let _ = team else {
             return true
         }
         
         // Access mode and/or role is unknown: let's try to add and observe the result.
-        guard let accessMode = self.accessMode,
-              let accessRole = self.accessRole else {
+        guard let accessMode = accessMode,
+              let accessRole = accessRole else {
                 return true
         }
         
@@ -50,7 +50,7 @@ extension AddParticipantsViewController.Context {
     var includeGuests: Bool {
         switch self {
         case .add(let conversation):
-            return (conversation as? ZMConversation)?.canAddGuest ?? false
+            return conversation.canAddGuest
         case .create(let creationValues):
             return creationValues.allowGuests
         }
@@ -372,10 +372,10 @@ final class AddParticipantsViewController: UIViewController {
         }
     }
     
-    fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
+    fileprivate func addSelectedParticipants(to conversation: GroupDetailsConversationType) {
         let selectedUsers = self.userSelection.users
         
-        conversation.addOrShowError(participants: Array(selectedUsers))
+        (conversation as? ZMConversation)?.addOrShowError(participants: Array(selectedUsers))
     }
 }
 
@@ -400,7 +400,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     @objc func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
             self.dismiss(animated: true) {
-                self.addSelectedParticipants(to: conversation as! ZMConversation) // TODO:
+                self.addSelectedParticipants(to: conversation)
             }
             
         }

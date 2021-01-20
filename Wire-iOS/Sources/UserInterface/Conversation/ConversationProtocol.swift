@@ -35,6 +35,11 @@ protocol TeamProvider {
     var team: Team? { get }
 }
 
+protocol AccessProvider {
+    var accessMode: ConversationAccessMode? { get }
+    var accessRole: ConversationAccessRole? { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -81,11 +86,12 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & ConversationLike
 
 //TODO: Merge there with ConversationLike
 extension ZMConversation: DisplayNameProvider {}
 extension ZMConversation: AllowGuestsProvider {}
 extension ZMConversation: TeamProvider {}
+extension ZMConversation: AccessProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}
