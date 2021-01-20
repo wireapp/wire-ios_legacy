@@ -123,9 +123,7 @@ extension RenameGroupSectionController: SimpleTextFieldDelegate {
         renameCell?.accessoryIconView.isHidden = true
     }
     
-    func textFieldDidEndEditing(_ textField: SimpleTextField) {
-//        guard let conversation = conversation as? ZMConversation else { return }
-        
+    func textFieldDidEndEditing(_ textField: SimpleTextField) {        
         if let newName = validName {
             ZMUserSession.shared()?.enqueue {
                 self.conversation.userDefinedName = newName
