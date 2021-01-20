@@ -17,24 +17,22 @@
 //
 
 import Foundation
+import XCTest
 @testable import Wire
 
-class VideoStreamStubProvider {
-    func videoStream(
-        participantName: String = "Bob",
-        client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
-        muted: Bool = false,
-        videoState: VideoState = .started,
-        active: Bool = false,
-        paused: Bool = false) -> VideoStream
-    {        
-        let stream = Wire.Stream(
-            streamId: client,
-            participantName: participantName,
-            microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState,
-            isParticipantActiveSpeaker: active
-        )
-        return VideoStream(stream: stream, isPaused: paused)
+final class ___FILEBASENAMEASIDENTIFIER___: XCTestCase {
+
+    private var sut: ___VARIABLE_productName:identifier___Module.Router!
+
+    override func setUp() {
+        super.setUp()
+        sut = ___VARIABLE_productName:identifier___Module.Router()
     }
+
+    override func tearDown() {
+        sut = nil
+    }
+
+    // MARK: - Tests
+
 }

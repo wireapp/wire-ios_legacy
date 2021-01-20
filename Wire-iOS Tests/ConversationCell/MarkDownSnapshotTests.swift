@@ -16,9 +16,29 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-final class MarkDownSnapshotTests: ConversationCellSnapshotTestCase {
+final class MarkDownSnapshotTests: XCTestCase {
+    var mockOtherUser: MockUserType!
+    var mockSelfUser: MockUserType!
+
+    override func setUp() {
+        super.setUp()
+
+        mockOtherUser = MockUserType.createUser(name: "Bruno")
+        UIColor.setAccentOverride(.vividRed)
+
+        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.accentColorValue = .vividRed
+    }
+
+    override func tearDown() {
+        mockOtherUser = nil
+        mockSelfUser = nil
+
+        super.tearDown()
+    }
 
     func testMentionInFirstParagraph() {
         let messageText =
@@ -27,14 +47,18 @@ final class MarkDownSnapshotTests: ConversationCellSnapshotTestCase {
         So she called all seven to her and said: 'Dear children, I have to go into the forest, be on your guard against the wolf; if he comes in, he will devour you all, skin, hair, and everything.
 The wretch often disguises himself, but you will know him at once by his rough voice and his black feet.' The kids said: 'Dear mother, we will take good care of ourselves; you may go away without any anxiety.' Then the old one bleated, and went on her way with an easy mind.
 """
-        let mention = Mention(range: NSRange(location: 0, length: 12), user: otherUser)
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [mention], fetchLinkPreview: false)
+        let mention = Mention(range: NSRange(location: 0, length: 12), user: mockOtherUser)
+        let message = MockMessageFactory.messageTemplate(sender: mockSelfUser)
+        let textMessageData = MockTextMessageData()
+        textMessageData.messageText = messageText
+        message.backingTextMessageData = textMessageData
 
+        textMessageData.mentions = [mention]
 
         verify(message: message)
     }
 
-    ///compare with above tests, the line spacing should be the same for both case.
+    /// compare with above tests, the line spacing should be the same for both case.
     func testNoMentrionParagraph() {
         let messageText =
         """
@@ -42,8 +66,8 @@ The wretch often disguises himself, but you will know him at once by his rough v
         So she called all seven to her and said: 'Dear children, I have to go into the forest, be on your guard against the wolf; if he comes in, he will devour you all, skin, hair, and everything.
 The wretch often disguises himself, but you will know him at once by his rough voice and his black feet.' The kids said: 'Dear mother, we will take good care of ourselves; you may go away without any anxiety.' Then the old one bleated, and went on her way with an easy mind.
 """
-        let message = try! otherUserConversation.appendText(content: messageText, mentions: [], fetchLinkPreview: false)
 
+        let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)!
 
         verify(message: message)
     }

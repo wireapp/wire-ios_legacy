@@ -17,24 +17,18 @@
 //
 
 import Foundation
-@testable import Wire
 
-class VideoStreamStubProvider {
-    func videoStream(
-        participantName: String = "Bob",
-        client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
-        muted: Bool = false,
-        videoState: VideoState = .started,
-        active: Bool = false,
-        paused: Bool = false) -> VideoStream
-    {        
-        let stream = Wire.Stream(
-            streamId: client,
-            participantName: participantName,
-            microphoneState: muted ? .muted : .unmuted,
-            videoState: videoState,
-            isParticipantActiveSpeaker: active
-        )
-        return VideoStream(stream: stream, isPaused: paused)
+extension ___VARIABLE_productName:identifier___Module {
+
+    final class Interactor: InteractorInterface {
+
+        weak var presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface!
+
     }
+
 }
+
+
+// MARK: - API for presenter
+
+extension ___VARIABLE_productName:identifier___Module.Interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface { }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,13 +17,24 @@
 //
 
 import Foundation
+@testable import Wire
 
-final class ___FILEBASENAMEASIDENTIFIER___: InteractorInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    weak var presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface!
+    final class MockView: ___VARIABLE_productName:identifier___ViewPresenterInterface {
+
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Methods
+
+    }
 
 }
 
-// MARK: - API for presenter
+extension ___VARIABLE_productName:identifier___Module.MockView {
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___InteractorPresenterInterface {}
+    struct MethodCalls { }
+
+}

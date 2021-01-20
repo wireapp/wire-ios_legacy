@@ -113,9 +113,9 @@ final class AppLockPresenter {
 
             if appLockInteractorInput.needsToCreateCustomPasscode {
                 userInterface?.presentCreatePasscodeScreen(callback: { _ in
-                    // User needs to enter the newly created passcode after creation.
-                    self.setContents(dimmed: true, withReauth: true)
                     self.appLockInteractorInput.needsToNotifyUser = false
+                    self.setContents(dimmed: false)
+                    self.appUnlocked()
                 })
             } else {
                 presentWarningIfNeeded {
