@@ -95,7 +95,7 @@ extension ZMConversationMessage {
         }
         
         // Read receipts are only available in team groups
-        guard conversation?.teamRemoteIdentifier != nil else {
+        guard conversationLike?.teamRemoteIdentifier != nil else {
             return false
         }
         

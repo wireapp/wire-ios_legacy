@@ -113,6 +113,11 @@ final class MessageDetailsActionTests: XCTestCase {
         let mockConversation = MockConversation()
         mockConversation.conversationType = .group
         mockConversation.localParticipantsContainUser = true
+        
+        if teamGroup {
+            mockConversation.teamRemoteIdentifier = UUID()
+        }
+        
         message.conversationLike = mockConversation
             block(message)
 //        }
