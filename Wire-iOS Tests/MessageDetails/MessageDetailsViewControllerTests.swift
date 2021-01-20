@@ -271,7 +271,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     // MARK: - Deallocation
     
-    func testThatItDeallocates() {
+    func testThatItDeallocates() {///TODO: assign conversation like
         self.verifyDeallocation { () -> MessageDetailsViewController in
             // GIVEN
             let conversation = self.createGroupConversation()

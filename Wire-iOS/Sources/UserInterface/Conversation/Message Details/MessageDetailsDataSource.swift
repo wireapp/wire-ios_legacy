@@ -101,7 +101,7 @@ class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserver {
             self.displayMode = .reactions
             self.title = "message_details.likes_title".localized
         default:
-            fatal("Trying to display a message that does not support reactions or receipts.")
+            fatal("Trying to display a message that does not support reactions or receipts.")///TODO:
         }
 
         super.init()
