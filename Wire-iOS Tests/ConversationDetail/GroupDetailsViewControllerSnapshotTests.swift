@@ -48,6 +48,9 @@ final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType
     
     var accessMode: ConversationAccessMode?
     var accessRole: ConversationAccessRole?
+
+    var connectedUserType: UserType?
+    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout?
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
