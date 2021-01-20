@@ -21,7 +21,7 @@ import LocalAuthentication
 
 enum AuthenticationType: CaseIterable {
 
-    case touchID, faceID, passcode, unavailable
+    case faceID, touchID, passcode, unavailable
 
     static var current: AuthenticationType {
         return AuthenticationTypeDetector().current
