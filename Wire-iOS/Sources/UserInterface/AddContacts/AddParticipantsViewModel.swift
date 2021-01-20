@@ -31,7 +31,7 @@ struct AddParticipantsViewModel {
     var botCanBeAdded: Bool {
         switch context {
         case .create: return false
-        case .add(let conversation): return conversation.botCanBeAdded ?? false
+        case .add(let conversation): return conversation.botCanBeAdded
         }
     }
     

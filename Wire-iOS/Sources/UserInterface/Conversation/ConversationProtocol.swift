@@ -81,7 +81,7 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & ConversationLike
 
 //TODO: Merge there with ConversationLike
 extension ZMConversation: DisplayNameProvider {}

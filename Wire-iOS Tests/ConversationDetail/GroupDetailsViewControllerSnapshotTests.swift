@@ -40,6 +40,7 @@ final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType
     var mutedMessageTypes: MutedMessageTypes = .none
 
     var teamRemoteIdentifier: UUID?
+    var team: Team?
 
     func localParticipantsContain(user: UserType) -> Bool {
         return false
