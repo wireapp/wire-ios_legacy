@@ -21,6 +21,16 @@ import XCTest
 
 final class MessageDetailsActionTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
+    }
+    
+    override func tearDown() {
+        SelfUser.provider = nil
+        super.tearDown()
+    }
+
     // MARK: - One To One
 
     func testThatDetailsAreNotAvailableForOneToOne_Consumer() {
@@ -100,6 +110,10 @@ final class MessageDetailsActionTests: XCTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
 //            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
+        let mockConversation = MockConversation()
+        mockConversation.conversationType = .group
+        mockConversation.localParticipantsContainUser = true
+        message.conversationLike = mockConversation
             block(message)
 //        }
     }
@@ -120,7 +134,8 @@ private final class MockConversation: NSObject, ConversationLike {
     
     var teamRemoteIdentifier: UUID?
     
+    var localParticipantsContainUser = false
     func localParticipantsContain(user: UserType) -> Bool {
-        return false
+        return localParticipantsContainUser
     }
 }
