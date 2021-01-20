@@ -231,10 +231,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         avatar.user = user
         updateTitleLabel(selfUser: selfUser)
 
-        if let conversation = conversation as? ZMConversation {
-            let style = UserTypeIconStyle(conversation: conversation, user: user, selfUser: selfUser)
-            userTypeIconView.set(style: style)
-        }
+        let style = UserTypeIconStyle(conversation: conversation, user: user, selfUser: selfUser)
+        userTypeIconView.set(style: style)
 
         verifiedIconView.isHidden = !user.isVerified
 
