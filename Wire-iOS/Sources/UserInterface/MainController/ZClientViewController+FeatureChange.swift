@@ -36,10 +36,11 @@ extension ZClientViewController {
     }
     
     func notifyUserOfDisabledAppLockIfNeeded() {
-        guard let appLock = appLock,
-            let warningVC = changeWarningViewController,
+        guard 
+            let appLock = appLock,
             appLock.needsToNotifyUser,
-            !appLock.isActive else {
+            !appLock.isActive
+            let warningVC = changeWarningViewController, else {
                 return
         }
         
