@@ -45,6 +45,9 @@ final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType
     func localParticipantsContain(user: UserType) -> Bool {
         return false
     }
+    
+    var accessMode: ConversationAccessMode?
+    var accessRole: ConversationAccessRole?
 }
 
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {

@@ -59,7 +59,7 @@ extension AddParticipantsViewController.Context {
     var selectionLimit: Int {
         switch self {
         case .add(let conversation):
-            return (conversation as? ZMConversation)?.freeParticipantSlots ?? 0
+            return conversation.freeParticipantSlots
         case .create:
             return ZMConversation.maxParticipantsExcludingSelf
         }
@@ -70,7 +70,7 @@ extension AddParticipantsViewController.Context {
         let message: String
         switch self {
         case .add(let conversation):
-            let freeSpace = (conversation as? ZMConversation)?.freeParticipantSlots ?? 0
+            let freeSpace = conversation.freeParticipantSlots
             message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
         case .create(_):
             message = "add_participants.alert.message.new_conversation".localized(args: max)
