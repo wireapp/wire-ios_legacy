@@ -37,7 +37,7 @@ extension AppLockModule {
             return true
         }
 
-        private let lockView = OldAppLockView()
+        let lockView = OldAppLockView()
 
         // MARK: - Life cycle
 
@@ -45,7 +45,7 @@ extension AppLockModule {
             super.viewDidLoad()
             setUpViews()
             refresh()
-            presenter.start()
+            presenter.requestAuthentication()
         }
 
         // MARK: - Methods
@@ -54,6 +54,8 @@ extension AppLockModule {
             view.addSubview(lockView)
             lockView.translatesAutoresizingMaskIntoConstraints = false
             lockView.fitInSuperview()
+
+            lockView.onReauthRequested = presenter.requestAuthentication
         }
 
         private func refresh() {

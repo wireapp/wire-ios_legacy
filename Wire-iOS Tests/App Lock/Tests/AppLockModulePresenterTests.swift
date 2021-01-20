@@ -47,14 +47,14 @@ final class AppLockModulePresenterTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Start
+    // MARK: - Request authentication
 
-    func test_ItRequestsToCustomPasscode_WhenItStarts() {
+    func test_ItRequestsToCreateCustomPasscode() {
         // Given
         interactor.needsToCreateCustomPasscode = true
 
         // When
-        sut.start()
+        sut.requestAuthentication()
 
         // Then
         XCTAssertEqual(router.methodCalls.presentCreatePasscodeModule.count, 1)
@@ -65,12 +65,12 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
     }
 
-    func test_ItRequestsToEvaluateAuthentication_WhenItStarts() {
+    func test_ItRequestsToEvaluateAuthentication() {
         // Given
         interactor.needsToCreateCustomPasscode = false
 
         // When
-        sut.start()
+        sut.requestAuthentication()
 
         // Then
         XCTAssertEqual(view.propertyCalls.state, [.authenticating])

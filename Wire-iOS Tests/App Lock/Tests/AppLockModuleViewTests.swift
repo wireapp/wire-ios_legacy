@@ -40,14 +40,26 @@ final class AppLockModuleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Life cycle events
+    // MARK: - Request authentication
 
-    func test_ItStartsThePresenter() {
+    func test_ItRequestsAuthentication_WhenViewLoads() {
         // When
         sut.loadViewIfNeeded()
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.start.count, 1)
+        XCTAssertEqual(presenter.methodCalls.requestAuthentication.count, 1)
+    }
+
+    func test_ItRequestsAuthentication_WhenLockViewRequestReauthentication() {
+        // Given
+        sut.loadViewIfNeeded()
+        presenter.methodCalls.requestAuthentication.removeAll()
+
+        // When
+        sut.lockView.onReauthRequested?()
+
+        // Then
+        XCTAssertEqual(presenter.methodCalls.requestAuthentication.count, 1)
     }
 
     // MARK: - View states

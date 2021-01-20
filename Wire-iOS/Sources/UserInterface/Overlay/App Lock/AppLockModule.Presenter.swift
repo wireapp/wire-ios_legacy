@@ -60,7 +60,7 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
-    func start() {
+    func requestAuthentication() {
         if interactor.needsToCreateCustomPasscode {
             router.presentCreatePasscodeModule { [weak self] in
                 self?.interactor.openAppLock()
