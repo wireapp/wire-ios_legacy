@@ -51,7 +51,6 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 5).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-//        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -77,7 +76,6 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 5).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-//        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -103,7 +101,6 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 20).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-//        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -128,14 +125,11 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 6).map(self.createUser)
         users.forEach { $0.setHandle($0.name) }
         
-//        conversation.add(participants:users)
         message.readReceipts =  users.map(MockReadReceipt.init)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
         // WHEN
         let detailsViewController = MessageDetailsViewController(message: message)
-        ///TODO:
-//        detailsViewController.container.selectIndex(1, animated: false)
         
         // THEN
         snapshot(detailsViewController)
@@ -288,7 +282,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     // MARK: - Deallocation
     
-    func testThatItDeallocates() {///TODO: assign conversation like
+    func testThatItDeallocates() {
         self.verifyDeallocation { () -> MessageDetailsViewController in
             // GIVEN
             
@@ -309,8 +303,8 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         }
     }
     
-    private func createMockGroupConversation(inTeam: Bool = false) -> MockConversation {
-        let mockConversation = MockConversation()
+    private func createMockGroupConversation(inTeam: Bool = false) -> MockConversationLike {
+        let mockConversation = MockConversationLike()
         mockConversation.conversationType = .group
         mockConversation.localParticipantsContainUser = true
         
@@ -332,17 +326,4 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         self.verify(view: detailsViewController.view, file: file, line: line)
     }
     
-}
-
-private final class MockConversation: NSObject, ConversationLike {
-    var conversationType: ZMConversationType = .oneOnOne
-    
-    var isSelfAnActiveMember: Bool = true
-    
-    var teamRemoteIdentifier: UUID?
-    
-    var localParticipantsContainUser = false
-    func localParticipantsContain(user: UserType) -> Bool {
-        return localParticipantsContainUser
-    }
 }

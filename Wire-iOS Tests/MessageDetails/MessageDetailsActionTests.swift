@@ -110,7 +110,7 @@ final class MessageDetailsActionTests: XCTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
 //            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
-        let mockConversation = MockConversation()
+        let mockConversation = MockConversationLike()
         mockConversation.conversationType = .group
         mockConversation.localParticipantsContainUser = true
         
@@ -126,21 +126,9 @@ final class MessageDetailsActionTests: XCTestCase {
     private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
-            message.conversationLike = MockConversation()
+            message.conversationLike = MockConversationLike()
             block(message)
     }
 
 }
 
-private final class MockConversation: NSObject, ConversationLike {
-    var conversationType: ZMConversationType = .oneOnOne
-    
-    var isSelfAnActiveMember: Bool = true
-    
-    var teamRemoteIdentifier: UUID?
-    
-    var localParticipantsContainUser = false
-    func localParticipantsContain(user: UserType) -> Bool {
-        return localParticipantsContainUser
-    }
-}

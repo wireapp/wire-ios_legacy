@@ -822,6 +822,7 @@
 		A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */; };
 		A98CD44E24C74C9F00EAC484 /* UIColor+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CD44D24C74C9F00EAC484 /* UIColor+Const.swift */; };
 		A98CF97425A47295008818D8 /* ConversationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CF97325A47295008818D8 /* ConversationProtocol.swift */; };
+		A98D9B0A25B88E4000AAE56D /* MockConversationLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D9B0925B88E4000AAE56D /* MockConversationLike.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
@@ -2480,6 +2481,7 @@
 		A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewController.swift; sourceTree = "<group>"; };
 		A98CD44D24C74C9F00EAC484 /* UIColor+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Const.swift"; sourceTree = "<group>"; };
 		A98CF97325A47295008818D8 /* ConversationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationProtocol.swift; sourceTree = "<group>"; };
+		A98D9B0925B88E4000AAE56D /* MockConversationLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationLike.swift; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedListMenuViewTests.swift; sourceTree = "<group>"; };
@@ -4801,6 +4803,7 @@
 				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 				5E294594219081A80045ACFA /* Date+Generator.swift */,
 				5EDF03ED22455BD200C04007 /* MockImageResource.swift */,
+				A98D9B0925B88E4000AAE56D /* MockConversationLike.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -8511,6 +8514,7 @@
 				EF4C5D4A23351CF00092CA38 /* ConversationListViewModelTests.swift in Sources */,
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
+				A98D9B0A25B88E4000AAE56D /* MockConversationLike.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
 				EEE60E2C2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
