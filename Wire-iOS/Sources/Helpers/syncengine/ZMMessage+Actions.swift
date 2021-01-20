@@ -65,7 +65,7 @@ extension ZMConversationMessage {
 
     /// Whether message details are available for this message.
     var areMessageDetailsAvailable: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 

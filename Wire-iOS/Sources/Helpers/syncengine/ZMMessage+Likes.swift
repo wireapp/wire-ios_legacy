@@ -19,11 +19,10 @@
 import Foundation
 import WireDataModel
 
-///TODO: ZMConversationMessage with conversationLike
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 

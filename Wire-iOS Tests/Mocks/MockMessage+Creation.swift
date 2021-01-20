@@ -35,11 +35,16 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
+    class func messageTemplate(sender: UserType? = nil,
+                               conversation: ConversationLike? = nil) -> MockMessage {
         let message = MockMessage()
 
-        let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
-        message.conversation = (conversation as Any) as? ZMConversation
+        if let conversation = conversation {
+            message.conversationLike = conversation
+        } else {
+            let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
+            message.conversationLike = (conversation as Any) as? ZMConversation
+        }
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
 
         if let sender = sender as? ZMUser {
@@ -52,7 +57,7 @@ final class MockMessageFactory {
             message.senderUser = user
         }
 
-        conversation?.activeParticipants = [message.senderUser as! MockUserType]
+        (conversation as? ZMConversation)?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }

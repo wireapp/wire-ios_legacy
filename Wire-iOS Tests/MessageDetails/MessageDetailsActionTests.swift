@@ -107,7 +107,20 @@ final class MessageDetailsActionTests: XCTestCase {
     private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
+            message.conversationLike = MockConversation()
             block(message)
     }
 
+}
+
+private final class MockConversation: NSObject, ConversationLike {
+    var conversationType: ZMConversationType = .oneOnOne
+    
+    var isSelfAnActiveMember: Bool = true
+    
+    var teamRemoteIdentifier: UUID?
+    
+    func localParticipantsContain(user: UserType) -> Bool {
+        return false
+    }
 }
