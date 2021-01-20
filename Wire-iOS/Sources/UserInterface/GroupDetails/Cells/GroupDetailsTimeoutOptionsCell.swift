@@ -29,7 +29,7 @@ final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
     }
 
     func configure(with conversation: GroupDetailsConversationType) {
-        switch (conversation as? ZMConversation)?.messageDestructionTimeout {
+        switch conversation.messageDestructionTimeout {
         case .synced(let value)?:
             status = value.displayString
         default:

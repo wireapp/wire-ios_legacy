@@ -226,7 +226,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             navigationController.modalPresentationStyle = .currentContext
             present(navigationController, animated: true)
         case .more:
-            actionController = ConversationActionController(conversation: conversation,
+            actionController = ConversationActionController(conversation: conversation as! ZMConversation,
                                                             target: self,
                                                             sourceView: view)
             actionController?.presentMenu(from: view, context: .details)

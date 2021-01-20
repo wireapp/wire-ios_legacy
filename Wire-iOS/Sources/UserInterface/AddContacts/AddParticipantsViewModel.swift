@@ -38,7 +38,7 @@ struct AddParticipantsViewModel {
     var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
-            return (conversation as? ZMConversation)?.connectedUser.map { [$0] } ?? []
+            return conversation.connectedUserType.map { [$0] } ?? []
         case .create(let values): return values.participants
         default: return []
         }

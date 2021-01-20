@@ -40,6 +40,10 @@ protocol AccessProvider {
     var accessRole: ConversationAccessRole? { get }
 }
 
+protocol MessageDestructionTimeoutProvider {
+    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout? { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -86,12 +90,13 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & MessageDestructionTimeoutProvider & ConnectedUserProvider & ConversationLike
 
 //TODO: Merge there with ConversationLike
 extension ZMConversation: DisplayNameProvider {}
 extension ZMConversation: AllowGuestsProvider {}
 extension ZMConversation: TeamProvider {}
 extension ZMConversation: AccessProvider {}
+extension ZMConversation: MessageDestructionTimeoutProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}
