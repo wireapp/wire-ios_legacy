@@ -258,6 +258,8 @@ final class UnlockViewController: UIViewController {
 
         onGranted()
 
+        session.appLockController.persistBiometrics()
+
         return true
     }
 
