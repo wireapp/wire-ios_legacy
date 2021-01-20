@@ -319,17 +319,17 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     
-    var conversation: ZMConversation? /*{
+    var conversation: ZMConversation? {
         get {
-            XCTFail("This property should not be used in tests")
+//            XCTFail("This property should not be used in tests")
             
             return nil
         }
         
         set {
-            XCTFail("This property should not be used in tests")
+//            XCTFail("This property should not be used in tests")
         }
-    }*/
+    }
     var conversationLike: ConversationLike?
     
     var deliveryState: ZMDeliveryState = .delivered

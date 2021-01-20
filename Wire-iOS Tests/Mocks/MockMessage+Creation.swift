@@ -35,13 +35,20 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
+    
+    ///TODO: wait for https://github.com/wireapp/wire-ios/pull/4833 merged and change the conversation's type 
+    class func messageTemplate(sender: UserType? = nil,
+                               conversation: ConversationLike? = nil) -> MockMessage {
         let message = MockMessage()
 
-        let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
-        message.conversation = (conversation as Any) as? ZMConversation
-        message.serverTimestamp = Date(timeIntervalSince1970: 0)
-
+        if let conversation = conversation {
+            message.conversationLike = conversation
+        } else {
+            let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
+            message.conversation = (conversation as Any) as? ZMConversation
+            message.serverTimestamp = Date(timeIntervalSince1970: 0)
+        }
+        
         if let sender = sender as? ZMUser {
             message.senderUser = sender
         } else if let sender = sender {
@@ -161,8 +168,11 @@ final class MockMessageFactory {
         return message
     }
 
-    class func textMessage(includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        return self.textMessage(withText: "Just a random text message", includingRichMedia: shouldIncludeRichMedia)
+    class func textMessage(includingRichMedia shouldIncludeRichMedia: Bool,
+                           conversation: ConversationLike? = nil) -> MockMessage? {
+        return textMessage(withText: "Just a random text message",
+                           conversation: conversation,
+                           includingRichMedia: shouldIncludeRichMedia)
     }
 
     class func textMessage(withText text: String?) -> MockMessage? {
@@ -171,8 +181,9 @@ final class MockMessageFactory {
 
     class func textMessage(withText text: String?,
                            sender: UserType? = nil,
+                           conversation: ConversationLike? = nil,
                            includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+        let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!

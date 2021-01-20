@@ -23,12 +23,16 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     var message: MockMessage!
     var sut: MessageToolboxView!
+    var mockConversation: MockConversationLike!
 
     override func setUp() {
         super.setUp()
-        message = MockMessageFactory.textMessage(withText: "Hello")
+
+        SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
+
+        mockConversation = MockConversationLike.createMockGroupConversation()
+        message = MockMessageFactory.textMessage(withText: "Hello", conversation: mockConversation, includingRichMedia: false)
         message.deliveryState = .sent
-        message.conversation = otherUserConversation
 
         sut = MessageToolboxView()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 28)
@@ -36,9 +40,11 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     override func tearDown() {
         sut = nil
+        SelfUser.provider = nil
+
         super.tearDown()
     }
-
+    
     func testThatItConfiguresWithFailedToSend() {
         // GIVEN
         message.deliveryState = .failedToSend
@@ -162,7 +168,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     func testThatItOpensReceipts_NoLikers() {
         // WHEN
-        message.conversation = createTeamGroupConversation()
+        message.conversationLike = mockConversation
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
         
         // THEN
