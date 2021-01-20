@@ -19,12 +19,20 @@ import Foundation
 import WireDataModel
 
 
-protocol DisplayNameContainer {
+protocol DisplayNameProvider {
     var displayName: String { get }
 }
 
-protocol ConnectedUserContainer {
+protocol ConnectedUserProvider {
     var connectedUserType: UserType? { get }
+}
+
+protocol AllowGuestsProvider {
+    var allowGuests: Bool { get }
+}
+
+protocol TeamProvider {
+    var team: Team? { get }
 }
 
 // MARK: - Input Bar View controller
@@ -42,9 +50,9 @@ protocol InputBarConversation {
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer & DisplayNameContainer & ConversationLike
+typealias InputBarConversationType = InputBarConversation & ConnectedUserProvider & DisplayNameProvider & ConversationLike
 
-extension ZMConversation: ConnectedUserContainer {
+extension ZMConversation: ConnectedUserProvider {
     var connectedUserType: UserType? {
         return connectedUser
     }
@@ -73,7 +81,11 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameContainer & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & ConversationLike
 
-extension ZMConversation: DisplayNameContainer {}
+//TODO: Merge there with ConversationLike
+extension ZMConversation: DisplayNameProvider {}
+extension ZMConversation: AllowGuestsProvider {}
+extension ZMConversation: TeamProvider {}
+
 extension ZMConversation: GroupDetailsConversation {}
