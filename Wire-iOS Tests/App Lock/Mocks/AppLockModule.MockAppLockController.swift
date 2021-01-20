@@ -62,12 +62,21 @@ extension AppLockModule {
             methodCalls.open.append(())
         }
 
+        // TODO: Delete
+
         func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
                                     description: String,
                                     context: LAContextProtocol,
                                     with callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
+            fatalError()
+        }
 
-            methodCalls.evaluateAuthentication.append((scenario, description, callback))
+        func evaluateAuthentication(passcodePreference: AppLockPasscodePreference,
+                                    description: String,
+                                    context: LAContextProtocol,
+                                    callback: @escaping (AuthenticationResult, LAContextProtocol) -> Void) {
+
+            methodCalls.evaluateAuthentication.append((passcodePreference, description, callback))
             callback(_authenticationResult, _evaluationContext)
         }
 
@@ -98,11 +107,11 @@ extension AppLockModule.MockAppLockController {
 
     struct MethodCalls {
 
-        typealias Scenario = AppLockModule.AuthenticationScenario
+        typealias Preference = AppLockPasscodePreference
         typealias Callback = (AppLockModule.AuthenticationResult, LAContext) -> Void
 
         var open: [Void] = []
-        var evaluateAuthentication: [(scenario: Scenario, description: String, callback: Callback)] = []
+        var evaluateAuthentication: [(preference: Preference, description: String, callback: Callback)] = []
         var persistBiometrics: [Void] = []
         var deletePasscode: [Void] = []
         var storePasscode: [String] = []

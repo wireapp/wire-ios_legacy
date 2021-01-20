@@ -24,7 +24,7 @@ import WireSyncEngine
 enum AppLockModule: ModuleInterface {
 
     typealias Session = UserSessionAppLockInterface & UserSessionEncryptionAtRestInterface
-    typealias AuthenticationScenario = AppLockController.AuthenticationScenario
+    typealias PasscodePreference = AppLockPasscodePreference
     typealias AuthenticationResult = AppLockController.AuthenticationResult
 
     static func build(session: Session) -> View {
@@ -67,6 +67,8 @@ protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
     var needsToCreateCustomPasscode: Bool { get }
+
+    var currentAuthenticationType: AuthenticationType { get }
     
     func evaluateAuthentication()
 

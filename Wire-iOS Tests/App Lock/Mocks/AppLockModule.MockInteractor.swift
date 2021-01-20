@@ -31,6 +31,8 @@ extension AppLockModule {
 
         var needsToCreateCustomPasscode = false
 
+        var currentAuthenticationType: AuthenticationType = .passcode
+
         // MARK: - Methods
 
         func evaluateAuthentication() {

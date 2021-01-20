@@ -99,6 +99,10 @@ final class MockAppLock: AppLockType {
         callback(MockAppLock.authenticationResult, LAContext())
     }
 
+    func evaluateAuthentication(passcodePreference: AppLockPasscodePreference, description: String, context: LAContextProtocol, callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
+        fatalError("Not implemented")
+    }
+
     func persistBiometrics() {
         MockAppLock.didPersistBiometrics = true
     }

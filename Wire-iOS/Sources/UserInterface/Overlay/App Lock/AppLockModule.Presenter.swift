@@ -19,7 +19,6 @@
 import Foundation
 
 // TODO: We may need to display a warning. Where should it go?
-// TODO: Use the authentication type to determine what copy to display in the view.
 
 extension AppLockModule {
 
@@ -44,14 +43,14 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             interactor.openAppLock()
 
         case .denied:
-            view.state = .locked
+            view.state = .locked(authenticationType: interactor.currentAuthenticationType)
 
         case .needCustomPasscode:
+            view.state = .locked(authenticationType: .passcode)
             router.presentInputPasscodeModule(onGranted: interactor.openAppLock)
 
         case .unavailable:
-            // TODO: Remove this case, it should never happen.
-            fatalError("Not implemented")
+            view.state = .locked(authenticationType: .unavailable)
         }
     }
 

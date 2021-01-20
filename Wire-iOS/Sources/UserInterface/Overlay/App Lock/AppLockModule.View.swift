@@ -27,7 +27,7 @@ extension AppLockModule {
 
         var presenter: AppLockPresenterViewInterface!
 
-        var state: ViewState = .locked {
+        var state: ViewState = .locked(authenticationType: .passcode) {
             didSet {
                 refresh()
             }
@@ -58,12 +58,30 @@ extension AppLockModule {
 
         private func refresh() {
             switch state {
-            case .locked:
+            case let .locked(authenticationType):
                 lockView.showReauth = true
+                lockView.authenticateLabel.text = authenticationText(for: authenticationType)
 
             case .authenticating:
                 lockView.showReauth = false
             }
+        }
+
+        private func authenticationText(for type: AuthenticationType) -> String {
+            var key = "self.settings.privacy_security.lock_cancelled.description_"
+
+            switch type {
+            case .faceID:
+                key.append("face_id")
+            case .touchID:
+                key.append("touch_id")
+            case .passcode:
+                key.append("passcode")
+            case .unavailable:
+                key.append("passcode_unavailable")
+            }
+
+            return key.localized
         }
 
     }
@@ -78,7 +96,7 @@ extension AppLockModule {
 
         /// The screen is currently locked.
 
-        case locked
+        case locked(authenticationType: AuthenticationType)
 
         /// The user is authenticating.
 

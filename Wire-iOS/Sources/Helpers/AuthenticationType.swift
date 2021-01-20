@@ -19,7 +19,7 @@
 import LocalAuthentication
 
 
-enum AuthenticationType {
+enum AuthenticationType: CaseIterable {
 
     case touchID, faceID, passcode, unavailable
 

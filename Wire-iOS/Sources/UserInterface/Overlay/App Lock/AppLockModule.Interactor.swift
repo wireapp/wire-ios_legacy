@@ -50,14 +50,16 @@ extension AppLockModule {
             session.appLockController
         }
 
-        private var scenario: AuthenticationScenario? {
+        private var passcodePreference: PasscodePreference? {
             guard let lock = session.lock else { return nil }
 
             switch lock {
+            case .screen where appLock.requiresBiometrics:
+                return .customOnly
             case .screen:
-                return .screenLock(requireBiometrics: appLock.requiresBiometrics)
+                return .deviceThenCustom
             case .database:
-                return .databaseLock
+                return .deviceOnly
             }
         }
 
@@ -76,15 +78,19 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         return appLock.requiresBiometrics || authenticationType.current == .unavailable
     }
 
+    var currentAuthenticationType: AuthenticationType {
+        return authenticationType.current
+    }
+
     func evaluateAuthentication() {
-        guard let scenario = scenario else {
+        guard let preference = passcodePreference else {
             handleAuthenticationResult(.granted, context: nil)
             return
         }
 
-        appLock.evaluateAuthentication(scenario: scenario,
+        appLock.evaluateAuthentication(passcodePreference: preference,
                                        description: deviceAuthenticationDescription,
-                                       with: handleAuthenticationResult)
+                                       callback: handleAuthenticationResult)
     }
 
     private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol?) {
@@ -96,7 +102,7 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
     }
 
     func openAppLock() {
-        appLock.open()
+        try? appLock.open()
     }
 
 }

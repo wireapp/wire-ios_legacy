@@ -88,11 +88,14 @@ final class AppLockModulePresenterTests: XCTestCase {
     }
 
     func test_ItSetsTheViewStateToLocked_WhenAuthenticationDenied() {
+        // Given
+        interactor.currentAuthenticationType = .faceID
+        
         // When
         sut.authenticationEvaluated(with: .denied)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.locked])
+        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .faceID)])
     }
 
     func test_itRequestsToInputPasscode_WhenPasscodeIsNeeded() {

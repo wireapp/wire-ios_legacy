@@ -30,7 +30,7 @@ extension AppLockModule {
 
         // MARK: - Properties
 
-        var state: AppLockModule.ViewState = .locked {
+        var state: AppLockModule.ViewState = .locked(authenticationType: .passcode) {
             didSet {
                 propertyCalls.state.append(state)
             }

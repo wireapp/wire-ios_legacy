@@ -113,8 +113,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
 
-        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
-        XCTAssertEqual(scenario, .screenLock(requireBiometrics: false))
+        let preference = appLock.methodCalls.evaluateAuthentication[0].preference
+        XCTAssertEqual(preference, .deviceThenCustom)
     }
 
     func test_EvalutesWithBiometricsScreenLockScenario_IfSessionHasScreenLock_AndBiometricsRequired() {
@@ -128,8 +128,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
 
-        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
-        XCTAssertEqual(scenario, .screenLock(requireBiometrics: true))
+        let preference = appLock.methodCalls.evaluateAuthentication[0].preference
+        XCTAssertEqual(preference, .customOnly)
     }
 
     func test_EvalutesWithDatabaseScenario_IfSessionHasDatabaseLock() {
@@ -142,8 +142,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
 
-        let scenario = appLock.methodCalls.evaluateAuthentication[0].scenario
-        XCTAssertEqual(scenario, .databaseLock)
+        let preference = appLock.methodCalls.evaluateAuthentication[0].preference
+        XCTAssertEqual(preference, .deviceOnly)
     }
     
     func test_DatabaseIsUnlocked_IfAuthenticationIsSuccessful() {
