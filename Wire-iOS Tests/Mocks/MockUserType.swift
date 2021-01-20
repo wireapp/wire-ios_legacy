@@ -42,6 +42,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - MockHelpers
     var isTrusted: Bool = true
+    var hasTeam: Bool = true
 
     let legalHoldDataSource = MockLegalHoldDataSource()
 
@@ -176,7 +177,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    func canAddUser(to conversation: ZMConversation) -> Bool {
+    func canAddUser(to conversation: ConversationLike) -> Bool {
         return canAddUserToConversation
     }
 
@@ -206,27 +207,27 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyOtherMemberInConversation
     }
 
-    func canModifyTitle(in conversation: ZMConversation) -> Bool {
+    func canModifyTitle(in conversation: ConversationLike) -> Bool {
         return canModifyTitleInConversation
     }
 
-    func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyReadReceiptSettings(in conversation: ConversationLike) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
 
-    func canModifyEphemeralSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyEphemeralSettings(in conversation: ConversationLike) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    func canModifyNotificationSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyNotificationSettings(in conversation: ConversationLike) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyAccessControlSettings(in conversation: ConversationLike) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    func isGroupAdmin(in conversation: ZMConversation) -> Bool {
+    func isGroupAdmin(in conversation: ConversationLike) -> Bool {
         return isGroupAdminInConversation
     }
 
@@ -236,7 +237,7 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-    func isGuest(in conversation: ZMConversation) -> Bool {
+    func isGuest(in conversation: ConversationLike) -> Bool {
         return isGuestInConversation
     }
 

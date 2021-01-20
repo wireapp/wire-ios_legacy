@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
+final class MessageDetailsActionTests: XCTestCase {
 
     // MARK: - One To One
 
@@ -94,25 +94,20 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     // MARK: - Helpers
 
     private func withGroupMessage(belongsToTeam: Bool, teamGroup: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = belongsToTeam ? teamTest : nonTeamTest
+//        let context = belongsToTeam ? teamTest : nonTeamTest
 
-        context {
+//        context {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
-            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
+//            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
             block(message)
-        }
+//        }
     }
 
     private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = belongsToTeam ? teamTest : nonTeamTest
-
-        context {
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
-            message.conversation = otherUserConversation
             block(message)
-        }
     }
 
 }

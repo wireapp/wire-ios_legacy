@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 
+///TODO: ZMConversationMessage with conversationLike
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
@@ -26,7 +27,7 @@ extension ZMConversationMessage {
             return false
         }
 
-        let participatesInConversation = conversation.localParticipants.contains(ZMUser.selfUser())
+        let participatesInConversation = conversation.localParticipantsContain(user: SelfUser.current)
         let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
