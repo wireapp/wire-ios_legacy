@@ -40,7 +40,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     // MARK: - Seen
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -64,7 +64,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsReceipts_ShortList_Edited_11() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -89,7 +89,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsReceipts_LongList_12() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -114,7 +114,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsLikes_13() {
         // GIVEN
-        let conversation = createMockGroupConversation()
+        let conversation = MockConversationLike.createMockGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -139,7 +139,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsNoLikesEmptyState_14() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -157,7 +157,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsNoReceiptsEmptyState_DisabledInConversation_15() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
 
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -176,7 +176,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsNoReceiptsEmptyState_EnabledInConversation_16() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
 
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -195,7 +195,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked() {
         // GIVEN
-        let conversation = createMockGroupConversation()
+        let conversation = MockConversationLike.createMockGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -216,7 +216,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsReceiptsOnly_Ephemeral() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = mockSelfUser
@@ -234,7 +234,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsLikesOnly_FromSelf_Consumer_17() {
         // GIVEN
-        let conversation = createMockGroupConversation()
+        let conversation = MockConversationLike.createMockGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = MockUserType.createUser(name: "Bruno")
@@ -250,7 +250,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsLikesOnly_FromOther_Team_17() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.textMessage(withText: "Message")!
         message.senderUser = MockUserType.createUser(name: "Bruno")
@@ -266,7 +266,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsReceiptsOnly_Pings() {
         // GIVEN
-        let conversation = createMockGroupConversation(inTeam: true)
+        let conversation = MockConversationLike.createMockGroupConversation(inTeam: true)
         
         let message = MockMessageFactory.pingMessage()!
         message.senderUser = mockSelfUser
@@ -288,7 +288,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             
             let message = MockMessageFactory.textMessage(withText: "Message")!
             message.senderUser = mockSelfUser
-            message.conversationLike = createMockGroupConversation()
+            message.conversationLike = MockConversationLike.createMockGroupConversation()
 
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
@@ -301,18 +301,6 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.container.selectIndex(0, animated: false)
             return detailsViewController
         }
-    }
-    
-    private func createMockGroupConversation(inTeam: Bool = false) -> MockConversationLike {
-        let mockConversation = MockConversationLike()
-        mockConversation.conversationType = .group
-        mockConversation.localParticipantsContainUser = true
-        
-        if inTeam {
-            mockConversation.teamRemoteIdentifier = UUID()
-        }
-
-        return mockConversation
     }
     
     // MARK: - Helpers

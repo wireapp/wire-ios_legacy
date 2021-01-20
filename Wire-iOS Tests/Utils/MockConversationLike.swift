@@ -30,4 +30,16 @@ final class MockConversationLike: NSObject, ConversationLike {
     func localParticipantsContain(user: UserType) -> Bool {
         return localParticipantsContainUser
     }
+    
+    static func createMockGroupConversation(inTeam: Bool = false) -> MockConversationLike {
+        let mockConversation = MockConversationLike()
+        mockConversation.conversationType = .group
+        mockConversation.localParticipantsContainUser = true
+        
+        if inTeam {
+            mockConversation.teamRemoteIdentifier = UUID()
+        }
+        
+        return mockConversation
+    }
 }

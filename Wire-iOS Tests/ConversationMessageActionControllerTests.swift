@@ -68,7 +68,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Super likeable")!
         message.senderUser = MockUserType.createUser(name: "Bob")
-        message.conversation = otherUserConversation
+        message.conversationLike = MockConversationLike.createMockGroupConversation()
 
         // WHEN
         let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
