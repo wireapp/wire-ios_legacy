@@ -202,7 +202,7 @@ platform :ios do
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
         end
         
-        sh "cd .. && aws s3 cp -v --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
     end
 
 
