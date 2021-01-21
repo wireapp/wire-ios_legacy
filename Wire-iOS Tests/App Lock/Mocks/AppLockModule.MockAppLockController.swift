@@ -80,6 +80,11 @@ extension AppLockModule {
             callback(_authenticationResult, _evaluationContext)
         }
 
+        func evaluateAuthentication(customPasscode: String) -> AuthenticationResult {
+            methodCalls.evaluateAuthenticationWithCustomPasscode.append(customPasscode)
+            return _passcode == customPasscode ? .granted : .denied
+        }
+
         func persistBiometrics() {
             methodCalls.persistBiometrics.append(())
         }
@@ -112,6 +117,7 @@ extension AppLockModule.MockAppLockController {
 
         var open: [Void] = []
         var evaluateAuthentication: [(preference: Preference, description: String, callback: Callback)] = []
+        var evaluateAuthenticationWithCustomPasscode: [String] = []
         var persistBiometrics: [Void] = []
         var deletePasscode: [Void] = []
         var storePasscode: [String] = []

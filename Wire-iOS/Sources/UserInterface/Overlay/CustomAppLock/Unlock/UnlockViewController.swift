@@ -246,19 +246,12 @@ final class UnlockViewController: UIViewController {
         // TODO: This should ideally be a method on app lock controller.
         guard
             let session = userSession,
-            let existingPasscode = session.appLockController.fetchPasscode()
+            session.appLockController.evaluateAuthentication(customPasscode: passcode) == .granted
         else {
             return false
         }
 
-        guard passcode.data(using: .utf8) == existingPasscode else {
-            showWrongPasscodeMessage()
-            return false
-        }
-
         onGranted()
-
-        session.appLockController.persistBiometrics()
 
         return true
     }

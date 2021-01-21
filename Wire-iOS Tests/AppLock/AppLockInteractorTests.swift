@@ -103,6 +103,10 @@ final class MockAppLock: AppLockType {
         fatalError("Not implemented")
     }
 
+    func evaluateAuthentication(customPasscode: String) -> AuthenticationResult {
+        fatalError("Not implemented")
+    }
+
     func persistBiometrics() {
         MockAppLock.didPersistBiometrics = true
     }
