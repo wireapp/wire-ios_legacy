@@ -50,12 +50,10 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
         }
         
         switch error {
-        case .tooShort:
-            interactorOutput?.passcodeValidated(result: .invalid(violations: [.tooShort]))
         case .invalidPassword(let passwordValidationResult):
             interactorOutput?.passcodeValidated(result: passwordValidationResult)
         default:
-            interactorOutput?.passcodeValidated(result: .invalid(violations: []))
+            break
         }
     }
 

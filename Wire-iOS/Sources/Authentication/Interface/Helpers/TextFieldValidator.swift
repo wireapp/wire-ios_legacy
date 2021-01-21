@@ -131,14 +131,11 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return description
         case .invalidPassword(let validationResult):
             switch validationResult {
-            case .invalid(let violations):
-                return violations.contains(.tooLong)
-                    ? "password.guidance.toolong".localized
-                    : PasscodeRuleSet.localizedErrorMessage
-            case .valid:
-                return ""
+            case .invalid(let violations) where violations.contains(.tooLong):
+                return "password.guidance.toolong".localized
+            default:
+                return PasscodeRuleSet.localizedErrorMessage
             }
-
         }
     }
 
