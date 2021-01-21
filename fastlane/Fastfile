@@ -100,6 +100,11 @@ platform :ios do
     desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
+        ipa_file_prefix = options[:ipa_file_prefix]
+
+        if ipa_file_prefix.nil? 
+            ipa_file_prefix = ""
+        end
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -116,7 +121,7 @@ platform :ios do
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
                 sh "cp -r DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
-                sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
+                sh "cd debug && zip -r ../#{ipa_file_prefix}_#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
             build_app(
