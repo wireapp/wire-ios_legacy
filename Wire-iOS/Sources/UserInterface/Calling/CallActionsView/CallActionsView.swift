@@ -74,7 +74,7 @@ extension CallActionsViewInputType {
 
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
-final class CallActionsView: UIView {
+final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     
     weak var delegate: CallActionsViewDelegate?
     
@@ -90,6 +90,11 @@ final class CallActionsView: UIView {
     
     private var lastInput: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
+    
+    private let speakersAllSegmentedView = RoundedSegmentedView(items: [
+        "call.overlay.switch_to.speakers".localized,
+        "call.overlay.switch_to.all".localized
+    ])
     
     // Buttons
     private let muteCallButton = IconLabelButton.muteCall()
@@ -121,15 +126,18 @@ final class CallActionsView: UIView {
     }
     
     private func setupViews() {
-        videoButtonDisabled.translatesAutoresizingMaskIntoConstraints = false
+        speakersAllSegmentedView.setSelected(true, forItemAt: 1)
+        speakersAllSegmentedView.delegate = self
+        speakersAllSegmentedView.isHidden = true
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
         bottomStackView.distribution = .equalSpacing
         bottomStackView.alignment = .top
+        verticalStackView.alignment = .center
         addSubview(verticalStackView)
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
-        [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
+        [speakersAllSegmentedView, topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(videoButtonDisabled)
     }
@@ -143,12 +151,16 @@ final class CallActionsView: UIView {
     }
     
     private func createConstraints() {
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        [verticalStackView, videoButtonDisabled, speakersAllSegmentedView].forEach {
+           $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             topAnchor.constraint(equalTo: verticalStackView.topAnchor),
             trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor),
+            topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
+            bottomStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             firstBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
             firstBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height),
             secondBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
@@ -157,6 +169,8 @@ final class CallActionsView: UIView {
             videoButtonDisabled.rightAnchor.constraint(equalTo: videoButton.rightAnchor),
             videoButtonDisabled.topAnchor.constraint(equalTo: videoButton.topAnchor),
             videoButtonDisabled.bottomAnchor.constraint(equalTo: videoButton.bottomAnchor),
+            speakersAllSegmentedView.widthAnchor.constraint(equalToConstant: 180),
+            speakersAllSegmentedView.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -210,6 +224,10 @@ final class CallActionsView: UIView {
     
     // MARK: - Action Output
     
+    func roundedSegmentedView(_ view: RoundedSegmentedView, didSelectSegmentAtIndex index: Int) {
+        // TODO: send action to delegate
+    }
+
     @objc private func performButtonAction(_ sender: IconLabelButton) {
         delegate?.callActionsView(self, perform: action(for: sender))
     }
