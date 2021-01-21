@@ -54,6 +54,8 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
     func presentInputPasscodeModule(onGranted: @escaping () -> Void)
 
+    func presentWarningModule(then completion: @escaping () -> Void)
+
 }
 
 // MARK: - Interactor / Presenter
@@ -65,6 +67,8 @@ protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 }
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
+
+    var needsToWarnUserOfConfigurationChange: Bool { get }
 
     var needsToCreateCustomPasscode: Bool { get }
 

@@ -77,6 +77,25 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
     }
 
+    func test_ItPresentsWarningModuleBeforeAuthenticating() {
+        // Given
+        interactor.needsToWarnUserOfConfigurationChange = true
+
+        // When
+        sut.requestAuthentication()
+
+        // Then
+        XCTAssertEqual(router.methodCalls.presentWarningModule.count, 1)
+        XCTAssertEqual(view.propertyCalls.state.count, 0)
+        XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 0)
+
+        let completion = router.methodCalls.presentWarningModule[0]
+        completion()
+
+        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
+        XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
+    }
+
     // MARK: - Authentication evaluated
 
     func test_ItRequestToOpenAppLock_WhenAuthenticationGranted() {

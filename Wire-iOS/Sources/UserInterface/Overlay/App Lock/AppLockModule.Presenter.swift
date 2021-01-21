@@ -18,8 +18,6 @@
 
 import Foundation
 
-// TODO: We may need to display a warning. Where should it go?
-
 extension AppLockModule {
 
     final class Presenter: PresenterInterface {
@@ -62,13 +60,24 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func requestAuthentication() {
         if interactor.needsToCreateCustomPasscode {
-            router.presentCreatePasscodeModule { [weak self] in
-                self?.interactor.openAppLock()
+            router.presentCreatePasscodeModule {
+                self.interactor.openAppLock()
             }
         } else {
-            view.state = .authenticating
-            interactor.evaluateAuthentication()
+            warnUserOfConfigurationChangeIfNeeded {
+                self.view.state = .authenticating
+                self.interactor.evaluateAuthentication()
+            }
         }
+    }
+
+    private func warnUserOfConfigurationChangeIfNeeded(then block: @escaping () -> Void) {
+        guard interactor.needsToWarnUserOfConfigurationChange else {
+            block()
+            return
+        }
+
+        router.presentWarningModule(then: block)
     }
 
 }

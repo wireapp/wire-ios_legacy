@@ -50,6 +50,24 @@ final class AppLockModuleInteractorTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Needs to warn user
+
+    func test_NeedsToWarnUserOfConfigurationChange() {
+        // Given
+        appLock.needsToNotifyUser = true
+
+        // Then
+        XCTAssertTrue(sut.needsToWarnUserOfConfigurationChange)
+    }
+
+    func test_DoesNotNeedToWarnUserOfConfigurationChange() {
+        // Given
+        appLock.needsToNotifyUser = false
+
+        // Then
+        XCTAssertFalse(sut.needsToWarnUserOfConfigurationChange)
+    }
+
     // MARK: - Needs to create passcode
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndBiometricsIsRequired() {

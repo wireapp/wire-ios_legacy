@@ -58,4 +58,10 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
         viewController?.present(navigationController, animated: false)
     }
 
+    func presentWarningModule(then completion: @escaping () -> Void) {
+        let warningViewController = AppLockChangeWarningViewController(isAppLockActive: true, completion: completion)
+        warningViewController.modalPresentationStyle = .fullScreen
+        viewController?.present(warningViewController, animated: false)
+    }
+
 }

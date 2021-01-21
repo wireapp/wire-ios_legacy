@@ -29,6 +29,8 @@ extension AppLockModule {
 
         // MARK: - Properties
 
+        var needsToWarnUserOfConfigurationChange = false
+
         var needsToCreateCustomPasscode = false
 
         var currentAuthenticationType: AuthenticationType = .passcode

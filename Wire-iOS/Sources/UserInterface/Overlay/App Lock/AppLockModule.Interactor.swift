@@ -71,6 +71,10 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
+    var needsToWarnUserOfConfigurationChange: Bool {
+        return appLock.needsToNotifyUser
+    }
+
     // FIXME: This could be more clearly expressed.
 
     var needsToCreateCustomPasscode: Bool {
