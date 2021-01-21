@@ -98,11 +98,13 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
     }
 
     private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol?) {
-        if case .granted = result, let context = context as? LAContext {
-            try? session.unlockDatabase(with: context)
-        }
+        DispatchQueue.main.async { [weak self] in
+            if case .granted = result, let context = context as? LAContext {
+                try? self?.session.unlockDatabase(with: context)
+            }
 
-        presenter.authenticationEvaluated(with: result)
+            self?.presenter.authenticationEvaluated(with: result)
+        }
     }
 
     func openAppLock() {
