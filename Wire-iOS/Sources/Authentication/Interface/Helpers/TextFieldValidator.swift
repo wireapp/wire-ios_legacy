@@ -138,10 +138,10 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .valid:
                 return ""
             }
-            
+
         }
     }
-    
+
 }
 
 // MARK: - Email validator
