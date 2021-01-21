@@ -20,7 +20,7 @@ import Foundation
 final class PasscodeSetupPresenter {
     private weak var userInterface: PasscodeSetupUserInterface?
     private var interactorInput: PasscodeSetupInteractorInput
-    
+
     private var passcodeValidationResult: PasscodeValidationResult?
     private let passcodeCharacterClasses: [PasscodeCharacterClass] = [.uppercase,
                                                                       .lowercase,
