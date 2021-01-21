@@ -121,7 +121,7 @@ platform :ios do
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
                 sh "cp -r DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
-                sh "cd debug && zip -r ../#{ipa_file_prefix}_#{build.artifact_path(with_filename: true)}.ipa Payload/"
+                sh "cd debug && zip -r #{ipa_file_prefix}.zip ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
             build_app(
