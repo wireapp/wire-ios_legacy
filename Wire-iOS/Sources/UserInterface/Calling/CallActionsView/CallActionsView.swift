@@ -77,12 +77,6 @@ extension CallActionsViewInputType {
 final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     
     weak var delegate: CallActionsViewDelegate?
-    
-    var isCompact = false {
-        didSet {
-            lastInput.apply(update)
-        }
-    }
 
     private let verticalStackView = UIStackView(axis: .vertical)
     private let topStackView = UIStackView(axis: .horizontal)
@@ -131,9 +125,12 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
         speakersAllSegmentedView.isHidden = true
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
+        topStackView.spacing = 32
         bottomStackView.distribution = .equalSpacing
         bottomStackView.alignment = .top
+        bottomStackView.spacing = 32
         verticalStackView.alignment = .center
+        verticalStackView.spacing = 64
         addSubview(verticalStackView)
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
@@ -191,9 +188,7 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
         speakerButton.isEnabled = canToggleSpeakerButton(input)
         acceptCallButton.isHidden = !input.callState.canAccept
-        firstBottomRowSpacer.isHidden = input.callState.canAccept || isCompact
-        secondBottomRowSpacer.isHidden = isCompact
-        verticalStackView.axis = isCompact ? .horizontal : .vertical
+        firstBottomRowSpacer.isHidden = input.callState.canAccept
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.callState.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.callState.isTerminating
@@ -209,17 +204,6 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     
     private func canToggleSpeakerButton(_ input: CallActionsViewInputType) -> Bool {
         return input.callState.isConnected && input.mediaState.canSpeakerBeToggled
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        verticalStackView.spacing = {
-            guard isCompact else { return 64 } // Calculate the spacing manually in compact mode
-            let iconCount = topStackView.visibleSubviews.count + bottomStackView.visibleSubviews.count
-            return (bounds.width - (CGFloat(iconCount) * IconButton.width)) / CGFloat(iconCount - 1)
-        }()
-        topStackView.spacing = isCompact ? verticalStackView.spacing : 32
-        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
     }
     
     // MARK: - Action Output
