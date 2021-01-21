@@ -103,12 +103,21 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.authenticationEvaluated(with: .needCustomPasscode)
 
         // Then
+        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .passcode)])
         XCTAssertEqual(router.methodCalls.presentInputPasscodeModule.count, 1)
 
         let onGranted = router.methodCalls.presentInputPasscodeModule[0]
         onGranted()
 
         XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
+    }
+
+    func test_itUpdatesViewState_WhenAuthenticationMethodUnavailable() {
+        // When
+        sut.authenticationEvaluated(with: .unavailable)
+
+        // Then
+        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .unavailable)])
     }
 
 }
