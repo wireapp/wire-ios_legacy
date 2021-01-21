@@ -19,36 +19,27 @@
 import Foundation
 import UIKit
 
-protocol LabeledSwitchDelegate: class {
-    func switchPositionDidChange(to: LabeledSwitch.Position)
+protocol RoundedSegmentedViewDelegate: class {
+    func roundedSegmentedView(_ view: RoundedSegmentedView, didSelectSegmentAtIndex index: Int)
 }
 
-class LabeledSwitch: UIView {
-    
-    enum Position {
-        case left
-        case right
-    }
+class RoundedSegmentedView: UIControl {
     
     private let stackView: UIStackView = {
         let view = UIStackView(axis: .horizontal)
         view.distribution = .fillProportionally
         return view
     }()
-    
-    private let leftButton = UIButton()
-    private let rightButton = UIButton()
-    private var selectedPosition: Position
-    
-    weak var delegate: LabeledSwitchDelegate?
+        
+    private var buttons = [UIButton]()
+    private var selectedButton: UIButton?
 
-    init(leftText: String, rightText: String, position: Position) {
-        self.selectedPosition = position
+    weak var delegate: RoundedSegmentedViewDelegate?
+
+    init(items: [String]) {
         super.init(frame: .zero)
-        setupViews()
+        setupViews(with: items)
         setupConstraints()
-        leftButton.setTitle(leftText, for: .normal)
-        rightButton.setTitle(rightText, for: .normal)
     }
     
     @available(*, unavailable)
@@ -56,17 +47,30 @@ class LabeledSwitch: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        
+    func setSelected(_ selected: Bool, forItemAt index: Int) {
+        guard selected else {
+            return buttons[index].set(selected: false)
+        }
+        buttons.forEach {
+            $0.set(selected: buttons.firstIndex(of: $0) == index)
+        }
+    }
+    
+    private func setupViews(with items: [String]) {
         layer.cornerRadius = 12
         layer.masksToBounds = true
-        backgroundColor = CallActionAppearance.dark(blurred: false).backgroundColorNormal
+        backgroundColor = .whiteAlpha16
         addSubview(stackView)
-        [leftButton, rightButton].forEach {
-            stackView.addArrangedSubview($0)
-            $0.titleLabel?.font = .smallMediumFont
-            $0.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        }
+        items.forEach(addNewButton(withTitle:))
+    }
+    
+    private func addNewButton(withTitle title: String) {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = .smallMediumFont
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        stackView.addArrangedSubview(button)
+        buttons.append(button)
     }
     
     private func setupConstraints() {
@@ -80,20 +84,15 @@ class LabeledSwitch: UIView {
     }
     
     @objc
-    func buttonAction(_ sender: UIButton) {
-        let newPosition: Position
-        switch sender {
-        case leftButton:
-            newPosition = .left
-        case rightButton:
-            newPosition = .right
-        }
+    private func buttonAction(_ sender: UIButton) {
+        guard
+            sender != selectedButton,
+            let index = buttons.firstIndex(of: sender)
+        else { return }
         
-        guard selectedPosition != newPosition else { return }
-        leftButton.set(selected: sender == leftButton)
-        rightButton.set(selected: sender == rightButton)
-        delegate?.switchPositionDidChange(to: newPosition)
-        selectedPosition = newPosition
+        selectedButton = sender
+        setSelected(true, forItemAt: index)
+        delegate?.roundedSegmentedView(self, didSelectSegmentAtIndex: index)
     }
 }
 
