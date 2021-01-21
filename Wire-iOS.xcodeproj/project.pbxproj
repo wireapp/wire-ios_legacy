@@ -15,6 +15,9 @@
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
+		06C1074425B9973E00C099D3 /* PasscodeCharacterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074325B9973E00C099D3 /* PasscodeCharacterClass.swift */; };
+		06C1074625B99C4A00C099D3 /* PasscodeRuleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074525B99C4A00C099D3 /* PasscodeRuleSet.swift */; };
+		06C1074825B99D1400C099D3 /* PasscodeRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */; };
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
 		06F2664223881A0D006BD21F /* LabelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F2664123881A0D006BD21F /* LabelIndicator.swift */; };
@@ -252,7 +255,7 @@
 		5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */; };
 		5E35F78D21870EDB00D3F4FE /* ConversationPingMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */; };
 		5E39FC5F225CBBD400C682B8 /* password_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E39FC5E225CBBD300C682B8 /* password_rules.json */; };
-		5E39FC61225CBBEF00C682B8 /* PasswordRules+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC60225CBBEF00C682B8 /* PasswordRules+Shared.swift */; };
+		5E39FC61225CBBEF00C682B8 /* PasscodeRules+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC60225CBBEF00C682B8 /* PasscodeRules+Shared.swift */; };
 		5E39FC63225CCEFA00C682B8 /* ValueValidationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */; };
 		5E39FC65225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */; };
 		5E39FC6B225F81FD00C682B8 /* ConversationViewController+GuestBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E39FC6A225F81FD00C682B8 /* ConversationViewController+GuestBar.swift */; };
@@ -1607,6 +1610,9 @@
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
+		06C1074325B9973E00C099D3 /* PasscodeCharacterClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeCharacterClass.swift; sourceTree = "<group>"; };
+		06C1074525B99C4A00C099D3 /* PasscodeRuleSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeRuleSet.swift; sourceTree = "<group>"; };
+		06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeRuleSetTests.swift; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
@@ -1859,7 +1865,7 @@
 		5E35F7892187068500D3F4FE /* ConversationCellSnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellSnapshotTestCase.swift; sourceTree = "<group>"; };
 		5E35F78C21870EDB00D3F4FE /* ConversationPingMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingMessageTests.swift; sourceTree = "<group>"; };
 		5E39FC5E225CBBD300C682B8 /* password_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = password_rules.json; sourceTree = "<group>"; };
-		5E39FC60225CBBEF00C682B8 /* PasswordRules+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordRules+Shared.swift"; sourceTree = "<group>"; };
+		5E39FC60225CBBEF00C682B8 /* PasscodeRules+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasscodeRules+Shared.swift"; sourceTree = "<group>"; };
 		5E39FC62225CCEFA00C682B8 /* ValueValidationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueValidationCell.swift; sourceTree = "<group>"; };
 		5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		5E39FC6A225F81FD00C682B8 /* ConversationViewController+GuestBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+GuestBar.swift"; sourceTree = "<group>"; };
@@ -3314,6 +3320,16 @@
 			path = Warning;
 			sourceTree = "<group>";
 		};
+		06C1074925B99D8200C099D3 /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */,
+				06C1074525B99C4A00C099D3 /* PasscodeRuleSet.swift */,
+				06C1074325B9973E00C099D3 /* PasscodeCharacterClass.swift */,
+			);
+			path = Passcode;
+			sourceTree = "<group>";
+		};
 		160D691E212C78C700096EAD /* CallQualityController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4006,7 +4022,7 @@
 			children = (
 				EF2126C71FB9DFE300625A9B /* CountryCode */,
 				5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */,
-				5E39FC60225CBBEF00C682B8 /* PasswordRules+Shared.swift */,
+				5E39FC60225CBBEF00C682B8 /* PasscodeRules+Shared.swift */,
 				EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */,
 				5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */,
 				5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */,
@@ -5724,9 +5740,9 @@
 		A96E802F24CB2A760010CD80 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
+				06C1074925B99D8200C099D3 /* Passcode */,
 				A9E674CF24F40C350058FC72 /* KeyboardAvoiding */,
 				A9A6506324D1C2C800B6A68D /* PasscodeError.swift */,
-				A9A6506524D1C32300B6A68D /* PasscodeValidationResult.swift */,
 				A96E803124CB2AB60010CD80 /* PasscodeSetupViewController.swift */,
 				A9CBBEBB24CF09AD006543D4 /* PasscodeSetupPresenter.swift */,
 				A9CBBEBD24CF09ED006543D4 /* PasscodeSetupInteractor.swift */,
@@ -5843,6 +5859,7 @@
 				A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */,
 				A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */,
 				EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */,
+				06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */,
 			);
 			path = CustomAppLock;
 			sourceTree = "<group>";
@@ -7428,7 +7445,7 @@
 				63B2366F251B634C009EDB02 /* UIAlertController+OutdatedClient.swift in Sources */,
 				A949418B23E09AFB001B0373 /* ConversationContentViewController.swift in Sources */,
 				7C440E83234B35CB00D91B5F /* FolderPickerViewController.swift in Sources */,
-				5E39FC61225CBBEF00C682B8 /* PasswordRules+Shared.swift in Sources */,
+				5E39FC61225CBBEF00C682B8 /* PasscodeRules+Shared.swift in Sources */,
 				EEC94D4223BF49D6003AF93D /* UserType+Helpers.swift in Sources */,
 				EF22DC7D224BBE3B001EDE8E /* SearchUserViewConroller.swift in Sources */,
 				87B8C3421DF9788B0015EC89 /* TweetOpening.swift in Sources */,
@@ -7584,6 +7601,7 @@
 				F1199D371FC8490A0070FAC3 /* AuthenticationStepController.swift in Sources */,
 				D53DB9A5203EE03400655CB4 /* Conversation+OptionsConfiguration.swift in Sources */,
 				F15650DC21DD10A100210504 /* AvatarImageView.swift in Sources */,
+				06C1074625B99C4A00C099D3 /* PasscodeRuleSet.swift in Sources */,
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
 				F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */,
 				16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */,
@@ -8163,6 +8181,7 @@
 				EE88E00623FAC9EA00D24703 /* SelfUser.swift in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
 				EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */,
+				06C1074425B9973E00C099D3 /* PasscodeCharacterClass.swift in Sources */,
 				5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */,
 				5E21345121E38A8400273D0D /* EmailPasswordFieldDescription.swift in Sources */,
 				5E0F75C02268A0D7006C991E /* UIBarButtonItem+StyleKit.swift in Sources */,
@@ -8667,6 +8686,7 @@
 				6340660925B204B100C0B4BA /* VideoStreamStubProvider.swift in Sources */,
 				EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */,
 				636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */,
+				06C1074825B99D1400C099D3 /* PasscodeRuleSetTests.swift in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				EE52379123F557B900D4FE79 /* MockServiceUserType+Creation.swift in Sources */,
 				5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */,

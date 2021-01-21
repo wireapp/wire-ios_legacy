@@ -93,7 +93,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     let emailCell = AccessoryTextFieldCell(style: .default, reuseIdentifier: nil)
     let emailPasswordCell = EmailPasswordTextFieldCell(style: .default, reuseIdentifier: nil)
-    let validationCell = ValueValidationCell(initialValidation: .info(PasswordRuleSet.localizedErrorMessage))
+    let validationCell = ValueValidationCell(initialValidation: .info(PasscodeRuleSet.localizedErrorMessage))
 
     init(user: UserType) {
         state = ChangeEmailState(currentEmail: user.emailAddress)

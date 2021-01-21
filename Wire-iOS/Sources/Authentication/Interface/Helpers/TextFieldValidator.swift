@@ -29,7 +29,7 @@ final class TextFieldValidator {
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
-        case invalidPassword(PasswordValidationResult)
+        case invalidPassword(PasscodeValidationResult)
         case custom(String)
     }
 
@@ -38,7 +38,7 @@ final class TextFieldValidator {
                                   isNew: Bool) -> TextFieldValidator.ValidationError? {
         if isNew {
             // If the user is registering, enforce the password rules
-            let result = PasswordRuleSet.shared.validatePassword(text)
+            let result = PasscodeRuleSet.shared.validatePasscode(text)
             return result != .valid ? .invalidPassword(result) : nil
         } else {
             // If the user is signing in, we do not require any format
@@ -89,7 +89,7 @@ extension TextFieldValidator {
 
     @available(iOS 12, *)
     var passwordRules: UITextInputPasswordRules {
-        return UITextInputPasswordRules(descriptor: PasswordRuleSet.shared.encodeInKeychainFormat())
+        return UITextInputPasswordRules(descriptor: PasscodeRuleSet.shared.encodeInKeychainFormat())
     }
 
 }
@@ -104,7 +104,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .email:
                 return "email.guidance.tooshort".localized
             case .password, .passcode:
-                return PasswordRuleSet.localizedErrorMessage
+                return PasscodeRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
@@ -129,17 +129,17 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .invalidPassword(let error):
-            switch error {
-            case .tooLong:
-                return "password.guidance.toolong".localized
-            default:
-                return PasswordRuleSet.localizedErrorMessage
+        case .invalidPassword(let validationResult):
+            switch validationResult {
+            case .invalid(let violations):
+                return violations.contains(.tooLong)
+                    ? "password.guidance.toolong".localized
+                    : PasscodeRuleSet.localizedErrorMessage
+            case .valid:
+                return ""
             }
-
         }
     }
-
 }
 
 // MARK: - Email validator

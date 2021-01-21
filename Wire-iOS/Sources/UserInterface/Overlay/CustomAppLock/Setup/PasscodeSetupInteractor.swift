@@ -32,11 +32,6 @@ protocol PasscodeSetupInteractorOutput: class {
 
 final class PasscodeSetupInteractor {
     weak var interactorOutput: PasscodeSetupInteractorOutput?
-
-    private let passwordCharacterClasses: [PasswordCharacterClass] = [.uppercase,
-                                                                      .lowercase,
-                                                                      .special,
-                                                                      .digits]
 }
 
 // MARK: - Interface
@@ -48,52 +43,20 @@ extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
         try appLock.updatePasscode(passcode)
     }
 
-    private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
-        var errorReasons: Set<PasscodeError> = Set()
-        passwordCharacterClasses.forEach {
-            if missingCharacterClasses.contains($0) {
-                switch $0 {
-                case .uppercase:
-                    errorReasons.insert(.noUppercaseChar)
-                case .lowercase:
-                    errorReasons.insert(.noLowercaseChar)
-                case .special:
-                    errorReasons.insert(.noSpecialChar)
-                case .digits:
-                    errorReasons.insert(.noNumber)
-                default:
-                    break
-                }
-            }
-        }
-
-        return errorReasons
-    }
-
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
-            interactorOutput?.passcodeValidated(result: .accepted)
+            interactorOutput?.passcodeValidated(result: .valid)
             return
         }
-
-        let result: PasscodeValidationResult
+        
         switch error {
         case .tooShort:
-            result = .error([.tooShort])
+            interactorOutput?.passcodeValidated(result: .invalid(violations: [.tooShort]))
         case .invalidPassword(let passwordValidationResult):
-            switch passwordValidationResult {
-            case .tooShort:
-                result = .error([.tooShort])
-            case .missingRequiredClasses(let passwordCharacterClass):
-                result = .error(passcodeError(from: passwordCharacterClass))
-            default:
-                result = .error([])
-            }
+            interactorOutput?.passcodeValidated(result: passwordValidationResult)
         default:
-            result = .error([])
+            interactorOutput?.passcodeValidated(result: .invalid(violations: []))
         }
-
-        interactorOutput?.passcodeValidated(result: result)
     }
 
 }

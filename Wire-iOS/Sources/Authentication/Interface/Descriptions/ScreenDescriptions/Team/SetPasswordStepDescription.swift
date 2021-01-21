@@ -36,6 +36,6 @@ final class SetPasswordStepDescription: DefaultValidatingStepDescription {
         headline = "team.password.headline".localized
         subtext = nil
         secondaryView = nil
-        initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
+        initialValidation = .info(PasscodeRuleSet.localizedErrorMessage)
     }
 }

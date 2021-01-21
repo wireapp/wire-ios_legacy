@@ -23,7 +23,7 @@ struct Password {
     let value: String
     
     init?(_ value: String) {
-        if case PasswordValidationResult.valid = PasswordRuleSet.shared.validatePassword(value) {
+        if case PasscodeValidationResult.valid = PasscodeRuleSet.shared.validatePasscode(value) {
             self.value = value
         } else {
             return nil
@@ -97,7 +97,7 @@ final class BackupPasswordViewController: UIViewController {
         subtitleLabel.numberOfLines = 0
         
         passwordRulesLabel.numberOfLines = 0
-        passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
+        passwordRulesLabel.text = PasscodeRuleSet.localizedErrorMessage
 
         [passwordView, subtitleLabel, passwordRulesLabel].forEach {
             view.addSubview($0)
