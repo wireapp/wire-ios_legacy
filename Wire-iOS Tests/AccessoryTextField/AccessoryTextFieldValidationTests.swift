@@ -212,11 +212,11 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         // GIVEN
         let type: AccessoryTextField.Kind = .password(isNew: true)
         let text = String(repeating: "a", count: 7)
-
+        
         // WHEN & THEN
         checkError(textFieldType: type, text: text, expectedError:
-            .invalidPassword(.invalid(violations: [.tooShort,
-                                                   .missingRequiredClasses(Set(arrayLiteral: .uppercase, .special, .digits))])))
+            .invalidPassword([.tooShort,
+                              .missingRequiredClasses(Set(arrayLiteral: .uppercase, .special, .digits))]))
     }
 
     func testThat129CharacterPasswordIsInvalid_New() {
@@ -225,7 +225,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "Aa1!", count: 129)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .invalidPassword(.invalid(violations: [.tooLong])))
+        checkError(textFieldType: type, text: text, expectedError: .invalidPassword([.tooLong]))
     }
 
     // MARK: - keyboard properties
