@@ -212,7 +212,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         // GIVEN
         let type: AccessoryTextField.Kind = .password(isNew: true)
         let text = String(repeating: "a", count: 7)
-        
+
         // WHEN & THEN
         checkError(textFieldType: type, text: text, expectedError:
             .invalidPassword([.tooShort,
