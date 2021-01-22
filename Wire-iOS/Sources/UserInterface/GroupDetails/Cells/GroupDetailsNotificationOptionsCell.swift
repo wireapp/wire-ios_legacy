@@ -28,12 +28,12 @@ final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCe
         title = "group_details.notification_options_cell.title".localized
     }
     
-    func configure(with conversation: ZMConversation) {
+    func configure(with conversation: GroupDetailsConversationType) {
         guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
         
-        self.status = key.localized
+        status = key.localized
     }
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

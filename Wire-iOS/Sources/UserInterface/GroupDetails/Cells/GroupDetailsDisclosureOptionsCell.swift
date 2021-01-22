@@ -21,7 +21,7 @@ import WireCommonComponents
 import WireDataModel
 
 protocol ConversationOptionsConfigurable {
-    func configure(with conversation: ZMConversation)
+    func configure(with conversation: GroupDetailsConversationType)
 }
 
 // a ConversationOptionsCell that with a disclosure indicator on the right
