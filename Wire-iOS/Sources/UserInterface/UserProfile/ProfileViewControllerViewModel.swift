@@ -97,27 +97,21 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     func cancelConnectionRequest(completion: @escaping Completion) {
-        let user = self.user as? ZMUser
-        
         ZMUserSession.shared()?.enqueue({
-            user?.cancelConnectionRequest()
+            self.user.cancelConnectionRequest()
             completion()
         })
     }
     
     func toggleBlocked() {
-        (user as? ZMUser)?.toggleBlocked()
+        user.toggleBlocked()
     }
     
     func openOneToOneConversation() {
-        guard let user = user as? ZMUser else {
-            zmLog.error("No user to open conversation with")
-            return
-        }
         var conversation: ZMConversation? = nil
         
         ZMUserSession.shared()?.enqueue({
-            conversation = user.oneToOneConversation
+            conversation = self.user.oneToOneConversation
         }, completionHandler: {
             guard let conversation = conversation else { return }
             
@@ -202,35 +196,25 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: Connect
     
     func sendConnectionRequest() {
-        let connect: (String) -> Void = {
-            if let user = self.user as? ZMUser {
-                user.connect(message: $0)
-            } else if let searchUser = self.user as? ZMSearchUser {
-                searchUser.connect(message: $0)
-            }
-        }
-        
         ZMUserSession.shared()?.enqueue {
             let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
-            connect(messageText)
+            self.user.connect(message: messageText)
             // update the footer view to display the cancel request button
             self.viewModelDelegate?.updateFooterViews()
         }
     }
     
     func acceptConnectionRequest() {
-        guard let user = self.user as? ZMUser else { return }
         ZMUserSession.shared()?.enqueue {
-            user.accept()
-            user.refreshData()
+            self.user.accept()
+            self.user.refreshData()
             self.viewModelDelegate?.updateFooterViews()
         }
     }
     
     func ignoreConnectionRequest() {
-        guard let user = self.user as? ZMUser else { return }
         ZMUserSession.shared()?.enqueue {
-            user.ignore()
+            self.user.ignore()
             self.viewModelDelegate?.returnToPreviousScreen()
         }
     }
