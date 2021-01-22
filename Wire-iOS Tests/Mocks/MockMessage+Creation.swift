@@ -36,7 +36,6 @@ final class MockMessageFactory {
     ///
     /// - Returns: a MockMessage with default values
     
-    ///TODO: wait for https://github.com/wireapp/wire-ios/pull/4833 merged and change the conversation's type 
     class func messageTemplate(sender: UserType? = nil,
                                conversation: ConversationLike? = nil) -> MockMessage {
         let message = MockMessage()
@@ -59,7 +58,8 @@ final class MockMessageFactory {
             message.senderUser = user
         }
 
-        conversation?.sortedActiveParticipants = [message.senderUser as! MockUserType]
+        ///TODO:
+//        conversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }
