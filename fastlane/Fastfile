@@ -100,7 +100,6 @@ platform :ios do
     desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
-        zip_filename = options[:zip_filename]
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -117,13 +116,7 @@ platform :ios do
                 sh "mkdir -p debug/Payload"
                 sh "mkdir -p #{build.artifact_path(with_filename: false)}"
                 sh "cp -r DerivedData/Build/Products/Debug-iphonesimulator/*.app debug/Payload/"
-
-                if !zip_filename.nil? 
-                  sh "cd debug && zip -r #{zip_filename}.zip ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
-		     else 
-                  sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
-                end
-
+                sh "cd debug && zip -r ../#{build.artifact_path(with_filename: true)}.ipa Payload/"
             end
         else
             build_app(
@@ -197,12 +190,19 @@ platform :ios do
     desc "Upload to S3 (Automation builds)"
     lane :upload_s3 do |options|
         build = Build.new(options: options)
+        s3_subfolder = options[:s3_subfolder]
+
+        if s3_subfolder.nil? 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/"
+        else 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/#{s3_subfolder}/"
+        end
 
         if build.appstore_build
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
         end
         
-        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
     end
 
 
