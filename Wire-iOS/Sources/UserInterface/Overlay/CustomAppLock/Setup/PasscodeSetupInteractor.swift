@@ -27,7 +27,7 @@ protocol PasscodeSetupInteractorInput: class {
 }
 
 protocol PasscodeSetupInteractorOutput: class {
-    func passcodeValidated(result: PasscodeValidationResult)
+    func passcodeValidated(result: PasswordValidationResult)
 }
 
 final class PasscodeSetupInteractor {

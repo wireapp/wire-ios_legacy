@@ -21,8 +21,8 @@ final class PasscodeSetupPresenter {
     private weak var userInterface: PasscodeSetupUserInterface?
     private var interactorInput: PasscodeSetupInteractorInput
 
-    private var passcodeValidationResult: PasscodeValidationResult?
-    private let passcodeCharacterClasses: [PasscodeCharacterClass] = [.uppercase,
+    private var passcodeValidationResult: PasswordValidationResult?
+    private let passcodeCharacterClasses: [PasswordCharacterClass] = [.uppercase,
                                                                       .lowercase,
                                                                       .special,
                                                                       .digits]
@@ -71,7 +71,7 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
         }
     }
 
-    func passcodeValidated(result: PasscodeValidationResult) {
+    func passcodeValidated(result: PasswordValidationResult) {
         passcodeValidationResult = result
 
         switch result {
@@ -90,7 +90,7 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
 // MARK: - Helpers
 
 extension PasscodeSetupPresenter {
-    private func passcodeError(from violations: [PasscodeValidationResult.Violation]) -> Set<PasscodeError> {
+    private func passcodeError(from violations: [PasswordValidationResult.Violation]) -> Set<PasscodeError> {
         var passcodeErrors: Set<PasscodeError> = Set()
         violations.forEach { (violation) in
             switch violation {
@@ -105,7 +105,7 @@ extension PasscodeSetupPresenter {
         return passcodeErrors
     }
     
-    private func passcodeError(from missingCharacterClasses: Set<PasscodeCharacterClass>) -> Set<PasscodeError> {
+    private func passcodeError(from missingCharacterClasses: Set<PasswordCharacterClass>) -> Set<PasscodeError> {
         var passcodeErrors: Set<PasscodeError> = Set()
         passcodeCharacterClasses.forEach {
             if missingCharacterClasses.contains($0) {

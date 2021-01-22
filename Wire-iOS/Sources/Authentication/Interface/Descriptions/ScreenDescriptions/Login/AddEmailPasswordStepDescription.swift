@@ -33,7 +33,7 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
         mainView = EmailPasswordFieldDescription(forRegistration: true, usePasswordDeferredValidation: true)
         headline = "registration.add_email_password.hero.title".localized
         subtext = "registration.add_email_password.hero.paragraph".localized
-        initialValidation = .info(PasscodeRuleSet.localizedErrorMessage)
+        initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
         secondaryView = nil
     }
 

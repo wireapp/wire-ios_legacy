@@ -19,48 +19,48 @@
 import Foundation
 
 /**
- * A set of passcode rules that can be used to check if a password is valid.
+ * A set of password rules that can be used to check if a password is valid.
  */
 
-public struct PasscodeRuleSet: Decodable {
+public struct PasswordRuleSet: Decodable {
 
-    /// The minimum length of the passcode.
+    /// The minimum length of the password.
     public let minimumLength: UInt
 
-    /// The maximum length of the passcode.
+    /// The maximum length of the password.
     public let maximumLength: UInt
 
     /// The allowed set of characters.
-    public let allowedCharacters: [PasscodeCharacterClass]
+    public let allowedCharacters: [PasswordCharacterClass]
 
     /// The character set that represents the union of all the characters in `allowedCharacters`.
     public let allowedCharacterSet: CharacterSet
 
     /// The required classes of characters.
-    public let requiredCharacters: [PasscodeCharacterClass]
+    public let requiredCharacters: [PasswordCharacterClass]
 
     /// The required set of characters.
-    public let requiredCharacterSets: [PasscodeCharacterClass: CharacterSet]
+    public let requiredCharacterSets: [PasswordCharacterClass: CharacterSet]
 
     // MARK: - Initialization
 
     /**
      * Creates the rule set from its required values.
-     * - parameter minimumLength: The minimum length of the passcode.
-     * - parameter maximumLength: The maximum length of the passcode.
-     * - parameter allowedCharacters: The characters that are allowed in the passcode.
-     * - parameter requiredCharacters: The characters that are required in the passcode. Note that if these are
+     * - parameter minimumLength: The minimum length of the password.
+     * - parameter maximumLength: The maximum length of the password.
+     * - parameter allowedCharacters: The characters that are allowed in the password.
+     * - parameter requiredCharacters: The characters that are required in the password. Note that if these are
      * not included in `allowedCharacters`, they will be added to that set.
      */
 
-    public init(minimumLength: UInt, maximumLength: UInt, allowedCharacters: [PasscodeCharacterClass], requiredCharacters: [PasscodeCharacterClass]) {
+    public init(minimumLength: UInt, maximumLength: UInt, allowedCharacters: [PasswordCharacterClass], requiredCharacters: [PasswordCharacterClass]) {
         self.minimumLength = minimumLength
         self.maximumLength = maximumLength
 
         // Parse the allowed and required characters
         var allowedCharacters = allowedCharacters
         var allowedCharacterSet = allowedCharacters.reduce(into: CharacterSet()) { $0.formUnion($1.associatedCharacterSet) }
-        var requiredCharacterSets: [PasscodeCharacterClass: CharacterSet] = [:]
+        var requiredCharacterSets: [PasswordCharacterClass: CharacterSet] = [:]
 
         for requiredClass in requiredCharacters {
             allowedCharacters.append(requiredClass)
@@ -88,8 +88,8 @@ public struct PasscodeRuleSet: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let minimumLength = try container.decode(UInt.self, forKey: .minimumLength)
         let maximumLength = try container.decode(UInt.self, forKey: .maximumLength)
-        let allowedCharacters = try container.decode([PasscodeCharacterClass].self, forKey: .allowedCharacters)
-        let requiredCharacters = try container.decode([PasscodeCharacterClass].self, forKey: .requiredCharacters)
+        let allowedCharacters = try container.decode([PasswordCharacterClass].self, forKey: .allowedCharacters)
+        let requiredCharacters = try container.decode([PasswordCharacterClass].self, forKey: .requiredCharacters)
         self.init(minimumLength: minimumLength, maximumLength: maximumLength, allowedCharacters: allowedCharacters, requiredCharacters: requiredCharacters)
     }
 
@@ -105,16 +105,16 @@ public struct PasscodeRuleSet: Decodable {
     // MARK: - Validation
 
     /**
-     * Verifies that the specified passcode conforms to this password rule set.
+     * Verifies that the specified password conforms to this password rule set.
      * - parameter password: The password to validate.
-     * - returns: The validation result. `valid` if the passcode is valid, or
+     * - returns: The validation result. `valid` if the password is valid, or
      * the description of the error.
      */
 
-    public func validatePasscode(_ passcode: String) -> PasscodeValidationResult {
-        var violations: [PasscodeValidationResult.Violation] = []
+    public func validatePassword(_ password: String) -> PasswordValidationResult {
+        var violations: [PasswordValidationResult.Violation] = []
         
-        let length = passcode.count
+        let length = password.count
 
         // Start by checking the length.
         if length < minimumLength {
@@ -126,10 +126,10 @@ public struct PasscodeRuleSet: Decodable {
         }
 
         // Check for allowed and requiredCharacters
-        var matchedRequiredClasses: Set<PasscodeCharacterClass> = []
+        var matchedRequiredClasses: Set<PasswordCharacterClass> = []
         let requiredClasses = Set(requiredCharacterSets.keys)
 
-        for scalar in passcode.unicodeScalars {
+        for scalar in password.unicodeScalars {
             guard allowedCharacterSet.contains(scalar) else {
                 violations.append(.disallowedCharacter(scalar))
                 return .invalid(violations: violations)

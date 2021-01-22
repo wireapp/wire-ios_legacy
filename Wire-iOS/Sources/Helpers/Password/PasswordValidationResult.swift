@@ -18,30 +18,30 @@
 import Foundation
 
 /**
- * The result of passcode validation.
+ * The result of password validation.
  */
 
-public enum PasscodeValidationResult: Equatable {
+public enum PasswordValidationResult: Equatable {
 
-    /// The passcode is valid.
+    /// The password is valid.
     case valid
 
-    /// The passcode is invalid due to the violations.
+    /// The password is invalid due to the violations.
     case invalid(violations: [Violation])
 
     public enum Violation: Equatable {
 
-        /// The passcode is too short.
+        /// The password is too short.
         case tooShort
 
-        /// The passcode is too long.
+        /// The password is too long.
         case tooLong
 
-        /// The passcode contains a disallowed character.
+        /// The password contains a disallowed character.
         case disallowedCharacter(Unicode.Scalar)
 
-        /// The passcode does not satisfy a requirement for a character class.
-        case missingRequiredClasses(Set<PasscodeCharacterClass>)
+        /// The password does not satisfy a requirement for a character class.
+        case missingRequiredClasses(Set<PasswordCharacterClass>)
     }
 
 }

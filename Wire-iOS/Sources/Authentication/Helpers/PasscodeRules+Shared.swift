@@ -21,23 +21,23 @@ import WireUtilities
 import FormatterKit
 import WireUtilities
 
-extension PasscodeRuleSet {
+extension PasswordRuleSet {
 
     private static let arrayFormatter = TTTArrayFormatter()
 
     /// The shared rule set.
-    static let shared: PasscodeRuleSet = {
+    static let shared: PasswordRuleSet = {
         let fileURL = Bundle.main.url(forResource: "password_rules", withExtension: "json")!
         let fileData = try! Data(contentsOf: fileURL)
         let decoder = JSONDecoder()
-        return try! decoder.decode(PasscodeRuleSet.self, from: fileData)
+        return try! decoder.decode(PasswordRuleSet.self, from: fileData)
     }()
 
     // MARK: - Localized Description
 
     /// The localized error message for the shared rule set.
     static let localizedErrorMessage: String = {
-        let ruleSet = PasscodeRuleSet.shared
+        let ruleSet = PasswordRuleSet.shared
         let minLengthRule = "registration.password.rules.min_length".localized(args: ruleSet.minimumLength)
 
         if ruleSet.requiredCharacters.isEmpty {
@@ -59,7 +59,7 @@ extension PasscodeRuleSet {
             }
         }
 
-        let formattedRulesList = PasscodeRuleSet.arrayFormatter.string(from: localizedRules)!
+        let formattedRulesList = PasswordRuleSet.arrayFormatter.string(from: localizedRules)!
         return "registration.password.rules.with_requirements".localized(args: minLengthRule, formattedRulesList)
     }()
 

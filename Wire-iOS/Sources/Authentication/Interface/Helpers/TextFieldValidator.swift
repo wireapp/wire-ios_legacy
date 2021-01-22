@@ -29,7 +29,7 @@ final class TextFieldValidator {
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
-        case invalidPassword(PasscodeValidationResult)
+        case invalidPassword(PasswordValidationResult)
         case custom(String)
     }
 
@@ -38,7 +38,7 @@ final class TextFieldValidator {
                                   isNew: Bool) -> TextFieldValidator.ValidationError? {
         if isNew {
             // If the user is registering, enforce the password rules
-            let result = PasscodeRuleSet.shared.validatePasscode(text)
+            let result = PasswordRuleSet.shared.validatePassword(text)
             return result != .valid ? .invalidPassword(result) : nil
         } else {
             // If the user is signing in, we do not require any format
@@ -89,7 +89,7 @@ extension TextFieldValidator {
 
     @available(iOS 12, *)
     var passwordRules: UITextInputPasswordRules {
-        return UITextInputPasswordRules(descriptor: PasscodeRuleSet.shared.encodeInKeychainFormat())
+        return UITextInputPasswordRules(descriptor: PasswordRuleSet.shared.encodeInKeychainFormat())
     }
 
 }
@@ -104,7 +104,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .email:
                 return "email.guidance.tooshort".localized
             case .password, .passcode:
-                return PasscodeRuleSet.localizedErrorMessage
+                return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
@@ -134,7 +134,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             case .invalid(let violations) where violations.contains(.tooLong):
                 return "password.guidance.toolong".localized
             default:
-                return PasscodeRuleSet.localizedErrorMessage
+                return PasswordRuleSet.localizedErrorMessage
             }
         }
     }

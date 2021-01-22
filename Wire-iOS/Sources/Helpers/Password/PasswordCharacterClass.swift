@@ -19,10 +19,10 @@
 import Foundation
 
 /**
- * The characters that can be used in a passcode safety rule.
+ * The characters that can be used in a password safety rule.
  */
 
-public enum PasscodeCharacterClass: Hashable, Decodable {
+public enum PasswordCharacterClass: Hashable, Decodable {
 
     /// All unicode characters.
     case unicode
@@ -93,7 +93,7 @@ public enum PasscodeCharacterClass: Hashable, Decodable {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
 
-        guard let decodedSet = PasscodeCharacterClass(rawValue: rawValue) else {
+        guard let decodedSet = PasswordCharacterClass(rawValue: rawValue) else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "'\(rawValue)' is not a valid character set.")
         }
 

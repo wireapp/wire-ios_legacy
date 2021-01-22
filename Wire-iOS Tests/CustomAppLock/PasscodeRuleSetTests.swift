@@ -21,11 +21,11 @@ import XCTest
 
 class PasscodeRuleSetTests: XCTestCase {
 
-    var defaultRuleSet: PasscodeRuleSet!
+    var defaultRuleSet: PasswordRuleSet!
 
     override func setUp() {
         super.setUp()
-        defaultRuleSet = PasscodeRuleSet(minimumLength: 8, maximumLength: 15, allowedCharacters: [.unicode], requiredCharacters: [.digits, .uppercase, .lowercase, .special])
+        defaultRuleSet = PasswordRuleSet(minimumLength: 8, maximumLength: 15, allowedCharacters: [.unicode], requiredCharacters: [.digits, .uppercase, .lowercase, .special])
     }
 
     override func tearDown() {
@@ -37,7 +37,7 @@ class PasscodeRuleSetTests: XCTestCase {
 
     func testThatItAddsRequiredCharactersToAllowedSet() {
         // GIVEN
-        let ruleSet = PasscodeRuleSet(minimumLength: 10, maximumLength: 100, allowedCharacters: [.asciiPrintable], requiredCharacters: [.custom("🐼")])
+        let ruleSet = PasswordRuleSet(minimumLength: 10, maximumLength: 100, allowedCharacters: [.asciiPrintable], requiredCharacters: [.custom("🐼")])
 
         // THEN
         let panda = Unicode.Scalar(Int(0x1F43C))!
@@ -67,17 +67,17 @@ class PasscodeRuleSetTests: XCTestCase {
         checkPassword("aaaaAAAA", expectedResult: .invalid(violations: [.missingRequiredClasses([.digits, .special])]))
     }
 
-    func checkPassword(_ password: String, expectedResult: PasscodeValidationResult, file: StaticString = #file, line: UInt = #line) {
-        XCTAssertEqual(defaultRuleSet.validatePasscode(password), expectedResult, file: file, line: line)
+    func checkPassword(_ password: String, expectedResult: PasswordValidationResult, file: StaticString = #file, line: UInt = #line) {
+        XCTAssertEqual(defaultRuleSet.validatePassword(password), expectedResult, file: file, line: line)
     }
 
     func testThatItDetectsDisallowedCharacter() {
         // GIVEN
-        let ruleSet = PasscodeRuleSet(minimumLength: 8, maximumLength: 120, allowedCharacters: [.asciiPrintable], requiredCharacters: [.digits])
+        let ruleSet = PasswordRuleSet(minimumLength: 8, maximumLength: 120, allowedCharacters: [.asciiPrintable], requiredCharacters: [.digits])
         let passwordWithHebrew = "1Passworד"
 
         // WHEN
-        let result = ruleSet.validatePasscode(passwordWithHebrew)
+        let result = ruleSet.validatePassword(passwordWithHebrew)
 
         // THEN
         let dalet = Unicode.Scalar(Int(0x05D3))!
@@ -105,7 +105,7 @@ class PasscodeRuleSetTests: XCTestCase {
 
         // WHEN
         let jsonDecoder = JSONDecoder()
-        let ruleSet = try jsonDecoder.decode(PasscodeRuleSet.self, from: Data(json.utf8))
+        let ruleSet = try jsonDecoder.decode(PasswordRuleSet.self, from: Data(json.utf8))
 
         // THEN
         let panda = Unicode.Scalar(Int(0x1F43C))!
@@ -121,7 +121,7 @@ class PasscodeRuleSetTests: XCTestCase {
 
     func testThatItEncodesToAppleKeychainFormat() {
         // GIVEN
-        let ruleSet = PasscodeRuleSet(minimumLength: 10, maximumLength: 100, allowedCharacters: [.asciiPrintable], requiredCharacters: [.custom("🐼")])
+        let ruleSet = PasswordRuleSet(minimumLength: 10, maximumLength: 100, allowedCharacters: [.asciiPrintable], requiredCharacters: [.custom("🐼")])
 
         // WHEN
         let keychainFormat = ruleSet.encodeInKeychainFormat()
