@@ -196,7 +196,10 @@ platform :ios do
             s3_path = "s3://#{ENV['S3_BUCKET']}/ios/"
         else 
             s3_path = "s3://#{ENV['S3_BUCKET']}/ios/#{s3_subfolder}/"
+            sh "echo upload to s3 subfolder: #{s3_subfolder}"
         end
+
+
 
         if build.appstore_build
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
