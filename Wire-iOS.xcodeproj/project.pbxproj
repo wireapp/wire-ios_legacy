@@ -17,7 +17,7 @@
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06C1074425B9973E00C099D3 /* PasswordCharacterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074325B9973E00C099D3 /* PasswordCharacterClass.swift */; };
 		06C1074625B99C4A00C099D3 /* PasswordRuleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074525B99C4A00C099D3 /* PasswordRuleSet.swift */; };
-		06C1074825B99D1400C099D3 /* PasscodeRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */; };
+		06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */; };
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
 		06F2664223881A0D006BD21F /* LabelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F2664123881A0D006BD21F /* LabelIndicator.swift */; };
@@ -1612,7 +1612,7 @@
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06C1074325B9973E00C099D3 /* PasswordCharacterClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCharacterClass.swift; sourceTree = "<group>"; };
 		06C1074525B99C4A00C099D3 /* PasswordRuleSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSet.swift; sourceTree = "<group>"; };
-		06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeRuleSetTests.swift; sourceTree = "<group>"; };
+		06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSetTests.swift; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
@@ -3328,6 +3328,14 @@
 				0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */,
 			);
 			path = Warning;
+			sourceTree = "<group>";
+		};
+		064AB3D425BAE36A00380D9B /* PasswordRules */ = {
+			isa = PBXGroup;
+			children = (
+				06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */,
+			);
+			path = PasswordRules;
 			sourceTree = "<group>";
 		};
 		160D691E212C78C700096EAD /* CallQualityController */ = {
@@ -5851,7 +5859,6 @@
 				A96E802924C846E40010CD80 /* WipeDatabaseViewControllerTests.swift */,
 				A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */,
 				EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */,
-				06C1074725B99D1400C099D3 /* PasscodeRuleSetTests.swift */,
 			);
 			path = CustomAppLock;
 			sourceTree = "<group>";
@@ -5884,6 +5891,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				064AB3D425BAE36A00380D9B /* PasswordRules */,
 				6370DA1F2577933400B5C8F1 /* Views */,
 				A99E3E8D2519F23700E4FD3E /* Analytics */,
 				A9E5725524C640A100CBE0D7 /* CustomAppLock */,
@@ -8678,7 +8686,7 @@
 				6340660925B204B100C0B4BA /* VideoStreamStubProvider.swift in Sources */,
 				EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */,
 				636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */,
-				06C1074825B99D1400C099D3 /* PasscodeRuleSetTests.swift in Sources */,
+				06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				EE52379123F557B900D4FE79 /* MockServiceUserType+Creation.swift in Sources */,
 				5E628025221EEA3B0039A8AB /* ProfileActionsFactoryTests.swift in Sources */,
