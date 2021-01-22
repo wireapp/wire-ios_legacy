@@ -194,6 +194,7 @@ platform :ios do
 
         if s3_subfolder.nil? 
             s3_path = "s3://#{ENV['S3_BUCKET']}/ios/"
+            sh "echo upload to s3 default folder "
         else 
             s3_path = "s3://#{ENV['S3_BUCKET']}/ios/#{s3_subfolder}/"
             sh "echo upload to s3 subfolder: #{s3_subfolder}"
