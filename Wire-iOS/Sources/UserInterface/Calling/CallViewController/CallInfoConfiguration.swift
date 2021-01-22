@@ -132,6 +132,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
     let callState: CallStateExtending
+    let videoGridPresentationMode: VideoGridPresentationMode
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -161,6 +162,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
         callState = voiceChannel.state
+        videoGridPresentationMode = voiceChannel.videoGridPresentationMode
     }
 
     // This property has to be computed in order to return the correct call duration

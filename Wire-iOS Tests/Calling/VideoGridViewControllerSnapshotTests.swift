@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
-    var isCallOneToOne: Bool = false
+    var shouldShowActiveSpeakerFrame: Bool = false
     
     var floatingVideoStream: VideoStream?
 
@@ -67,7 +67,7 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testForActiveSpeakers_OneToOne() {
         configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
         configuration.floatingVideoStream = selfVideoStream
-        configuration.isCallOneToOne = true
+        configuration.shouldShowActiveSpeakerFrame = true
         createSut()
 
         verify(view: sut.view)

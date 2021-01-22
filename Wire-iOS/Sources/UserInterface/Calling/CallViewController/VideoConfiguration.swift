@@ -26,7 +26,7 @@ struct VideoConfiguration: VideoGridConfiguration {
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
-    let isCallOneToOne: Bool
+    let shouldShowActiveSpeakerFrame: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.videoStreamArrangment
@@ -34,7 +34,7 @@ struct VideoConfiguration: VideoGridConfiguration {
         floatingVideoStream = videoStreamArrangment.preview
         videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
-        isCallOneToOne = voiceChannel.callHasTwoParticipants
+        shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
     }
 }
 
@@ -86,9 +86,14 @@ extension VoiceChannel {
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
 
-        let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
-        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
+        var videoStreams = sortedActiveVideoStreams
         
+        if videoGridPresentationMode == .activeSpeakers {
+            return (nil, videoStreams.filter(\.stream.isParticipantActiveSpeaker))
+        }
+        
+        videoStreams = Array(videoStreams.prefix(VideoConfiguration.maxVideoStreams))
+        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
         return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
     }
     
@@ -110,10 +115,14 @@ extension VoiceChannel {
         }
     }
     
-    fileprivate var callHasTwoParticipants: Bool {
+    private var callHasTwoParticipants: Bool {
         return connectedParticipants.count == 2
     }
     
+    fileprivate var shouldShowActiveSpeakerFrame: Bool {
+        return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
+    }
+
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {

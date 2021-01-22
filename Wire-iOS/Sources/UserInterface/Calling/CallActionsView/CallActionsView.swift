@@ -60,6 +60,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
     var callState: CallStateExtending { get }
+    var videoGridPresentationMode: VideoGridPresentationMode { get}
 }
 
 extension CallActionsViewInputType {
@@ -68,6 +69,26 @@ extension CallActionsViewInputType {
         case (true, _): return .dark(blurred: true)
         case (false, .light): return .light
         case (false, .dark): return .dark(blurred: false)
+        }
+    }
+}
+
+extension VideoGridPresentationMode {
+    var title: String {
+        switch self {
+        case .activeSpeakers:
+            return "call.overlay.switch_to.speakers".localized
+        case .allVideoStreams:
+            return "call.overlay.switch_to.all".localized
+        }
+    }
+    
+    var accessibilityIdentifier: String {
+        switch self {
+        case .activeSpeakers:
+            return "speakers"
+        case .allVideoStreams:
+            return "all"
         }
     }
 }
@@ -85,10 +106,7 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     private var lastInput: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
     
-    private let speakersAllSegmentedView = RoundedSegmentedView(items: [
-        "call.overlay.switch_to.speakers".localized,
-        "call.overlay.switch_to.all".localized
-    ])
+    private let speakersAllSegmentedView = RoundedSegmentedView(items: VideoGridPresentationMode.allCases.map(\.title))
     
     // Buttons
     private let muteCallButton = IconLabelButton.muteCall()
@@ -120,9 +138,7 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     }
     
     private func setupViews() {
-        speakersAllSegmentedView.setSelected(true, forItemAt: 1)
         speakersAllSegmentedView.delegate = self
-        speakersAllSegmentedView.isHidden = true
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
         topStackView.spacing = 32
@@ -176,6 +192,9 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
+        speakersAllSegmentedView.isHidden = !input.isVideoCall
+        let index = VideoGridPresentationMode.allCases.firstIndex(of: input.videoGridPresentationMode)!
+        speakersAllSegmentedView.setSelected(true, forItemAt: index)
         muteCallButton.isSelected = input.isMuted
         muteCallButton.isEnabled = canToggleMuteButton(input)
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
@@ -209,7 +228,8 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     // MARK: - Action Output
     
     func roundedSegmentedView(_ view: RoundedSegmentedView, didSelectSegmentAtIndex index: Int) {
-        // TODO: send action to delegate
+        let mode = VideoGridPresentationMode.allCases[index]
+        delegate?.callActionsView(self, perform: .updateVideoGridPresentationMode(mode))
     }
 
     @objc private func performButtonAction(_ sender: IconLabelButton) {
@@ -242,6 +262,8 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
 
         let targetCamera = input.cameraType == .front ? "back" : "front"
         flipCameraButton.accessibilityLabel = "call.actions.label.switch_to_\(targetCamera)_camera".localized
+        
+        speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }
 
 }

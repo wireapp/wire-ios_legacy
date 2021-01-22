@@ -197,7 +197,7 @@ final class VideoGridViewController: UIViewController {
             viewCache[selfStreamId] = SelfVideoPreviewView(
                 stream: selfStream,
                 isCovered: isCovered,
-                shouldShowActiveSpeakerFrame: !configuration.isCallOneToOne
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame
             )
         }
     }
@@ -236,7 +236,7 @@ final class VideoGridViewController: UIViewController {
         videoStreams.forEach {
             let view = (streamView(for: $0.stream) as? BaseVideoPreviewView)
             view?.stream = $0.stream
-            view?.shouldShowActiveSpeakerFrame = !configuration.isCallOneToOne
+            view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             (view as? VideoPreviewView)?.isPaused = $0.isPaused
         }
     }
@@ -350,7 +350,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: !configuration.isCallOneToOne)
+            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame)
             viewCache[streamId] = view
             return view
         }

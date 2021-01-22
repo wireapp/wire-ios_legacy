@@ -24,7 +24,7 @@ protocol VideoGridConfiguration {
     var floatingVideoStream: VideoStream? { get }
     var videoStreams: [VideoStream] { get }
     var networkQuality: NetworkQuality { get }
-    var isCallOneToOne: Bool { get }
+    var shouldShowActiveSpeakerFrame: Bool { get }
 
 }
 
@@ -44,7 +44,7 @@ extension VideoGridConfiguration {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
             networkQuality == other.networkQuality &&
-            isCallOneToOne == other.isCallOneToOne
+            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame
     }
 
 }
