@@ -21,16 +21,19 @@ import XCTest
 
 final class ZClientViewControllerTests: XCTestCase {
     var sut: ZClientViewController!
+    var userSessionMock: MockZMUserSession!
 
     override func setUp() {
         super.setUp()
 
         let mockSelfUser = MockUserType.createSelfUser(name: "Bob")
-        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData), selfUser: mockSelfUser)
+        userSessionMock = MockZMUserSession()
+        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData), selfUser: mockSelfUser, userSession: userSessionMock)
     }
 
     override func tearDown() {
         sut = nil
+        userSessionMock = nil
 
         super.tearDown()
     }
@@ -55,4 +58,18 @@ final class ZClientViewControllerTests: XCTestCase {
         XCTAssertNil(alert)
     }
 
+    func testThatCustomPasscodeWillBeDeleted_AfterDisablingApplock() {
+        /// GIVEN
+        try! sut._userSession!.appLockController.storePasscode("test")
+        sut._userSession!.appLockController.needsToNotifyUser = true
+        sut._userSession!.appLockController.isActive = false
+        XCTAssertFalse(sut._userSession!.appLockController.isCustomPasscodeNotSet)
+        
+        /// WHEN
+        sut.notifyUserOfDisabledAppLockIfNeeded()
+        sut.changeWarningViewController?.confirmButtonTapped(sender: nil)
+        
+        /// THEN
+        XCTAssertTrue(sut._userSession!.appLockController.isCustomPasscodeNotSet)
+    }
 }

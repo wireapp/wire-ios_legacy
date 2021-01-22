@@ -53,6 +53,8 @@ final class ZClientViewController: UIViewController {
     private var networkAvailabilityObserverToken: Any?
     private var pendingInitialStateRestore = false
     
+    var _userSession: UserSessionInterface?
+    
     /// init method for testing allows injecting an Account object and self user
     ///
     /// - Parameters:
@@ -60,8 +62,9 @@ final class ZClientViewController: UIViewController {
     ///   - selfUser: a SelfUserType object
     required init(account: Account,
                   selfUser: SelfUserType,
-                  userSession: ZMUserSession? = ZMUserSession.shared()) {
-        backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession)
+                  userSession: UserSessionInterface? = ZMUserSession.shared()) {
+        _userSession = userSession
+        backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession as? ZMUserSession)
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
         
         super.init(nibName:nil, bundle:nil)

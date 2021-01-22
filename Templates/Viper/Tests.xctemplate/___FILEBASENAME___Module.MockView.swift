@@ -1,5 +1,6 @@
+//
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +17,24 @@
 //
 
 import Foundation
+@testable import Wire
 
-enum PasscodeValidationResult {
-    case accepted
-    case error(Set<PasscodeError>)
+extension ___VARIABLE_productName:identifier___Module {
+
+    final class MockView: ___VARIABLE_productName:identifier___ViewPresenterInterface {
+
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Methods
+
+    }
+
+}
+
+extension ___VARIABLE_productName:identifier___Module.MockView {
+
+    struct MethodCalls { }
+
 }

@@ -38,7 +38,7 @@ struct AddParticipantsViewModel {
     var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
-            return conversation.connectedUser.map { [$0] } ?? []
+            return conversation.connectedUserType.map { [$0] } ?? []
         case .create(let values): return values.participants
         default: return []
         }
@@ -52,7 +52,7 @@ struct AddParticipantsViewModel {
     
     var filterConversation: ZMConversation? {
         switch context {
-        case .add(let conversation) where conversation.conversationType == .group: return conversation
+        case .add(let conversation) where conversation.conversationType == .group: return conversation as? ZMConversation
         default: return nil
         }
     }

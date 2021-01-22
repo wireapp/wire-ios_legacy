@@ -33,11 +33,12 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
         case notifications = 0, guests, timeout
         
-        func accessible(in conversation: ZMConversation, by user: UserType) -> Bool {
+        func accessible(in conversation: GroupDetailsConversationType,
+                        by user: UserType) -> Bool {
             switch self {
             case .notifications: return user.canModifyNotificationSettings(in: conversation)
             case .guests:        return user.canModifyAccessControlSettings(in: conversation)
-            case .timeout:       return user.canModifyEphemeralSettings(in: conversation) 
+            case .timeout:       return user.canModifyEphemeralSettings(in: conversation)
             }
         }
         
@@ -54,7 +55,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
     // MARK: - Properties
 
     private weak var delegate: GroupOptionsSectionControllerDelegate?
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     private let syncCompleted: Bool
     private let options: [Option]
     
@@ -62,7 +63,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         return !options.isEmpty
     }
     
-    init(conversation: ZMConversation, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
+    init(conversation: GroupDetailsConversationType, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted

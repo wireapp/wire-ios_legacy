@@ -21,16 +21,16 @@ import Cartography
 import UIKit
 import WireDataModel
 
-extension ZMConversation {
+extension ConversationLike where Self: TeamProvider & AccessProvider {
     var canAddGuest: Bool {
         // If not a team conversation: possible to add any contact.
-        guard let _ = self.team else {
+        guard let _ = team else {
             return true
         }
         
         // Access mode and/or role is unknown: let's try to add and observe the result.
-        guard let accessMode = self.accessMode,
-              let accessRole = self.accessRole else {
+        guard let accessMode = accessMode,
+              let accessRole = accessRole else {
                 return true
         }
         
@@ -95,7 +95,7 @@ final class AddParticipantsViewController: UIViewController {
     }
     
     enum Context {
-        case add(ZMConversation)
+        case add(GroupDetailsConversationType)
         case create(ConversationCreationValues)
     }
     
@@ -130,7 +130,7 @@ final class AddParticipantsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(conversation: ZMConversation) {
+    convenience init(conversation: GroupDetailsConversationType) {
         self.init(context: .add(conversation))
     }
     
@@ -143,7 +143,8 @@ final class AddParticipantsViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
+    init(context: Context,
+         variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -371,10 +372,10 @@ final class AddParticipantsViewController: UIViewController {
         }
     }
     
-    fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
+    fileprivate func addSelectedParticipants(to conversation: GroupDetailsConversationType) {
         let selectedUsers = self.userSelection.users
         
-        conversation.addOrShowError(participants: Array(selectedUsers))
+        (conversation as? ZMConversation)?.addOrShowError(participants: Array(selectedUsers))
     }
 }
 
@@ -444,7 +445,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,
-            actionType: .addService(conversation),
+            actionType: .addService(conversation as! ZMConversation),
             variant: .init(colorScheme: self.variant, opaque: true)
         ) { [weak self] result in
             guard let `self` = self, let result = result else { return }

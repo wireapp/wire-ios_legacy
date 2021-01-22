@@ -19,6 +19,12 @@
 
 import WireSyncEngine
 
+extension GroupDetailsConversation where Self: ZMConversation {
+    var freeParticipantSlots: Int {
+        return ZMConversation.maxParticipants - localParticipants.count
+    }
+}
+
 extension ZMConversation {
     private enum NetworkError: Error {
         case offline
@@ -30,10 +36,6 @@ extension ZMConversation {
     
     static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
-    }
-
-    var freeParticipantSlots: Int {
-        return type(of: self).maxParticipants - localParticipants.count
     }
     
     func addOrShowError(participants: [UserType]) {
