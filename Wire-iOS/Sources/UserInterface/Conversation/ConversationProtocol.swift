@@ -18,6 +18,34 @@
 import Foundation
 import WireDataModel
 
+
+protocol DisplayNameProvider {
+    var displayName: String { get }
+}
+
+protocol ConnectedUserProvider {
+    var connectedUserType: UserType? { get }
+}
+
+protocol AllowGuestsProvider {
+    var allowGuests: Bool { get }
+}
+
+protocol TeamProvider {
+    var team: Team? { get }
+}
+
+protocol AccessProvider {
+    var accessMode: ConversationAccessMode? { get }
+    var accessRole: ConversationAccessRole? { get }
+}
+
+protocol MessageDestructionTimeoutProvider {
+    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout? { get }
+}
+
+// MARK: - Input Bar View controller
+
 protocol InputBarConversation {
     var typingUsers: [UserType] { get }
     var hasDraftMessage: Bool { get }
@@ -26,24 +54,49 @@ protocol InputBarConversation {
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
-    var conversationType: ZMConversationType { get }
-
     func setIsTyping(_ isTyping: Bool)
 
     var isReadOnly: Bool { get }
-    var displayName: String { get }
 }
 
-protocol ConnectedUserContainer {
-    var connectedUserType: UserType? { get }
-}
+typealias InputBarConversationType = InputBarConversation & ConnectedUserProvider & DisplayNameProvider & ConversationLike
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserContainer
-
-extension ZMConversation: ConnectedUserContainer {
+extension ZMConversation: ConnectedUserProvider {
     var connectedUserType: UserType? {
         return connectedUser
     }
 }
 
 extension ZMConversation: InputBarConversation {}
+
+// MARK: - GroupDetailsConversation View controllers and child VCs
+
+protocol GroupDetailsConversation {
+    var isUnderLegalHold: Bool { get }
+    var userDefinedName: String? { get set }
+
+    var securityLevel: ZMConversationSecurityLevel { get }
+
+    var sortedOtherParticipants: [UserType] { get }
+    var sortedServiceUsers: [UserType] { get }
+
+    var allowGuests: Bool { get }
+    var hasReadReceiptsEnabled: Bool { get }
+
+    var mutedMessageTypes: MutedMessageTypes { get }
+
+    var freeParticipantSlots: Int { get }
+
+    var teamRemoteIdentifier: UUID? { get }
+}
+
+typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & MessageDestructionTimeoutProvider & ConnectedUserProvider & ConversationLike
+
+//TODO: Merge there with ConversationLike
+extension ZMConversation: DisplayNameProvider {}
+extension ZMConversation: AllowGuestsProvider {}
+extension ZMConversation: TeamProvider {}
+extension ZMConversation: AccessProvider {}
+extension ZMConversation: MessageDestructionTimeoutProvider {}
+
+extension ZMConversation: GroupDetailsConversation {}
