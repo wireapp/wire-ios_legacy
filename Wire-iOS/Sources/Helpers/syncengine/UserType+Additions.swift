@@ -19,12 +19,10 @@
 import WireDataModel
 
 extension UserType {
+    
     var nameAccentColor: UIColor? {
         return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
     }
-}
-
-extension ZMUser {
 
     var canSeeServices: Bool {
         #if ADD_SERVICE_DISABLED
