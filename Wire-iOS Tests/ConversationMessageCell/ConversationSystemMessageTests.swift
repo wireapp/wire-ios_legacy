@@ -19,8 +19,8 @@
 import XCTest
 @testable import Wire
 
-final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
-    
+final class ConversationSystemMessageTests: XCTestCase {
+
     override func setUp() {
         super.setUp()
         SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
@@ -90,11 +90,11 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testNewClient_oneUser_oneClient() {
         let numUsers = 1
         let (message, mockSystemMessageData) = MockMessageFactory.systemMessageAndData(with: .newClient, users: numUsers)
-        
+
         let userClients: [AnyHashable] = [MockUserClient()]
-        
+
         message!.update(mockSystemMessageData: mockSystemMessageData, userClients: userClients)
-        
+
         verify(message: message!)
     }
 

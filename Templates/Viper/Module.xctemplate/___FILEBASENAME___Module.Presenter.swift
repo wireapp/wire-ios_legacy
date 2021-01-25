@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,18 +18,22 @@
 
 import Foundation
 
-final class ___FILEBASENAMEASIDENTIFIER___: PresenterInterface {
+extension ___VARIABLE_productName:identifier___Module {
 
-    var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
-    var interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface!
-    weak var view: ___VARIABLE_productName:identifier___ViewPresenterInterface!
+    final class Presenter: PresenterInterface {
+
+        var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
+        var interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface!
+        weak var view: ___VARIABLE_productName:identifier___ViewPresenterInterface!
+
+    }
 
 }
 
 // MARK: - API for interactor
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___PresenterInteractorInterface {}
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface { }
 
 // MARK: - API for view
 
-extension ___FILEBASENAMEASIDENTIFIER___: ___VARIABLE_productName:identifier___PresenterViewInterface {}
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterViewInterface { }

@@ -49,11 +49,22 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
-            updateBorderVisibility()
+            updateActiveSpeakerFrame()
         }
     }
     
-    var isMaximized: Bool = false
+    var shouldShowActiveSpeakerFrame: Bool {
+        didSet {
+            updateActiveSpeakerFrame()
+        }
+    }
+    
+    /// indicates wether or not the view is shown in full in the grid
+    var isMaximized: Bool = false {
+        didSet {
+            updateActiveSpeakerFrame()
+        }
+    }
     
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
@@ -69,16 +80,17 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     
     let userDetailsView = VideoParticipantDetailsView()
     
-    init(stream: Stream, isCovered: Bool) {
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
         self.stream = stream
         self.isCovered = isCovered
-        
+        self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+
         super.init(frame: .zero)
 
         setupViews()
         createConstraints()
         updateUserDetails()
-        updateBorderVisibility()
+        updateActiveSpeakerFrame()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -114,13 +126,13 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
-    // MARK: - Frame Border
-    
-    private let isActiveSpeakerFrameEnabled = false
-    
-    private func updateBorderVisibility() {
-        guard isActiveSpeakerFrameEnabled else { return }
-        layer.borderWidth = stream.isParticipantUnmutedAndActiveSpeaker ? 1 : 0
+    // MARK: - Active Speaker Frame
+        
+    private func updateActiveSpeakerFrame() {
+        let showFrame = shouldShowActiveSpeakerFrame
+            && stream.isParticipantUnmutedAndActiveSpeaker
+            && !isMaximized
+        layer.borderWidth = showFrame ? 1 : 0
     }
     
     // MARK: - Orientation & Layout

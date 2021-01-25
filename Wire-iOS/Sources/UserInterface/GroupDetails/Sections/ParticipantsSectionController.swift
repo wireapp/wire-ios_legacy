@@ -22,7 +22,7 @@ import WireDataModel
 import WireSyncEngine
 
 protocol ParticipantsCellConfigurable: Reusable {
-    func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool)
+    func configure(with rowType: ParticipantsRowType, conversation: GroupDetailsConversationType, showSeparator: Bool)
 }
 
 enum ParticipantsRowType {
@@ -123,9 +123,9 @@ private struct ParticipantsSectionViewModel {
 }
 
 extension UserCell: ParticipantsCellConfigurable {
-    func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
+    func configure(with rowType: ParticipantsRowType, conversation: GroupDetailsConversationType, showSeparator: Bool) {
         guard case let .user(user) = rowType else { preconditionFailure() }
-        configure(with: user, selfUser: ZMUser.selfUser(), conversation: conversation)
+        configure(with: user, selfUser: SelfUser.current, conversation: conversation as? ZMConversation)
         accessoryIconView.isHidden = user.isSelfUser
         accessibilityIdentifier = identifier
         self.showSeparator = showSeparator
@@ -142,12 +142,12 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     }
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private var viewModel: ParticipantsSectionViewModel
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     private var token: AnyObject?
     
     init(participants: [UserType],
          conversationRole: ConversationRole,
-         conversation: ZMConversation,
+         conversation: GroupDetailsConversationType,
          delegate: GroupDetailsSectionControllerDelegate,
          totalParticipantsCount: Int,
          clipSection: Bool = true,

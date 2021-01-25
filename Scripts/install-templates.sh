@@ -23,9 +23,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 
 # Determine source and destination paths.
-SOURCE=Templates/Module.xctemplate
+SOURCE=Templates/Viper
 XCODE_PATH=$(xcode-select -p)
-DESTINATION=$XCODE_PATH/Library/Xcode/Templates/File\ Templates/Viper/
+DESTINATION=$XCODE_PATH/Library/Xcode/Templates/File\ Templates/
 
 # Install
 echo "Installing '${SOURCE}' to '${DESTINATION}'"

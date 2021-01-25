@@ -73,11 +73,10 @@ extension AccountSelectorController: AccountSelectorViewDelegate {
             return
         }
         
-        SessionManager.shared?.select(account, tearDownCompletion: {
-            ZClientViewController.shared?.conversationListViewController.dismiss(animated: true,
-                                                                                 completion: {
-                AppDelegate.shared.mediaPlaybackManager?.stop()
-            })
+        ZClientViewController.shared?.conversationListViewController.dismiss(animated: true,
+                                                                             completion: {
+            AppDelegate.shared.mediaPlaybackManager?.stop()
+            SessionManager.shared?.select(account)
         })
     }
 }

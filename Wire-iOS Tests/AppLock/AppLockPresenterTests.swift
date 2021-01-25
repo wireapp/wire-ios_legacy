@@ -30,18 +30,21 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var requestPasswordMessage: String?
     var presentCreatePasscodeScreenCalled: Bool = false
     var presentWarningScreenCalled: Bool = false
-    
+
+    var presentUnlockScreenCalled: Bool = false
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
+        presentUnlockScreenCalled = true
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
         presentCreatePasscodeScreenCalled = true
+        callback?(true)
     }
     
-    func presentWarningScreen(callback: ResultHandler?) {
+    func presentWarningScreen(completion: Completion?) {
         presentWarningScreenCalled = true
     }
     
@@ -62,6 +65,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
+    var needsToCreateCustomPasscode: Bool = false
     var isCustomPasscodeNotSet: Bool = false
     var _isAuthenticationNeeded: Bool = false
     var didCallIsAuthenticationNeeded: Bool = false
@@ -487,6 +491,62 @@ final class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertFalse(userInterface.presentWarningScreenCalled)
     }
+
+    // MARK: - Require authentication
+
+    func testThatIt_AsksToCreateCustomPasscode() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToCreateCustomPasscode = true
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+    }
+
+    func testThatIt_ResetsNeedsToNotifyUserFlag_AfterDisplayingCreatePasscodeScreen() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToNotifyUser = true
+        appLockInteractor.needsToCreateCustomPasscode = true
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+        XCTAssertFalse(appLockInteractor.needsToNotifyUser)
+    }
+
+    func testThatIt_AsksToEvaluateAuthentication() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToCreateCustomPasscode = false
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
+    }
+    
+    // Mark: - Creating passcode
+    
+    func testThatItUnlocksAppAfterCreatingAPasscode() {
+        // Given
+        set(authNeeded: true, authenticationState: .needed)
+        appLockInteractor.needsToCreateCustomPasscode = true
+        
+        // When
+        sut.requireAuthenticationIfNeeded()
+        
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+        XCTAssertEqual(userInterface.contentsDimmed, false)
+    }
+
 }
 
 extension AppLockPresenterTests {

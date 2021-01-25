@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,11 +19,6 @@
 import Foundation
 
 enum ___FILEBASENAMEASIDENTIFIER___: ModuleInterface {
-
-    typealias Router = ___VARIABLE_productName:identifier___Router
-    typealias Interactor = ___VARIABLE_productName:identifier___Interactor
-    typealias Presenter = ___VARIABLE_productName:identifier___Presenter
-    typealias View = ___VARIABLE_productName:identifier___View
 
     static func build() -> View {
         let router = Router()
