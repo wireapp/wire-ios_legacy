@@ -30,7 +30,7 @@ extension AppLockModule {
 
         // MARK: - Mock helpers
 
-        var _authenticationResult: AppLockController.AuthenticationResult = .unavailable
+        var _authenticationResult: AppLockAuthenticationResult = .unavailable
         var _evaluationContext = LAContext()
         var _passcode: String?
 
@@ -38,37 +38,23 @@ extension AppLockModule {
 
         var delegate: AppLockDelegate?
 
+        var isAvailable = true
         var isActive = false
-
-        var isLocked = false
-
-        var requiresBiometrics = false
-
-        var needsToSetCustomPasscode = false
-
-        var isCustomPasscodeNotSet = false
-
-        var needsToNotifyUser = false
-
         var timeout: UInt = 10
-
         var isForced = false
-
-        var isAvailable = false
+        var isLocked = false
+        var requireCustomPasscode = false
+        var isCustomPasscodeSet = false
+        var needsToNotifyUser = false
 
         // MARK: - Methods
 
-        func open() {
-            methodCalls.open.append(())
+        func beginTimer() {
+            methodCalls.beginTimer.append(())
         }
 
-        // TODO: Delete
-
-        func evaluateAuthentication(scenario: AppLockController.AuthenticationScenario,
-                                    description: String,
-                                    context: LAContextProtocol,
-                                    with callback: @escaping (AppLockController.AuthenticationResult, LAContextProtocol) -> Void) {
-            fatalError()
+        func open() {
+            methodCalls.open.append(())
         }
 
         func evaluateAuthentication(passcodePreference: AppLockPasscodePreference,
@@ -85,23 +71,14 @@ extension AppLockModule {
             return _passcode == customPasscode ? .granted : .denied
         }
 
-        func persistBiometrics() {
-            methodCalls.persistBiometrics.append(())
-        }
-
         func deletePasscode() throws {
             methodCalls.deletePasscode.append(())
             _passcode = nil
         }
 
-        func storePasscode(_ passcode: String) throws {
-            methodCalls.storePasscode.append(passcode)
+        func updatePasscode(_ passcode: String) throws {
+            methodCalls.updatePasscode.append(passcode)
             _passcode = passcode
-        }
-
-        func fetchPasscode() -> Data? {
-            methodCalls.fetchPasscode.append(())
-            return _passcode?.data(using: .utf8)
         }
 
     }
@@ -115,13 +92,12 @@ extension AppLockModule.MockAppLockController {
         typealias Preference = AppLockPasscodePreference
         typealias Callback = (AppLockModule.AuthenticationResult, LAContext) -> Void
 
+        var beginTimer: [Void] = []
         var open: [Void] = []
         var evaluateAuthentication: [(preference: Preference, description: String, callback: Callback)] = []
         var evaluateAuthenticationWithCustomPasscode: [String] = []
-        var persistBiometrics: [Void] = []
         var deletePasscode: [Void] = []
-        var storePasscode: [String] = []
-        var fetchPasscode: [Void] = []
+        var updatePasscode: [String] = []
 
     }
 

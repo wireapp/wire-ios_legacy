@@ -72,8 +72,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndBiometricsIsRequired() {
         // Given
-        appLock.isCustomPasscodeNotSet = true
-        appLock.requiresBiometrics = true
+        appLock.isCustomPasscodeSet = false
+        appLock.requireCustomPasscode = true
 
         // Then
         XCTAssertTrue(sut.needsToCreateCustomPasscode)
@@ -81,7 +81,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndNoAuthenticationTypeIsAvailable() {
         // Given
-        appLock.isCustomPasscodeNotSet = true
+        appLock.isCustomPasscodeSet = false
         authenticationType.current = .unavailable
 
         // Then
@@ -90,7 +90,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     func test_NoNeedToCreateCustomPasscode_IfOneIsSet() {
         // Given
-        appLock.isCustomPasscodeNotSet = false
+        appLock.isCustomPasscodeSet = true
 
         // Then
         XCTAssertFalse(sut.needsToCreateCustomPasscode)
@@ -98,8 +98,8 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     func test_NoNeedToCreatePasscode_IfNoneIsSet_BiometricsIsNotRequired_DevicePasscodeIsSet() {
         // Given
-        appLock.isCustomPasscodeNotSet = true
-        appLock.requiresBiometrics = false
+        appLock.isCustomPasscodeSet = false
+        appLock.requireCustomPasscode = false
         authenticationType.current = .passcode
 
         // Then
@@ -114,6 +114,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
         // When
         sut.evaluateAuthentication()
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
@@ -123,10 +124,11 @@ final class AppLockModuleInteractorTests: XCTestCase {
     func test_EvalutesWithScreenLockScenario_IfSessionHasScreenLock() {
         // Given
         session.lock = .screen
-        appLock.requiresBiometrics = false
+        appLock.requireCustomPasscode = false
 
         // When
         sut.evaluateAuthentication()
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
@@ -138,10 +140,11 @@ final class AppLockModuleInteractorTests: XCTestCase {
     func test_EvalutesWithBiometricsScreenLockScenario_IfSessionHasScreenLock_AndBiometricsRequired() {
         // Given
         session.lock = .screen
-        appLock.requiresBiometrics = true
+        appLock.requireCustomPasscode = true
 
         // When
         sut.evaluateAuthentication()
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
@@ -156,6 +159,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
         // When
         sut.evaluateAuthentication()
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 1)
@@ -171,6 +175,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
         // When
         sut.evaluateAuthentication()
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // Then
         XCTAssertEqual(session.methodCalls.unlockDatabase.count, 1)
@@ -190,6 +195,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         for result in authenticationResults {
             appLock._authenticationResult = result
             sut.evaluateAuthentication()
+            XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         }
 
         // Then
@@ -211,6 +217,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         for result in authenticationResults {
             appLock._authenticationResult = result
             sut.evaluateAuthentication()
+            XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         }
 
         // Then

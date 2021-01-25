@@ -91,13 +91,12 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
         sut.view.layoutIfNeeded()
 
-
         verify(matching: sut, customSize: CGSize(width: CGSize.iPhoneSize.iPhone4_7.width, height: sut.tableView.contentSize.height))
     }
     
     func testThatApplockIsAvailableInOptionsGroup_WhenIsAvailable() {
         // given
-        let appLock = MockAppLock()
+        let appLock = AppLockModule.MockAppLockController()
         appLock.isAvailable = true
         userSessionMock.appLockController = appLock
 
@@ -111,7 +110,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     
     func testThatApplockIsNotAvailableInOptionsGroup_WhenIsNotAvailable() {
         // given
-        let appLock = MockAppLock()
+        let appLock = AppLockModule.MockAppLockController()
         appLock.isAvailable = false
         userSessionMock.appLockController = appLock
 

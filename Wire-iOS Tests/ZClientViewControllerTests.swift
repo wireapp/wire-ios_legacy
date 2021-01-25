@@ -59,17 +59,17 @@ final class ZClientViewControllerTests: XCTestCase {
     }
 
     func testThatCustomPasscodeWillBeDeleted_AfterDisablingApplock() {
-        /// GIVEN
-        try! sut._userSession!.appLockController.storePasscode("test")
+        // Given
+        let appLock = AppLockModule.MockAppLockController()
+        sut._userSession!.appLockController = appLock
         sut._userSession!.appLockController.needsToNotifyUser = true
         sut._userSession!.appLockController.isActive = false
-        XCTAssertFalse(sut._userSession!.appLockController.isCustomPasscodeNotSet)
         
-        /// WHEN
+        // When
         sut.notifyUserOfDisabledAppLockIfNeeded()
         sut.changeWarningViewController?.confirmButtonTapped(sender: nil)
         
-        /// THEN
-        XCTAssertTrue(sut._userSession!.appLockController.isCustomPasscodeNotSet)
+        // Then
+        XCTAssertEqual(appLock.methodCalls.deletePasscode.count, 1)
     }
 }

@@ -31,6 +31,8 @@ extension AppLockModule {
         private let session: Session
         private let authenticationType: AuthenticationTypeProvider
 
+        let dispatchGroup = DispatchGroup()
+
         /// The message to display on the OS authentication screen.
 
         private let deviceAuthenticationDescription = {
@@ -54,7 +56,7 @@ extension AppLockModule {
             guard let lock = session.lock else { return nil }
 
             switch lock {
-            case .screen where appLock.requiresBiometrics:
+            case .screen where appLock.requireCustomPasscode:
                 return .customOnly
             case .screen:
                 return .deviceThenCustom
@@ -75,11 +77,9 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         return appLock.needsToNotifyUser
     }
 
-    // FIXME: This could be more clearly expressed.
-
     var needsToCreateCustomPasscode: Bool {
-        guard appLock.isCustomPasscodeNotSet else { return false }
-        return appLock.requiresBiometrics || currentAuthenticationType == .unavailable
+        guard !appLock.isCustomPasscodeSet else { return false }
+        return appLock.requireCustomPasscode || currentAuthenticationType == .unavailable
     }
 
     var currentAuthenticationType: AuthenticationType {
@@ -98,7 +98,7 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
     }
 
     private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol?) {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async(group: dispatchGroup) { [weak self] in
             if case .granted = result, let context = context as? LAContext {
                 try? self?.session.unlockDatabase(with: context)
             }

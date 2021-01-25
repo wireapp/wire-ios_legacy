@@ -151,10 +151,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let accountIdentifier = account?.userIdentifier
             else { return }
         let configuration = AppLockRules.fromBundle()
-        let appLockConfig = AppLockController.Config(useBiometricsOrCustomPasscode: configuration.useBiometricsOrCustomPasscode,
-                                                     forceAppLock: configuration.forceAppLock,
-                                                     timeOut: configuration.appLockTimeout)
-        
+        let appLockConfig = AppLockController.Config(
+            isAvailable: true,
+            isForced: configuration.forceAppLock,
+            timeout: configuration.appLockTimeout,
+            requireCustomPasscode: configuration.useBiometricsOrCustomPasscode
+        )
+
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
@@ -475,43 +478,43 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
         
-        guard
-            let sharingSession = sharingSession,
-            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
-        else {
-            localAuthenticationStatus = .disabled
-            callback(localAuthenticationStatus)
-            return
-        }
-        
-        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
-            callback(localAuthenticationStatus)
-            return
-        }
-        
-        let scenario: AppLockController.AuthenticationScenario
-        
-        if sharingSession.encryptMessagesAtRest {
-            scenario = .databaseLock
-        } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.requiresBiometrics)
-        }
-        
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                                description: "share_extension.privacy_security.lock_app.description".localized)
-        { [weak self] (result, context) in
-            DispatchQueue.main.async {
-                if case .granted = result {
-                    self?.localAuthenticationStatus = .granted
-                    if let context = context as? LAContext {
-                        try? self?.sharingSession?.unlockDatabase(with: context)
-                    }
-                } else {
-                    self?.localAuthenticationStatus = .denied
-                }
-                callback(self?.localAuthenticationStatus)
-            }
-        }
+//        guard
+//            let sharingSession = sharingSession,
+//            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
+//        else {
+//            localAuthenticationStatus = .disabled
+//            callback(localAuthenticationStatus)
+//            return
+//        }
+//        
+//        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
+//            callback(localAuthenticationStatus)
+//            return
+//        }
+//        
+//        let scenario: AppLockController.AuthenticationScenario
+//        
+//        if sharingSession.encryptMessagesAtRest {
+//            scenario = .databaseLock
+//        } else {
+//            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.requiresBiometrics)
+//        }
+//        
+//        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
+//                                                                description: "share_extension.privacy_security.lock_app.description".localized)
+//        { [weak self] (result, context) in
+//            DispatchQueue.main.async {
+//                if case .granted = result {
+//                    self?.localAuthenticationStatus = .granted
+//                    if let context = context as? LAContext {
+//                        try? self?.sharingSession?.unlockDatabase(with: context)
+//                    }
+//                } else {
+//                    self?.localAuthenticationStatus = .denied
+//                }
+//                callback(self?.localAuthenticationStatus)
+//            }
+//        }
     }
     
     

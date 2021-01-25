@@ -20,6 +20,8 @@ import Foundation
 import UIKit
 import WireSystem
 
+// TODO: [John] Rename and move.
+
 final class OldAppLockView: UIView {
     var onReauthRequested: Completion?
 
