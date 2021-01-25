@@ -45,8 +45,8 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
     }
 
     func presentInputPasscodeModule(onGranted: @escaping () -> Void) {
-        // TODO: Clean this up.
-        // TODO: Inject these arguments.
+        // TODO: [John] Clean this up.
+        // TODO: [John] Inject these arguments.
         let unlockViewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: unlockViewController)
         let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
