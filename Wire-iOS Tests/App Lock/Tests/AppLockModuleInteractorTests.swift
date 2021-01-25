@@ -57,7 +57,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // Then
-        XCTAssertTrue(sut.needsToWarnUserOfConfigurationChange)
+        XCTAssertTrue(sut.needsToInformUserOfConfigurationChange)
     }
 
     func test_DoesNotNeedToWarnUserOfConfigurationChange() {
@@ -65,7 +65,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = false
 
         // Then
-        XCTAssertFalse(sut.needsToWarnUserOfConfigurationChange)
+        XCTAssertFalse(sut.needsToInformUserOfConfigurationChange)
     }
 
     // MARK: - Needs to create passcode

@@ -52,7 +52,7 @@ final class AppLockModulePresenterTests: XCTestCase {
     func test_ItRequestsToCreateCustomPasscode() {
         // Given
         interactor.needsToCreateCustomPasscode = true
-        interactor.needsToWarnUserOfConfigurationChange = false
+        interactor.needsToInformUserOfConfigurationChange = false
 
         // When
         sut.requestAuthentication()
@@ -69,7 +69,7 @@ final class AppLockModulePresenterTests: XCTestCase {
     func test_ItRequestsToCreateCustomPasscode_DueToConfigurationChange() {
         // Given
         interactor.needsToCreateCustomPasscode = true
-        interactor.needsToWarnUserOfConfigurationChange = true
+        interactor.needsToInformUserOfConfigurationChange = true
 
         // When
         sut.requestAuthentication()
@@ -97,7 +97,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_ItPresentsWarningModuleBeforeAuthenticating() {
         // Given
-        interactor.needsToWarnUserOfConfigurationChange = true
+        interactor.needsToInformUserOfConfigurationChange = true
 
         // When
         sut.requestAuthentication()

@@ -66,7 +66,7 @@ protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    var needsToWarnUserOfConfigurationChange: Bool { get }
+    var needsToInformUserOfConfigurationChange: Bool { get }
 
     var needsToCreateCustomPasscode: Bool { get }
 

@@ -60,7 +60,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func requestAuthentication() {
         if interactor.needsToCreateCustomPasscode {
-            router.presentCreatePasscodeModule(shouldInform: interactor.needsToWarnUserOfConfigurationChange) {
+            router.presentCreatePasscodeModule(shouldInform: interactor.needsToInformUserOfConfigurationChange) {
                 self.interactor.openAppLock()
             }
         } else {
@@ -72,7 +72,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
     }
 
     private func warnUserOfConfigurationChangeIfNeeded(then block: @escaping () -> Void) {
-        guard interactor.needsToWarnUserOfConfigurationChange else {
+        guard interactor.needsToInformUserOfConfigurationChange else {
             block()
             return
         }

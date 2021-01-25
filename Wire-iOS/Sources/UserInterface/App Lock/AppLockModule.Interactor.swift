@@ -73,7 +73,7 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
-    var needsToWarnUserOfConfigurationChange: Bool {
+    var needsToInformUserOfConfigurationChange: Bool {
         return appLock.needsToNotifyUser
     }
 

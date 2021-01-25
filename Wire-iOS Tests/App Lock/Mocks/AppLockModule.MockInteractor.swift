@@ -29,7 +29,7 @@ extension AppLockModule {
 
         // MARK: - Properties
 
-        var needsToWarnUserOfConfigurationChange = false
+        var needsToInformUserOfConfigurationChange = false
 
         var needsToCreateCustomPasscode = false
 
