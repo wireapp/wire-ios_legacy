@@ -37,7 +37,7 @@ extension AppLockModule {
             return true
         }
 
-        let lockView = OldAppLockView()
+        let lockView = LockView()
 
         // MARK: - Life cycle
 
@@ -62,7 +62,7 @@ extension AppLockModule {
             switch state {
             case let .locked(authenticationType):
                 lockView.showReauth = true
-                lockView.authenticateLabel.text = authenticationText(for: authenticationType)
+                lockView.message = authenticationText(for: authenticationType)
 
             case .authenticating:
                 lockView.showReauth = false
