@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class MessageDetailsActionTests: CoreDataSnapshotTestCase {
+final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     // MARK: - One To One
 
@@ -57,7 +57,7 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     func testThatDetailsAreNotAvailableInGroup_OtherUserMesaage() {
         withGroupMessage(belongsToTeam: false, teamGroup: false) { message in
-            message.sender = self.otherUser
+            message.senderUser = MockUserType.createUser(name: "Bob")
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
@@ -65,7 +65,7 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     func testThatDetailsAreAvailableInTeamGroup_WithoutReceipts_OtherUserMessage() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
-            message.sender = self.otherUser
+            message.senderUser = MockUserType.createUser(name: "Bob")
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
@@ -98,7 +98,7 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")!
-            message.sender = self.selfUser
+            message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
             block(message)
         }
@@ -109,7 +109,7 @@ class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")!
-            message.sender = self.selfUser
+            message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = otherUserConversation
             block(message)
         }

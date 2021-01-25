@@ -55,9 +55,9 @@ final class ImageMessageView: UIView {
     var message: ZMConversationMessage? {
         didSet {
             if let message = self.message {
-                self.user = message.sender
+                user = message.senderUser
                 
-                self.updateForImage()
+                updateForImage()
             }
         }
     }

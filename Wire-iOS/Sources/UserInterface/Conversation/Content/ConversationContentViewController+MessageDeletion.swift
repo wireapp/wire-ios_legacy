@@ -24,7 +24,7 @@ private extension ZMConversationMessage {
 
     /// Whether the `Delete for everyone` option should be allowed and shown for this message.
     var canBeDeletedForEveryone: Bool {
-        guard let sender = sender, let conversation = conversation else { return false }
+        guard let sender = senderUser, let conversation = conversation else { return false }
         return sender.isSelfUser && conversation.isSelfAnActiveMember
     }
 

@@ -19,7 +19,7 @@
 import Foundation
 import Down
 
-extension NSMutableAttributedString {
+extension NSAttributedString {
     
     @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {

@@ -58,8 +58,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
     private var snapshotView: UIView?
     
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool) {
-        super.init(stream: stream, isCovered: isCovered)
+    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+        super.init(
+            stream: stream,
+            isCovered: isCovered,
+            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
+        )
         updateState()
         updateVideoKind()
     }
@@ -81,7 +85,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
+
     // MARK: - Fill mode
 
     private var videoKind: VideoKind = .none {

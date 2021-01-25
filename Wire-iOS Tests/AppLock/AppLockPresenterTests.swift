@@ -29,15 +29,23 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var passwordInput: String?
     var requestPasswordMessage: String?
     var presentCreatePasscodeScreenCalled: Bool = false
-    
+    var presentWarningScreenCalled: Bool = false
+
+    var presentUnlockScreenCalled: Bool = false
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
         requestPasswordMessage = message
         callback(passwordInput)
+        presentUnlockScreenCalled = true
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
         presentCreatePasscodeScreenCalled = true
+        callback?(true)
+    }
+    
+    func presentWarningScreen(completion: Completion?) {
+        presentWarningScreenCalled = true
     }
     
     var spinnerAnimating: Bool?
@@ -57,6 +65,7 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
+    var needsToCreateCustomPasscode: Bool = false
     var isCustomPasscodeNotSet: Bool = false
     var _isAuthenticationNeeded: Bool = false
     var didCallIsAuthenticationNeeded: Bool = false
@@ -68,6 +77,10 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     
     var passwordToVerify: String?
     var customPasscodeToVerify: String?
+    
+    var needsToNotifyUser: Bool = false
+
+    var lastUnlockedDate: Date = Date()
 
     func verify(password: String) {
         passwordToVerify = password
@@ -100,7 +113,6 @@ final class AppLockPresenterTests: XCTestCase {
         userInterface = AppLockUserInterfaceMock()
         appLockInteractor = AppLockInteractorMock()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: true, useCustomCodeInsteadOfAccountPassword: false, forceAppLock: false, appLockTimeout: 1)
     }
     
     override func tearDown() {
@@ -179,7 +191,7 @@ final class AppLockPresenterTests: XCTestCase {
         //given
         resetMocksValues()
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         //then
         assert(contentsDimmed: true, reauthVisibile: false)
     }
@@ -281,7 +293,7 @@ final class AppLockPresenterTests: XCTestCase {
         setupPasswordVerificationTest()
 
         //when
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //then
         assertPasswordVerification(on: queue)
@@ -329,39 +341,39 @@ final class AppLockPresenterTests: XCTestCase {
     
     func testThatApplicationDidEnterBackgroundUpdatesLastUnlockedDateIfAuthenticated() {
         //given
-        AppLock.lastUnlockedDate = Date()
+        appLockInteractor.lastUnlockedDate = Date()
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .authenticated)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertTrue(Date() > AppLock.lastUnlockedDate)
+        XCTAssertTrue(Date() > appLockInteractor.lastUnlockedDate)
     }
     
     func testThatApplicationDidEnterBackgroundDoenstUpdateLastUnlockDateIfNotAuthenticated() {
         //given
         let date = Date()
-        AppLock.lastUnlockedDate = date
+        appLockInteractor.lastUnlockedDate = date
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .cancelled)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .needed)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
         
         //given
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: .pendingPassword)
         //when
         sut.applicationDidEnterBackground()
         //then
-        XCTAssertEqual(date, AppLock.lastUnlockedDate)
+        XCTAssertEqual(date, appLockInteractor.lastUnlockedDate)
     }
     
     func testThatApplicationDidEnterBackgroundDimsContentIfAppLockActive() {
@@ -436,7 +448,7 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = true
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
 
         //THEN
         XCTAssert( userInterface.presentCreatePasscodeScreenCalled)
@@ -448,12 +460,93 @@ final class AppLockPresenterTests: XCTestCase {
         appLockInteractor.isCustomPasscodeNotSet = false
         
         //WHEN
-        sut.authenticationEvaluated(with: .needAccountPassword)
+        sut.authenticationEvaluated(with: .needCustomPasscode)
         
         //THEN
         XCTAssertFalse( userInterface.presentCreatePasscodeScreenCalled)
         
     }
+    
+     //MARK: - warning screen
+    func testThatAppLockShowsWarningScreen_IfNeedsToNotifyUserIsTrue() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = true
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertTrue(userInterface.presentWarningScreenCalled)
+    }
+    
+    func testThatAppLockDoesNotShowWarningScreen_IfNeedsToNotifyUserIsFalse() {
+        //given
+        set(authNeeded: true, authenticationState: .authenticated)
+        appLockInteractor.needsToNotifyUser = false
+        
+        //when
+        sut.requireAuthenticationIfNeeded()
+        
+        //then
+        XCTAssertFalse(userInterface.presentWarningScreenCalled)
+    }
+
+    // MARK: - Require authentication
+
+    func testThatIt_AsksToCreateCustomPasscode() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToCreateCustomPasscode = true
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+    }
+
+    func testThatIt_ResetsNeedsToNotifyUserFlag_AfterDisplayingCreatePasscodeScreen() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToNotifyUser = true
+        appLockInteractor.needsToCreateCustomPasscode = true
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+        XCTAssertFalse(appLockInteractor.needsToNotifyUser)
+    }
+
+    func testThatIt_AsksToEvaluateAuthentication() {
+        // Given
+        appLockInteractor._isAuthenticationNeeded = true
+        appLockInteractor.needsToCreateCustomPasscode = false
+
+        // When
+        sut.requireAuthentication()
+
+        // Then
+        XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
+    }
+    
+    // Mark: - Creating passcode
+    
+    func testThatItUnlocksAppAfterCreatingAPasscode() {
+        // Given
+        set(authNeeded: true, authenticationState: .needed)
+        appLockInteractor.needsToCreateCustomPasscode = true
+        
+        // When
+        sut.requireAuthenticationIfNeeded()
+        
+        // Then
+        XCTAssertTrue(userInterface.presentCreatePasscodeScreenCalled)
+        XCTAssertEqual(userInterface.contentsDimmed, false)
+    }
+
 }
 
 extension AppLockPresenterTests {
@@ -490,7 +583,7 @@ extension AppLockPresenterTests {
         let expectation = XCTestExpectation(description: "verify password")
         
         queue.async {
-            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.passwordToVerify)
+            XCTAssertEqual(self.userInterface.passwordInput, self.appLockInteractor.customPasscodeToVerify)
             expectation.fulfill()
         }
         

@@ -63,7 +63,11 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
     func addMuteStateObserver(_ observer: MuteStateObserver) -> Any {
         return "token"
     }
-
+    
+    func addActiveSpeakersObserver(_ observer: ActiveSpeakersObserver) -> Any {
+        return "token"
+    }
+    
     var state: CallState {
         return mockCallState
     }
@@ -79,7 +83,11 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
     var participants: [CallParticipant] {
         return mockParticipants
     }
-
+    
+    func participants(activeSpeakersLimit limit: Int?) -> [CallParticipant] {
+        return mockParticipants
+    }
+    
     var isConstantBitRateAudioActive: Bool {
         return mockIsConstantBitRateAudioActive
     }

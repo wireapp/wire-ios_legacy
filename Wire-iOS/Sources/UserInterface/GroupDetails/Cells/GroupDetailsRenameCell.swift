@@ -86,7 +86,7 @@ final class GroupDetailsRenameCell : UICollectionViewCell {
         configureColors()
     }
     
-    func configure(for conversation: ZMConversation, editable: Bool) {
+    func configure(for conversation: GroupDetailsConversationType, editable: Bool) {
         titleTextField.text = conversation.displayName
         verifiedIconView.isHidden = conversation.securityLevel != .secure
         

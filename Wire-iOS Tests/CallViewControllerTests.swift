@@ -39,7 +39,8 @@ extension XCTestCase {
 }
 
 extension XCTestCase {
-    static func createCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController {
+    static func createCallViewController(selfUser: UserType,
+                                         mediaManager: ZMMockAVSMediaManager) -> CallViewController {
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
@@ -50,7 +51,7 @@ extension XCTestCase {
         voiceChannel.mockIsVideoCall = true
         voiceChannel.mockCallState = CallState.established
         let proximityManager = ProximityMonitorManager()
-        let callController = CallViewController(voiceChannel: voiceChannel, proximityMonitorManager: proximityManager, mediaManager:mediaManager)
+        let callController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, proximityMonitorManager: proximityManager, mediaManager:mediaManager)
 
         return callController
     }
@@ -62,7 +63,7 @@ final class CallViewControllerTests: XCTestCase {
         // when & then
         verifyDeallocation { () -> CallViewController in
             // given
-            let callController = XCTestCase.createCallViewController(mediaManager: ZMMockAVSMediaManager())
+            let callController = XCTestCase.createCallViewController(selfUser: MockUserType.createSelfUser(name: "Alice"), mediaManager: ZMMockAVSMediaManager())
             // Simulate user click
             callController.startOverlayTimer()
             return callController

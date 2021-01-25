@@ -19,6 +19,7 @@ import Foundation
 import WireUtilities
 import WireCommonComponents
 import WireTransport
+import WireSyncEngine
 
 protocol PasscodeSetupInteractorInput: class {
     func validate(error: TextFieldValidator.ValidationError?)
@@ -26,72 +27,34 @@ protocol PasscodeSetupInteractorInput: class {
 }
 
 protocol PasscodeSetupInteractorOutput: class {
-    func passcodeValidated(result: PasscodeValidationResult)
+    func passcodeValidated(result: PasswordValidationResult)
 }
 
 final class PasscodeSetupInteractor {
     weak var interactorOutput: PasscodeSetupInteractorOutput?
-
-    private let passwordCharacterClasses: [PasswordCharacterClass] = [.uppercase,
-                                                                      .lowercase,
-                                                                      .special,
-                                                                      .digits]
 }
 
 // MARK: - Interface
 extension PasscodeSetupInteractor: PasscodeSetupInteractorInput {
+
     func storePasscode(passcode: String) throws {
-        guard let data = passcode.data(using: .utf8) else { return }
-
-        try Keychain.updateItem(PasscodeKeychainItem.passcode, value: data)
-    }
-
-    private func passcodeError(from missingCharacterClasses: Set<WireUtilities.PasswordCharacterClass>) -> Set<PasscodeError> {
-        var errorReasons: Set<PasscodeError> = Set()
-        passwordCharacterClasses.forEach {
-            if missingCharacterClasses.contains($0) {
-                switch $0 {
-                case .uppercase:
-                    errorReasons.insert(.noUppercaseChar)
-                case .lowercase:
-                    errorReasons.insert(.noLowercaseChar)
-                case .special:
-                    errorReasons.insert(.noSpecialChar)
-                case .digits:
-                    errorReasons.insert(.noNumber)
-                default:
-                    break
-                }
-            }
-        }
-
-        return errorReasons
+        // TODO: [John] Inject the app lock controller.
+        guard let appLock = ZMUserSession.shared()?.appLockController else { return }
+        try appLock.updatePasscode(passcode)
     }
 
     func validate(error: TextFieldValidator.ValidationError?) {
         guard let error = error else {
-            interactorOutput?.passcodeValidated(result: .accepted)
+            interactorOutput?.passcodeValidated(result: .valid)
             return
         }
-
-        let result: PasscodeValidationResult
+        
         switch error {
-        case .tooShort:
-            result = .error([.tooShort])
-        case .invalidPassword(let passwordValidationResult):
-            switch passwordValidationResult {
-            case .tooShort:
-                result = .error([.tooShort])
-            case .missingRequiredClasses(let passwordCharacterClass):
-                result = .error(passcodeError(from: passwordCharacterClass))
-            default:
-                result = .error([])
-            }
+        case .invalidPassword(let violations):
+            interactorOutput?.passcodeValidated(result: .invalid(violations: violations))
         default:
-            result = .error([])
+            break
         }
-
-        interactorOutput?.passcodeValidated(result: result)
     }
 
 }

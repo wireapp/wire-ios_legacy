@@ -32,8 +32,7 @@ final class WipeDatabasePresenter {
                 return
             }
             
-            self?.interactorInput?.deleteAccounts()
-            self?.interactorInput?.deletePasscode()
+            self?.interactorInput?.deleteAccount()
             
             self?.displayWipeCompletionScreen()            
         }
