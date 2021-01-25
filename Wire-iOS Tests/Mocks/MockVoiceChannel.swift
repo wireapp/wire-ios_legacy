@@ -19,7 +19,7 @@
 import Foundation
 
 final class MockVoiceChannel: NSObject, VoiceChannel {
-
+    var videoGridPresentationMode: VideoGridPresentationMode = .allVideoStreams
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?

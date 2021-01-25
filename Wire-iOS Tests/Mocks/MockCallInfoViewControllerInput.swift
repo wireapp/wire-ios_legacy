@@ -20,6 +20,7 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+    var videoGridPresentationMode: VideoGridPresentationMode
     var videoPlaceholderState: CallVideoPlaceholderState
     var permissions: CallPermissionsConfiguration
     var degradationState: CallDegradationState
