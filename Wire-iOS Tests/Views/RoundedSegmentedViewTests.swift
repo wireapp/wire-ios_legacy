@@ -33,7 +33,10 @@ class RoundedSegmentedViewTests: XCTestCase {
     }
     
     private func createView(with items: [String]) -> RoundedSegmentedView {
-        let view = RoundedSegmentedView(items: items)
+        let view = RoundedSegmentedView()
+        items.forEach {
+            view.addButton(withTitle: $0, actionHandler: {})
+        }
         view.frame = CGRect(x: 0, y: 0, width: 95, height: 25)
         return view
     }
