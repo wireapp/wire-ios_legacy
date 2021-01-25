@@ -20,6 +20,8 @@ import Foundation
 import WireDataModel
 import WireSyncEngine
 
+/// This module is responsible for displaying the app lock and requesting
+/// authentication from the user.
 
 enum AppLockModule: ModuleInterface {
 
@@ -41,10 +43,6 @@ enum AppLockModule: ModuleInterface {
     }
 
 }
-
-// This module is responsible for displaying the app lock and requesting
-// authentication from the user. The app lock always begins in a locked
-// state.
 
 // MARK: - Router / Presenter
 
