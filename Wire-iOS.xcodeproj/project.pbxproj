@@ -5375,6 +5375,8 @@
 		8FC8516F199245760008B66B /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				EE01D07F25ADA3AD001DB205 /* App Lock */,
+				A9BB638024C1DD910072143A /* CustomAppLock */,
 				A9A3B1FA24D9B1E1001AF38E /* Factory */,
 				7C440E7123472BF500D91B5F /* Folders */,
 				16DD6E932283048A0090A74C /* LegalHoldDetails */,
@@ -5592,13 +5594,11 @@
 		8FC8523C199245760008B66B /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
-				A9BB638024C1DD910072143A /* CustomAppLock */,
 				8FC85247199245760008B66B /* MediaBar */,
 				8FC85255199245760008B66B /* NotificationWindowRootViewController.swift */,
 				BFBBD1EC20D9238B00BFC4AD /* NotificationWindow.swift */,
 				16E2A0991F6ADE75005F4DB1 /* ActiveCallViewController.swift */,
 				872B3282209B208D005AC615 /* CallTopOverlayController.swift */,
-				EE01D07F25ADA3AD001DB205 /* App Lock */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
