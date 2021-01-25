@@ -217,7 +217,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     func configure(with user: UserType,
                    selfUser: UserType,
                    subtitle overrideSubtitle: NSAttributedString? = nil,
-                   conversation: ZMConversation? = nil) {
+                   conversation: GroupDetailsConversationType? = nil) {
         
         let subtitle: NSAttributedString?
         if overrideSubtitle == nil {

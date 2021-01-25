@@ -13,6 +13,6 @@ jobs:
 
       - name: create bump PR
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             bash <(curl --silent https://raw.githubusercontent.com/ wire-ios-shared-resources/Scripts/createBumpPR.sh)
