@@ -19,12 +19,9 @@
 import Foundation
 import UIKit
 
-protocol RoundedSegmentedViewDelegate: class {
-    func roundedSegmentedView(_ view: RoundedSegmentedView, didSelectSegmentAtIndex index: Int)
-}
+class RoundedSegmentedView: UIView {
+    typealias ActionHandler = () -> Void
 
-class RoundedSegmentedView: UIControl {
-    
     private let stackView: UIStackView = {
         let view = UIStackView(axis: .horizontal)
         view.distribution = .fillProportionally
@@ -32,13 +29,11 @@ class RoundedSegmentedView: UIControl {
     }()
         
     private var buttons = [UIButton]()
-    private var selectedButton: UIButton?
+    private var actionHandlers = [UIButton: ActionHandler]()
 
-    weak var delegate: RoundedSegmentedViewDelegate?
-
-    init(items: [String]) {
+    init() {
         super.init(frame: .zero)
-        setupViews(with: items)
+        setupViews()
         setupConstraints()
     }
     
@@ -47,30 +42,31 @@ class RoundedSegmentedView: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setSelected(_ selected: Bool, forItemAt index: Int) {
-        guard selected else {
-            return buttons[index].set(selected: false)
-        }
-        buttons.forEach {
-            $0.set(selected: buttons.firstIndex(of: $0) == index)
+    func setSelected(_ selected: Bool, forItemAt index: Int) {        
+        for (i, button) in buttons.enumerated() {
+            button.isSelected = i == index && selected
         }
     }
     
-    private func setupViews(with items: [String]) {
+    private func setupViews() {
         layer.cornerRadius = 12
         layer.masksToBounds = true
         backgroundColor = .whiteAlpha16
         addSubview(stackView)
-        items.forEach(addNewButton(withTitle:))
     }
     
-    private func addNewButton(withTitle title: String) {
+    func addButton(withTitle title: String, actionHandler: @escaping ActionHandler) {
         let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .selected)
+        button.setBackgroundImage(.singlePixelImage(with: .clear), for: .normal)
+        button.setBackgroundImage(.singlePixelImage(with: .white), for: .selected)
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .smallMediumFont
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         stackView.addArrangedSubview(button)
         buttons.append(button)
+        actionHandlers[button] = actionHandler
     }
     
     private func setupConstraints() {
@@ -86,19 +82,11 @@ class RoundedSegmentedView: UIControl {
     @objc
     private func buttonAction(_ sender: UIButton) {
         guard
-            sender != selectedButton,
+            !sender.isSelected,
             let index = buttons.firstIndex(of: sender)
         else { return }
         
-        selectedButton = sender
         setSelected(true, forItemAt: index)
-        delegate?.roundedSegmentedView(self, didSelectSegmentAtIndex: index)
-    }
-}
-
-private extension UIButton {
-    func set(selected: Bool) {
-        backgroundColor = selected ? .white : .clear
-        setTitleColor(selected ? .black : .white, for: .normal)
+        actionHandlers[sender]?()
     }
 }

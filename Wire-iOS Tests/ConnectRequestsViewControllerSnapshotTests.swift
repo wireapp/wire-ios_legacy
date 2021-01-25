@@ -21,7 +21,7 @@ import XCTest
 import SnapshotTesting
 import WireDataModel
 
-final class MockConnectionRequest: ConnectedUserContainer {
+final class MockConnectionRequest: ConnectedUserProvider {
     var connectedUserType: UserType?
 }
 

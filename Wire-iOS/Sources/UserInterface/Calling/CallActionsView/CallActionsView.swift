@@ -95,7 +95,7 @@ extension VideoGridPresentationMode {
 
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
-final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
+final class CallActionsView: UIView {
     
     weak var delegate: CallActionsViewDelegate?
 
@@ -106,8 +106,8 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     private var lastInput: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
     
-    private let speakersAllSegmentedView = RoundedSegmentedView(items: VideoGridPresentationMode.allCases.map(\.title))
-    
+    private let speakersAllSegmentedView = RoundedSegmentedView()
+
     // Buttons
     private let muteCallButton = IconLabelButton.muteCall()
     private let videoButton = IconLabelButton.video()
@@ -138,7 +138,10 @@ final class CallActionsView: UIView, RoundedSegmentedViewDelegate {
     }
     
     private func setupViews() {
-        speakersAllSegmentedView.delegate = self
+        speakersAllSegmentedView.addButton(withTitle: "call.overlay.switch_to.speakers".localized, actionHandler: {})
+        speakersAllSegmentedView.addButton(withTitle: "call.overlay.switch_to.all".localized, actionHandler: {})
+        speakersAllSegmentedView.setSelected(true, forItemAt: 1)
+        speakersAllSegmentedView.isHidden = true
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
         topStackView.spacing = 32
