@@ -318,7 +318,10 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
-    var conversation: ZMConversation? = .none
+    
+    var conversation: ZMConversation?
+    var conversationLike: ConversationLike?
+    
     var deliveryState: ZMDeliveryState = .delivered
 
     var imageMessageData: ZMImageMessageData? = .none

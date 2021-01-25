@@ -74,7 +74,7 @@ class TeamMetadataRefresherTests: XCTestCase {
         XCTAssertEqual(mockSelfUser.refreshTeamDataCount, 0)
     }
 
-    func test_it_refreshes_if_timeout_expired() {
+    func test_it_refreshes_if_timeout_expired() {///TODO: crash
         // Given
         let sut = TeamMetadataRefresher(refreshInterval: 0.5)
 

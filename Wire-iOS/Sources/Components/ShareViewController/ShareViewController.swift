@@ -32,6 +32,7 @@ protocol Shareable {
     associatedtype I: ShareDestination
     func share<I>(to: [I])
     func previewView() -> UIView?
+//    func forward(to: [AnyObject])
 }
 
 final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate {
