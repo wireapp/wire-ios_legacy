@@ -17,7 +17,31 @@
 
 import Foundation
 
-enum PasscodeValidationResult {
-    case accepted
-    case error(Set<PasscodeError>)
+/**
+ * The result of password validation.
+ */
+
+public enum PasswordValidationResult: Equatable {
+
+    /// The password is valid.
+    case valid
+
+    /// The password is invalid due to the violations.
+    case invalid(violations: [Violation])
+
+    public enum Violation: Equatable {
+
+        /// The password is too short.
+        case tooShort
+
+        /// The password is too long.
+        case tooLong
+
+        /// The password contains a disallowed character.
+        case disallowedCharacter(Unicode.Scalar)
+
+        /// The password does not satisfy a requirement for a character class.
+        case missingRequiredClasses(Set<PasswordCharacterClass>)
+    }
+
 }

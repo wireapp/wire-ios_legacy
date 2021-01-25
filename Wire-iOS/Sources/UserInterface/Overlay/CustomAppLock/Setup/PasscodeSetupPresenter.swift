@@ -21,11 +21,15 @@ final class PasscodeSetupPresenter {
     private weak var userInterface: PasscodeSetupUserInterface?
     private var interactorInput: PasscodeSetupInteractorInput
 
-    private var passcodeValidationResult: PasscodeValidationResult?
-
+    private var passcodeValidationResult: PasswordValidationResult?
+    private let passcodeCharacterClasses: [PasswordCharacterClass] = [.uppercase,
+                                                                      .lowercase,
+                                                                      .special,
+                                                                      .digits]
+    
     var isPasscodeValid: Bool {
         switch passcodeValidationResult {
-        case .accepted:
+        case .valid:
             return true
         default:
             return false
@@ -67,22 +71,59 @@ extension PasscodeSetupPresenter: PasscodeSetupInteractorOutput {
         }
     }
 
-    func passcodeValidated(result: PasscodeValidationResult) {
+    func passcodeValidated(result: PasswordValidationResult) {
         passcodeValidationResult = result
 
         switch result {
-        case .accepted:
+        case .valid:
             userInterface?.createButtonEnabled = true
             resetValidationLabels(errors: Set(PasscodeError.allCases), passed: true)
-        case .error(let errorReasons):
+        case .invalid(let violations):
             userInterface?.createButtonEnabled = false
 
-            // reset: if the passcode is too short, set all other as not passed
-            let passed: Bool = errorReasons != [.tooShort]
-
-            resetValidationLabels(errors: Set(PasscodeError.allCases), passed: passed)
-            resetValidationLabels(errors: errorReasons, passed: false)
+            resetValidationLabels(errors: Set(PasscodeError.allCases), passed: true)
+            resetValidationLabels(errors: passcodeError(from: violations), passed: false)
         }
     }
+}
 
+// MARK: - Helpers
+
+extension PasscodeSetupPresenter {
+    private func passcodeError(from violations: [PasswordValidationResult.Violation]) -> Set<PasscodeError> {
+        var passcodeErrors: Set<PasscodeError> = Set()
+        violations.forEach { (violation) in
+            switch violation {
+            case .tooShort:
+                passcodeErrors.insert(.tooShort)
+            case .missingRequiredClasses(let passwordCharacterClass):
+                passcodeErrors = passcodeErrors.union(passcodeError(from: passwordCharacterClass))
+            default:
+                break
+            }
+        }
+        return passcodeErrors
+    }
+    
+    private func passcodeError(from missingCharacterClasses: Set<PasswordCharacterClass>) -> Set<PasscodeError> {
+        var passcodeErrors: Set<PasscodeError> = Set()
+        passcodeCharacterClasses.forEach {
+            if missingCharacterClasses.contains($0) {
+                switch $0 {
+                case .uppercase:
+                    passcodeErrors.insert(.noUppercaseChar)
+                case .lowercase:
+                    passcodeErrors.insert(.noLowercaseChar)
+                case .special:
+                    passcodeErrors.insert(.noSpecialChar)
+                case .digits:
+                    passcodeErrors.insert(.noNumber)
+                default:
+                    break
+                }
+            }
+        }
+        
+        return passcodeErrors
+    }
 }
