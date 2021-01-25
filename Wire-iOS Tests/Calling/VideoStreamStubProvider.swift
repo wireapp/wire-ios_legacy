@@ -26,8 +26,7 @@ class VideoStreamStubProvider {
         muted: Bool = false,
         videoState: VideoState = .started,
         active: Bool = false,
-        paused: Bool = false) -> VideoStream
-    {        
+        paused: Bool = false) -> VideoStream {
         let stream = Wire.Stream(
             streamId: client,
             participantName: participantName,
