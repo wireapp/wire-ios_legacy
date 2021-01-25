@@ -48,7 +48,7 @@ enum AppLockModule: ModuleInterface {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    func presentCreatePasscodeModule(completion: @escaping () -> Void)
+    func presentCreatePasscodeModule(shouldInform: Bool, completion: @escaping () -> Void)
 
     func presentInputPasscodeModule(onGranted: @escaping () -> Void)
 

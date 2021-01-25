@@ -52,15 +52,33 @@ final class AppLockModulePresenterTests: XCTestCase {
     func test_ItRequestsToCreateCustomPasscode() {
         // Given
         interactor.needsToCreateCustomPasscode = true
+        interactor.needsToWarnUserOfConfigurationChange = false
 
         // When
         sut.requestAuthentication()
 
         // Then
         XCTAssertEqual(router.methodCalls.presentCreatePasscodeModule.count, 1)
+        XCTAssertEqual(router.methodCalls.presentCreatePasscodeModule[0].shouldInform, false)
 
-        let completion = router.methodCalls.presentCreatePasscodeModule[0]
-        completion()
+        router.methodCalls.presentCreatePasscodeModule[0].completion()
+
+        XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
+    }
+
+    func test_ItRequestsToCreateCustomPasscode_DueToConfigurationChange() {
+        // Given
+        interactor.needsToCreateCustomPasscode = true
+        interactor.needsToWarnUserOfConfigurationChange = true
+
+        // When
+        sut.requestAuthentication()
+
+        // Then
+        XCTAssertEqual(router.methodCalls.presentCreatePasscodeModule.count, 1)
+        XCTAssertEqual(router.methodCalls.presentCreatePasscodeModule[0].shouldInform, true)
+
+        router.methodCalls.presentCreatePasscodeModule[0].completion()
 
         XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
     }

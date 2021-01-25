@@ -60,7 +60,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func requestAuthentication() {
         if interactor.needsToCreateCustomPasscode {
-            router.presentCreatePasscodeModule {
+            router.presentCreatePasscodeModule(shouldInform: interactor.needsToWarnUserOfConfigurationChange) {
                 self.interactor.openAppLock()
             }
         } else {
