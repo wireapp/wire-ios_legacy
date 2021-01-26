@@ -62,7 +62,9 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & ConversationLike & SwiftConversationLike
+typealias Conversation = ConversationLike & SwiftConversationLike
+
+typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
 
 
 extension ZMConversation: GroupDetailsConversation {}

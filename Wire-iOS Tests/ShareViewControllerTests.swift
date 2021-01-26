@@ -24,53 +24,53 @@ final class ShareViewControllerTests: XCTestCase {
     var groupConversation: MockGroupDetailsConversation! ///TODO: move property to DM
     var oneToOneConversation: MockGroupDetailsConversation! ///TODO: move property to DM
     var sut: ShareViewController<MockGroupDetailsConversation, MockShareableMessage>!
-
+    
     override func setUp() {
         super.setUp()
-
+        
         let mockUser = MockUserType.createDefaultOtherUser()
-
+        
         groupConversation = MockGroupDetailsConversation()
         groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
         groupConversation.displayName = "Bruno, John Appleseed"
-
+        
         oneToOneConversation = MockGroupDetailsConversation() ///TODO: create a simpler type?
         oneToOneConversation.conversationType = .oneOnOne
         oneToOneConversation.sortedOtherParticipants = [mockUser]
         oneToOneConversation.displayName = "Bruno"
     }
-
+    
     override func tearDown() {
         groupConversation = nil
         oneToOneConversation = nil
         sut = nil
         disableDarkColorScheme()
-
+        
         super.tearDown()
     }
-
+    
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-
+    
     func disableDarkColorScheme() {
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-
+    
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         createSut(message: message,
                   allowsMultipleSelection: false)
-
+        
         //THEN
         verify(matching: sut)
     }
-
+    
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         makeTestForShareViewController(message: message)
@@ -78,11 +78,11 @@ final class ShareViewControllerTests: XCTestCase {
     
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
         activateDarkColorScheme()
-
+        
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         makeTestForShareViewController(message: message)
     }
-
+    
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController(message: message)
@@ -104,21 +104,21 @@ final class ShareViewControllerTests: XCTestCase {
         activateDarkColorScheme()
         verifyLocation()
     }
-
+    
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
         let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
         makeTestForShareViewController(message: message)
     }
-
-     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
-     activateDarkColorScheme()
+    
+    func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
+        activateDarkColorScheme()
         let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
         makeTestForShareViewController(message: message)
-     }
-
+    }
+    
     private func verifyImage(file: StaticString = #file,
-                                testName: String = #function,
-                                line: UInt = #line) {
+                             testName: String = #function,
+                             line: UInt = #line) {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         
         let message: MockShareableMessage = MockMessageFactory.imageMessage(with: img)
@@ -132,49 +132,49 @@ final class ShareViewControllerTests: XCTestCase {
     func testThatItRendersCorrectlyShareViewController_Photos() {
         verifyImage()
     }
-
+    
     func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
         activateDarkColorScheme()
         verifyImage()
     }
-
+    
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
         activateDarkColorScheme()
         let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-
+        
         let message: MockShareableMessage = MockMessageFactory.videoMessage(sender: nil, previewImage: thumbnail)
         createSut(message: message)
-
+        
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         verifyInAllDeviceSizes(matching: sut)
     }
-
+    
     private func createSut(message: MockShareableMessage,
                            allowsMultipleSelection: Bool = true) {
         message.conversationLike = groupConversation
-
+        
         sut = ShareViewController<MockGroupDetailsConversation, MockShareableMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true, allowsMultipleSelection: allowsMultipleSelection
         )
     }
-
+    
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
     private func makeTestForShareViewController(message: MockShareableMessage,
-        file: StaticString = #file,
+                                                file: StaticString = #file,
                                                 testName: String = #function,
-                                        line: UInt = #line) {
+                                                line: UInt = #line) {
         createSut(message: message)
-
+        
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
     }
-
+    
 }
 
 final class MockShareableMessage: MockMessage, Shareable {
     typealias I = MockGroupDetailsConversation
-
+    
     func share<MockGroupDetailsConversation>(to: [MockGroupDetailsConversation]) {
         //no-op
     }
