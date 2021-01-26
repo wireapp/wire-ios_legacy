@@ -24,7 +24,7 @@ import WireDataModel
 
 
 extension NSAttributedString {
-    
+        
     static var paragraphStyle: NSParagraphStyle = {
         return defaultParagraphStyle()
     }()
@@ -62,7 +62,7 @@ extension NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         
         paragraphStyle.minimumLineHeight = 22 * UIFont.wr_preferredContentSizeMultiplier(for: UIApplication.shared.preferredContentSizeCategory)
-        paragraphStyle.paragraphSpacing = 8
+        paragraphStyle.paragraphSpacing = CGFloat.MessageCell.paragraphSpacing
         
         return paragraphStyle
     }

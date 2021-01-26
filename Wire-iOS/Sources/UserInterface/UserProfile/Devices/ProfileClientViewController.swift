@@ -23,8 +23,8 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-final class ProfileClientViewController: UIViewController {
-
+final class ProfileClientViewController: UIViewController, SpinnerCapable {
+    
     let userClient: UserClient
     let contentView = UIView()
     let backButton = IconButton(style: .circular)
@@ -38,9 +38,9 @@ final class ProfileClientViewController: UIViewController {
     let verifiedToggle = UISwitch()
     let verifiedToggleLabel = UILabel()
     let resetButton = ButtonWithLargerHitArea()
+    var dismissSpinner: SpinnerCompletion?
 
     var userClientToken: NSObjectProtocol!
-    var resetSessionPending: Bool = false
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
@@ -355,7 +355,7 @@ final class ProfileClientViewController: UIViewController {
         ZMUserSession.shared()?.perform {
             self.userClient.resetSession()
         }
-        self.resetSessionPending = true
+        isLoadingViewVisible = true
     }
     
     @objc private func onShowDebugActions(_ sender: AnyObject) {
@@ -408,15 +408,17 @@ final class ProfileClientViewController: UIViewController {
 extension ProfileClientViewController: UserClientObserver {
 
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        self.updateFingerprintLabel()
         
-        // This means the fingerprint is acquired
-        if self.resetSessionPending && self.userClient.fingerprint != .none {
+        if changeInfo.fingerprintChanged {
+            self.updateFingerprintLabel()
+        }
+        
+        if changeInfo.sessionHasBeenReset {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
             let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler:  nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: .none)
-            self.resetSessionPending = false
+            isLoadingViewVisible = false
         }
     }
 

@@ -113,7 +113,8 @@ final class ConversationMessageActionController {
              .sketchEmoji:
             return message.isImage
         case .present,
-             .openQuote:
+             .openQuote,
+             .resetSession:
             return false
         }
     }
