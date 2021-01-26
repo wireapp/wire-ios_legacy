@@ -31,7 +31,7 @@ final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType
     var sortedOtherParticipants: [UserType] = []
     var sortedServiceUsers: [UserType] = []
 
-    var securityLevel: ZMConversationSecurityLevel = .secure
+    var securityLevel: ZMConversationSecurityLevel = .notSecure
 
     var allowGuests: Bool = false
     var hasReadReceiptsEnabled: Bool = false

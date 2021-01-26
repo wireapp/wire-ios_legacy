@@ -22,21 +22,27 @@ import WireLinkPreview
 
 final class ShareViewControllerTests: XCTestCase {
     var groupConversation: MockGroupDetailsConversation! ///TODO: move property to DM
+    var oneToOneConversation: MockGroupDetailsConversation! ///TODO: move property to DM
     var sut: ShareViewController<MockGroupDetailsConversation, MockShareableMessage>!
 
     override func setUp() {
         super.setUp()
 
-        groupConversation = MockGroupDetailsConversation()
-        
         let mockUser = MockUserType.createDefaultOtherUser()
 
+        groupConversation = MockGroupDetailsConversation()
         groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
         groupConversation.displayName = "Bruno, John Appleseed"
+
+        oneToOneConversation = MockGroupDetailsConversation() ///TODO: create a simpler type?
+        oneToOneConversation.conversationType = .oneOnOne
+        oneToOneConversation.sortedOtherParticipants = [mockUser]
+        oneToOneConversation.displayName = "Bruno"
     }
 
     override func tearDown() {
         groupConversation = nil
+        oneToOneConversation = nil
         sut = nil
         disableDarkColorScheme()
 
@@ -151,19 +157,10 @@ final class ShareViewControllerTests: XCTestCase {
     private func createSut(message: MockShareableMessage,
                            allowsMultipleSelection: Bool = true) {
         message.conversationLike = groupConversation
-//        groupConversation.add(participants: [createUser(name: "John Appleseed")])
-//        let oneToOneConversation = otherUserConversation!
 
-//        guard let message = groupConversation.lastMessage else {
-//            XCTFail("Cannot add test message to the group conversation")
-//            return
-//        }
-
-        ///TODO: wait for DM conversation like
-//        message.conversation =
         sut = ShareViewController<MockGroupDetailsConversation, MockShareableMessage>(
             shareable: message,
-            destinations: [groupConversation/*, oneToOneConversation*/],
+            destinations: [groupConversation, oneToOneConversation],
             showPreview: true, allowsMultipleSelection: allowsMultipleSelection
         )
     }
