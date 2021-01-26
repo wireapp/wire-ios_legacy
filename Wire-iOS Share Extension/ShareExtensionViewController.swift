@@ -424,11 +424,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseAccount() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
-            if let status = status, status != .denied {
-                self?.showChooseAccount()
-            }
-        })
+        showChooseAccount()
     }
     
     private func presentChooseConversation() {
