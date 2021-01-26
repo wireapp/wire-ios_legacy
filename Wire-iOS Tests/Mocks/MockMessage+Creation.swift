@@ -161,23 +161,10 @@ final class MockMessageFactory {
         return message
     }
 
-    class func textMessage(includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        return self.textMessage(withText: "Just a random text message", includingRichMedia: shouldIncludeRichMedia)
-    }
-
-    class func shareableTextMessage(withText text: String?) -> MockShareableMessage {
-        let message = MockShareableMessage()
-        let textMessageData = MockTextMessageData()
-        textMessageData.messageText = text
-        message.backingTextMessageData = textMessageData
-        
-        return message
-    }
-
-    class func textMessage(withText text: String?,
+    class func textMessage<T: MockMessage>(withText text: String? = "Just a random text message",
                            sender: UserType? = nil,
-                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!

@@ -60,25 +60,25 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTextMessagePreview() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersTextMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersEmojiOnly() {
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")!
+        let message = MockMessageFactory.textMessage(withText: "😀🌮")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersEmojiOnly_dark() {
         activateDarkColorScheme()
 
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")!
+        let message = MockMessageFactory.textMessage(withText: "😀🌮")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
@@ -105,13 +105,13 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTextMessagePreview_LongText() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersTextMessagePreview_LongText_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
@@ -142,7 +142,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         article.title = "You won't believe what happened next!"
 
-        let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")!
+        let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")
         message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
@@ -188,7 +188,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testDeallocation() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         self.verifyDeallocation {
             return message.replyPreview()!
         }

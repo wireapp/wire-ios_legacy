@@ -63,7 +63,7 @@ final class ShareViewControllerTests: XCTestCase {
 
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
-        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         createSut(message: message,
                   allowsMultipleSelection: false)
 
@@ -72,19 +72,19 @@ final class ShareViewControllerTests: XCTestCase {
     }
 
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
-        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         makeTestForShareViewController(message: message)
     }
     
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
         activateDarkColorScheme()
 
-        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
         makeTestForShareViewController(message: message)
     }
 
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
-        let message = MockMessageFactory.shareableTextMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController(message: message)
     }
     

@@ -23,7 +23,7 @@ final class ConversationReplyCellDescriptionTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysNameOfOriginalSender() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Hello")!
+        let message = MockMessageFactory.textMessage(withText: "Hello")
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
@@ -36,7 +36,7 @@ final class ConversationReplyCellDescriptionTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysCorrectNameForSelfReply() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Hello")!
+        let message = MockMessageFactory.textMessage(withText: "Hello")
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = otherUserConversation
 
@@ -49,7 +49,7 @@ final class ConversationReplyCellDescriptionTests: CoreDataSnapshotTestCase {
 
     func testThatItFormatsDateForPastDay() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Hello")!
+        let message = MockMessageFactory.textMessage(withText: "Hello")
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
         message.serverTimestamp = Date(timeIntervalSince1970: 1497798000)
@@ -63,7 +63,7 @@ final class ConversationReplyCellDescriptionTests: CoreDataSnapshotTestCase {
 
     func testThatItFormatsDateForToday() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Hello")!
+        let message = MockMessageFactory.textMessage(withText: "Hello")
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
         message.serverTimestamp = .today(at: 9, 41)
