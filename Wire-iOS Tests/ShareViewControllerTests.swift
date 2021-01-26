@@ -70,14 +70,13 @@ final class ShareViewControllerTests: XCTestCase {
         //THEN
         verify(matching: sut)
     }
-    /*
 
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
-//        try! groupConversation.appendText(content: "This is a text message.")
-        makeTestForShareViewController()
+        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        makeTestForShareViewController(message: message)
     }
 
-    func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
+/*    func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
 //        try! groupConversation.appendText(content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController()
     }
@@ -166,14 +165,14 @@ final class ShareViewControllerTests: XCTestCase {
     }
 
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
-    /*
-    private func makeTestForShareViewController(file: StaticString = #file,
+    private func makeTestForShareViewController(message: MockShareableMessage,
+        file: StaticString = #file,
                                                 testName: String = #function,
                                         line: UInt = #line) {
-        createSut()
+        createSut(message: message)
 
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
-    }*/
+    }
 
 }
 
