@@ -364,7 +364,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysVideoMessage_53() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData!.filename = "Video.mp4"
         message.backingFileMessageData!.mimeType = "video/mp4"
         message.backingFileMessageData!.previewData = image.jpegData(compressionQuality: 1)
@@ -381,7 +381,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysFileMessage_54() {
         // GIVEN
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData!.filename = "Annual Report.pdf"
         message.backingFileMessageData!.mimeType = "application/pdf"
         message.senderUser = MockUserType.createUser(name: "Bruno")
@@ -397,7 +397,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysAudioMessage_55() {
         // GIVEN
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData!.filename = "ImportantMessage.m4a"
         message.backingFileMessageData!.mimeType = "audio/x-m4a"
         message.senderUser = MockUserType.createUser(name: "Bruno")

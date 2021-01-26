@@ -116,13 +116,13 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersFileMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersFileMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
@@ -165,7 +165,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersVideoMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
@@ -177,7 +177,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersAudioMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "audio/x-m4a"
         message.backingFileMessageData.filename = "vacation.m4a"
         

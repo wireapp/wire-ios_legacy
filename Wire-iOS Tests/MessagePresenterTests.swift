@@ -79,7 +79,7 @@ final class MessagePresenterTests: XCTestCase {
 
     func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){
         // GIVEN
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
 
         // WHEN
         let addPassesViewController = sut.createAddPassesViewController(fileMessageData: message.fileMessageData!)

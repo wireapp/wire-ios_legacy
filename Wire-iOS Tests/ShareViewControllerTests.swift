@@ -81,18 +81,35 @@ final class ShareViewControllerTests: XCTestCase {
         makeTestForShareViewController(message: message)
     }
     
-    func testThatItRendersCorrectlyShareViewController_LocationMessage() throws {
+    private func verifyLocation(file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
         let message: MockShareableMessage = MockMessageFactory.locationMessage()
         message.backingLocationMessageData.name = "Stranger Place"
-        makeTestForShareViewController(message: message)
+        makeTestForShareViewController(message: message, file: file, testName: testName, line: line)
     }
-/*
-    func testThatItRendersCorrectlyShareViewController_FileMessage() {
-        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
-//        try! groupConversation.appendFile(with: file)
-        makeTestForShareViewController()
+    
+    func testThatItRendersCorrectlyShareViewController_LocationMessage() {
+        verifyLocation()
+    }
+    
+    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() throws {
+        activateDarkColorScheme()
+        verifyLocation()
     }
 
+    func testThatItRendersCorrectlyShareViewController_FileMessage() {
+//        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
+//        try! groupConversation.appendFile(with: file)
+        
+        
+        let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
+//        message.backingLocationMessageData.name = "Stranger Place"
+//        makeTestForShareViewController(message: message, file: file, testName: testName, line: line)
+        makeTestForShareViewController(message: message)
+    }
+
+    /*
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 //        try! self.groupConversation.appendImage(from: img.imageData!)
@@ -144,13 +161,6 @@ final class ShareViewControllerTests: XCTestCase {
         activateDarkColorScheme()
         let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
 //        try! groupConversation.appendFile(with: file)
-        makeTestForShareViewController()
-    }
-
-    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() throws {
-        activateDarkColorScheme()
-        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
-//        try groupConversation.appendLocation(with: location)
         makeTestForShareViewController()
     }*/
 

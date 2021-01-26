@@ -27,7 +27,7 @@ final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     override func setUp() {
         super.setUp()
         
-        message = MockMessageFactory.fileTransferMessage(sender: mockSelfUser)!
+        message = MockMessageFactory.fileTransferMessage(sender: mockSelfUser)
     }
     
     override func tearDown() {

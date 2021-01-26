@@ -57,10 +57,10 @@ final class MockMessageFactory {
         return message
     }
 
-    class func fileTransferMessage(sender: UserType? = nil) -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
+    class func fileTransferMessage<T: MockMessage>(sender: UserType? = nil) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
-        message?.backingFileMessageData = MockFileMessageData()
+        message.backingFileMessageData = MockFileMessageData()
         return message
     }
 
@@ -134,7 +134,6 @@ final class MockMessageFactory {
         return message
     }
 
-    ///TODO: shareable
     class func locationMessage<T: MockMessage>(sender: MockUserType? = nil) -> T {
         let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
@@ -267,15 +266,15 @@ final class MockMessageFactory {
     }
 
     class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
-        let fileMessage = MockMessageFactory.fileTransferMessage()
-        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
-        fileMessage?.backingFileMessageData.filename = "sound.m4a"
+        let fileMessage: MockMessage = MockMessageFactory.fileTransferMessage()
+        fileMessage.backingFileMessageData.mimeType = "audio/x-m4a"
+        fileMessage.backingFileMessageData.filename = "sound.m4a"
 
         if let config = config {
-            config(fileMessage!)
+            config(fileMessage)
         }
 
-        return fileMessage!
+        return fileMessage
     }
 
 }
