@@ -18,13 +18,8 @@
 import Foundation
 import WireDataModel
 
-protocol AccessProvider {
-    var accessMode: ConversationAccessMode? { get }
-    var accessRole: ConversationAccessRole? { get }
-}
-
-protocol MessageDestructionTimeoutProvider {
-    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout? { get }
+protocol StableRandomParticipantsProvider {
+    var stableRandomParticipants: [UserType] { get }
 }
 
 // MARK: - Input Bar View controller
@@ -43,12 +38,6 @@ protocol InputBarConversation {
 }
 
 typealias InputBarConversationType = InputBarConversation & ConversationLike
-
-//extension ZMConversation: ConnectedUserProvider {
-//    var connectedUserType: UserType? {
-//        return connectedUser
-//    }
-//}
 
 extension ZMConversation: InputBarConversation {}
 

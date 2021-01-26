@@ -76,5 +76,13 @@ extension MockUserType {
         user.teamRole = teamID != nil ? .member : .none
         return user
     }
+    
+    class func createDefaultOtherUser() -> MockUserType {
+        let user = MockUserType.createUser(name: "Bruno")
+        user.accentColorValue = .brightOrange
+        user.isConnected = true
+        
+        return user
+    }
 
 }

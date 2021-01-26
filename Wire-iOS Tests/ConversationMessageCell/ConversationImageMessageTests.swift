@@ -35,9 +35,7 @@ final class ConversationImageMessageTests: XCTestCase {
     private func createSut(imageName: String) {
         image = image(inTestBundleNamed: imageName)
         message = MockMessageFactory.imageMessage(with: image)!
-        let sender = MockUserType.createUser(name: "Bruno")
-        sender.accentColorValue = .brightOrange
-        sender.isConnected = true
+        let sender = MockUserType.createDefaultOtherUser()
         message.senderUser = sender
     }
 

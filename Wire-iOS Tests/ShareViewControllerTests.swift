@@ -28,7 +28,10 @@ final class ShareViewControllerTests: XCTestCase {
         super.setUp()
 
         groupConversation = MockGroupDetailsConversation()
-        groupConversation.sortedOtherParticipants = [MockUserType.createUser(name: "Bruno"), MockUserType.createUser(name: "John Appleseed")]
+        
+        let mockUser = MockUserType.createDefaultOtherUser()
+
+        groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
         groupConversation.displayName = "Bruno, John Appleseed"
     }
 
@@ -189,9 +192,10 @@ extension MockGroupDetailsConversation: ShareDestination {
     var showsGuestIcon: Bool {
         return false
     }
-    
-    var avatarView: UIView? {
-        return UIView() ///TODO:
+}
+
+extension MockGroupDetailsConversation: StableRandomParticipantsProvider {
+    var stableRandomParticipants: [UserType] {
+        return sortedOtherParticipants
     }
-    
 }

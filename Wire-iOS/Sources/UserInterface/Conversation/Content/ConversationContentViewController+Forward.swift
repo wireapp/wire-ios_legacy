@@ -31,6 +31,9 @@ extension ZMConversation: ShareDestination {
                 $0.isGuest(in: self) } != nil
     }
 
+}
+
+extension ShareDestination where Self: ConversationAvatarViewConversation {
     var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.configure(context: .conversation(conversation: self))
