@@ -165,13 +165,18 @@ final class MockMessageFactory {
         return self.textMessage(withText: "Just a random text message", includingRichMedia: shouldIncludeRichMedia)
     }
 
-    class func textMessage(withText text: String?) -> MockMessage? {
-        return MockMessageFactory.textMessage(withText: text, includingRichMedia: false)
+    class func shareableTextMessage(withText text: String?) -> MockShareableMessage {
+        let message = MockShareableMessage()
+        let textMessageData = MockTextMessageData()
+        textMessageData.messageText = text
+        message.backingTextMessageData = textMessageData
+        
+        return message
     }
 
     class func textMessage(withText text: String?,
                            sender: UserType? = nil,
-                           includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
+                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> MockMessage? {
         let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let textMessageData = MockTextMessageData()

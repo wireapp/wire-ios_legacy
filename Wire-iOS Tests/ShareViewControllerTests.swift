@@ -53,8 +53,9 @@ final class ShareViewControllerTests: XCTestCase {
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
 //        try! groupConversation.appendText(content: "This is a text message.")
-
-        createSut(allowsMultipleSelection: false)
+        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        createSut(message: message,
+                  allowsMultipleSelection: false)
 
         //THEN
         verify(matching: sut)
@@ -143,7 +144,8 @@ final class ShareViewControllerTests: XCTestCase {
         makeTestForShareViewController()
     }*/
 
-    private func createSut(allowsMultipleSelection: Bool = true) {
+    private func createSut(message: MockShareableMessage,
+                           allowsMultipleSelection: Bool = true) {
 //        groupConversation.add(participants: [createUser(name: "John Appleseed")])
 //        let oneToOneConversation = otherUserConversation!
 
@@ -151,7 +153,7 @@ final class ShareViewControllerTests: XCTestCase {
 //            XCTFail("Cannot add test message to the group conversation")
 //            return
 //        }
-        let message = MockShareableMessage()
+
         ///TODO: wait for DM conversation like
 //        message.conversation =
         sut = ShareViewController<MockGroupDetailsConversation, MockShareableMessage>(
@@ -162,23 +164,23 @@ final class ShareViewControllerTests: XCTestCase {
     }
 
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
+    /*
     private func makeTestForShareViewController(file: StaticString = #file,
                                                 testName: String = #function,
                                         line: UInt = #line) {
         createSut()
 
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
-    }
+    }*/
 
 }
 
 final class MockShareableMessage: MockMessage, Shareable {
- 
-    func share<MockGroupDetailsConversation>(to: [MockGroupDetailsConversation]) {
-    }
-    
     typealias I = MockGroupDetailsConversation
-    
+
+    func share<MockGroupDetailsConversation>(to: [MockGroupDetailsConversation]) {
+        //no-op
+    }
 }
 
 extension MockGroupDetailsConversation: ShareDestination {
