@@ -110,31 +110,28 @@ final class ShareViewControllerTests: XCTestCase {
         makeTestForShareViewController(message: message)
     }
 
-    func testThatItRendersCorrectlyShareViewController_Photos() {
+    private func verifyImage(file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-
+        
         let message: MockShareableMessage = MockMessageFactory.imageMessage(with: img)
         createSut(message: message)
-
+        
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-
-        verifyInAllDeviceSizes(matching: sut)
+        
+        verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
+    }
+    
+    func testThatItRendersCorrectlyShareViewController_Photos() {
+        verifyImage()
     }
 
-    /*
     func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
         activateDarkColorScheme()
-        let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")
-//        try! self.groupConversation.appendImage(at: img)
-
-        createSut()
-
-        _ = sut.view // make sure view is loaded
-
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        verifyInAllDeviceSizes(matching: sut)
+        verifyImage()
     }
-
+/*
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
         activateDarkColorScheme()
         let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
