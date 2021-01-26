@@ -19,8 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
-
+extension AuthenticationCoordinator: ZMAuthenticationStatusDelegate {
     /// Called when the authentication succeeds. We ignore this event, as
     /// we are waiting for the client registration event to fire to transition to the next step.
     func authenticationDidSucceed() {
@@ -28,12 +27,12 @@ extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
     }
 
     /// Called when the credentials could not be authenticated.
-    func authenticationDidFail(_ error: NSError) {
-        eventResponderChain.handleEvent(ofType: .authenticationFailure(error))
+    func authenticationDidFail(_ error: Error!) {
+        eventResponderChain.handleEvent(ofType: .authenticationFailure(error as NSError))
     }
 
     /// Called when the backup is ready to be imported.
-    func authenticationReadyToImportBackup(existingAccount: Bool) {
+    func authenticationReadyImportingBackup(_ existingAccount: Bool) {
         addedAccount = !existingAccount
         eventResponderChain.handleEvent(ofType: .backupReady(existingAccount))
     }
@@ -44,8 +43,13 @@ extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
     }
 
     /// Called when the phone login code couldn't be requested manually.
-    func loginCodeRequestDidFail(_ error: NSError) {
-        eventResponderChain.handleEvent(ofType: .authenticationFailure(error))
+    func loginCodeRequestDidFail(_ error: Error!) {
+        eventResponderChain.handleEvent(ofType: .authenticationFailure(error as NSError))
     }
-
+    
+    /// Called when the login code become available
+    func companyLoginCodeDidBecomeAvailable(_ uuid: UUID!) {
+        sessionManager.addAccount(userInfo: [SessionManager.companyLoginCodeKey: uuid ?? UUID(),
+                                             SessionManager.companyLoginRequestTimestampKey: Date()])
+    }
 }

@@ -113,6 +113,10 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     var registrationStatus: RegistrationStatus {
         return unauthenticatedSession.registrationStatus
     }
+    
+    var authenticationStatus: ZMAuthenticationStatus {
+        return unauthenticatedSession.authenticationStatus
+    }
 
     /// The user session to use before authentication has finished.
     var unauthenticatedSession: UnauthenticatedSession {
@@ -204,7 +208,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func updateLoginObservers() {
         loginObservers = [
-            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
@@ -214,6 +217,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         }
 
         registrationStatus.delegate = self
+        authenticationStatus.delegate = self
     }
 
     /**
