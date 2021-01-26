@@ -110,6 +110,12 @@ final class ShareViewControllerTests: XCTestCase {
         makeTestForShareViewController(message: message)
     }
 
+     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
+     activateDarkColorScheme()
+        let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
+        makeTestForShareViewController(message: message)
+     }
+
     private func verifyImage(file: StaticString = #file,
                                 testName: String = #function,
                                 line: UInt = #line) {
@@ -142,14 +148,6 @@ final class ShareViewControllerTests: XCTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         verifyInAllDeviceSizes(matching: sut)
     }
-
-    /*
-    func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
-        activateDarkColorScheme()
-        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
-//        try! groupConversation.appendFile(with: file)
-        makeTestForShareViewController()
-    }*/
 
     private func createSut(message: MockShareableMessage,
                            allowsMultipleSelection: Bool = true) {
