@@ -77,8 +77,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     /// stores extensionContext?.attachments
     fileprivate var attachments: [AttachmentType: [NSItemProvider]] = [:]
     
-    fileprivate var currentAccount: Account? = nil
-    fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .disabled
+    fileprivate var currentAccount: Account? = nil {
+        didSet {
+            localAuthenticationStatus = .denied
+        }
+    }
+
+    fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .denied
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
 
