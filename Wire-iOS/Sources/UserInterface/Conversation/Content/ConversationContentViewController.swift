@@ -59,6 +59,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
     var digitalSignatureToken: Any?
+    var userClientToken: Any?
     var isDigitalSignatureVerificationShown: Bool = false
     
     private var mediaPlaybackManager: MediaPlaybackManager?

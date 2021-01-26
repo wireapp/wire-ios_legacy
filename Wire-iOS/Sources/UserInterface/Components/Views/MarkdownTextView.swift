@@ -623,6 +623,17 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 // MARK: - DownStyle Presets
 
 extension DownStyle {
+    /// The style used within the conversation system message cells.
+    static var systemMessage: DownStyle = {
+        let style = DownStyle()
+        style.baseFont = FontSpec(.medium, .none).font!
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
+        style.listItemPrefixSpacing = 8
+        return style
+    }()
+    
     /// The style used within the conversation message cells.
     static var normal: DownStyle = {
         let style = DownStyle()
