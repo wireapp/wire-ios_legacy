@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire
 import WireCommonComponents
 
+///TODO: subclass SwiftMockConvo
 final class MockInputBarConversationType: NSObject, InputBarConversationType {
     var allowGuests: Bool = false
     var team: Team?
@@ -52,6 +53,12 @@ final class MockInputBarConversationType: NSObject, InputBarConversationType {
     func localParticipantsContain(user: UserType) -> Bool {
         return false
     }
+    
+    var isUnderLegalHold = false
+    var securityLevel: ZMConversationSecurityLevel = .notSecure
+    
+    var accessMode: ConversationAccessMode?
+    var accessRole: ConversationAccessRole?    
 }
 
 final class ConversationInputBarViewControllerTests: XCTestCase {

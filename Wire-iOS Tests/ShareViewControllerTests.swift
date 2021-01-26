@@ -21,20 +21,20 @@ import WireLinkPreview
 @testable import Wire
 
 final class ShareViewControllerTests: XCTestCase {
-    var groupConversation: SwiftMockConversation!
-    var oneToOneConversation: SwiftMockConversation!
-    var sut: ShareViewController<SwiftMockConversation, MockShareableMessage>!
+    var groupConversation: MockShareViewControllerConversation!
+    var oneToOneConversation: MockShareViewControllerConversation!
+    var sut: ShareViewController<MockShareViewControllerConversation, MockShareableMessage>!
     
     override func setUp() {
         super.setUp()
         
         let mockUser = MockUserType.createDefaultOtherUser()
         
-        groupConversation = MockGroupDetailsConversation()
+        groupConversation = MockShareViewControllerConversation()
         groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
         groupConversation.displayName = "Bruno, John Appleseed"
         
-        oneToOneConversation = SwiftMockConversation()
+        oneToOneConversation = MockShareViewControllerConversation()
         oneToOneConversation.conversationType = .oneOnOne
         oneToOneConversation.sortedOtherParticipants = [mockUser]
         oneToOneConversation.displayName = "Bruno"
@@ -49,13 +49,13 @@ final class ShareViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    func activateDarkColorScheme() {
+    private func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
     
-    func disableDarkColorScheme() {
+    private func disableDarkColorScheme() {
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
@@ -153,7 +153,7 @@ final class ShareViewControllerTests: XCTestCase {
                            allowsMultipleSelection: Bool = true) {
         message.conversationLike = groupConversation
         
-        sut = ShareViewController<MockGroupDetailsConversation, MockShareableMessage>(
+        sut = ShareViewController<MockShareViewControllerConversation, MockShareableMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true, allowsMultipleSelection: allowsMultipleSelection
@@ -173,24 +173,20 @@ final class ShareViewControllerTests: XCTestCase {
 }
 
 final class MockShareableMessage: MockMessage, Shareable {
-    typealias I = MockGroupDetailsConversation
+    typealias I = MockShareViewControllerConversation
     
-    func share<MockGroupDetailsConversation>(to: [MockGroupDetailsConversation]) {
+    func share<MockShareViewControllerConversation>(to: [MockShareViewControllerConversation]) {
         //no-op
     }
 }
 
-extension SwiftMockConversation: ShareDestination {
-//    var avatarView: UIView? {
-//        <#code#>
-//    }
-    
+extension MockShareViewControllerConversation: ShareDestination {
     var showsGuestIcon: Bool {
         return false
     }
 }
 
-extension MockGroupDetailsConversation: StableRandomParticipantsProvider {
+extension MockShareViewControllerConversation: StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] {
         return sortedOtherParticipants
     }

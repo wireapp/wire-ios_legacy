@@ -22,6 +22,10 @@ protocol StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] { get }
 }
 
+protocol SortedOtherParticipantsProvider {
+    var sortedOtherParticipants: [UserType] { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -46,8 +50,6 @@ extension ZMConversation: InputBarConversation {}
 protocol GroupDetailsConversation {
     var userDefinedName: String? { get set }
 
-
-    var sortedOtherParticipants: [UserType] { get }
     var sortedServiceUsers: [UserType] { get }
 
     var allowGuests: Bool { get }
@@ -64,7 +66,9 @@ protocol GroupDetailsConversation {
 public typealias Conversation = ConversationLike & SwiftConversationLike
 
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
+
+typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & GroupDetailsConversation & Conversation
 
 
+extension ZMConversation: SortedOtherParticipantsProvider {}
 extension ZMConversation: GroupDetailsConversation {}

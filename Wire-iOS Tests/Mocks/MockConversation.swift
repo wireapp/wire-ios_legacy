@@ -43,19 +43,22 @@ class SwiftMockConversation: NSObject, Conversation  {
     var accessRole: ConversationAccessRole?
     
     var messageDestructionTimeout: MessageDestructionTimeout?
+
+    var isUnderLegalHold: Bool = false
+    var securityLevel: ZMConversationSecurityLevel = .notSecure
 }
 
-final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation {
+final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {
+    var sortedOtherParticipants: [UserType] = []
+}
+
+final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation, SortedOtherParticipantsProvider {
     var userDefinedName: String?
         
     var freeParticipantSlots: Int = 1
 
-    var isUnderLegalHold: Bool = false
-
     var sortedOtherParticipants: [UserType] = []
     var sortedServiceUsers: [UserType] = []
-
-    var securityLevel: ZMConversationSecurityLevel = .notSecure
 
     var hasReadReceiptsEnabled: Bool = false
 

@@ -55,10 +55,6 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
 }
 
 final class MockSystemMessageData: NSObject, ZMSystemMessageData {
-    var isDecryptionErrorRecoverable: Bool = true
-    var decryptionErrorCode: NSNumber?
-    var senderClientID: String?
-
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser> {

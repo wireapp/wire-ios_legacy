@@ -21,7 +21,7 @@ import XCTest
 import SnapshotTesting
 import WireDataModel
 
-final class MockConnectionRequest: NSObject, ConversationLike {
+final class MockConnectionRequest: NSObject, Conversation {
     var conversationType: ZMConversationType = .connection
     
     var isSelfAnActiveMember: Bool = false
@@ -39,6 +39,14 @@ final class MockConnectionRequest: NSObject, ConversationLike {
     var team: Team?
     
     var connectedUserType: UserType?
+
+    var isUnderLegalHold = false
+    var securityLevel: ZMConversationSecurityLevel = .notSecure
+
+    var accessMode: ConversationAccessMode?
+    var accessRole: ConversationAccessRole?
+
+    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout?
 }
 
 final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
