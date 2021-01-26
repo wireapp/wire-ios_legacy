@@ -21,9 +21,9 @@ import WireLinkPreview
 @testable import Wire
 
 final class ShareViewControllerTests: XCTestCase {
-    var groupConversation: MockGroupDetailsConversation! ///TODO: move property to DM
-    var oneToOneConversation: MockGroupDetailsConversation! ///TODO: move property to DM
-    var sut: ShareViewController<MockGroupDetailsConversation, MockShareableMessage>!
+    var groupConversation: SwiftMockConversation!
+    var oneToOneConversation: SwiftMockConversation!
+    var sut: ShareViewController<SwiftMockConversation, MockShareableMessage>!
     
     override func setUp() {
         super.setUp()
@@ -34,7 +34,7 @@ final class ShareViewControllerTests: XCTestCase {
         groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
         groupConversation.displayName = "Bruno, John Appleseed"
         
-        oneToOneConversation = MockGroupDetailsConversation() ///TODO: create a simpler type?
+        oneToOneConversation = SwiftMockConversation()
         oneToOneConversation.conversationType = .oneOnOne
         oneToOneConversation.sortedOtherParticipants = [mockUser]
         oneToOneConversation.displayName = "Bruno"
@@ -180,7 +180,11 @@ final class MockShareableMessage: MockMessage, Shareable {
     }
 }
 
-extension MockGroupDetailsConversation: ShareDestination {
+extension SwiftMockConversation: ShareDestination {
+//    var avatarView: UIView? {
+//        <#code#>
+//    }
+    
     var showsGuestIcon: Bool {
         return false
     }

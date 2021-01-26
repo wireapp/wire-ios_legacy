@@ -44,10 +44,8 @@ extension ZMConversation: InputBarConversation {}
 // MARK: - GroupDetailsConversation View controllers and child VCs
 
 protocol GroupDetailsConversation {
-    var isUnderLegalHold: Bool { get }
     var userDefinedName: String? { get set }
 
-    var securityLevel: ZMConversationSecurityLevel { get }
 
     var sortedOtherParticipants: [UserType] { get }
     var sortedServiceUsers: [UserType] { get }
@@ -62,7 +60,9 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias Conversation = ConversationLike & SwiftConversationLike
+///TODO:
+public typealias Conversation = ConversationLike & SwiftConversationLike
+
 
 typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
 
