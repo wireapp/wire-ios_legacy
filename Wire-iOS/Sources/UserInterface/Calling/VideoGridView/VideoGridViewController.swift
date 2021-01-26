@@ -24,8 +24,7 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
-final class VideoGridViewController: UIViewController {
-
+final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
@@ -70,6 +69,8 @@ final class VideoGridViewController: UIViewController {
             animateNetworkConditionView()
         }
     }
+
+    var dismissSpinner: SpinnerCompletion?
 
     // MARK: - Initialization
 
@@ -181,6 +182,7 @@ final class VideoGridViewController: UIViewController {
     private func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
+        displaySpinnerIfNeeded()
         updateSelfPreview()
         updateFloatingVideo(with: configuration.floatingVideoStream)
         updateVideoGrid(with: videoStreams)
@@ -190,6 +192,14 @@ final class VideoGridViewController: UIViewController {
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
+    private func displaySpinnerIfNeeded() {
+        guard configuration.videoStreams.isEmpty else {
+            dismissSpinner?()
+            return
+        }
+        showLoadingView(title: "No active speakers")
+    }
+    
     private func updateSelfPreview() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
