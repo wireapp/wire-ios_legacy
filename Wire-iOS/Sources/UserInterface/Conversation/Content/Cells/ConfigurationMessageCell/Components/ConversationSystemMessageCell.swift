@@ -805,13 +805,16 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
             clientIdentifier: (systemMessage.senderClientID ?? "N/A"))
         
         var components: [NSAttributedString]
-        
+                
         switch systemMessage.systemMessageType {
         case .decryptionFailed:
             components = [
-                messageString,
-                resetSessionString
+                messageString
             ]
+            
+            if systemMessage.isDecryptionErrorRecoverable {
+                components.append(resetSessionString)
+            }
         case .decryptionFailedResolved:
             components = [
                 messageString,

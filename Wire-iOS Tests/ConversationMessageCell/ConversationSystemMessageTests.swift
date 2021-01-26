@@ -107,6 +107,14 @@ final class ConversationSystemMessageTests: XCTestCase {
         verify(message: message)
     }
     
+    func testDecryptionFailed_NotRecoverable_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: user)!
+        message.backingSystemMessageData.isDecryptionErrorRecoverable = false
+
+        verify(message: message)
+    }
+    
     func testDecryptionFailedResolved_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0)!
 
