@@ -18,23 +18,6 @@
 import Foundation
 import WireDataModel
 
-
-protocol DisplayNameProvider {
-    var displayName: String { get }
-}
-
-protocol ConnectedUserProvider {
-    var connectedUserType: UserType? { get }
-}
-
-protocol AllowGuestsProvider {
-    var allowGuests: Bool { get }
-}
-
-protocol TeamProvider {
-    var team: Team? { get }
-}
-
 protocol AccessProvider {
     var accessMode: ConversationAccessMode? { get }
     var accessRole: ConversationAccessRole? { get }
@@ -59,13 +42,13 @@ protocol InputBarConversation {
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserProvider & DisplayNameProvider & ConversationLike
+typealias InputBarConversationType = InputBarConversation & ConversationLike
 
-extension ZMConversation: ConnectedUserProvider {
-    var connectedUserType: UserType? {
-        return connectedUser
-    }
-}
+//extension ZMConversation: ConnectedUserProvider {
+//    var connectedUserType: UserType? {
+//        return connectedUser
+//    }
+//}
 
 extension ZMConversation: InputBarConversation {}
 
@@ -90,13 +73,7 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & MessageDestructionTimeoutProvider & ConnectedUserProvider & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & ConversationLike & SwiftConversationLike
 
-//TODO: Merge there with ConversationLike
-extension ZMConversation: DisplayNameProvider {}
-extension ZMConversation: AllowGuestsProvider {}
-extension ZMConversation: TeamProvider {}
-extension ZMConversation: AccessProvider {}
-extension ZMConversation: MessageDestructionTimeoutProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}

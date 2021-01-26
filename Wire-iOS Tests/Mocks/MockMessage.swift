@@ -55,6 +55,9 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
 }
 
 final class MockSystemMessageData: NSObject, ZMSystemMessageData {
+    var isDecryptionErrorRecoverable: Bool = true
+    var decryptionErrorCode: NSNumber?
+    var senderClientID: String?
 
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
@@ -361,7 +364,7 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
 
     var replies: Set<ZMMessage> = Set()
 
-    var usersReaction: [String: [ZMUser]] {
+    var usersReaction: [String: [UserType]] {
         return backingUsersReaction
     }
 

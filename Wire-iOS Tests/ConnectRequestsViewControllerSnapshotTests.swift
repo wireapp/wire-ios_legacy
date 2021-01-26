@@ -21,7 +21,23 @@ import XCTest
 import SnapshotTesting
 import WireDataModel
 
-final class MockConnectionRequest: ConnectedUserProvider {
+final class MockConnectionRequest: NSObject, ConversationLike {
+    var conversationType: ZMConversationType = .connection
+    
+    var isSelfAnActiveMember: Bool = false
+    
+    var teamRemoteIdentifier: UUID?
+    
+    func localParticipantsContain(user: UserType) -> Bool {
+        return true
+    }
+    
+    var displayName: String = ""
+    
+    var allowGuests: Bool = false
+    
+    var team: Team?
+    
     var connectedUserType: UserType?
 }
 

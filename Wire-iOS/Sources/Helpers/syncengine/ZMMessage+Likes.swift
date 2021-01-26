@@ -55,7 +55,8 @@ extension ZMConversationMessage {
         return usersReaction.filter { (reaction, _) -> Bool in
             reaction == MessageReaction.like.unicodeValue
             }.map { (_, users) in
-                return users
+                ///TODO:
+                return users as! [ZMUser]
             }.first ?? []
     }
 
