@@ -29,13 +29,13 @@ final class ConversationActionController {
         case list, details
     }
 
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     unowned let target: UIViewController
     weak var sourceView: UIView?
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    init(conversation: ZMConversation,
+    init(conversation: GroupDetailsConversationType,
          target: UIViewController,
          sourceView: UIView?) {
         self.conversation = conversation
@@ -54,9 +54,9 @@ final class ConversationActionController {
         let actions: [ZMConversation.Action]
         switch context {
         case .details:
-            actions = conversation.detailActions
+            actions = (conversation as? ZMConversation)?.detailActions ?? []
         case .list:
-            actions = conversation.listActions
+            actions = (conversation as? ZMConversation)?.listActions ?? []
         }
         
         let title = context == .list ? conversation.displayName : nil
@@ -79,52 +79,55 @@ final class ConversationActionController {
     }
 
     func handleAction(_ action: ZMConversation.Action) {
+        guard let conversation = conversation as? ZMConversation else { return }
+        
         switch action {
         case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
 
             requestDeleteGroupResult() { result in
-                self.handleDeleteGroupResult(result, conversation: self.conversation, in: userSession)
+                self.handleDeleteGroupResult(result, conversation: conversation, in: userSession)
             }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
-            self.conversation.isArchived = !isArchived
+            conversation.isArchived = !isArchived
             }
         case .markRead: self.enqueue {
-            self.conversation.markAsRead()
+            conversation.markAsRead()
             }
         case .markUnread: self.enqueue {
-            self.conversation.markAsUnread()
+            conversation.markAsUnread()
             }
-        case .configureNotifications: self.requestNotificationResult(for: self.conversation) { result in
-            self.handleNotificationResult(result, for: self.conversation)
+        case .configureNotifications: self.requestNotificationResult(for: conversation) { result in
+            self.handleNotificationResult(result, for: conversation)
         }
         case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
+            conversation.mutedMessageTypes = isSilenced ? .none : .all
             }
         case .leave:
             request(LeaveResult.self) { result in
-                self.handleLeaveResult(result, for: self.conversation)
+                self.handleLeaveResult(result, for: conversation)
             }
-        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
-            self.handleClearContentResult(result, for: self.conversation)
+        case .clearContent:
+            requestClearContentResult(for: conversation) { result in
+            self.handleClearContentResult(result, for: conversation)
             }
         case .cancelRequest:
-            guard let user = self.conversation.connectedUser else { return }
+            guard let user = conversation.connectedUser else { return }
             self.requestCancelConnectionRequestResult(for: user) { result in
-                self.handleConnectionRequestResult(result, for: self.conversation)
+                self.handleConnectionRequestResult(result, for: conversation)
             }
-        case .block: self.requestBlockResult(for: self.conversation) { result in
-            self.handleBlockResult(result, for: self.conversation)
+        case .block: self.requestBlockResult(for: conversation) { result in
+            self.handleBlockResult(result, for: conversation)
             }
         case .moveToFolder:
-            self.openMoveToFolder(for: self.conversation)
+            self.openMoveToFolder(for: conversation)
         case .removeFromFolder:
             enqueue {
-                self.conversation.removeFromFolder()
+                conversation.removeFromFolder()
             }
         case .favorite(isFavorite: let isFavorite):
             enqueue {
-                self.conversation.isFavorite = !isFavorite
+                conversation.isFavorite = !isFavorite
             }
         case .remove: fatalError()
         }

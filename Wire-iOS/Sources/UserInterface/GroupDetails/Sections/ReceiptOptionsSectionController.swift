@@ -29,7 +29,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     // MARK: - Properties
 
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     private let syncCompleted: Bool
 
     private var footerView = SectionFooter(frame: .zero)
@@ -39,7 +39,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return !SelfUser.current.canModifyReadReceiptSettings(in: conversation)
     }
 
-    init(conversation: ZMConversation,
+    init(conversation: GroupDetailsConversationType,
         syncCompleted: Bool,
         collectionView: UICollectionView,
         presentingViewController: UIViewController) {
@@ -79,7 +79,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
             guard let userSession = ZMUserSession.shared(), let conversation = self?.conversation else { return }
             
             cell.isUserInteractionEnabled = false
-            conversation.setEnableReadReceipts(enabled, in: userSession, { result in
+            (conversation as? ZMConversation)?.setEnableReadReceipts(enabled, in: userSession, { result in
                 cell.isUserInteractionEnabled = true
                 
                 switch result {

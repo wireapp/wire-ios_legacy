@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import WireCommonComponents
 
-final class MockInputBarConversationType: InputBarConversationType {
+final class MockInputBarConversationType: NSObject, InputBarConversationType {
     var typingUsers: [UserType] = []
 
     var hasDraftMessage: Bool = false
@@ -41,6 +41,14 @@ final class MockInputBarConversationType: InputBarConversationType {
     var isReadOnly: Bool = false
 
     var displayName: String = ""
+
+    var isSelfAnActiveMember: Bool = true
+
+    var teamRemoteIdentifier: UUID?
+
+    func localParticipantsContain(user: UserType) -> Bool {
+        return false
+    }
 }
 
 final class ConversationInputBarViewControllerTests: XCTestCase {

@@ -342,8 +342,10 @@ final class SettingsPropertyFactory {
                         self.delegate?.appLockOptionDidChange(self,
                                                               newValue: lockApp.boolValue,
                                                               callback: { result in
-                        self.isAppLockActive = result
-                        })                        
+                           self.userSession?.perform {
+                               self.isAppLockActive = result
+                           }
+                        })
 
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")

@@ -1,5 +1,6 @@
+//
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +17,28 @@
 //
 
 import Foundation
+import XCTest
+@testable import Wire
 
-enum PasscodeValidationResult {
-    case accepted
-    case error(Set<PasscodeError>)
+final class ___FILEBASENAMEASIDENTIFIER___: XCTestCase {
+
+    private var sut: ___VARIABLE_productName:identifier___Module.View!
+    private var presenter: ___VARIABLE_productName:identifier___Module.MockPresenter!
+
+    override func setUp() {
+      super.setUp()
+        sut = ___VARIABLE_productName:identifier___Module.View()
+        presenter = ___VARIABLE_productName:identifier___Module.MockPresenter()
+
+        sut.presenter = presenter
+    }
+
+    override func tearDown() {
+        sut = nil
+        presenter = nil
+        super.tearDown()
+    }
+
+    // MARK: - Tests
+
 }

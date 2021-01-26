@@ -29,7 +29,7 @@ final class TextFieldValidator {
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
-        case invalidPassword(PasswordValidationResult)
+        case invalidPassword([PasswordValidationResult.Violation])
         case custom(String)
     }
 
@@ -39,7 +39,12 @@ final class TextFieldValidator {
         if isNew {
             // If the user is registering, enforce the password rules
             let result = PasswordRuleSet.shared.validatePassword(text)
-            return result != .valid ? .invalidPassword(result) : nil
+            switch result {
+            case .valid:
+                return nil
+            case .invalid(let violations):
+                return .invalidPassword(violations)
+            }
         } else {
             // If the user is signing in, we do not require any format
             return text.isEmpty ? .tooShort(kind: kind) : nil
@@ -129,14 +134,10 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .invalidPassword(let error):
-            switch error {
-            case .tooLong:
-                return "password.guidance.toolong".localized
-            default:
-                return PasswordRuleSet.localizedErrorMessage
-            }
-
+        case .invalidPassword(let violations):
+            return violations.contains(.tooLong)
+                ? "password.guidance.toolong".localized
+                : PasswordRuleSet.localizedErrorMessage
         }
     }
 

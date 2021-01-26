@@ -26,6 +26,7 @@ struct VideoConfiguration: VideoGridConfiguration {
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
+    let isCallOneToOne: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.videoStreamArrangment
@@ -33,6 +34,7 @@ struct VideoConfiguration: VideoGridConfiguration {
         floatingVideoStream = videoStreamArrangment.preview
         videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
+        isCallOneToOne = voiceChannel.callHasTwoParticipants
     }
 }
 
@@ -108,7 +110,7 @@ extension VoiceChannel {
         }
     }
     
-    private var callHasTwoParticipants: Bool {
+    fileprivate var callHasTwoParticipants: Bool {
         return connectedParticipants.count == 2
     }
     

@@ -25,6 +25,7 @@ import LocalAuthentication
 typealias AppLockInteractorUserSession = UserSessionVerifyPasswordInterface & UserSessionEncryptionAtRestInterface & UserSessionAppLockInterface
 
 protocol AppLockInteractorInput: class {
+    var needsToCreateCustomPasscode: Bool { get }
     var isCustomPasscodeNotSet: Bool { get }
     var isAuthenticationNeeded: Bool { get }
     var isDimmingScreenWhenInactive: Bool { get }
@@ -76,7 +77,7 @@ final class AppLockInteractor {
     var shouldUseBiometricsOrCustomPasscode: Bool {
         return appLock?.config.useBiometricsOrCustomPasscode ?? false
     }
-    
+
     var needsToNotifyUser: Bool {
         get {
             return appLock?.needsToNotifyUser ?? false
@@ -96,6 +97,11 @@ final class AppLockInteractor {
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
+
+    var needsToCreateCustomPasscode: Bool {
+        return (AuthenticationType.current == .unavailable || shouldUseBiometricsOrCustomPasscode) && isCustomPasscodeNotSet
+    }
+
     var isCustomPasscodeNotSet: Bool {
         return appLock?.isCustomPasscodeNotSet ?? false
     }

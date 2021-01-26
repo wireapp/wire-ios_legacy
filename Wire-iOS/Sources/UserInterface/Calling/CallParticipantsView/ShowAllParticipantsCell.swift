@@ -114,7 +114,7 @@ extension ShowAllParticipantsCell: CallParticipantsCellConfigurationConfigurable
 }
 
 extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
-    func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
+    func configure(with rowType: ParticipantsRowType, conversation: GroupDetailsConversationType, showSeparator: Bool) {
         guard case let .showAll(count) = rowType else { preconditionFailure() }
         titleLabel.text = "call.participants.show_all".localized(args: String(count))
         backgroundColor = .from(scheme: .barBackground)

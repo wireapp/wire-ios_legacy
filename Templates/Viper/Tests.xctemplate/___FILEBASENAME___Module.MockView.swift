@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,31 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireDataModel
+import Foundation
+@testable import Wire
 
-extension UserType {
-    var nameAccentColor: UIColor? {
-        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
+extension ___VARIABLE_productName:identifier___Module {
+
+    final class MockView: ___VARIABLE_productName:identifier___ViewPresenterInterface {
+
+        // MARK: - Metrics
+
+        var methodCalls = MethodCalls()
+
+        // MARK: - Methods
+
     }
+
 }
 
-extension ZMUser {
+extension ___VARIABLE_productName:identifier___Module.MockView {
 
-    var canSeeServices: Bool {
-        #if ADD_SERVICE_DISABLED
-        return false
-        #else
-        return hasTeam
-        #endif
-    }
-
-    /// Blocks user if not already blocked and vice versa.
-    func toggleBlocked() {
-        if isBlocked {
-            accept()
-        } else {
-            block()
-        }
-    }
+    struct MethodCalls { }
 
 }

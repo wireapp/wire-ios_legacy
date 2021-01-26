@@ -20,6 +20,13 @@ import Foundation
 
 extension MockUserType {
 
+    class func createDefaultSelfUser() -> MockUserType {
+        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.accentColorValue = .vividRed
+
+        return mockSelfUser
+    }
+
     /// Creates a self-user with the specified name and team membership.
     ///
     /// - Parameters:

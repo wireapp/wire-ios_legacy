@@ -169,7 +169,7 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
         }
     }
     
-    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
+    func presentFullParticipantsList(for users: [UserType], in conversation: GroupDetailsConversationType) {
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     
