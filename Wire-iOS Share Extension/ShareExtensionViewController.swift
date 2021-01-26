@@ -484,12 +484,12 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             callback(localAuthenticationStatus)
             return
         }
-        
-        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
+
+        guard localAuthenticationStatus == .denied || sharingSession.isDatabaseLocked else {
             callback(localAuthenticationStatus)
             return
         }
-        
+
         let scenario: AppLockController.AuthenticationScenario
         
         if sharingSession.encryptMessagesAtRest {
