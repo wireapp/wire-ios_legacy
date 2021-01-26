@@ -167,30 +167,6 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
-    // MARK: - Compact
-    
-    func testCallActionsView_Compact() {
-        // Given
-        let input = CallActionsViewInput(
-            permissions: MockCallPermissions.videoPendingApproval,
-            canToggleMediaType: true,
-            isVideoCall: false,
-            isMuted: false,
-            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
-            variant: .light,
-            cameraType: .front,
-            callState: CallStateMock.incoming
-        )
-        
-        // When
-        widthConstraint.constant = 400
-        sut.isCompact = true
-        sut.update(with: input)
-        
-        // Then
-        verify(view: sut)
-    }
-    
     // MARK: - Call State: Incoming
     
     func testCallActionsView_StateIncoming_Audio() {
