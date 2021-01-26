@@ -35,8 +35,8 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
-        let message = MockMessage()
+    class func messageTemplate<T: MockMessage>(sender: UserType? = nil) -> T {
+        let message = T()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
@@ -134,8 +134,9 @@ final class MockMessageFactory {
         return message
     }
 
-    class func locationMessage(sender: MockUserType? = nil) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+    ///TODO: shareable
+    class func locationMessage<T: MockMessage>(sender: MockUserType? = nil) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
         message.backingLocationMessageData = MockLocationMessageData()
         return message

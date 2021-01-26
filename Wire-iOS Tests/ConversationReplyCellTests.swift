@@ -413,7 +413,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysLocationMessage_56() {
         // GIVEN
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         message.backingLocationMessageData.name = "Rosenthaler Str. 40-41, 10178 Berlin"
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
@@ -428,7 +428,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDoesNotTruncateLongLocationMessage_56() {
         // GIVEN
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         message.backingLocationMessageData.name = "Hackesher Markt, Rosenthaler Str. 40-41, 10178 Berlin, Germany"
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation

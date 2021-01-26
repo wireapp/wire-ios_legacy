@@ -403,4 +403,8 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     var hasBeenDeleted = false
 
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
+    
+    required override init() {
+        
+    }
 }

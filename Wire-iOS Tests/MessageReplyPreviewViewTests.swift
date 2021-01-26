@@ -127,13 +127,13 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersLocationMessagePreview() {
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersLocationMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
