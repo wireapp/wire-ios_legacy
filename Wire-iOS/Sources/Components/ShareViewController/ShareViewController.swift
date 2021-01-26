@@ -167,7 +167,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filteredDestinations.count
+        return filteredDestinations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

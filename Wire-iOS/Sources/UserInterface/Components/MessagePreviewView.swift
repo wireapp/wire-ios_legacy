@@ -220,8 +220,7 @@ final class MessagePreviewView: UIView, Themeable {
     
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
-        ///TODO:
-//        require(message.conversationLike != nil)
+        require(message.conversationLike != nil)
         self.message = message
         self.displaySender = displaySender
         super.init(frame: .zero)

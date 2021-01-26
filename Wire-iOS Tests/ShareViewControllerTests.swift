@@ -28,6 +28,8 @@ final class ShareViewControllerTests: XCTestCase {
         super.setUp()
 
         groupConversation = MockGroupDetailsConversation()
+        groupConversation.sortedOtherParticipants = [MockUserType.createUser(name: "Bruno"), MockUserType.createUser(name: "John Appleseed")]
+        groupConversation.displayName = "Bruno, John Appleseed"
     }
 
     override func tearDown() {
@@ -49,10 +51,9 @@ final class ShareViewControllerTests: XCTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-///TODO: it creates share VC
+
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
-//        try! groupConversation.appendText(content: "This is a text message.")
         let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
         createSut(message: message,
                   allowsMultipleSelection: false)
@@ -146,6 +147,7 @@ final class ShareViewControllerTests: XCTestCase {
 
     private func createSut(message: MockShareableMessage,
                            allowsMultipleSelection: Bool = true) {
+        message.conversationLike = groupConversation
 //        groupConversation.add(participants: [createUser(name: "John Appleseed")])
 //        let oneToOneConversation = otherUserConversation!
 
