@@ -41,7 +41,8 @@ enum MessageAction: CaseIterable {
     sketchEmoji,
     ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
     present,
-    openQuote
+    openQuote,
+    resetSession
 
     var title: String? {
         let key: String?
@@ -80,7 +81,8 @@ enum MessageAction: CaseIterable {
         case .sketchEmoji:
             key = "image.add_emoji"
         case .present,
-             .openQuote:
+             .openQuote,
+             .resetSession:
             key = nil
         }
 
@@ -115,18 +117,14 @@ enum MessageAction: CaseIterable {
             return .redo
         case .showInConversation:
             return .eye
-        case .present:
-            // no icon for present
-            return nil
         case .sketchDraw:
             return .brush
         case .sketchEmoji:
             return .emoji
-        case .openQuote:
-            // no icon for openQuote
-            return nil
-        case .digitallySign:
-            // no icon for digitallySign
+        case .present,
+             .openQuote,
+             .digitallySign,
+             .resetSession:
             return nil
         }
     }
@@ -172,8 +170,8 @@ enum MessageAction: CaseIterable {
             imageName = "smiley.fill"
         case .present,
              .openQuote,
-             .digitallySign:
-            // no icon for present and openQuote
+             .digitallySign,
+             .resetSession:
             imageName = nil
         }
         
@@ -214,7 +212,8 @@ enum MessageAction: CaseIterable {
         case .present,
              .sketchDraw,
              .sketchEmoji,
-             .openQuote:
+             .openQuote,
+             .resetSession:
             // no message related actions are not handled in ConversationMessageActionController
             return nil
         }

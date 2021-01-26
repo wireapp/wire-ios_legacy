@@ -19,19 +19,26 @@
 import XCTest
 @testable import Wire
 
-final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
+final class LocationMessageCellTests: XCTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
     var sut: ImageMessageView!
-    
+    var mockSelfUser: MockUserType!
+
     override func setUp() {
         super.setUp()
-        
-        mockSelfUser.name = "selfUser"
-        mockSelfUser.accentColorValue = .vividRed
+
+        mockSelfUser = MockUserType.createDefaultSelfUser()
+        UIColor.setAccentOverride(.vividRed)
     }
-    
+
+    override func tearDown() {
+        mockSelfUser = nil
+
+        super.tearDown()
+    }
+
     /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
     func disabled_testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
@@ -46,7 +53,7 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
     }
 
     func testThatItRendersLocationCellObfuscated() {
-        verify(message: makeMessage() {
+        verify(message: makeMessage {
             $0.isObfuscated = true
         })
     }
