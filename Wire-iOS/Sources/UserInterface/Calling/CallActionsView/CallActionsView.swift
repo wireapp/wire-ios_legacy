@@ -91,6 +91,10 @@ extension VideoGridPresentationMode {
             return "all"
         }
     }
+    
+    var index: Int {
+        type(of: self).allCases.firstIndex(of: self)!
+    }
 }
 
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
@@ -138,10 +142,7 @@ final class CallActionsView: UIView {
     }
     
     private func setupViews() {
-        speakersAllSegmentedView.addButton(withTitle: "call.overlay.switch_to.speakers".localized, actionHandler: {})
-        speakersAllSegmentedView.addButton(withTitle: "call.overlay.switch_to.all".localized, actionHandler: {})
-        speakersAllSegmentedView.setSelected(true, forItemAt: 1)
-        speakersAllSegmentedView.isHidden = true
+        setupSegmentedView()
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
         topStackView.spacing = 32
@@ -158,6 +159,16 @@ final class CallActionsView: UIView {
         addSubview(videoButtonDisabled)
     }
 
+    private func setupSegmentedView() {
+        VideoGridPresentationMode.allCases.forEach { mode in
+            speakersAllSegmentedView.addButton(
+                withTitle: mode.title,
+                actionHandler: { [weak self] in self?.updateVideoGridPresentationMode(with: mode) }
+            )
+        }
+        speakersAllSegmentedView.setSelected(true, forItemAt: VideoGridPresentationMode.allVideoStreams.index)
+    }
+    
     private func setupAccessibility() {
         muteCallButton.accessibilityLabel = "voice.mute_button.title".localized
         videoButton.accessibilityLabel = "voice.video_button.title".localized
@@ -196,8 +207,7 @@ final class CallActionsView: UIView {
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         speakersAllSegmentedView.isHidden = !input.isVideoCall
-        let index = VideoGridPresentationMode.allCases.firstIndex(of: input.videoGridPresentationMode)!
-        speakersAllSegmentedView.setSelected(true, forItemAt: index)
+        speakersAllSegmentedView.setSelected(true, forItemAt: input.videoGridPresentationMode.index)
         muteCallButton.isSelected = input.isMuted
         muteCallButton.isEnabled = canToggleMuteButton(input)
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
@@ -230,8 +240,7 @@ final class CallActionsView: UIView {
     
     // MARK: - Action Output
     
-    func roundedSegmentedView(_ view: RoundedSegmentedView, didSelectSegmentAtIndex index: Int) {
-        let mode = VideoGridPresentationMode.allCases[index]
+    func updateVideoGridPresentationMode(with mode: VideoGridPresentationMode) {
         delegate?.callActionsView(self, perform: .updateVideoGridPresentationMode(mode))
     }
 
