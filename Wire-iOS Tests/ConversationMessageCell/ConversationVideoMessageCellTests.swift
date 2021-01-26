@@ -28,7 +28,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
         super.setUp()
         
         message = MockMessageFactory.videoMessage(sender: mockSelfUser,
-                                                  previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))!
+                                                  previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
     }
     
     override func tearDown() {
@@ -56,7 +56,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testUploadedCell_fromOtherUser_withoutPreview() {
-        let message = MockMessageFactory.videoMessage()!
+        let message = MockMessageFactory.videoMessage()
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
@@ -84,7 +84,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     func testUploadingCell_fromOtherUser_withoutPreview() {
-        let message = MockMessageFactory.videoMessage()!
+        let message = MockMessageFactory.videoMessage()
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil

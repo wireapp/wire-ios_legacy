@@ -146,12 +146,12 @@ final class MockMessageFactory {
         return message
     }
 
-    class func videoMessage(sender: UserType? = nil,
-                            previewImage: UIImage? = nil) -> MockMessage? {
-        let message: MockMessage? = fileTransferMessage(sender: sender)
-        message?.backingFileMessageData.mimeType = "video/mp4"
-        message?.backingFileMessageData.filename = "vacation.mp4"
-        message?.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
+    class func videoMessage<T: MockMessage>(sender: UserType? = nil,
+                            previewImage: UIImage? = nil) -> T {
+        let message: T = fileTransferMessage(sender: sender)
+        message.backingFileMessageData.mimeType = "video/mp4"
+        message.backingFileMessageData.filename = "vacation.mp4"
+        message.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
         return message
     }
 

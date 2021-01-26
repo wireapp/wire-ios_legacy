@@ -131,22 +131,19 @@ final class ShareViewControllerTests: XCTestCase {
         activateDarkColorScheme()
         verifyImage()
     }
-/*
+
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
         activateDarkColorScheme()
-        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
-        let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0)
-        let file = ZMFileMetadata(fileURL: videoURL, thumbnail: thumbnail)
-//        try! self.groupConversation.appendFile(with: file)
+        let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 
-        createSut()
-
-        _ = sut.view // make sure view is loaded
+        let message: MockShareableMessage = MockMessageFactory.videoMessage(sender: nil, previewImage: thumbnail)
+        createSut(message: message)
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         verifyInAllDeviceSizes(matching: sut)
     }
 
+    /*
     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
         activateDarkColorScheme()
         let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))

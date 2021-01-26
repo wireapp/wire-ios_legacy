@@ -49,7 +49,7 @@ final class MessagePresenterTests: XCTestCase {
     // MARK: - Video
     func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile(){
         // GIVEN
-        let message = MockMessageFactory.videoMessage()!
+        let message = MockMessageFactory.videoMessage()
         let fileURL = Bundle(for: MockAudioRecorder.self).url(forResource: "video", withExtension: "mp4")
         message.backingFileMessageData?.fileURL = fileURL
 
