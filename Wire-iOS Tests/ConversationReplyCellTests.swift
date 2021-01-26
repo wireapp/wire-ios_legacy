@@ -304,7 +304,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysNullImage() {
         // GIVEN
         let image = UIImage()
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
@@ -319,7 +319,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysPortraitImage_52() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
@@ -334,7 +334,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysSquareImage_52() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 
@@ -349,7 +349,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysPanoImage_52() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 

@@ -36,7 +36,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
     
     func testThatImageIsPresentedOnSingleTapWhenDownloaded() {
         // GIVEN
-        let message = MockMessageFactory.imageMessage(with: image(inTestBundleNamed: "unsplash_burger.jpg"))!
+        let message = MockMessageFactory.imageMessage(with: image(inTestBundleNamed: "unsplash_burger.jpg"))
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         
@@ -50,7 +50,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
     
     func testThatImageIgnoresSingleTapWhenNotDownloaded() {
         // GIVEN
-        let message = MockMessageFactory.imageMessage(with: nil)!
+        let message = MockMessageFactory.imageMessage(with: nil)
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         

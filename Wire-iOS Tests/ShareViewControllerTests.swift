@@ -75,6 +75,13 @@ final class ShareViewControllerTests: XCTestCase {
         let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
         makeTestForShareViewController(message: message)
     }
+    
+    func testThatItRendersCorrectlyShareViewController_DarkMode() {
+        activateDarkColorScheme()
+
+        let message = MockMessageFactory.shareableTextMessage(withText: "This is a text message.")
+        makeTestForShareViewController(message: message)
+    }
 
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
         let message = MockMessageFactory.shareableTextMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
@@ -99,36 +106,22 @@ final class ShareViewControllerTests: XCTestCase {
     }
 
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
-//        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
-//        try! groupConversation.appendFile(with: file)
-        
-        
         let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
-//        message.backingLocationMessageData.name = "Stranger Place"
-//        makeTestForShareViewController(message: message, file: file, testName: testName, line: line)
         makeTestForShareViewController(message: message)
     }
 
-    /*
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-//        try! self.groupConversation.appendImage(from: img.imageData!)
 
-        createSut()
-
-        _ = sut.view // make sure view is loaded
+        let message: MockShareableMessage = MockMessageFactory.imageMessage(with: img)
+        createSut(message: message)
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verifyInAllDeviceSizes(matching: sut)
     }
 
-    func testThatItRendersCorrectlyShareViewController_DarkMode() {
-        activateDarkColorScheme()
-//        try! groupConversation.appendText(content: "This is a text message.")
-        makeTestForShareViewController()
-    }
-
+    /*
     func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
         activateDarkColorScheme()
         let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")

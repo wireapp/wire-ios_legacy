@@ -66,7 +66,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItDisplaysCorrectToolbarForImage_Ephemeral() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = true
         sut.currentMessage = message
         
@@ -82,7 +82,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     func testThatToolBarIsUpdateAfterScollToAnEphemeralImage() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = false
         sut.currentMessage = message
 

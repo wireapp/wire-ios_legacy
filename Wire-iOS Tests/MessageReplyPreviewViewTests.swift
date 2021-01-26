@@ -156,7 +156,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
 
     func testThatItRendersImageMessagePreview() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
 
         let previewView = message.replyPreview()!
         XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
