@@ -59,6 +59,7 @@ final class ShareViewControllerTests: XCTestCase {
         //THEN
         verify(matching: sut)
     }
+    /*
 
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
 //        try! groupConversation.appendText(content: "This is a text message.")
@@ -69,7 +70,6 @@ final class ShareViewControllerTests: XCTestCase {
 //        try! groupConversation.appendText(content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController()
     }
-/*
     func testThatItRendersCorrectlyShareViewController_LocationMessage() throws {
         let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
 //        try groupConversation.appendLocation(with: location)
@@ -152,6 +152,8 @@ final class ShareViewControllerTests: XCTestCase {
 //            return
 //        }
         let message = MockShareableMessage()
+        ///TODO: wait for DM conversation like
+//        message.conversation =
         sut = ShareViewController<MockGroupDetailsConversation, MockShareableMessage>(
             shareable: message,
             destinations: [groupConversation/*, oneToOneConversation*/],
@@ -170,13 +172,8 @@ final class ShareViewControllerTests: XCTestCase {
 
 }
 
-final class MockShareableMessage: Shareable {
-    
-    func previewView() -> UIView? {
-        return UIView() ///TODO: generate preview
-    }
-    
-    
+final class MockShareableMessage: MockMessage, Shareable {
+ 
     func share<MockGroupDetailsConversation>(to: [MockGroupDetailsConversation]) {
     }
     
@@ -190,7 +187,7 @@ extension MockGroupDetailsConversation: ShareDestination {
     }
     
     var avatarView: UIView? {
-        return UIView()
+        return UIView() ///TODO:
     }
     
 }

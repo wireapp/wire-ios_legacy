@@ -288,7 +288,7 @@ final class MockLocationMessageData: NSObject, LocationMessageData {
     var zoomLevel: Int32 = 0
 }
 
-final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
+class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
@@ -318,7 +318,10 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
+
     var conversation: ZMConversation? = .none
+    var conversationLike: ConversationLike? = .none
+
     var deliveryState: ZMDeliveryState = .delivered
 
     var imageMessageData: ZMImageMessageData? = .none
