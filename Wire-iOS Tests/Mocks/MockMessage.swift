@@ -303,10 +303,10 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     var sender: ZMUser? {
         get {
             XCTFail("This property should not be used in tests")
-            
+
             return nil
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }
@@ -402,8 +402,8 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     var hasBeenDeleted = false
 
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
-    
+
     required override init() {
-        
+
     }
 }
