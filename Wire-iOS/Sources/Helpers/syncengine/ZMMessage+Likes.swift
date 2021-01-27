@@ -41,7 +41,7 @@ extension ZMConversationMessage {
             }
         }
         get {
-            return likers().contains(.selfUser())
+            return hashBoxlikers.contains(HashBox(value: SelfUser.current))
         }
     }
 
@@ -51,17 +51,20 @@ extension ZMConversationMessage {
             }.reduce(0, +) > 0
     }
 
-    func likers() -> [ZMUser] {
+    var likers: [UserType] {
         return usersReaction.filter { (reaction, _) -> Bool in
             reaction == MessageReaction.like.unicodeValue
             }.map { (_, users) in
-                ///TODO:
-                return users as! [ZMUser]
+                return users
             }.first ?? []
     }
 
-    var sortedLikers: [ZMUser] {
-        return likers().sorted { $0.name < $1.name }
+    var hashBoxlikers: [HashBoxUser] {
+        return likers.map{HashBox(value: $0)}
+    }
+    
+    var sortedLikers: [UserType] {
+        return likers.sorted { $0.name < $1.name }
     }
 
     var sortedReadReceipts: [ReadReceipt] {
