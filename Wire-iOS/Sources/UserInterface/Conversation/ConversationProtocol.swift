@@ -62,11 +62,6 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-///TODO:
-public typealias Conversation = ConversationLike & SwiftConversationLike
-
-
-
 typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & GroupDetailsConversation & Conversation
 
 
