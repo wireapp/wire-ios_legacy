@@ -76,13 +76,6 @@ final class ShareViewControllerTests: XCTestCase {
         makeTestForShareViewController(message: message)
     }
     
-    func testThatItRendersCorrectlyShareViewController_DarkMode() {
-        activateDarkColorScheme()
-        
-        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
-        makeTestForShareViewController(message: message)
-    }
-    
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController(message: message)
@@ -100,22 +93,11 @@ final class ShareViewControllerTests: XCTestCase {
         verifyLocation()
     }
     
-    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() throws {
-        activateDarkColorScheme()
-        verifyLocation()
-    }
-    
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
         let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
         makeTestForShareViewController(message: message)
     }
-    
-    func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
-        activateDarkColorScheme()
-        let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
-        makeTestForShareViewController(message: message)
-    }
-    
+        
     private func verifyImage(file: StaticString = #file,
                              testName: String = #function,
                              line: UInt = #line) {
@@ -130,11 +112,6 @@ final class ShareViewControllerTests: XCTestCase {
     }
     
     func testThatItRendersCorrectlyShareViewController_Photos() {
-        verifyImage()
-    }
-    
-    func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
-        activateDarkColorScheme()
         verifyImage()
     }
     
@@ -162,12 +139,22 @@ final class ShareViewControllerTests: XCTestCase {
     
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
     private func makeTestForShareViewController(message: MockShareableMessage,
+                                                inAllColorSchemes: Bool = false,
                                                 file: StaticString = #file,
                                                 testName: String = #function,
                                                 line: UInt = #line) {
         createSut(message: message)
         
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
+
+        if inAllColorSchemes {
+            activateDarkColorScheme()
+        
+            createSut(message: message)
+            
+            verifyInAllDeviceSizes(matching: sut, file: file, testName: testName + "dark", line: line)
+        }
+
     }
     
 }
