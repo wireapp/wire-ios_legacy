@@ -20,6 +20,12 @@
 import XCTest
 @testable import Wire
 
+extension SelfUser {
+    static func setupMockSelfUser() {
+        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen"))
+    }
+}
+
 final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
@@ -31,7 +37,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen"))
+        SelfUser.setupMockSelfUser()
 
         snapshotBackgroundColor = UIColor.white
     
