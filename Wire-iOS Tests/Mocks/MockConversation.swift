@@ -66,3 +66,19 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
     var mutedMessageTypes: MutedMessageTypes = .none
 }
 
+final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation {
+    
+    var typingUsers: [UserType] = []
+    
+    var hasDraftMessage: Bool = false
+        
+    var draftMessage: DraftMessage?
+    
+    var messageDestructionTimeoutValue: TimeInterval = 0
+        
+    func setIsTyping(_ isTyping: Bool) {
+        //no-op
+    }
+    
+    var isReadOnly: Bool = false        
+}
