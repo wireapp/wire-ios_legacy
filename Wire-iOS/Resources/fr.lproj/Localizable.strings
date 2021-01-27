@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Vous n’avez pas utilisé cet appareil depuis un moment. Il est possible que certains messages n’apparaissent pas ici.";
 "content.system.missing_messages.subtitle_start" = "Pendant ce temps,";
 
-"content.system.cannot_decrypt" = "Un message de %@ n’a pas été reçu.";
+"content.system.cannot_decrypt.self" = "Un message de **vous** n'a pas pu être déchiffré.";
+"content.system.cannot_decrypt.other" = "Un message de **%@** n'a pas pu être déchiffré.";
+"content.system.cannot_decrypt.reset_session" = "Corriger les futurs messages";
+"content.system.cannot_decrypt.error_details" = "(Erreur corrigée : %d ID : %@)";
 
-"content.system.cannot_decrypt.you_part" = "vous";
-"content.system.cannot_decrypt.why_part" = "Pourquoi ?";
+"content.system.cannot_decrypt_resolved.self" = "Vous pouvez maintenant déchiffrer vos messages. Pour récupérer les messages perdus, **vous devez les renvoyer**";
+"content.system.cannot_decrypt_resolved.other" = "Vous pouvez maintenant déchiffrer les messages de **%1$@**. Pour récupérer les messages perdus, **demandez à %1$@ de les renvoyer.**";
 
-"content.system.cannot_decrypt.identity" = "L'identité de l'appareil %@ a changé. Message non distribué.";
-"content.system.cannot_decrypt.identity.you_part" = "Votre";
-"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "En savoir plus";
-"content.system.cannot_decrypt.otherDevice_part" = "(appareil %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "L'identité de **votre** appareil a changé. Le message n'a pas été distribué.";
+"content.system.cannot_decrypt_identity_changed.other" = "L’identité de l’appareil de **%@’s** a changé. Le message n'a pas été distribué."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ n'a pas pu déchiffrer certains de vos messages mais a résolu le problème**. Cela a affecté toutes vos conversations en commun.";
+"content.system.session_reset.self" = "**Vous n'avez pas pu déchiffrer certains de vos messages, mais vous avez résolu le problème**. Cela a affecté toutes les conversations.";
 
 "content.system.unknown_message.body" = "Impossible d’afficher ce message. Vous utilisez peut-être une version trop ancienne de Wire.";
 
@@ -1567,7 +1569,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Une erreur s'est produite, veuillez réessayer";
 "error.user.needs_credentials" = "Veuillez vérifier vos informations et réessayez.";
-"error.user.domain_blocked" = "Cet e-mail nécessite une invitation de la part d'une équipe Wire existante. Contactez les administrateurs informatiques de votre organisation pour recevoir une invitation.";
+"error.user.domain_blocked" = "Cet e-mail nécessite une invitation de la part d'une équipe existante. Contactez les administrateurs informatiques de votre organisation pour recevoir une invitation.";
 "error.user.invalid_credentials" = "Veuillez vérifier vos informations et réessayez.";
 "error.user.account_pending_activation" = "Le compte auquel vous tentez d’accéder est en attente d’activation. Merci de vérifier vos informations.";
 "error.user.network_error" = "Il semble y avoir un problème avec votre réseau. Veuillez réessayer ultérieurement.";
