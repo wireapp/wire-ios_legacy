@@ -40,6 +40,7 @@ final class MockMessageFactory {
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
+        message.conversationLike = message.conversation
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
 
         if let sender = sender as? ZMUser {
