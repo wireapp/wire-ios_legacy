@@ -21,38 +21,10 @@ import XCTest
 import SnapshotTesting
 import WireDataModel
 
-final class MockConnectionRequest: NSObject, Conversation {
-    var conversationType: ZMConversationType = .connection
-    
-    var isSelfAnActiveMember: Bool = false
-    
-    var teamRemoteIdentifier: UUID?
-    
-    func localParticipantsContain(user: UserType) -> Bool {
-        return true
-    }
-    
-    var displayName: String = ""
-    
-    var allowGuests: Bool = false
-    
-    var team: Team?
-    
-    var connectedUserType: UserType?
-
-    var isUnderLegalHold = false
-    var securityLevel: ZMConversationSecurityLevel = .notSecure
-
-    var accessMode: ConversationAccessMode?
-    var accessRole: ConversationAccessRole?
-
-    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout?
-}
-
 final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConnectRequestsViewController!
-    var mockConnectionRequest: MockConnectionRequest!
+    var mockConnectionRequest: SwiftMockConversation!
 
     override func setUp() {
         super.setUp()
@@ -63,7 +35,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
 
         sut.loadViewIfNeeded()
 
-        mockConnectionRequest = MockConnectionRequest()
+        mockConnectionRequest = SwiftMockConversation()
         let mockUser = MockUserType.createSelfUser(name: "Bruno")
         mockUser.accentColorValue = .brightOrange
         mockUser.handle = "bruno"
@@ -91,7 +63,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         otherUser.accentColorValue = .brightYellow
         otherUser.handle = "bill"
 
-        let secondConnectionRequest = MockConnectionRequest()
+        let secondConnectionRequest = SwiftMockConversation()
         secondConnectionRequest.connectedUserType = otherUser
 
 

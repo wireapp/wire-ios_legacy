@@ -5894,6 +5894,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				87BEB0D71C734D550094BFE9 /* Mocks */,
 				064AB3D425BAE36A00380D9B /* PasswordRules */,
 				6370DA1F2577933400B5C8F1 /* Views */,
 				A99E3E8D2519F23700E4FD3E /* Analytics */,
@@ -5953,7 +5954,6 @@
 				BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */,
 				BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */,
 				54D355E1255939640004DAC7 /* Routers */,
-				87BEB0D71C734D550094BFE9 /* Mocks */,
 				1E12C04D1BFA6346001A8A26 /* TestCategories */,
 				DBD990471B39927A000ACF94 /* InputBar */,
 				BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */,

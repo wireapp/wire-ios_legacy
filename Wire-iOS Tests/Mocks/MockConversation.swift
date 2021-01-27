@@ -19,6 +19,7 @@
 import Foundation
 @testable import Wire
 
+///TODO: rename to MockConversation after objc MockConversation is retired
 class SwiftMockConversation: NSObject, Conversation  {
     var isSelfAnActiveMember: Bool = true
     
@@ -64,3 +65,4 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
 
     var mutedMessageTypes: MutedMessageTypes = .none
 }
+
