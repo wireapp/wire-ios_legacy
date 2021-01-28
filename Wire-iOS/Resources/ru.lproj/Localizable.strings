@@ -221,7 +221,7 @@
 "list.archived_conversations_close" = "Закрыть архив";
 
 "list.section.groups" = "Группы";
-"list.section.contacts" = "Участники";
+"list.section.contacts" = "Контакты";
 "list.section.requests" = "Запросы";
 "list.section.favorites" = "Избранное";
 
@@ -237,7 +237,7 @@
 "conversation.status.silenced" = "Без звука";
 "conversation.status.poor_connection" = "Плохое подключение";
 "conversation.status.blocked" = "Заблокирован(-а)";
-"conversation.status.incoming_call" = "%@ вызывает…";
+"conversation.status.incoming_call" = "%@ звонит…";
 "conversation.status.incoming_call.unknown" = "Вызов…";
 
 "conversation.status.message.text" = "%@";
@@ -258,7 +258,7 @@
 "conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
 "conversation.status.message.ephemeral.reply" = "Ответил(-а) на ваше сообщение";
 "conversation.status.message.ephemeral.reply.group" = "Кто-то ответил на ваше сообщение";
-"conversation.status.message.ephemeral.knock" = "Отправил(-а) пинг";
+"conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
 "conversation.status.message.ephemeral.knock.group" = "Кто-то отправил пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
@@ -510,7 +510,7 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "Эта беседа находится под правовой защитой";
+"content.system.message_legal_hold.enabled" = "Теперь вы находитесь под правовой защитой";
 "content.system.message_legal_hold.disabled" = "Для этой беседы деактивирована правовая защита";
 
 "content.system.message_legal_hold.learn_more" = "Подробнее";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Вы не использовали это устройство продолжительное время. Некоторые сообщения могут не отображаться.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
 
-"content.system.cannot_decrypt" = "Сообщение от %@ получено не было.";
+"content.system.cannot_decrypt.self" = "Не удалось расшифровать **ваше** сообщение.";
+"content.system.cannot_decrypt.other" = "Не удалось расшифровать сообщение от **%@**.";
+"content.system.cannot_decrypt.reset_session" = "Исправить будущие сообщения";
+"content.system.cannot_decrypt.error_details" = "(Исправлена ошибка: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "вы";
-"content.system.cannot_decrypt.why_part" = "Почему?";
+"content.system.cannot_decrypt_resolved.self" = "Теперь вы можете расшифровывать свои сообщения. Чтобы восстановить утраченные сообщения, **вы должны отправить их повторно.**";
+"content.system.cannot_decrypt_resolved.other" = "Теперь вы можете расшифровывать сообщения от **%1$@**. Чтобы восстановить утраченные сообщения, **попросите **%1$@** отправить их повторно**";
 
-"content.system.cannot_decrypt.identity" = "Идентификатор устройства %@ изменился. Сообщение не доставлено.";
-"content.system.cannot_decrypt.identity.you_part" = "Ваш";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Подробнее";
-"content.system.cannot_decrypt.otherDevice_part" = "(устройство %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "Идентификатор **вашего** устройства изменился. Сообщение не доставлено.";
+"content.system.cannot_decrypt_identity_changed.other" = "Идентификатор устройства **%@** изменился. Сообщение не доставлено."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ не смог расшифровать некоторые из ваших сообщений, но решил проблему**. Это затронуло все ваши совместные беседы.";
+"content.system.session_reset.self" = "**Вам не смогли расшифровать некоторые из ваших сообщений, но проблема была решена**. Это затронуло все беседы.";
 
 "content.system.unknown_message.body" = "Сообщение не может быть показано. Возможно, вы используете старую версию Wire.";
 

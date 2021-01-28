@@ -155,6 +155,11 @@ extension ConversationContentViewController {
         case .openDetails:
             let detailsViewController = MessageDetailsViewController(message: message)
             parent?.present(detailsViewController, animated: true)
+        case .resetSession:
+            guard let client = message.systemMessageData?.clients.first as? UserClient else { return }
+            isLoadingViewVisible = true
+            userClientToken = UserClientChangeInfo.add(observer: self, for: client)
+            client.resetSession()
         }
     }
 
@@ -179,7 +184,21 @@ extension ConversationContentViewController {
     }
 }
 
+// MARK: - UserClientObserver
+
+extension ConversationContentViewController: UserClientObserver {
+    
+    func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
+        if changeInfo.sessionHasBeenReset {
+            userClientToken = nil
+            isLoadingViewVisible = false
+        }
+    }
+    
+}
+
 // MARK: - SignatureObserver
+
 extension ConversationContentViewController: SignatureObserver {
     func willReceiveSignatureURL() {
         isLoadingViewVisible = true

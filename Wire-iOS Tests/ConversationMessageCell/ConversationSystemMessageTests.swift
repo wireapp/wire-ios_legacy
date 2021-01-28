@@ -19,8 +19,8 @@
 import XCTest
 @testable import Wire
 
-final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
-    
+final class ConversationSystemMessageTests: XCTestCase {
+
     override func setUp() {
         super.setUp()
         SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
@@ -80,9 +80,63 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
+    
+    func testSessionReset_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: user)!
 
-    func testDecryptionFailed() {
+        verify(message: message)
+    }
+    
+    func testSessionReset_Self() {
+        let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: SelfUser.current)!
+         
+        verify(message: message)
+    }
+
+    func testDecryptionFailed_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailed_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: user)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailed_NotRecoverable_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: user)!
+        message.backingSystemMessageData.isDecryptionErrorRecoverable = false
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedResolved_Self() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedResolved_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0, sender: user)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedIdentifyChanged_Self() {
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0)!
+
+        verify(message: message)
+    }
+    
+    func testDecryptionFailedIdentifyChanged_Other() {
+        let user = MockUserType.createUser(name: "Bruno")
+        let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0, sender: user)!
 
         verify(message: message)
     }
@@ -90,11 +144,11 @@ final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testNewClient_oneUser_oneClient() {
         let numUsers = 1
         let (message, mockSystemMessageData) = MockMessageFactory.systemMessageAndData(with: .newClient, users: numUsers)
-        
+
         let userClients: [AnyHashable] = [MockUserClient()]
-        
+
         message!.update(mockSystemMessageData: mockSystemMessageData, userClients: userClients)
-        
+
         verify(message: message!)
     }
 
