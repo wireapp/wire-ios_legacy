@@ -474,11 +474,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         pushConfigurationViewController(accountSelectionViewController)
     }
 
-    /// @param callback confirmation; called when authentication evaluation is completed.
-    fileprivate func requireLocalAuthenticationIfNeeded(with callback: @escaping (LocalAuthenticationStatus?)->()) {
-        
-        // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
-        
+    fileprivate func requireLocalAuthenticationIfNeeded(with callback: @escaping (LocalAuthenticationStatus?) -> Void) {
         guard
             let sharingSession = sharingSession,
             sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
@@ -493,31 +489,35 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
 
-        let scenario: AppLockController.AuthenticationScenario
+        let appLock = sharingSession.appLockController
+        let description = "share_extension.privacy_security.lock_app.description".localized
+        let passcodePreference: AppLockPasscodePreference
         
         if sharingSession.encryptMessagesAtRest {
-            scenario = .databaseLock
+            passcodePreference = .deviceOnly
+        } else if appLock.requireCustomPasscode {
+            passcodePreference = .customOnly
         } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
+            passcodePreference = .deviceThenCustom
         }
-        
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                                description: "share_extension.privacy_security.lock_app.description".localized)
-        { [weak self] (result, context) in
+
+        appLock.evaluateAuthentication(passcodePreference: passcodePreference, description: description) { [weak self] result, context in
             DispatchQueue.main.async {
                 if case .granted = result {
                     self?.localAuthenticationStatus = .granted
+
                     if let context = context as? LAContext {
                         try? self?.sharingSession?.unlockDatabase(with: context)
                     }
+
                 } else {
                     self?.localAuthenticationStatus = .denied
                 }
+
                 callback(self?.localAuthenticationStatus)
             }
         }
     }
-    
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(causedBy: change)
