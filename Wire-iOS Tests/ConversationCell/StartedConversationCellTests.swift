@@ -183,7 +183,7 @@ final class StartedConversationCellTests: XCTestCase {
 //        }
     }
 
-    /*func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
+    func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
 //        teamTest {
             let message = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
             verify(message: message)
@@ -193,16 +193,17 @@ final class StartedConversationCellTests: XCTestCase {
     func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
 //        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
-            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
+//            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
 //        }
-    }*/
-/*
+    }
+
     func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {///TODO: crash?
 //        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
-            mockSelfUser.membership!.setTeamRole(.partner)
-            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
+        mockSelfUser.canAddUserToConversation = false
+//            mockSelfUser.membership!.setTeamRole(.partner)
+//            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
 //        }
     }
@@ -210,11 +211,11 @@ final class StartedConversationCellTests: XCTestCase {
     func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
 //        nonTeamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
-            message.conversation?.teamRemoteIdentifier = .create()
-            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
+//            message.conversationLike?.teamRemoteIdentifier = .create()
+//            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
 //        }
-    }*/
+    }
 
     // MARK: - Helper
 
