@@ -20,18 +20,23 @@
 
 import XCTest
 
-final class ConversationAudioMessageCellTests: ConversationCellSnapshotTestCase {
+final class ConversationAudioMessageCellTests: XCTestCase {
     
     var message: MockMessage!
+    var mockSelfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         
+        UIColor.setAccentOverride(.vividRed)
+
+        mockSelfUser = MockUserType.createDefaultSelfUser()
         message = MockMessageFactory.audioMessage(sender: mockSelfUser)!
     }
 
     override func tearDown() {
         message = nil
+        mockSelfUser = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         
         super.tearDown()
