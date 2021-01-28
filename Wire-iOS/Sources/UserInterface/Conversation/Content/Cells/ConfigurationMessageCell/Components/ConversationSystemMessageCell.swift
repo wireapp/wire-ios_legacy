@@ -555,7 +555,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     }
 }
 
-class ConversationStartedSystemMessageCellDescription: NSObject, ConversationMessageCellDescription {
+final class ConversationStartedSystemMessageCellDescription: NSObject, ConversationMessageCellDescription {
     
     typealias View = ConversationStartedSystemMessageCell
     let configuration: View.Configuration

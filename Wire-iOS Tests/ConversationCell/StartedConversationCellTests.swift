@@ -51,170 +51,127 @@ final class StartedConversationCellTests: XCTestCase {
     }
 
     func testThatItRendersParticipantsCellStartedConversationOtherUser() {
-//        teamTest {
             let message = cell(for: .newConversation, fromSelf: false)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersParticipantsCellStartedConversation_ManyUsers() {
-//        teamTest {
             let message = cell(for: .newConversation, fromSelf: false, fillUsers: .many)
             verify(message: message)
-//        }
     }
 
     // MARK: - New Conversation
 
     func testThatItRendersNewConversationCellWithNoParticipantsAndName() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fromSelf: true, fillUsers: .none)
             verify(message: message)
-//        }
     }
 
     ///TODO
     func testThatItRendersNewConversationCellWithOneParticipantAndName() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .justYou)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithTwoParticipantsAndName() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndName() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameWithOverflow() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameWithoutOverflow() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow, allTeamUsers: true)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allTeamUsers: true, numberOfGuests: 5)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeam() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .some, allTeamUsers: true)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .some, allTeamUsers: true, numberOfGuests: 10)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameFromSelfUser() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fromSelf: true, fillUsers: .many)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithOneParticipantAndWithoutName() {
-//        teamTest {
             let message = cell(for: .newConversation, fillUsers: .justYou)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellStartedFromSelfWithOneParticipantAndWithoutName() {
-//        teamTest {
             let message = cell(for: .newConversation, fromSelf: true, fillUsers: .youAndAnother)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndWithoutName() {
-//        teamTest {
             let message = cell(for: .newConversation, fillUsers: .many)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithoutParticipants() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip")
             verify(message: message)
-//        }
     }
 
     // MARK: - Invite Guests
 
     func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
-//        teamTest {
         
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
 //            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
-//        teamTest {
             let message = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
 //            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {///TODO: crash?
-//        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
         mockSelfUser.canAddUserToConversation = false
 //            mockSelfUser.membership!.setTeamRole(.partner)
 //            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
-//        nonTeamTest {
+        // self user is not in a team
+        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
-//            message.conversationLike?.teamRemoteIdentifier = .create()
-//            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
-//        }
     }
 
     // MARK: - Helper
@@ -279,7 +236,6 @@ final class StartedConversationCellTests: XCTestCase {
 //            let action = Action.insertNewObject(in: uiMOC)
 //            action.name = actionName
 //            actions.append(action)
-//        }
 //
 //        let adminRole = Role.insertNewObject(in: uiMOC)
 //        adminRole.name = "wire_admin"
