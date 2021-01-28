@@ -30,7 +30,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
         message = MockMessageFactory.videoMessage(sender: mockSelfUser,
                                                   previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
     }
-    
+
     override func tearDown() {
         message = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()

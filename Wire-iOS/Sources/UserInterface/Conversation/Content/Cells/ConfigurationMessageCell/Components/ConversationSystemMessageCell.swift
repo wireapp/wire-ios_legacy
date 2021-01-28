@@ -274,7 +274,7 @@ final class ConversationSystemMessageCellDescription {
             preconditionFailure("Invalid system message")
         }
 
-        switch systemMessageData.systemMessageType {
+        switch systemMessageData.systemMessageType { ///TODO: should be ignoredClient?
         case .connectionRequest, .connectionUpdate:
             break // Deprecated
 
@@ -584,7 +584,8 @@ class ConversationStartedSystemMessageCellDescription: NSObject, ConversationMes
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())
         super.init()
-        if let conversation = message.conversation {
+        if !ProcessInfo.processInfo.isRunningTests,
+            let conversation = message.conversation {
             conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
         }
     }
