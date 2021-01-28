@@ -19,10 +19,10 @@
 import WireSyncEngine
 import UIKit
 
-extension ConversationLike {
+extension ConversationLike where Self: SwiftConversationLike {
     var botCanBeAdded: Bool {
         return conversationType != .oneOnOne &&
-               team != nil &&
+               teamType != nil &&
                allowGuests
     }
 }
