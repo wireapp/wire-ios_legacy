@@ -28,7 +28,7 @@ final class StartedConversationCellTests: XCTestCase {
         super.setUp()
 
         UIColor.setAccentOverride(.vividRed)
-        SelfUser.setupMockSelfUser()
+        SelfUser.setupMockSelfUser(inTeam: UUID())
         
         mockSelfUser = SelfUser.current as? MockUserType
         mockSelfUser.accentColorValue = .strongBlue
@@ -173,16 +173,17 @@ final class StartedConversationCellTests: XCTestCase {
     }
 
     // MARK: - Invite Guests
-/*
+
     func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
 //        teamTest {
+        
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
-            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
+//            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
 //        }
     }
 
-    func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
+    /*func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
 //        teamTest {
             let message = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
             verify(message: message)
@@ -256,36 +257,36 @@ final class StartedConversationCellTests: XCTestCase {
         
 //        let users = Array(message.users).filter { $0 != mockSelfUser }
 //        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: users, team: team)
-//        conversation?.allowGuests = allowGuests
 //        conversation?.remoteIdentifier = .create()
 //        conversation?.teamRemoteIdentifier = team?.remoteIdentifier
 //        createARoleForSelfUserWith(["add_conversation_member", "modify_conversation_access"], conversation: conversation!)
         let conversation = SwiftMockConversation()
+        conversation.allowGuests = allowGuests
         message.conversationLike = conversation
 //        message.visibleInConversation = conversation
 
         return message
     }
-/*
+
     private func createARoleForSelfUserWith(_ actionNames: [String], conversation: ZMConversation) {
-        let participantRole = ParticipantRole.insertNewObject(in: uiMOC)
-        participantRole.conversation = conversation
-        participantRole.user = selfUser
-
+//        let participantRole = ParticipantRole.insertNewObject(in: uiMOC)
+//        participantRole.conversation = conversation
+//        participantRole.user = selfUser
+//
         var actions: [Action] = []
-        actionNames.forEach { (actionName) in
-            let action = Action.insertNewObject(in: uiMOC)
-            action.name = actionName
-            actions.append(action)
-        }
-
-        let adminRole = Role.insertNewObject(in: uiMOC)
-        adminRole.name = "wire_admin"
-        adminRole.actions = Set(actions)
-        participantRole.role = adminRole
-
-        selfUser.participantRoles = Set([participantRole])
-    }*/
+//        actionNames.forEach { (actionName) in
+//            let action = Action.insertNewObject(in: uiMOC)
+//            action.name = actionName
+//            actions.append(action)
+//        }
+//
+//        let adminRole = Role.insertNewObject(in: uiMOC)
+//        adminRole.name = "wire_admin"
+//        adminRole.actions = Set(actions)
+//        participantRole.role = adminRole
+//
+//        mockSelfUser.participantRoles = Set([participantRole])
+    }
 
 }
 
