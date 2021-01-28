@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     private lazy var confirmButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
         button.setBackgroundImageColor(.strongBlue, for: .normal)
-        button.accessibilityIdentifier = "confirmButton"
+        button.accessibilityIdentifier = "warning_screen.button.confirm"
         button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         return button
@@ -43,6 +43,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel()
         label.text = "warning_screen.title_label".localized
+        label.accessibilityIdentifier = "warning_screen.label.title"
         return label
     }()
     
@@ -52,6 +53,7 @@ final class AppLockChangeWarningViewController: UIViewController {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.accessibilityIdentifier = "warning_screen.label.message"
         return label
     }()
 
