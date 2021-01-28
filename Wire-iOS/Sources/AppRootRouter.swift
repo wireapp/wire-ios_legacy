@@ -29,7 +29,7 @@ extension AppRootRouter {
 public class AppRootRouter: NSObject {
     
     // MARK: - Public Property
-    let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
+    let screenCurtain = ScreenCurtain()
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
@@ -143,8 +143,8 @@ public class AppRootRouter: NSObject {
     }
     
     private func setupAdditionalWindows() {
-        overlayWindow.makeKeyAndVisible()
-        overlayWindow.isHidden = true
+        screenCurtain.makeKeyAndVisible()
+        screenCurtain.isHidden = true
     }
     
     private func createLifeCycleObserverTokens() {
@@ -196,6 +196,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .authenticated(completedRegistration: let completedRegistration):
             configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
+            screenCurtain.delegate = ZMUserSession.shared()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
         case .headless:
@@ -297,6 +298,8 @@ extension AppRootRouter {
         
         rootViewController.set(childViewController: navigationController,
                                completion: completion)
+
+        presentAlertForDeletedAccountIfNeeded(error)
     }
     
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
@@ -390,13 +393,10 @@ extension AppRootRouter {
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
-        
-        presentAlertForDeletedAccount(appState)
     }
     
-    private func presentAlertForDeletedAccount(_ appState: AppState) {
+    private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
         guard
-            case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
             let reason = error?.userInfo[ZMAccountDeletedReasonKey] as? ZMAccountDeletedReason
         else {
@@ -407,6 +407,12 @@ extension AppRootRouter {
         case .sessionExpired:
             rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
                                                         message: "account_deleted_session_expired_alert.message".localized)
+
+        case .databaseWiped:
+            let wipeCompletionViewController = WipeCompletionViewController()
+            wipeCompletionViewController.modalPresentationStyle = .fullScreen
+            rootViewController.present(wipeCompletionViewController, animated: true)
+
         default:
             break
         }
@@ -445,9 +451,9 @@ extension AppRootRouter: ApplicationStateObserving {
     
     func updateOverlayWindowFrame(size: CGSize? = nil) {
         if let size = size {
-            overlayWindow.frame.size = size
+            screenCurtain.frame.size = size
         } else {
-            overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+            screenCurtain.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
         }
     }
 }

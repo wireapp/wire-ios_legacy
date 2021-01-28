@@ -78,8 +78,7 @@ final class WipeCompletionViewController: UIViewController {
 
     @objc
     private func onLoginCodeButtonPressed(sender: AnyObject?) {
-        dismiss(animated: false)
-        AppDelegate.shared.notificationsWindow?.isHidden = true
+        dismiss(animated: true)
     }
 
 }

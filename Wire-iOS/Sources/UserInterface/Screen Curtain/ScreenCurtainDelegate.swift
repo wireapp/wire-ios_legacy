@@ -1,5 +1,6 @@
+//
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,27 +19,19 @@
 import Foundation
 import WireSyncEngine
 
-protocol WipeDatabaseInteractorInput: class {
-    func deleteAccount()
+protocol ScreenCurtainDelegate: class {
+
+    /// Whether the screen curtain should be shown when the app
+    /// resigns active.
+
+    var shouldShowScreenCurtain: Bool { get }
+
 }
 
-protocol WipeDatabaseInteractorOutput: class {
-}
+extension ZMUserSession: ScreenCurtainDelegate {
 
-final class WipeDatabaseInteractor {
-    weak var output: WipeDatabaseInteractorOutput?
-}
-
-// MARK: - Interface
-extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
-    func deleteAccount() {
-        guard
-            let sessionManager = SessionManager.shared,
-            let account = sessionManager.accountManager.selectedAccount
-        else {
-            return
-        }
-
-        sessionManager.wipeDatabase(for: account)
+    var shouldShowScreenCurtain: Bool {
+        return appLockController.isActive || encryptMessagesAtRest
     }
+
 }

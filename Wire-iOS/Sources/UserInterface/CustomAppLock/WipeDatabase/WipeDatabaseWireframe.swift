@@ -34,11 +34,4 @@ final class WipeDatabaseWireframe {
         return viewController
     }
     
-    func presentWipeCompletion(from presentingViewController: WipeDatabaseUserInterface?) {
-        let wipeCompletionViewController = WipeCompletionViewController()
-        wipeCompletionViewController.modalPresentationStyle = .fullScreen
-        
-        AppDelegate.shared.notificationsWindow?.isHidden = false
-        (presentingViewController as? UIViewController)?.present(wipeCompletionViewController, animated: true)
-    }
 }
