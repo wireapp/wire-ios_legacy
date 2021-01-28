@@ -37,7 +37,7 @@ class SwiftMockConversation: NSObject, Conversation  {
     
     var allowGuests: Bool = false
 
-    var team: Team?
+    var teamType: TeamType?
     
     var accessMode: ConversationAccessMode?
     
