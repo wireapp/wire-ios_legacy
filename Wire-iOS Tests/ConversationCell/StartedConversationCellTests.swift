@@ -46,10 +46,8 @@ final class StartedConversationCellTests: XCTestCase {
     // MARK: - Started a Conversation
 
     func testThatItRendersParticipantsCellStartedConversationSelfUser() {
-//        teamTest {
             let message = cell(for: .newConversation, fromSelf: true)
             verify(message: message)
-//        }
     }
 
     func testThatItRendersParticipantsCellStartedConversationOtherUser() {
@@ -227,6 +225,8 @@ final class StartedConversationCellTests: XCTestCase {
                       numberOfGuests: Int16 = 0) -> ZMConversationMessage {
         let message = MockMessageFactory.systemMessage(with: type)!
         message.senderUser = fromSelf ? mockSelfUser : nil//otherUser
+//        message.actionType = .started(withName: nil)
+//        systemMessage.text
 //        message.text = text
 //        message.numberOfGuestsAdded = numberOfGuests
 //        message.allTeamUsersAdded = allTeamUsers
@@ -235,6 +235,7 @@ final class StartedConversationCellTests: XCTestCase {
         ///TODO: ZMSystemMessage.userTypes
         
         let data = message.systemMessageData as! MockSystemMessageData
+        data.text = text
         data.userTypes = {
 //        message.users = {
             // We add the sender to ensure it is removed

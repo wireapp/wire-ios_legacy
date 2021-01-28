@@ -33,6 +33,7 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
     var linkPreviewImageCacheKey: String?
     var mentions = [Mention]()
     var quote: ZMMessage?
+    var quoteMessage: ZMConversationMessage?
     var isQuotingSelf: Bool = false
     var hasQuote: Bool = false
 
