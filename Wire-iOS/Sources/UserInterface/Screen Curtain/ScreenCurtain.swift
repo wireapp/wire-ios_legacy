@@ -58,7 +58,7 @@ final class ScreenCurtain: UIWindow {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Methods
+    // MARK: - Events
 
     @objc
     func applicationDidBecomeActive() {
