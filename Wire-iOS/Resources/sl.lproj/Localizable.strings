@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Te naprave nekaj časa niste uporabljali. Nekatera sporočila se morda tukaj ne bodo pojavila.";
 "content.system.missing_messages.subtitle_start" = "Medtem,";
 
-"content.system.cannot_decrypt" = "Sporočilo od %@ ni bilo prejeto.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "tebe";
-"content.system.cannot_decrypt.why_part" = "Zakaj?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "Identita naprave od %@ je bila spremenjena. Sporočilo ni dostavljeno.";
-"content.system.cannot_decrypt.identity.you_part" = "Tvoja";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Nauči se več";
-"content.system.cannot_decrypt.otherDevice_part" = "(naprava%@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
@@ -759,7 +761,7 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Izbriši vsebino?";
 "meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Tudi zapusti pogovor";
 "meta.menu.delete_content.button_cancel" = "Prekliči";
@@ -1171,7 +1173,7 @@
 
 "self.settings.privacy_security.lock_app.description" = "Odkleni Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Napačno geslo. Poizkusite znova.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";

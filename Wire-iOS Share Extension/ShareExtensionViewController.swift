@@ -77,8 +77,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     /// stores extensionContext?.attachments
     fileprivate var attachments: [AttachmentType: [NSItemProvider]] = [:]
     
-    fileprivate var currentAccount: Account? = nil
-    fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .disabled
+    fileprivate var currentAccount: Account? = nil {
+        didSet {
+            localAuthenticationStatus = .denied
+        }
+    }
+
+    fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .denied
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
 
@@ -424,11 +429,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseAccount() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
-            if let status = status, status != .denied {
-                self?.showChooseAccount()
-            }
-        })
+        showChooseAccount()
     }
     
     private func presentChooseConversation() {
@@ -483,12 +484,12 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             callback(localAuthenticationStatus)
             return
         }
-        
-        guard localAuthenticationStatus != .granted, sharingSession.isDatabaseLocked else {
+
+        guard localAuthenticationStatus == .denied || sharingSession.isDatabaseLocked else {
             callback(localAuthenticationStatus)
             return
         }
-        
+
         let scenario: AppLockController.AuthenticationScenario
         
         if sharingSession.encryptMessagesAtRest {

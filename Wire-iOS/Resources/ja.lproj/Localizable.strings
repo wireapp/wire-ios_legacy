@@ -27,7 +27,7 @@
 "general.edit" = "編集";
 "general.done" = "完了";
 "general.confirm" = "OK";
-"general.later" = "あとで";
+"general.later" = "後で";
 "general.skip" = "後で";
 "general.accept" = "承諾";
 "general.decline" = "不要です";
@@ -67,7 +67,7 @@
 "peoplepicker.group.done" = "完了";
 "peoplepicker.group.create" = "新規作成";
 
-"peoplepicker.header.people" = "ピープル";
+"peoplepicker.header.people" = "会話";
 "peoplepicker.header.services" = "サービス";
 "peoplepicker.services.open_conversation.item" = "会話を始めます";
 "peoplepicker.services.add_service.button" = "サービスを追加";
@@ -221,7 +221,7 @@
 "list.archived_conversations_close" = "アーカイブして閉じます";
 
 "list.section.groups" = "グループ";
-"list.section.contacts" = "ピープル";
+"list.section.contacts" = "会話";
 "list.section.requests" = "リクエスト";
 "list.section.favorites" = "お気に入り";
 
@@ -258,7 +258,7 @@
 "conversation.status.message.ephemeral.mention.group" = "誰かがあなたにメンションしました";
 "conversation.status.message.ephemeral.reply" = "メッセージに返信しました";
 "conversation.status.message.ephemeral.reply.group" = "誰かがメッセージに返信しました";
-"conversation.status.message.ephemeral.knock" = "Ping しました";
+"conversation.status.message.ephemeral.knock" = "ping しました";
 "conversation.status.message.ephemeral.knock.group" = "誰かが ping しました";
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "しばらくの間、このデバイスでWireを利用していなかったため、いくつかのメッセージがここに表示されない可能性があります。";
 "content.system.missing_messages.subtitle_start" = "同時に";
 
-"content.system.cannot_decrypt" = "%@からのメッセージは受信されませんでした。";
+"content.system.cannot_decrypt.self" = "**あなた**からのメッセージは復号できませんでした。";
+"content.system.cannot_decrypt.other" = "**%@**からのメッセージは復号できませんでした。";
+"content.system.cannot_decrypt.reset_session" = "今後のメッセージを修正する";
+"content.system.cannot_decrypt.error_details" = "(修正エラー: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "あなた";
-"content.system.cannot_decrypt.why_part" = "なぜ？";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "**%1$@**からメッセージを復号することができます。紛失したメッセージを復号するには、** %1$@ に再送信を依頼してください。**";
 
-"content.system.cannot_decrypt.identity" = "%@のデバイスIDが変更されました。配信不能なメッセージです。";
-"content.system.cannot_decrypt.identity.you_part" = "あなたの";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@ のデバイス"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "もっと知る";
-"content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**あなた** のデバイスIDが変更されました。メッセージは配信されません。";
+"content.system.cannot_decrypt_identity_changed.other" = "%@ のデバイスIDが変更されました。メッセージは配信されません。"; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ が復号できなかったメッセージがありましたが、問題は解決しました**。これはあなたが共有するすべての会話に影響がありました。";
+"content.system.session_reset.self" = "**あなたが復号できなかったメッセージがありましたが、問題は解決しました**。これはすべての会話に影響がありました。";
 
 "content.system.unknown_message.body" = "Wire の古いバージョンを使っているため、このメッセージを表示できません。";
 
@@ -727,13 +729,13 @@
 "participants.avatar.guest.title" = "ゲスト";
 
 "participants.title" = "詳細";
-"participants.all.title" = "メンバー";
+"participants.all.title" = "会話";
 "participants.section.participants" = "人 (%d)";
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "オプション";
 "participants.footer.add_title" = "参加者を追加";
 "participants.section.name.footer" = "最大 %1$d 人の参加者がグループ通話に参加できます。";
-"participants.section.admins.footer" = "There are no admins.";
+"participants.section.admins.footer" = "管理者がいません。";
 "participants.section.members.footer" = "There are no members.";
 
 "profile.profile.group_admin_options.title" = "グループ管理者";
@@ -967,7 +969,7 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
-"self.settings.manage_team.title" = "チームを管理する";
+"self.settings.manage_team.title" = "チームを管理";
 "self.settings.add_team_or_account.title" = "アカウントを追加";
 "self.settings.add_account.title" = "アカウントを追加";
 
@@ -1004,7 +1006,7 @@
 "self.settings.enable_read_receipts.title" = "開封通知を送信";
 "self.settings.privacy_section_group.subtitle" = "オフの場合は、他の人の開封通知を見ることができません。\n\nこの設定はグループ会議には適用されません。";
 
-"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+"self.settings.encrypt_messages_at_rest.title" = "待機時にメッセージを暗号化する";
 
 "self.settings.account_picture_group.picture" = "写真";
 "self.settings.account_picture_group.color" = "色";
@@ -1033,12 +1035,12 @@
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";
 
 // Crash
-"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash.title" = "匿名のクラッシュ レポートを送信";
 "self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
 
 // Analytics
-"self.settings.privacy_analytics.title" = "Send anonymous usage data";
-"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+"self.settings.privacy_analytics.title" = "利用状況に関する匿名のデータを送信";
+"self.settings.privacy_analytics_menu.description.title" = "使用データを使用すると、Wireはアプリがどのように使用されているかと、アプリがどのように改善されるかを理解することができます。 データは匿名であり、通信の内容(メッセージ、ファイル、通話など)は含まれません。";
 
 "self.settings.receiveNews_and_offers.title" = "ニュースレターを受け取る";
 "self.settings.receiveNews_and_offers.description.title" = "電子メールで Wireからニュースや製品アップデート情報を受け取る。";
@@ -1122,7 +1124,7 @@
 // dark theme
 "dark_theme.option.dark" = "ダーク";
 "dark_theme.option.light" = "ライト";
-"dark_theme.option.system" = "システム設定と同期";
+"dark_theme.option.system" = "システム設定に従う";
 
 // Open in
 "self.settings.external_apps.header" = "リンクを開く";
@@ -1193,8 +1195,8 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "デバッグ報告";
 "self.settings.advanced.debugging_tools.title" = "デバッグツール";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "最初の未読を検索";
-"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
-"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "自分のユーザーIDを表示";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "デバッグコマンドを入力";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "この情報は、Wireサポートが通話の問題を診断し、全体的なアプリケーションの操作性を向上させるのに役立ちます。";
 "self.settings.advanced.reset_push_token.title" = "プッシュ通知のトークンをリセットする";
 "self.settings.advanced.reset_push_token.subtitle" = "プッシュ通知に関して問題があった場合、Wireサポートチームはあなたにトークンのリセットを求めることがあります。";
@@ -1265,10 +1267,10 @@
 // Landing screen
 
 "landing.header" = "Wire。あなたのアカウントを追加します。";
-"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
-"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
-"landing.create_account.title" = "Create a Wire personal account";
-"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.welcome_message" = "ビジネスまたは組織で利用するために Proまたは Enterprise アカウントを作成しようとしていますか?";
+"landing.welcome_submessage" = "残念ながら、アプリでは不可能です。チームを作成したら、こちらからログインできます。";
+"landing.create_account.title" = "Wire 個人アカウントを作成します";
+"landing.create_account.infotitle" = "友人や家族とチャットしますか?";
 "landing.create_account.subtitle" = "友人や家族のグループと個人的にチャット";
 "landing.create_team.title" = "プロ";
 "landing.create_team.subtitle" = "企業、団体、専門機関のためのセキュアなコラボレーション";
@@ -1346,7 +1348,7 @@
 "guest_room.link.button.title" = "リンクを作成";
 
 "guest_room.actions.copy_link" = "リンクをコピー";
-"guest_room.actions.copied_link" = "リンクをコピーしました!";
+"guest_room.actions.copied_link" = "リンクをコピーしました。";
 "guest_room.actions.share_link" = "リンクを共有";
 "guest_room.actions.revoke_link" = "リンク取消...";
 
@@ -1417,7 +1419,7 @@
 "login.sso.alert.message.sso_only" = "シングルサインオンコードを入力してください";
 "login.sso.alert.action" = "ログイン";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "メールアドレスまたはシングルサインオンアクセスコード";
-"login.sso.alert.text_field.placeholder.sso_only" = "シングルサインオンアクセスコード";
+"login.sso.alert.text_field.placeholder.sso_only" = "シングルサインオン アクセスコード";
 
 "login.sso.start_error_title" = "組織アカウントログインを開始できません";
 "login.sso.link_error_message" = "このリンクは無効です。問題を解決するにはあなたの組織の管理者に問い合わせてください。";
@@ -1743,7 +1745,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "まだ、誰もこのメッセージにいいねしていません。";
+"message_details.empty_likes" = "まだ、誰もこのメッセージに「いいね！」していません。";
 "message_details.empty_read_receipts" = "まだ、誰もこのメッセージを読んでいません。";
 "message_details.read_receipts_disabled" = "このメッセージが送信された時、開封通知はオフでした。";
 "message_details.combined_title" = "メッセージの詳細";
@@ -1797,7 +1799,7 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "パスコード";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
@@ -1814,10 +1816,10 @@
 "create_passcode.validation.no_special_char" = "A special character";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.textfield.placeholder" = "パスコードを入力してください";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "パスコードが間違っています";
 "unlock.submit_button.title" = "unlock";
 
 // Custom app lock - warning screen
@@ -1829,7 +1831,7 @@
 // Wipe database
 
 "wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label" = "このデバイスに保存されたデータには、パスコードを入力しなければアクセスできません。\nパスコードを忘れた場合は、データベースを消去すれば、新たなデバイスとして再度ログインできます。\nデータベースを消去すると、";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";

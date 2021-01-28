@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
-    var shouldShowActiveSpeakerFrame: Bool = false
+    var shouldShowActiveSpeakerFrame: Bool = true
     
     var floatingVideoStream: VideoStream?
 
@@ -67,7 +67,7 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testForActiveSpeakers_OneToOne() {
         configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
         configuration.floatingVideoStream = selfVideoStream
-        configuration.shouldShowActiveSpeakerFrame = true
+        configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
         verify(view: sut.view)

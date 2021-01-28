@@ -193,6 +193,7 @@ final class VideoGridViewController: UIViewController {
 
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
             view.stream = selfStream
+            view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
             viewCache[selfStreamId] = SelfVideoPreviewView(
                 stream: selfStream,

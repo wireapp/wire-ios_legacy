@@ -235,7 +235,7 @@
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
 "conversation.status.silenced" = "Silenzioso";
-"conversation.status.poor_connection" = "Connessione scadente";
+"conversation.status.poor_connection" = "Scarsa connessione";
 "conversation.status.blocked" = "Bloccato";
 "conversation.status.incoming_call" = "%@ sta chiamando…";
 "conversation.status.incoming_call.unknown" = "Qualcuno sta chiamando…";
@@ -510,8 +510,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "Questa conversazione è sotto sospensione legale";
-"content.system.message_legal_hold.disabled" = "La sospensione legale ha disattivato questa conversazione";
+"content.system.message_legal_hold.enabled" = "Questa conversazione viene registrata per conservazione legale";
+"content.system.message_legal_hold.disabled" = "Conservazione legale disattivata per questa conversazione";
 
 "content.system.message_legal_hold.learn_more" = "Ulteriori informazioni";
 
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Non hai utilizzato questo dispositivo per un po' di tempo. Alcuni messaggi potrebbero non apparire qui.";
 "content.system.missing_messages.subtitle_start" = "Nel frattempo,";
 
-"content.system.cannot_decrypt" = "Non è stato ricevuto un messaggio da %@.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "tu";
-"content.system.cannot_decrypt.why_part" = "Perchè?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ ha cambiato identità del dispositivo. Messaggio non recapitato.";
-"content.system.cannot_decrypt.identity.you_part" = "Il tuo";
-"content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Ulteriori informazioni";
-"content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Questo messaggio non può essere visualizzato. Potresti usare una versione non aggiornata di Wire.";
 
@@ -685,10 +687,10 @@
 "call.degraded.alert.message.unknown" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "call.degraded.alert.action.continue" = "Chiama comunque";
 
-"call.degraded.ended.alert.title" = "Call ended";
-"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
-"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
-"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+"call.degraded.ended.alert.title" = "Chiamata terminata";
+"call.degraded.ended.alert.message.self" = "La chiamata è stata disconnessa perché hai iniziato a utilizzare un nuovo dispositivo.";
+"call.degraded.ended.alert.message.user" = "La chiamata è stata disconnessa perché %@ non è più un contatto verificato.";
+"call.degraded.ended.alert.message.unknown" = "La chiamata è stata disconnessa perché qualcuno non è più un contatto verificato.";
 
 "call.alert.ongoing.alert_title" = "La chiamata verrà interrotta.";
 
@@ -732,7 +734,7 @@
 "participants.section.services" = "Servizi (%d)";
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.name.footer" = "Fino a %1$d partecipanti possono partecipare ad una conversazione di gruppo.";
 "participants.section.admins.footer" = "Non ci sono amministratori.";
 "participants.section.members.footer" = "Non ci sono membri.";
 
@@ -1004,7 +1006,7 @@
 "self.settings.enable_read_receipts.title" = "Invia conferme di lettura";
 "self.settings.privacy_section_group.subtitle" = "Quando è disattivato, non sarai in grado di vedere le conferme di lettura da altre persone.\nQuesta impostazione non si applica alle conversazioni di gruppo.";
 
-"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+"self.settings.encrypt_messages_at_rest.title" = "Cifra i messaggi a riposo";
 
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Colore";
@@ -1034,11 +1036,11 @@
 
 // Crash
 "self.settings.privacy_crash.title" = "Send anonymous crash data";
-"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+"self.settings.privacy_crash_menu.description.title" = "Invia segnalazioni anonime di crash e dati di base come il numero di versione e il sistema operativo per aiutare Wire a identificare e risolvere i problemi nell'app.";
 
 // Analytics
-"self.settings.privacy_analytics.title" = "Send anonymous usage data";
-"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+"self.settings.privacy_analytics.title" = "Inviare dati di utilizzo anonimi";
+"self.settings.privacy_analytics_menu.description.title" = "I dati di utilizzo permettono a Wire di capire come l'applicazione viene utilizzata e come può essere migliorata. I dati sono anonimi e non includono il contenuto delle vostre comunicazioni (come messaggi, file o chiamate).";
 
 "self.settings.receiveNews_and_offers.title" = "Ricevi newsletter";
 "self.settings.receiveNews_and_offers.description.title" = "Ricevi notizie e aggiornamenti da Wire via email.";
@@ -1764,7 +1766,7 @@
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Sospensione legale disattivata";
-"legal_hold.deactivated.message" = "I messaggi futuri non verranno registrati.";
+"legal_hold.deactivated.message" = "I messaggi futuri non saranno salvati.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
@@ -1797,7 +1799,7 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "Codice di accesso";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
