@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "您已有一段時間沒有使用此設備，可能不會顯示部分訊息。";
 "content.system.missing_messages.subtitle_start" = "同時，";
 
-"content.system.cannot_decrypt" = "從 %@ 的訊息未被接收。";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "您";
-"content.system.cannot_decrypt.why_part" = "為甚麼？";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ 的設備識別已更改。信息無法送達。";
-"content.system.cannot_decrypt.identity.you_part" = "您的";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "瞭解更多";
-"content.system.cannot_decrypt.otherDevice_part" = "(設備 %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "無法顯示此消息。可能因為您使用舊版本的Wire。";
 

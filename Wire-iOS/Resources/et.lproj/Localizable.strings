@@ -200,7 +200,7 @@
 "folder.creation.name.placeholder" = "Folder name";
 
 "folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.empty.hint" = "Loo uus kaust, vajutades + nuppu";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -223,7 +223,7 @@
 "list.section.groups" = "Grupid";
 "list.section.contacts" = "Inimesed";
 "list.section.requests" = "Requests";
-"list.section.favorites" = "Favorites";
+"list.section.favorites" = "Lemmikud";
 
 "conversation.voiceover.verified" = "kinnitatud";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -480,7 +480,7 @@
 "content.system.call.missed-call-you" = "Vastamata kõne";
 
 "content.system.call.missed-call.groups" = "Vastamata kõne kasutajalt %@";
-"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups-you" = "Vastamata kõne kasutajalt %2$@";
 "content.system.call.missed-call.groups.you" = "Sina";
 
 "content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Sa ei ole seda seadet mõnda aega kasutanud. Osad sõnumid ei pruugi siia ilmuda.";
 "content.system.missing_messages.subtitle_start" = "Samal ajal,";
 
-"content.system.cannot_decrypt" = "Sõnum, mille saatis %@, ei tulnud kohale.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "sina";
-"content.system.cannot_decrypt.why_part" = "Miks?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "Seadme, mida kasutab %@, identiteet muutus. Sõnumi saatmine ebaõnnestus.";
-"content.system.cannot_decrypt.identity.you_part" = "Sinu";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Loe lähemalt";
-"content.system.cannot_decrypt.otherDevice_part" = "(seade %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Sõnumit pole võimalik näidata. Võimalik, et kasutad mõnd Wire vanemat versiooni.";
 
@@ -644,7 +646,7 @@
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";
 "voice.end_call_button.title" = "Lõpeta kõne";
-"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.title" = "Palun uuenda Wire'i";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Hiljem";
 
@@ -733,10 +735,10 @@
 "participants.section.settings" = "Valikud";
 "participants.footer.add_title" = "Lisa osalejaid";
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
-"participants.section.admins.footer" = "There are no admins.";
+"participants.section.admins.footer" = "Adminid puuduvad.";
 "participants.section.members.footer" = "There are no members.";
 
-"profile.profile.group_admin_options.title" = "Group admin";
+"profile.profile.group_admin_options.title" = "Grupi admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Veel toiminguid";
@@ -746,7 +748,7 @@
 "meta.menu.unarchive" = "Arhiivist tagasi";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
-"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.move_to_folder" = "Liiguta…";
 "meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Hääletu";
 "meta.menu.silence.unmute" = "Heli sisse";
@@ -759,7 +761,7 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Tühjendad sisu?";
 "meta.menu.delete_content.dialog_message" = "See tühjendab vestlusajaloo sinu kõigis seadmetes.";
 "meta.menu.delete_content.leave_as_well_message" = "Lahku samuti vestlusest";
 "meta.menu.delete_content.button_cancel" = "Tühista";
@@ -821,8 +823,8 @@
 "profile.connection_request_dialog.button_connect" = "Lisa kontakt";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_dialog.title" = "Kustutad grupivestluse?";
+"conversation.delete_request_dialog.message" = "See kustutab antud grupi ja kogu selle sisu kõigi osalejate jaoks kõigis seadmetes. Sisu taastamiseks puudub võimalus. Kõiki osalejaid teavitatakse.";
 "conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
@@ -837,8 +839,8 @@
 "profile.unblock_button_title" = "Tühista blokeering…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "Lisa lemmikutesse";
+"profile.unfavorite_button_title" = "Eemalda lemmikutest";
 
 "profile.block_button_title_action" = "Blokeeri";
 "profile.unblock_button_title_action" = "Tühista blokeering";
@@ -859,7 +861,7 @@
 // User Details
 "profile.details.title" = "Üksikasjad";
 "profile.details.guest" = "Külaline";
-"profile.details.group_admin" = "Group admin";
+"profile.details.group_admin" = "Grupi admin";
 "profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Kasutajanimi";
@@ -1171,7 +1173,7 @@
 
 "self.settings.privacy_security.lock_app.description" = "Tee lukust lahti";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Vale parool. Palun proovi uuesti.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
@@ -1275,7 +1277,7 @@
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
 "landing.login.email.button.title" = "Log in with email";
-"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.enterprise.button.title" = "Ettevõtte sisselogimine";
 "landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
@@ -1412,12 +1414,12 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "See varundus loodi uuema või aegunud Wire'i versiooni kaudu ja seda ei saa siin taastada.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.title" = "Ettevõtte sisselogimine";
 "login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
-"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.message.sso_only" = "Palun sisesta oma SSO-kood:";
 "login.sso.alert.action" = "Logi sisse";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO ligipääsukood";
 
 "login.sso.start_error_title" = "Cannot Start Enterprise Login";
 "login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
@@ -1517,7 +1519,7 @@
 "signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
 "signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
-"signin_logout.sso.buton" = "Enterprise log in";
+"signin_logout.sso.buton" = "Ettevõtte sisselogimine";
 
 "signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
 "signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
@@ -1785,8 +1787,8 @@
 "legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
-"account_deleted_session_expired_alert.title" = "Your session expired";
-"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+"account_deleted_session_expired_alert.title" = "Sinu sessioon aegus";
+"account_deleted_session_expired_alert.message" = "Rakendus ei kontakteerunud serveriga pika aja jooksul või su sessioon lõpetati kaugjuhtimise teel.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
@@ -1797,7 +1799,7 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "Pääsukood";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
