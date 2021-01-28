@@ -20,19 +20,25 @@
 
 import XCTest
 
-final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase {
+final class ConversationVideoMessageCellTests: XCTestCase {
 
     var message: MockMessage!
-    
+    var mockSelfUser: MockUserType!
+
     override func setUp() {
         super.setUp()
+        UIColor.setAccentOverride(.vividRed)
         
+        mockSelfUser = MockUserType.createDefaultSelfUser()
+
         message = MockMessageFactory.videoMessage(sender: mockSelfUser,
                                                   previewImage: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
     }
     
     override func tearDown() {
         message = nil
+        mockSelfUser = nil
+        
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         
         super.tearDown()
