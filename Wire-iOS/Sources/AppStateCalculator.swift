@@ -141,16 +141,6 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
 
-    // TODO: Delete after tests adjusted.
-
-    func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
-        if isLocked {
-            transition(to: .locked)
-        } else {
-            transition(to: .authenticated(completedRegistration: false))
-        }
-    }
-
     func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) {
         if userSession.isLocked {
             transition(to: .locked)
