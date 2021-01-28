@@ -86,14 +86,9 @@ extension VoiceChannel {
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
 
-        var videoStreams = sortedActiveVideoStreams
-        
-        if videoGridPresentationMode == .activeSpeakers {
-            return (nil, videoStreams.filter(\.stream.isParticipantActiveSpeaker))
-        }
-        
-        videoStreams = Array(videoStreams.prefix(VideoConfiguration.maxVideoStreams))
+        let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
         let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
+
         return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
     }
     
@@ -120,7 +115,7 @@ extension VoiceChannel {
     }
     
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
-        return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
+        return connectedParticipants.count > 2
     }
 
     var sortedActiveVideoStreams: [VideoStream] {
