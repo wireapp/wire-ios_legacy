@@ -28,8 +28,6 @@ final class UnlockViewController: UIViewController {
 
     typealias Session = ZMUserSessionInterface & UserSessionAppLockInterface
 
-    var callback: RequestPasswordController.Callback?
-
     var onGranted: (() -> Void)? = nil
 
     private let selfUser: UserType
@@ -237,21 +235,15 @@ final class UnlockViewController: UIViewController {
 
     @discardableResult
     private func unlock() -> Bool {
-        guard let passcode = accessoryTextField.text else { return false }
-
-        callback?(passcode)
-
-        guard let onGranted = onGranted else { return true }
-
-        // TODO: This should ideally be a method on app lock controller.
         guard
+            let passcode = accessoryTextField.text,
             let session = userSession,
             session.appLockController.evaluateAuthentication(customPasscode: passcode) == .granted
         else {
             return false
         }
 
-        onGranted()
+        onGranted?()
 
         return true
     }
