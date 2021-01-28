@@ -225,9 +225,7 @@ final class StartedConversationCellTests: XCTestCase {
                       allTeamUsers: Bool = false,
                       numberOfGuests: Int16 = 0) -> ZMConversationMessage {
         let message = MockMessageFactory.systemMessage(with: type)!
-        message.senderUser = fromSelf ? mockSelfUser : nil//otherUser
-//        message.actionType = .started(withName: nil)
-//        systemMessage.text
+        message.senderUser = fromSelf ? mockSelfUser : mockOtherUser
 //        message.text = text
 //        message.numberOfGuestsAdded = numberOfGuests
 //        message.allTeamUsersAdded = allTeamUsers
@@ -255,13 +253,15 @@ final class StartedConversationCellTests: XCTestCase {
             }
         }()
 
+        
 //        let users = Array(message.users).filter { $0 != mockSelfUser }
 //        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: users, team: team)
 //        conversation?.allowGuests = allowGuests
 //        conversation?.remoteIdentifier = .create()
 //        conversation?.teamRemoteIdentifier = team?.remoteIdentifier
 //        createARoleForSelfUserWith(["add_conversation_member", "modify_conversation_access"], conversation: conversation!)
-//        let conversation = SwiftMockConversation()
+        let conversation = SwiftMockConversation()
+        message.conversationLike = conversation
 //        message.visibleInConversation = conversation
 
         return message

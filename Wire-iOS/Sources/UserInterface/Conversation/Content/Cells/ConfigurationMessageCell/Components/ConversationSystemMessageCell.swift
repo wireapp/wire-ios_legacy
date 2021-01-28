@@ -270,7 +270,7 @@ final class ConversationSystemMessageCellDescription {
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.senderUser,
-            let conversation = message.conversation else {
+            let conversation = message.conversationLike else {
             preconditionFailure("Invalid system message")
         }
 
@@ -319,7 +319,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(decryptionCell)]
 
         case .newClient, .usingNewDevice, .reactivatedDevice:
-            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation)
+            let newClientCell = ConversationNewDeviceSystemMessageCellDescription(message: message, systemMessageData: systemMessageData, conversation: conversation as! ZMConversation)
             return [AnyConversationMessageCellDescription(newClientCell)]
 
         case .ignoredClient:
@@ -343,7 +343,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(cell)]
 
         case .legalHoldEnabled, .legalHoldDisabled:
-            let cell = ConversationLegalHoldCellDescription(systemMessageType: systemMessageData.systemMessageType, conversation: conversation)
+            let cell = ConversationLegalHoldCellDescription(systemMessageType: systemMessageData.systemMessageType, conversation: conversation as! ZMConversation)
             return [AnyConversationMessageCellDescription(cell)]
             
         case .newConversation:
@@ -369,7 +369,7 @@ final class ConversationSystemMessageCellDescription {
     }
 }
 
-private extension ZMConversation {
+private extension ConversationLike {
     var isOpenGroup: Bool {
         return conversationType == .group && allowGuests
     }
