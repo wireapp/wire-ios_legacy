@@ -73,6 +73,7 @@ final class StartedConversationCellTests: XCTestCase {
 //        }
     }
 
+    ///TODO
     func testThatItRendersNewConversationCellWithOneParticipantAndName() {
 //        teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .justYou)
@@ -242,17 +243,16 @@ final class StartedConversationCellTests: XCTestCase {
             let users: [MockUserType] = XCTestCase.usernames.map{MockUserType.createUser(name: $0)}
             
             let additionalUsers: [MockUserType] = [mockSelfUser, mockOtherUser]
-            return Set(users[0...1] + additionalUsers)
-//            switch fillUsers {
-//            case .none: return []
-//            case .sender: return [message.sender!]
-//            case .justYou: return Set([selfUser])
-//            case .youAndAnother: return Set(users[0..<1] + [selfUser])
-//            case .one: return Set(users[0...1] + additionalUsers)
-//            case .some: return Set(users[0...4] + additionalUsers)
-//            case .many: return Set(users[0..<11] + additionalUsers)
-//            case .overflow: return Set(users + additionalUsers)
-//            }
+            switch fillUsers {
+            case .none: return []
+            case .sender: return [message.sender!]
+            case .justYou: return Set([mockSelfUser])
+            case .youAndAnother: return Set(users[0..<1] + [mockSelfUser])
+            case .one: return Set(users[0...1] + additionalUsers)
+            case .some: return Set(users[0...4] + additionalUsers)
+            case .many: return Set(users[0..<11] + additionalUsers)
+            case .overflow: return Set(users + additionalUsers)
+            }
         }()
 
 //        let users = Array(message.users).filter { $0 != mockSelfUser }
