@@ -147,7 +147,7 @@ extension ConversationContentViewController {
         case .reply:
             delegate?.conversationContentViewController(self, didTriggerReplyingTo: message)
         case .openQuote:
-            if let quote = message.textMessageData?.quote {
+            if let quote = message.textMessageData?.quoteMessage {
                 scroll(to: quote) { _ in
                     self.dataSource.highlight(message: quote)
                 }
