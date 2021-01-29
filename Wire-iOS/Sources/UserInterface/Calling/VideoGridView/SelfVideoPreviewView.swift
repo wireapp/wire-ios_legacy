@@ -24,6 +24,13 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     
     private let previewView = AVSVideoPreview()
         
+    override var stream: Stream {
+        didSet {
+            guard stream != oldValue else { return }
+            updateCaptureState()
+        }
+    }
+    
     deinit {
         stopCapture()
     }
@@ -56,6 +63,10 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         if window != nil {
             startCapture()
         }
+    }
+    
+    private func updateCaptureState() {
+        stream.videoState == .some(.started) ? startCapture() : stopCapture()
     }
     
     func startCapture() {
