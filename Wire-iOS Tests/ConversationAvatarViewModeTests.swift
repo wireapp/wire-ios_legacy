@@ -26,7 +26,7 @@ final class ConversationAvatarViewModeTests: XCTestCase {
     var sut: ConversationAvatarView!
     var otherUser: MockUserType!
     var mockConversation: MockConversationAvatarViewConversation!
-
+    
     override func setUp() {
         super.setUp()
 
