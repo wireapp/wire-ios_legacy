@@ -133,6 +133,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let userEnabledCBR: Bool
     let callState: CallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
+    let allowPresentationModeUpdates: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -163,6 +164,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         networkQuality = voiceChannel.networkQuality
         callState = voiceChannel.state
         videoGridPresentationMode = voiceChannel.videoGridPresentationMode
+        allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -263,6 +265,10 @@ fileprivate extension VoiceChannel {
         case .incoming(video: true, shouldRing: true, degraded: _): return true
         default: return false
         }
+    }
+    
+    var allowPresentationModeUpdates: Bool {
+        return connectedParticipants.count > 2 && internalIsVideoCall
     }
 }
 

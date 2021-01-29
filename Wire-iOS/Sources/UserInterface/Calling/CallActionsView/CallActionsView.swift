@@ -60,7 +60,8 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
     var callState: CallStateExtending { get }
-    var videoGridPresentationMode: VideoGridPresentationMode { get}
+    var videoGridPresentationMode: VideoGridPresentationMode { get }
+    var allowPresentationModeUpdates: Bool { get }
 }
 
 extension CallActionsViewInputType {
@@ -206,7 +207,7 @@ final class CallActionsView: UIView {
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
-        speakersAllSegmentedView.isHidden = !input.isVideoCall
+        speakersAllSegmentedView.isHidden = !input.allowPresentationModeUpdates
         speakersAllSegmentedView.setSelected(true, forItemAt: input.videoGridPresentationMode.index)
         muteCallButton.isSelected = input.isMuted
         muteCallButton.isEnabled = canToggleMuteButton(input)
