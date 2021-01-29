@@ -26,14 +26,14 @@ final class CallInfoViewControllerSnapshotTests: XCTestCase {
 
     func testOneToOneIncomingAudioRinging() {
         // given
-        let otherUser = MockUser.createConnectedUser(name: "Bruno", inTeam: nil)
-        let selfUser = MockUser.createSelfUser(name: "Alice", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Bruno")
+        let selfUser = MockUserType.createSelfUser(name: "Alice")
         let fixture = CallInfoTestFixture(otherUser: otherUser, mockUsers: SwiftMockLoader.mockUsers())
 
         // when
         let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, selfUser: selfUser)
 
         // then
-        verifyAllIPhoneSizes(matching: sut)
+        verifyAllIPhoneSizes(matching: sut) ///TODO: which user to user image view?
     }
 }
