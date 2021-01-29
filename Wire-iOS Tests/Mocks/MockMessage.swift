@@ -43,7 +43,6 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
             XCTFail("This property should not be used in tests")
         }
     }
-
     var quoteMessage: ZMConversationMessage?
     var isQuotingSelf: Bool = false
     var hasQuote: Bool = false
