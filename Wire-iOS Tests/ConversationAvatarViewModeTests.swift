@@ -66,25 +66,19 @@ final class ConversationAvatarViewModeTests: XCTestCase {
         mockConversation.stableRandomParticipants = [otherUser]
 
         // WHEN
-<<<<<<< Updated upstream
-        sut.configure(context: .conversation(conversation: conversation))
-=======
         sut.configure(context: .conversation(conversation: mockConversation))
->>>>>>> Stashed changes
 
         // THEN
         XCTAssertEqual(sut.mode, .four)
     }
 
-    /*func testThatModeIsNoneWhenGroupConversationIsEmpty() {
+    func testThatModeIsNoneWhenGroupConversationIsEmpty() {
         // GIVEN
-        var selfUser = MockUserType.createDefaultSelfUser()
-        mockConversation.removeParticipantsAndUpdateConversationState(users:[otherUser!], initiatingUser: selfUser)
 
         // WHEN
         sut.configure(context: .conversation(conversation: mockConversation))
 
         // THEN
         XCTAssertEqual(sut.mode, .none)
-    }*/
+    }
 }
