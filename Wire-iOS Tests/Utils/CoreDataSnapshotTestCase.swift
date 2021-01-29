@@ -24,6 +24,14 @@ struct SelfProvider: SelfUserProvider {
     let selfUser: UserType & ZMEditableUser
 }
 
+extension XCTestCase {
+    static let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
+                            "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                            "Brett", "Hannah", "Ana", "Paula"]
+    
+}
+
+
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
 class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
@@ -36,9 +44,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     var team: Team?
     var teamMember: Member?
 
-    let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
-                     "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
-                     "Brett", "Hannah", "Ana", "Paula"]
+    let usernames = XCTestCase.usernames
 
     // The provider to use when configuring `SelfUser.provider`, needed only when tested code
     // invokes `SelfUser.current`. As we slowly migrate to `UserType`, we will use this more
