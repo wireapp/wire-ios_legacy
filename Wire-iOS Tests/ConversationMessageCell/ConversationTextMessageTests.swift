@@ -20,13 +20,14 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
+final class ConversationTextMessageTests: XCTestCase {
 
     var mockOtherUser: MockUserType!
     
     override func setUp() {
         super.setUp()
-        
+        UIColor.setAccentOverride(.vividRed)
+
         mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
     }
     
@@ -85,13 +86,14 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
     
     func testTextWithQuote() {
         // GIVEN
-        let conversation = createGroupConversation()
-        let quote = try! conversation.appendText(content: "Who is responsible for this!")
-        (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
+        let conversation = SwiftMockConversation()
+        let quote = MockMessageFactory.textMessage(withText: "Who is responsible for this!")
+        quote.conversationLike = conversation
+        quote.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am")
         message.senderUser = mockOtherUser
         message.backingTextMessageData.hasQuote = true
-        message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
+        message.backingTextMessageData.quoteMessage = quote
         
         // THEN
         verify(message: message)
@@ -108,14 +110,15 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
             $0.summary = ""
         }
         let article = ArticleMetadata(protocolBuffer: linkPreview)
-        let conversation = createGroupConversation()
-        let quote = try! conversation.appendText(content: "Who is responsible for this!")
-        (quote as? ZMMessage)?.serverTimestamp = Date.distantPast
+        let conversation = SwiftMockConversation()
+        let quote = MockMessageFactory.textMessage(withText: "Who is responsible for this!")
+        quote.conversationLike = conversation
+        quote.serverTimestamp = Date.distantPast
         let message = MockMessageFactory.textMessage(withText: "I am http://www.example.com")
         message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.hasQuote = true
-        message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
+        message.backingTextMessageData.quoteMessage = quote
         
         // THEN
         verify(message: message)
