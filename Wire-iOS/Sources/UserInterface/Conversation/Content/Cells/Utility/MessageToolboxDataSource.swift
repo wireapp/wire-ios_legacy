@@ -26,7 +26,7 @@ enum MessageToolboxContent: Equatable {
     case sendFailure(NSAttributedString)
 
     /// Display the list of reactions.
-    case reactions(NSAttributedString/*, likers: [String]*/)
+    case reactions(NSAttributedString)
     
     /// Display list of calls
     case callList(NSAttributedString)

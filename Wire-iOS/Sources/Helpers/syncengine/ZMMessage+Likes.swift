@@ -41,7 +41,7 @@ extension ZMConversationMessage {
             }
         }
         get {
-            return hashBoxlikers.contains(HashBox(value: SelfUser.current))
+            return likers.contains{ $0.isSelfUser }
         }
     }
 
@@ -59,10 +59,6 @@ extension ZMConversationMessage {
             }.first ?? []
     }
 
-    var hashBoxlikers: [HashBoxUser] {
-        return likers.map{HashBox(value: $0)}
-    }
-    
     var sortedLikers: [UserType] {
         return likers.sorted { $0.name < $1.name }
     }
