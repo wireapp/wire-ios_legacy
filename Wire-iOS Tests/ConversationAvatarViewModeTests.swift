@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -27,12 +26,12 @@ final class ConversationAvatarViewModeTests: XCTestCase {
     var sut: ConversationAvatarView!
     var otherUser: MockUserType!
     var mockConversation: MockConversationAvatarViewConversation!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         mockConversation = MockConversationAvatarViewConversation()
-            
+
         otherUser = MockUserType.createDefaultOtherUser()
         sut = ConversationAvatarView()
     }
@@ -41,7 +40,7 @@ final class ConversationAvatarViewModeTests: XCTestCase {
         sut = nil
         mockConversation = nil
         otherUser = nil
-        
+
         super.tearDown()
     }
 

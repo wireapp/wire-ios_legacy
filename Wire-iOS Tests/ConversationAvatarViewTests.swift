@@ -20,50 +20,50 @@ import XCTest
 @testable import Wire
 
 final class ConversationAvatarViewTests: XCTestCase {
-    
+
     var sut: ConversationAvatarView!
-    
+
     override func setUp() {
         super.setUp()
         sut = ConversationAvatarView()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItRendersNoUserImages() {
         // GIVEN
         let conversation = MockConversationAvatarViewConversation()
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: conversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersSomeAndThenNoUserImages() {
         // GIVEN
         let otherUserConversation = MockConversationAvatarViewConversation()
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: otherUserConversation))
-        
+
         // AND WHEN
         _ = sut.prepareForSnapshots()
-        
+
         // AND WHEN
-        
+
         let conversation = MockConversationAvatarViewConversation()
-        
+
         sut.configure(context: .conversation(conversation: conversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersSingleUserImage() {
         // GIVEN
         let otherUserConversation = MockConversationAvatarViewConversation()
@@ -71,14 +71,14 @@ final class ConversationAvatarViewTests: XCTestCase {
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.stableRandomParticipants = [otherUser]
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: otherUserConversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersPendingConnection() {
         // GIVEN
         let otherUser = MockUserType.createDefaultOtherUser()
@@ -88,14 +88,14 @@ final class ConversationAvatarViewTests: XCTestCase {
         let otherUserConversation = MockConversationAvatarViewConversation()
         otherUserConversation.conversationType = .connection
         otherUserConversation.stableRandomParticipants = [otherUser]
-        
+
         // WHEN
         sut.configure(context: .connect(users: [otherUser]))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersASingleServiceUser() {
         // GIVEN
         let otherUser = MockServiceUserType()
@@ -104,19 +104,19 @@ final class ConversationAvatarViewTests: XCTestCase {
         otherUser.providerIdentifier = "providerIdentifier"
         otherUser.isConnected = true
         XCTAssert(otherUser.isServiceUser)
-        
+
         otherUser.accentColorValue = .strongLimeGreen
         let otherUserConversation = MockConversationAvatarViewConversation()
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.stableRandomParticipants = [otherUser]
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: otherUserConversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersTwoUserImages() {
         // GIVEN
         let conversation = MockConversationAvatarViewConversation()
@@ -124,43 +124,43 @@ final class ConversationAvatarViewTests: XCTestCase {
         let thirdUser = MockUserType.createConnectedUser(name: "Anna")
         thirdUser.accentColorValue = .vividRed
         conversation.stableRandomParticipants = [thirdUser, otherUser]
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: conversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersManyUsers() {
         // GIVEN
-        
+
         let conversation = MockConversationAvatarViewConversation()
         conversation.stableRandomParticipants = XCTestCase.usernames.map {MockUserType.createConnectedUser(name: $0)}
-        
+
         (conversation.stableRandomParticipants[0] as! MockUserType).accentColorValue = .vividRed
         (conversation.stableRandomParticipants[1] as! MockUserType).accentColorValue = .brightOrange
         (conversation.stableRandomParticipants[2] as! MockUserType).accentColorValue = .brightYellow
         (conversation.stableRandomParticipants[3] as! MockUserType).accentColorValue = .strongBlue
-        
+
         // WHEN
         sut.configure(context: .conversation(conversation: conversation))
-        
+
         // THEN
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
 }
 
 fileprivate extension UIView {
-    
+
     func prepareForSnapshots() -> UIView {
         let container = UIView()
         container.backgroundColor = .white
         container.addSubview(self)
         translatesAutoresizingMaskIntoConstraints = false
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             container.heightAnchor.constraint(equalToConstant: 24),
             container.widthAnchor.constraint(equalToConstant: 24),
@@ -169,8 +169,8 @@ fileprivate extension UIView {
             container.leadingAnchor.constraint(equalTo: leadingAnchor),
             container.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
-        
+
         return container
     }
-    
+
 }
