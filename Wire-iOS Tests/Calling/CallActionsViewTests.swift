@@ -18,8 +18,10 @@
 
 import XCTest
 @testable import Wire
+import WireSyncEngine
 
 fileprivate struct CallActionsViewInput: CallActionsViewInputType {
+    var allowPresentationModeUpdates: Bool
     var videoGridPresentationMode: VideoGridPresentationMode
     var permissions: CallPermissionsConfiguration
     let canToggleMediaType, isVideoCall, isMuted: Bool
@@ -83,6 +85,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -106,6 +109,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -131,6 +135,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -154,6 +159,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -178,6 +184,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
@@ -199,6 +206,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateIncoming_Video() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
@@ -222,6 +230,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOutgoing_Audio() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -243,6 +252,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOutgoing_Video() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -266,6 +276,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOngoing_Audio() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -287,6 +298,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOngoing_Audio_Muted() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -308,6 +320,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOngoing_Audio_SpeakerUnavailable() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -329,7 +342,52 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateOngoing_Video() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: true,
+            isMuted: false,
+            mediaState: .sendingVideo,
+            variant: .dark,
+            cameraType: .front,
+            callState: CallStateMock.ongoing
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOngoing_Video_PresentationMode_AllVideoStreams() {
+        // Given
+        let input = CallActionsViewInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .allVideoStreams,
+            permissions: MockCallPermissions.videoAllowedForever,
+            canToggleMediaType: true,
+            isVideoCall: true,
+            isMuted: false,
+            mediaState: .sendingVideo,
+            variant: .dark,
+            cameraType: .front,
+            callState: CallStateMock.ongoing
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_StateOngoing_Video_PresentationMode_ActiveSpeakers() {
+        // Given
+        let input = CallActionsViewInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .activeSpeakers,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
@@ -352,6 +410,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateTerminating_Audio() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -373,6 +432,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_StateTerminating_Video() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
@@ -396,6 +456,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_Permissions_NotDetermined() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoPendingApproval,
             canToggleMediaType: false,
@@ -417,6 +478,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_Permissions_NotAllowed() {
         // Given
         let input = CallActionsViewInput(
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoDeniedForever,
             canToggleMediaType: false,
