@@ -274,7 +274,7 @@ final class ConversationSystemMessageCellDescription {
             preconditionFailure("Invalid system message")
         }
 
-        switch systemMessageData.systemMessageType { ///TODO: should be ignoredClient?
+        switch systemMessageData.systemMessageType {
         case .connectionRequest, .connectionUpdate:
             break // Deprecated
 
