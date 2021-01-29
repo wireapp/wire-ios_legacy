@@ -34,6 +34,6 @@ final class CallInfoViewControllerSnapshotTests: XCTestCase {
         let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, selfUser: selfUser)
 
         // then
-        verifyAllIPhoneSizes(matching: sut) ///TODO: which user to user image view?
+        verifyAllIPhoneSizes(matching: sut)
     }
 }

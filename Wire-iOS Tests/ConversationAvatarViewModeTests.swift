@@ -56,7 +56,7 @@ final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelp
         let conversation = createGroupConversation()
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation))///TODO:
+        sut.configure(context: .conversation(conversation: conversation))
 
         // THEN
         XCTAssertEqual(sut.mode, .four)
