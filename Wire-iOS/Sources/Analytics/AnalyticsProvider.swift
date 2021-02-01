@@ -26,6 +26,8 @@ protocol AnalyticsProvider: class {
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String: Any])
 
+    func tagEvent(_ event: AnalyticsEvent)
+
     /// Set a custom dimension
     func setSuperProperty(_ name: String, value: Any?)
 
