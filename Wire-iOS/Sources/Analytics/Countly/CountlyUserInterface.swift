@@ -29,4 +29,18 @@ protocol CountlyUserInterface {
 
 }
 
+extension CountlyUserInterface {
+
+    func update(with attributes: CountlyUserAttributes) {
+        attributes.rawValue.forEach { set($0, value: $1) }
+        save()
+    }
+
+    func reset() {
+        CountlyUserAttributeKey.allCases.forEach { unSet($0.rawValue) }
+        save()
+    }
+
+}
+
 extension CountlyUserDetails: CountlyUserInterface {}

@@ -131,7 +131,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.manualSessionHandling = true
         config.deviceID = analyticsIdentifier
 
-        updateCountlyUser(with: userAttributes)
+        countlyUser.update(with: userAttributes)
 
         countly.start(with: config)
 
@@ -149,7 +149,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private func endCountly() {
         endSession()
-        clearCountlyUser()
+        countlyUser.reset()
         didInitializeCountly = false
     }
 
@@ -184,19 +184,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             .teamSize: team.members.count,
             .userContactsCount: team.members.count.logRound()
         ]
-    }
-
-    private func updateCountlyUser(with attributes: CountlyUserAttributes) {
-        for (key, value) in attributes.rawValue {
-            countlyUser.set(key, value: value)
-        }
-
-        countlyUser.save()
-    }
-
-    private func clearCountlyUser() {
-        CountlyUserAttributeKey.allCases.forEach { countlyUser.unSet($0.rawValue) }
-        countlyUser.save()
     }
 
     private var shouldTracksEvent: Bool {
