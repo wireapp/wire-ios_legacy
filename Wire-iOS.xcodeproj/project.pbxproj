@@ -1090,6 +1090,8 @@
 		EE378E2C24BDE5D50014118A /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2B24BDE5D50014118A /* Stream.swift */; };
 		EE378E2E24BDE5FF0014118A /* VideoStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2D24BDE5FF0014118A /* VideoStream.swift */; };
 		EE378E3024BDE6210014118A /* VideoGridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2F24BDE6210014118A /* VideoGridConfiguration.swift */; };
+		EE41467625C8993900E750E8 /* CountlyInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41467525C8993900E750E8 /* CountlyInterface.swift */; };
+		EE41467825C8995900E750E8 /* CountlyUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41467725C8995900E750E8 /* CountlyUserInterface.swift */; };
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
 		EE44D7EA259BD85F000C6345 /* Viper+Relationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */; };
@@ -2832,6 +2834,8 @@
 		EE378E2B24BDE5D50014118A /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		EE378E2D24BDE5FF0014118A /* VideoStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStream.swift; sourceTree = "<group>"; };
 		EE378E2F24BDE6210014118A /* VideoGridConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridConfiguration.swift; sourceTree = "<group>"; };
+		EE41467525C8993900E750E8 /* CountlyInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountlyInterface.swift; sourceTree = "<group>"; };
+		EE41467725C8995900E750E8 /* CountlyUserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountlyUserInterface.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
 		EE52378223F5566F00D4FE79 /* MockUserType+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+Creation.swift"; sourceTree = "<group>"; };
@@ -4375,8 +4379,8 @@
 		871BBFA11D34F56300DF0793 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				EE41467425C8992000E750E8 /* Countly */,
 				A93C96BA251CD3DE00EBD4D8 /* AnalyticsDecryptionFailedObserver.swift */,
-				A9730DD9250274150061BF36 /* AnalyticsCountlyProvider.swift */,
 				8712134A1FA37881008B6767 /* TrackingManager.swift */,
 				EFBCC90E2152A93F006AAB70 /* AnalyticsProvider.swift */,
 				A9150DB423D1B6B800844185 /* Analytics.swift */,
@@ -6385,6 +6389,16 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EE41467425C8992000E750E8 /* Countly */ = {
+			isa = PBXGroup;
+			children = (
+				A9730DD9250274150061BF36 /* AnalyticsCountlyProvider.swift */,
+				EE41467525C8993900E750E8 /* CountlyInterface.swift */,
+				EE41467725C8995900E750E8 /* CountlyUserInterface.swift */,
+			);
+			path = Countly;
+			sourceTree = "<group>";
+		};
 		EE5F54CF259B777B00F11F3C /* Viper */ = {
 			isa = PBXGroup;
 			children = (
@@ -7799,6 +7813,7 @@
 				8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */,
 				5E90418B21F61CBF00C3B413 /* ReauthenticateStepDescription.swift in Sources */,
 				871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */,
+				EE41467625C8993900E750E8 /* CountlyInterface.swift in Sources */,
 				87D5E4421C3E79C600EB8289 /* Data+Fingerprint.swift in Sources */,
 				1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */,
 				F1CB5D3A215E1D2F001CCF5D /* UITextView+Replace.swift in Sources */,
@@ -8298,6 +8313,7 @@
 				16616750223A81CB00779AE3 /* MessageKeyPathObserver.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
 				7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */,
+				EE41467825C8995900E750E8 /* CountlyUserInterface.swift in Sources */,
 				A95C76C0240E87440047CD29 /* ConversationButtonMessageCell.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.swift in Sources */,
 				A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */,
