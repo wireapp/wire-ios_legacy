@@ -250,20 +250,33 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
-    /*
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
+        let message = createNewMessage()
         
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
+        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+
+        
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [mentionMessage, message],
+                                        messagesRequiringAttentionByType: [.text:1, .mention:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         
         // then
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersMutedConversation_TextMessagesThenMention() {
         // when
         otherUserConversation.mutedMessageTypes = [.all]
@@ -272,7 +285,6 @@ final class ConversationListCellTests: XCTestCase {
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
@@ -286,7 +298,6 @@ final class ConversationListCellTests: XCTestCase {
         let message = try! otherUserConversation.appendText(content: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
         
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
