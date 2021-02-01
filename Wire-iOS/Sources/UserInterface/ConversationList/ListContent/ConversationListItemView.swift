@@ -270,7 +270,7 @@ final class ConversationListItemView: UIView {
         } else {
             statusIcon = status.icon(for: conversation)
         }
-        self.rightAccessory.icon = statusIcon
+        rightAccessory.icon = statusIcon
         
         if let statusIconAccessibilityValue = rightAccessory.accessibilityValue {
             statusComponents.append(statusIconAccessibilityValue)

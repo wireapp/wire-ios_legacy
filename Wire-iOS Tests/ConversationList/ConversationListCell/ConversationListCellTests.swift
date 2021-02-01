@@ -20,6 +20,13 @@ import UIKit
 @testable import Wire
 import XCTest
 
+extension ConversationStatus {
+    ///TODO: rm
+    static func createDefaultStatus() -> ConversationStatus {
+        return ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+    }
+}
+
 ///TODO: no need subclass after DM protocol update
 private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider {
     var status: ConversationStatus
@@ -27,7 +34,7 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
     var mutedMessageTypes: MutedMessageTypes = .none
     
     override init() {
-        status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        status = ConversationStatus.createDefaultStatus()
     }
     
     static func createOneOnOneConversation() -> MockConversation {
@@ -99,7 +106,8 @@ final class ConversationListCellTests: XCTestCase {
     
     func testThatItRendersMutedConversation() {
         // when
-        otherUserConversation.mutedMessageTypes = [.all]
+        let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [.all], isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        otherUserConversation.status = status
         
         // then
         verify(otherUserConversation)
