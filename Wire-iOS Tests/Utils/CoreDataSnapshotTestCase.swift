@@ -26,9 +26,9 @@ struct SelfProvider: SelfUserProvider {
 
 extension XCTestCase {
     static let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
-                     "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
-                     "Brett", "Hannah", "Ana", "Paula"]
-
+                            "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                            "Brett", "Hannah", "Ana", "Paula"]
+    
 }
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
