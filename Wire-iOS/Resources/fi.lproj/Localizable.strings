@@ -30,12 +30,12 @@
 "general.later" = "Myöhemmin";
 "general.skip" = "Ei Nyt";
 "general.accept" = "Hyväksy";
-"general.decline" = "No, thanks";
+"general.decline" = "Ei kiitos";
 "general.failure" = "Jokin meni pieleen";
 "general.failure.try_again" = "Ole hyvä ja yritä uudelleen.";
-"general.service" = "Service";
+"general.service" = "Palvelu";
 "general.off" = "Pois päältä";
-"general.on" = "On";
+"general.on" = "Käytössä";
 "general.loading" = "Ladataan…";
 "general.paste" = "Liitä";
 
@@ -70,13 +70,13 @@
 "peoplepicker.header.people" = "Ihmiset";
 "peoplepicker.header.services" = "Palvelut";
 "peoplepicker.services.open_conversation.item" = "Avaa keskustelu";
-"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.services.add_service.button" = "Lisää palvelu";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
-"peoplepicker.title.add_to_conversation" = "Add participants";
+"peoplepicker.title.add_to_conversation" = "Lisää osallistujia";
 
 "peoplepicker.no_contacts_title" = "Ei Yhteystietoja.";
 
@@ -325,7 +325,7 @@
 "conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "Allow guests and services";
 "conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
-"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.title" = "Lukukuittaukset";
 "conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Käynnissä oleva puhelu";
@@ -506,7 +506,7 @@
 "content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
 "content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "Lukukuittaukset on päällä";
 
 // legal hold
 
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Et ole käyttänyt tätä laitetta pitkään aikaan. Jotkut viestit eivät saata näkyä täällä.";
 "content.system.missing_messages.subtitle_start" = "Sillä aikaa";
 
-"content.system.cannot_decrypt" = "Viesti käyttäjältä: %@ ei tullut perille.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "sinä";
-"content.system.cannot_decrypt.why_part" = "Miksi?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ laitteen identiteetti muuttui. Perilletoimittamaton viesti.";
-"content.system.cannot_decrypt.identity.you_part" = "Sinun";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@ n"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Lisätietoja";
-"content.system.cannot_decrypt.otherDevice_part" = "(laite %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
@@ -628,7 +630,7 @@
 "voice.status.video_not_available" = "Video pois päältä";
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
-"voice.status.cbr" = "Tasainen Bittinopeus";
+"voice.status.cbr" = "Tasainen bittinopeus (CBR)";
 "voice.network_error.body" = "Sinun pitää olla online-tilassa soittaaksesi puheluja. Tarkista yhteytesi ja yritä uudelleen.";
 "voice.degradation.new_self_device" = "Aloitit käyttämään uutta laitetta.";
 "voice.degradation.new_user_device" = "%@ aloitti käyttämään uutta laitetta.";
@@ -759,7 +761,7 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Poista sisältö?";
 "meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Poistu myös keskustelusta";
 "meta.menu.delete_content.button_cancel" = "Peruuta";
@@ -833,7 +835,7 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Kyllä";
 
 // Unblock button
-"profile.block_button_title" = "Block…";
+"profile.block_button_title" = "Estä…";
 "profile.unblock_button_title" = "Unblock…";
 
 // Favorite button
@@ -895,13 +897,13 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.title" = "Vieraat ja palvelut";
+"group_details.guest_options_cell.enabled" = "Käytössä";
 "group_details.guest_options_cell.disabled" = "Pois päältä";
 "group_details.timeout_options_cell.title" = "Timed messages";
 "group_details.notification_options_cell.title" = "Ilmoitukset";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
-"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.title" = "Lukukuittaukset";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
 "group_details.conversation_admins_header.title" = "Group admins";
@@ -961,8 +963,8 @@
 
 // Settings changed alert
 
-"self.read_receipts_enabled.title" = "You have enabled read receipts";
-"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_enabled.title" = "Olet asettanut lukukuittaukset päälle";
+"self.read_receipts_disabled.title" = "Olet asettanut lukukuittaukset pois päältä";
 "self.read_receipts_description.title" = "You can change this option in your account settings.";
 
 // Settings - top level
@@ -1037,7 +1039,7 @@
 "self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
 
 // Analytics
-"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics.title" = "Lähetä anonyymiä käyttötietoa";
 "self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
@@ -1171,7 +1173,7 @@
 
 "self.settings.privacy_security.lock_app.description" = "Avata Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Väärä salasana. Yritä uudelleen.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
@@ -1279,7 +1281,7 @@
 "landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
-"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.button.title" = "Näytä enemmän";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
@@ -1295,7 +1297,7 @@
 "team.email.textfield.placeholder" = "Your company email";
 "team.email.button.learn_more" = "Lisätietoja";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "Sinulle on sähköpostia.";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
@@ -1324,7 +1326,7 @@
 // Team Invite Errors
 "team.invite.error.generic" = "Jokin meni pieleen, yritä uudelleen";
 "team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.already_invited" = "Tämä sähköpostiosoite on jo kutsuttu";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "Ei internet-yhteyttä";
 
@@ -1401,14 +1403,14 @@
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Jokin meni pieleen";
-"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+"registration.no_history.restore_backup_failed.message" = "Historiaa ei voitu palauttaa.";
 
 // Wrong Account
-"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Epäyhteensopiva varmuuskopio";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Et voi palauttaa historiaa toisesta tilistä.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Epäyhteensopiva varmuuskopio";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
 // SSO – Company Login
@@ -1711,7 +1713,7 @@
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 
-"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.title" = "Yhdistä palvelimeen";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
 
 "url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
@@ -1738,7 +1740,7 @@
 // News and offers consent prompt
 
 "news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
-"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.message" = "Voit perua tilauksen milloin tahansa.";
 "news_offers.consent.button.privacy_policy.title" = "Yksityisyyskäytännöt";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
