@@ -79,7 +79,7 @@ final class ConversationListCellTests: XCTestCase {
         sut = nil
         SelfUser.provider = nil
         otherUserConversation = nil
-//        otherUser = nil
+        otherUser = nil
         
         super.tearDown()
     }
@@ -228,29 +228,36 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
-    /*
     func testThatItRendersConversation_ReplySelfMessage() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = selfUser
+        let replyMessage = createNewMessage(text: "reply test")
 
-        let replyMessage = try! otherUserConversation.appendText(content: "reply test", replyingTo: message)
-        (replyMessage as! ZMMessage).sender = otherUser
-
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [replyMessage],
+                                        messagesRequiringAttentionByType: [.reply:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: true)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
     }
 
+    /*
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = try! otherUserConversation.appendText(content: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -264,7 +271,7 @@ final class ConversationListCellTests: XCTestCase {
         (message as! ZMClientMessage).sender = otherUser
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -278,7 +285,7 @@ final class ConversationListCellTests: XCTestCase {
         (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = try! otherUserConversation.appendText(content: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
         otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
@@ -289,7 +296,7 @@ final class ConversationListCellTests: XCTestCase {
         // when
         let knock = try! otherUserConversation.appendKnock()
         (knock as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
         
         // then
         verify(otherUserConversation)
