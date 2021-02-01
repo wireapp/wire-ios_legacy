@@ -125,17 +125,36 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(otherUserConversation)
     }
-        /*
+
     func testThatItRendersConversationWithNewMessage() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+
+        let message: MockMessage = MockMessageFactory.textMessage(withText: "Hey there!", sender: otherUser, conversation: otherUserConversation)
+        
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.text:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
+//        let message = try! otherUserConversation.appendText(content: "Hey there!")
+//        (message as! ZMClientMessage).sender = otherUser
+//        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
         
         // then
+//        verify(otherUserConversation)
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersConversationWithNewMessages() {
         // when
         (0..<8).forEach {_ in 
