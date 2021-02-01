@@ -63,6 +63,10 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
             zmLog.info(string)
         }
     }
+
+    func tagEvent(_ event: AnalyticsEvent) {
+        tagEvent(event.name, attributes: event.attributes.rawValue)
+    }
     
     func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
         

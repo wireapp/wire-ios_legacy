@@ -212,6 +212,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Tag events
 
+    func tagEvent(_ event: AnalyticsEvent) {
+        tagEvent(event.name, attributes: event.attributes.rawValue)
+    }
+
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
         //store the event before self user is assigned, send it later when self user is ready.

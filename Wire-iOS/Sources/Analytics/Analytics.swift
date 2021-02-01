@@ -110,6 +110,14 @@ extension Analytics: AnalyticsType {
     }
 }
 
+extension Analytics: AnalyticsLike {
+
+    func tagEvent(_ event: AnalyticsEvent) {
+        tagEvent(event.name, attributes: event.attributes.rawValue)
+    }
+
+}
+
 extension Analytics: ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
