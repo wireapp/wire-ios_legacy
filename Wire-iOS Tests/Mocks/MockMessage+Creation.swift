@@ -190,8 +190,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func pingMessage() -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func pingMessage<T: MockMessage>() -> T {
+        let message: T = MockMessageFactory.messageTemplate()
         message.knockMessageData = MockKnockMessageData()
 
         return message
