@@ -22,7 +22,7 @@ import avs
 
 final class SelfVideoPreviewView: BaseVideoPreviewView {
     
-    private let previewView = AVSVideoPreview()
+    var previewView = AVSVideoPreview()
         
     override var stream: Stream {
         didSet {
