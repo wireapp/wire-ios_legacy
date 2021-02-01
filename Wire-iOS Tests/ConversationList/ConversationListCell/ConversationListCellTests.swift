@@ -41,6 +41,9 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
 
         //title
         otherUserConversation.displayName = otherUser.name!
+
+        //subtitle
+        otherUserConversation.connectedUserType = otherUser
         
         return otherUserConversation
     }

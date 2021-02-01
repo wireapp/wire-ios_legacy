@@ -84,6 +84,7 @@ extension MockUserType {
     /// - Returns: a mock user
     class func createDefaultOtherUser() -> MockUserType {
         let user = MockUserType.createUser(name: "Bruno")
+        user.handle = "bruno"
         user.initials = "B"
         user.accentColorValue = .brightOrange
         user.isConnected = true
