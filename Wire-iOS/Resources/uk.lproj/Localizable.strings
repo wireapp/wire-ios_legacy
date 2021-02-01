@@ -200,7 +200,7 @@
 "folder.creation.name.placeholder" = "Назва теки";
 
 "folder.picker.title" = "Перемістити до";
-"folder.picker.empty.hint" = "Створити нову папку за допомогою кнопки +";
+"folder.picker.empty.hint" = "Створити нову теку за допомогою кнопки +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом певного часу. Деякі повідомлення можуть не відображатися тут.";
 "content.system.missing_messages.subtitle_start" = "Тим часом";
 
-"content.system.cannot_decrypt" = "Повідомлення від %@ не було отримане.";
+"content.system.cannot_decrypt.self" = "Не вдалося розшифрувати **ваше** повідомлення.";
+"content.system.cannot_decrypt.other" = "Не вдалося розшифрувати повідомлення від **%@**.";
+"content.system.cannot_decrypt.reset_session" = "Виправити майбутні повідомлення";
+"content.system.cannot_decrypt.error_details" = "(Виправлена помилка: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "ви";
-"content.system.cannot_decrypt.why_part" = "Чому?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "Тепер ви можете розшифрувати повідомлення від **%1$@**. Щоб відновити втрачені повідомлення, **попросіть %1$@ надіслати їх повторно.**";
 
-"content.system.cannot_decrypt.identity" = "%@ ідентифікатор пристрою змінився. Повідомлення не доставлено.";
-"content.system.cannot_decrypt.identity.you_part" = "Ваш";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
-"content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "Ідентифікатор **вашого** пристрою змінився. Повідомлення не доставлене.";
+"content.system.cannot_decrypt_identity_changed.other" = "Ідентифікатор пристрою, що належить  користувачу **%@**, змінився. Повідомлення не доставлене."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ не зміг розшифрувати деякі з ваших повідомлень, але вирішив проблему з їх доставкою**. Це вплинуло на всі розмови, в яких ви обоє берете участь.";
+"content.system.session_reset.self" = "**Вам не вдалося розшифрувати деякі з ваших повідомлень, але ви вирішили проблему з їх доставкою**. Це вплинуло на всі ваші розмови.";
 
 "content.system.unknown_message.body" = "Це повідомлення не може бути показане. Можливо, ваша версія Wire вийшла із вжитку.";
 
@@ -733,7 +735,7 @@
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
 "participants.section.name.footer" = "До цієї розмови може приєднатися до %1$d учасників.";
-"participants.section.admins.footer" = "Немає адміністраторів.";
+"participants.section.admins.footer" = "Нема адміністраторів.";
 "participants.section.members.footer" = "Користувачі відсутні.";
 
 "profile.profile.group_admin_options.title" = "Адміністратор групи";
@@ -759,7 +761,7 @@
 "meta.menu.open_self_profile" = "Відкрити профіль";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Очистити вміст?";
+"meta.menu.delete_content.dialog_title" = "Видалити вміст?";
 "meta.menu.delete_content.dialog_message" = "Це очистить історію розмови на всіх ваших пристроях.";
 "meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
 "meta.menu.delete_content.button_cancel" = "Скасувати";
@@ -1265,9 +1267,9 @@
 // Landing screen
 
 "landing.header" = "Wire. Додати акаунт.";
-"landing.welcome_message" = "Намагаєтесь створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
-"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку. Як тільки ви створите свою команду, то зможете увійти тут";
-"landing.create_account.title" = "Створити персональний акаунт Wire";
+"landing.welcome_message" = "Пробуєте створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
+"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку - як тільки ви створите свою команду, то зможете увійти тут";
+"landing.create_account.title" = "Створити персональний акаунт в Wire";
 "landing.create_account.infotitle" = "Спілкуєтесь з друзями та сім'єю?";
 "landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
@@ -1427,8 +1429,8 @@
 
 "login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний код SSO вашої команди, та повторіть спробу.";
 "login.sso.error.alert.invalid_status.message" = "Будь ласка, спробуйте ще раз пізніше (помилка %@).";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Будь ласка, введіть правильний код SSO доступу";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Будь ласка, введіть правильний емейл або код SSO доступу";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Будь ласка, введіть правильний код доступу SSO";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Будь ласка, введіть правильний емейл або код доступу SSO";
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
@@ -1801,7 +1803,7 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Створити код допуску";
+"create_passcode.title_label" = "Створіть код допуску";
 "create_passcode.info_label" = "Він буде використаний для розблокування Wire. Якщо ви забудете цей пароль, то **його неможливо буде відновити.**";
 "create_passcode.info_label_forced_applock" = "Створіть пароль для розблокування Wire. Будь ласка,  запам'ятайте, що **його неможливо буде відновити.**";
 "create_passcode.create_button.title" = "створити код допуску";
@@ -1830,14 +1832,14 @@
 
 "wipe_database.title_label" = "Доступ як з нового пристрою";
 "wipe_database.info_label" = "Дані, що зберігаються на цьому пристрої, доступні лише з вашим кодом доступу.\n\nЯкщо ви забудете код доступу, то зможете очистити базу даних для входу в якості нового пристрою.\n\nВидаливши базу даних, ";
-"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього акаунту будуть остаточно видалені.";
+"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
 
 "wipe_database.button.title" = "Я хочу видалити базу даних";
 
 // Wipe database alert
 
 "wipe_database.alert.description" = "Підтвердити видалення бази даних";
-"wipe_database.alert.message" = "Введіть 'Видалити', щоб підтвердити, що ви дійсно хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
 "wipe_database.alert.placeholder" = "Введіть 'Видалити'";
 "wipe_database.alert.confirm" = "Видалити";
 "wipe_database.alert.confirm_input" = "Видалити";

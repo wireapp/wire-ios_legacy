@@ -474,14 +474,14 @@
 
 "content.system.call.called" = "%@曾打电话";
 "content.system.call.called-you" = "%@曾打电话";
-"content.system.call.called.you" = "你";
+"content.system.call.called.you" = "您";
 
 "content.system.call.missed-call" = "未接电话";
 "content.system.call.missed-call-you" = "未接电话";
 
 "content.system.call.missed-call.groups" = "从 %@ 的未接来电";
 "content.system.call.missed-call.groups-you" = "从 %2$@ 的未接来电";
-"content.system.call.missed-call.groups.you" = "你";
+"content.system.call.missed-call.groups.you" = "您";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "你有一段沒有使用此设备, 一些信息可能不会在这里出现";
 "content.system.missing_messages.subtitle_start" = "同时，";
 
-"content.system.cannot_decrypt" = "来至 %@ 的消息未被接收。";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "你";
-"content.system.cannot_decrypt.why_part" = "为什么呢？";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ 设备标识改变。未送达的信息。";
-"content.system.cannot_decrypt.identity.you_part" = "你";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "了解更多信息";
-"content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "此消息无法显示，您可能在使用旧版本Wire。";
 
@@ -1723,7 +1725,7 @@
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire无法找到此人。";
-"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+"url_action.invalid_user.message" = "您可能没有访问该帐号的权限或该帐号不再存在。";
 
 "url_action.invalid_conversation.title" = "Wire不能打开此对话。";
 "url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
@@ -1811,13 +1813,13 @@
 "create_passcode.validation.no_lowercase_char" = "小写字母";
 "create_passcode.validation.no_uppercase_char" = "An uppercase letter";
 "create_passcode.validation.no_number" = "一个数字";
-"create_passcode.validation.no_special_char" = "A special character";
+"create_passcode.validation.no_special_char" = "特殊字符";
 
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "输入您的锁定码";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "密码错误";
 "unlock.submit_button.title" = "解锁";
 
 // Custom app lock - warning screen
@@ -1829,7 +1831,7 @@
 // Wipe database
 
 "wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label" = "此设备上存储的数据只能用您的密码访问。\n\n如果您忘记了您的密码，您可以删除数据库作为新设备重新登录。\n\n删除数据库， ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";

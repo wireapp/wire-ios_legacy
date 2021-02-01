@@ -27,7 +27,7 @@
 "general.edit" = "Editar";
 "general.done" = "Listo";
 "general.confirm" = "OK";
-"general.later" = "Más Tarde";
+"general.later" = "Después";
 "general.skip" = "Ahora no";
 "general.accept" = "Aceptar";
 "general.decline" = "No, gracias";
@@ -159,7 +159,7 @@
 "conversation_list.voiceover.status.typing" = "escribiendo";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "te mencionaron";
-"conversation_list.voiceover.status.reply" = "responder";
+"conversation_list.voiceover.status.reply" = "respuesta";
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "reciente";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "Listado de conversaciones recientes";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "carpetas";
@@ -492,8 +492,8 @@
 
 "content.system.conversation.with_name.participants" = "con";
 
-"content.system.message_timer_changes" = "%@ puso un temporizador de mensaje de %@";
-"content.system.message_timer_changes-you" = "%@ puso un temporizador de %@";
+"content.system.message_timer_changes" = "%@ puso un temporizador de %@";
+"content.system.message_timer_changes-you" = "%@ puso un temporizador de mensaje de %@";
 
 "content.system.message_timer_off" = "%@ desactivó el temporizador de mensajes";
 "content.system.message_timer_off-you" = "%@ desactivó el temporizador de mensajes";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "No has utilizado este dispositivo durante un tiempo. Algunos mensajes no aparecerán aquí.";
 "content.system.missing_messages.subtitle_start" = "Mientras tanto,";
 
-"content.system.cannot_decrypt" = "Mensaje de %@ corrupto.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "tú";
-"content.system.cannot_decrypt.why_part" = "¿Por qué?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "La identidad del dispositivo de %@ ha cambiado. Mensaje no entregado.";
-"content.system.cannot_decrypt.identity.you_part" = "Tu";
-"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Más información";
-"content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "No se puede mostrar el este mensaje. Puede que esté usando un versión antigua de Wire.";
 
@@ -821,8 +823,8 @@
 "profile.connection_request_dialog.button_connect" = "Conectar";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_dialog.title" = "¿Desea eliminar la conversación?";
+"conversation.delete_request_dialog.message" = "Esta opción eliminará el grupo y el contenido para todos los participantes desde cualquier dispositivo. El contenido no podrá restaurarse. Se notificará a todos los participantes.";
 "conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
@@ -837,8 +839,8 @@
 "profile.unblock_button_title" = "Desbloquear…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "Agregar a Favoritos";
+"profile.unfavorite_button_title" = "Eliminar de Favoritos";
 
 "profile.block_button_title_action" = "Bloquear";
 "profile.unblock_button_title_action" = "Desbloquear";
@@ -1037,7 +1039,7 @@
 "self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
 
 // Analytics
-"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics.title" = "Enviar datos de uso anónimos";
 "self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Recibir boletín de noticias";
@@ -1171,7 +1173,7 @@
 
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Desbloquear con contraseña";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Contraseña incorrecta. Por favor, inténtelo de nuevo.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
@@ -1417,7 +1419,7 @@
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Iniciar sesión";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "Código SSO";
 
 "login.sso.start_error_title" = "Cannot Start Enterprise Login";
 "login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
@@ -1429,11 +1431,11 @@
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 "login.sso.error.alert.invalid_format.message.sso_only" = "Por favor, introduzca un código de acceso SSO válido";
 "login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
-"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_not_registered.message" = "Este correo electrónico no se puede utilizar para iniciar sesión empresarial. Por favor, introduce el código SSO para continuar.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
 "login.sso.error.alert.unknown.message" = "Por favor, inténtalo de nuevo más tarde.";
 "login.sso.backend_switch.title" = "Redirecting...";
-"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.subtitle" = "Está siendo redirigido al servidor de su organización.";
 "login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
@@ -1797,7 +1799,7 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "Contraseña";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";

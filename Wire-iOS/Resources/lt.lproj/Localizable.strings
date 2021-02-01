@@ -193,7 +193,7 @@
 
 // Folders
 
-"folder.creation.name.title" = "Kurti naują aplanką";
+"folder.creation.name.title" = "Sukurti naują aplanką";
 "folder.creation.name.button.create" = "Kurti";
 "folder.creation.name.header" = "Perkelti susirašinėjimą „%@“ į naują aplanką.";
 "folder.creation.name.footer" = "Iki 64 simbolių";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Jūs kurį laiką nenaudojote šio įrenginio. Kai kurios žinutės čia gali neatsirasti.";
 "content.system.missing_messages.subtitle_start" = "Tuo tarpu,";
 
-"content.system.cannot_decrypt" = "Žinutė, kurią parašė %@ nebuvo gauta.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "jūs";
-"content.system.cannot_decrypt.why_part" = "Kodėl?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "Pasikeitė %@ įrenginio tapatybė. Žinutė nenusiųsta.";
-"content.system.cannot_decrypt.identity.you_part" = "Jūsų";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Sužinokite daugiau";
-"content.system.cannot_decrypt.otherDevice_part" = "(įrenginys %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Žinutės negalima parodyti. Gali būti, kad naudojate senesnę „Wire“ versiją.";
 
@@ -759,7 +761,7 @@
 "meta.menu.open_self_profile" = "Atverti profilį";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Valyti turinį?";
+"meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
 "meta.menu.delete_content.dialog_message" = "Tai išvalys bendravimo praeitį visuose jūsų įrenginiuose.";
 "meta.menu.delete_content.leave_as_well_message" = "Taip pat išeiti iš pokalbio";
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
@@ -821,7 +823,7 @@
 "profile.connection_request_dialog.button_connect" = "Užmegzti kontaktą";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Ištrinti grupės susirašinėjimą?";
+"conversation.delete_request_dialog.title" = "Ištrinti grupės pokalbį?";
 "conversation.delete_request_dialog.message" = "Grupė ir visas turinys visiems dalyviams iš visų įrenginių bus ištrinti. Nėra galimybės atkurti turinio. Visiems dalyviams bus pranešta.";
 "conversation.delete_request_error_dialog.title" = "Trinant grupę „%@“ įvyko klaida. Bandykite dar kartą.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Ištrinti grupę";
@@ -1004,7 +1006,7 @@
 "self.settings.enable_read_receipts.title" = "Siųsti perskaitymo patvirtinimus";
 "self.settings.privacy_section_group.subtitle" = "Išjungus, jūs nematysite kada gavėjas perskaito jūsų siųstas žinutes.\n\nŠis nustatymas negalioja susirašinėjimams grupėje.";
 
-"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+"self.settings.encrypt_messages_at_rest.title" = "Šifruoti neaktyvias žinutes";
 
 "self.settings.account_picture_group.picture" = "Paveikslas";
 "self.settings.account_picture_group.color" = "Spalva";
@@ -1797,7 +1799,7 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "„Passcode“";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";

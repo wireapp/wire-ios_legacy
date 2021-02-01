@@ -221,7 +221,7 @@
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "list.section.groups" = "Gruppen";
-"list.section.contacts" = "Kontakte";
+"list.section.contacts" = "Personen";
 "list.section.requests" = "Anfragen";
 "list.section.favorites" = "Favoriten";
 
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Sie haben Wire eine Weile nicht benutzt. Einige ältere Nachrichten könnten nicht angezeigt werden.";
 "content.system.missing_messages.subtitle_start" = "In der Zwischenzeit";
 
-"content.system.cannot_decrypt" = "Eine Nachricht von %@ wurde nicht empfangen.";
+"content.system.cannot_decrypt.self" = "Eine Nachricht von **Ihnen** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.other" = "Eine Nachricht von **%@** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.reset_session" = "Entschlüsselung künftiger Nachrichten";
+"content.system.cannot_decrypt.error_details" = "(Behobener Fehler: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "Ihnen";
-"content.system.cannot_decrypt.why_part" = "Warum?";
+"content.system.cannot_decrypt_resolved.self" = "Sie können jetzt Nachrichten von sich selbst entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **müssen Sie sie erneut senden.**";
+"content.system.cannot_decrypt_resolved.other" = "Sie können jetzt künftige Nachrichten von **%1$@**entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **bitten Sie %1$@, sie erneut zu senden.**";
 
-"content.system.cannot_decrypt.identity" = "%@ Geräte-Identität hat sich geändert. Nachricht kann nicht entschlüsselt werden.";
-"content.system.cannot_decrypt.identity.you_part" = "Ihre";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@s"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Mehr erfahren";
-"content.system.cannot_decrypt.otherDevice_part" = "(Gerät %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Ihre** Geräte-Identität hat sich geändert. Unzustellbare Nachricht.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** Geräte-Identität hat sich geändert. Unzustellbare Nachricht."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = " **%@ konnte einige Ihrer Nachrichten nicht entschlüsseln, hat das Problem aber gelöst**. Dies betraf alle Unterhaltungen, die Sie gemeinsam nutzen.";
+"content.system.session_reset.self" = " **Sie konnten einige Ihrer Nachrichten nicht entschlüsseln, haben das Problem aber gelöst**. Dies betraf alle Unterhaltungen.";
 
 "content.system.unknown_message.body" = "Diese Meldung konnte nicht angezeigt werden. Möglicherweise verwenden Sie eine ältere Version von Wire.";
 
