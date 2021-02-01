@@ -309,20 +309,38 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
+    //TODO: same result as testThatItRendersMutedConversation_TextMessagesThenMention, we should create andother test just testing
     func testThatItRendersMutedConversation_MentionThenTextMessages() {
         // when
-        otherUserConversation.mutedMessageTypes = [.all]
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
+//        otherUserConversation.mutedMessageTypes = [.all]
+//        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+//        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+//        let message = try! otherUserConversation.appendText(content: "Hey there!")
+//        (message as! ZMClientMessage).sender = otherUser
+
+        let message = createNewMessage()
+        let mentionMessage = createMentionSelfMessage()
         
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message, mentionMessage],
+                                        messagesRequiringAttentionByType: [.mention:1, .text:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [.all],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         
         // then
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersConversationWithKnock() {
         // when
         let knock = try! otherUserConversation.appendKnock()
