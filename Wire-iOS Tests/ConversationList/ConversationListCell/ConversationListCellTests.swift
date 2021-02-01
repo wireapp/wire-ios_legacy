@@ -126,8 +126,8 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
-    private func createNewMessage() -> MockMessage {
-        let message: MockMessage = MockMessageFactory.textMessage(withText: "Hey there!", sender: otherUser, conversation: otherUserConversation)
+    private func createNewMessage(text: String = "Hey there!") -> MockMessage {
+        let message: MockMessage = MockMessageFactory.textMessage(withText: text, sender: otherUser, conversation: otherUserConversation)
         
         return message
     }
@@ -206,29 +206,29 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
-    /*
     func testThatItRendersConversation_TextMessagesThenMentionThenReply() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
+        let replyMessage = createNewMessage(text: "Pong!")
 
-        let selfMessage = try! otherUserConversation.appendText(content: "Ping!")
-        (message as! ZMClientMessage).sender = selfUser
-
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-
-        let replyMessage = try! otherUserConversation.appendText(content: "Pong!", replyingTo: selfMessage)
-        (replyMessage as! ZMMessage).sender = otherUser
-
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [replyMessage],
+                                        messagesRequiringAttentionByType: [.mention:1, .reply:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
     }
 
+    /*
     func testThatItRendersConversation_ReplySelfMessage() {
         // when
         let message = try! otherUserConversation.appendText(content: "Hey there!")
