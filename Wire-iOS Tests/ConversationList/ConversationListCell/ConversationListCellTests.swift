@@ -37,9 +37,8 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
         status = ConversationStatus.createDefaultStatus()
     }
     
-    static func createOneOnOneConversation() -> MockConversation {
+    static func createOneOnOneConversation(otherUser: MockUserType) -> MockConversation {
         SelfUser.setupMockSelfUser()
-        let otherUser = MockUserType.createDefaultOtherUser()
         let otherUserConversation = MockConversation()
 
         // avatar
@@ -67,7 +66,8 @@ final class ConversationListCellTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        otherUserConversation = MockConversation.createOneOnOneConversation()
+        otherUser = MockUserType.createDefaultOtherUser()
+        otherUserConversation = MockConversation.createOneOnOneConversation(otherUser: otherUser)
         
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
@@ -79,7 +79,7 @@ final class ConversationListCellTests: XCTestCase {
         sut = nil
         SelfUser.provider = nil
         otherUserConversation = nil
-        otherUser = nil
+//        otherUser = nil
         
         super.tearDown()
     }
@@ -112,16 +112,20 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(otherUserConversation)
     }
-///TODO: @property (nonatomic, readonly, nullable) ZMUser *connectedUser;
-    /*
+
     func testThatItRendersBlockedConversation() {
         // when
-        otherUserConversation.connectedUser?.toggleBlocked()
+        otherUserConversation.connectedUserType?.toggleBlocked()
+
+        let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [], isOngoingCall: false, isBlocked: true, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        otherUserConversation.status = status
         
+        otherUser.isConnected = false
+
         // then
         verify(otherUserConversation)
     }
-        
+        /*
     func testThatItRendersConversationWithNewMessage() {
         // when
         let message = try! otherUserConversation.appendText(content: "Hey there!")

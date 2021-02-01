@@ -144,9 +144,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isPendingApprovalByOtherUser: Bool = false
     
-    func accept() { }
+    func accept() {
+        isBlocked = false
+    }
     
-    func block() { }
+    func block() {
+        isBlocked = true
+    }
     
     func ignore() { }
     
