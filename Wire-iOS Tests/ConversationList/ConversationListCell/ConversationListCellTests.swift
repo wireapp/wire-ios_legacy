@@ -126,10 +126,16 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
+    private func createNewMessage() -> MockMessage {
+        let message: MockMessage = MockMessageFactory.textMessage(withText: "Hey there!", sender: otherUser, conversation: otherUserConversation)
+        
+        return message
+    }
+    
     func testThatItRendersConversationWithNewMessage() {
         // when
 
-        let message: MockMessage = MockMessageFactory.textMessage(withText: "Hey there!", sender: otherUser, conversation: otherUserConversation)
+        let message = createNewMessage()
         
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
@@ -152,10 +158,10 @@ final class ConversationListCellTests: XCTestCase {
     func testThatItRendersConversationWithNewMessages() {
         // when
         var messages: [MockMessage] = []
-(0..<8).forEach {_ in
-        let message: MockMessage = MockMessageFactory.textMessage(withText: "Hey there!", sender: otherUser, conversation: otherUserConversation)
-    
-    messages.append(message)
+        (0..<8).forEach {_ in
+            let message = createNewMessage()
+
+            messages.append(message)
         }
         
         let status = ConversationStatus(isGroup: false,
@@ -176,21 +182,31 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
     func testThatItRendersConversation_TextMessagesThenMention() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
+        let message = createNewMessage()
+
+        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message, mentionMessage],
+                                        messagesRequiringAttentionByType: [.mention:1, .text:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
 
+    /*
     func testThatItRendersConversation_TextMessagesThenMentionThenReply() {
         // when
         let message = try! otherUserConversation.appendText(content: "Hey there!")
