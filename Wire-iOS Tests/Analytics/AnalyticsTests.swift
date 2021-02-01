@@ -77,10 +77,11 @@ final class AnalyticsTests: XCTestCase {
         coreDataFixture.teamTest {
             // Given
             let sut = Analytics(optedOut: false)
+            let countly = MockCountly()
 
             let provider = AnalyticsCountlyProvider(
-                countlyInstanceType: MockCountly.self,
-                countlyAppKey: "dummy countlyAppKey",
+                countly: countly,
+                appKey: "dummy countlyAppKey",
                 serverURL: URL(string: "www.wire.com")!
             )!
 
@@ -89,7 +90,7 @@ final class AnalyticsTests: XCTestCase {
             let selfUser = coreDataFixture.selfUser!
             sut.selfUser = selfUser
 
-            XCTAssertEqual(MockCountly.startCount, 1)
+            XCTAssertEqual(countly.methodCalls.start.count, 1)
 
             // When
             let changeInfo = UserChangeInfo(object: selfUser)
@@ -97,7 +98,7 @@ final class AnalyticsTests: XCTestCase {
             sut.userDidChange(changeInfo)
 
             // Then
-            XCTAssertEqual(MockCountly.startCount, 2)
+            XCTAssertEqual(countly.methodCalls.start.count, 2)
         }
 
     }
