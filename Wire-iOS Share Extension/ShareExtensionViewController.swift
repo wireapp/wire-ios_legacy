@@ -592,13 +592,15 @@ extension ShareExtensionViewController {
     }
     
     private func presentUnlockScreen(with callback: @escaping (_ password: String?) -> ()) {
+        let unlockViewController = UnlockViewController()
+        pushConfigurationViewController(unlockViewController)
         
-        self.view.addSubview(stateAccessoryView)
-        stateAccessoryView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stateAccessoryView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
-            stateAccessoryView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
+//        self.view.addSubview(stateAccessoryView)
+//        stateAccessoryView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            stateAccessoryView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
+//            stateAccessoryView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+//        ])
         
         //        if unlockViewController == nil {
         //            // TODO: [John] Avoid static methods.
