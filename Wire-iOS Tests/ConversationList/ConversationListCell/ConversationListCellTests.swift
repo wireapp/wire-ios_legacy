@@ -63,6 +63,7 @@ final class ConversationListCellTests: XCTestCase {
     fileprivate var otherUserConversation: MockConversation!
     var otherUser: MockUserType!
     
+    
     override func setUp() {
         super.setUp()
         
@@ -85,6 +86,20 @@ final class ConversationListCellTests: XCTestCase {
     }
     
     // MARK: - Helper
+    
+    private func createNewMessage(text: String = "Hey there!") -> MockMessage {
+        let message: MockMessage = MockMessageFactory.textMessage(withText: text, sender: otherUser, conversation: otherUserConversation)
+        
+        return message
+    }
+    
+    private func createMentionSelfMessage() -> MockMessage {
+        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+        
+        return mentionMessage
+    }
+    
+
     
     private func verify(
         _ conversation: MockConversation,
@@ -126,12 +141,6 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
 
-    private func createNewMessage(text: String = "Hey there!") -> MockMessage {
-        let message: MockMessage = MockMessageFactory.textMessage(withText: text, sender: otherUser, conversation: otherUserConversation)
-        
-        return message
-    }
-    
     func testThatItRendersConversationWithNewMessage() {
         // when
 
@@ -186,7 +195,7 @@ final class ConversationListCellTests: XCTestCase {
         // when
         let message = createNewMessage()
 
-        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+        let mentionMessage = createMentionSelfMessage()
 
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
@@ -276,20 +285,31 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
     func testThatItRendersMutedConversation_TextMessagesThenMention() {
         // when
-        otherUserConversation.mutedMessageTypes = [.all]
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        let message = createNewMessage()
+        let mentionMessage = createMentionSelfMessage()
         
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [mentionMessage, message],
+                                        messagesRequiringAttentionByType: [.text:1, .mention:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [.all],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         
         // then
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersMutedConversation_MentionThenTextMessages() {
         // when
         otherUserConversation.mutedMessageTypes = [.all]
