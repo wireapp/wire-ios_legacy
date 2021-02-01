@@ -61,7 +61,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.didMoveToWindow()
         
         if window != nil {
-            startCapture()
+            updateCaptureState()
         }
     }
     
