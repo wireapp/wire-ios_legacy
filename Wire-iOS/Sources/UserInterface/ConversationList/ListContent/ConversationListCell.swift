@@ -20,6 +20,8 @@ import Foundation
 import WireSyncEngine
 import avs
 
+typealias ConversationListCellConversation = Conversation & StableRandomParticipantsProvider & ConversationStatusProvider
+
 final class ConversationListCell: SwipeMenuCollectionCell,
                                   SectionListCellType {
     static let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
@@ -27,7 +29,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
     static var cachedSize: CGSize = .zero
 
-    var conversation: ConversationAvatarViewConversation? {
+    var conversation: ConversationListCellConversation? {
         didSet {
             guard !(conversation === oldValue) else { return }
 
@@ -193,9 +195,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     }
     
     func updateAppearance() {
-        if let conversation = conversation as? ZMConversation { ///TODO: include in UI tests?
-            itemView.update(for: conversation)
-        }
+        itemView.update(for: conversation)
     }
     
     func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
@@ -265,6 +265,8 @@ extension ConversationListCell: ZMTypingChangeObserver {
 
 extension ConversationListCell: AVSMediaManagerClientObserver {
     func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification?) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
+        
         // AUDIO-548 AVMediaManager notifications arrive on a background thread.
         DispatchQueue.main.async(execute: {
             if notification?.microphoneMuteChanged != nil {

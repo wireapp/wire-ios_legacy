@@ -35,6 +35,14 @@ protocol ConversationStatusProvider {
     var status: ConversationStatus { get }
 }
 
+protocol MutedMessageTypesProvider {
+    var mutedMessageTypes: MutedMessageTypes { get } ///TODO: mv to DM
+}
+
+protocol ConnectedUserProvider {
+    var connectedUserType: UserType? { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -64,19 +72,26 @@ protocol GroupDetailsConversation {
     var allowGuests: Bool { get }
     var hasReadReceiptsEnabled: Bool { get }
 
-    var mutedMessageTypes: MutedMessageTypes { get }
 
     var freeParticipantSlots: Int { get }
 
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & GroupDetailsConversation & Conversation
+typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & GroupDetailsConversation & MutedMessageTypesProvider & Conversation
 
 
 extension ZMConversation: SortedOtherParticipantsProvider {}
 //extension ZMConversation: CanJoinCallProvider {}
 extension ZMConversation: ConversationStatusProvider {}
+
+//TODO: mv to DM
+extension ZMConversation: MutedMessageTypesProvider {}
+extension ZMConversation: ConnectedUserProvider {
+    var connectedUserType: UserType? {
+        return connectedUser
+    }
+}
 
 extension ZMConversation: GroupDetailsConversation {}
 

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MockConversationAvatarViewConversation: SwiftMockConversation, StableRandomParticipantsProvider {
+class MockConversationAvatarViewConversation: SwiftMockConversation, StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] = []
 }
 

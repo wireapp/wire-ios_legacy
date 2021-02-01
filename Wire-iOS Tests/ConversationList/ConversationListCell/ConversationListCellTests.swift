@@ -20,28 +20,56 @@ import UIKit
 @testable import Wire
 import XCTest
 
+///TODO: no need subclass after DM protocol update
+private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider {
+    var status: ConversationStatus
+    
+    var mutedMessageTypes: MutedMessageTypes = .none
+    
+    override init() {
+        status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+    }
+    
+    static func createOneOnOneConversation() -> MockConversation {
+        SelfUser.setupMockSelfUser()
+        let otherUser = MockUserType.createDefaultOtherUser()
+        let otherUserConversation = MockConversation()
+
+        // avatar
+        otherUserConversation.stableRandomParticipants = [otherUser]
+        otherUserConversation.conversationType = .oneOnOne
+
+        //title
+        otherUserConversation.displayName = otherUser.name!
+        
+        return otherUserConversation
+    }
+}
+
 final class ConversationListCellTests: XCTestCase {
 
     // MARK: - Setup
     
     var sut: ConversationListCell!
-    var otherUserConversation: Conversation!
+    fileprivate var otherUserConversation: MockConversation!
+    var otherUser: MockUserType!
     
     override func setUp() {
         super.setUp()
-//        snapshotBackgroundColor = .darkGray
-        otherUserConversation = SwiftMockConversation()
+        
+        otherUserConversation = MockConversation.createOneOnOneConversation()
+        
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
 
-        SelfUser.setupMockSelfUser()
     }
     
     override func tearDown() {
         sut = nil
         SelfUser.provider = nil
         otherUserConversation = nil
+        otherUser = nil
         
         super.tearDown()
     }
@@ -49,13 +77,14 @@ final class ConversationListCellTests: XCTestCase {
     // MARK: - Helper
     
     private func verify(
-        _ conversation: Conversation,
+        _ conversation: MockConversation,
         file: StaticString = #file,
+        testName: String = #function,
         line: UInt = #line
         ) {
         sut.conversation = conversation
-        
-        verify(matching: sut, file: file, line: line)
+        sut.backgroundColor = .darkGray
+        verify(matching: sut, file: file, testName: testName, line: line)
     }
     
     // MARK: - Tests
@@ -72,7 +101,8 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(otherUserConversation)
     }
-
+///TODO: @property (nonatomic, readonly, nullable) ZMUser *connectedUser;
+    /*
     func testThatItRendersBlockedConversation() {
         // when
         otherUserConversation.connectedUser?.toggleBlocked()
@@ -301,15 +331,15 @@ final class ConversationListCellTests: XCTestCase {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
-    }
+    }*/
 
     
-    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
+    /*func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
         sut.itemView.rightAccessory.icon = icon
 
         verify(view: sut)
-    }
+    }*/
     
 }

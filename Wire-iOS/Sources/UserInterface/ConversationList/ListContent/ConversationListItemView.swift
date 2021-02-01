@@ -19,7 +19,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-typealias ConversationListItemViewConversation = ConversationAvatarViewConversation & ConversationStatusProvider
+typealias ConversationListItemViewConversation = ConversationAvatarViewConversation & ConversationStatusProvider & ConnectedUserProvider
 
 extension Notification.Name {
     static let conversationListItemDidScroll = Notification.Name("ConversationListItemDidScroll")
@@ -202,9 +202,10 @@ final class ConversationListItemView: UIView {
     }
 
 
-    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
-        self.titleText = title
-        self.subtitleAttributedText = subtitle
+    func configure(with title: NSAttributedString?,
+                   subtitle: NSAttributedString?) {
+        titleText = title
+        subtitleAttributedText = subtitle
     }
     
     /// configure without a conversation, i.e. when displaying a pending user
@@ -222,7 +223,7 @@ final class ConversationListItemView: UIView {
         labelsStack.accessibilityLabel = title?.string
     }
     
-    func update(for conversation: ZMConversation?) {
+    func update(for conversation: ConversationListCellConversation?) {
         self.conversation = conversation
         
         guard let conversation = conversation else {
@@ -245,7 +246,7 @@ final class ConversationListItemView: UIView {
         let title: NSAttributedString?
         
         if SelfUser.current.isTeamMember,
-           let connectedUser = conversation.connectedUser {
+           let connectedUser = conversation.connectedUserType {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
             
             if connectedUser.availability != .none {
@@ -264,7 +265,7 @@ final class ConversationListItemView: UIView {
         let statusIcon: ConversationStatusIcon?
         if let player = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
-            message.conversation == conversation {
+            message.conversation === conversation {
             statusIcon = .playingMedia
         } else {
             statusIcon = status.icon(for: conversation)
@@ -275,7 +276,8 @@ final class ConversationListItemView: UIView {
             statusComponents.append(statusIconAccessibilityValue)
         }
         
-        if conversation.localParticipants.first?.isPendingApproval == true {
+        ///TODO:
+        if (conversation as? ZMConversation)?.localParticipants.first?.isPendingApproval == true {
             statusComponents.append("pending approval")
         }
         
