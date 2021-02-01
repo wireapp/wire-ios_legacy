@@ -26,6 +26,15 @@ protocol SortedOtherParticipantsProvider {
     var sortedOtherParticipants: [UserType] { get }
 }
 
+///related to voice channel from sync engine
+//protocol CanJoinCallProvider {
+//    var canJoinCall: Bool { get }
+//}
+
+protocol ConversationStatusProvider {
+    var status: ConversationStatus { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -66,4 +75,8 @@ typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & Group
 
 
 extension ZMConversation: SortedOtherParticipantsProvider {}
+//extension ZMConversation: CanJoinCallProvider {}
+extension ZMConversation: ConversationStatusProvider {}
+
 extension ZMConversation: GroupDetailsConversation {}
+

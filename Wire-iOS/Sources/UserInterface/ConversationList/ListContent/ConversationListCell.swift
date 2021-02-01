@@ -27,7 +27,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
     static var cachedSize: CGSize = .zero
 
-    var conversation: Conversation? {
+    var conversation: ConversationAvatarViewConversation? {
         didSet {
             guard !(conversation === oldValue) else { return }
 
@@ -193,7 +193,9 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     }
     
     func updateAppearance() {
-        itemView.update(for: conversation)
+        if let conversation = conversation as? ZMConversation { ///TODO: include in UI tests?
+            itemView.update(for: conversation)
+        }
     }
     
     func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
@@ -221,12 +223,14 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
     @objc
     private func onRightAccessorySelected(_ sender: UIButton?) {
-        let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
+        guard let conversation = conversation as? ZMConversation else { return }
         
-        if mediaPlaybackManager?.activeMediaPlayer != nil &&
-            mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == conversation {
+        let activeMediaPlayer = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer
+        
+        if activeMediaPlayer != nil &&
+            activeMediaPlayer?.sourceMessage?.conversation == conversation {
             toggleMediaPlayer()
-        } else if conversation?.canJoinCall == true {
+        } else if conversation.canJoinCall {
             delegate?.conversationListCellJoinCallButtonTapped(self)
         }
     }

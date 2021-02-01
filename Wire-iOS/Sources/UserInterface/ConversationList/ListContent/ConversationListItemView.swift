@@ -19,13 +19,15 @@ import Foundation
 import UIKit
 import WireDataModel
 
+typealias ConversationListItemViewConversation = ConversationAvatarViewConversation & ConversationStatusProvider
+
 extension Notification.Name {
     static let conversationListItemDidScroll = Notification.Name("ConversationListItemDidScroll")
 }
 
 final class ConversationListItemView: UIView {
     // Please use `updateForConversation:` to set conversation.
-    private var conversation: ZMConversation?
+    private var conversation: ConversationAvatarViewConversation?
     
     var titleText: NSAttributedString? {
         didSet {
@@ -192,9 +194,9 @@ final class ConversationListItemView: UIView {
     @objc
     private func mediaPlayerStateChanged(_ notification: Notification?) {
         DispatchQueue.main.async(execute: {
-            if self.conversation != nil &&
-                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == self.conversation {
-                self.update(for: self.conversation)
+            if let conversation = self.conversation as? ZMConversation,
+                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == conversation {
+                self.update(for: conversation)
             }
         })
     }
