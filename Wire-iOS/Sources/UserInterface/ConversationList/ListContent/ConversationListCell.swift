@@ -27,18 +27,17 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
     static var cachedSize: CGSize = .zero
 
-    var conversation: ZMConversation? {
+    var conversation: Conversation? {
         didSet {
-            guard conversation != oldValue else { return }
+            guard !(conversation === oldValue) else { return }
 
             typingObserverToken = nil
-            typingObserverToken = conversation?.addTypingObserver(self)
-            
-            updateAppearance()
-            
-            if let conversation = conversation {
+            if let conversation = conversation as? ZMConversation {
+                typingObserverToken = conversation.addTypingObserver(self)
                 setupConversationObserver(conversation: conversation)
             }
+
+            updateAppearance()
         }
     }
     

@@ -20,38 +20,42 @@ import UIKit
 @testable import Wire
 import XCTest
 
-final class ConversationListCellTests: CoreDataSnapshotTestCase {
+final class ConversationListCellTests: XCTestCase {
 
     // MARK: - Setup
     
     var sut: ConversationListCell!
+    var otherUserConversation: Conversation!
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
+//        snapshotBackgroundColor = .darkGray
+        otherUserConversation = SwiftMockConversation()
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
 
-        SelfUser.provider = selfUserProvider
+        SelfUser.setupMockSelfUser()
     }
     
     override func tearDown() {
         sut = nil
         SelfUser.provider = nil
+        otherUserConversation = nil
+        
         super.tearDown()
     }
     
     // MARK: - Helper
     
     private func verify(
-        _ conversation: ZMConversation,
+        _ conversation: Conversation,
         file: StaticString = #file,
         line: UInt = #line
         ) {
         sut.conversation = conversation
         
-        verify(view: sut, file: file, line: line)
+        verify(matching: sut, file: file, line: line)
     }
     
     // MARK: - Tests
