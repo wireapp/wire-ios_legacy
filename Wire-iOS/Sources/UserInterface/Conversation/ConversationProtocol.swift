@@ -43,6 +43,12 @@ protocol ConnectedUserProvider {
     var connectedUserType: UserType? { get }
 }
 
+// ZMConversation extension from sync engine
+protocol TypingUsersProvider {
+    var typingUsers: [UserType] { get }
+}
+
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -82,8 +88,9 @@ typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & Group
 
 
 extension ZMConversation: SortedOtherParticipantsProvider {}
-//extension ZMConversation: CanJoinCallProvider {}
 extension ZMConversation: ConversationStatusProvider {}
+
+extension ZMConversation: TypingUsersProvider {}
 
 //TODO: mv to DM
 extension ZMConversation: MutedMessageTypesProvider {}

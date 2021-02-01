@@ -20,21 +20,16 @@ import UIKit
 @testable import Wire
 import XCTest
 
-extension ConversationStatus {
-    ///TODO: rm
-    static func createDefaultStatus() -> ConversationStatus {
-        return ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
-    }
-}
-
 ///TODO: no need subclass after DM protocol update
-private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider {
+private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider, TypingUsersProvider {
+    var typingUsers: [UserType] = []
+    
     var status: ConversationStatus
     
     var mutedMessageTypes: MutedMessageTypes = .none
     
     override init() {
-        status = ConversationStatus.createDefaultStatus()
+        status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
     }
     
     static func createOneOnOneConversation(otherUser: MockUserType) -> MockConversation {
@@ -98,8 +93,6 @@ final class ConversationListCellTests: XCTestCase {
         
         return mentionMessage
     }
-    
-
     
     private func verify(
         _ conversation: MockConversation,
@@ -309,14 +302,9 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    //TODO: same result as testThatItRendersMutedConversation_TextMessagesThenMention, we should create andother test just testing
+    //Notice: same result as testThatItRendersMutedConversation_TextMessagesThenMention with reversed message order
     func testThatItRendersMutedConversation_MentionThenTextMessages() {
         // when
-//        otherUserConversation.mutedMessageTypes = [.all]
-//        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-//        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-//        let message = try! otherUserConversation.appendText(content: "Hey there!")
-//        (message as! ZMClientMessage).sender = otherUser
 
         let message = createNewMessage()
         let mentionMessage = createMentionSelfMessage()
@@ -340,12 +328,23 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
     func testThatItRendersConversationWithKnock() {
         // when
-        let knock = try! otherUserConversation.appendKnock()
-        (knock as! ZMClientMessage).sender = otherUser
-        
+        let message: MockMessage = MockMessageFactory.pingMessage()
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.knock:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         
         // then
         verify(otherUserConversation)
@@ -353,12 +352,26 @@ final class ConversationListCellTests: XCTestCase {
     
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
-        otherUserConversation.setTypingUsers([otherUser])
+//        otherUserConversation.setTypingUsers([otherUser])
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: true,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [],
+                                        messagesRequiringAttentionByType: [:],
+                                        isTyping: true,
+                                        mutedMessageTypes: [.none],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersConversationWithTypingSelfUser() {
         // when
         otherUserConversation.setIsTyping(true)

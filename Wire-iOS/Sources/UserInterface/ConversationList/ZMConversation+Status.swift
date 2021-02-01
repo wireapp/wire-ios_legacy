@@ -273,7 +273,7 @@ extension ZMConversation {
     }
 }
 
-typealias MatcherConversation = Conversation & ConversationStatusProvider
+typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingUsersProvider
 
 // "You left"
 final class SelfUserLeftMatcher: ConversationStatusMatcher {
@@ -397,8 +397,6 @@ final class TypingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
-        ///TODO: typingUsers
-        guard let conversation = conversation as? ZMConversation else { return nil }
 
         let statusString: NSAttributedString
         if status.isGroup {

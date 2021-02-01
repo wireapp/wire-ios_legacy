@@ -20,7 +20,9 @@ import Foundation
 import WireSyncEngine
 import avs
 
-typealias ConversationListCellConversation = Conversation & StableRandomParticipantsProvider & ConversationStatusProvider
+//typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingUsersProvider
+
+typealias ConversationListCellConversation = Conversation & StableRandomParticipantsProvider & ConversationStatusProvider & TypingUsersProvider
 
 final class ConversationListCell: SwipeMenuCollectionCell,
                                   SectionListCellType {
