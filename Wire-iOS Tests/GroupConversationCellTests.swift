@@ -27,31 +27,62 @@ final class GroupConversationCellTests: XCTestCase {
 //        cell.layoutIfNeeded()
 //        return cell
 //    }
+    var sut: GroupConversationCell!
+    var otherUser: MockUserType!
+    var mockConversation: MockStableRandomParticipantsConversation!
     
-    func testOneToOneConversation() {
+    override func setUp() {
+        super.setUp()
+        
+        mockConversation = MockStableRandomParticipantsConversation()
+        otherUser = MockUserType.createDefaultOtherUser()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        mockConversation = nil
+        otherUser = nil
+        
+        super.tearDown()
+    }
+
+    
+    private func createOneOnOneConversation() -> MockStableRandomParticipantsConversation{
         var otherUser: MockUserType!
         otherUser = MockUserType.createDefaultOtherUser()
-
+        
         let otherUserConversation = MockStableRandomParticipantsConversation.createOneOnOneConversation(otherUser: otherUser)
         
-        let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
-        cell.configure(conversation: otherUserConversation)
-
-        verifyInAllColorSchemes(matching: cell)
+        return otherUserConversation
     }
     
-    /*func testGroupConversation() {
-        let groupConversation = createGroupConversation()
-        for username in usernames.prefix(upTo: 3) {
-            groupConversation.add(participants:createUser(name: username))
-        }
+    func testOneToOneConversation() {
+        let otherUserConversation = createOneOnOneConversation()
         
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(conversation: groupConversation)
-        }))
+        sut = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(conversation: otherUserConversation)
+
+        verifyInAllColorSchemes(matching: sut)
     }
     
-    func testGroupConversationWithVeryLongName() {
+    func testGroupConversation() {
+        let groupConversation = MockStableRandomParticipantsConversation()
+
+        var mockUsers = [MockUserType]()
+        for username in XCTestCase.usernames.prefix(upTo: 3) {
+            mockUsers.append(MockUserType.createUser(name: username))
+        }
+
+        groupConversation.stableRandomParticipants = [mockUsers[0], otherUser, mockUsers[1], mockUsers[2]]
+        groupConversation.displayName = "Anna, Bruno, Claire, Dean"
+
+        sut = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(conversation: groupConversation)
+
+        verifyInAllColorSchemes(matching: sut)
+    }
+    
+    /*func testGroupConversationWithVeryLongName() {
         let groupConversation = createGroupConversation()
         groupConversation.userDefinedName  = "Loooooooooooooooooooooooooong name"
         for username in usernames.prefix(upTo: 3) {

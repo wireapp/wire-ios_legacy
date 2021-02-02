@@ -22,7 +22,7 @@ import UIKit
 
 typealias GroupConversationCellConversation = Conversation & StableRandomParticipantsProvider
 
-class GroupConversationCell: UICollectionViewCell, Themeable {
+final class GroupConversationCell: UICollectionViewCell, Themeable {
     
     let avatarSpacer = UIView()
     let avatarView = ConversationAvatarView()
