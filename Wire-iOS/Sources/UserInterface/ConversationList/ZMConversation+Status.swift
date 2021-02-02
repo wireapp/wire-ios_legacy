@@ -645,7 +645,7 @@ final class FailedSendMatcher: ConversationStatusMatcher {
 final class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
     
-    private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
+    private func addedString(for messages: [ZMConversationMessage], in conversation: MatcherConversation) -> NSAttributedString? {
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
            let sender = message.senderUser,
@@ -660,7 +660,8 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
         return .none
     }
     
-    private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
+    private func removedString(for messages: [ZMConversationMessage],
+                               in conversation: MatcherConversation) -> NSAttributedString? {
         
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
@@ -675,9 +676,6 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
-        ///TODO: typingUsers
-        guard let conversation = conversation as? ZMConversation else { return nil }
-
         var allStatusMessagesByType: [StatusMessageType: [ZMConversationMessage]] = [:]
         
         self.matchedTypes.forEach { type in
@@ -802,7 +800,6 @@ extension ConversationStatus {
         return .none
     }
     
-    ///TODO: mock more ZMConversation properties for matcher
     func description(for conversation: MatcherConversation) -> NSAttributedString {
         let allMatchers = appliedMatchersForDescription(for: conversation)
         guard !allMatchers.isEmpty else {

@@ -276,7 +276,6 @@ final class ConversationListItemView: UIView {
             statusComponents.append(statusIconAccessibilityValue)
         }
         
-        ///TODO:
         if (conversation as? ZMConversation)?.localParticipants.first?.isPendingApproval == true {
             statusComponents.append("pending approval")
         }

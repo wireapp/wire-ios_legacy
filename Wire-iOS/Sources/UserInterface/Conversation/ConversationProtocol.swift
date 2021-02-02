@@ -26,11 +26,6 @@ protocol SortedOtherParticipantsProvider {
     var sortedOtherParticipants: [UserType] { get }
 }
 
-///related to voice channel from sync engine
-//protocol CanJoinCallProvider {
-//    var canJoinCall: Bool { get }
-//}
-
 protocol ConversationStatusProvider {
     var status: ConversationStatus { get }
 }
