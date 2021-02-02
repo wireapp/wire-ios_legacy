@@ -153,8 +153,13 @@ extension AppStateCalculator: SessionManagerDelegate {
 // MARK: - AuthenticationCoordinatorDelegate
 extension AppStateCalculator: AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
-        let appState: AppState = .authenticated(completedRegistration: addedAccount)
-        transition(to: appState)
+        guard let userSession = ZMUserSession.shared() else { return }
+
+        if userSession.isLocked {
+            transition(to: .locked)
+        } else {
+            transition(to: .authenticated(completedRegistration: addedAccount))
+        }
     }
 }
 
