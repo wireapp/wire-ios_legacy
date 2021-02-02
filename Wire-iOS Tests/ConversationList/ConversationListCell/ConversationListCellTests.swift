@@ -100,11 +100,15 @@ final class ConversationListCellTests: XCTestCase {
     
     private func verify(
         _ conversation: MockConversation,
+        icon: ConversationStatusIcon? = nil,
         file: StaticString = #file,
         testName: String = #function,
-        line: UInt = #line
-        ) {
+        line: UInt = #line) {
         sut.conversation = conversation
+        
+        if let icon = icon {
+            sut.itemView.rightAccessory.icon = icon
+        }
         sut.backgroundColor = .darkGray
         verify(matching: sut, file: file, testName: testName, line: line)
     }
@@ -394,12 +398,32 @@ final class ConversationListCellTests: XCTestCase {
         verify(conversation)
     }
     
-    /*
+    private func createGroupConversation() -> MockConversation {
+        let conversation = MockConversation()
+        conversation.stableRandomParticipants = [otherUser]
+        conversation.displayName = otherUser.displayName
+        
+        return conversation
+    }
+    
+    ///test for SelfUserLeftMatcher is matched
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
-        conversation.removeParticipantsAndUpdateConversationState(users: [selfUser], initiatingUser: otherUser)
         
+        let status = ConversationStatus(isGroup: true,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [],
+                                        messagesRequiringAttentionByType: [:],
+                                        isTyping: true,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: false,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
         // then
         verify(conversation)
     }
@@ -407,10 +431,10 @@ final class ConversationListCellTests: XCTestCase {
     func testThatItRendersGroupConversationWithIncomingCall() {
         let conversation = createGroupConversation()
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
 
-    func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
+    /*func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
@@ -466,15 +490,6 @@ final class ConversationListCellTests: XCTestCase {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
-    }*/
-
-    
-    /*func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
-        guard let conversation = conversation else { XCTFail(); return }
-        sut.conversation = conversation
-        sut.itemView.rightAccessory.icon = icon
-
-        verify(view: sut)
     }*/
     
 }
