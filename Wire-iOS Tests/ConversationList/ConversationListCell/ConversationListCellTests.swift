@@ -483,24 +483,24 @@ final class ConversationListCellTests: XCTestCase {
         verify(conversation!, icon: icon)
     }
     
-    /*func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
+    func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
     
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedAll() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
     
     func testThatItRendersOneOnOneConversationWithOngoingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
-        verify(conversation, icon: icon)
-    }*/
+        verify(conversation!, icon: icon)
+    }
     
 }
