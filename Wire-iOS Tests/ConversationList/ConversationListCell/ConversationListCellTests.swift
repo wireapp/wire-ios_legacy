@@ -20,8 +20,9 @@ import UIKit
 @testable import Wire
 import XCTest
 
-/// TODO: no need subclass after DM protocol update
-private final class MockConversation: MockConversationAvatarViewConversation, ConversationStatusProvider, TypingStatusProvider {
+private final class MockConversation: MockConversationAvatarViewConversation, ConversationStatusProvider, TypingStatusProvider, VoiceChannelProvider {
+    var voiceChannel: VoiceChannel?
+    
     var typingUsers: [UserType] = []
 
     func setIsTyping(_ isTyping: Bool) {

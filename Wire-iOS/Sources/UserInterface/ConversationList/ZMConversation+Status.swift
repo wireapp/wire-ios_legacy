@@ -273,8 +273,6 @@ extension ZMConversation {
     }
 }
 
-typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingStatusProvider
-
 // "You left"
 final class SelfUserLeftMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
@@ -312,9 +310,6 @@ final class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
-        ///TODO:
-        guard let conversation = conversation as? ZMConversation else { return nil }
-        
         if conversation.voiceChannel?.state.canJoinCall == true {
             if let callerDisplayName = conversation.voiceChannel?.initiator?.name {
                 return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
