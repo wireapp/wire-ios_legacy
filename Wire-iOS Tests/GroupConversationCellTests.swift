@@ -19,22 +19,28 @@
 import XCTest
 @testable import Wire
 
-class GroupConversationCellTests: CoreDataSnapshotTestCase {
+final class GroupConversationCellTests: XCTestCase {
         
-    func cell(_ configuration : (GroupConversationCell) -> Void) -> GroupConversationCell {
-        let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
-        configuration(cell)
-        cell.layoutIfNeeded()
-        return cell
-    }
+//    func cell(_ configuration : (GroupConversationCell) -> Void) -> GroupConversationCell {
+//        let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+//        configuration(cell)
+//        cell.layoutIfNeeded()
+//        return cell
+//    }
     
     func testOneToOneConversation() {
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(conversation: otherUserConversation)
-        }))
+        var otherUser: MockUserType!
+        otherUser = MockUserType.createDefaultOtherUser()
+
+        let otherUserConversation = MockStableRandomParticipantsConversation.createOneOnOneConversation(otherUser: otherUser)
+        
+        let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        cell.configure(conversation: otherUserConversation)
+
+        verifyInAllColorSchemes(matching: cell)
     }
     
-    func testGroupConversation() {
+    /*func testGroupConversation() {
         let groupConversation = createGroupConversation()
         for username in usernames.prefix(upTo: 3) {
             groupConversation.add(participants:createUser(name: username))
@@ -55,7 +61,7 @@ class GroupConversationCellTests: CoreDataSnapshotTestCase {
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(conversation: groupConversation)
         }))
-    }
+    }*/
     
 }
 

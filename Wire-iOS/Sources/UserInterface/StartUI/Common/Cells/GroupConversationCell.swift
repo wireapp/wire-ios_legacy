@@ -20,6 +20,8 @@ import Foundation
 import WireDataModel
 import UIKit
 
+typealias GroupConversationCellConversation = Conversation & StableRandomParticipantsProvider
+
 class GroupConversationCell: UICollectionViewCell, Themeable {
     
     let avatarSpacer = UIView()
@@ -127,12 +129,12 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
         subtitleLabel.textColor = sectionTextColor
     }
     
-    public func configure(conversation: ZMConversation) {
+    func configure(conversation: GroupConversationCellConversation) {
         avatarView.configure(context: .conversation(conversation: conversation))
 
         titleLabel.text = conversation.displayName
         
-        if conversation.conversationType == .oneOnOne, let handle = conversation.connectedUser?.handle {
+        if conversation.conversationType == .oneOnOne, let handle = conversation.connectedUserType?.handle {
             subtitleLabel.isHidden = false
             subtitleLabel.text = "@\(handle)"
         } else {
