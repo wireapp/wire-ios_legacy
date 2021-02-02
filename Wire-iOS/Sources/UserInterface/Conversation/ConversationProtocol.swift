@@ -16,7 +16,7 @@
 //
 
 import Foundation
-import WireDataModel
+import WireSyncEngine
 
 protocol StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] { get }
@@ -34,13 +34,15 @@ protocol ConnectedUserProvider {
     var connectedUserType: UserType? { get }
 }
 
-// ZMConversation extension from sync engine
+// MARK: - ZMConversation extension from sync engine
 protocol TypingStatusProvider {
     var typingUsers: [UserType] { get }
     func setIsTyping(_ isTyping: Bool)
 }
 
-
+protocol VoiceChannelProvider {
+    var voiceChannel: VoiceChannel? { get }
+}
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -82,6 +84,7 @@ extension ZMConversation: SortedOtherParticipantsProvider {}
 extension ZMConversation: ConversationStatusProvider {}
 
 extension ZMConversation: TypingStatusProvider {}
+extension ZMConversation: VoiceChannelProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}
 
