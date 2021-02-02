@@ -383,16 +383,18 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
     func testThatItRendersGroupConversation() {
         // when
-        let conversation = createGroupConversation()
-        conversation.add(participants:[createUser(name: "Ana")])
+        let conversation = MockConversation()
+        let newUser = MockUserType.createUser(name: "Ana")
+        conversation.stableRandomParticipants = [newUser, otherUser]
+        conversation.displayName = "Ana, Bruno"
 
         // then
         verify(conversation)
     }
     
+    /*
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
