@@ -137,23 +137,23 @@ class MockUserType: NSObject, UserType, Decodable {
     var isConnected: Bool = false
 
     var isBlocked: Bool = false
-    
+
     var isIgnored: Bool = false
 
     var isPendingApprovalBySelfUser: Bool = false
 
     var isPendingApprovalByOtherUser: Bool = false
-    
+
     func accept() {
         isBlocked = false
     }
-    
+
     func block() {
         isBlocked = true
     }
-    
+
     func ignore() { }
-    
+
     func cancelConnectionRequest() { }
 
     // MARK: - Wireless

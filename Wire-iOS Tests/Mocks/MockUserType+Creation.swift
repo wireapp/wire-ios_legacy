@@ -79,7 +79,7 @@ extension MockUserType {
         user.teamRole = teamID != nil ? .member : .none
         return user
     }
-    
+
     /// Create a connected Mock user with name Bruno and orange accent color
     /// - Returns: a mock user
     class func createDefaultOtherUser() -> MockUserType {
@@ -88,7 +88,7 @@ extension MockUserType {
         user.initials = "B"
         user.accentColorValue = .brightOrange
         user.isConnected = true
-        
+
         return user
     }
 }

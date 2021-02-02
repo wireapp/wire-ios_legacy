@@ -20,22 +20,22 @@ import UIKit
 @testable import Wire
 import XCTest
 
-///TODO: no need subclass after DM protocol update
+/// TODO: no need subclass after DM protocol update
 private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider, TypingStatusProvider {
     var typingUsers: [UserType] = []
-    
+
     func setIsTyping(_ isTyping: Bool) {
-        //no-op
+        // no-op
     }
 
     var status: ConversationStatus
-    
+
     var mutedMessageTypes: MutedMessageTypes = .none
-    
+
     override init() {
         status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
     }
-    
+
     static func createOneOnOneConversation(otherUser: MockUserType) -> MockConversation {
         SelfUser.setupMockSelfUser()
         let otherUserConversation = MockConversation()
@@ -44,12 +44,12 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
         otherUserConversation.stableRandomParticipants = [otherUser]
         otherUserConversation.conversationType = .oneOnOne
 
-        //title
+        // title
         otherUserConversation.displayName = otherUser.name!
 
-        //subtitle
+        // subtitle
         otherUserConversation.connectedUserType = otherUser
-        
+
         return otherUserConversation
     }
 }
@@ -57,47 +57,46 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
 final class ConversationListCellTests: XCTestCase {
 
     // MARK: - Setup
-    
+
     var sut: ConversationListCell!
     fileprivate var otherUserConversation: MockConversation!
     var otherUser: MockUserType!
-    
-    
+
     override func setUp() {
         super.setUp()
-        
+
         otherUser = MockUserType.createDefaultOtherUser()
         otherUserConversation = MockConversation.createOneOnOneConversation(otherUser: otherUser)
-        
+
         accentColor = .strongBlue
-        ///The cell must higher than 64, otherwise it breaks the constraints.
+        /// The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
 
     }
-    
+
     override func tearDown() {
         sut = nil
         SelfUser.provider = nil
         otherUserConversation = nil
         otherUser = nil
-        
+
         super.tearDown()
     }
-    
+
     // MARK: - Helper
-    
+
     private func createNewMessage(text: String = "Hey there!") -> MockMessage {
         let message: MockMessage = MockMessageFactory.textMessage(withText: text, sender: otherUser, conversation: otherUserConversation)
-        
+
         return message
     }
-    
+
     private func createMentionSelfMessage() -> MockMessage {
         let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
-        
+
         return mentionMessage
     }
-    
+
     private func verify(
         _ conversation: MockConversation,
         icon: ConversationStatusIcon? = nil,
@@ -105,26 +104,26 @@ final class ConversationListCellTests: XCTestCase {
         testName: String = #function,
         line: UInt = #line) {
         sut.conversation = conversation
-        
+
         if let icon = icon {
             sut.itemView.rightAccessory.icon = icon
         }
         sut.backgroundColor = .darkGray
         verify(matching: sut, file: file, testName: testName, line: line)
     }
-    
+
     // MARK: - Tests
-    
+
     func testThatItRendersWithoutStatus() {
         // when & then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersMutedConversation() {
         // when
         let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [.all], isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
         otherUserConversation.status = status
-        
+
         // then
         verify(otherUserConversation)
     }
@@ -135,7 +134,7 @@ final class ConversationListCellTests: XCTestCase {
 
         let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [], isOngoingCall: false, isBlocked: true, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
         otherUserConversation.status = status
-        
+
         otherUser.isConnected = false
 
         // then
@@ -146,12 +145,12 @@ final class ConversationListCellTests: XCTestCase {
         // when
 
         let message = createNewMessage()
-        
+
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [message],
-                                        messagesRequiringAttentionByType: [.text:1],
+                                        messagesRequiringAttentionByType: [.text: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -160,11 +159,11 @@ final class ConversationListCellTests: XCTestCase {
                                         hasSelfMention: false,
                                         hasSelfReply: false)
         otherUserConversation.status = status
-        
+
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversationWithNewMessages() {
         // when
         var messages: [MockMessage] = []
@@ -173,12 +172,12 @@ final class ConversationListCellTests: XCTestCase {
 
             messages.append(message)
         }
-        
+
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: messages,
-                                        messagesRequiringAttentionByType: [.text:8],
+                                        messagesRequiringAttentionByType: [.text: 8],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -191,7 +190,7 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversation_TextMessagesThenMention() {
         // when
         let message = createNewMessage()
@@ -202,7 +201,7 @@ final class ConversationListCellTests: XCTestCase {
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [message, mentionMessage],
-                                        messagesRequiringAttentionByType: [.mention:1, .text:1],
+                                        messagesRequiringAttentionByType: [.mention: 1, .text: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -224,7 +223,7 @@ final class ConversationListCellTests: XCTestCase {
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [replyMessage],
-                                        messagesRequiringAttentionByType: [.mention:1, .reply:1],
+                                        messagesRequiringAttentionByType: [.mention: 1, .reply: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -246,7 +245,7 @@ final class ConversationListCellTests: XCTestCase {
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [replyMessage],
-                                        messagesRequiringAttentionByType: [.reply:1],
+                                        messagesRequiringAttentionByType: [.reply: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -263,15 +262,14 @@ final class ConversationListCellTests: XCTestCase {
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
         let message = createNewMessage()
-        
+
         let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
 
-        
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [mentionMessage, message],
-                                        messagesRequiringAttentionByType: [.text:1, .mention:1],
+                                        messagesRequiringAttentionByType: [.text: 1, .mention: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -281,21 +279,20 @@ final class ConversationListCellTests: XCTestCase {
                                         hasSelfReply: false)
         otherUserConversation.status = status
 
-        
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersMutedConversation_TextMessagesThenMention() {
         // when
         let message = createNewMessage()
         let mentionMessage = createMentionSelfMessage()
-        
+
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [mentionMessage, message],
-                                        messagesRequiringAttentionByType: [.text:1, .mention:1],
+                                        messagesRequiringAttentionByType: [.text: 1, .mention: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [.all],
                                         isOngoingCall: false,
@@ -305,23 +302,22 @@ final class ConversationListCellTests: XCTestCase {
                                         hasSelfReply: false)
         otherUserConversation.status = status
 
-        
         // then
         verify(otherUserConversation)
     }
-    
-    //Notice: same result as testThatItRendersMutedConversation_TextMessagesThenMention with reversed message order
+
+    // Notice: same result as testThatItRendersMutedConversation_TextMessagesThenMention with reversed message order
     func testThatItRendersMutedConversation_MentionThenTextMessages() {
         // when
 
         let message = createNewMessage()
         let mentionMessage = createMentionSelfMessage()
-        
+
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [message, mentionMessage],
-                                        messagesRequiringAttentionByType: [.mention:1, .text:1],
+                                        messagesRequiringAttentionByType: [.mention: 1, .text: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [.all],
                                         isOngoingCall: false,
@@ -331,11 +327,10 @@ final class ConversationListCellTests: XCTestCase {
                                         hasSelfReply: false)
         otherUserConversation.status = status
 
-        
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversationWithKnock() {
         // when
         let message: MockMessage = MockMessageFactory.pingMessage()
@@ -343,7 +338,7 @@ final class ConversationListCellTests: XCTestCase {
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [message],
-                                        messagesRequiringAttentionByType: [.knock:1],
+                                        messagesRequiringAttentionByType: [.knock: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -353,11 +348,10 @@ final class ConversationListCellTests: XCTestCase {
                                         hasSelfReply: false)
         otherUserConversation.status = status
 
-        
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
         let status = ConversationStatus(isGroup: false,
@@ -377,16 +371,16 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(otherUserConversation)
     }
-    
-    //no typing status and right icon
+
+    // no typing status and right icon
     func testThatItRendersConversationWithTypingSelfUser() {
         // when
         otherUserConversation.setIsTyping(true)
-        
+
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersGroupConversation() {
         // when
         let conversation = MockConversation()
@@ -397,20 +391,20 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(conversation)
     }
-    
+
     private func createGroupConversation() -> MockConversation {
         let conversation = MockConversation()
         conversation.stableRandomParticipants = [otherUser]
         conversation.displayName = otherUser.displayName
-        
+
         return conversation
     }
-    
-    ///test for SelfUserLeftMatcher is matched
+
+    /// test for SelfUserLeftMatcher is matched
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
-        
+
         let status = ConversationStatus(isGroup: true,
                                         hasMessages: false,
                                         hasUnsentMessages: false,
@@ -440,14 +434,14 @@ final class ConversationListCellTests: XCTestCase {
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation, icon: icon)
     }
-    
+
     func testThatItRendersGroupConversationWithIncomingCall_SilencedAll() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation, icon: icon)
     }
-    
+
     func testThatItRendersGroupConversationWithOngoingCall() {
         let conversation = createGroupConversation()
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
@@ -463,7 +457,7 @@ final class ConversationListCellTests: XCTestCase {
                                         hasMessages: false,
                                         hasUnsentMessages: false,
                                         messagesRequiringAttention: [message],
-                                        messagesRequiringAttentionByType: [.text:1],
+                                        messagesRequiringAttentionByType: [.text: 1],
                                         isTyping: false,
                                         mutedMessageTypes: [],
                                         isOngoingCall: false,
@@ -476,31 +470,31 @@ final class ConversationListCellTests: XCTestCase {
         // then
         verify(conversation)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedAll() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithOngoingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
         verify(conversation!, icon: icon)
     }
-    
+
 }
