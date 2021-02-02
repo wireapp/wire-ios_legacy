@@ -434,27 +434,27 @@ final class ConversationListCellTests: XCTestCase {
         verify(conversation, icon: icon)
     }
 
-    /*func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
+    func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
     
     func testThatItRendersGroupConversationWithIncomingCall_SilencedAll() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
     
     func testThatItRendersGroupConversationWithOngoingCall() {
         let conversation = createGroupConversation()
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
 
-    func testThatItRendersGroupConversationWithTextMessages() {
+    /*func testThatItRendersGroupConversationWithTextMessages() {
         // when
         let conversation = createGroupConversation()
         let message = try! conversation.appendText(content: "Hey there!")
