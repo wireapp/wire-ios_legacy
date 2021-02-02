@@ -60,17 +60,19 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
 protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
+    func createCustomPasscode(shouldInformUserOfConfigChange: Bool)
+
+    func proceedWithAuthentication(shouldInformUserOfConfigChange: Bool)
+
     func authenticationEvaluated(with result: AppLockModule.AuthenticationResult)
 
 }
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    var needsToInformUserOfConfigurationChange: Bool { get }
-
-    var needsToCreateCustomPasscode: Bool { get }
-
     var currentAuthenticationType: AuthenticationType { get }
+
+    func initiateAuthentication()
     
     func evaluateAuthentication()
 

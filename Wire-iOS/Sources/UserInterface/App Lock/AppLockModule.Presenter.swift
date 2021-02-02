@@ -35,6 +35,26 @@ extension AppLockModule {
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
+    func createCustomPasscode(shouldInformUserOfConfigChange: Bool) {
+        router.presentCreatePasscodeModule(shouldInform: shouldInformUserOfConfigChange) {
+            self.interactor.openAppLock()
+        }
+    }
+
+    func proceedWithAuthentication(shouldInformUserOfConfigChange: Bool) {
+        let authenticate = {
+            self.view.refresh(with: .authenticating)
+            self.interactor.evaluateAuthentication()
+        }
+
+        guard shouldInformUserOfConfigChange else {
+            authenticate()
+            return
+        }
+
+        router.presentWarningModule(then: authenticate)
+    }
+
     func authenticationEvaluated(with result: AppLockModule.AuthenticationResult) {
         switch result {
         case .granted:
@@ -62,32 +82,11 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
         switch event {
         case .viewDidLoad:
             view.refresh(with: .locked(interactor.currentAuthenticationType))
-            requestAuthentication()
+            interactor.initiateAuthentication()
+
         case .unlockButtonTapped:
-            requestAuthentication()
+            interactor.initiateAuthentication()
         }
-    }
-
-    private func requestAuthentication() {
-        if interactor.needsToCreateCustomPasscode {
-            router.presentCreatePasscodeModule(shouldInform: interactor.needsToInformUserOfConfigurationChange) {
-                self.interactor.openAppLock()
-            }
-        } else {
-            warnUserOfConfigurationChangeIfNeeded {
-                self.view.refresh(with: .authenticating)
-                self.interactor.evaluateAuthentication()
-            }
-        }
-    }
-
-    private func warnUserOfConfigurationChangeIfNeeded(then block: @escaping () -> Void) {
-        guard interactor.needsToInformUserOfConfigurationChange else {
-            block()
-            return
-        }
-
-        router.presentWarningModule(then: block)
     }
 
 }

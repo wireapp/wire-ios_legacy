@@ -29,13 +29,13 @@ extension AppLockModule {
 
         // MARK: - Properties
 
-        var needsToInformUserOfConfigurationChange = false
-
-        var needsToCreateCustomPasscode = false
-
         var currentAuthenticationType: AuthenticationType = .passcode
 
         // MARK: - Methods
+
+        func initiateAuthentication() {
+            methodCalls.initiateAuthentication.append(())
+        }
 
         func evaluateAuthentication() {
             methodCalls.evaluateAuthentication.append(())
@@ -53,6 +53,7 @@ extension AppLockModule.MockInteractor {
 
     struct MethodCalls {
 
+        var initiateAuthentication: [Void] = []
         var evaluateAuthentication: [Void] = []
         var openAppLock: [Void] = []
 

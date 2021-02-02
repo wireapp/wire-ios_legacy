@@ -50,33 +50,18 @@ final class AppLockModuleInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Needs to warn user
-
-    func test_NeedsToWarnUserOfConfigurationChange() {
-        // Given
-        appLock.needsToNotifyUser = true
-
-        // Then
-        XCTAssertTrue(sut.needsToInformUserOfConfigurationChange)
-    }
-
-    func test_DoesNotNeedToWarnUserOfConfigurationChange() {
-        // Given
-        appLock.needsToNotifyUser = false
-
-        // Then
-        XCTAssertFalse(sut.needsToInformUserOfConfigurationChange)
-    }
-
-    // MARK: - Needs to create passcode
+    // MARK: - Initiate authentication
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndBiometricsIsRequired() {
         // Given
         appLock.isCustomPasscodeSet = false
         appLock.requireCustomPasscode = true
 
+        // When
+        sut.initiateAuthentication()
+
         // Then
-        XCTAssertTrue(sut.needsToCreateCustomPasscode)
+        XCTAssertEqual(presenter.methodCalls.createCustomPasscode.count, 1)
     }
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndNoAuthenticationTypeIsAvailable() {
@@ -84,26 +69,85 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.isCustomPasscodeSet = false
         authenticationType.current = .unavailable
 
+        // When
+        sut.initiateAuthentication()
+
         // Then
-        XCTAssertTrue(sut.needsToCreateCustomPasscode)
+        XCTAssertEqual(presenter.methodCalls.createCustomPasscode.count, 1)
     }
 
-    func test_NoNeedToCreateCustomPasscode_IfOneIsSet() {
+    func test_NeedsToCreatePasscode_InformingUserOfConfigChange() {
         // Given
-        appLock.isCustomPasscodeSet = true
+        appLock.isCustomPasscodeSet = false
+        appLock.requireCustomPasscode = true
+        appLock.needsToNotifyUser = true
+
+        // When
+        sut.initiateAuthentication()
 
         // Then
-        XCTAssertFalse(sut.needsToCreateCustomPasscode)
+        XCTAssertEqual(presenter.methodCalls.createCustomPasscode, [true])
     }
 
-    func test_NoNeedToCreatePasscode_IfNoneIsSet_BiometricsIsNotRequired_DevicePasscodeIsSet() {
+    func test_NeedsToCreatePasscode_WithoutInformingUserOfConfigChange() {
+        // Given
+        appLock.isCustomPasscodeSet = false
+        appLock.requireCustomPasscode = true
+        appLock.needsToNotifyUser = false
+
+        // When
+        sut.initiateAuthentication()
+
+        // Then
+        XCTAssertEqual(presenter.methodCalls.createCustomPasscode, [false])
+    }
+
+    func test_ProceedWithAuthentication_WhenCustomPasscodeIsNotNeeded() {
         // Given
         appLock.isCustomPasscodeSet = false
         appLock.requireCustomPasscode = false
         authenticationType.current = .passcode
 
+        // When
+        sut.initiateAuthentication()
+
         // Then
-        XCTAssertFalse(sut.needsToCreateCustomPasscode)
+        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication.count, 1)
+    }
+
+    func test_ProceedWithAuthentication_WithCustomPasscode() {
+        // Given
+        appLock.isCustomPasscodeSet = true
+
+        // When
+        sut.initiateAuthentication()
+
+        // Then
+        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication.count, 1)
+    }
+
+    func test_ProceedWithAuthentication_InformingUserOfConfigChange() {
+        // Given
+        appLock.isCustomPasscodeSet = true
+        appLock.needsToNotifyUser = true
+
+        // When
+        sut.initiateAuthentication()
+
+        // Then
+        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication, [true])
+    }
+
+    func test_ProceedWithAuthentication_WithoutInformingUserOfConfigChange() {
+        // Given
+        appLock.isCustomPasscodeSet = true
+        appLock.needsToNotifyUser = false
+
+        // When
+        sut.initiateAuthentication()
+
+        // Then
+        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication, [false])
     }
     
     // MARK: - Evaluate authentication

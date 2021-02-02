@@ -65,6 +65,15 @@ extension AppLockModule {
             }
         }
 
+        private var needsToNotifyUser: Bool {
+            return appLock.needsToNotifyUser
+        }
+
+        private var needsToCreateCustomPasscode: Bool {
+            guard !appLock.isCustomPasscodeSet else { return false }
+            return appLock.requireCustomPasscode || currentAuthenticationType == .unavailable
+        }
+
     }
 
 }
@@ -73,17 +82,16 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
-    var needsToInformUserOfConfigurationChange: Bool {
-        return appLock.needsToNotifyUser
-    }
-
-    var needsToCreateCustomPasscode: Bool {
-        guard !appLock.isCustomPasscodeSet else { return false }
-        return appLock.requireCustomPasscode || currentAuthenticationType == .unavailable
-    }
-
     var currentAuthenticationType: AuthenticationType {
         return authenticationType.current
+    }
+
+    func initiateAuthentication() {
+        if needsToCreateCustomPasscode {
+            presenter.createCustomPasscode(shouldInformUserOfConfigChange: needsToNotifyUser)
+        } else {
+            presenter.proceedWithAuthentication(shouldInformUserOfConfigChange: needsToNotifyUser)
+        }
     }
 
     func evaluateAuthentication() {

@@ -29,6 +29,14 @@ extension AppLockModule {
 
         // MARK: - Methods
 
+        func createCustomPasscode(shouldInformUserOfConfigChange: Bool) {
+            methodCalls.createCustomPasscode.append(shouldInformUserOfConfigChange)
+        }
+
+        func proceedWithAuthentication(shouldInformUserOfConfigChange: Bool) {
+            methodCalls.proceedWithAuthentication.append(shouldInformUserOfConfigChange)
+        }
+
         func authenticationEvaluated(with result: AppLockModule.AuthenticationResult) {
             methodCalls.authenticationEvaluated.append(result)
         }
@@ -45,6 +53,8 @@ extension AppLockModule.MockPresenter {
 
     struct MethodCalls {
 
+        var createCustomPasscode: [Bool] = []
+        var proceedWithAuthentication: [Bool] = []
         var authenticationEvaluated: [AppLockModule.AuthenticationResult] = []
         var processEvent: [AppLockModule.Event] = []
 
