@@ -105,11 +105,12 @@ final class AppStateCalculatorTests: XCTestCase {
     
     func testThatAppStateChanges_OnDidUpdateActiveUserSession() {
         // GIVEN
-        let isDatabaseLocked = true
+        let userSession = MockZMUserSession()
+        userSession.lock = .database
         sut.applicationDidBecomeActive()
         
         // WHEN
-        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
 
         // THEN
         XCTAssertEqual(sut.appState, .locked)
@@ -147,13 +148,14 @@ final class AppStateCalculatorTests: XCTestCase {
     
     func testApplicationTransit_WhenAppStateChanges() {
         // WHEN
-        let isDatabaseLocked = true
+        let userSession = MockZMUserSession()
+        userSession.lock = .database
         sut.applicationDidBecomeActive()
         sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
 
         // WHEN
-        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
 
         // THEN
         XCTAssertEqual(sut.appState, .locked)
@@ -164,12 +166,13 @@ final class AppStateCalculatorTests: XCTestCase {
     
     func testThatAppStateDoesntChange_OnDidReportDatabaseLockChange_BeforeAppBecomeActive() {
         // GIVEN
-        let isDatabaseLocked = true
+        let userSession = MockZMUserSession()
+        userSession.lock = .database
         delegate.wasNotified = false
         sut.applicationDidEnterBackground()
         
         // WHEN
-        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
         
         // THEN
         XCTAssertFalse(delegate.wasNotified)
@@ -177,10 +180,11 @@ final class AppStateCalculatorTests: XCTestCase {
     
     func testThatAppStateChanges_OnDidReportDatabaseLockChange_AfterAppHasBecomeActive() {
         // GIVEN
-        let isDatabaseLocked = true
+        let userSession = MockZMUserSession()
+        userSession.lock = .database
         delegate.wasNotified = false
         sut.applicationDidEnterBackground()
-        sut.sessionManagerDidReportDatabaseLockChange(isLocked: isDatabaseLocked)
+        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
         
         // WHEN
         sut.applicationDidBecomeActive()
