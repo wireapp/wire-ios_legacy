@@ -36,7 +36,7 @@ extension AppLockModule {
 
         var appLockController: AppLockType = MockAppLockController()
 
-        var lock: ZMUserSession.Lock? = .screen
+        var lock: SessionLock? = .screen
 
         var encryptMessagesAtRest = false
 
