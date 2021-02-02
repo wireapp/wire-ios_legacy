@@ -20,7 +20,7 @@ import UIKit
 @testable import Wire
 import XCTest
 
-private final class MockConversation: MockConversationAvatarViewConversation, ConversationStatusProvider, TypingStatusProvider, VoiceChannelProvider {
+private final class MockConversation: MockStableRandomParticipantsConversation, ConversationStatusProvider, TypingStatusProvider, VoiceChannelProvider {
     var voiceChannel: VoiceChannel?
     
     var typingUsers: [UserType] = []
@@ -31,7 +31,7 @@ private final class MockConversation: MockConversationAvatarViewConversation, Co
 
     var status: ConversationStatus
 
-    override init() {
+    required init() {
         status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
     }
 

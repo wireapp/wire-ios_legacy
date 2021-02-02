@@ -19,42 +19,76 @@
 import XCTest
 @testable import Wire
 
-class GroupConversationCellTests: CoreDataSnapshotTestCase {
+final class GroupConversationCellTests: XCTestCase {
         
-    func cell(_ configuration : (GroupConversationCell) -> Void) -> GroupConversationCell {
-        let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
-        configuration(cell)
-        cell.layoutIfNeeded()
-        return cell
+    var sut: GroupConversationCell!
+    var otherUser: MockUserType!
+    
+    override func setUp() {
+        super.setUp()
+        
+        otherUser = MockUserType.createDefaultOtherUser()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        otherUser = nil
+        
+        super.tearDown()
+    }
+
+    
+    private func createOneOnOneConversation() -> MockStableRandomParticipantsConversation{
+        otherUser = MockUserType.createDefaultOtherUser()
+        
+        let otherUserConversation = MockStableRandomParticipantsConversation.createOneOnOneConversation(otherUser: otherUser)
+        
+        return otherUserConversation
+    }
+
+    private func createGroupConversation() -> MockStableRandomParticipantsConversation {
+        let groupConversation = MockStableRandomParticipantsConversation()
+        
+        var mockUsers = [MockUserType]()
+        for username in XCTestCase.usernames.prefix(upTo: 3) {
+            mockUsers.append(MockUserType.createUser(name: username))
+        }
+        
+        groupConversation.stableRandomParticipants = [mockUsers[0], otherUser, mockUsers[1], mockUsers[2]]
+        
+        return groupConversation
+    }
+    
+    private func verify(conversation: GroupConversationCellConversation,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        
+        sut = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(conversation: conversation)
+        
+        verifyInAllColorSchemes(matching: sut, file: file, testName: testName, line: line)
     }
     
     func testOneToOneConversation() {
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(conversation: otherUserConversation)
-        }))
+        let otherUserConversation = createOneOnOneConversation()
+        
+        verify(conversation: otherUserConversation)
     }
     
     func testGroupConversation() {
         let groupConversation = createGroupConversation()
-        for username in usernames.prefix(upTo: 3) {
-            groupConversation.add(participants:createUser(name: username))
-        }
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(conversation: groupConversation)
-        }))
+        groupConversation.displayName = "Anna, Bruno, Claire, Dean"
+
+        verify(conversation: groupConversation)
     }
     
     func testGroupConversationWithVeryLongName() {
         let groupConversation = createGroupConversation()
-        groupConversation.userDefinedName  = "Loooooooooooooooooooooooooong name"
-        for username in usernames.prefix(upTo: 3) {
-            groupConversation.add(participants:[createUser(name: username)])
-        }
+
+        groupConversation.displayName  = "Loooooooooooooooooooooooooong name"
         
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(conversation: groupConversation)
-        }))
+        verify(conversation: groupConversation)
     }
     
 }
