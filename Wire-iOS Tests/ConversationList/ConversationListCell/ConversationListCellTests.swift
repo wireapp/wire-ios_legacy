@@ -454,19 +454,30 @@ final class ConversationListCellTests: XCTestCase {
         verify(conversation, icon: icon)
     }
 
-    /*func testThatItRendersGroupConversationWithTextMessages() {
+    func testThatItRendersGroupConversationWithTextMessages() {
         // when
         let conversation = createGroupConversation()
-        let message = try! conversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        
-        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        
+        let message = createNewMessage()
+
+        let status = ConversationStatus(isGroup: true,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.text:1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        conversation.status = status
+
         // then
         verify(conversation)
     }
     
-    func testThatItRendersOneOnOneConversationWithIncomingCall() {
+    /*func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
         verify(conversation: conversation, icon: icon)
