@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
+///TODO: retire this extension
 extension ZMConversation {
     
     func add(participants: Set<ZMUser>) {
@@ -32,17 +33,6 @@ extension ZMConversation {
     
     func add(participants: ZMUser...) {
         add(participants: Set(participants))
-    }
-}
-
-extension ColorSchemeVariant {
-    var name: String {
-        switch self {
-        case .light:
-            return "light"
-        case .dark:
-            return "dark"
-        }
     }
 }
 
