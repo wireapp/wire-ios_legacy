@@ -321,11 +321,7 @@ final class CallingMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
-        ///TODO: mock voiceVhannel
-        guard let conversation = conversation as? ZMConversation else { return nil }
-
-        
-        return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation) ///TODO: mock conversation.voiceChannel?.state?
+        return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation)
     }
     
     public static func icon(for state: CallState?, conversation: ConversationStatusProvider?) -> ConversationStatusIcon? {
