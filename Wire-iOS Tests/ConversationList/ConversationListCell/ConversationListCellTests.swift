@@ -21,7 +21,7 @@ import UIKit
 import XCTest
 
 /// TODO: no need subclass after DM protocol update
-private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider, TypingStatusProvider {
+private final class MockConversation: MockConversationAvatarViewConversation, ConversationStatusProvider, TypingStatusProvider {
     var typingUsers: [UserType] = []
 
     func setIsTyping(_ isTyping: Bool) {
@@ -29,8 +29,6 @@ private final class MockConversation: MockConversationAvatarViewConversation, Mu
     }
 
     var status: ConversationStatus
-
-    var mutedMessageTypes: MutedMessageTypes = .none
 
     override init() {
         status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
