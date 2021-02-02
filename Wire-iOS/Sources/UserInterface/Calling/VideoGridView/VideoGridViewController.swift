@@ -184,10 +184,10 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func updateSelfPreview() {
-        guard
-            let selfStreamId = ZMUser.selfUser()?.selfStreamId,
-            let selfStream = stream(with: selfStreamId)
-        else {
+        guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
+
+        guard let selfStream = stream(with: selfStreamId) else {
+            (viewCache[selfStreamId] as? SelfVideoPreviewView)?.stopCapture()
             return
         }
 
