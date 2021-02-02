@@ -44,8 +44,9 @@ protocol ConnectedUserProvider {
 }
 
 // ZMConversation extension from sync engine
-protocol TypingUsersProvider {
+protocol TypingStatusProvider {
     var typingUsers: [UserType] { get }
+    func setIsTyping(_ isTyping: Bool)
 }
 
 
@@ -59,12 +60,11 @@ protocol InputBarConversation {
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
-    func setIsTyping(_ isTyping: Bool)
 
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConversationLike
+typealias InputBarConversationType = InputBarConversation & TypingStatusProvider & ConversationLike
 
 extension ZMConversation: InputBarConversation {}
 
@@ -90,7 +90,7 @@ typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & Group
 extension ZMConversation: SortedOtherParticipantsProvider {}
 extension ZMConversation: ConversationStatusProvider {}
 
-extension ZMConversation: TypingUsersProvider {}
+extension ZMConversation: TypingStatusProvider {}
 
 //TODO: mv to DM
 extension ZMConversation: MutedMessageTypesProvider {}

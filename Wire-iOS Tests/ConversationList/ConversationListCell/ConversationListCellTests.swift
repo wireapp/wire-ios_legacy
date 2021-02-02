@@ -21,9 +21,13 @@ import UIKit
 import XCTest
 
 ///TODO: no need subclass after DM protocol update
-private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider, TypingUsersProvider {
+private final class MockConversation: MockConversationAvatarViewConversation, MutedMessageTypesProvider, ConversationStatusProvider, TypingStatusProvider {
     var typingUsers: [UserType] = []
     
+    func setIsTyping(_ isTyping: Bool) {
+        //no-op
+    }
+
     var status: ConversationStatus
     
     var mutedMessageTypes: MutedMessageTypes = .none
@@ -352,7 +356,6 @@ final class ConversationListCellTests: XCTestCase {
     
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
-//        otherUserConversation.setTypingUsers([otherUser])
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: true,
                                         hasUnsentMessages: false,
@@ -371,7 +374,7 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
-    /*
+    //no typing status and right icon
     func testThatItRendersConversationWithTypingSelfUser() {
         // when
         otherUserConversation.setIsTyping(true)
@@ -380,6 +383,7 @@ final class ConversationListCellTests: XCTestCase {
         verify(otherUserConversation)
     }
     
+    /*
     func testThatItRendersGroupConversation() {
         // when
         let conversation = createGroupConversation()

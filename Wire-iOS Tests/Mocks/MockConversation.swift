@@ -66,10 +66,10 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
     var mutedMessageTypes: MutedMessageTypes = .none
 }
 
-final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation {
+final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation, TypingStatusProvider {
     
     var typingUsers: [UserType] = []
-    
+
     var hasDraftMessage: Bool = false
         
     var draftMessage: DraftMessage?

@@ -273,7 +273,7 @@ extension ZMConversation {
     }
 }
 
-typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingUsersProvider
+typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingStatusProvider
 
 // "You left"
 final class SelfUserLeftMatcher: ConversationStatusMatcher {

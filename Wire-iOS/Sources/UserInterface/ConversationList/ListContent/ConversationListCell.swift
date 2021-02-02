@@ -22,7 +22,7 @@ import avs
 
 //typealias MatcherConversation = Conversation & ConversationStatusProvider & TypingUsersProvider
 
-typealias ConversationListCellConversation = Conversation & StableRandomParticipantsProvider & ConversationStatusProvider & TypingUsersProvider
+typealias ConversationListCellConversation = Conversation & StableRandomParticipantsProvider & ConversationStatusProvider & TypingStatusProvider
 
 final class ConversationListCell: SwipeMenuCollectionCell,
                                   SectionListCellType {
