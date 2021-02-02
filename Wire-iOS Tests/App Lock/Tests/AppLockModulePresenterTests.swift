@@ -135,7 +135,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .faceID)])
     }
 
-    func test_itRequestsToInputPasscode_WhenPasscodeIsNeeded() {
+    func test_ItRequestsToInputPasscode_WhenPasscodeIsNeeded() {
         // When
         sut.authenticationEvaluated(with: .needCustomPasscode)
 
@@ -149,7 +149,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(interactor.methodCalls.openAppLock.count, 1)
     }
 
-    func test_itUpdatesViewState_WhenAuthenticationMethodUnavailable() {
+    func test_ItUpdatesViewState_WhenAuthenticationMethodUnavailable() {
         // When
         sut.authenticationEvaluated(with: .unavailable)
 
