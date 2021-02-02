@@ -38,12 +38,14 @@ final class MockMessageFactory {
     class func messageTemplate<T: MockMessage>(sender: UserType? = nil, conversation: Conversation? = nil) -> T {
         let message = T()
 
+        var mockZMConversation: MockConversation? = nil
         if let conversation = conversation {
             message.conversationLike = conversation
         } else {
             let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
             message.conversation = (conversation as Any) as? ZMConversation
             message.conversationLike = message.conversation
+            mockZMConversation = conversation
         }
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
 
@@ -57,7 +59,7 @@ final class MockMessageFactory {
             message.senderUser = user
         }
 
-        (conversation as? MockConversation)?.activeParticipants = [message.senderUser as! MockUserType]
+            mockZMConversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }
