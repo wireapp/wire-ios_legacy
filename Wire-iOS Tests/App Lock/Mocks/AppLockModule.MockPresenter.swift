@@ -33,8 +33,8 @@ extension AppLockModule {
             methodCalls.authenticationEvaluated.append(result)
         }
 
-        func requestAuthentication() {
-            methodCalls.requestAuthentication.append(())
+        func processEvent(_ event: AppLockModule.Event) {
+            methodCalls.processEvent.append(event)
         }
 
     }
@@ -45,8 +45,8 @@ extension AppLockModule.MockPresenter {
 
     struct MethodCalls {
 
-        var requestAuthentication: [Void] = []
         var authenticationEvaluated: [AppLockModule.AuthenticationResult] = []
+        var processEvent: [AppLockModule.Event] = []
 
     }
 

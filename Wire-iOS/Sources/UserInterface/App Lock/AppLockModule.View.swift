@@ -45,7 +45,7 @@ extension AppLockModule {
             super.viewDidLoad()
             setUpViews()
             refresh()
-            presenter.requestAuthentication()
+            presenter.processEvent(.viewDidLoad)
         }
 
         // MARK: - Methods
@@ -55,7 +55,9 @@ extension AppLockModule {
             lockView.translatesAutoresizingMaskIntoConstraints = false
             lockView.fitInSuperview()
 
-            lockView.onReauthRequested = presenter.requestAuthentication
+            lockView.onReauthRequested = { [weak self] in
+                self?.presenter.processEvent(.unlockButtonTapped)
+            }
         }
 
         private func refresh() {
@@ -85,6 +87,19 @@ extension AppLockModule {
 
             return key.localized
         }
+
+    }
+
+}
+
+// MARK: - Event
+
+extension AppLockModule {
+
+    enum Event: Equatable {
+
+        case viewDidLoad
+        case unlockButtonTapped
 
     }
 

@@ -88,6 +88,6 @@ protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
 protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
-    func requestAuthentication()
+    func processEvent(_ event: AppLockModule.Event)
 
 }

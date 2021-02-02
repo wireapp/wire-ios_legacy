@@ -42,24 +42,23 @@ final class AppLockModuleViewTests: XCTestCase {
 
     // MARK: - Request authentication
 
-    func test_ItRequestsAuthentication_WhenViewLoads() {
+    func test_ItSendsEvent_WhenViewLoads() {
         // When
         sut.loadViewIfNeeded()
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.requestAuthentication.count, 1)
+        XCTAssertEqual(presenter.methodCalls.processEvent, [.viewDidLoad])
     }
 
-    func test_ItRequestsAuthentication_WhenLockViewRequestReauthentication() {
+    func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
         // Given
         sut.loadViewIfNeeded()
-        presenter.methodCalls.requestAuthentication.removeAll()
 
         // When
         sut.lockView.onReauthRequested?()
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.requestAuthentication.count, 1)
+        XCTAssertEqual(presenter.methodCalls.processEvent, [.viewDidLoad, .unlockButtonTapped])
     }
 
     // MARK: - View states

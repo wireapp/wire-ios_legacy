@@ -58,7 +58,17 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
-    func requestAuthentication() {
+    func processEvent(_ event: AppLockModule.Event) {
+        switch event {
+        case .viewDidLoad:
+            // view.refresh
+            requestAuthentication()
+        case .unlockButtonTapped:
+            requestAuthentication()
+        }
+    }
+
+    private func requestAuthentication() {
         if interactor.needsToCreateCustomPasscode {
             router.presentCreatePasscodeModule(shouldInform: interactor.needsToInformUserOfConfigurationChange) {
                 self.interactor.openAppLock()
