@@ -52,12 +52,13 @@ final class AppLockModulePresenterTests: XCTestCase {
     func test_ItRequestsToEvaluateAuthentication_WhenViewLoads() {
         // Given
         interactor.needsToCreateCustomPasscode = false
+        interactor.currentAuthenticationType = .faceID
 
         // When
         sut.processEvent(.viewDidLoad)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
+        XCTAssertEqual(view.methodCalls.refresh, [.locked(.faceID), .authenticating])
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
     }
 
@@ -69,7 +70,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.unlockButtonTapped)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
+        XCTAssertEqual(view.methodCalls.refresh, [.authenticating])
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
     }
 
@@ -127,7 +128,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.unlockButtonTapped)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
+        XCTAssertEqual(view.methodCalls.refresh, [.authenticating])
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
     }
 
@@ -140,13 +141,13 @@ final class AppLockModulePresenterTests: XCTestCase {
 
         // Then
         XCTAssertEqual(router.methodCalls.presentWarningModule.count, 1)
-        XCTAssertEqual(view.propertyCalls.state.count, 0)
+        XCTAssertEqual(view.methodCalls.refresh.count, 0)
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 0)
 
         let completion = router.methodCalls.presentWarningModule[0]
         completion()
 
-        XCTAssertEqual(view.propertyCalls.state, [.authenticating])
+        XCTAssertEqual(view.methodCalls.refresh, [.authenticating])
         XCTAssertEqual(interactor.methodCalls.evaluateAuthentication.count, 1)
     }
 
@@ -168,7 +169,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.authenticationEvaluated(with: .denied)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .faceID)])
+        XCTAssertEqual(view.methodCalls.refresh, [.locked(.faceID)])
     }
 
     func test_ItRequestsToInputPasscode_WhenPasscodeIsNeeded() {
@@ -176,7 +177,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.authenticationEvaluated(with: .needCustomPasscode)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .passcode)])
+        XCTAssertEqual(view.methodCalls.refresh, [.locked(.passcode)])
         XCTAssertEqual(router.methodCalls.presentInputPasscodeModule.count, 1)
 
         let onGranted = router.methodCalls.presentInputPasscodeModule[0]
@@ -190,7 +191,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.authenticationEvaluated(with: .unavailable)
 
         // Then
-        XCTAssertEqual(view.propertyCalls.state, [.locked(authenticationType: .unavailable)])
+        XCTAssertEqual(view.methodCalls.refresh, [.locked(.unavailable)])
     }
 
 }

@@ -66,7 +66,7 @@ final class AppLockModuleViewTests: XCTestCase {
     func test_ViewState_Locked() {
         // Given
         for type in AuthenticationType.allCases {
-            sut.state = .locked(authenticationType: type)
+            sut.refresh(with: .locked(type))
 
             // Then
             verify(matching: sut)
@@ -75,7 +75,7 @@ final class AppLockModuleViewTests: XCTestCase {
 
     func test_ViewState_Authenticating() {
         // Given
-        sut.state = .authenticating
+        sut.refresh(with: .authenticating)
 
         // Then
         verify(matching: sut)

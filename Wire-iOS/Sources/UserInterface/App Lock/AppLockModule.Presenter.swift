@@ -41,14 +41,14 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             interactor.openAppLock()
 
         case .denied:
-            view.state = .locked(authenticationType: interactor.currentAuthenticationType)
+            view.refresh(with: .locked(interactor.currentAuthenticationType))
 
         case .needCustomPasscode:
-            view.state = .locked(authenticationType: .passcode)
+            view.refresh(with: .locked(.passcode))
             router.presentInputPasscodeModule(onGranted: interactor.openAppLock)
 
         case .unavailable:
-            view.state = .locked(authenticationType: .unavailable)
+            view.refresh(with: .locked(.unavailable))
         }
     }
 
@@ -61,7 +61,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
     func processEvent(_ event: AppLockModule.Event) {
         switch event {
         case .viewDidLoad:
-            // view.refresh
+            view.refresh(with: .locked(interactor.currentAuthenticationType))
             requestAuthentication()
         case .unlockButtonTapped:
             requestAuthentication()
@@ -75,7 +75,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
             }
         } else {
             warnUserOfConfigurationChangeIfNeeded {
-                self.view.state = .authenticating
+                self.view.refresh(with: .authenticating)
                 self.interactor.evaluateAuthentication()
             }
         }

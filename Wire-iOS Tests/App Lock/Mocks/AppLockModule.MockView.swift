@@ -25,15 +25,12 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
-        var propertyCalls = PropertyCalls()
         var methodCalls = MethodCalls()
 
-        // MARK: - Properties
+        // MARK: - Methods
 
-        var state: AppLockModule.ViewState = .locked(authenticationType: .passcode) {
-            didSet {
-                propertyCalls.state.append(state)
-            }
+        func refresh(with model: AppLockModule.ViewModel) {
+            methodCalls.refresh.append(model)
         }
 
     }
@@ -42,12 +39,10 @@ extension AppLockModule {
 
 extension AppLockModule.MockView {
 
-    struct PropertyCalls {
+    struct MethodCalls {
 
-        var state: [AppLockModule.ViewState] = []
+        var refresh: [AppLockModule.ViewModel] = []
 
     }
-
-    struct MethodCalls { }
 
 }

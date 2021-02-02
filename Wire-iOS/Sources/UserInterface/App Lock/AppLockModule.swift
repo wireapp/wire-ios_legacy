@@ -82,7 +82,7 @@ protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
 protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
-    var state: AppLockModule.ViewState { get set }
+    func refresh(with model: AppLockModule.ViewModel)
 
 }
 

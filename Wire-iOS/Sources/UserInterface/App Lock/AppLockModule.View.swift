@@ -27,12 +27,6 @@ extension AppLockModule {
 
         var presenter: AppLockPresenterViewInterface!
 
-        var state: ViewState = .locked(authenticationType: .passcode) {
-            didSet {
-                refresh()
-            }
-        }
-
         override var prefersStatusBarHidden: Bool {
             return true
         }
@@ -44,7 +38,6 @@ extension AppLockModule {
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpViews()
-            refresh()
             presenter.processEvent(.viewDidLoad)
         }
 
@@ -60,32 +53,9 @@ extension AppLockModule {
             }
         }
 
-        private func refresh() {
-            switch state {
-            case let .locked(authenticationType):
-                lockView.showReauth = true
-                lockView.message = authenticationText(for: authenticationType)
-
-            case .authenticating:
-                lockView.showReauth = false
-            }
-        }
-
-        private func authenticationText(for type: AuthenticationType) -> String {
-            var key = "self.settings.privacy_security.lock_cancelled.description_"
-
-            switch type {
-            case .faceID:
-                key.append("face_id")
-            case .touchID:
-                key.append("touch_id")
-            case .passcode:
-                key.append("passcode")
-            case .unavailable:
-                key.append("passcode_unavailable")
-            }
-
-            return key.localized
+        func refresh(with model: ViewModel) {
+            lockView.showReauth = model.showReauth
+            lockView.message = model.message
         }
 
     }
@@ -109,16 +79,44 @@ extension AppLockModule {
 
 extension AppLockModule {
 
-    enum ViewState: Equatable {
+    struct ViewModel: Equatable {
 
-        /// The screen is currently locked.
+        let showReauth: Bool
+        let authenticationType: AuthenticationType
 
-        case locked(authenticationType: AuthenticationType)
+        var message: String {
+            var key = "self.settings.privacy_security.lock_cancelled.description_"
 
-        /// The user is authenticating.
+            switch authenticationType {
+                case .faceID:
+                    key.append("face_id")
+                case .touchID:
+                    key.append("touch_id")
+                case .passcode:
+                    key.append("passcode")
+                case .unavailable:
+                    key.append("passcode_unavailable")
+            }
 
-        case authenticating
+            return key.localized
+        }
 
+    }
+
+}
+
+extension AppLockModule.ViewModel {
+
+    static let authenticating = Self.init(
+        showReauth: false,
+        authenticationType: .current
+    )
+
+    static func locked(_ authenticationType: AuthenticationType = .current) -> Self {
+        Self.init(
+            showReauth: true,
+            authenticationType: authenticationType
+        )
     }
 
 }
