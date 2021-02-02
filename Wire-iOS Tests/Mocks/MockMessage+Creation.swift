@@ -35,12 +35,18 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate<T: MockMessage>(sender: UserType? = nil) -> T {
+    class func messageTemplate<T: MockMessage>(sender: UserType? = nil, conversation: Conversation? = nil) -> T {
         let message = T()
 
-        let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
-        message.conversation = (conversation as Any) as? ZMConversation
-        message.conversationLike = message.conversation
+        var mockZMConversation: MockConversation? = nil
+        if let conversation = conversation {
+            message.conversationLike = conversation
+        } else {
+            let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
+            message.conversation = (conversation as Any) as? ZMConversation
+            message.conversationLike = message.conversation
+            mockZMConversation = conversation
+        }
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
 
         if let sender = sender as? ZMUser {
@@ -53,7 +59,7 @@ final class MockMessageFactory {
             message.senderUser = user
         }
 
-        conversation?.activeParticipants = [message.senderUser as! MockUserType]
+            mockZMConversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }
@@ -164,8 +170,9 @@ final class MockMessageFactory {
 
     class func textMessage<T: MockMessage>(withText text: String? = "Just a random text message",
                            sender: UserType? = nil,
+                           conversation: Conversation? = nil,
                            includingRichMedia shouldIncludeRichMedia: Bool = false) -> T {
-        let message: T = MockMessageFactory.messageTemplate(sender: sender)
+        let message: T = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!
@@ -185,8 +192,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func pingMessage() -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func pingMessage<T: MockMessage>() -> T {
+        let message: T = MockMessageFactory.messageTemplate()
         message.knockMessageData = MockKnockMessageData()
 
         return message

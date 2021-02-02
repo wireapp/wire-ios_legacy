@@ -257,7 +257,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
         
-        let message = MockMessageFactory.pingMessage()!
+        let message = MockMessageFactory.pingMessage()
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
         message.needsReadConfirmation = true
