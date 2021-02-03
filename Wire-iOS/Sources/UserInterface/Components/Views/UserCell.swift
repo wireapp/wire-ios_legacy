@@ -18,7 +18,6 @@
 
 import UIKit
 import WireCommonComponents
-import WireDataModel
 import WireSyncEngine
 
 extension UIImageView {

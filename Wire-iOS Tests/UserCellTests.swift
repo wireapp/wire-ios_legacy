@@ -19,48 +19,54 @@
 import XCTest
 @testable import Wire
 
-final class UserCellTests: ZMSnapshotTestCase {
+final class UserCellTests: XCTestCase {
     
-    var mockConversation: MockConversation!
+    var sut: UserCell!
+    var teamID = UUID()
+    var conversation: MockGroupDetailsConversation!
     
-    var conversation : ZMConversation {
-        return (mockConversation as Any) as! ZMConversation
-    }
+//    var conversation : ZMConversation {
+//        return (mockConversation as Any) as! ZMConversation
+//    }
         
     override func setUp() {
         super.setUp()
-                
-        mockConversation = MockConversationFactory.mockConversation()
+        
+        SelfUser.setupMockSelfUser(inTeam: teamID)
+        conversation = MockGroupDetailsConversation()
     }
     
     override func tearDown() {
-        MockUser.mockSelf().isTeamMember = false
-        mockConversation = nil
+//        MockUser.mockSelf().isTeamMember = false
+        conversation = nil
+        sut = nil
         super.tearDown()
     }
-    
-    func cell(_ configuration : (UserCell) -> Void) -> UserCell {
-        let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
-        cell.accessoryIconView.isHidden = false
-        configuration(cell)
-        cell.layoutIfNeeded()
-        return cell
+
+    private func verify(mockUser: UserType,
+                        conversation: GroupDetailsConversationType,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        
+        sut = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(with: mockUser,
+                        selfUser: SelfUser.current,
+                       conversation: conversation)
+        sut.accessoryIconView.isHidden = false
+
+        verifyInAllColorSchemes(matching: sut, file: file, testName: testName, line: line)
     }
 
     func testExternalUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
-        mockUser.isTeamMember = true
+        let mockUser = MockUserType.createUser(name: "James Hetfield", inTeam: teamID)
+        mockUser.handle = "james_hetfield_1"
         mockUser.teamRole = .partner
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+  
+        verify(mockUser: mockUser, conversation: conversation)
     }
 
-    func testServiceUser() {
+    /*func testServiceUser() {
         MockUser.mockSelf().isTeamMember = true
         let mockUser = MockUser.firstMockUser()
         mockUser.isServiceUser = true
@@ -176,6 +182,6 @@ final class UserCellTests: ZMSnapshotTestCase {
         cell.cellIdentifier = "participants.section.participants.cell"
         cell.configure(with: user, conversation: conversation, showSeparator: true)
         XCTAssertEqual(cell.accessibilityIdentifier, "Members - participants.section.participants.cell")
-    }
+    }*/
     
 }
