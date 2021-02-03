@@ -24,20 +24,20 @@ final class UserCellTests: XCTestCase {
     var sut: UserCell!
     var teamID = UUID()
     var conversation: MockGroupDetailsConversation!
+    var mockUser: MockUserType!
     
-//    var conversation : ZMConversation {
-//        return (mockConversation as Any) as! ZMConversation
-//    }
-        
     override func setUp() {
         super.setUp()
         
         SelfUser.setupMockSelfUser(inTeam: teamID)
+        
+        mockUser = MockUserType.createUser(name: "James Hetfield", inTeam: teamID)
+        mockUser.handle = "james_hetfield_1"
+
         conversation = MockGroupDetailsConversation()
     }
     
     override func tearDown() {
-//        MockUser.mockSelf().isTeamMember = false
         conversation = nil
         sut = nil
         super.tearDown()
@@ -59,26 +59,18 @@ final class UserCellTests: XCTestCase {
     }
 
     func testExternalUser() {
-        let mockUser = MockUserType.createUser(name: "James Hetfield", inTeam: teamID)
-        mockUser.handle = "james_hetfield_1"
         mockUser.teamRole = .partner
   
         verify(mockUser: mockUser, conversation: conversation)
     }
 
-    /*func testServiceUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
-        mockUser.isServiceUser = true
+    func testServiceUser() {
+        mockUser.mockedIsServiceUser = true
         
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
     
-    func testNonTeamUser() {
+    /*func testNonTeamUser() {
         let user = MockUser.mockUsers()[0]
         
         verifyInAllColorSchemes(view: cell({ (cell) in
