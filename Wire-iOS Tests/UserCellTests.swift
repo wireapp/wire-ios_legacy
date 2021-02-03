@@ -83,57 +83,48 @@ final class UserCellTests: XCTestCase {
         verify(mockUser: mockUser, conversation: conversation)
     }
     
-    /*func testGuestUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
-
+    func testGuestUser() {
         mockUser.isGuestInConversation = true
         
         verify(mockUser: mockUser, conversation: conversation)
     }
     
     func testGuestUser_Wireless() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
         mockUser.isGuestInConversation = true
         mockUser.expiresAfter = 5_200
         mockUser.handle = nil
 
-        verifyInAllColorSchemes(view: cell {
-            $0.configure(with: mockUser,
-                         selfUser: MockUser.mockSelf(),
-                         conversation: conversation)
-        })
+        verify(mockUser: mockUser, conversation: conversation)
     }
     
     func testTrustedGuestUser() {
-        MockUser.mockSelf().isTeamMember = true
-        
-        let mockUser = MockUser.firstMockUser()
         mockUser.isVerified = true
 
         mockUser.isGuestInConversation = true
-        _ = mockUser.feature(withUserClients: 1)
 
         verify(mockUser: mockUser, conversation: conversation)
     }
     
     func testNonTeamUserWithoutHandle() {
-        let user = MockUser.mockUsers()[10]
-        
+        mockUser = MockUserType.createUser(name: "Tarja Turunen")
+        mockUser.accentColorValue = .vividRed
+        mockUser.isConnected = true
+        mockUser.handle = nil
+
         verify(mockUser: mockUser, conversation: conversation)
     }
     
     
     func testUserInsideOngoingVideoCall() {
-        let user = MockUser.mockUsers()[0]
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted, isActiveSpeaker: false)
-            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
-        }))
+            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: mockUser), videoState: .started, microphoneState: .unmuted, isActiveSpeaker: false)
+
+        sut = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(with: config, variant: .dark, selfUser: SelfUser.current)
+
+        verifyInAllColorSchemes(matching: sut)
     }
     
-    func testUserScreenSharingInsideOngoingVideoCall() {
+    /*func testUserScreenSharingInsideOngoingVideoCall() {
         let user = MockUser.mockUsers()[0]
         verifyInAllColorSchemes(view: cell({ (cell) in
             let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted, isActiveSpeaker: false)
