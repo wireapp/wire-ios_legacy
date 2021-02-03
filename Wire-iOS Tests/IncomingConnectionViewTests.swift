@@ -17,28 +17,31 @@
 //
 
 
-import Foundation
+import XCTest
 @testable import Wire
 
 
-final class IncomingConnectionViewTests: ZMSnapshotTestCase {
+final class IncomingConnectionViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
-        snapshotBackgroundColor = .white
     }
 
     func testThatItRendersWithUserName() {
-        let user = MockUser.mockUsers().first!
+        let user = SwiftMockLoader.mockUsers().first!
         let sut = IncomingConnectionView(user: user)
-        verify(view: sut.layoutForTest())
+        
+        sut.backgroundColor = .white
+        verify(matching: sut.layoutForTest())
     }
 
     func testThatItRendersWithUserName_NoHandle() {
-        let user = MockUser.mockUsers().last! // The last user does not have a username
+        let user = SwiftMockLoader.mockUsers().last! // The last user does not have a username
         let sut = IncomingConnectionView(user: user)
-        verify(view: sut.layoutForTest())
+
+        sut.backgroundColor = .white
+        verify(matching: sut.layoutForTest())
     }
     
 }
