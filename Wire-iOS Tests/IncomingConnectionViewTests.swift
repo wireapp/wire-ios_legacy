@@ -26,7 +26,6 @@ final class IncomingConnectionViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
-//        snapshotBackgroundColor = .white
     }
 
     func testThatItRendersWithUserName() {
