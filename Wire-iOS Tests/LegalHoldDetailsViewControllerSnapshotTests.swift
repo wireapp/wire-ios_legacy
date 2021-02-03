@@ -52,9 +52,11 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
 
     func testSelfUserUnderLegalHold() {
-        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
-        let selfUser = MockUser.mockSelf()
-        selfUser?.isUnderLegalHold = true
+//        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
+//        let selfUser = MockUser.mockSelf()
+        
+        let conversation = SwiftMockConversation()
+//        selfUser?.isUnderLegalHold = true
 
         verifyInColorThemes(conversation: conversation)
     }

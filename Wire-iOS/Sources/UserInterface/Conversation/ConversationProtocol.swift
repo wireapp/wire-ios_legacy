@@ -26,6 +26,11 @@ protocol SortedOtherParticipantsProvider {
     var sortedOtherParticipants: [UserType] { get }
 }
 
+///TODO: DM
+protocol VerifyLegalHoldSubjectsProvider {
+    func verifyLegalHoldSubjects()
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {

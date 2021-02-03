@@ -42,17 +42,19 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
+typealias LegalHoldParticipantsSectionControllerConversation = Conversation & VerifyLegalHoldSubjectsProvider
+
+final class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private var viewModel: LegalHoldParticipantsSectionViewModel
-    private let conversation: ZMConversation
+    private let conversation: LegalHoldParticipantsSectionControllerConversation
     private var token: AnyObject?
     
     weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
-    init(conversation: ZMConversation) {
-        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
+    init(conversation: LegalHoldParticipantsSectionControllerConversation) {
+        viewModel = LegalHoldParticipantsSectionViewModel(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
         self.conversation = conversation
         super.init()
         
