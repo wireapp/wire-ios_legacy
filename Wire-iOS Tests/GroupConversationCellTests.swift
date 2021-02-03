@@ -28,6 +28,7 @@ final class GroupConversationCellTests: XCTestCase {
         super.setUp()
         
         otherUser = MockUserType.createDefaultOtherUser()
+        sut = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
     }
     
     override func tearDown() {
@@ -64,30 +65,38 @@ final class GroupConversationCellTests: XCTestCase {
                         testName: String = #function,
                         line: UInt = #line) {
         
-        sut = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
         sut.configure(conversation: conversation)
         
         verifyInAllColorSchemes(matching: sut, file: file, testName: testName, line: line)
     }
     
     func testOneToOneConversation() {
+        //GIVEN & WHEN
         let otherUserConversation = createOneOnOneConversation()
         
+        //THEN
         verify(conversation: otherUserConversation)
     }
     
     func testGroupConversation() {
+        //GIVEN
         let groupConversation = createGroupConversation()
+        
+        //WHEN
         groupConversation.displayName = "Anna, Bruno, Claire, Dean"
 
+        //THEN
         verify(conversation: groupConversation)
     }
     
     func testGroupConversationWithVeryLongName() {
+        //GIVEN
         let groupConversation = createGroupConversation()
-
-        groupConversation.displayName  = "Loooooooooooooooooooooooooong name"
         
+        //WHEN
+        groupConversation.displayName  = "Loooooooooooooooooooooooooong name"
+                
+        //THEN
         verify(conversation: groupConversation)
     }
     
