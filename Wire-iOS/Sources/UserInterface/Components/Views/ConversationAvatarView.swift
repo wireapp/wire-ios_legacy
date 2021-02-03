@@ -72,7 +72,7 @@ extension ZMConversation: StableRandomParticipantsProvider {
     /// Stable random list of the participants in the conversation. The list would be consistent between platforms
     /// because the conversation UUID is used as the random indexes source.
     var stableRandomParticipants: [UserType] {
-        let allUsers = self.sortedActiveParticipants
+        let allUsers = sortedActiveParticipants
         guard let remoteIdentifier = self.remoteIdentifier else {
             return allUsers
         }

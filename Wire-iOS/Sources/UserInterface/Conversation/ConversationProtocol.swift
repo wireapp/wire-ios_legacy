@@ -18,6 +18,7 @@
 import Foundation
 import WireSyncEngine
 
+/// from UI project, to randomize users display in avatar icon
 protocol StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] { get }
 }
