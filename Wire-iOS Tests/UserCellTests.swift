@@ -77,30 +77,19 @@ final class UserCellTests: XCTestCase {
         verify(mockUser: mockUser, conversation: conversation)
     }
     
-    /*func testTrustedNonTeamUser() {
-        let mockUser = MockUser.firstMockUser()
-
+    func testTrustedNonTeamUser() {
         mockUser.isVerified = true
-        _ = mockUser.feature(withUserClients: 1)
         
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
     
-    func testGuestUser() {
+    /*func testGuestUser() {
         MockUser.mockSelf().isTeamMember = true
         let mockUser = MockUser.firstMockUser()
 
         mockUser.isGuestInConversation = true
         
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
     
     func testGuestUser_Wireless() {
@@ -126,11 +115,7 @@ final class UserCellTests: XCTestCase {
         mockUser.isGuestInConversation = true
         _ = mockUser.feature(withUserClients: 1)
 
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
     
     func testNonTeamUserWithoutHandle() {
