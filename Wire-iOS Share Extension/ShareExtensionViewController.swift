@@ -90,6 +90,8 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     let stateAccessoryView = ConversationStateAccessoryView()
+    
+    lazy var unlockViewController = UnlockViewController()
 
     // MARK: - Host App State
 
@@ -583,44 +585,18 @@ extension ShareExtensionViewController {
                 !passcode.isEmpty,
                 let passcodeData = self.sharingSession?.appLockController.fetchPasscode(),
                 passcode == String(data: passcodeData, encoding: .utf8) else {
+                    self.unlockViewController.showWrongPasscodeMessage()
                     callback(.denied)
                     return
             }
-            
+            self.popConfigurationViewController()
             callback(.granted)
         }
     }
     
     private func presentUnlockScreen(with callback: @escaping (_ password: String?) -> ()) {
-        let unlockViewController = UnlockViewController()
         pushConfigurationViewController(unlockViewController)
         
-//        self.view.addSubview(stateAccessoryView)
-//        stateAccessoryView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            stateAccessoryView.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
-//            stateAccessoryView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-//        ])
-        
-        //        if unlockViewController == nil {
-        //            // TODO: [John] Avoid static methods.
-        //            let viewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
-        //
-        //            let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
-        //            let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
-        //            navigationController.modalPresentationStyle = .fullScreen
-        //            present(navigationController, animated: false)
-        //
-        //            unlockScreenWrapper = navigationController
-        //            unlockViewController = viewController
-        //        }
-        //
-        //        guard let unlockViewController = unlockViewController else { return }
-        //
-        //        if message == AuthenticationMessageKey.wrongPassword {
-        //            unlockViewController.showWrongPasscodeMessage()
-        //        }
-        //
-        //        unlockViewController.callback = callback
+        unlockViewController.callback = callback        
     }
 }

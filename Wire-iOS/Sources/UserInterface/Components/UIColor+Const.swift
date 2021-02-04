@@ -20,6 +20,8 @@ import UIKit
 extension UIColor {
     enum PasscodeUnlock {
         static let error: UIColor = UIColor(rgb: (236, 121, 121))
+        static var buttonGraphite: UIColor = UIColor(rgb: (51, 55, 58))
+        static var buttonLightGraphite: UIColor = UIColor(rgb:(141, 152, 159))
     }
 
     enum WipeDatabase {
