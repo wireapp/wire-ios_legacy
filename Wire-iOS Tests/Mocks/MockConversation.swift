@@ -50,6 +50,18 @@ class SwiftMockConversation: NSObject, Conversation  {
     var securityLevel: ZMConversationSecurityLevel = .notSecure
 
     var mutedMessageTypes: MutedMessageTypes = .none
+    
+    static func createMockGroupConversation(inTeam: Bool = false) -> SwiftMockConversation {
+        let mockConversation = SwiftMockConversation()
+        mockConversation.conversationType = .group
+        mockConversation.localParticipantsContainUser = true
+        
+        if inTeam {
+            mockConversation.teamRemoteIdentifier = UUID()
+        }
+        
+        return mockConversation
+    }
 }
 
 final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {
