@@ -6402,16 +6402,6 @@
 			path = Countly;
 			sourceTree = "<group>";
 		};
-		EE41467C25C8A6A500E750E8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EE41468225C8A6A500E750E8 /* WireDataModel.framework */,
-				EE41468425C8A6A500E750E8 /* WireDataModelTests.xctest */,
-				EE41468625C8A6A500E750E8 /* WireDataModelTestHost.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		EE5F54CF259B777B00F11F3C /* Viper */ = {
 			isa = PBXGroup;
 			children = (
