@@ -32,12 +32,15 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
     }
     
     func testForDarkTheme() {
-        verifyInDarkScheme(createSut: {
-            let navigationController = UIViewController().wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
-            navigationController.pushViewController(WipeDatabaseViewController(), animated: false)
-            
-            return navigationController
-        })
+		let createSut: () -> UIViewController = {
+			let navigationController = UIViewController().wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
+			navigationController.pushViewController(WipeDatabaseViewController(), animated: false)
+			
+			return navigationController
+		}
+
+		
+        verifyInDarkScheme(createSut: createSut)
     }
 
     func testForConfirmAlert() {

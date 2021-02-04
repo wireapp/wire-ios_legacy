@@ -48,8 +48,6 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
-        
-//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -60,16 +58,18 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-        verify(matching: message.replyPreview()!.prepareForSnapshot())
+		verifyInAllColorSchemes(createSut: {
+			message.replyPreview()!.prepareForSnapshot()
+		})
     }
     
-    /*func testThatItRendersTextMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
+//    func testThatItRendersTextMessagePreview_dark() {
+//        activateDarkColorScheme()
+//        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
+//        verify(view: message.replyPreview()!.prepareForSnapshot())
+//    }
     
-    func testThatItRendersEmojiOnly() {
+    /*func testThatItRendersEmojiOnly() {
         let message = MockMessageFactory.textMessage(withText: "😀🌮")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
