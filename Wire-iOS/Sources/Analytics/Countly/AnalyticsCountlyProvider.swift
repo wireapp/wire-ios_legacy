@@ -37,7 +37,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Properties
 
-    var countlyInstanceType: CountlyInstance.Type
+    private let countly: CountlyInterface
+    private let countlyUser: CountlyUserInterface
 
     /// The Countly application to which events will be sent.
 
@@ -92,15 +93,16 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Life cycle
 
-    init?(
-        countlyInstanceType: CountlyInstance.Type = Countly.self,
-        countlyAppKey: String,
-        serverURL: URL
-    ) {
-        guard !countlyAppKey.isEmpty else { return nil }
+    init?(countly: CountlyInterface = Countly.sharedInstance(),
+          countlyUser: CountlyUserInterface = Countly.user(),
+          appKey: String,
+          serverURL: URL) {
+
+        guard !appKey.isEmpty else { return nil }
         
-        self.countlyInstanceType = countlyInstanceType
-        self.appKey = countlyAppKey
+        self.countly = countly
+        self.countlyUser = countlyUser
+        self.appKey = appKey
         self.serverURL = serverURL
         isOptedOut = false
         setupApplicationNotifications()
@@ -131,11 +133,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         updateCountlyUser(withProperties: userProperties)
 
-        countlyInstanceType.sharedInstance().start(with: config)
+        countly.start(with: config)
 
         // Changing Device ID after app started
         // ref: https://support.count.ly/hc/en-us/articles/360037753511-iOS-watchOS-tvOS-macOS#section-resetting-stored-device-id
-        Countly.sharedInstance().setNewDeviceID(analyticsIdentifier, onServer: true)
+        countly.setNewDeviceID(analyticsIdentifier, onServer: true)
 
         zmLog.info("AnalyticsCountlyProvider \(self) started")
 
@@ -152,17 +154,17 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     private func beginSession() {
-        Countly.sharedInstance().beginSession()
+        countly.beginSession()
         isRecording = true
     }
 
     private func updateSession() {
         guard isRecording else { return }
-        Countly.sharedInstance().updateSession()
+        countly.updateSession()
     }
 
     private func endSession() {
-        Countly.sharedInstance().endSession()
+        countly.endSession()
         isRecording = false
     }
 
@@ -188,10 +190,10 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         let convertedAttributes = properties.countlyStringValueDictionary
 
         for (key, value) in convertedAttributes {
-            Countly.user().set(key, value: value)
+            countlyUser.set(key, value: value)
         }
 
-        Countly.user().save()
+        countlyUser.save()
     }
 
     private func clearCountlyUser() {
@@ -202,8 +204,8 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             "user_contacts"
         ]
 
-        keys.forEach(Countly.user().unSet)
-        Countly.user().save()
+        keys.forEach(countlyUser.unSet)
+        countlyUser.save()
     }
 
     private var shouldTracksEvent: Bool {
@@ -233,7 +235,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         convertedAttributes["app_name"] = "ios"
         convertedAttributes["app_version"] = Bundle.main.shortVersionString
 
-        countlyInstanceType.sharedInstance().recordEvent(event, segmentation: convertedAttributes)
+        countly.recordEvent(event, segmentation: convertedAttributes)
     }
 
     private func tagPendingEvents() {

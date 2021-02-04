@@ -51,7 +51,7 @@ final class AnalyticsProviderFactory: NSObject {
                 return nil
             }
 
-            return AnalyticsCountlyProvider(countlyAppKey: appKey, serverURL: url)
+            return AnalyticsCountlyProvider(appKey: appKey, serverURL: url)
 
         } else {
             zmLog.info("Creating analyticsProvider: no provider")

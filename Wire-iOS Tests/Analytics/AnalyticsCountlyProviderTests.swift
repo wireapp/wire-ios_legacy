@@ -34,8 +34,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
     override func tearDown() {
         sut = nil
         coreDataFixture = nil
-        MockCountly.reset()
-        
+
         super.tearDown()
     }
 
@@ -64,12 +63,13 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
     func testThatAppOpenIsStoredAndTaggedAfterSelfUserIsSet() {
         coreDataFixture.teamTest {
-
             //GIVEN
             sut = Analytics(optedOut: false)
+            let countly = MockCountly()
+
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
-                countlyInstanceType: MockCountly.self,
-                countlyAppKey: "dummy countlyAppKey",
+                countly: countly,
+                appKey: "dummy countlyAppKey",
                 serverURL: URL(string: "www.wire.com")!
             )!
 
@@ -81,16 +81,16 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             //THEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
-            XCTAssertEqual(MockCountly.recordEventCount, 0)
+            XCTAssertEqual(countly.methodCalls.recordEvent.count, 0)
 
             //WHEN
             sut.selfUser = coreDataFixture.selfUser
 
             //THEN
-            XCTAssertEqual(MockCountly.startCount, 1)
+            XCTAssertEqual(countly.methodCalls.start.count, 1)
 
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
-            XCTAssertEqual(MockCountly.recordEventCount, 1)
+            XCTAssertEqual(countly.methodCalls.recordEvent.count, 1)
         }
     }
     
@@ -98,10 +98,11 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
         coreDataFixture.nonTeamTest {
             //GIVEN
             sut = Analytics(optedOut: false)
+            let countly = MockCountly()
 
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
-                countlyInstanceType: MockCountly.self,
-                countlyAppKey: "dummy countlyAppKey",
+                countly: countly,
+                appKey: "dummy countlyAppKey",
                 serverURL: URL(string: "www.wire.com")!
             )!
 
@@ -111,32 +112,55 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
             sut.selfUser = coreDataFixture.selfUser
 
             //THEN
-            XCTAssertEqual(MockCountly.startCount, 0)
+            XCTAssertEqual(countly.methodCalls.start.count, 0)
         }
     }
 
 }
 
-final class MockCountly: CountlyInstance {
-    static var recordEventCount = 0
-    static var startCount = 0
+final class MockCountly: CountlyInterface {
 
-    static let shared = MockCountly()
-    
-    static func reset() {
-        recordEventCount = 0
-        startCount = 0
-    }
+    // MARK: - Metrics
 
-    static func sharedInstance() -> Self {
-        return shared as! Self
-    }
-    
-    func recordEvent(_ key: String, segmentation: [String: String]?) {
-        MockCountly.recordEventCount += 1
-    }
-    
+    var methodCalls = MethodCalls()
+
+    // MARK: - Methods
+
     func start(with config: CountlyConfig) {
-        MockCountly.startCount += 1
+        methodCalls.start.append(config)
     }
+
+    func setNewDeviceID(_ deviceID: String?, onServer: Bool) {
+        methodCalls.setNewDeviceID.append((deviceID, onServer))
+    }
+
+    func beginSession() {
+        methodCalls.beginSession.append(())
+    }
+
+    func updateSession() {
+        methodCalls.updateSession.append(())
+    }
+
+    func endSession() {
+        methodCalls.endSession.append(())
+    }
+
+    func recordEvent(_ key: String, segmentation: [String: String]?) {
+        methodCalls.recordEvent.append((key, segmentation))
+    }
+
+    // MARK: - Types
+
+    struct MethodCalls {
+
+        var start: [CountlyConfig] = []
+        var setNewDeviceID: [(deviceID: String?, onServer: Bool)] = []
+        var beginSession: [Void] = []
+        var updateSession: [Void] = []
+        var endSession: [Void] = []
+        var recordEvent: [(key: String, segmentation: [String: String]?)] = []
+
+    }
+
 }
