@@ -35,17 +35,21 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     var sut: LegalHoldDetailsViewController!
     var wrappedInVC: UINavigationController!
     var selfUser: MockUserType!
+    var otherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         
         SelfUser.setupMockSelfUser(inTeam: UUID())
         selfUser = (SelfUser.current as! MockUserType)
+        otherUser = MockUserType.createDefaultOtherUser()
     }
 
     override func tearDown() {
         sut = nil
         wrappedInVC = nil
+        otherUser = nil
+        SelfUser.provider = nil
 
         super.tearDown()
     }
@@ -66,11 +70,11 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }*/
 
     func testSelfUserUnderLegalHold() {
-//        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
-//        let selfUser = MockUser.mockSelf()
         
         let conversation = MockConversation()
         selfUser.isUnderLegalHold = true
+        conversation.sortedActiveParticipantsUserTypes = [selfUser]
+        
         verifyInAllColorSchemes(createSut: {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
             wrappedInVC = self.sut.wrapInNavigationController()
