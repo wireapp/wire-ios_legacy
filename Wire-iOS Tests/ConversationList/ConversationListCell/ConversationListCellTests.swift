@@ -120,7 +120,18 @@ final class ConversationListCellTests: XCTestCase {
 
     func testThatItRendersMutedConversation() {
         // when
-        let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [.all], isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        let status = ConversationStatus(isGroup: false, 
+                                        hasMessages: false, 
+                                        hasUnsentMessages: false, 
+                                        messagesRequiringAttention: [], 
+                                        messagesRequiringAttentionByType: [:], 
+                                        isTyping: false, 
+                                        mutedMessageTypes: [.all], 
+                                        isOngoingCall: false, 
+                                        isBlocked: false, 
+                                        isSelfAnActiveMember: true, 
+                                        hasSelfMention: false, 
+                                        hasSelfReply: false)
         otherUserConversation.status = status
 
         // then
@@ -131,7 +142,18 @@ final class ConversationListCellTests: XCTestCase {
         // when
         otherUserConversation.connectedUserType?.toggleBlocked()
 
-        let status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: [], isOngoingCall: false, isBlocked: true, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        let status = ConversationStatus(isGroup: false, 
+                                        hasMessages: false, 
+                                        hasUnsentMessages: false, 
+                                        messagesRequiringAttention: [], 
+                                        messagesRequiringAttentionByType: [:], 
+                                        isTyping: false, 
+                                        mutedMessageTypes: [], 
+                                        isOngoingCall: false, 
+                                        isBlocked: true, 
+                                        isSelfAnActiveMember: true, 
+                                        hasSelfMention: false, 
+                                        hasSelfReply: false)
         otherUserConversation.status = status
 
         otherUser.isConnected = false
