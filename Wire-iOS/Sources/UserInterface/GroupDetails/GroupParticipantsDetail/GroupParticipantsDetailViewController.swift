@@ -44,7 +44,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     init(selectedParticipants: [UserType],
-         conversation: ZMConversation,
+         conversation: GroupParticipantsDetailConversation,
          variant: ColorSchemeVariant = ColorScheme.default.variant) {
         
         self.variant = variant
@@ -144,7 +144,8 @@ final class GroupParticipantsDetailViewController: UIViewController {
             sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false, showSectionCount: false))
         }
         
-        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, showSectionCount: false))
+        if !viewModel.members.isEmpty {
+            sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, showSectionCount: false))
         }
 
         return sections
@@ -158,9 +159,11 @@ final class GroupParticipantsDetailViewController: UIViewController {
 extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
     
     func presentDetails(for user: UserType) {
+        guard let conversation = viewModel.conversation as? ZMConversation else { return }
+        
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
-            conversation: viewModel.conversation,
+            conversation: conversation,
             profileViewControllerDelegate: self,
             viewControllerDismisser: self
         )

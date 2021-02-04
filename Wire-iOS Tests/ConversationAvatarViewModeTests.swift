@@ -18,19 +18,40 @@
 import XCTest
 @testable import Wire
 
-final class MockConversationAvatarViewConversation: SwiftMockConversation, StableRandomParticipantsProvider {
+class MockStableRandomParticipantsConversation: SwiftMockConversation, StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] = []
+    
+    required override init() {
+        
+    }
+    
+    static func createOneOnOneConversation<T: MockStableRandomParticipantsConversation>(otherUser: MockUserType) -> T {
+        SelfUser.setupMockSelfUser()
+        let otherUserConversation = T()
+        
+        // avatar
+        otherUserConversation.stableRandomParticipants = [otherUser]
+        otherUserConversation.conversationType = .oneOnOne
+        
+        // title
+        otherUserConversation.displayName = otherUser.name!
+        
+        // subtitle
+        otherUserConversation.connectedUserType = otherUser
+        
+        return otherUserConversation
+    }
 }
 
 final class ConversationAvatarViewModeTests: XCTestCase {
     var sut: ConversationAvatarView!
     var otherUser: MockUserType!
-    var mockConversation: MockConversationAvatarViewConversation!
+    var mockConversation: MockStableRandomParticipantsConversation!
     
     override func setUp() {
         super.setUp()
 
-        mockConversation = MockConversationAvatarViewConversation()
+        mockConversation = MockStableRandomParticipantsConversation()
 
         otherUser = MockUserType.createDefaultOtherUser()
         sut = ConversationAvatarView()
