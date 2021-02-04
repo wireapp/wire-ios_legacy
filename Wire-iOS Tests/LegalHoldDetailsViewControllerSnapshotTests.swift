@@ -20,13 +20,27 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
+private final class MockConversation: MockGroupDetailsConversation & SortedActiveParticipantProvider & VerifyLegalHoldSubjectsProvider {
+    var sortedActiveParticipantsUserTypes: [UserType] = []
+    
+    func verifyLegalHoldSubjects() {
+        //no-op
+    }
+}
+
+
+
 final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: LegalHoldDetailsViewController!
     var wrappedInVC: UINavigationController!
+    var selfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
+        
+        SelfUser.setupMockSelfUser(inTeam: UUID())
+        selfUser = (SelfUser.current as! MockUserType)
     }
 
     override func tearDown() {
@@ -36,7 +50,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    private func verifyInColorThemes(conversation: MockConversation,
+    /*private func verifyInColorThemes(conversation: MockConversation,
                                      file: StaticString = #file,
                                      testName: String = #function,
                                      line: UInt = #line) {
@@ -49,17 +63,19 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
         wrappedInVC = sut.wrapInNavigationController()
         verify(matching: wrappedInVC, named: "LightTheme", file: file, testName: testName, line: line)
-    }
+    }*/
 
     func testSelfUserUnderLegalHold() {
 //        let conversation = MockConversation.groupConversation(selfUser: MockUser.mockSelf(), otherUser: MockUser.mockUsers().first!)
 //        let selfUser = MockUser.mockSelf()
         
-        let conversation = SwiftMockConversation()
+        let conversation = MockConversation()
+        selfUser.isUnderLegalHold = true
         verifyInAllColorSchemes(createSut: {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
+            wrappedInVC = self.sut.wrapInNavigationController()
+            return wrappedInVC
         })
-//        selfUser?.isUnderLegalHold = true
 
 //        verifyInColorThemes(conversation: conversation)
     }

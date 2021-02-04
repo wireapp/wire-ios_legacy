@@ -53,7 +53,7 @@ final class MockShareViewControllerConversation: SwiftMockConversation, SortedOt
     var sortedOtherParticipants: [UserType] = []
 }
 
-final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation, SortedOtherParticipantsProvider {
+class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation, SortedOtherParticipantsProvider {
     var userDefinedName: String?
         
     var freeParticipantSlots: Int = 1

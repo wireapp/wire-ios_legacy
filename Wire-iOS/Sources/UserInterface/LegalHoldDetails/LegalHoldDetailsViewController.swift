@@ -23,14 +23,14 @@ final class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
-    fileprivate let conversation: Conversation
+    fileprivate let conversation: LegalHoldDetailsConversation
     
     convenience init?(user: UserType) {
         guard let conversation = user.oneToOneConversation else { return nil }
         self.init(conversation: conversation)
     }
         
-    init(conversation: Conversation) {
+    init(conversation: LegalHoldDetailsConversation) {
         self.conversation = conversation
         self.collectionViewController = SectionCollectionViewController()
         self.collectionViewController.collectionView = collectionView
