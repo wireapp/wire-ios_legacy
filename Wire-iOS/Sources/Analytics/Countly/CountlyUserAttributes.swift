@@ -17,30 +17,19 @@
 //
 
 import Foundation
-import Countly
+import WireDataModel
 
-protocol CountlyUserInterface {
+/// Attributes that are associated with a Countly user.
 
-    func set(_ key: String, value: String)
+typealias CountlyUserAttributes = [CountlyUserAttributeKey: AnalyticsAttributeValue]
 
-    func unSet(_ key: String)
-    
-    func save()
+/// Attribute keys for the Countly user.
 
-}
+enum CountlyUserAttributeKey: String, CaseIterable {
 
-extension CountlyUserInterface {
-
-    func update(with attributes: CountlyUserAttributes) {
-        attributes.rawValue.forEach { set($0, value: $1) }
-        save()
-    }
-
-    func reset() {
-        CountlyUserAttributeKey.allCases.forEach { unSet($0.rawValue) }
-        save()
-    }
+    case teamId = "team_team_id"
+    case teamRole = "team_user_type"
+    case teamSize = "team_team_size"
+    case userContactsCount = "user_contacts"
 
 }
-
-extension CountlyUserDetails: CountlyUserInterface {}

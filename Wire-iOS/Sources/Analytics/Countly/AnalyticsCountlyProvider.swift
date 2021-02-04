@@ -120,7 +120,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             !isRecording,
             user.isTeamMember,
             let analyticsIdentifier = user.analyticsIdentifier,
-            let userProperties = userProperties(for: user)
+            let userAttributes = attributes(for: user)
         else {
             return
         }
@@ -131,7 +131,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.manualSessionHandling = true
         config.deviceID = analyticsIdentifier
 
-        updateCountlyUser(withProperties: userProperties)
+        countlyUser.update(with: userAttributes)
 
         countly.start(with: config)
 
@@ -149,7 +149,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     private func endCountly() {
         endSession()
-        clearCountlyUser()
+        countlyUser.reset()
         didInitializeCountly = false
     }
 
@@ -170,7 +170,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     // MARK: - Countly user
 
-    private func userProperties(for user: ZMUser) -> [String: Any]? {
+    private func attributes(for user: ZMUser) -> CountlyUserAttributes? {
         guard
             let team = user.team,
             let teamId = team.remoteIdentifier
@@ -179,33 +179,11 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         }
 
         return [
-            "team_team_id": teamId,
-            "team_user_type": user.teamRole,
-            "team_team_size": team.members.count,
-            "user_contacts": team.members.count.logRound()
+            .teamId: teamId,
+            .teamRole: user.teamRole,
+            .teamSize: team.members.count,
+            .userContactsCount: team.members.count.logRound()
         ]
-    }
-
-    private func updateCountlyUser(withProperties properties: [String: Any]) {
-        let convertedAttributes = properties.countlyStringValueDictionary
-
-        for (key, value) in convertedAttributes {
-            countlyUser.set(key, value: value)
-        }
-
-        countlyUser.save()
-    }
-
-    private func clearCountlyUser() {
-        let keys = [
-            "team_team_id",
-            "team_user_type",
-            "team_team_size",
-            "user_contacts"
-        ]
-
-        keys.forEach(countlyUser.unSet)
-        countlyUser.save()
     }
 
     private var shouldTracksEvent: Bool {
