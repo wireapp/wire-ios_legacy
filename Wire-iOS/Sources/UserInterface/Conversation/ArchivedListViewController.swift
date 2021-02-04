@@ -176,14 +176,14 @@ extension ArchivedListViewController: ConversationListCellDelegate {
     }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else { return }
+        guard let conversation = cell.conversation as? ZMConversation else { return }
 
         startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()
     }
     
     func conversationListCellOverscrolled(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else { return }
+        guard let conversation = cell.conversation as? ZMConversation else { return }
 
         actionController = ConversationActionController(conversation: conversation, target: self, sourceView: cell)
         actionController?.presentMenu(from: cell, context: .list)
