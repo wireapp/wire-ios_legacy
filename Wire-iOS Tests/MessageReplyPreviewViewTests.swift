@@ -25,11 +25,11 @@ extension UIView {
     fileprivate func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         let container = ReplyRoundCornersView(containedView: self)
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
         container.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-		
+
 		container.backgroundColor = UIColor.from(scheme: .contentBackground)
-        
+
         return container
     }
 }
@@ -38,12 +38,12 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         disableDarkColorScheme()
         super.tearDown()
     }
-    
+
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
@@ -55,7 +55,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-    
+
 	private func verify(message: MockMessage,
 						file: StaticString = #file,
 						testName: String = #function,
@@ -64,51 +64,51 @@ final class MessageReplyPreviewViewTests: XCTestCase {
 			message.replyPreview()!.prepareForSnapshot()
 		}, file: file, testName: testName, line: line)
 	}
-	
+
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-		
+
 		verify(message: message)
     }
-        
+
     func testThatItRendersEmojiOnly() {
         let message = MockMessageFactory.textMessage(withText: "😀🌮")
 
 		verify(message: message)
     }
-        
+
     private func mentionMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Hello @user"
         let mockUser = SwiftMockLoader.mockUsers().first!
         let mention = Mention(range: NSRange(location: 6, length: 5), user: mockUser)
         textMessageData.mentions = [mention]
         message.backingTextMessageData = textMessageData
-        
+
         return message
     }
-    
+
     func testThatItRendersMention() {
 		verify(message: mentionMessage())
     }
-    
+
     func testThatItRendersTextMessagePreview_LongText() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
 		verify(message: message)
     }
-    
+
     func testThatItRendersFileMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
 		verify(message: message)
     }
-    
+
     func testThatItRendersLocationMessagePreview() {
         let message = MockMessageFactory.locationMessage()
 		verify(message: message)
     }
-    
+
     func testThatItRendersLinkPreviewMessagePreview() {
         let url = "https://www.example.com/article/1"
         let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
@@ -119,10 +119,10 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         message.backingTextMessageData.linkPreviewHasImage = true
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
+
         verify(matching: previewView.prepareForSnapshot())
     }
 
@@ -141,24 +141,24 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
+
         verify(matching: previewView.prepareForSnapshot())
     }
-    
+
     func testThatItRendersAudioMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "audio/x-m4a"
         message.backingFileMessageData.filename = "vacation.m4a"
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
+
         verify(matching: previewView.prepareForSnapshot())
     }
-    
+
     func testDeallocation() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verifyDeallocation {

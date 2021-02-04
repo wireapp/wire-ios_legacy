@@ -154,9 +154,9 @@ extension XCTestCase {
 						   file: file,
 						   testName: testName,
 						   line: line)
-		
+
 		ColorScheme.default.variant = .light
-		
+
 		verify(matching: createSut(),
 			   named: "LightTheme",
 			   file: file,
@@ -189,7 +189,7 @@ extension XCTestCase {
 							testName: String = #function,
 							line: UInt = #line) {
 		ColorScheme.default.variant = .dark
-		
+
 		verify(matching: createSut(),
 			   named: name,
 			   file: file,

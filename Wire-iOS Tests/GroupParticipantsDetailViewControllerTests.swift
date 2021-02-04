@@ -58,7 +58,7 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
 
     override func tearDown() {
         SelfUser.provider = nil
-        
+
         super.tearDown()
     }
 
@@ -77,7 +77,7 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
 			let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
 			return sut.wrapInNavigationController()
 		}
-		
+
         verifyInAllColorSchemes(createSut: createSut)
 
     }
