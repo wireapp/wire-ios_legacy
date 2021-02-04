@@ -43,7 +43,7 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
 
 typealias LegalHoldDetailsConversation = Conversation & SortedOtherParticipantsProvider & GroupDetailsConversation
 
-private extension SwiftConversationLike {
+private extension ConversationLike {
     func createViewModel() -> LegalHoldParticipantsSectionViewModel {
         return LegalHoldParticipantsSectionViewModel(participants: sortedActiveParticipantsUserTypes.filter(\.isUnderLegalHold))
     }
