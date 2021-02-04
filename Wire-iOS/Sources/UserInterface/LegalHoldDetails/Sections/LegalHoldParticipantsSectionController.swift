@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 private struct LegalHoldParticipantsSectionViewModel {
@@ -42,9 +41,9 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-typealias LegalHoldDetailsConversation = Conversation & SortedActiveParticipantProvider & VerifyLegalHoldSubjectsProvider & SortedOtherParticipantsProvider & GroupDetailsConversation
+typealias LegalHoldDetailsConversation = Conversation & SortedOtherParticipantsProvider & GroupDetailsConversation
 
-private extension SortedActiveParticipantProvider {
+private extension SwiftConversationLike {
     func createViewModel() -> LegalHoldParticipantsSectionViewModel {
         return LegalHoldParticipantsSectionViewModel(participants: sortedActiveParticipantsUserTypes.filter(\.isUnderLegalHold))
     }

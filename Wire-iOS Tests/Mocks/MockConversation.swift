@@ -49,6 +49,12 @@ class SwiftMockConversation: NSObject, Conversation  {
     var securityLevel: ZMConversationSecurityLevel = .notSecure
 
     var mutedMessageTypes: MutedMessageTypes = .none
+
+    func verifyLegalHoldSubjects() {
+        //no-op
+    }
+    
+    var sortedActiveParticipantsUserTypes: [UserType] = []
 }
 
 final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {

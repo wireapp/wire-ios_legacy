@@ -20,14 +20,6 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-private final class MockConversation: MockGroupDetailsConversation & SortedActiveParticipantProvider & VerifyLegalHoldSubjectsProvider {
-    var sortedActiveParticipantsUserTypes: [UserType] = []
-    
-    func verifyLegalHoldSubjects() {
-        //no-op
-    }
-}
-
 final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: LegalHoldDetailsViewController!
@@ -50,7 +42,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
 
     func testSelfUserUnderLegalHold() {
-        let conversation = MockConversation()
+        let conversation = MockGroupDetailsConversation()
         selfUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [selfUser]
         
@@ -62,7 +54,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
     
     func testOtherUserUnderLegalHold() {
-        let conversation = MockConversation()
+        let conversation = MockGroupDetailsConversation()
         let otherUser = SwiftMockLoader.mockUsers().first!
         otherUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [otherUser]

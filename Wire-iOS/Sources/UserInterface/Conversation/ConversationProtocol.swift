@@ -26,16 +26,6 @@ protocol SortedOtherParticipantsProvider {
     var sortedOtherParticipants: [UserType] { get }
 }
 
-///TODO: DM
-protocol SortedActiveParticipantProvider {
-    var sortedActiveParticipantsUserTypes: [UserType] { get }
-}
-
-///TODO: DM
-protocol VerifyLegalHoldSubjectsProvider {
-    func verifyLegalHoldSubjects()
-}
-
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -77,11 +67,3 @@ typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & Group
 
 extension ZMConversation: SortedOtherParticipantsProvider {}
 extension ZMConversation: GroupDetailsConversation {}
-
-extension ZMConversation: VerifyLegalHoldSubjectsProvider {}
-
-extension ZMConversation: SortedActiveParticipantProvider {
-    var sortedActiveParticipantsUserTypes: [UserType] {
-        return sortedActiveParticipants
-    }
-}
