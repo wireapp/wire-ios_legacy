@@ -22,11 +22,11 @@ import WireDataModel
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = self.conversationLike else {
             return false
         }
-
-        let participatesInConversation = conversation.localParticipants.contains(ZMUser.selfUser())
+        
+        let participatesInConversation = conversation.localParticipantsContain(user: SelfUser.current)
         let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
@@ -64,7 +64,7 @@ extension ZMConversationMessage {
     }
 
     var sortedReadReceipts: [ReadReceipt] {
-        return readReceipts.sorted { $0.user.name < $1.user.name }
+        return readReceipts.sorted { $0.userType.name < $1.userType.name }
     }
 
 }

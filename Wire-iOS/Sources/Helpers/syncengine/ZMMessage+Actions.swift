@@ -65,7 +65,7 @@ extension ZMConversationMessage {
 
     /// Whether message details are available for this message.
     var areMessageDetailsAvailable: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 
@@ -95,7 +95,7 @@ extension ZMConversationMessage {
         }
         
         // Read receipts are only available in team groups
-        guard conversation?.teamRemoteIdentifier != nil else {
+        guard conversationLike?.teamRemoteIdentifier != nil else {
             return false
         }
         

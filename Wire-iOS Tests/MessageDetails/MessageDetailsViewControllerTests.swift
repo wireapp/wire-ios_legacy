@@ -19,25 +19,31 @@
 import XCTest
 @testable import Wire
 
-final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
+final class MessageDetailsViewControllerTests: XCTestCase {
 
     // MARK: - Seen
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
-        let conversation = self.createTeamGroupConversation()
+        let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        SelfUser.provider = SelfProvider(selfUser:mockSelfUser)
+        let conversation = SwiftMockConversation()
+        conversation.teamRemoteIdentifier = UUID()
+        conversation.localParticipantsContainUser = true
         
         let message = MockMessageFactory.textMessage(withText: "Message")
-        message.senderUser = MockUserType.createSelfUser(name: "Alice")
-        message.conversation = conversation
+        message.senderUser = mockSelfUser
+        message.conversationLike = conversation
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = usernames.prefix(upTo: 5).map(self.createUser)
+        let users = XCTestCase.usernames.prefix(upTo: 5).map({
+            MockUserType.createUser(name: $0)
+        })
         let receipts = users.map(MockReadReceipt.init)
         
-        conversation.add(participants:users)
         message.readReceipts = receipts
-        message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+        let likers: [UserType] = Array(users.prefix(upTo: 4))
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: likers]
         
         // WHEN
         let detailsViewController = MessageDetailsViewController(message: message)
@@ -47,7 +53,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         snapshot(detailsViewController)
     }
     
-    func testThatItShowsReceipts_ShortList_Edited_11() {
+    /*func testThatItShowsReceipts_ShortList_Edited_11() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
         
@@ -293,18 +299,21 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             detailsViewController.container.selectIndex(0, animated: false)
             return detailsViewController
         }
-    }
+    }*/
     
     
     // MARK: - Helpers
     
     private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil,
                           file: StaticString = #file,
+                          testName: String = #function,
                           line: UInt = #line) {
         detailsViewController.reloadData()
-        detailsViewController.loadViewIfNeeded()
         configuration?(detailsViewController)
-        self.verify(view: detailsViewController.view, file: file, line: line)
+        verify(matching: detailsViewController,
+               file: file,
+               testName: testName,
+               line: line)
     }
     
 }

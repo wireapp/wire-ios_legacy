@@ -305,7 +305,7 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
-    typealias UsersByReaction = [String: [ZMUser]]
+    typealias UsersByReaction = [String: [UserType]]
 
     // MARK: - ZMConversationMessage
     var nonce: UUID? = UUID()

@@ -27,8 +27,9 @@ class SwiftMockConversation: NSObject, Conversation  {
 
     var teamRemoteIdentifier: UUID?
     
+    var localParticipantsContainUser: Bool = false
     func localParticipantsContain(user: UserType) -> Bool {
-        return false
+        return localParticipantsContainUser
     }
     
     var displayName: String = ""
@@ -47,6 +48,8 @@ class SwiftMockConversation: NSObject, Conversation  {
 
     var isUnderLegalHold: Bool = false
     var securityLevel: ZMConversationSecurityLevel = .notSecure
+
+    var mutedMessageTypes: MutedMessageTypes = .none
 }
 
 final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {
@@ -62,8 +65,6 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
     var sortedServiceUsers: [UserType] = []
 
     var hasReadReceiptsEnabled: Bool = false
-
-    var mutedMessageTypes: MutedMessageTypes = .none
 }
 
 final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation {
