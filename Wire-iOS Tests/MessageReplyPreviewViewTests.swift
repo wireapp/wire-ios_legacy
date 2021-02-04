@@ -94,39 +94,19 @@ final class MessageReplyPreviewViewTests: XCTestCase {
 		verify(message: mentionMessage())
     }
     
-    /*
-    
     func testThatItRendersTextMessagePreview_LongText() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
-    func testThatItRendersTextMessagePreview_LongText_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
     
     func testThatItRendersFileMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
-    func testThatItRendersFileMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.fileTransferMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
     
     func testThatItRendersLocationMessagePreview() {
         let message = MockMessageFactory.locationMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
-    func testThatItRendersLocationMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.locationMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
     
     func testThatItRendersLinkPreviewMessagePreview() {
@@ -143,7 +123,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
-        verify(view: previewView.prepareForSnapshot())
+        verify(matching: previewView.prepareForSnapshot())
     }
 
     func testThatItRendersImageMessagePreview() {
@@ -153,7 +133,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         let previewView = message.replyPreview()!
         XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verify(view: previewView.prepareForSnapshot())
+        verify(matching: previewView.prepareForSnapshot())
     }
 
     func testThatItRendersVideoMessagePreview() {
@@ -165,7 +145,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
-        verify(view: previewView.prepareForSnapshot())
+        verify(matching: previewView.prepareForSnapshot())
     }
     
     func testThatItRendersAudioMessagePreview() {
@@ -176,7 +156,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
-        verify(view: previewView.prepareForSnapshot())
+        verify(matching: previewView.prepareForSnapshot())
     }
     
     func testDeallocation() {
@@ -184,5 +164,5 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         verifyDeallocation {
             return message.replyPreview()!
         }
-    }*/
+    }
 }
