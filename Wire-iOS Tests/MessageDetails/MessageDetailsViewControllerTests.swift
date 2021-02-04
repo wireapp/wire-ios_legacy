@@ -21,14 +21,33 @@ import XCTest
 
 final class MessageDetailsViewControllerTests: XCTestCase {
 
-    // MARK: - Seen
-    func testThatItShowsReceipts_ShortList_11() {
-        // GIVEN
-        let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+    var mockSelfUser: MockUserType!
+    
+    override func setUp() {
+        super.setUp()
+        
+        mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+    }
+    
+    override func tearDown() {
+        mockSelfUser = nil
+        
+        super.tearDown()
+    }
+
+    private func createTeamGroupConversation() -> SwiftMockConversation {
         SelfUser.provider = SelfProvider(selfUser:mockSelfUser)
         let conversation = SwiftMockConversation()
         conversation.teamRemoteIdentifier = UUID()
         conversation.localParticipantsContainUser = true
+        
+        return conversation
+    }
+    
+    // MARK: - Seen
+    func testThatItShowsReceipts_ShortList_11() {
+        // GIVEN
+        let conversation = createTeamGroupConversation()
         
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = mockSelfUser
@@ -53,21 +72,22 @@ final class MessageDetailsViewControllerTests: XCTestCase {
         snapshot(detailsViewController)
     }
     
-    /*func testThatItShowsReceipts_ShortList_Edited_11() {
+    func testThatItShowsReceipts_ShortList_Edited_11() {
         // GIVEN
-        let conversation = self.createTeamGroupConversation()
-        
+        let conversation = createTeamGroupConversation()
+
         let message = MockMessageFactory.textMessage(withText: "Message")
-        message.senderUser = MockUserType.createSelfUser(name: "Alice")
-        message.conversation = conversation
+        message.senderUser = mockSelfUser
+        message.conversationLike = conversation
         message.updatedAt = Date(timeIntervalSince1970: 69)
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = usernames.prefix(upTo: 5).map(self.createUser)
+        let users = XCTestCase.usernames.prefix(upTo: 5).map({
+            MockUserType.createUser(name: $0)
+        })
         let receipts = users.map(MockReadReceipt.init)
         
-        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -79,7 +99,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
         snapshot(detailsViewController)
     }
     
-    func testThatItShowsReceipts_LongList_12() {
+    /*func testThatItShowsReceipts_LongList_12() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
         
