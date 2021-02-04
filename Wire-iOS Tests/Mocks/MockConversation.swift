@@ -27,9 +27,9 @@ class SwiftMockConversation: NSObject, Conversation  {
 
     var teamRemoteIdentifier: UUID?
     
-    var localParticipantsContainUser: Bool = false
+    var mockLocalParticipantsContainUserReturn: Bool = false
     func localParticipantsContain(user: UserType) -> Bool {
-        return localParticipantsContainUser
+        return mockLocalParticipantsContainUserReturn
     }
     
     var displayName: String = ""
@@ -54,7 +54,7 @@ class SwiftMockConversation: NSObject, Conversation  {
     static func createMockGroupConversation(inTeam: Bool = false) -> SwiftMockConversation {
         let mockConversation = SwiftMockConversation()
         mockConversation.conversationType = .group
-        mockConversation.localParticipantsContainUser = true
+        mockConversation.mockLocalParticipantsContainUserReturn = true
         
         if inTeam {
             mockConversation.teamRemoteIdentifier = UUID()
