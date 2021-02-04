@@ -21,7 +21,7 @@ import WireDataModel
 
 extension ConversationListCell: ZMConversationObserver {
     func conversationDidChange(_ change: ConversationChangeInfo) {
-        guard change.conversation == (conversation as? ZMConversation),
+        guard change.conversation === conversation,
             (change.isArchivedChanged ||
             change.conversationListIndicatorChanged ||
             change.nameChanged ||

@@ -110,8 +110,9 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isSelfUser: Bool = false
 
+    var mockedIsServiceUser: Bool = false
     var isServiceUser: Bool {
-        return false
+        return mockedIsServiceUser
     }
 
     var isVerified: Bool = false
