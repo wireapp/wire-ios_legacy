@@ -131,6 +131,16 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
             mockMuted = newValue
         }
     }
+    
+    var mockVideoGridPresentationMode: VideoGridPresentationMode = .allVideoStreams
+    var videoGridPresentationMode: VideoGridPresentationMode {
+        get {
+            return mockVideoGridPresentationMode
+        }
+        set {
+            mockVideoGridPresentationMode = newValue
+        }
+    }
 
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
 
