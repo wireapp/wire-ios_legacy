@@ -558,20 +558,19 @@ extension ShareExtensionViewController {
             localAuthenticationStatus = .granted
         case .needCustomPasscode:
             let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
-//            if isCustomPasscodeNotSet {
-//                ///TODO katerina: add strings to Localizable strings
-//                let alert = UIAlertController(title: "Create a passcode", message: "Please open Wire and create a passcode", alertAction: .ok(style: .cancel))
-//                self.present(alert, animated: true, completion: nil)
-//
-//                localAuthenticationStatus = .denied
-//            } else {
+            if isCustomPasscodeNotSet {
+                let alert = UIAlertController(title: "share_extension.unlock.alert.title".localized, message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
+                self.present(alert, animated: true, completion: nil)
+                
+                localAuthenticationStatus = .denied
+            } else {
                 requestCustomPasscode { [weak self] status in
                     guard let `self` = self else { return }
                     
                     self.localAuthenticationStatus = status
                     completion()
                 }
-//            }
+            }
         default:
             localAuthenticationStatus = .denied
         }

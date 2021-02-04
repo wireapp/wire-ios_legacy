@@ -64,16 +64,15 @@ class AccessoryTextField: BaseAccessoryTextField {
                    accessoryTrailingInset: accessoryTrailingInset,
                    textFieldAttributes: textFieldAttributes)
         
+        setupView()
         setupTextFieldProperties()
-        setup()
     }
     
-    private func setup() {
+    private func setupView() {
         accessoryStack.addArrangedSubview(revealButton)
         revealButton.addTarget(self, action: #selector(revealButtonTapped(button:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            // dimensions
             revealButton.widthAnchor.constraint(equalToConstant: revealButtonWidth),
             revealButton.heightAnchor.constraint(equalToConstant: revealButtonWidth)
         ])
@@ -82,7 +81,7 @@ class AccessoryTextField: BaseAccessoryTextField {
     private func setupTextFieldProperties() {
         returnKeyType = .next
         isSecureTextEntry = true
-        accessibilityIdentifier = "PasswordField"
+        accessibilityIdentifier = "passcode_text_field"
         autocapitalizationType = .none
         if #available(iOS 12, *) {
             textContentType = .password

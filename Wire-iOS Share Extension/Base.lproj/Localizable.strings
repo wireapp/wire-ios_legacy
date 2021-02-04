@@ -39,6 +39,9 @@
 "share_extension.unlock.textfield.placeholder" = "Enter your passcode";
 "share_extension.unlock.hint_label" = "Passcode";
 "share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.title" = "Create a passcode";
+"share_extension.unlock.alert.message" = "Please open Wire and create a passcode";
+
 
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
