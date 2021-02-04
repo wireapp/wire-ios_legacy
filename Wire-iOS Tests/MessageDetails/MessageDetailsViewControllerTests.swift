@@ -19,15 +19,17 @@
 import XCTest
 @testable import Wire
 
-final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
+final class MessageDetailsViewControllerTests: XCTestCase {
     
     var conversation: SwiftMockConversation!
     var mockSelfUser: MockUserType!
+    var otherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         
         mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        otherUser = MockUserType.createDefaultOtherUser()
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
     }
     
@@ -49,7 +51,9 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = XCTestCase.usernames.prefix(upTo: 5).map(self.createUser)
+        let users = XCTestCase.usernames.prefix(upTo: 5).map({
+            MockUserType.createUser(name: $0)
+        })
         ///TODO: refactor this after ReadReceipt added UserType property
         let receipts = users.map(MockReadReceipt.init)
         
@@ -75,7 +79,9 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = XCTestCase.usernames.prefix(upTo: 5).map(self.createUser)
+        let users = XCTestCase.usernames.prefix(upTo: 5).map({
+            MockUserType.createUser(name: $0)
+        })
         let receipts = users.map(MockReadReceipt.init)
         
         message.readReceipts = receipts
@@ -100,7 +106,9 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = XCTestCase.usernames.prefix(upTo: 20).map(self.createUser)
+        let users = XCTestCase.usernames.prefix(upTo: 20).map({
+            MockUserType.createUser(name: $0)
+        })
         let receipts = users.map(MockReadReceipt.init)
         
         message.readReceipts = receipts
@@ -124,8 +132,13 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
-        let users = XCTestCase.usernames.prefix(upTo: 6).map(self.createUser)
-        users.forEach { $0.setHandle($0.name) }
+        let users = XCTestCase.usernames.prefix(upTo: 6).map({
+            MockUserType.createUser(name: $0)
+        })
+//        users.forEach {
+            ///TODO: handle gen
+//            $0.setHandle($0.name)
+//        }
         
         message.readReceipts =  users.map(MockReadReceipt.init)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
@@ -293,7 +306,9 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             message.senderUser = SelfUser.current
             message.conversationLike = conversation
             
-            //            let users = usernames.prefix(upTo: 5).map(self.createUser)
+            //            let users = usernames.prefix(upTo: 5).map({
+            MockUserType.createUser(name: $0)
+        })
             //            let receipts = users.map(MockReadReceipt.init)
             
             //                message.readReceipts = receipts
@@ -310,11 +325,14 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil,
                           file: StaticString = #file,
+                          testName: String = #function,
                           line: UInt = #line) {
         detailsViewController.reloadData()
-        detailsViewController.loadViewIfNeeded()
         configuration?(detailsViewController)
-        self.verify(view: detailsViewController.view, file: file, line: line)
+        verify(matching: detailsViewController,
+               file: file,
+               testName: testName,
+               line: line)
     }
     
 }
