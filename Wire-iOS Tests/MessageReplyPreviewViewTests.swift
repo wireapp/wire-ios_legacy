@@ -56,32 +56,28 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         NSAttributedString.invalidateParagraphStyle()
     }
     
-    func testThatItRendersTextMessagePreview() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
+	private func verify(message: MockMessage,
+						file: StaticString = #file,
+						testName: String = #function,
+						line: UInt = #line) {
 		verifyInAllColorSchemes(createSut: {
 			message.replyPreview()!.prepareForSnapshot()
-		})
+		}, file: file, testName: testName, line: line)
+	}
+	
+    func testThatItRendersTextMessagePreview() {
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
+		
+		verify(message: message)
     }
-    
-//    func testThatItRendersTextMessagePreview_dark() {
-//        activateDarkColorScheme()
-//        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-//        verify(view: message.replyPreview()!.prepareForSnapshot())
-//    }
-    
-    /*func testThatItRendersEmojiOnly() {
+        
+    func testThatItRendersEmojiOnly() {
         let message = MockMessageFactory.textMessage(withText: "😀🌮")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
-    func testThatItRendersEmojiOnly_dark() {
-        activateDarkColorScheme()
 
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
-    
-    func mentionMessage() -> MockMessage {
+        
+    private func mentionMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
         
         let textMessageData = MockTextMessageData()
@@ -95,13 +91,10 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     }
     
     func testThatItRendersMention() {
-        verify(view: mentionMessage().replyPreview()!.prepareForSnapshot())
+		verify(message: mentionMessage())
     }
     
-    func testThatItRendersMention_dark() {
-        activateDarkColorScheme()
-        verify(view: mentionMessage().replyPreview()!.prepareForSnapshot())
-    }
+    /*
     
     func testThatItRendersTextMessagePreview_LongText() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
