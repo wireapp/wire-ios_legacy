@@ -37,8 +37,6 @@ extension UIButton {
         }
         
         let image = UIImage.imageForIcon(iconType, size: size.rawValue, color: .black)
-        let renderingMode: UIImage.RenderingMode = UIImage.RenderingMode.alwaysTemplate
-        
-        setImage(image.withRenderingMode(renderingMode), for: state)
+        setImage(image.withRenderingMode(.alwaysTemplate), for: state)
     }
 }
