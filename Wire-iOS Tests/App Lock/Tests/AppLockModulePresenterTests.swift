@@ -65,18 +65,6 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(router.modules, [.createPasscode(shouldInform: false)])
     }
 
-    func test_ItOpensAppLock_AfterPasscodeIsCreated() {
-        // Given
-        sut.handle(.customPasscodeCreationNeeded(shouldInform: false))
-        let onPasscodeCreated = router.completions[0]
-
-        // when
-        onPasscodeCreated()
-
-        // Then
-        XCTAssertEqual(interactor.requests, [.openAppLock])
-    }
-
     // MARK: - Proceed with authentication
 
     func test_ProceedWithAuthentication_InformingUserOfConfigChange() {
@@ -85,12 +73,6 @@ final class AppLockModulePresenterTests: XCTestCase {
 
         // Then
         XCTAssertEqual(router.modules, [.informUserOfConfigChange])
-
-        let completion = router.completions[0]
-        completion()
-
-        XCTAssertEqual(view.methodCalls.refresh, [.authenticating])
-        XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
     }
 
     func test_ProceedWithAuthentication_WithoutInformingUserOfConfigChange() {
@@ -122,11 +104,6 @@ final class AppLockModulePresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(view.methodCalls.refresh, [.locked(.passcode)])
         XCTAssertEqual(router.modules, [.inputPasscode])
-
-        let onGranted = router.completions[0]
-        onGranted()
-
-        XCTAssertEqual(interactor.requests, [.openAppLock])
     }
 
     func test_ItUpdatesViewState_WhenAuthenticationMethodUnavailable() {
@@ -157,6 +134,30 @@ final class AppLockModulePresenterTests: XCTestCase {
 
         // Then
         XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+    }
+
+    func test_ItOpensAppLock_AfterPasscodeIsCreated() {
+        // When
+        sut.processEvent(.passcodeSetupCompleted)
+
+        // Then
+        XCTAssertEqual(interactor.requests, [.openAppLock])
+    }
+
+    func test_EvaluatesAuthentication_WhenConfigChangeIsAcknowledged() {
+        // When
+        sut.processEvent(.configChangeAcknowledged)
+
+        // Then
+        XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
+    }
+
+    func test_OpenAppLock_WhenCustomPasscodeIsVerified() {
+        // When
+        sut.processEvent(.customPasscodeVerified)
+
+        // Then
+        XCTAssertEqual(interactor.requests, [.openAppLock])
     }
 
 }

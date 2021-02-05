@@ -24,7 +24,7 @@ extension AppLockModule {
 
     final class Router: RouterInterface {
 
-        weak var viewController: UIViewController?
+        weak var view: View!
 
     }
 
@@ -35,43 +35,44 @@ extension AppLockModule {
 
 extension AppLockModule.Router: AppLockRouterPresenterInterface {
 
-    func present(_ module: AppLockModule.Module, then completion: @escaping () -> Void) {
+    func present(_ module: AppLockModule.Module) {
         switch module {
         case let .createPasscode(shouldInform):
-            presentCreatePasscodeModule(shouldInform: shouldInform, completion: completion)
+            presentCreatePasscodeModule(shouldInform: shouldInform)
 
         case .inputPasscode:
-            presentInputPasscodeModule(onGranted: completion)
+            presentInputPasscodeModule()
 
         case .informUserOfConfigChange:
-            presentWarningModule(then: completion)
+            presentWarningModule()
         }
     }
 
-    private func presentCreatePasscodeModule(shouldInform: Bool, completion: @escaping () -> Void) {
+    private func presentCreatePasscodeModule(shouldInform: Bool) {
         let passcodeSetupViewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(
             variant: .dark,
             context: shouldInform ? .forcedForTeam : .createPasscode,
-            callback: { _ in completion() })
+            delegate: view)
 
-        viewController?.present(passcodeSetupViewController, animated: true)
+        view.present(passcodeSetupViewController, animated: true)
     }
 
-    private func presentInputPasscodeModule(onGranted: @escaping () -> Void) {
+    private func presentInputPasscodeModule() {
         // TODO: [John] Clean this up.
         // TODO: [John] Inject these arguments.
         let unlockViewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: unlockViewController)
         let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
         navigationController.modalPresentationStyle = .fullScreen
-        unlockViewController.onGranted = onGranted
-        viewController?.present(navigationController, animated: false)
+        unlockViewController.delegate = view
+        view.present(navigationController, animated: false)
     }
 
-    private func presentWarningModule(then completion: @escaping () -> Void) {
-        let warningViewController = AppLockChangeWarningViewController(isAppLockActive: true, completion: completion)
+    private func presentWarningModule() {
+        let warningViewController = AppLockChangeWarningViewController(isAppLockActive: true)
         warningViewController.modalPresentationStyle = .fullScreen
-        viewController?.present(warningViewController, animated: false)
+        warningViewController.delegate = view
+        view.present(warningViewController, animated: false)
     }
 
 }

@@ -239,7 +239,7 @@ final class PasscodeSetupViewController: UIViewController {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
 
-        authenticationCoordinator?.passcodeSetupControllerDidFinish(self)
+        authenticationCoordinator?.passcodeSetupControllerDidFinish()
         dismiss(animated: true)
     }
 
@@ -258,10 +258,10 @@ final class PasscodeSetupViewController: UIViewController {
 
     static func createKeyboardAvoidingFullScreenView(variant: ColorSchemeVariant = ColorScheme.default.variant,
                                                      context: Context,
-                                                     callback: ResultHandler?) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
+                                                     delegate: PasscodeSetupViewControllerDelegate? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
                                                                       context: context,
-                                                                      callback: callback)
+                                                                      callback: nil)
         
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
         
@@ -293,7 +293,7 @@ final class PasscodeSetupViewController: UIViewController {
     private func appLockSetupViewControllerDismissed() {
         callback?(false)
 
-        passcodeSetupViewControllerDelegate?.passcodeSetupControllerWasDismissed(self)
+        passcodeSetupViewControllerDelegate?.passcodeSetupControllerWasDismissed()
     }
 }
 

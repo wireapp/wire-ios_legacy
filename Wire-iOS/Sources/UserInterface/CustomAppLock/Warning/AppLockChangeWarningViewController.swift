@@ -21,13 +21,19 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
+protocol AppLockChangeWarningViewControllerDelegate: class {
+
+    func appLockChangeWarningViewControllerDidDismiss()
+
+}
+
 final class AppLockChangeWarningViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var isAppLockActive: Bool
+    weak var delegate: AppLockChangeWarningViewControllerDelegate?
 
-    private var completion: Completion?
+    private var isAppLockActive: Bool
 
     private let contentView: UIView = UIView()
     
@@ -67,10 +73,8 @@ final class AppLockChangeWarningViewController: UIViewController {
 
     // MARK: - Life cycle
 
-    init(isAppLockActive: Bool, completion: Completion? = nil) {
+    init(isAppLockActive: Bool) {
         self.isAppLockActive = isAppLockActive
-        self.completion = completion
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -140,8 +144,7 @@ final class AppLockChangeWarningViewController: UIViewController {
             }
         }
 
-        completion?()
-        dismiss(animated: true)
+        dismiss(animated: true, completion: delegate?.appLockChangeWarningViewControllerDidDismiss)
     }
 
 }

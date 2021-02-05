@@ -40,7 +40,7 @@ final class AppLockModuleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Request authentication
+    // MARK: - Event sending
 
     func test_ItSendsEvent_WhenViewLoads() {
         // When
@@ -59,6 +59,30 @@ final class AppLockModuleViewTests: XCTestCase {
 
         // Then
         XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])
+    }
+
+    func test_ItSendsEvent_WhenPasscodeSetupFinishes() {
+        // When
+        sut.passcodeSetupControllerDidFinish()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.passcodeSetupCompleted])
+    }
+
+    func test_ItSendsEvent_WhenCustomPasscodeIsVerified() {
+        // When
+        sut.unlockViewControllerDidUnlock()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.customPasscodeVerified])
+    }
+
+    func test_ItSendsEvent_WhenConfigChangeWarningIsDismissed() {
+        // When
+        sut.appLockChangeWarningViewControllerDidDismiss()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.configChangeAcknowledged])
     }
 
     // MARK: - View states

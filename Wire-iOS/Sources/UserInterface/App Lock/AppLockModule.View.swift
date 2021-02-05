@@ -111,3 +111,31 @@ extension AppLockModule.ViewModel {
 // MARK: - API for presenter
 
 extension AppLockModule.View: AppLockViewPresenterInterface {}
+
+extension AppLockModule.View: PasscodeSetupViewControllerDelegate {
+
+    func passcodeSetupControllerDidFinish() {
+        presenter.processEvent(.passcodeSetupCompleted)
+    }
+
+    func passcodeSetupControllerWasDismissed() {
+
+    }
+
+}
+
+extension AppLockModule.View: UnlockViewControllerDelegate {
+
+    func unlockViewControllerDidUnlock() {
+        presenter.processEvent(.customPasscodeVerified)
+    }
+
+}
+
+extension AppLockModule.View: AppLockChangeWarningViewControllerDelegate {
+
+    func appLockChangeWarningViewControllerDidDismiss() {
+        presenter.processEvent(.configChangeAcknowledged)
+    }
+
+}

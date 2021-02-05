@@ -26,13 +26,11 @@ extension AppLockModule {
         // MARK: - Metrics
 
         var modules = [Module]()
-        var completions = [() -> Void]()
 
         // MARK: - Methods
 
-        func present(_ module: AppLockModule.Module, then completion: @escaping () -> Void) {
+        func present(_ module: AppLockModule.Module) {
             modules.append(module)
-            completions.append(completion)
         }
 
     }

@@ -21,6 +21,12 @@ import WireCommonComponents
 import WireDataModel
 import WireSyncEngine
 
+protocol UnlockViewControllerDelegate: class {
+
+    func unlockViewControllerDidUnlock()
+
+}
+
 /// UnlockViewController
 /// 
 /// This VC should be wrapped in KeyboardAvoidingViewController as the "unlock" button would be covered on 4 inch iPhone
@@ -28,7 +34,7 @@ final class UnlockViewController: UIViewController {
 
     typealias Session = ZMUserSessionInterface & UserSessionAppLockInterface
 
-    var onGranted: (() -> Void)? = nil
+    weak var delegate: UnlockViewControllerDelegate?
 
     private let selfUser: UserType
     private var userSession: Session?
@@ -243,7 +249,7 @@ final class UnlockViewController: UIViewController {
             return false
         }
 
-        onGranted?()
+        delegate?.unlockViewControllerDidUnlock()
 
         return true
     }

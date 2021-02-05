@@ -40,7 +40,7 @@ protocol ModuleInterface {
 extension ModuleInterface {
 
     static func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View) {
-        router.viewController = view
+        router.view = (view as! Self.Router.View)
         interactor.presenter = (presenter as! Self.Interactor.PresenterInteractor)
         presenter.interactor = (interactor as! Self.Presenter.InteractorPresenter)
         presenter.router = (router as! Self.Presenter.RouterPresenter)
@@ -57,9 +57,11 @@ extension ModuleInterface {
 
 protocol RouterInterface: RouterPresenterInterface {
 
+    associatedtype View: UIViewController
+
     /// A weak reference to the view controller
 
-    var viewController: UIViewController? { get set }
+    var view: View! { get set }
 
 }
 

@@ -37,8 +37,6 @@ enum AppLockModule: ModuleInterface {
 
         assemble(router: router, interactor: interactor, presenter: presenter, view: view)
 
-        router.viewController = view
-
         return view
     }
 
@@ -48,7 +46,7 @@ enum AppLockModule: ModuleInterface {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    func present(_ module: AppLockModule.Module, then completion: @escaping () -> Void)
+    func present(_ module: AppLockModule.Module)
 
 }
 
@@ -114,7 +112,9 @@ extension AppLockModule {
 
         case viewDidLoad
         case unlockButtonTapped
-
+        case passcodeSetupCompleted
+        case customPasscodeVerified
+        case configChangeAcknowledged
     }
 
 }

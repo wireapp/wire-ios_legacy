@@ -38,24 +38,17 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
     func handle(_ result: AppLockModule.Result) {
         switch result {
         case let .customPasscodeCreationNeeded(shouldInform):
-            router.present(.createPasscode(shouldInform: shouldInform), then: openAppLock)
+            router.present(.createPasscode(shouldInform: shouldInform))
 
-        case let .readyForAuthentication(shouldInform):
-            let authenticate = {
-                self.view.refresh(with: .authenticating)
-                self.interactor.execute(.evaluateAuthentication)
-            }
+        case .readyForAuthentication(shouldInform: true):
+            router.present(.informUserOfConfigChange)
 
-            guard shouldInform else {
-                authenticate()
-                return
-            }
-
-            router.present(.informUserOfConfigChange, then: authenticate)
+        case .readyForAuthentication:
+            authenticate()
 
         case .customPasscodeNeeded:
             view.refresh(with: .locked(.passcode))
-            router.present(.inputPasscode, then: openAppLock)
+            router.present(.inputPasscode)
 
         case .authenticationDenied:
             view.refresh(with: .locked(interactor.currentAuthenticationType))
@@ -67,6 +60,11 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
     private func openAppLock() {
         interactor.execute(.openAppLock)
+    }
+
+    private func authenticate() {
+        view.refresh(with: .authenticating)
+        interactor.execute(.evaluateAuthentication)
     }
 
 }
@@ -83,6 +81,15 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
         case .unlockButtonTapped:
             interactor.execute(.initiateAuthentication)
+
+        case .passcodeSetupCompleted:
+            interactor.execute(.openAppLock)
+
+        case .customPasscodeVerified:
+            interactor.execute(.openAppLock)
+
+        case .configChangeAcknowledged:
+            authenticate()
         }
     }
 
