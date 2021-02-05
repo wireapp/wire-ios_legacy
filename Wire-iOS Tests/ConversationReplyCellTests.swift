@@ -443,7 +443,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysErrorForUnsupportedMessageType_57() {
         // GIVEN
-        let message = MockMessageFactory.pingMessage()!
+        let message = MockMessageFactory.pingMessage()
         message.senderUser = MockUserType.createUser(name: "Bruno")
         message.conversation = otherUserConversation
 

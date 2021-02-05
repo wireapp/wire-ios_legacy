@@ -47,6 +47,8 @@ class SwiftMockConversation: NSObject, Conversation  {
 
     var isUnderLegalHold: Bool = false
     var securityLevel: ZMConversationSecurityLevel = .notSecure
+
+    var mutedMessageTypes: MutedMessageTypes = .none
 }
 
 final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {
@@ -62,14 +64,12 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
     var sortedServiceUsers: [UserType] = []
 
     var hasReadReceiptsEnabled: Bool = false
-
-    var mutedMessageTypes: MutedMessageTypes = .none
 }
 
-final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation {
+final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation, TypingStatusProvider {
     
     var typingUsers: [UserType] = []
-    
+
     var hasDraftMessage: Bool = false
         
     var draftMessage: DraftMessage?

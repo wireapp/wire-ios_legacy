@@ -35,7 +35,7 @@ final class ConversationAvatarViewTests: XCTestCase {
 
     func testThatItRendersNoUserImages() {
         // GIVEN
-        let conversation = MockConversationAvatarViewConversation()
+        let conversation = MockStableRandomParticipantsConversation()
 
         // WHEN
         sut.configure(context: .conversation(conversation: conversation))
@@ -46,7 +46,7 @@ final class ConversationAvatarViewTests: XCTestCase {
 
     func testThatItRendersSomeAndThenNoUserImages() {
         // GIVEN
-        let otherUserConversation = MockConversationAvatarViewConversation()
+        let otherUserConversation = MockStableRandomParticipantsConversation()
 
         // WHEN
         sut.configure(context: .conversation(conversation: otherUserConversation))
@@ -56,7 +56,7 @@ final class ConversationAvatarViewTests: XCTestCase {
 
         // AND WHEN
 
-        let conversation = MockConversationAvatarViewConversation()
+        let conversation = MockStableRandomParticipantsConversation()
 
         sut.configure(context: .conversation(conversation: conversation))
 
@@ -66,7 +66,7 @@ final class ConversationAvatarViewTests: XCTestCase {
 
     func testThatItRendersSingleUserImage() {
         // GIVEN
-        let otherUserConversation = MockConversationAvatarViewConversation()
+        let otherUserConversation = MockStableRandomParticipantsConversation()
         let otherUser = MockUserType.createDefaultOtherUser()
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
@@ -85,7 +85,7 @@ final class ConversationAvatarViewTests: XCTestCase {
         otherUser.accentColorValue = .strongLimeGreen
         otherUser.isConnected = false
         otherUser.isPendingApprovalBySelfUser = true
-        let otherUserConversation = MockConversationAvatarViewConversation()
+        let otherUserConversation = MockStableRandomParticipantsConversation()
         otherUserConversation.conversationType = .connection
         otherUserConversation.stableRandomParticipants = [otherUser]
 
@@ -106,7 +106,7 @@ final class ConversationAvatarViewTests: XCTestCase {
         XCTAssert(otherUser.isServiceUser)
 
         otherUser.accentColorValue = .strongLimeGreen
-        let otherUserConversation = MockConversationAvatarViewConversation()
+        let otherUserConversation = MockStableRandomParticipantsConversation()
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.stableRandomParticipants = [otherUser]
 
@@ -119,7 +119,7 @@ final class ConversationAvatarViewTests: XCTestCase {
 
     func testThatItRendersTwoUserImages() {
         // GIVEN
-        let conversation = MockConversationAvatarViewConversation()
+        let conversation = MockStableRandomParticipantsConversation()
         let otherUser = MockUserType.createDefaultOtherUser()
         let thirdUser = MockUserType.createConnectedUser(name: "Anna")
         thirdUser.accentColorValue = .vividRed
@@ -135,7 +135,7 @@ final class ConversationAvatarViewTests: XCTestCase {
     func testThatItRendersManyUsers() {
         // GIVEN
 
-        let conversation = MockConversationAvatarViewConversation()
+        let conversation = MockStableRandomParticipantsConversation()
         conversation.stableRandomParticipants = XCTestCase.usernames.map {MockUserType.createConnectedUser(name: $0)}
 
         (conversation.stableRandomParticipants[0] as! MockUserType).accentColorValue = .vividRed
