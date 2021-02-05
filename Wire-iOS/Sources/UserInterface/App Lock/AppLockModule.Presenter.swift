@@ -58,15 +58,6 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
         }
     }
 
-    private func openAppLock() {
-        interactor.execute(request: .openAppLock)
-    }
-
-    private func authenticate() {
-        view.refresh(with: .authenticating)
-        interactor.execute(request: .evaluateAuthentication)
-    }
-
 }
 
 // MARK: - Process event
@@ -75,21 +66,26 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func process(event: AppLockModule.Event) {
         switch event {
-        case .viewDidLoad:
+        case .viewDidLoad, .unlockButtonTapped:
             interactor.execute(request: .initiateAuthentication)
 
-        case .unlockButtonTapped:
-            interactor.execute(request: .initiateAuthentication)
-
-        case .passcodeSetupCompleted:
-            interactor.execute(request: .openAppLock)
-
-        case .customPasscodeVerified:
+        case .passcodeSetupCompleted, .customPasscodeVerified:
             interactor.execute(request: .openAppLock)
 
         case .configChangeAcknowledged:
             authenticate()
         }
+    }
+
+}
+
+// MARK: - Helpers
+
+extension AppLockModule.Presenter {
+
+    private func authenticate() {
+        view.refresh(with: .authenticating)
+        interactor.execute(request: .evaluateAuthentication)
     }
 
 }
