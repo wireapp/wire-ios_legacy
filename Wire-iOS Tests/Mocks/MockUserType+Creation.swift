@@ -69,7 +69,8 @@ extension MockUserType {
     ///
     /// - Returns: A standard mock user object with default values.
 
-    class func createUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
+    class func createUser(name: String,
+                          inTeam teamID: UUID? = nil) -> MockUserType {
         let user = MockUserType()
         user.name = name
         user.displayName = name

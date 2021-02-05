@@ -21,8 +21,8 @@ import XCTest
 @testable import Wire
 
 extension SelfUser {
-    static func setupMockSelfUser() {
-        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen"))
+    static func setupMockSelfUser(inTeam teamID: UUID? = nil) {
+        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen", inTeam: teamID))
     }
 }
 
