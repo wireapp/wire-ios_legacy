@@ -249,6 +249,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
     func test_PresenterIsInformed_OfAllUnsuccessfulAuthenticationResults() {
         // Given
         session.lock = .screen
+        authenticationType.current = .faceID
 
         let authenticationResults: [AppLockModule.AuthenticationResult] = [
             .denied,
@@ -264,7 +265,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         }
 
         // Then
-        XCTAssertEqual(presenter.results, [.authenticationDenied, .customPasscodeNeeded, .authenticationUnavailable])
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID), .customPasscodeNeeded, .authenticationUnavailable])
     }
 
     // MARK: - Open app lock

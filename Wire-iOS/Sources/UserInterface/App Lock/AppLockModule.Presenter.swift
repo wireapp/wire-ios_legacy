@@ -50,8 +50,8 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
             view.refresh(with: .locked(.passcode))
             router.present(.inputPasscode)
 
-        case .authenticationDenied:
-            view.refresh(with: .locked(interactor.currentAuthenticationType))
+        case let .authenticationDenied(authenticationType):
+            view.refresh(with: .locked(authenticationType))
 
         case .authenticationUnavailable:
             view.refresh(with: .locked(.unavailable))
@@ -76,7 +76,6 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
     func processEvent(_ event: AppLockModule.Event) {
         switch event {
         case .viewDidLoad:
-            view.refresh(with: .locked(interactor.currentAuthenticationType))
             interactor.execute(.initiateAuthentication)
 
         case .unlockButtonTapped:

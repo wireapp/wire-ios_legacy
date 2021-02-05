@@ -60,8 +60,6 @@ protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    var currentAuthenticationType: AuthenticationType { get }
-
     func execute(_ request: AppLockModule.Request)
 
 }
@@ -86,7 +84,7 @@ extension AppLockModule {
 
         case customPasscodeCreationNeeded(shouldInform: Bool)
         case readyForAuthentication(shouldInform: Bool)
-        case authenticationDenied
+        case authenticationDenied(AuthenticationType)
         case authenticationUnavailable
         case customPasscodeNeeded
 

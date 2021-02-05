@@ -87,11 +87,8 @@ final class AppLockModulePresenterTests: XCTestCase {
     // MARK: - Authentication evaluated
 
     func test_ItSetsTheViewStateToLocked_WhenAuthenticationDenied() {
-        // Given
-        interactor.currentAuthenticationType = .faceID
-        
         // When
-        sut.handle(.authenticationDenied)
+        sut.handle(.authenticationDenied(.faceID))
 
         // Then
         XCTAssertEqual(view.methodCalls.refresh, [.locked(.faceID)])
@@ -124,7 +121,6 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.viewDidLoad)
 
         // Then
-        XCTAssertEqual(view.methodCalls.refresh, [.locked(.faceID)])
         XCTAssertEqual(interactor.requests, [.initiateAuthentication])
     }
 

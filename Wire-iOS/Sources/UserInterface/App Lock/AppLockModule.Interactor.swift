@@ -71,7 +71,7 @@ extension AppLockModule {
 
         private var needsToCreateCustomPasscode: Bool {
             guard !appLock.isCustomPasscodeSet else { return false }
-            return appLock.requireCustomPasscode || currentAuthenticationType == .unavailable
+            return appLock.requireCustomPasscode || authenticationType.current == .unavailable
         }
 
     }
@@ -81,10 +81,6 @@ extension AppLockModule {
 // MARK: - API for presenter
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
-
-    var currentAuthenticationType: AuthenticationType {
-        return authenticationType.current
-    }
 
     func execute(_ request: AppLockModule.Request) {
         switch request {
@@ -121,7 +117,7 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
                 self.openAppLock()
 
             case .denied:
-                self.presenter.handle(.authenticationDenied)
+                self.presenter.handle(.authenticationDenied(self.authenticationType.current))
 
             case .needCustomPasscode:
                 self.presenter.handle(.customPasscodeNeeded)
