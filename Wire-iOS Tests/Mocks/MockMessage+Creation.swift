@@ -35,11 +35,12 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
-        let message = MockMessage()
+    class func messageTemplate<T: MockMessage>(sender: UserType? = nil) -> T {
+        let message = T()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
+        message.conversationLike = message.conversation
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
 
         if let sender = sender as? ZMUser {
@@ -57,14 +58,14 @@ final class MockMessageFactory {
         return message
     }
 
-    class func fileTransferMessage(sender: UserType? = nil) -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
+    class func fileTransferMessage<T: MockMessage>(sender: UserType? = nil) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
-        message?.backingFileMessageData = MockFileMessageData()
+        message.backingFileMessageData = MockFileMessageData()
         return message
     }
 
-    class func imageMessage(sender: UserType? = nil, with image: UIImage?) -> MockMessage? {
+    class func imageMessage<T: MockMessage>(sender: UserType? = nil, with image: UIImage?) -> T {
         let imageData = MockImageMessageData()
         if let image = image, let data = image.imageData {
             imageData.mockImageData = data
@@ -74,16 +75,16 @@ final class MockMessageFactory {
             imageData.isDownloaded = false
         }
 
-        let message: MockMessage? = imageMessage(sender: sender)
-        message?.imageMessageData = imageData
+        let message: T = imageMessage(sender: sender)
+        message.imageMessageData = imageData
 
         return message
     }
 
-    class func imageMessage(sender: UserType? = nil) -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
+    class func imageMessage<T: MockMessage>(sender: UserType? = nil) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
-        message?.imageMessageData = MockImageMessageData()
+        message.imageMessageData = MockImageMessageData()
 
         return message
     }
@@ -134,8 +135,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func locationMessage(sender: MockUserType? = nil) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+    class func locationMessage<T: MockMessage>(sender: MockUserType? = nil) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
         message.backingLocationMessageData = MockLocationMessageData()
         return message
@@ -146,12 +147,12 @@ final class MockMessageFactory {
         return message
     }
 
-    class func videoMessage(sender: UserType? = nil,
-                            previewImage: UIImage? = nil) -> MockMessage? {
-        let message: MockMessage? = fileTransferMessage(sender: sender)
-        message?.backingFileMessageData.mimeType = "video/mp4"
-        message?.backingFileMessageData.filename = "vacation.mp4"
-        message?.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
+    class func videoMessage<T: MockMessage>(sender: UserType? = nil,
+                            previewImage: UIImage? = nil) -> T {
+        let message: T = fileTransferMessage(sender: sender)
+        message.backingFileMessageData.mimeType = "video/mp4"
+        message.backingFileMessageData.filename = "vacation.mp4"
+        message.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
         return message
     }
 
@@ -161,18 +162,10 @@ final class MockMessageFactory {
         return message
     }
 
-    class func textMessage(includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        return self.textMessage(withText: "Just a random text message", includingRichMedia: shouldIncludeRichMedia)
-    }
-
-    class func textMessage(withText text: String?) -> MockMessage? {
-        return MockMessageFactory.textMessage(withText: text, includingRichMedia: false)
-    }
-
-    class func textMessage(withText text: String?,
+    class func textMessage<T: MockMessage>(withText text: String? = "Just a random text message",
                            sender: UserType? = nil,
-                           includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> T {
+        let message: T = MockMessageFactory.messageTemplate(sender: sender)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!
@@ -261,15 +254,15 @@ final class MockMessageFactory {
     }
 
     class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
-        let fileMessage = MockMessageFactory.fileTransferMessage()
-        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
-        fileMessage?.backingFileMessageData.filename = "sound.m4a"
+        let fileMessage: MockMessage = MockMessageFactory.fileTransferMessage()
+        fileMessage.backingFileMessageData.mimeType = "audio/x-m4a"
+        fileMessage.backingFileMessageData.filename = "sound.m4a"
 
         if let config = config {
-            config(fileMessage!)
+            config(fileMessage)
         }
 
-        return fileMessage!
+        return fileMessage
     }
 
 }

@@ -32,7 +32,17 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String?
     var mentions = [Mention]()
-    var quote: ZMMessage?
+    var quote: ZMMessage? {
+        get {
+            XCTFail("This property should not be used in tests")
+            return nil
+        }
+        
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var quoteMessage: ZMConversationMessage?
     var isQuotingSelf: Bool = false
     var hasQuote: Bool = false
 
@@ -55,7 +65,6 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
 }
 
 final class MockSystemMessageData: NSObject, ZMSystemMessageData {
-
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser> {
@@ -291,7 +300,7 @@ final class MockLocationMessageData: NSObject, LocationMessageData {
     var zoomLevel: Int32 = 0
 }
 
-final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
+class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
@@ -304,10 +313,10 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var sender: ZMUser? {
         get {
             XCTFail("This property should not be used in tests")
-            
+
             return nil
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }
@@ -321,7 +330,10 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
+
     var conversation: ZMConversation? = .none
+    var conversationLike: ConversationLike? = .none
+
     var deliveryState: ZMDeliveryState = .delivered
 
     var imageMessageData: ZMImageMessageData? = .none
@@ -361,7 +373,7 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
 
     var replies: Set<ZMMessage> = Set()
 
-    var usersReaction: [String: [ZMUser]] {
+    var usersReaction: [String: [UserType]] {
         return backingUsersReaction
     }
 
@@ -400,4 +412,8 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var hasBeenDeleted = false
 
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
+
+    required override init() {
+
+    }
 }

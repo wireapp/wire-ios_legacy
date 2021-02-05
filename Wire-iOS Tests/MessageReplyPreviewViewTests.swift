@@ -60,25 +60,25 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTextMessagePreview() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersTextMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersEmojiOnly() {
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")!
+        let message = MockMessageFactory.textMessage(withText: "😀🌮")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersEmojiOnly_dark() {
         activateDarkColorScheme()
 
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")!
+        let message = MockMessageFactory.textMessage(withText: "😀🌮")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
@@ -105,35 +105,35 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersTextMessagePreview_LongText() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersTextMessagePreview_LongText_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersFileMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersFileMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersLocationMessagePreview() {
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
     func testThatItRendersLocationMessagePreview_dark() {
         activateDarkColorScheme()
-        let message = MockMessageFactory.locationMessage()!
+        let message = MockMessageFactory.locationMessage()
         verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
@@ -142,7 +142,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
         article.title = "You won't believe what happened next!"
 
-        let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")!
+        let message = MockMessageFactory.textMessage(withText: "https://www.example.com/article/1")
         message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
@@ -156,7 +156,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
 
     func testThatItRendersImageMessagePreview() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
 
         let previewView = message.replyPreview()!
         XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
@@ -165,7 +165,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersVideoMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
@@ -177,7 +177,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersAudioMessagePreview() {
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "audio/x-m4a"
         message.backingFileMessageData.filename = "vacation.m4a"
         
@@ -188,8 +188,8 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
     
     func testDeallocation() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
-        self.verifyDeallocation {
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
+        verifyDeallocation {
             return message.replyPreview()!
         }
     }

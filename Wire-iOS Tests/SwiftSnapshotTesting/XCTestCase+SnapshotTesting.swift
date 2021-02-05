@@ -54,7 +54,7 @@ extension XCTestCase {
                               file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-        
+
         for(config, name) in XCTestCase.phoneConfigNames {
             verify(matching: value, as: .image(on: config), named: name,
                    file: file,
@@ -62,7 +62,6 @@ extension XCTestCase {
                    line: line)
         }
     }
-    
 
     func verifyAllIPhoneSizes(createSut: (CGSize) -> UIViewController,
                               file: StaticString = #file,
@@ -91,7 +90,9 @@ extension XCTestCase {
                 (deviceMockable.device as? MockDevice)?.userInterfaceIdiom = config.traits.userInterfaceIdiom
             }
 
-            verify(matching: value, as: .image(on: config), named: name,
+            verify(matching: value,
+                   as: .image(on: config),
+                   named: name,
                    file: file,
                    testName: testName,
                    line: line)
@@ -153,7 +154,7 @@ extension XCTestCase {
                            file: file,
                            testName: testName,
                            line: line)
-        
+
         ColorScheme.default.variant = .light
 
         verify(matching: createSut(),
@@ -169,7 +170,7 @@ extension XCTestCase {
                             testName: String = #function,
                             line: UInt = #line) {
         ColorScheme.default.variant = .dark
-        
+
         verify(matching: createSut(),
                named: name,
                file: file,

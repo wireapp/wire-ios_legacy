@@ -97,7 +97,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         let context = belongsToTeam ? teamTest : nonTeamTest
 
         context {
-            let message = MockMessageFactory.textMessage(withText: "Message")!
+            let message = MockMessageFactory.textMessage(withText: "Message")
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
             block(message)
@@ -108,7 +108,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         let context = belongsToTeam ? teamTest : nonTeamTest
 
         context {
-            let message = MockMessageFactory.textMessage(withText: "Message")!
+            let message = MockMessageFactory.textMessage(withText: "Message")
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = otherUserConversation
             block(message)

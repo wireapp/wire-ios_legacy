@@ -20,6 +20,12 @@
 import XCTest
 @testable import Wire
 
+extension SelfUser {
+    static func setupMockSelfUser() {
+        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen"))
+    }
+}
+
 final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
@@ -31,8 +37,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-
-        MockUser.mockSelf()?.name = "Tarja Turunen"
+        SelfUser.setupMockSelfUser()
 
         snapshotBackgroundColor = UIColor.white
     
@@ -66,7 +71,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItDisplaysCorrectToolbarForImage_Ephemeral() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = true
         sut.currentMessage = message
         
@@ -82,7 +87,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     func testThatToolBarIsUpdateAfterScollToAnEphemeralImage() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = false
         sut.currentMessage = message
 
