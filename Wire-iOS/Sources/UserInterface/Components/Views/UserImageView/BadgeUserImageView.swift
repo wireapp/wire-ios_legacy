@@ -105,7 +105,7 @@ final class BadgeUserImageView: UserImageView {
 
     /// Updates the badge icon.
     private func updateBadgeIcon() {
-        guard let user = self.user else {
+        guard let user = user else {
             badgeIcon = .none
             return
         }
