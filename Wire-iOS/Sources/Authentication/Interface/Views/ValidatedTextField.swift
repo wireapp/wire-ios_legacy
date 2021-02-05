@@ -30,11 +30,11 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-protocol AccessoryTextFieldDelegate: class {
+protocol ValidatedTextFieldDelegate: class {
     func buttonPressed(_ sender: UIButton)
 }
 
-final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable {
+final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)
@@ -46,7 +46,7 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
 
     let textFieldValidator: TextFieldValidator
     weak var textFieldValidationDelegate: TextFieldValidationDelegate?
-    weak var accessoryTextFieldDelegate: AccessoryTextFieldDelegate?
+    weak var validatedTextFieldDelegate: ValidatedTextFieldDelegate?
 
     // MARK: - UI constants
 
@@ -88,14 +88,14 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
     }
 
     /// The other text field that needs to be valid in order to enable the confirm button.
-    private weak var boundTextField: AccessoryTextField?
+    private weak var boundTextField: ValidatedTextField?
 
     /**
      * Binds the state of the confirmation button to the validity of another text field.
      * The button will be enabled when both the current and bound fields are valid.
      */
 
-    func bindConfirmationButton(to textField: AccessoryTextField) {
+    func bindConfirmationButton(to textField: ValidatedTextField) {
         assert(boundTextField == nil, "A text field cannot be bound to another text field more than once.")
         self.boundTextField = textField
         textField.boundTextField = self
@@ -109,7 +109,7 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
         case .passcode:
             iconButton = IconButton(style: .default, variant: .light)
             iconButton.accessibilityIdentifier = "RevealButton"
-            iconButton.accessibilityLabel = "Reveal passcode".localized
+            iconButton.accessibilityLabel = "Reveal passcode"
             iconButton.isEnabled = true
         default:
             iconButton = IconButton(style: .circular, variant: .dark)
@@ -156,9 +156,9 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
         self.kind = kind
         self.accessoryTrailingInset = accessoryTrailingInset
 
-        let textFieldAttributes = BaseAccessoryTextField.Attributes(textFont: AccessoryTextField.enteredTextFont,
+        let textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
                                                                     textColor: UIColor.Team.textColor,
-                                                                    placeholderFont: AccessoryTextField.placeholderFont,
+                                                                    placeholderFont: ValidatedTextField.placeholderFont,
                                                                     placeholderColor: UIColor.Team.placeholderColor,
                                                                     backgroundColor: UIColor.Team.textfieldColor,
                                                                     cornerRadius: cornerRadius ?? 0)
@@ -278,10 +278,10 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
         addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 
         NSLayoutConstraint.activate([
-            confirmButton.widthAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
-            confirmButton.heightAnchor.constraint(equalToConstant: AccessoryTextField.ConfirmButtonWidth),
-            guidanceDot.widthAnchor.constraint(equalToConstant: AccessoryTextField.GuidanceDotWidth),
-            guidanceDot.heightAnchor.constraint(equalToConstant: AccessoryTextField.GuidanceDotWidth)
+            confirmButton.widthAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
+            confirmButton.heightAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
+            guidanceDot.widthAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth),
+            guidanceDot.heightAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth)
         ])
     }
 
@@ -313,7 +313,7 @@ final class AccessoryTextField: BaseAccessoryTextField, TextContainer, Themeable
 
     @objc
     private func confirmButtonTapped(button: UIButton) {
-        accessoryTextFieldDelegate?.buttonPressed(button)
+        validatedTextFieldDelegate?.buttonPressed(button)
         validateInput()
     }
 

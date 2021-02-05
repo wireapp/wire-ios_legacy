@@ -20,11 +20,11 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol AccessoryTextFieldDelegate: class {
+protocol PasscodeTextFieldDelegate: class {
     func textFieldValueChanged(_ value: String?)
 }
 
-class AccessoryTextField: BaseAccessoryTextField {
+class PasscodeTextField: AccessoryTextField {
     
     // MARK: - Constants
     
@@ -32,7 +32,7 @@ class AccessoryTextField: BaseAccessoryTextField {
     
     // MARK: - Properties
     
-    weak var accessoryTextFieldDelegate: AccessoryTextFieldDelegate?
+    weak var passcodeTextFieldDelegate: PasscodeTextFieldDelegate?
     
     var revealButtonIcon: StyleKitIcon? {
         didSet {
@@ -49,7 +49,7 @@ class AccessoryTextField: BaseAccessoryTextField {
         iconButton.adjustsImageWhenDisabled = false
         
         iconButton.accessibilityIdentifier = "passcode_text_field.button.reveal"
-        iconButton.accessibilityLabel = "Reveal passcode".localized
+        iconButton.accessibilityLabel = "share_extension.unlock.reveal_passcode".localized
         iconButton.isEnabled = true
         return iconButton
     }()
@@ -90,7 +90,7 @@ class AccessoryTextField: BaseAccessoryTextField {
     
     @objc
     override func textFieldDidChange(textField: UITextField) {
-        accessoryTextFieldDelegate?.textFieldValueChanged(input)
+        passcodeTextFieldDelegate?.textFieldValueChanged(input)
     }
     
     @objc
@@ -102,7 +102,7 @@ class AccessoryTextField: BaseAccessoryTextField {
 
 // MARK: - Private methods
 
-extension AccessoryTextField {
+extension PasscodeTextField {
     
     private func updateButtonIcon() {
         revealButton.setIcon(revealButtonIcon, size: .tiny, for: .normal)
@@ -112,22 +112,22 @@ extension AccessoryTextField {
 
 // MARK: - Helpers
 
-extension AccessoryTextField {
+extension PasscodeTextField {
     
-    static func createPasscodeTextField(delegate: AccessoryTextFieldDelegate?) -> AccessoryTextField {
-        let textFieldAttributes = BaseAccessoryTextField.Attributes(textFont: UIFont.systemFont(ofSize: 12),
+    static func createPasscodeTextField(delegate: PasscodeTextFieldDelegate?) -> PasscodeTextField {
+        let textFieldAttributes = AccessoryTextField.Attributes(textFont: UIFont.systemFont(ofSize: 12),
                                                                     textColor: UIColor.Team.textColor,
                                                                     placeholderFont: UIFont.systemFont(ofSize: 12),
                                                                     placeholderColor: UIColor.Team.placeholderColor,
                                                                     backgroundColor: UIColor.Team.textfieldColor,
                                                                     cornerRadius: 4)
         
-        let textField = AccessoryTextField(leftInset: 0,
+        let textField = PasscodeTextField(leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            textFieldAttributes: textFieldAttributes)
 
         textField.revealButtonIcon = StyleKitIcon.AppLock.reveal
-        textField.accessoryTextFieldDelegate = delegate
+        textField.passcodeTextFieldDelegate = delegate
 
         textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true
 

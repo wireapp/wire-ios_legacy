@@ -440,11 +440,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     
     private func presentChooseConversation() {
         requireLocalAuthenticationIfNeeded { [weak self] in
-            guard let `self` = self else { return }
+            guard let `self` = self,
+                self.localAuthenticationStatus == .granted else { return }
             
-            if self.localAuthenticationStatus != .denied {
-                self.showChooseConversation()
-            }
+            self.showChooseConversation()
         }
     }
     

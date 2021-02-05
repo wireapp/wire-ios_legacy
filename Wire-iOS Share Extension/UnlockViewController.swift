@@ -52,8 +52,8 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    private lazy var accessoryTextField: AccessoryTextField = {
-        let textField = AccessoryTextField.createPasscodeTextField(delegate: self)
+    private lazy var passcodeTextField: PasscodeTextField = {
+        let textField = PasscodeTextField.createPasscodeTextField(delegate: self)
         textField.isSecureTextEntry = true
         textField.autocapitalizationType = .none
         
@@ -138,7 +138,7 @@ extension UnlockViewController {
         
         [titleLabel,
          hintLabel,
-         accessoryTextField,
+         passcodeTextField,
          errorLabel,
          unlockButton].forEach(stackView.addArrangedSubview)
         
@@ -177,9 +177,9 @@ extension UnlockViewController {
     
     private func setupInitialStates() {
         errorLabel.text = " "
-        accessoryTextField.text = ""
+        passcodeTextField.text = ""
         unlockButton.isEnabled = false
-        accessoryTextField.becomeFirstResponder()
+        passcodeTextField.becomeFirstResponder()
     }
     
 }
@@ -194,7 +194,7 @@ extension UnlockViewController {
     }
     
     private func unlock() {
-        guard let passcode = accessoryTextField.text else { return }
+        guard let passcode = passcodeTextField.text else { return }
         callback?(passcode)
     }
     
@@ -209,9 +209,9 @@ extension UnlockViewController {
     
 }
 
-// MARK: - AccessoryTextFieldDelegate
+// MARK: - PasscodeTextFieldDelegate
 
-extension UnlockViewController: AccessoryTextFieldDelegate {
+extension UnlockViewController: PasscodeTextFieldDelegate {
     
     func textFieldValueChanged(_ value: String?) {
         errorLabel.text = " "

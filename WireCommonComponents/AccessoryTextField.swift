@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-open class BaseAccessoryTextField: UITextField {
+open class AccessoryTextField: UITextField {
     
     public struct Attributes {
         let textFont: UIFont
@@ -112,7 +112,7 @@ open class BaseAccessoryTextField: UITextField {
 
 // MARK: - View creation
 
-extension BaseAccessoryTextField {
+extension AccessoryTextField {
     
     private func setupViews() {
         addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
@@ -161,7 +161,7 @@ extension BaseAccessoryTextField {
 
 // MARK: - Custom edge insets
 
-extension BaseAccessoryTextField {
+extension AccessoryTextField {
     public override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
         
@@ -176,7 +176,7 @@ extension BaseAccessoryTextField {
 
 // MARK: - Placeholder
 
-extension BaseAccessoryTextField {
+extension AccessoryTextField {
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: textFieldAttributes.placeholderColor,
                                                         .font: textFieldAttributes.placeholderFont]
@@ -201,7 +201,7 @@ extension BaseAccessoryTextField {
 
 // MARK: - Right and left accessory
 
-extension BaseAccessoryTextField {
+extension AccessoryTextField {
     func rightAccessoryViewRect(forBounds bounds: CGRect, isLeftToRight: Bool) -> CGRect {
         let contentSize = accessoryContainer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         
