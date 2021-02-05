@@ -38,7 +38,7 @@ extension AppLockModule {
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpViews()
-            presenter.processEvent(.viewDidLoad)
+            presenter.process(event: .viewDidLoad)
         }
 
         // MARK: - Methods
@@ -49,7 +49,7 @@ extension AppLockModule {
             lockView.fitInSuperview()
 
             lockView.onReauthRequested = { [weak self] in
-                self?.presenter.processEvent(.unlockButtonTapped)
+                self?.presenter.process(event: .unlockButtonTapped)
             }
         }
 
@@ -118,7 +118,7 @@ extension AppLockModule.View: AppLockViewPresenterInterface {
 extension AppLockModule.View: PasscodeSetupViewControllerDelegate {
 
     func passcodeSetupControllerDidFinish() {
-        presenter.processEvent(.passcodeSetupCompleted)
+        presenter.process(event: .passcodeSetupCompleted)
     }
 
     func passcodeSetupControllerWasDismissed() {
@@ -130,7 +130,7 @@ extension AppLockModule.View: PasscodeSetupViewControllerDelegate {
 extension AppLockModule.View: UnlockViewControllerDelegate {
 
     func unlockViewControllerDidUnlock() {
-        presenter.processEvent(.customPasscodeVerified)
+        presenter.process(event: .customPasscodeVerified)
     }
 
 }
@@ -138,7 +138,7 @@ extension AppLockModule.View: UnlockViewControllerDelegate {
 extension AppLockModule.View: AppLockChangeWarningViewControllerDelegate {
 
     func appLockChangeWarningViewControllerDidDismiss() {
-        presenter.processEvent(.configChangeAcknowledged)
+        presenter.process(event: .configChangeAcknowledged)
     }
 
 }

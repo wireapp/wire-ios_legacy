@@ -35,20 +35,20 @@ extension AppLockModule {
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
-    func handle(_ result: AppLockModule.Result) {
+    func handle(result: AppLockModule.Result) {
         switch result {
         case let .customPasscodeCreationNeeded(shouldInform):
-            router.present(.createPasscode(shouldInform: shouldInform))
+            router.perform(action: .createPasscode(shouldInform: shouldInform))
 
         case .readyForAuthentication(shouldInform: true):
-            router.present(.informUserOfConfigChange)
+            router.perform(action: .informUserOfConfigChange)
 
         case .readyForAuthentication:
             authenticate()
 
         case .customPasscodeNeeded:
             view.refresh(with: .locked(.passcode))
-            router.present(.inputPasscode)
+            router.perform(action: .inputPasscode)
 
         case let .authenticationDenied(authenticationType):
             view.refresh(with: .locked(authenticationType))
@@ -59,12 +59,12 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
     }
 
     private func openAppLock() {
-        interactor.execute(.openAppLock)
+        interactor.execute(request: .openAppLock)
     }
 
     private func authenticate() {
         view.refresh(with: .authenticating)
-        interactor.execute(.evaluateAuthentication)
+        interactor.execute(request: .evaluateAuthentication)
     }
 
 }
@@ -73,19 +73,19 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
-    func processEvent(_ event: AppLockModule.Event) {
+    func process(event: AppLockModule.Event) {
         switch event {
         case .viewDidLoad:
-            interactor.execute(.initiateAuthentication)
+            interactor.execute(request: .initiateAuthentication)
 
         case .unlockButtonTapped:
-            interactor.execute(.initiateAuthentication)
+            interactor.execute(request: .initiateAuthentication)
 
         case .passcodeSetupCompleted:
-            interactor.execute(.openAppLock)
+            interactor.execute(request: .openAppLock)
 
         case .customPasscodeVerified:
-            interactor.execute(.openAppLock)
+            interactor.execute(request: .openAppLock)
 
         case .configChangeAcknowledged:
             authenticate()

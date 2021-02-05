@@ -25,12 +25,12 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
-        var modules = [Module]()
+        var actions = [Action]()
 
         // MARK: - Methods
 
-        func present(_ module: AppLockModule.Module) {
-            modules.append(module)
+        func perform(action: AppLockModule.Action) {
+            actions.append(action)
         }
 
     }

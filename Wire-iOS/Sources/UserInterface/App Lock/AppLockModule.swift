@@ -46,7 +46,7 @@ enum AppLockModule: ModuleInterface {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    func present(_ module: AppLockModule.Module)
+    func perform(action: AppLockModule.Action)
 
 }
 
@@ -54,13 +54,13 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
 protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
-    func handle(_ result: AppLockModule.Result)
+    func handle(result: AppLockModule.Result)
 
 }
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    func execute(_ request: AppLockModule.Request)
+    func execute(request: AppLockModule.Request)
 
 }
 
@@ -74,7 +74,7 @@ protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
 protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
-    func processEvent(_ event: AppLockModule.Event)
+    func process(event: AppLockModule.Event)
 
 }
 
@@ -98,7 +98,7 @@ extension AppLockModule {
 
     }
 
-    enum Module: Equatable {
+    enum Action: Equatable {
 
         case createPasscode(shouldInform: Bool)
         case inputPasscode

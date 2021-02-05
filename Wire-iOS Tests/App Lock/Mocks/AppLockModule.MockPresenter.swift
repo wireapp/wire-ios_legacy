@@ -30,11 +30,11 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        func handle(_ result: AppLockModule.Result) {
+        func handle(result: AppLockModule.Result) {
             results.append(result)
         }
 
-        func processEvent(_ event: AppLockModule.Event) {
+        func process(event: AppLockModule.Event) {
             events.append(event)
         }
 
