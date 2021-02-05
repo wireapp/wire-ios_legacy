@@ -71,7 +71,7 @@ final class ProfileViewController: UIViewController {
 
     convenience init(user: UserType,
                      viewer: UserType,
-                     conversation: ZMConversation? = nil,
+                     conversation: Conversation? = nil,
                      context: ProfileViewControllerContext? = nil,
                      viewControllerDismisser: ViewControllerDismisser? = nil) {
         let profileViewControllerContext: ProfileViewControllerContext
@@ -408,7 +408,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Notifications
     
     private func presentNotificationsOptions(from targetView: UIView) {
-        guard let conversation = viewModel.conversation else { return }
+        guard let conversation = viewModel.conversation as? ZMConversation else { return }
         
         let title = "\(conversation.displayName) • \(NotificationResult.title)"
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
@@ -419,7 +419,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Delete Contents
     
     private func presentDeleteConfirmationPrompt(from targetView: UIView) {
-        guard let conversation = viewModel.conversation else { return }
+        guard let conversation = viewModel.conversation as? ZMConversation else { return }
         
         let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
         ClearContentResult.options(for: conversation).map { $0.action(viewModel.handleDeleteResult) }.forEach(controller.addAction)
@@ -430,7 +430,9 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Remove User
     
     private func presentRemoveUserMenuSheetController(from view: UIView) {
-        let otherUser = viewModel.user
+		guard let conversation = viewModel.conversation as? ZMConversation else { return }
+
+		let otherUser = viewModel.user
         
         let controller = UIAlertController(
             title: "profile.remove_dialog_message".localized(args: otherUser.name ?? ""),
@@ -439,7 +441,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         )
         
         let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
-            self.viewModel.conversation?.removeOrShowError(participant: otherUser) { result in
+            conversation.removeOrShowError(participant: otherUser) { result in
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()

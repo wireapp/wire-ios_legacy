@@ -83,13 +83,19 @@ final class ProfileViewControllerTests: XCTestCase {
 
     func testForContextOneToOneConversation() {
         let selfUser = MockUserType.createSelfUser(name: "Bob", inTeam: UUID())
+		SelfUser.provider = SelfProvider(selfUser: selfUser)
         mockUser.emailAddress = nil
 
-        let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [selfUser, mockUser]
-
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
+//        let conversation = MockConversation.oneOnOneConversation() ///TODO:
+		let conversation = SwiftMockConversation()
+		conversation.conversationType = .oneOnOne
+//        conversation.activeParticipants = [selfUser, mockUser]
+//		conversation.stableRandomParticipants = [mockUser]
+		
+        sut = ProfileViewController(user: mockUser,
+									viewer: selfUser,
+                                    conversation: conversation,
+									context: .oneToOneConversation)
 
         verify(matching: sut)
     }

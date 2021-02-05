@@ -64,7 +64,7 @@ final class ProfileDetailsContentController: NSObject,
     let viewer: UserType
     
     /// The conversation where the profile details will be displayed.
-    let conversation: ZMConversation?
+    let conversation: Conversation?
     
     /// The current group admin status for UI.
     private var isAdminState: Bool
@@ -94,7 +94,7 @@ final class ProfileDetailsContentController: NSObject,
     
     init(user: UserType,
          viewer: UserType,
-         conversation: ZMConversation?) {
+         conversation: Conversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -155,7 +155,7 @@ final class ProfileDetailsContentController: NSObject,
             var items: [ProfileDetailsContentController.Content] = []
 
             if let conversation = conversation {
-                let viewerCanChangeOtherRoles = viewer.canModifyOtherMember(in: conversation)
+                let viewerCanChangeOtherRoles = viewer.canModifyOtherMember(in: conversation as! ZMConversation) ///TODO:
                 let userCanHaveRoleChanged = !user.isWirelessUser
 
                 if viewerCanChangeOtherRoles && userCanHaveRoleChanged {
@@ -284,8 +284,10 @@ final class ProfileDetailsContentController: NSObject,
     }
     
     private func updateConversationRole() {
-        let groupRoles = self.conversation?.getRoles()
-        let newParticipantRole = groupRoles?.first {
+		guard let conversation = conversation as? ZMConversation else { return }
+		
+        let groupRoles = conversation.getRoles()
+		let newParticipantRole = groupRoles.first {
             $0.name == (self.isAdminState ? ZMConversation.defaultAdminRoleName : ZMConversation.defaultMemberRoleName)
         }
         

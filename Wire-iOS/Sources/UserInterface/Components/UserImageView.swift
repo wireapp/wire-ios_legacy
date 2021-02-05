@@ -69,7 +69,11 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     /// The user to display the avatar of.
     var user: UserType? {
         didSet {
+			if user is ZMUser {
             updateUser()
+			} else {
+				updateUser()
+			}
         }
     }
 

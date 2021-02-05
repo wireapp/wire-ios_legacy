@@ -67,7 +67,7 @@ final class ProfileTitleView: UIView {
     }
 
     func configure(with user: UserType, variant: ColorSchemeVariant) {
-        let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant), selfUser: ZMUser.selfUser())
+		let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant), selfUser: SelfUser.current)
         titleLabel.attributedText = attributedTitle
         titleLabel.font = FontSpec(.normal, .medium).font!
     }

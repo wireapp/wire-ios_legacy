@@ -221,7 +221,8 @@ class MockUserType: NSObject, UserType, Decodable {
         return teamIdentifier == otherTeamIdentifier
     }
 
-    func canModifyOtherMember(in conversation: ZMConversation) -> Bool {
+	///TODO: update usertype
+    func canModifyOtherMember(in conversation: Conversation) -> Bool {
         return canModifyOtherMemberInConversation
     }
 
