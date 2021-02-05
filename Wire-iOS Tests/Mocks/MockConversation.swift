@@ -21,6 +21,9 @@ import Foundation
 
 ///TODO: rename to MockConversation after objc MockConversation is retired
 class SwiftMockConversation: NSObject, Conversation  {
+	var sortedOtherParticipants: [UserType] = []
+	var sortedServiceUsers: [UserType] = []
+
 	func verifyLegalHoldSubjects() {
 		//no-op
 	}
@@ -70,17 +73,10 @@ class SwiftMockConversation: NSObject, Conversation  {
     }
 }
 
-final class MockShareViewControllerConversation: SwiftMockConversation, SortedOtherParticipantsProvider {
-    var sortedOtherParticipants: [UserType] = []
-}
-
-final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation, SortedOtherParticipantsProvider {
+final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation {
     var userDefinedName: String?
         
     var freeParticipantSlots: Int = 1
-
-    var sortedOtherParticipants: [UserType] = []
-    var sortedServiceUsers: [UserType] = []
 
     var hasReadReceiptsEnabled: Bool = false
 }

@@ -23,10 +23,6 @@ protocol StableRandomParticipantsProvider {
     var stableRandomParticipants: [UserType] { get }
 }
 
-protocol SortedOtherParticipantsProvider {
-    var sortedOtherParticipants: [UserType] { get }
-}
-
 protocol ConversationStatusProvider {
     var status: ConversationStatus { get }
 }
@@ -78,10 +74,8 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = SortedOtherParticipantsProvider & GroupDetailsConversation & Conversation
+typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
 
-
-extension ZMConversation: SortedOtherParticipantsProvider {}
 extension ZMConversation: ConversationStatusProvider {}
 
 extension ZMConversation: TypingStatusProvider {}

@@ -20,10 +20,27 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
+
+final class MockShareViewControllerConversation: SwiftMockConversation {}
+
+
+extension MockShareViewControllerConversation: ShareDestination {
+	var showsGuestIcon: Bool {
+		return false
+	}
+}
+
+extension MockShareViewControllerConversation: StableRandomParticipantsProvider {
+	var stableRandomParticipants: [UserType] {
+		return sortedOtherParticipants
+	}
+}
+
+
 final class ShareViewControllerTests: XCTestCase {
-    var groupConversation: MockShareViewControllerConversation!
-    var oneToOneConversation: MockShareViewControllerConversation!
-    var sut: ShareViewController<MockShareViewControllerConversation, MockShareableMessage>!
+    fileprivate var groupConversation: MockShareViewControllerConversation!
+    fileprivate var oneToOneConversation: MockShareViewControllerConversation!
+    fileprivate var sut: ShareViewController<MockShareViewControllerConversation, MockShareableMessage>!
 
     override func setUp() {
         super.setUp()
@@ -162,19 +179,7 @@ final class ShareViewControllerTests: XCTestCase {
 final class MockShareableMessage: MockMessage, Shareable {
     typealias I = MockShareViewControllerConversation
 
-    func share<MockShareViewControllerConversation>(to: [MockShareViewControllerConversation]) {
+    func share<SwiftMockConversation>(to: [SwiftMockConversation]) {
         // no-op
-    }
-}
-
-extension MockShareViewControllerConversation: ShareDestination {
-    var showsGuestIcon: Bool {
-        return false
-    }
-}
-
-extension MockShareViewControllerConversation: StableRandomParticipantsProvider {
-    var stableRandomParticipants: [UserType] {
-        return sortedOtherParticipants
     }
 }

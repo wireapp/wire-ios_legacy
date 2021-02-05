@@ -29,8 +29,8 @@ final class MockReadReceipt: ReadReceipt {
     var serverTimestamp: Date?
 
     init(user: UserType) {
-        self.userType = user
-        self.serverTimestamp = Date(timeIntervalSince1970: 0)
+        userType = user
+        serverTimestamp = Date(timeIntervalSince1970: 0)
     }
 
 }
