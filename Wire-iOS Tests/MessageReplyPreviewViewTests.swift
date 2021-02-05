@@ -27,16 +27,17 @@ extension UIView {
         container.translatesAutoresizingMaskIntoConstraints = false
         
         container.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-		
-		container.backgroundColor = UIColor.from(scheme: .contentBackground)
         
+        container.setNeedsLayout()
+        container.layoutIfNeeded()
         return container
     }
 }
 
-final class MessageReplyPreviewViewTests: XCTestCase {
+class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
     
     override func tearDown() {
@@ -49,7 +50,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
         
-//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -60,10 +61,10 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-        verify(matching: message.replyPreview()!.prepareForSnapshot())
+        verify(view: message.replyPreview()!.prepareForSnapshot())
     }
     
-    /*func testThatItRendersTextMessagePreview_dark() {
+    func testThatItRendersTextMessagePreview_dark() {
         activateDarkColorScheme()
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verify(view: message.replyPreview()!.prepareForSnapshot())
@@ -191,5 +192,5 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         verifyDeallocation {
             return message.replyPreview()!
         }
-    }*/
+    }
 }
