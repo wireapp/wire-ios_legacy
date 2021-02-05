@@ -21,6 +21,12 @@ import Foundation
 
 ///TODO: rename to MockConversation after objc MockConversation is retired
 class SwiftMockConversation: NSObject, Conversation  {
+	func verifyLegalHoldSubjects() {
+		//no-op
+	}
+	
+	var sortedActiveParticipantsUserTypes: [UserType] = []
+	
     var isSelfAnActiveMember: Bool = true
     
     var conversationType: ZMConversationType = .group
