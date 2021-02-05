@@ -53,11 +53,6 @@ extension AppLockModule {
             }
         }
 
-        func refresh(with model: ViewModel) {
-            lockView.showReauth = model.showReauth
-            lockView.message = model.message
-        }
-
     }
 
 }
@@ -66,23 +61,38 @@ extension AppLockModule {
 
 extension AppLockModule {
 
-    struct ViewModel: Equatable {
+    enum ViewModel: Equatable {
 
-        let showReauth: Bool
-        let authenticationType: AuthenticationType
+        case locked(AuthenticationType)
+        case authenticating
+
+        var showReauth: Bool {
+            switch self {
+            case .locked:
+                return true
+
+            case .authenticating:
+                return false
+            }
+        }
 
         var message: String {
+            guard case let .locked(authenticationType) = self else { return "" }
+
             var key = "self.settings.privacy_security.lock_cancelled.description_"
 
             switch authenticationType {
-                case .faceID:
-                    key.append("face_id")
-                case .touchID:
-                    key.append("touch_id")
-                case .passcode:
-                    key.append("passcode")
-                case .unavailable:
-                    key.append("passcode_unavailable")
+            case .faceID:
+                key.append("face_id")
+
+            case .touchID:
+                key.append("touch_id")
+
+            case .passcode:
+                key.append("passcode")
+
+            case .unavailable:
+                key.append("passcode_unavailable")
             }
 
             return key.localized
@@ -92,25 +102,18 @@ extension AppLockModule {
 
 }
 
-extension AppLockModule.ViewModel {
+// MARK: - API for presenter
 
-    static let authenticating = Self.init(
-        showReauth: false,
-        authenticationType: .current
-    )
+extension AppLockModule.View: AppLockViewPresenterInterface {
 
-    static func locked(_ authenticationType: AuthenticationType = .current) -> Self {
-        Self.init(
-            showReauth: true,
-            authenticationType: authenticationType
-        )
+    func refresh(with model: AppLockModule.ViewModel) {
+        lockView.showReauth = model.showReauth
+        lockView.message = model.message
     }
 
 }
 
-// MARK: - API for presenter
-
-extension AppLockModule.View: AppLockViewPresenterInterface {}
+// MARK: - Delegates
 
 extension AppLockModule.View: PasscodeSetupViewControllerDelegate {
 
