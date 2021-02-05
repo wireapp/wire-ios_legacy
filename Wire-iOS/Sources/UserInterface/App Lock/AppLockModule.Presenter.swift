@@ -31,7 +31,7 @@ extension AppLockModule {
 }
 
 
-// MARK: - API for interactor
+// MARK: - Handle result
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
@@ -69,7 +69,7 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
 }
 
-// MARK: - API for view
+// MARK: - Process event
 
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 

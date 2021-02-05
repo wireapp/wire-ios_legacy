@@ -78,7 +78,7 @@ extension AppLockModule {
 
 }
 
-// MARK: - API for presenter
+// MARK: - Execute request
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 

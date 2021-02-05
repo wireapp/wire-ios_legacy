@@ -57,7 +57,7 @@ extension AppLockModule {
 
 }
 
-// MARK: - View state
+// MARK: - View model
 
 extension AppLockModule {
 
@@ -102,7 +102,7 @@ extension AppLockModule {
 
 }
 
-// MARK: - API for presenter
+// MARK: - Refresh
 
 extension AppLockModule.View: AppLockViewPresenterInterface {
 

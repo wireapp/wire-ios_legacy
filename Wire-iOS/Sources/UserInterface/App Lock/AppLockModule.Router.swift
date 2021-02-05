@@ -24,14 +24,15 @@ extension AppLockModule {
 
     final class Router: RouterInterface {
 
+        // MARK: - Properties
+
         weak var view: View!
 
     }
 
 }
 
-
-// MARK: - API for presenter
+// MARK: - Perform action
 
 extension AppLockModule.Router: AppLockRouterPresenterInterface {
 

@@ -42,51 +42,15 @@ enum AppLockModule: ModuleInterface {
 
 }
 
-// MARK: - Router / Presenter
-
-protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
-
-    func perform(action: AppLockModule.Action)
-
-}
-
-// MARK: - Interactor / Presenter
-
-protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
-
-    func handle(result: AppLockModule.Result)
-
-}
-
-protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
-
-    func execute(request: AppLockModule.Request)
-
-}
-
-// MARK: - View / Presenter
-
-protocol AppLockViewPresenterInterface: ViewPresenterInterface {
-
-    func refresh(with model: AppLockModule.ViewModel)
-
-}
-
-protocol AppLockPresenterViewInterface: PresenterViewInterface {
-
-    func process(event: AppLockModule.Event)
-
-}
-
 extension AppLockModule {
 
-    enum Result: Equatable {
+    enum Event: Equatable {
 
-        case customPasscodeCreationNeeded(shouldInform: Bool)
-        case readyForAuthentication(shouldInform: Bool)
-        case authenticationDenied(AuthenticationType)
-        case authenticationUnavailable
-        case customPasscodeNeeded
+        case viewDidLoad
+        case unlockButtonTapped
+        case passcodeSetupCompleted
+        case customPasscodeVerified
+        case configChangeAcknowledged
 
     }
 
@@ -98,6 +62,16 @@ extension AppLockModule {
 
     }
 
+    enum Result: Equatable {
+
+        case customPasscodeCreationNeeded(shouldInform: Bool)
+        case readyForAuthentication(shouldInform: Bool)
+        case authenticationDenied(AuthenticationType)
+        case authenticationUnavailable
+        case customPasscodeNeeded
+
+    }
+
     enum Action: Equatable {
 
         case createPasscode(shouldInform: Bool)
@@ -106,13 +80,42 @@ extension AppLockModule {
 
     }
 
-    enum Event: Equatable {
+}
 
-        case viewDidLoad
-        case unlockButtonTapped
-        case passcodeSetupCompleted
-        case customPasscodeVerified
-        case configChangeAcknowledged
-    }
+// MARK: - Router
+
+protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
+
+    func perform(action: AppLockModule.Action)
+
+}
+
+// MARK: - Interactor
+
+protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
+
+    func execute(request: AppLockModule.Request)
+
+}
+
+// MARK: - Presenter
+
+protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
+
+    func handle(result: AppLockModule.Result)
+
+}
+
+protocol AppLockPresenterViewInterface: PresenterViewInterface {
+
+    func process(event: AppLockModule.Event)
+
+}
+
+// MARK: - View
+
+protocol AppLockViewPresenterInterface: ViewPresenterInterface {
+
+    func refresh(with model: AppLockModule.ViewModel)
 
 }
