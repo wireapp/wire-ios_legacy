@@ -54,7 +54,9 @@ extension CallInfoViewControllerInput {
             cameraType == other.cameraType &&
             networkQuality == other.networkQuality &&
             userEnabledCBR == other.userEnabledCBR &&
-            callState.isEqual(toCallState: other.callState)
+            callState.isEqual(toCallState: other.callState) &&
+            videoGridPresentationMode == other.videoGridPresentationMode &&
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates
     }
 }
 

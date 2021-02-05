@@ -421,6 +421,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .alertVideoUnavailable: alertVideoUnavailable()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
+        case .updateVideoGridPresentationMode(let mode): voiceChannel.videoGridPresentationMode = mode
         }
 
         updateConfiguration()

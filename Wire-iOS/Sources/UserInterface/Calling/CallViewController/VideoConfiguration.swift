@@ -88,7 +88,7 @@ extension VoiceChannel {
 
         let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
         let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
-        
+
         return arrangeVideoStreams(for: selfStream ?? self.selfStream, participantsStreams: videoStreams)
     }
     
@@ -117,7 +117,7 @@ extension VoiceChannel {
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
         return connectedParticipants.count > 2
     }
-    
+
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {

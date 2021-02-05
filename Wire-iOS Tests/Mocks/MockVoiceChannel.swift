@@ -18,8 +18,7 @@
 
 import Foundation
 
-final class MockVoiceChannel: NSObject, VoiceChannel {
-
+final class MockVoiceChannel: NSObject, VoiceChannel {    
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?
@@ -131,6 +130,17 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
             mockMuted = newValue
         }
     }
+    
+    var mockVideoGridPresentationMode: VideoGridPresentationMode = .allVideoStreams
+    var videoGridPresentationMode: VideoGridPresentationMode {
+        get {
+            return mockVideoGridPresentationMode
+        }
+        set {
+            mockVideoGridPresentationMode = newValue
+        }
+    }
+
 
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
 

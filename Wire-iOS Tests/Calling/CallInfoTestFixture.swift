@@ -48,6 +48,8 @@ struct CallInfoTestFixture {
 
     var oneToOneOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -70,6 +72,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -92,6 +96,8 @@ struct CallInfoTestFixture {
     
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .outgoing(degradedUser: hashBoxOtherUser),
@@ -114,6 +120,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .incoming(degradedUser: hashBoxOtherUser),
@@ -136,6 +144,8 @@ struct CallInfoTestFixture {
 
     var oneToOneAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -158,6 +168,8 @@ struct CallInfoTestFixture {
 
     var oneToOneAudioEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -180,6 +192,8 @@ struct CallInfoTestFixture {
 
     var oneToOneAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -202,6 +216,8 @@ struct CallInfoTestFixture {
 
     var oneToOneAudioEstablishedVBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -224,6 +240,8 @@ struct CallInfoTestFixture {
 
     var oneToOneAudioEstablishedPoorNetwork: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -248,6 +266,8 @@ struct CallInfoTestFixture {
 
     var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -270,6 +290,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -292,6 +314,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingVideoRingingWithPermissionsDeniedForever: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoDeniedForever,
             degradationState: .none,
@@ -314,6 +338,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingVideoRingingWithUndeterminedVideoPermissions: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoPendingApproval,
             degradationState: .none,
@@ -336,6 +362,8 @@ struct CallInfoTestFixture {
 
     var oneToOneIncomingVideoRingingVideoTurnedOff: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: CallVideoPlaceholderState.statusTextHidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -358,6 +386,8 @@ struct CallInfoTestFixture {
 
     var oneToOneVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -380,6 +410,8 @@ struct CallInfoTestFixture {
 
     var oneToOneVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -404,6 +436,8 @@ struct CallInfoTestFixture {
 
     var groupOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -426,6 +460,8 @@ struct CallInfoTestFixture {
 
     var groupIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -448,6 +484,8 @@ struct CallInfoTestFixture {
 
     var groupAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -470,6 +508,8 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablished(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -492,6 +532,8 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablishedRemoteTurnedVideoOn(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -514,6 +556,8 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablishedVideoUnavailable(mockUsers: [MockUserType]) ->  CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -536,6 +580,8 @@ struct CallInfoTestFixture {
 
     var groupAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -560,6 +606,8 @@ struct CallInfoTestFixture {
 
     var groupOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -582,6 +630,8 @@ struct CallInfoTestFixture {
 
     var groupIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -604,6 +654,8 @@ struct CallInfoTestFixture {
 
     var groupVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -626,6 +678,8 @@ struct CallInfoTestFixture {
 
     var groupVideoEstablishedScreenSharing: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -648,6 +702,8 @@ struct CallInfoTestFixture {
 
     var groupVideoEstablishedPoorConnection: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -670,6 +726,8 @@ struct CallInfoTestFixture {
 
     func groupVideoEstablished(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
@@ -692,6 +750,8 @@ struct CallInfoTestFixture {
 
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -714,6 +774,8 @@ struct CallInfoTestFixture {
 
     var groupVideoEstablishedVBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
             degradationState: .none,
@@ -737,6 +799,8 @@ struct CallInfoTestFixture {
     var groupVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
         let permissions = MockCallPermissions.videoPendingApproval
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: permissions.preferredVideoPlaceholderState,
             permissions: permissions,
             degradationState: .none,
@@ -760,6 +824,8 @@ struct CallInfoTestFixture {
     var groupVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
         let permissions = MockCallPermissions.videoDeniedForever
         return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: permissions.preferredVideoPlaceholderState,
             permissions: permissions,
             degradationState: .none,
