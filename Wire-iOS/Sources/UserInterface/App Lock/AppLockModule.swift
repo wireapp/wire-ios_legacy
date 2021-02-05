@@ -48,11 +48,7 @@ enum AppLockModule: ModuleInterface {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    func presentCreatePasscodeModule(shouldInform: Bool, completion: @escaping () -> Void)
-
-    func presentInputPasscodeModule(onGranted: @escaping () -> Void)
-
-    func presentWarningModule(then completion: @escaping () -> Void)
+    func present(_ module: AppLockModule.Module, then completion: @escaping () -> Void)
 
 }
 
@@ -60,11 +56,7 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
 protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
-    func createCustomPasscode(shouldInformUserOfConfigChange: Bool)
-
-    func proceedWithAuthentication(shouldInformUserOfConfigChange: Bool)
-
-    func authenticationEvaluated(with result: AppLockModule.AuthenticationResult)
+    func handle(_ result: AppLockModule.Result)
 
 }
 
@@ -72,11 +64,7 @@ protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
     var currentAuthenticationType: AuthenticationType { get }
 
-    func initiateAuthentication()
-    
-    func evaluateAuthentication()
-
-    func openAppLock()
+    func execute(_ request: AppLockModule.Request)
 
 }
 
@@ -91,5 +79,42 @@ protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
     func processEvent(_ event: AppLockModule.Event)
+
+}
+
+extension AppLockModule {
+
+    enum Result: Equatable {
+
+        case customPasscodeCreationNeeded(shouldInform: Bool)
+        case readyForAuthentication(shouldInform: Bool)
+        case authenticationDenied
+        case authenticationUnavailable
+        case customPasscodeNeeded
+
+    }
+
+    enum Request: Equatable {
+
+        case initiateAuthentication
+        case evaluateAuthentication
+        case openAppLock
+
+    }
+
+    enum Module: Equatable {
+
+        case createPasscode(shouldInform: Bool)
+        case inputPasscode
+        case informUserOfConfigChange
+
+    }
+
+    enum Event: Equatable {
+
+        case viewDidLoad
+        case unlockButtonTapped
+
+    }
 
 }

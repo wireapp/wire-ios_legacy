@@ -25,7 +25,7 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var requests = [Request]()
 
         // MARK: - Properties
 
@@ -33,29 +33,9 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        func initiateAuthentication() {
-            methodCalls.initiateAuthentication.append(())
+        func execute(_ request: AppLockModule.Request) {
+            requests.append(request)
         }
-
-        func evaluateAuthentication() {
-            methodCalls.evaluateAuthentication.append(())
-        }
-
-        func openAppLock() {
-            methodCalls.openAppLock.append(())
-        }
-
-    }
-
-}
-
-extension AppLockModule.MockInteractor {
-
-    struct MethodCalls {
-
-        var initiateAuthentication: [Void] = []
-        var evaluateAuthentication: [Void] = []
-        var openAppLock: [Void] = []
 
     }
 

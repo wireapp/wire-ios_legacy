@@ -47,7 +47,7 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.loadViewIfNeeded()
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.processEvent, [.viewDidLoad])
+        XCTAssertEqual(presenter.events, [.viewDidLoad])
     }
 
     func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
@@ -58,7 +58,7 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.lockView.onReauthRequested?()
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.processEvent, [.viewDidLoad, .unlockButtonTapped])
+        XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])
     }
 
     // MARK: - View states

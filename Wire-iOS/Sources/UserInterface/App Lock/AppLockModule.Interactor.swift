@@ -86,36 +86,58 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         return authenticationType.current
     }
 
-    func initiateAuthentication() {
-        if needsToCreateCustomPasscode {
-            presenter.createCustomPasscode(shouldInformUserOfConfigChange: needsToNotifyUser)
-        } else {
-            presenter.proceedWithAuthentication(shouldInformUserOfConfigChange: needsToNotifyUser)
-        }
-    }
+    func execute(_ request: AppLockModule.Request) {
+        switch request {
+        case .initiateAuthentication where needsToCreateCustomPasscode:
+            presenter.handle(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
 
-    func evaluateAuthentication() {
-        guard let preference = passcodePreference else {
-            handleAuthenticationResult(.granted, context: nil)
-            return
-        }
+        case .initiateAuthentication:
+            presenter.handle(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
-        appLock.evaluateAuthentication(passcodePreference: preference,
-                                       description: deviceAuthenticationDescription,
-                                       callback: handleAuthenticationResult)
+        case .evaluateAuthentication:
+            guard let preference = passcodePreference else {
+                handleAuthenticationResult(.granted, context: nil)
+                return
+            }
+
+            appLock.evaluateAuthentication(
+                passcodePreference: preference,
+                description: deviceAuthenticationDescription,
+                callback: handleAuthenticationResult
+            )
+
+        case .openAppLock:
+            openAppLock()
+        }
     }
 
     private func handleAuthenticationResult(_ result: AppLockModule.AuthenticationResult, context: LAContextProtocol?) {
         DispatchQueue.main.async(group: dispatchGroup) { [weak self] in
-            if case .granted = result, let context = context as? LAContext {
-                try? self?.session.unlockDatabase(with: context)
-            }
+            guard let `self` = self else { return }
 
-            self?.presenter.authenticationEvaluated(with: result)
+            switch result {
+            case .granted:
+                self.unlockDatabase(with: context)
+                self.openAppLock()
+
+            case .denied:
+                self.presenter.handle(.authenticationDenied)
+
+            case .needCustomPasscode:
+                self.presenter.handle(.customPasscodeNeeded)
+
+            case .unavailable:
+                self.presenter.handle(.authenticationUnavailable)
+            }
         }
     }
 
-    func openAppLock() {
+    private func unlockDatabase(with context: LAContextProtocol?) {
+        guard let context = context as? LAContext else { return }
+        try? session.unlockDatabase(with: context)
+    }
+
+    private func openAppLock() {
         try? appLock.open()
     }
 

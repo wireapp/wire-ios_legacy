@@ -25,38 +25,18 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var results = [Result]()
+        var events = [Event]()
 
         // MARK: - Methods
 
-        func createCustomPasscode(shouldInformUserOfConfigChange: Bool) {
-            methodCalls.createCustomPasscode.append(shouldInformUserOfConfigChange)
-        }
-
-        func proceedWithAuthentication(shouldInformUserOfConfigChange: Bool) {
-            methodCalls.proceedWithAuthentication.append(shouldInformUserOfConfigChange)
-        }
-
-        func authenticationEvaluated(with result: AppLockModule.AuthenticationResult) {
-            methodCalls.authenticationEvaluated.append(result)
+        func handle(_ result: AppLockModule.Result) {
+            results.append(result)
         }
 
         func processEvent(_ event: AppLockModule.Event) {
-            methodCalls.processEvent.append(event)
+            events.append(event)
         }
-
-    }
-
-}
-
-extension AppLockModule.MockPresenter {
-
-    struct MethodCalls {
-
-        var createCustomPasscode: [Bool] = []
-        var proceedWithAuthentication: [Bool] = []
-        var authenticationEvaluated: [AppLockModule.AuthenticationResult] = []
-        var processEvent: [AppLockModule.Event] = []
 
     }
 

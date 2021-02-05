@@ -35,7 +35,20 @@ extension AppLockModule {
 
 extension AppLockModule.Router: AppLockRouterPresenterInterface {
 
-    func presentCreatePasscodeModule(shouldInform: Bool, completion: @escaping () -> Void) {
+    func present(_ module: AppLockModule.Module, then completion: @escaping () -> Void) {
+        switch module {
+        case let .createPasscode(shouldInform):
+            presentCreatePasscodeModule(shouldInform: shouldInform, completion: completion)
+
+        case .inputPasscode:
+            presentInputPasscodeModule(onGranted: completion)
+
+        case .informUserOfConfigChange:
+            presentWarningModule(then: completion)
+        }
+    }
+
+    private func presentCreatePasscodeModule(shouldInform: Bool, completion: @escaping () -> Void) {
         let passcodeSetupViewController = PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(
             variant: .dark,
             context: shouldInform ? .forcedForTeam : .createPasscode,
@@ -44,7 +57,7 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
         viewController?.present(passcodeSetupViewController, animated: true)
     }
 
-    func presentInputPasscodeModule(onGranted: @escaping () -> Void) {
+    private func presentInputPasscodeModule(onGranted: @escaping () -> Void) {
         // TODO: [John] Clean this up.
         // TODO: [John] Inject these arguments.
         let unlockViewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
@@ -55,7 +68,7 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
         viewController?.present(navigationController, animated: false)
     }
 
-    func presentWarningModule(then completion: @escaping () -> Void) {
+    private func presentWarningModule(then completion: @escaping () -> Void) {
         let warningViewController = AppLockChangeWarningViewController(isAppLockActive: true, completion: completion)
         warningViewController.modalPresentationStyle = .fullScreen
         viewController?.present(warningViewController, animated: false)

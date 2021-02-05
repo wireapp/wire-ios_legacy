@@ -58,10 +58,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.requireCustomPasscode = true
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.createCustomPasscode.count, 1)
+        XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
     }
 
     func test_NeedsToCreatePasscode_IfNoneIsSet_AndNoAuthenticationTypeIsAvailable() {
@@ -70,10 +70,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         authenticationType.current = .unavailable
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.createCustomPasscode.count, 1)
+        XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
     }
 
     func test_NeedsToCreatePasscode_InformingUserOfConfigChange() {
@@ -83,10 +83,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.createCustomPasscode, [true])
+        XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: true)])
     }
 
     func test_NeedsToCreatePasscode_WithoutInformingUserOfConfigChange() {
@@ -96,10 +96,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = false
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.createCustomPasscode, [false])
+        XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
     }
 
     func test_ProceedWithAuthentication_WhenCustomPasscodeIsNotNeeded() {
@@ -109,10 +109,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         authenticationType.current = .passcode
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication.count, 1)
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
     }
 
     func test_ProceedWithAuthentication_WithCustomPasscode() {
@@ -120,10 +120,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.isCustomPasscodeSet = true
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication.count, 1)
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
     }
 
     func test_ProceedWithAuthentication_InformingUserOfConfigChange() {
@@ -132,10 +132,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication, [true])
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
 
     func test_ProceedWithAuthentication_WithoutInformingUserOfConfigChange() {
@@ -144,10 +144,10 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = false
 
         // When
-        sut.initiateAuthentication()
+        sut.execute(.initiateAuthentication)
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.proceedWithAuthentication, [false])
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
     }
     
     // MARK: - Evaluate authentication
@@ -157,12 +157,12 @@ final class AppLockModuleInteractorTests: XCTestCase {
         session.lock = .none
 
         // When
-        sut.evaluateAuthentication()
+        sut.execute(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
-        XCTAssertEqual(presenter.methodCalls.authenticationEvaluated, [.granted])
+        XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
     func test_EvalutesWithScreenLockScenario_IfSessionHasScreenLock() {
@@ -171,7 +171,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.requireCustomPasscode = false
 
         // When
-        sut.evaluateAuthentication()
+        sut.execute(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
@@ -187,7 +187,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.requireCustomPasscode = true
 
         // When
-        sut.evaluateAuthentication()
+        sut.execute(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
@@ -202,7 +202,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         session.lock = .database
 
         // When
-        sut.evaluateAuthentication()
+        sut.execute(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
 
         // Then
@@ -218,7 +218,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock._authenticationResult = .granted
 
         // When
-        sut.evaluateAuthentication()
+        sut.execute(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         
         // Then
@@ -238,7 +238,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // When
         for result in authenticationResults {
             appLock._authenticationResult = result
-            sut.evaluateAuthentication()
+            sut.execute(.evaluateAuthentication)
             XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         }
 
@@ -246,12 +246,11 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(session.methodCalls.unlockDatabase.count, 0)
     }
 
-    func test_PresenterIsInformed_OfAllAuthenticationResults() {
+    func test_PresenterIsInformed_OfAllUnsuccessfulAuthenticationResults() {
         // Given
         session.lock = .screen
 
         let authenticationResults: [AppLockModule.AuthenticationResult] = [
-            .granted,
             .denied,
             .needCustomPasscode,
             .unavailable
@@ -260,19 +259,19 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // When
         for result in authenticationResults {
             appLock._authenticationResult = result
-            sut.evaluateAuthentication()
+            sut.execute(.evaluateAuthentication)
             XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         }
 
         // Then
-        XCTAssertEqual(presenter.methodCalls.authenticationEvaluated, authenticationResults)
+        XCTAssertEqual(presenter.results, [.authenticationDenied, .customPasscodeNeeded, .authenticationUnavailable])
     }
 
     // MARK: - Open app lock
 
     func test_ItOpensAppLock() {
         // When
-        sut.openAppLock()
+        sut.execute(.openAppLock)
 
         // Then
         XCTAssertEqual(appLock.methodCalls.open.count, 1)

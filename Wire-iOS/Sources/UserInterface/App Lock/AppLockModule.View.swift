@@ -62,19 +62,6 @@ extension AppLockModule {
 
 }
 
-// MARK: - Event
-
-extension AppLockModule {
-
-    enum Event: Equatable {
-
-        case viewDidLoad
-        case unlockButtonTapped
-
-    }
-
-}
-
 // MARK: - View state
 
 extension AppLockModule {
