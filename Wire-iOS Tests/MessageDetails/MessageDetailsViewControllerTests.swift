@@ -284,7 +284,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		// GIVEN
 		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
 
-		let message = MockMessageFactory.pingMessage()!
+		let message = MockMessageFactory.pingMessage()
 		message.senderUser = SelfUser.current
 		message.conversationLike = conversation
 		message.needsReadConfirmation = true
