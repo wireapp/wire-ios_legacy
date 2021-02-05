@@ -25,23 +25,13 @@ extension AppLockModule {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var models = [ViewModel]()
 
         // MARK: - Methods
 
         func refresh(with model: AppLockModule.ViewModel) {
-            methodCalls.refresh.append(model)
+            models.append(model)
         }
-
-    }
-
-}
-
-extension AppLockModule.MockView {
-
-    struct MethodCalls {
-
-        var refresh: [AppLockModule.ViewModel] = []
 
     }
 

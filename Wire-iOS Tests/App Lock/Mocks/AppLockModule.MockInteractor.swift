@@ -27,10 +27,6 @@ extension AppLockModule {
 
         var requests = [Request]()
 
-        // MARK: - Properties
-
-        var currentAuthenticationType: AuthenticationType = .passcode
-
         // MARK: - Methods
 
         func execute(request: AppLockModule.Request) {

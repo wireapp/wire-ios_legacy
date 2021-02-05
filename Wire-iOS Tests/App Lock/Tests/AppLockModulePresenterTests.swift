@@ -78,7 +78,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.handle(result: .readyForAuthentication(shouldInform: false))
 
         // Then
-        XCTAssertEqual(view.methodCalls.refresh, [.authenticating])
+        XCTAssertEqual(view.models, [.authenticating])
         XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
     }
 
@@ -87,7 +87,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.handle(result: .customPasscodeNeeded)
 
         // Then
-        XCTAssertEqual(view.methodCalls.refresh, [.locked(.passcode)])
+        XCTAssertEqual(view.models, [.locked(.passcode)])
         XCTAssertEqual(router.actions, [.inputPasscode])
     }
 
@@ -96,7 +96,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.handle(result: .authenticationDenied(.faceID))
 
         // Then
-        XCTAssertEqual(view.methodCalls.refresh, [.locked(.faceID)])
+        XCTAssertEqual(view.models, [.locked(.faceID)])
     }
 
     func test_AuthenticationUnavailable() {
@@ -104,7 +104,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.handle(result: .authenticationUnavailable)
 
         // Then
-        XCTAssertEqual(view.methodCalls.refresh, [.locked(.unavailable)])
+        XCTAssertEqual(view.models, [.locked(.unavailable)])
     }
 
     // MARK: - Process Event
