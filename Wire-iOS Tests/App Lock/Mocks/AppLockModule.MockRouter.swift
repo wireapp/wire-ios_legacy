@@ -29,7 +29,7 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        func perform(action: AppLockModule.Action) {
+        func perform(action: Action) {
             actions.append(action)
         }
 

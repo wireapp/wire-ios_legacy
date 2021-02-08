@@ -22,6 +22,8 @@ extension AppLockModule {
 
     final class Presenter: PresenterInterface {
 
+        // MARK: - Properties
+
         var router: AppLockRouterPresenterInterface!
         var interactor: AppLockInteractorPresenterInterface!
         weak var view: AppLockViewPresenterInterface!

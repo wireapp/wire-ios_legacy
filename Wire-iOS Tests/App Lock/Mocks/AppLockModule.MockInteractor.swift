@@ -29,7 +29,7 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        func execute(request: AppLockModule.Request) {
+        func execute(request: Request) {
             requests.append(request)
         }
 
