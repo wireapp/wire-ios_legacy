@@ -28,11 +28,9 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 
 
     override func setUp() {
-        // self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
-//        selfUserInTeam = true
-
         super.setUp()
 		
+		// self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
 		SelfUser.setupMockSelfUser(inTeam: UUID())
 		selfUser = (SelfUser.current as! MockUserType)
 		otherUser = MockUserType.createDefaultOtherUser()
@@ -45,11 +43,8 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
     
     func createSUT() {
         sut = UserSearchResultsViewController(nibName: nil, bundle: nil)
-        
-        sut.view.layoutIfNeeded()
-        
+                
         sut.view.backgroundColor = .black
-        sut.view.layer.speed = 0
     }
     
     override func tearDown() {
@@ -69,37 +64,25 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
     func testThatShowsResultsInConversationWithEmptyQuery() {
         createSUT()
         sut.users = [selfUser, otherUser].searchForMentions(withQuery: "")
-//        guard let view = sut.view else { XCTFail(); return }
         verify(matching: sut)
     }
 
-    /*func testThatShowsResultsInConversationWithQuery() {
-        createSUT()
-        sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
-        guard let view = sut.view else { XCTFail(); return }
-        verify(view: view)
+    func testThatShowsResultsInConversationWithQuery() {
+		verifyInAllColorSchemes(createSut: {
+			createSUT()
+			sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
+			
+			return sut
+		})
     }
     
-    func testThatShowsResultsInConversationWithQuery_DarkMode() {
-        ColorScheme.default.variant = .dark
-        createSUT()
-        sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
-        guard let view = sut.view else { XCTFail(); return }
-        verify(view: view)
-    }
-
     func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
-        var allUsers: [ZMUser] = []
+        var allUsers: [UserType] = []
 
-        for name in usernames {
-            let user = ZMUser.insertNewObject(in: uiMOC)
-            user.remoteIdentifier = UUID()
-            user.teamIdentifier = nil
-            user.name = name
-            user.setHandle(name.lowercased())
+		for name in XCTestCase.usernames {
+			let user = MockUserType.createUser(name: name)
             user.accentColorValue = .brightOrange
             XCTAssertFalse(user.isTeamMember, "user should not be a team member to generate snapshots with guest icon", file: file, line: line)
-            uiMOC.saveOrRollback()
             allUsers.append(user)
         }
 
@@ -114,32 +97,29 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         createSUT()
 
         sut.users = mockSearchResultUsers()
-        guard let view = sut.view else { XCTFail(); return }
-        verify(view: view)
+        verify(matching: sut)
     }
 
     func testThatHighlightedTopMostItemUpdatesAfterSelectedTopMostUser() {
         createSUT()
 
         sut.users = mockSearchResultUsers()
-        guard let view = sut.view else { XCTFail(); return }
 
-        let numberOfUsers = usernames.count
+		let numberOfUsers = XCTestCase.usernames.count
 
         for _ in 0..<numberOfUsers {
             sut.selectPreviousUser()
         }
 
-        verify(view: view)
+        verify(matching: sut)
     }
 
     func testThatHighlightedItemStaysAtMiddleAfterSelectedAnUserAtTheMiddle() {
         createSUT()
 
         sut.users = mockSearchResultUsers()
-        guard let view = sut.view else { XCTFail(); return }
 
-        let numberOfUsers = usernames.count
+		let numberOfUsers = XCTestCase.usernames.count
 
         // go to top most
         for _ in 0..<numberOfUsers+5 {
@@ -156,13 +136,12 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
             sut.selectPreviousUser()
         }
 
-        verify(view: view)
+        verify(matching: sut)
     }
 
     func testThatLowestItemIsNotHighlightedIfKeyboardIsNotCollapsed() {
         createSUT()
         sut.users = mockSearchResultUsers()
-        guard let view = sut.view else { XCTFail(); return }
 
         ///post a mock show keyboard notification
         NotificationCenter.default.post(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: [
@@ -171,7 +150,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
             UIResponder.keyboardAnimationDurationUserInfoKey: TimeInterval(0.0)])
 
 
-        verify(view: view)
+        verify(matching: sut)
     }
 
     func testThatItDoesNotCrashWithNoResults() {
@@ -182,6 +161,6 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         
         // when
         sut.users = users.searchForMentions(withQuery: "362D00AE-B606-4680-BD47-F17749229E64")
-    }*/
+    }
     
 }
