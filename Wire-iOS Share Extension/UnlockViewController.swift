@@ -36,8 +36,8 @@ final class UnlockViewController: UIViewController {
         var button = UIButton()
 
         button.setBackgroundImage(UIImage.singlePixelImage(with: .white), for: .normal)
-        button.setTitleColor(UIColor.PasscodeUnlock.buttonGraphite, for: .normal)
-        button.setTitleColor(UIColor.PasscodeUnlock.buttonLightGraphite, for: .highlighted)
+        button.setTitleColor(.graphite, for: .normal)
+        button.setTitleColor(.lightGraphite, for: .highlighted)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
         button.setTitle("share_extension.unlock.submit_button.title".localized(uppercased: true), for: .normal)
