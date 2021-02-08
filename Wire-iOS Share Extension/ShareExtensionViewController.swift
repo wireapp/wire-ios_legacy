@@ -550,11 +550,10 @@ extension ShareExtensionViewController {
     }
     
     private func authenticationEvaluated(with result: AppLockController.AuthenticationResult, completion:  @escaping Completion) {
-        defer { completion() }
-        
         switch result {
         case .granted:
             localAuthenticationStatus = .granted
+            completion()
         case .needCustomPasscode:
             let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
             if isCustomPasscodeNotSet {
@@ -562,6 +561,7 @@ extension ShareExtensionViewController {
                 self.present(alert, animated: true, completion: nil)
                 
                 localAuthenticationStatus = .denied
+                completion()
             } else {
                 requestCustomPasscode { [weak self] status in
                     guard let `self` = self else { return }
@@ -572,6 +572,7 @@ extension ShareExtensionViewController {
             }
         default:
             localAuthenticationStatus = .denied
+            completion()
         }
     }
     
