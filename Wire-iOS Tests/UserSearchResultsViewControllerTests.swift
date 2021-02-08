@@ -78,7 +78,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
     func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
         var allUsers: [UserType] = []
 
-        for name in XCTestCase.usernames {
+        for name in MockUserType.usernames {
             let user = MockUserType.createUser(name: name)
             user.accentColorValue = .brightOrange
             XCTAssertFalse(user.isTeamMember, "user should not be a team member to generate snapshots with guest icon", file: file, line: line)
@@ -103,7 +103,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 
         sut.users = mockSearchResultUsers()
 
-        let numberOfUsers = XCTestCase.usernames.count
+        let numberOfUsers = MockUserType.usernames.count
 
         for _ in 0..<numberOfUsers {
             sut.selectPreviousUser()
@@ -117,7 +117,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 
         sut.users = mockSearchResultUsers()
 
-        let numberOfUsers = XCTestCase.usernames.count
+        let numberOfUsers = MockUserType.usernames.count
 
         // go to top most
         for _ in 0..<numberOfUsers+5 {
