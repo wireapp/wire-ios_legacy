@@ -26,10 +26,9 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 	var selfUser: MockUserType!
 	var otherUser: MockUserType!
 
-
     override func setUp() {
         super.setUp()
-		
+
 		// self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
 		SelfUser.setupMockSelfUser(inTeam: UUID())
 		selfUser = (SelfUser.current as! MockUserType)
@@ -40,16 +39,16 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 		XCTAssert(SelfUser.current.isTeamMember, "selfUser should be a team member to generate snapshots with guest icon")
 
     }
-    
+
     func createSUT() {
         sut = UserSearchResultsViewController(nibName: nil, bundle: nil)
-                
+
         sut.view.backgroundColor = .black
     }
-    
+
     override func tearDown() {
 		sut = nil
-		
+
 		selfUser = nil
 		otherUser = nil
 		serviceUser = nil
@@ -58,9 +57,9 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 
         super.tearDown()
     }
-    
+
     // UI Tests
-    
+
     func testThatShowsResultsInConversationWithEmptyQuery() {
         createSUT()
         sut.users = [selfUser, otherUser].searchForMentions(withQuery: "")
@@ -71,11 +70,11 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 		verifyInAllColorSchemes(createSut: {
 			createSUT()
 			sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
-			
+
 			return sut
 		})
     }
-    
+
     func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
         var allUsers: [UserType] = []
 
@@ -90,7 +89,6 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 
         return allUsers.searchForMentions(withQuery: "")
     }
-
 
     func testThatItOverflowsWithTooManyUsers_darkMode() {
         ColorScheme.default.variant = .dark
@@ -143,12 +141,11 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         createSUT()
         sut.users = mockSearchResultUsers()
 
-        ///post a mock show keyboard notification
+        /// post a mock show keyboard notification
         NotificationCenter.default.post(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: [
             UIResponder.keyboardFrameBeginUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 0),
             UIResponder.keyboardFrameEndUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 100),
             UIResponder.keyboardAnimationDurationUserInfoKey: TimeInterval(0.0)])
-
 
         verify(matching: sut)
     }
@@ -158,9 +155,9 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         // given
         let users: [UserType] = [selfUser, otherUser, serviceUser]
         sut.users = users.searchForMentions(withQuery: "u")
-        
+
         // when
         sut.users = users.searchForMentions(withQuery: "362D00AE-B606-4680-BD47-F17749229E64")
     }
-    
+
 }
