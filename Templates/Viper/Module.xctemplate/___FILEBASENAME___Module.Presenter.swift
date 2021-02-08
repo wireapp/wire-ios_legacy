@@ -22,18 +22,37 @@ extension ___VARIABLE_productName:identifier___Module {
 
     final class Presenter: PresenterInterface {
 
-        var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
+        // MARK: - Properties
+
         var interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface!
         weak var view: ___VARIABLE_productName:identifier___ViewPresenterInterface!
+        var router: ___VARIABLE_productName:identifier___RouterPresenterInterface!
 
     }
 
 }
 
-// MARK: - API for interactor
+// MARK: - Handle result
 
-extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface { }
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface {
 
-// MARK: - API for view
+    func handle(result: ___VARIABLE_productName:identifier___Module.Result) {
+        switch result {
 
-extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterViewInterface { }
+        }
+    }
+
+}
+
+// MARK: - Process event
+
+extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterViewInterface {
+
+    func process(event: ___VARIABLE_productName:identifier___Module.Event) {
+        switch event {
+        case .viewDidLoad:
+          break
+        }
+    }
+
+}
