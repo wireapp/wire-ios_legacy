@@ -55,7 +55,7 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
 
     override func tearDown() {
         SelfUser.provider = nil
-        
+
         super.tearDown()
     }
 
@@ -70,10 +70,12 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
         conversation.sortedOtherParticipants = users
 
         // when & then
-        verifyInAllColorSchemes(createSut: {
-            let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
-            return sut.wrapInNavigationController()
-        })
+		let createSut: () -> UIViewController = {
+			let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+			return sut.wrapInNavigationController()
+		}
+
+        verifyInAllColorSchemes(createSut: createSut)
 
     }
 
