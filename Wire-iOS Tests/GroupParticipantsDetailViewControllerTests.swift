@@ -36,12 +36,9 @@ extension ZMConversation {
     }
 }
 
-private final class MockConversation: MockStableRandomParticipantsConversation, GroupDetailsConversation, SortedOtherParticipantsProvider {
-    var sortedOtherParticipants: [UserType] = []
+private final class MockConversation: MockStableRandomParticipantsConversation, GroupDetailsConversation {
 
     var userDefinedName: String?
-
-    var sortedServiceUsers: [UserType] = []
 
     var hasReadReceiptsEnabled: Bool = false
 
