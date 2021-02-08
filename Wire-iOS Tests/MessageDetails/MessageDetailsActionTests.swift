@@ -21,6 +21,11 @@ import XCTest
 
 final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
+	override func setUp() {
+		super.setUp()
+		SelfUser.setupMockSelfUser()
+	}
+	
     // MARK: - One To One
 
     func testThatDetailsAreNotAvailableForOneToOne_Consumer() {
@@ -48,7 +53,10 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     
     func testThatDetailsAreAvailableInTeamGroup_Receipts() {
         withGroupMessage(belongsToTeam: false, teamGroup: true) { message in
-            XCTAssertTrue(message.areMessageDetailsAvailable)
+			///TODO: tmp fix, will fix converation creation in new PR
+			message.conversationLike = message.conversation
+
+			XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
     }
@@ -85,7 +93,10 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     func testThatDetailsAreAvailableInTeamGroup_Ephemeral() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
-            XCTAssertFalse(message.canBeLiked)
+			///TODO: tmp fix, will fix converation creation in new PR
+			message.conversationLike = message.conversation
+
+			XCTAssertFalse(message.canBeLiked)
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
@@ -109,8 +120,9 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")
-            message.senderUser = MockUserType.createSelfUser(name: "Alice")
+			message.senderUser = MockUserType.createSelfUser(name: "Alice", inTeam: belongsToTeam ? UUID() : nil)
             message.conversation = otherUserConversation
+			message.conversationLike = otherUserConversation
             block(message)
         }
     }
