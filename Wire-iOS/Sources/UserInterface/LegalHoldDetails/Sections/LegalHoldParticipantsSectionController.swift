@@ -41,7 +41,7 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-typealias LegalHoldDetailsConversation = Conversation & SortedOtherParticipantsProvider & GroupDetailsConversation
+typealias LegalHoldDetailsConversation = Conversation & GroupDetailsConversation
 
 private extension ConversationLike {
     func createViewModel() -> LegalHoldParticipantsSectionViewModel {
