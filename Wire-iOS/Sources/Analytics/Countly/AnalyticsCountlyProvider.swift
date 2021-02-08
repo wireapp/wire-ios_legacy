@@ -110,7 +110,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             !isRecording,
             user.isTeamMember,
             let analyticsIdentifier = user.analyticsIdentifier,
-            let userAttributes = attributes(for: user)
+            let userAttributes = user.analyticsAttributes
         else {
             return
         }
@@ -156,24 +156,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     private func endSession() {
         countly.endSession()
         isRecording = false
-    }
-
-    // MARK: - Countly user
-
-    private func attributes(for user: ZMUser) -> CountlyUserAttributes? {
-        guard
-            let team = user.team,
-            let teamId = team.remoteIdentifier
-        else {
-            return nil
-        }
-
-        return [
-            .teamId: teamId,
-            .teamRole: user.teamRole,
-            .teamSize: team.members.count,
-            .userContactsCount: team.members.count.logRound()
-        ]
     }
 
     private var shouldTracksEvent: Bool {
@@ -279,4 +261,24 @@ extension Int {
     func logRound(factor: Double = 6) -> Int {
         return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
     }
+}
+
+private extension ZMUser {
+
+    var analyticsAttributes: CountlyUserAttributes? {
+        guard
+            let team = team,
+            let teamId = team.remoteIdentifier
+        else {
+            return nil
+        }
+
+        return [
+            .teamId: teamId,
+            .teamRole: teamRole,
+            .teamSize: team.members.count,
+            .userContactsCount: team.members.count.logRound()
+        ]
+    }
+
 }
