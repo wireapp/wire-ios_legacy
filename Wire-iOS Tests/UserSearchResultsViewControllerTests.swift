@@ -35,7 +35,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
 		selfUser = (SelfUser.current as! MockUserType)
 		otherUser = MockUserType.createDefaultOtherUser()
 
-		serviceUser = MockServiceUserType.createServiceUser(name: "ServiceUser") //createServiceUser()
+		serviceUser = MockServiceUserType.createServiceUser(name: "ServiceUser")
 
 		XCTAssert(SelfUser.current.isTeamMember, "selfUser should be a team member to generate snapshots with guest icon")
 
