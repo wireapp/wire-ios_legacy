@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "You called";
 "content.system.ephemeral_time_remaining" = "%@ left";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "You";
-"content.system.this_device" = "this device";
 
 "content.system.call.called" = "%@ called";
 "content.system.call.called-you" = "%@ called";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "a new device";
-"content.system.started_using" = "started using";
 "content.system.is_verified" = "All fingerprints are verified";
 
 "content.system.new_users" = "New user joined.";
 "content.system.verify_devices" = "Verify devices";
 
-"content.system.unverified" = "%@ unverified one of %@"; //example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "your devices";
-"content.system.other_devices" = "%@’s devices";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "You haven’t used this device for a while. Some messages may not appear here.";
 "content.system.missing_messages.subtitle_start" = "Meanwhile,";
