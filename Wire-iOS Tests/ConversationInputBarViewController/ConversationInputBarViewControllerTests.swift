@@ -21,6 +21,10 @@ import XCTest
 import WireCommonComponents
 
 final class MockInputBarConversationType: NSObject, InputBarConversationType {
+	var sortedOtherParticipants: [UserType] = []
+	
+	var sortedServiceUsers: [UserType] = []
+	
     var typingUsers: [UserType] = []
 
     var hasDraftMessage: Bool = false

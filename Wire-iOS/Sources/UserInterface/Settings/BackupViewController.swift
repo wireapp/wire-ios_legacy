@@ -212,19 +212,14 @@ fileprivate extension BackupViewController {
     }
     
     private func presentShareSheet(with url: URL, from indexPath: IndexPath) {
-        #if arch(i386) || arch(x86_64)
-            let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
-            try! FileManager.default.moveItem(at: url, to: tmpURL)
-        #else
-            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            activityController.completionWithItemsHandler = { _, _, _, _ in
-                SessionManager.clearPreviousBackups()
-            }
-            activityController.popoverPresentationController.apply {
-                $0.sourceView = tableView
-                $0.sourceRect = tableView.rectForRow(at: indexPath)
-            }
-            self.present(activityController, animated: true)
-        #endif
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { _, _, _, _ in
+            SessionManager.clearPreviousBackups()
+        }
+        activityController.popoverPresentationController.apply {
+            $0.sourceView = tableView
+            $0.sourceRect = tableView.rectForRow(at: indexPath)
+        }
+        self.present(activityController, animated: true)
     }
 }

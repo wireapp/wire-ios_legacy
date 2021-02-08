@@ -307,10 +307,7 @@ extension AppRootRouter {
         }
         
         self.authenticatedRouter = authenticatedRouter
-        
-        //TODO: katerina we should do it in our slow sync
-        updateTeamFeature()
-        
+
         rootViewController.set(childViewController: authenticatedRouter.viewController,
                                completion: completion)
     }
@@ -422,9 +419,6 @@ extension AppRootRouter: ApplicationStateObserving {
     func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
-        
-        //TODO: katerina do not forget to remove it when we have events from BE
-        updateTeamFeature()
     }
     
     func applicationDidEnterBackground() {
@@ -471,14 +465,5 @@ extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
 
-    }
-}
-
-extension AppRootRouter {
-    //TODO: katerina we should do it in our slow sync
-    private func updateTeamFeature() {
-        ZMUserSession.shared()?.perform {
-            ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
-        }
     }
 }
