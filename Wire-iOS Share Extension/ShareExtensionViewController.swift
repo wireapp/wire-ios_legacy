@@ -557,7 +557,7 @@ extension ShareExtensionViewController {
         case .needCustomPasscode:
             let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
             if isCustomPasscodeNotSet {
-                let alert = UIAlertController(title: "share_extension.unlock.alert.title".localized, message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
+                let alert = UIAlertController(title: "", message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
                 self.present(alert, animated: true, completion: nil)
                 
                 localAuthenticationStatus = .denied
