@@ -128,10 +128,6 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     }()
 
     let accessoryContainer = UIView()
-    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: CGFloat.AccessoryTextField.horizonalInset, bottom: 0, right: CGFloat.AccessoryTextField.horizonalInset)
-    let placeholderInsets: UIEdgeInsets
-
-    let accessoryTrailingInset: CGFloat
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
     /// - Parameters:
@@ -142,19 +138,9 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
          leftInset: CGFloat = 8,
          accessoryTrailingInset: CGFloat = 16,
          cornerRadius: CGFloat? = nil) {
-        var topInset: CGFloat = 0
-        if #available(iOS 11, *) {
-            topInset = 0
-        } else {
-            /// Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            topInset = 8
-        }
-
-        placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
+        
         textFieldValidator = TextFieldValidator()
-
         self.kind = kind
-        self.accessoryTrailingInset = accessoryTrailingInset
 
         let textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
                                                                     textColor: UIColor.Team.textColor,

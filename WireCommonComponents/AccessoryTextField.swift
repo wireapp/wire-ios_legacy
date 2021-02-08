@@ -69,7 +69,8 @@ open class AccessoryTextField: UITextField {
     }()
     let accessoryContainer = UIView()
     
-    let textInsets: UIEdgeInsets
+    public var textInsets: UIEdgeInsets
+    
     let placeholderInsets: UIEdgeInsets
     let accessoryTrailingInset: CGFloat
     let textFieldAttributes: Attributes
