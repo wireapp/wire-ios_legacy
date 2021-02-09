@@ -79,23 +79,19 @@ extension AppLockModule {
         var message: String {
             guard case let .locked(authenticationType) = self else { return "" }
 
-            var key = "self.settings.privacy_security.lock_cancelled.description_"
-
             switch authenticationType {
             case .faceID:
-                key.append("face_id")
+                return "self.settings.privacy_security.lock_cancelled.description_face_id".localized
 
             case .touchID:
-                key.append("touch_id")
+                return "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
 
             case .passcode:
-                key.append("passcode")
+                return "self.settings.privacy_security.lock_cancelled.description_passcode".localized
 
             case .unavailable:
-                key.append("passcode_unavailable")
+                return "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
             }
-
-            return key.localized
         }
 
     }
