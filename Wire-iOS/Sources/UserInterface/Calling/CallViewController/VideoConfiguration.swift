@@ -47,7 +47,7 @@ extension CallParticipant {
 extension VoiceChannel {
 
     private var sortedParticipants: [CallParticipant] {
-        return participants(activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers).sorted {
+        return participants(ofKind: .all, activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers).sorted {
             $0.streamId == selfStreamId ||
             $0.user.name?.lowercased() < $1.user.name?.lowercased()
         }
@@ -83,7 +83,25 @@ extension VoiceChannel {
         return ZMUser.selfUser()?.selfStreamId
     }
     
+    fileprivate var videoStreamArrangment2: (preview: VideoStream?, grid: [VideoStream]) {
+        guard isEstablished else {
+            return (nil, [])
+        }
+        
+        let participants = self.participants(ofKind: .smoothedActiveSpeakers, activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers)
+        let videoStreams = activeVideoStreams(from: participants)
+        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
+
+        return arrangeVideoStreams(for: selfStream, participantsStreams: videoStreams)
+    }
+    
     fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
+        return videoGridPresentationMode == .activeSpeakers
+            ? videoStreamArrangment2
+            : videoStreamArrangment1
+    }
+    
+    fileprivate var videoStreamArrangment1: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
 
         let videoStreams = Array(sortedActiveVideoStreams.prefix(VideoConfiguration.maxVideoStreams))
@@ -103,7 +121,7 @@ extension VoiceChannel {
             return (nil, streamsExcludingSelf)
         }
 
-        if callHasTwoParticipants && streamsExcludingSelf.count == 1 {
+        if callHasTwoParticipants && streamsExcludingSelf.count == 1 && videoGridPresentationMode == .allVideoStreams {
             return (selfStream, streamsExcludingSelf)
         } else {
             return (nil, [selfStream] + streamsExcludingSelf)
@@ -115,9 +133,25 @@ extension VoiceChannel {
     }
     
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
-        return connectedParticipants.count > 2
+        return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
     }
 
+    func activeVideoStreams(from participants: [CallParticipant]) -> [VideoStream] {
+        return participants.compactMap { participant in
+            switch participant.state {
+            case .connected(let videoState, let microphoneState) where videoState != .stopped:
+                let stream = Stream(streamId: participant.streamId,
+                                    participantName: participant.user.name,
+                                    microphoneState: microphoneState,
+                                    videoState: videoState,
+                                    isParticipantActiveSpeaker: participant.isActiveSpeaker)
+                return VideoStream(stream: stream, isPaused: videoState == .paused)
+            default:
+                return nil
+            }
+        }
+    }
+    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
