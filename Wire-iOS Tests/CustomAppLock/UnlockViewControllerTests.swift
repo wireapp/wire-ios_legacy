@@ -32,8 +32,8 @@ final class UnlockViewControllerTests: XCTestCase {
     }
 
     private func fillPasscode() {
-        sut.accessoryTextField.text = "Passcode"
-        sut.validationUpdated(sender: sut.accessoryTextField, error: nil)
+        sut.validatedTextField.text = "Passcode"
+        sut.validationUpdated(sender: sut.validatedTextField, error: nil)
     }
 
     func testForInitState() {

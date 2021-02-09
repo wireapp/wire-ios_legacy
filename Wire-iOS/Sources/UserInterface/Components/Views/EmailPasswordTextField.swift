@@ -26,8 +26,8 @@ protocol EmailPasswordTextFieldDelegate: class {
 
 class EmailPasswordTextField: UIView, MagicTappable {
 
-    let emailField = AccessoryTextField(kind: .email)
-    let passwordField = AccessoryTextField(kind: .password(isNew: false))
+    let emailField = ValidatedTextField(kind: .email)
+    let passwordField = ValidatedTextField(kind: .password(isNew: false))
     let contentStack = UIStackView()
     let separatorContainer: ContentInsetView
 

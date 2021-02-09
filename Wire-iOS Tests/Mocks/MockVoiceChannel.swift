@@ -141,7 +141,6 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
         }
     }
 
-
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
 
     func mute(_ muted: Bool, userSession: ZMUserSession) {}
