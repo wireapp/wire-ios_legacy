@@ -29,7 +29,7 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Methods
 
-        func execute(request: ___VARIABLE_productName:identifier___Module.Request) {
+        func executeRequest(_ request: ___VARIABLE_productName:identifier___Module.Request) {
             requests.append(request)
         }
 

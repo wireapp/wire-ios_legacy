@@ -53,7 +53,7 @@ extension ___FILEBASENAMEASIDENTIFIER___ {
 
 protocol ___VARIABLE_productName:identifier___InteractorPresenterInterface: InteractorPresenterInterface {
 
-    func execute(request: ___FILEBASENAMEASIDENTIFIER___.Request)
+    func executeRequest(_ request: ___FILEBASENAMEASIDENTIFIER___.Request)
 
 }
 
@@ -61,13 +61,13 @@ protocol ___VARIABLE_productName:identifier___InteractorPresenterInterface: Inte
 
 protocol ___VARIABLE_productName:identifier___PresenterInteractorInterface: PresenterInteractorInterface {
 
-    func handle(result: ___FILEBASENAMEASIDENTIFIER___.Result)
+    func handleResult(_ result: ___FILEBASENAMEASIDENTIFIER___.Result)
 
 }
 
 protocol ___VARIABLE_productName:identifier___PresenterViewInterface: PresenterViewInterface {
 
-    func process(event: ___FILEBASENAMEASIDENTIFIER___.Event)
+    func processEvent(_ event: ___FILEBASENAMEASIDENTIFIER___.Event)
 
 }
 
@@ -75,7 +75,7 @@ protocol ___VARIABLE_productName:identifier___PresenterViewInterface: PresenterV
 
 protocol ___VARIABLE_productName:identifier___ViewPresenterInterface: ViewPresenterInterface {
 
-    func refresh(with model: ___FILEBASENAMEASIDENTIFIER___.ViewModel)
+    func refresh(withModel model: ___FILEBASENAMEASIDENTIFIER___.ViewModel)
 
 }
 
@@ -83,6 +83,6 @@ protocol ___VARIABLE_productName:identifier___ViewPresenterInterface: ViewPresen
 
 protocol ___VARIABLE_productName:identifier___RouterPresenterInterface: RouterPresenterInterface {
 
-    func perform(action: ___FILEBASENAMEASIDENTIFIER___.Action)
+    func performAction(_ action: ___FILEBASENAMEASIDENTIFIER___.Action)
 
 }

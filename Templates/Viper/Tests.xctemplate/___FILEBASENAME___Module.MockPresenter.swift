@@ -30,11 +30,11 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Methods
 
-        func handle(result: ___VARIABLE_productName:identifier___Module.Result) {
+        func handleResult(_ result: ___VARIABLE_productName:identifier___Module.Result) {
             results.append(result)
         }
 
-        func process(event: ___VARIABLE_productName:identifier___Module.Event) {
+        func processEvent(_ event: ___VARIABLE_productName:identifier___Module.Event) {
             events.append(event)
         }
 

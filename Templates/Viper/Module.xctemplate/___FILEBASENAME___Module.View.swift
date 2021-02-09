@@ -31,7 +31,7 @@ extension ___VARIABLE_productName:identifier___Module {
 
         override func viewDidLoad() {
             super.viewDidLoad()
-            presenter.process(event: .viewDidLoad)
+            presenter.processEvent(.viewDidLoad)
         }
 
     }
@@ -50,7 +50,7 @@ extension ___VARIABLE_productName:identifier___Module {
 
 extension ___VARIABLE_productName:identifier___Module.View: ___VARIABLE_productName:identifier___ViewPresenterInterface {
 
-    func refresh(with model: ___VARIABLE_productName:identifier___Module.ViewModel) {
+    func refresh(withModel model: ___VARIABLE_productName:identifier___Module.ViewModel) {
 
     }
 

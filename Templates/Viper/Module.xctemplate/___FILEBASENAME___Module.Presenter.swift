@@ -36,7 +36,7 @@ extension ___VARIABLE_productName:identifier___Module {
 
 extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface {
 
-    func handle(result: ___VARIABLE_productName:identifier___Module.Result) {
+    func handleResult(_ result: ___VARIABLE_productName:identifier___Module.Result) {
         switch result {
 
         }
@@ -48,7 +48,7 @@ extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_pro
 
 extension ___VARIABLE_productName:identifier___Module.Presenter: ___VARIABLE_productName:identifier___PresenterViewInterface {
 
-    func process(event: ___VARIABLE_productName:identifier___Module.Event) {
+    func processEvent(_ event: ___VARIABLE_productName:identifier___Module.Event) {
         switch event {
         case .viewDidLoad:
           break

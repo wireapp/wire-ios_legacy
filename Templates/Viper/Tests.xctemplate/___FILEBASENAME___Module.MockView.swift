@@ -29,7 +29,7 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Methods
 
-        func refresh(with model: ___VARIABLE_productName:identifier___Module.ViewModel) {
+        func refresh(withModel model: ___VARIABLE_productName:identifier___Module.ViewModel) {
             models.append(model)
         }
 
