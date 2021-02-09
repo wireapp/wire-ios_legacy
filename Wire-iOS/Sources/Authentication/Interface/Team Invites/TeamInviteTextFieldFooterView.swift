@@ -35,7 +35,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
     
     let errorButton = Button()
-    private let textField: AccessoryTextField
+    private let textField: ValidatedTextField
     private let errorLabel = UILabel()
 
     var shouldConfirm: ((String) -> Bool)? {
@@ -63,7 +63,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
     
     init() {
-        textField = textFieldDescriptor.create() as! AccessoryTextField
+        textField = textFieldDescriptor.create() as! ValidatedTextField
         super.init(frame: .zero)
         setupViews()
         createConstraints()

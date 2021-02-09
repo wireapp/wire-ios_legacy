@@ -13,7 +13,12 @@ jobs:
       - name: Event Information
         run: |
           echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-          
+
+      - id: share-engine-version
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: wireapp/wire-ios-share-engine
+        
       - name: checkout
         uses: actions/checkout@v2
 
@@ -21,4 +26,5 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+            echo share engine latest version is: ${{ steps.share-engine-version.outputs.release }}
             bash <(curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/createBumpPR.sh)
