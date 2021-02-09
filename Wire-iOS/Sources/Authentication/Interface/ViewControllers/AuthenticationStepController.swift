@@ -159,7 +159,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
 
         errorLabel = UILabel()
-        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + AccessoryTextField.ConfirmButtonWidth)
+        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + ValidatedTextField.ConfirmButtonWidth)
         errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
         errorLabel.textAlignment = .left
         errorLabel.numberOfLines = 0
