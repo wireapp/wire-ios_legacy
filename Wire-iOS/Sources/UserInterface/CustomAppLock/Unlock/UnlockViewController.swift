@@ -59,8 +59,8 @@ final class UnlockViewController: UIViewController {
         return button
     }()
 
-    lazy var accessoryTextField: AccessoryTextField = {
-        let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
+    lazy var validatedTextField: ValidatedTextField = {
+        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
         textField.placeholder = "unlock.textfield.placeholder".localized
         textField.delegate = self
         textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
@@ -156,7 +156,7 @@ final class UnlockViewController: UIViewController {
         [accountIndicator,
          titleLabel,
          UILabel.createHintLabel(variant: .dark),
-         accessoryTextField,
+         validatedTextField,
          errorLabel,
          wipeButton].forEach(upperStackView.addArrangedSubview)
 
@@ -177,7 +177,7 @@ final class UnlockViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        accessoryTextField.becomeFirstResponder()
+        validatedTextField.becomeFirstResponder()
     }
 
     private func createConstraints() {
@@ -242,7 +242,7 @@ final class UnlockViewController: UIViewController {
     @discardableResult
     private func unlock() -> Bool {
         guard
-            let passcode = accessoryTextField.text,
+            let passcode = validatedTextField.text,
             let session = userSession,
             session.appLockController.evaluateAuthentication(customPasscode: passcode) == .granted
         else {
@@ -250,7 +250,6 @@ final class UnlockViewController: UIViewController {
         }
 
         delegate?.unlockViewControllerDidUnlock()
-
         return true
     }
 
@@ -269,13 +268,13 @@ final class UnlockViewController: UIViewController {
     }
 }
 
-// MARK: - AccessoryTextFieldDelegate
+// MARK: - ValidatedTextFieldDelegate
 
-extension UnlockViewController: AccessoryTextFieldDelegate {
+extension UnlockViewController: ValidatedTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
-        accessoryTextField.isSecureTextEntry = !accessoryTextField.isSecureTextEntry
+        validatedTextField.isSecureTextEntry = !validatedTextField.isSecureTextEntry
 
-        accessoryTextField.updatePasscodeIcon()
+        validatedTextField.updatePasscodeIcon()
     }
 }
 

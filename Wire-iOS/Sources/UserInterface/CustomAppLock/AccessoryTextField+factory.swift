@@ -19,16 +19,16 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-extension AccessoryTextField {
-    static func createPasscodeTextField(kind: AccessoryTextField.Kind,
-                                        delegate: AccessoryTextFieldDelegate & TextFieldValidationDelegate) -> AccessoryTextField {
-        let textField = AccessoryTextField(kind: kind,
+extension ValidatedTextField {
+    static func createPasscodeTextField(kind: ValidatedTextField.Kind,
+                                        delegate: ValidatedTextFieldDelegate & TextFieldValidationDelegate) -> ValidatedTextField {
+        let textField = ValidatedTextField(kind: kind,
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 4)
 
         textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
-        textField.accessoryTextFieldDelegate = delegate
+        textField.validatedTextFieldDelegate = delegate
         textField.textFieldValidationDelegate = delegate
 
         textField.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.textFieldHeight).isActive = true

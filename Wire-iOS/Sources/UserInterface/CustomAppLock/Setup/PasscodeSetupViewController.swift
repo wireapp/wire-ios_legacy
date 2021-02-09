@@ -77,8 +77,8 @@ final class PasscodeSetupViewController: UIViewController {
         return button
     }()
 
-    lazy var passcodeTextField: AccessoryTextField = {
-        let textField = AccessoryTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
+    lazy var passcodeTextField: ValidatedTextField = {
+        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
         textField.delegate = self
 
@@ -310,9 +310,9 @@ extension PasscodeSetupViewController: UITextFieldDelegate {
     }
 }
 
-// MARK: - AccessoryTextFieldDelegate
+// MARK: - ValidatedTextFieldDelegate
 
-extension PasscodeSetupViewController: AccessoryTextFieldDelegate {
+extension PasscodeSetupViewController: ValidatedTextFieldDelegate {
     func buttonPressed(_ sender: UIButton) {
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
 

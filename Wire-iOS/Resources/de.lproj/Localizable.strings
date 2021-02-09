@@ -520,7 +520,7 @@
 "content.system.reactivated_device" = "Sie haben %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
 "content.system.new_device" = "ein neues Gerät";
-"content.system.started_using" = "benutzen";
+"content.system.started_using" = "haben begonnen,";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
 "content.system.new_users" = "Teilnehmer hinzugefügt.";
@@ -632,8 +632,8 @@
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.status.cbr" = "Konstante Bitrate";
 "voice.network_error.body" = "Sie brauchen eine Internetverbindung, um anzurufen. Überprüfen Sie die Verbindung und versuchen Sie es erneut.";
-"voice.degradation.new_self_device" = "Sie haben ein neues Gerät hinzugefügt.";
-"voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
+"voice.degradation.new_self_device" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"voice.degradation.new_user_device" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
 "voice.degradation_outgoing.prompt" = "Möchten Sie noch anrufen?";
 "voice.degradation_incoming.prompt" = "Möchten Sie den Anruf noch annehmen?";
 "voice.accept_button.title" = "Annehmen";
@@ -682,13 +682,13 @@
 "call.video.too_many.alert.message" = "Videoanrufe funktionieren nur in Gruppen von 4 oder weniger Personen.";
 
 "call.degraded.alert.title" = "Neues Gerät";
-"call.degraded.alert.message.self" = "Sie haben ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.user" = "%@ hat ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
+"call.degraded.alert.message.self" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.user" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.unknown" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
 "call.degraded.ended.alert.title" = "Anruf beendet";
-"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie ein neues Gerät verwendet haben.";
+"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie begonnen haben, ein neues Gerät zu nutzen.";
 "call.degraded.ended.alert.message.user" = "Der Anruf wurde unterbrochen, weil %@ kein verifizierter Kontakt mehr ist.";
 "call.degraded.ended.alert.message.unknown" = "Der Anruf wurde unterbrochen, weil jemand nicht mehr als verifizierter Kontakt gilt.";
 
@@ -784,9 +784,9 @@
 "meta.leave_conversation_button_leave_and_delete" = "Verlassen und Verlauf löschen";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
-"meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
-"meta.degraded.degradation_reason_message.someone" = "Jemand verwendet ein neues Gerät.";
+"meta.degraded.degradation_reason_message.singular" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"meta.degraded.degradation_reason_message.plural" = "%@ hat begonnen, neue Geräte zu nutzen.";
+"meta.degraded.degradation_reason_message.someone" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "meta.degraded.dialog_message" = "Möchten Sie die Nachricht noch senden?";
 "meta.degraded.verify_devices_button" = "Geräte überprüfen…";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";

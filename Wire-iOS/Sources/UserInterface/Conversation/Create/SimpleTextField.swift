@@ -100,7 +100,7 @@ final class SimpleTextField: UITextField, Themeable {
         accessibilityIdentifier = "NameField"
         autocorrectionType = .no
         contentVerticalAlignment = .center
-        font = AccessoryTextField.enteredTextFont
+        font = ValidatedTextField.enteredTextFont
         delegate = textFieldValidator
         textFieldValidator.delegate = self
     }
@@ -126,7 +126,7 @@ final class SimpleTextField: UITextField, Themeable {
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
-                                        .font: AccessoryTextField.placeholderFont]
+                                        .font: ValidatedTextField.placeholderFont]
         return placeholder && attribute
     }
 
