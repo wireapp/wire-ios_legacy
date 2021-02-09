@@ -33,6 +33,8 @@ extension AppLockModule {
 
         let dispatchGroup = DispatchGroup()
 
+        private let isReadyForAuthentication = DispatchSemaphore(value: 1)
+
         /// The message to display on the OS authentication screen.
 
         private let deviceAuthenticationDescription = {
@@ -96,6 +98,8 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
                 return
             }
 
+            isReadyForAuthentication.wait()
+
             appLock.evaluateAuthentication(
                 passcodePreference: preference,
                 description: deviceAuthenticationDescription,
@@ -125,6 +129,8 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
             case .unavailable:
                 self.presenter.handleResult(.authenticationUnavailable)
             }
+
+            self.isReadyForAuthentication.signal()
         }
     }
 
