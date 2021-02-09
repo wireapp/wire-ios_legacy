@@ -86,7 +86,7 @@ extension AppLockModule {
 
 protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
-    func perform(action: AppLockModule.Action)
+    func performAction(_ action: AppLockModule.Action)
 
 }
 
@@ -94,7 +94,7 @@ protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
-    func execute(request: AppLockModule.Request)
+    func executeRequest(_ request: AppLockModule.Request)
 
 }
 
@@ -102,13 +102,13 @@ protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
 
 protocol AppLockPresenterInteractorInterface: PresenterInteractorInterface {
 
-    func handle(result: AppLockModule.Result)
+    func handleResult(_ result: AppLockModule.Result)
 
 }
 
 protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
-    func process(event: AppLockModule.Event)
+    func processEvent(_ event: AppLockModule.Event)
 
 }
 
@@ -116,6 +116,6 @@ protocol AppLockPresenterViewInterface: PresenterViewInterface {
 
 protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
-    func refresh(with model: AppLockModule.ViewModel)
+    func refresh(withModel model: AppLockModule.ViewModel)
 
 }

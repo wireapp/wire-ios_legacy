@@ -36,7 +36,7 @@ extension AppLockModule {
 
 extension AppLockModule.Router: AppLockRouterPresenterInterface {
 
-    func perform(action: AppLockModule.Action) {
+    func performAction(_ action: AppLockModule.Action) {
         switch action {
         case let .createPasscode(shouldInform):
             presentCreatePasscodeModule(shouldInform: shouldInform)

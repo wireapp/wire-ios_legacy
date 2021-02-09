@@ -29,7 +29,7 @@ extension AppLockModule {
 
         // MARK: - Methods
 
-        func refresh(with model: ViewModel) {
+        func refresh(withModel model: ViewModel) {
             models.append(model)
         }
 

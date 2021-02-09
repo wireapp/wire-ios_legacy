@@ -82,13 +82,13 @@ extension AppLockModule {
 
 extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
-    func execute(request: AppLockModule.Request) {
+    func executeRequest(_ request: AppLockModule.Request) {
         switch request {
         case .initiateAuthentication where needsToCreateCustomPasscode:
-            presenter.handle(result: .customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
+            presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
 
         case .initiateAuthentication:
-            presenter.handle(result: .readyForAuthentication(shouldInform: needsToNotifyUser))
+            presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .evaluateAuthentication:
             guard let preference = passcodePreference else {
@@ -117,13 +117,13 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
                 self.openAppLock()
 
             case .denied:
-                self.presenter.handle(result: .authenticationDenied(self.authenticationType.current))
+                self.presenter.handleResult(.authenticationDenied(self.authenticationType.current))
 
             case .needCustomPasscode:
-                self.presenter.handle(result: .customPasscodeNeeded)
+                self.presenter.handleResult(.customPasscodeNeeded)
 
             case .unavailable:
-                self.presenter.handle(result: .authenticationUnavailable)
+                self.presenter.handleResult(.authenticationUnavailable)
             }
         }
     }

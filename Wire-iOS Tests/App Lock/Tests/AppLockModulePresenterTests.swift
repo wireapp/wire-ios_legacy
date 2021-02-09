@@ -51,7 +51,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_CustomPasscodeCreationNeeded_InformingUserOfConfigChange() {
         // When
-        sut.handle(result: .customPasscodeCreationNeeded(shouldInform: true))
+        sut.handleResult(.customPasscodeCreationNeeded(shouldInform: true))
 
         // Then
         XCTAssertEqual(router.actions, [.createPasscode(shouldInform: true)])
@@ -59,7 +59,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_CustomPasscodeCreationNeeded_WithoutInformingUserOfConfigChange() {
         // When
-        sut.handle(result: .customPasscodeCreationNeeded(shouldInform: false))
+        sut.handleResult(.customPasscodeCreationNeeded(shouldInform: false))
 
         // Then
         XCTAssertEqual(router.actions, [.createPasscode(shouldInform: false)])
@@ -67,7 +67,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_ReadyForAuthentication_InformingUserOfConfigChange() {
         // When
-        sut.handle(result: .readyForAuthentication(shouldInform: true))
+        sut.handleResult(.readyForAuthentication(shouldInform: true))
 
         // Then
         XCTAssertEqual(router.actions, [.informUserOfConfigChange])
@@ -75,7 +75,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_ReadyForAuthentication_WithoutInformingUserOfConfigChange() {
         // When
-        sut.handle(result: .readyForAuthentication(shouldInform: false))
+        sut.handleResult(.readyForAuthentication(shouldInform: false))
 
         // Then
         XCTAssertEqual(view.models, [.authenticating])
@@ -84,7 +84,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_CustomPasscodeNeeded() {
         // When
-        sut.handle(result: .customPasscodeNeeded)
+        sut.handleResult(.customPasscodeNeeded)
 
         // Then
         XCTAssertEqual(view.models, [.locked(.passcode)])
@@ -93,7 +93,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_AuthenticationDenied() {
         // When
-        sut.handle(result: .authenticationDenied(.faceID))
+        sut.handleResult(.authenticationDenied(.faceID))
 
         // Then
         XCTAssertEqual(view.models, [.locked(.faceID)])
@@ -101,7 +101,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_AuthenticationUnavailable() {
         // When
-        sut.handle(result: .authenticationUnavailable)
+        sut.handleResult(.authenticationUnavailable)
 
         // Then
         XCTAssertEqual(view.models, [.locked(.unavailable)])
@@ -111,7 +111,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_ViewDidLoad() {
         // When
-        sut.process(event: .viewDidLoad)
+        sut.processEvent(.viewDidLoad)
 
         // Then
         XCTAssertEqual(interactor.requests, [.initiateAuthentication])
@@ -119,7 +119,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_UnlockButtonTapped() {
         // When
-        sut.process(event: .unlockButtonTapped)
+        sut.processEvent(.unlockButtonTapped)
 
         // Then
         XCTAssertEqual(interactor.requests, [.initiateAuthentication])
@@ -127,7 +127,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_PasscodeSetupCompleted() {
         // When
-        sut.process(event: .passcodeSetupCompleted)
+        sut.processEvent(.passcodeSetupCompleted)
 
         // Then
         XCTAssertEqual(interactor.requests, [.openAppLock])
@@ -135,7 +135,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_ConfigChangeAcknowledged() {
         // When
-        sut.process(event: .configChangeAcknowledged)
+        sut.processEvent(.configChangeAcknowledged)
 
         // Then
         XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
@@ -143,7 +143,7 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     func test_CustomPasscodeVerified() {
         // When
-        sut.process(event: .customPasscodeVerified)
+        sut.processEvent(.customPasscodeVerified)
 
         // Then
         XCTAssertEqual(interactor.requests, [.openAppLock])

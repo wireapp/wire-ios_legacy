@@ -37,26 +37,26 @@ extension AppLockModule {
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
-    func handle(result: AppLockModule.Result) {
+    func handleResult(_ result: AppLockModule.Result) {
         switch result {
         case let .customPasscodeCreationNeeded(shouldInform):
-            router.perform(action: .createPasscode(shouldInform: shouldInform))
+            router.performAction(.createPasscode(shouldInform: shouldInform))
 
         case .readyForAuthentication(shouldInform: true):
-            router.perform(action: .informUserOfConfigChange)
+            router.performAction(.informUserOfConfigChange)
 
         case .readyForAuthentication:
             authenticate()
 
         case .customPasscodeNeeded:
-            view.refresh(with: .locked(.passcode))
-            router.perform(action: .inputPasscode)
+            view.refresh(withModel: .locked(.passcode))
+            router.performAction(.inputPasscode)
 
         case let .authenticationDenied(authenticationType):
-            view.refresh(with: .locked(authenticationType))
+            view.refresh(withModel: .locked(authenticationType))
 
         case .authenticationUnavailable:
-            view.refresh(with: .locked(.unavailable))
+            view.refresh(withModel: .locked(.unavailable))
         }
     }
 
@@ -66,13 +66,13 @@ extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
 
 extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
-    func process(event: AppLockModule.Event) {
+    func processEvent(_ event: AppLockModule.Event) {
         switch event {
         case .viewDidLoad, .unlockButtonTapped:
-            interactor.execute(request: .initiateAuthentication)
+            interactor.executeRequest(.initiateAuthentication)
 
         case .passcodeSetupCompleted, .customPasscodeVerified:
-            interactor.execute(request: .openAppLock)
+            interactor.executeRequest(.openAppLock)
 
         case .configChangeAcknowledged:
             authenticate()
@@ -86,8 +86,8 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 extension AppLockModule.Presenter {
 
     private func authenticate() {
-        view.refresh(with: .authenticating)
-        interactor.execute(request: .evaluateAuthentication)
+        view.refresh(withModel: .authenticating)
+        interactor.executeRequest(.evaluateAuthentication)
     }
 
 }
