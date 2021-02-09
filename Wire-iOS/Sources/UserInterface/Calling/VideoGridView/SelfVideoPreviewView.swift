@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,8 +22,15 @@ import avs
 
 final class SelfVideoPreviewView: BaseVideoPreviewView {
     
-    private let previewView = AVSVideoPreview()
+    var previewView = AVSVideoPreview()
         
+    override var stream: Stream {
+        didSet {
+            guard stream != oldValue else { return }
+            updateCaptureState()
+        }
+    }
+    
     deinit {
         stopCapture()
     }
@@ -54,8 +61,12 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.didMoveToWindow()
         
         if window != nil {
-            startCapture()
+            updateCaptureState()
         }
+    }
+    
+    private func updateCaptureState() {
+        stream.videoState == .some(.started) ? startCapture() : stopCapture()
     }
     
     func startCapture() {

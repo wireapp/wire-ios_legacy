@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class AccessoryTextFieldValidateionTests: XCTestCase {
-    var sut: AccessoryTextField!
+    var sut: ValidatedTextField!
     var mockViewController: MockViewController!
 
     class MockViewController: UIViewController, TextFieldValidationDelegate {
@@ -44,7 +44,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = AccessoryTextField()
+        sut = ValidatedTextField()
         mockViewController = MockViewController()
         sut.textFieldValidationDelegate = mockViewController
     }
@@ -56,7 +56,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         super.tearDown()
     }
 
-    fileprivate func checkSucceed(textFieldType: AccessoryTextField.Kind,
+    fileprivate func checkSucceed(textFieldType: ValidatedTextField.Kind,
                                   text: String,
                                   file: StaticString = #file,
                                   line: UInt = #line) {
@@ -72,7 +72,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertEqual(mockViewController.lastError, .none, "Should not have error", file: file, line: line)
     }
 
-    fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
+    fileprivate func checkError(textFieldType: ValidatedTextField.Kind,
                                 text: String?,
                                 expectedError: TextFieldValidator.ValidationError?,
                                 file: StaticString = #file,
@@ -110,7 +110,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .unknown
+        let type: ValidatedTextField.Kind = .unknown
         let text = "blah"
 
         // WHEN & THEN
@@ -119,7 +119,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatSucceedAfterSendEditingChangedForPasswordTextField() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: false)
+        let type: ValidatedTextField.Kind = .password(isNew: false)
         let text = "blahblah"
 
         // WHEN & THEN
@@ -128,7 +128,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatEmailIsValidatedWhenSetToEmailType() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .email
+        let type: ValidatedTextField.Kind = .email
         let text = "blahblah@wire.com"
 
         // WHEN & THEN
@@ -137,7 +137,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatNameIsValidWhenSetToNameType() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let text = "foo bar"
 
         // WHEN & THEN
@@ -147,7 +147,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     // MARK: - unhappy cases
     func testThatOneCharacterNameIsInvalid() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let text = "a"
 
         // WHEN & THEN
@@ -156,7 +156,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat65CharacterNameIsInvalid() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let text = String(repeating: "a", count: 65)
 
         // WHEN & THEN
@@ -165,7 +165,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatNilNameIsInvalid() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
 
         // WHEN & THEN
         checkError(textFieldType: type, text: nil, expectedError: .tooShort(kind: type))
@@ -173,7 +173,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatInvalidEmailDoesNotPassValidation() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .email
+        let type: ValidatedTextField.Kind = .email
         let text = "This is not a valid email address"
 
         // WHEN & THEN
@@ -182,7 +182,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat255CharactersEmailDoesNotPassValidation() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .email
+        let type: ValidatedTextField.Kind = .email
         let suffix = "@wire.com"
         let text = String(repeating: "b", count: 255 - suffix.count) + suffix
 
@@ -192,7 +192,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat7CharacterPasswordIsValid_Existing() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: false)
+        let type: ValidatedTextField.Kind = .password(isNew: false)
         let text = String(repeating: "a", count: 7)
 
         // WHEN & THEN
@@ -201,7 +201,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat129CharacterPasswordIsValid_Existing() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: false)
+        let type: ValidatedTextField.Kind = .password(isNew: false)
         let text = String(repeating: "a", count: 129)
 
         // WHEN & THEN
@@ -210,7 +210,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat7CharacterPasswordIsInvalid_New() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: true)
+        let type: ValidatedTextField.Kind = .password(isNew: true)
         let text = String(repeating: "a", count: 7)
 
         // WHEN & THEN
@@ -221,7 +221,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThat129CharacterPasswordIsInvalid_New() {
         // GIVEN
-        let type: AccessoryTextField.Kind = .password(isNew: true)
+        let type: ValidatedTextField.Kind = .password(isNew: true)
         let text = String(repeating: "Aa1!", count: 129)
 
         // WHEN & THEN
@@ -232,7 +232,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
     func testThatPasswordIsSecuredWhenSetToPasswordType() {
         // GIVEN
-        let kind: AccessoryTextField.Kind = .password(isNew: false)
+        let kind: ValidatedTextField.Kind = .password(isNew: false)
         let text = "This is a valid password"
 
         // WHEN

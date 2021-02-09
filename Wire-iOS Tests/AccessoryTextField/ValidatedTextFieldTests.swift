@@ -20,13 +20,13 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class AccessoryTextFieldTests: XCTestCase {
-    var sut: AccessoryTextField!
+final class ValidatedTextFieldTests: XCTestCase {
+    var sut: ValidatedTextField!
 
     override func setUp() {
         super.setUp()
 
-        sut = AccessoryTextField()
+        sut = ValidatedTextField()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
     }
 

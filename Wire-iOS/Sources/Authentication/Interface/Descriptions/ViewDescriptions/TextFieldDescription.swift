@@ -22,7 +22,7 @@ import UIKit
 final class TextFieldDescription: NSObject, ValueSubmission {
     let placeholder: String
     let actionDescription: String
-    let kind: AccessoryTextField.Kind
+    let kind: ValidatedTextField.Kind
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true
@@ -30,10 +30,10 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
-    var textField: AccessoryTextField?
+    var textField: ValidatedTextField?
     var useDeferredValidation: Bool = false
 
-    init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
+    init(placeholder: String, actionDescription: String, kind: ValidatedTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
         self.uppercasePlaceholder = uppercasePlaceholder
@@ -49,7 +49,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
 
 extension TextFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let textField = AccessoryTextField(kind: kind)
+        let textField = ValidatedTextField(kind: kind)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = uppercasePlaceholder ? self.placeholder.localizedUppercase : self.placeholder
@@ -80,7 +80,7 @@ extension TextFieldDescription: UITextFieldDelegate {
         submitValue(with: textField.input)
     }
 
-    @objc func editingChanged(sender: AccessoryTextField) {
+    @objc func editingChanged(sender: ValidatedTextField) {
         // If we use deferred validation, remove the error when the text changes
         guard useDeferredValidation else { return }
         self.valueValidated?(nil)

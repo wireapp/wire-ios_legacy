@@ -79,7 +79,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
-    private let textField = AccessoryTextField(kind: .phoneNumber, leftInset: 8)
+    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8)
 
     // MARK: - Initialization
 
