@@ -517,7 +517,7 @@ extension ShareExtensionViewController {
             let sharingSession = sharingSession,
             sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
             else {
-                localAuthenticationStatus = .disabled
+                localAuthenticationStatus = .granted
                 completion()
                 return
         }
