@@ -38,6 +38,18 @@
             ReferencedContainer = "container:Wire-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "MallocStackLogging"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "PrefersMallocStackLoggingLite"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -53,6 +65,18 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingSmallHeight()">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingSmallSize()">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithPicture()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -60,6 +84,21 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ConversationInputBarViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests/testSoundCloudMediaPreviewAttachment()">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests/testSoundCloudSetMediaPreviewAttachment()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
