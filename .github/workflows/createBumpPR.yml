@@ -23,5 +23,5 @@ jobs:
         run: |            
             curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/updateCatfile.swift --output updateCarfile.file
             chmod +x updateCarfile.swift
-            swift updateCarfile.swift ${{ secret.RATE_LIMIT_SECRET }} ./Cartfile
+            swift updateCarfile.swift ${{ secrets.RATE_LIMIT_SECRET }} ./Cartfile
 
