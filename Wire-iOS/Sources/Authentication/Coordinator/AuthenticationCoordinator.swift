@@ -169,7 +169,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             return
         }
 
-        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
@@ -208,7 +208,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func updateLoginObservers() {
         loginObservers = [
-            PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
@@ -216,8 +215,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
 
+        sessionManager.loginDelegate = self
         registrationStatus.delegate = self
-        authenticationStatus.delegate = self
     }
 
     /**

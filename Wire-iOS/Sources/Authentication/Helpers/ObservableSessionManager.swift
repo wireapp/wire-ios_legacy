@@ -26,6 +26,8 @@ import WireSyncEngine
 
 protocol ObservableSessionManager: SessionManagerType {
 
+    var loginDelegate: LoginDelegate? { get set }
+    
     var activeUnauthenticatedSession: UnauthenticatedSession { get }
 
     /**
