@@ -109,6 +109,8 @@ extension ConversationInputBarViewController {
     ///
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let completion: Completion = { [weak self] in
@@ -147,7 +149,7 @@ extension ConversationInputBarViewController {
                 var conversationMediaAction: ConversationMediaAction = .fileTransfer
 
                 do {
-                    let message = try weakSelf.conversation.appendFile(with: metadata)
+                    let message = try conversation.appendFile(with: metadata)
                     if let fileMessageData = message.fileMessageData {
                         if fileMessageData.isVideo {
                             conversationMediaAction = .videoMessage
@@ -156,7 +158,7 @@ extension ConversationInputBarViewController {
                         }
                     }
 
-                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: conversation)
                 } catch {
                     Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
                 }

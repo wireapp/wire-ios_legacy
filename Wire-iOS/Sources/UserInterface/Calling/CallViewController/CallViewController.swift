@@ -61,6 +61,7 @@ final class CallViewController: UIViewController {
     }
 
     init(voiceChannel: VoiceChannel,
+         selfUser: UserType,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
          mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
          permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
@@ -69,7 +70,7 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR, selfUser: selfUser)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -80,7 +81,8 @@ final class CallViewController: UIViewController {
                            voiceChannel.addParticipantObserver(self),
                            voiceChannel.addConstantBitRateObserver(self),
                            voiceChannel.addNetworkQualityObserver(self),
-                           voiceChannel.addMuteStateObserver(self)]
+                           voiceChannel.addMuteStateObserver(self),
+                           voiceChannel.addActiveSpeakersObserver(self)]
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
         }
@@ -215,7 +217,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR, selfUser: ZMUser.selfUser())
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         videoGridViewController.configuration = videoConfiguration
@@ -300,6 +302,12 @@ extension CallViewController: WireCallCenterCallStateObserver {
         hapticsController.updateCallState(callState)
     }
 
+}
+
+extension CallViewController: ActiveSpeakersObserver {
+    func callCenterDidChangeActiveSpeakers() {
+        updateConfiguration()
+    }
 }
 
 //MARK: - WireCallCenterCallParticipantObserver

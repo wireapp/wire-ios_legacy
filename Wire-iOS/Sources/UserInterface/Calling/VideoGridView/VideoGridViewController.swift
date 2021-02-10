@@ -184,17 +184,22 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func updateSelfPreview() {
-        guard
-            let selfStreamId = ZMUser.selfUser()?.selfStreamId,
-            let selfStream = stream(with: selfStreamId)
-        else {
+        guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
+
+        guard let selfStream = stream(with: selfStreamId) else {
+            (viewCache[selfStreamId] as? SelfVideoPreviewView)?.stopCapture()
             return
         }
 
         if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
             view.stream = selfStream
+            view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream, isCovered: isCovered)
+            viewCache[selfStreamId] = SelfVideoPreviewView(
+                stream: selfStream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame
+            )
         }
     }
 
@@ -230,9 +235,10 @@ final class VideoGridViewController: UIViewController {
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? VideoPreviewView)
-            view?.isPaused = $0.isPaused
+            let view = (streamView(for: $0.stream) as? BaseVideoPreviewView)
             view?.stream = $0.stream
+            view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
+            (view as? VideoPreviewView)?.isPaused = $0.isPaused
         }
     }
 
@@ -345,7 +351,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered)
+            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame)
             viewCache[streamId] = view
             return view
         }

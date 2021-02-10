@@ -23,23 +23,26 @@ import UIKit
 import WireDataModel
 
 final class CollectionCellHeader: UIView {
-    public var message: ZMConversationMessage? {
+    var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {
+            guard let message = message,
+                  let serverTimestamp = message.serverTimestamp,
+                  let sender = message.senderUser else {
                 return
             }
             
-            self.nameLabel.textColor = sender.nameAccentColor
-            self.nameLabel.text = sender.name
-            self.dateLabel.text = serverTimestamp.formattedDate
+            nameLabel.textColor = sender.nameAccentColor
+            
+            nameLabel.text = sender.name
+            dateLabel.text = serverTimestamp.formattedDate
         }
     }
     
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
     
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.addSubview(self.nameLabel)
@@ -55,7 +58,7 @@ final class CollectionCellHeader: UIView {
         }
     }
     
-    public var nameLabel: UILabel = {
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "sender name"
         label.font = .smallSemiboldFont
@@ -63,7 +66,7 @@ final class CollectionCellHeader: UIView {
         return label
     }()
 
-    public var dateLabel: UILabel = {
+    var dateLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "sent on"
         label.font = .smallLightFont

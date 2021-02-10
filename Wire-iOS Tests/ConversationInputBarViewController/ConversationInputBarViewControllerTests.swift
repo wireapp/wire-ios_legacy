@@ -18,26 +18,61 @@
 
 import XCTest
 @testable import Wire
+import WireCommonComponents
+
+final class MockInputBarConversationType: NSObject, InputBarConversationType {
+	var sortedOtherParticipants: [UserType] = []
+	
+	var sortedServiceUsers: [UserType] = []
+	
+    var typingUsers: [UserType] = []
+
+    var hasDraftMessage: Bool = false
+
+    var connectedUserType: UserType?
+
+    var draftMessage: DraftMessage?
+
+    var messageDestructionTimeoutValue: TimeInterval = 0
+    var messageDestructionTimeout: MessageDestructionTimeout?
+
+    var conversationType: ZMConversationType = .group
+
+    func setIsTyping(_ isTyping: Bool) {
+        //no-op
+    }
+
+    var isReadOnly: Bool = false
+
+    var displayName: String = ""
+
+    var isSelfAnActiveMember: Bool = true
+
+    var teamRemoteIdentifier: UUID?
+
+    func localParticipantsContain(user: UserType) -> Bool {
+        return false
+    }
+}
 
 final class ConversationInputBarViewControllerTests: XCTestCase {
 
-    var coreDataFixture: CoreDataFixture!
-
     var sut: ConversationInputBarViewController!
+    var mockConversation: MockInputBarConversationType!
 
     override func setUp() {
         super.setUp()
-        coreDataFixture = CoreDataFixture()
 
-        sut = ConversationInputBarViewController(conversation: coreDataFixture.otherUserConversation)
+        UIColor.setAccentOverride(.vividRed)
 
-        sut.loadViewIfNeeded()
+        mockConversation = MockInputBarConversationType()
+        sut = ConversationInputBarViewController(conversation: mockConversation)
     }
 
     override func tearDown() {
         sut = nil
+        mockConversation = nil
 
-        coreDataFixture = nil
         super.tearDown()
     }
 
@@ -47,23 +82,21 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
                        widths: tabletWidths(), snapshotBackgroundColor: .white)
 
     }
-}
 
-// MARK: - Typing indication
-extension ConversationInputBarViewControllerTests {
+    // MARK: - Typing indication
+
     func testTypingIndicationIsShown() {
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
-        sut.typingIndicatorView.typingUsers = [coreDataFixture.otherUser]
+        sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
         sut.typingIndicatorView.setHidden(false, animated: false)
 
         // THEN
         verifyInAllPhoneWidths(matching: sut.view)
     }
-}
 
-// MARK: - Ephemeral indicator button
-extension ConversationInputBarViewControllerTests {
+    // MARK: - Ephemeral indicator button
+
     func testEphemeralIndicatorButton() {
         // GIVEN
 
@@ -71,7 +104,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTimeNone() {
@@ -79,10 +112,15 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(.none)
+        mockConversation.messageDestructionTimeout = .local(.none)
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
+    }
+
+    private func setMessageDestructionTimeout(timeInterval: TimeInterval) {
+        mockConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeInterval))
+        mockConversation.messageDestructionTimeoutValue = timeInterval
     }
 
     func testEphemeralTime10Second() {
@@ -90,12 +128,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(10)
+        setMessageDestructionTimeout(timeInterval: 10)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime5Minutes() {
@@ -103,12 +141,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(300)
+        setMessageDestructionTimeout(timeInterval: 300)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime2Hours() {
@@ -116,12 +154,12 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(7200)
+        setMessageDestructionTimeout(timeInterval: 7200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
     func testEphemeralTime3Days() {
@@ -129,7 +167,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(259200)
+        setMessageDestructionTimeout(timeInterval: 259200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -142,7 +180,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
+        setMessageDestructionTimeout(timeInterval: 2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
@@ -155,14 +193,14 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        coreDataFixture.otherUserConversation.messageDestructionTimeout = .local(2419200)
+        setMessageDestructionTimeout(timeInterval: 2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         let shortText = "Lorem ipsum dolor"
         sut.inputBar.textView.text = shortText
 
         // THEN
-        self.verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut.view)
     }
 
 // MARK: - file action sheet

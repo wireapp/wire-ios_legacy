@@ -92,7 +92,8 @@ final class AppLockViewController: UIViewController {
     private func presentCustomPassCodeUnlockScreenIfNeeded(message: String,
                                                            callback: @escaping RequestPasswordController.Callback) {
         if unlockViewController == nil {
-            let viewController = UnlockViewController()
+            // TODO: [John] Avoid static methods.
+            let viewController = UnlockViewController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared())
             
             let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: viewController)
             let navigationController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
@@ -130,16 +131,20 @@ extension AppLockViewController: AppLockUserInterface {
     func presentUnlockScreen(with message: String,
                              callback: @escaping RequestPasswordController.Callback) {
         
-        if AppLock.rules.useCustomCodeInsteadOfAccountPassword {
-            presentCustomPassCodeUnlockScreenIfNeeded(message: message, callback: callback)
-        } else {
-            presentRequestPasswordController(message: message, callback: callback)
-        }
+        presentCustomPassCodeUnlockScreenIfNeeded(message: message, callback: callback)
     }
     
     func presentCreatePasscodeScreen(callback: ResultHandler?) {
-        present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(callback: callback, variant: .dark),
+        present(PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(variant: .dark,
+                                                                                 context: .forcedForTeam,
+                                                                                 callback: callback),
                 animated: false)
+    }
+    
+    func presentWarningScreen(completion: Completion? = nil) {
+        let warningVC = AppLockChangeWarningViewController(isAppLockActive: true, completion: completion)
+        warningVC.modalPresentationStyle = .fullScreen
+        present(warningVC, animated: false)
     }
 
     func setSpinner(animating: Bool) {

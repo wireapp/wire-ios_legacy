@@ -22,28 +22,34 @@ extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }
 
+// MARK: - URLActionRouterDelegete
+protocol URLActionRouterDelegete: class {
+    func urlActionRouterWillShowCompanyLoginError()
+}
+
+// MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
     func openDeepLink(needsAuthentication: Bool)
     func open(url: URL) -> Bool
 }
 
+// MARK: - URLActionRouter
 class URLActionRouter: URLActionRouterProtocol {
     
     // MARK: - Public Property
     var sessionManager: SessionManager?
+    weak var delegate: URLActionRouterDelegete?
     
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private let authenticationCoordinator: AuthenticationCoordinator?
     private var url: URL?
     
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                authenticationCoordinator: AuthenticationCoordinator? = nil,
                 sessionManager: SessionManager? = nil,
                 url: URL? = nil) {
         self.rootViewController = viewController
-        self.authenticationCoordinator = authenticationCoordinator
+        self.sessionManager = sessionManager
         self.url = url
     }
     
@@ -54,7 +60,7 @@ class URLActionRouter: URLActionRouterProtocol {
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
-                authenticationCoordinator?.cancelCompanyLogin()
+                delegate?.urlActionRouterWillShowCompanyLoginError()
                 
                 UIApplication.shared.topmostViewController()?.dismissIfNeeded(animated: true, completion: {
                     UIApplication.shared.topmostViewController()?.showAlert(for: error)
@@ -95,9 +101,8 @@ extension URLActionRouter: PresentationDelegate {
     }
     
     func completedURLAction(_ action: URLAction) {
-        if case URLAction.companyLoginSuccess = action {
-            notifyCompanyLoginCompletion()
-        }
+        guard case URLAction.companyLoginSuccess = action else { return }
+        notifyCompanyLoginCompletion()
     }
     
     func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {

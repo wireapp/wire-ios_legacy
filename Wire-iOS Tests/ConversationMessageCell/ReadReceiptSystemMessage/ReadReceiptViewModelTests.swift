@@ -35,19 +35,23 @@ final class ReadReceiptViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func createMockMessage(type: ZMSystemMessageType) {
+    private func createMockMessage(type: ZMSystemMessageType) {
         mockMessage = MockMessageFactory.systemMessage(with: type)!
     }
 
+    private func createSut(type: ZMSystemMessageType) {
+        sut = ReadReceiptViewModel(icon: .eye,
+                                   iconColor: UIColor.from(scheme: .textDimmed),
+                                   systemMessageType: type,
+                                   sender: mockMessage.senderUser!)
+    }
+    
     func testThatSelfUserSwitchOffReceiptOption(){
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsDisabled
         createMockMessage(type: type)
 
-        sut = ReadReceiptViewModel(icon: .eye,
-                                   iconColor: UIColor.from(scheme: .textDimmed),
-                                   systemMessageType: type,
-                                   sender: mockMessage.sender!)
+        createSut(type: type)
 
         // THEN
         XCTAssertEqual(sut.attributedTitle()?.string, "You turned read receipts off for everyone")
@@ -57,13 +61,10 @@ final class ReadReceiptViewModelTests: XCTestCase {
         // GIVEN
         let type = ZMSystemMessageType.readReceiptsDisabled
         createMockMessage(type: type)
-        mockMessage.sender = MockUser.mockUsers()?.first
+        mockMessage.senderUser = SwiftMockLoader.mockUsers().first
 
         // WHEN
-        sut = ReadReceiptViewModel(icon: .eye,
-                                   iconColor: UIColor.from(scheme: .textDimmed),
-                                   systemMessageType: type,
-                                   sender: mockMessage.sender!)
+        createSut(type: type)
 
         // THEN
         XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts off for everyone")
@@ -73,12 +74,9 @@ final class ReadReceiptViewModelTests: XCTestCase {
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsEnabled
         createMockMessage(type: type)
-        mockMessage.sender = MockUser.mockUsers()?.first
+        mockMessage.senderUser = SwiftMockLoader.mockUsers().first
 
-        sut = ReadReceiptViewModel(icon: .eye,
-                                   iconColor: UIColor.from(scheme: .textDimmed),
-                                   systemMessageType: type,
-                                   sender: mockMessage.sender!)
+        createSut(type: type)
 
         // THEN
         XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts on for everyone")
@@ -89,10 +87,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         let type = ZMSystemMessageType.readReceiptsOn
         createMockMessage(type: type)
 
-        sut = ReadReceiptViewModel(icon: .eye,
-                                   iconColor: UIColor.from(scheme: .textDimmed),
-                                   systemMessageType: type,
-                                   sender: mockMessage.sender!)
+        createSut(type: type)
 
         // THEN
         XCTAssertEqual(sut.attributedTitle()?.string, "Read receipts are on")

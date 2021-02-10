@@ -20,11 +20,13 @@ import WireSyncEngine
 
 struct VideoConfiguration: VideoGridConfiguration {
 
+    fileprivate static let maxActiveSpeakers: Int = 4
     fileprivate static let maxVideoStreams: Int = 12
 
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
+    let shouldShowActiveSpeakerFrame: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.videoStreamArrangment
@@ -32,6 +34,7 @@ struct VideoConfiguration: VideoGridConfiguration {
         floatingVideoStream = videoStreamArrangment.preview
         videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
+        shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
     }
 }
 
@@ -44,7 +47,7 @@ extension CallParticipant {
 extension VoiceChannel {
 
     private var sortedParticipants: [CallParticipant] {
-        return participants.sorted {
+        return participants(activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers).sorted {
             $0.streamId == selfStreamId ||
             $0.user.name?.lowercased() < $1.user.name?.lowercased()
         }
@@ -63,7 +66,8 @@ extension VoiceChannel {
         let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
                             participantName: name,
                             microphoneState: .unmuted,
-                            videoState: videoState)
+                            videoState: videoState,
+                            isParticipantActiveSpeaker: false)
         
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
@@ -110,6 +114,10 @@ extension VoiceChannel {
         return connectedParticipants.count == 2
     }
     
+    fileprivate var shouldShowActiveSpeakerFrame: Bool {
+        return connectedParticipants.count > 2
+    }
+    
     var sortedActiveVideoStreams: [VideoStream] {
         return sortedParticipants.compactMap { participant in
             switch participant.state {
@@ -117,7 +125,8 @@ extension VoiceChannel {
                 let stream = Stream(streamId: participant.streamId,
                                     participantName: participant.user.name,
                                     microphoneState: microphoneState,
-                                    videoState: videoState)
+                                    videoState: videoState,
+                                    isParticipantActiveSpeaker: participant.isActiveSpeaker)
                 return VideoStream(stream: stream, isPaused: videoState == .paused)
             default:
                 return nil

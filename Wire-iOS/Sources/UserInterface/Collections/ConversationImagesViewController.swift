@@ -316,7 +316,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func createNavigationTitle() {
-        guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
+        guard let sender = currentMessage.senderUser, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
         navigationItem.titleView = TwoLineTitleView(first: (sender.name ?? "").localizedUppercase, second: serverTimestamp.formattedDate)

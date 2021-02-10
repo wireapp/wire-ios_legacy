@@ -20,9 +20,19 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
-final class MockMessageFactory: NSObject {
+extension MockMessage {
+    func update(mockSystemMessageData: MockSystemMessageData,
+                userClients: [AnyHashable]) {
+        mockSystemMessageData.clients = Set(userClients)
+
+        backingSystemMessageData = mockSystemMessageData
+    }
+}
+
+final class MockMessageFactory {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
+    /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
     class func messageTemplate(sender: UserType? = nil) -> MockMessage {
@@ -31,26 +41,30 @@ final class MockMessageFactory: NSObject {
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation
         message.conversation = (conversation as Any) as? ZMConversation
         message.serverTimestamp = Date(timeIntervalSince1970: 0)
-        
+
         if let sender = sender as? ZMUser {
-            message.sender = sender
+            message.senderUser = sender
+        } else if let sender = sender {
+            message.senderUser = sender
         } else {
-            message.sender = (MockUser.mockSelf() as Any) as? ZMUser
+            let user = MockUserType.createSelfUser(name: "Tarja Turunen")
+            user.accentColorValue = .strongBlue
+            message.senderUser = user
         }
-        
-        conversation?.activeParticipants = [message.sender!]
+
+        conversation?.activeParticipants = [message.senderUser as! MockUserType]
 
         return message
     }
 
-    class func fileTransferMessage() -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate()
+    class func fileTransferMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
 
         message?.backingFileMessageData = MockFileMessageData()
         return message
     }
 
-    class func imageMessage(with image: UIImage?) -> MockMessage? {
+    class func imageMessage(sender: UserType? = nil, with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
         if let image = image, let data = image.imageData {
             imageData.mockImageData = data
@@ -60,82 +74,89 @@ final class MockMessageFactory: NSObject {
             imageData.isDownloaded = false
         }
 
-        let message: MockMessage? = self.imageMessage()
+        let message: MockMessage? = imageMessage(sender: sender)
         message?.imageMessageData = imageData
 
         return message
     }
 
-    class func imageMessage() -> MockMessage? {
-        let message: MockMessage? = MockMessageFactory.messageTemplate()
+    class func imageMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = MockMessageFactory.messageTemplate(sender: sender)
 
         message?.imageMessageData = MockImageMessageData()
 
         return message
     }
 
-    class func pendingImageMessage() -> MockMessage? {
+    class func pendingImageMessage(sender: UserType? = nil) -> MockMessage? {
         let imageData = MockImageMessageData()
 
-        let message: MockMessage? = self.imageMessage()
+        let message: MockMessage? = imageMessage(sender: sender)
         message?.imageMessageData = imageData
 
         return message
     }
 
-    class func systemMessage(with systemMessageType: ZMSystemMessageType,
-                             users numUsers: Int = 0,
-                             clients numClients: Int = 0,
-                             sender: UserType? = nil) -> MockMessage? {
+    class func systemMessageAndData(with systemMessageType: ZMSystemMessageType,
+                                    users numUsers: Int = 0,
+                                    sender: UserType? = nil) -> (MockMessage?, MockSystemMessageData) {
         let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
 
         message.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
 
-
         if numUsers > 0 {
-            mockSystemMessageData.users = Set(MockUser.mockUsers()[0...numUsers - 1])
+            mockSystemMessageData.userTypes = Set(SwiftMockLoader.mockUsers()[0...numUsers - 1])
         } else {
-            mockSystemMessageData.users = Set()
+            mockSystemMessageData.userTypes = Set()
         }
+
+        return (message, mockSystemMessageData)
+    }
+
+    class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             users numUsers: Int = 0,
+                             clients numClients: Int = 0,
+                             sender: UserType? = nil) -> MockMessage? {
+
+        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType, users: numUsers, sender: sender)
 
         var userClients: [AnyHashable] = []
 
-        for user: Any in mockSystemMessageData.users {
+        for user: Any in mockSystemMessageData.userTypes {
             if let client = (user as? MockUser)?.feature(withUserClients: numClients) {
                 userClients.append(contentsOf: client)
             }
         }
 
-        mockSystemMessageData.clients = Set(userClients)
-
-        message.backingSystemMessageData = mockSystemMessageData
+        message!.update(mockSystemMessageData: mockSystemMessageData, userClients: userClients)
         return message
     }
 
-    class func locationMessage() -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func locationMessage(sender: MockUserType? = nil) -> MockMessage? {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
 
         message.backingLocationMessageData = MockLocationMessageData()
         return message
     }
 
-    class var compositeMessage: MockMessage {
-        let message = MockMessageFactory.messageTemplate()
+    class func compositeMessage(sender: UserType? = nil) -> MockMessage {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
         return message
     }
 
-    class func videoMessage(previewImage: UIImage? = nil) -> MockMessage? {
-        let message: MockMessage? = self.fileTransferMessage()
+    class func videoMessage(sender: UserType? = nil,
+                            previewImage: UIImage? = nil) -> MockMessage? {
+        let message: MockMessage? = fileTransferMessage(sender: sender)
         message?.backingFileMessageData.mimeType = "video/mp4"
         message?.backingFileMessageData.filename = "vacation.mp4"
         message?.backingFileMessageData.previewData = previewImage?.jpegData(compressionQuality: 0.9)
         return message
     }
 
-    class func audioMessage() -> MockMessage? {
-        let message: MockMessage? = self.fileTransferMessage()
+    class func audioMessage(sender: UserType? = nil) -> MockMessage? {
+        let message: MockMessage? = fileTransferMessage(sender: sender)
         message?.backingFileMessageData.mimeType = "audio/x-m4a"
         return message
     }
@@ -148,8 +169,10 @@ final class MockMessageFactory: NSObject {
         return MockMessageFactory.textMessage(withText: text, includingRichMedia: false)
     }
 
-    class func textMessage(withText text: String?, includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
-        let message = MockMessageFactory.messageTemplate()
+    class func textMessage(withText text: String?,
+                           sender: UserType? = nil,
+                           includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
+        let message = MockMessageFactory.messageTemplate(sender: sender)
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = shouldIncludeRichMedia ? "Check this 500lb squirrel! -> https://www.youtube.com/watch?v=0so5er4X3dc" : text!
@@ -209,27 +232,27 @@ final class MockMessageFactory: NSObject {
         message?.hasBeenDeleted = true
         return message
     }
-    
+
     class func deletedImageMessage() -> MockMessage? {
         return self.deletedMessage(from: self.imageMessage())
     }
-    
+
     class func deletedVideoMessage() -> MockMessage? {
         return self.deletedMessage(from: self.videoMessage())
     }
-    
+
     class func deletedAudioMessage() -> MockMessage? {
         return self.deletedMessage(from: self.audioMessage())
     }
-    
+
     class func deletedFileMessage() -> MockMessage? {
         return self.deletedMessage(from: self.fileTransferMessage())
     }
-    
+
     class func deletedLinkMessage() -> MockMessage? {
         return self.deletedMessage(from: self.linkMessage())
     }
-    
+
     class func passFileTransferMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
         message.backingFileMessageData = MockPassFileMessageData()

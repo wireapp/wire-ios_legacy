@@ -35,7 +35,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
         mockConversation = createTeamGroupConversation()
 
         mockMessage = MockMessageFactory.textMessage(withText: "Message")!
-        mockMessage.sender = selfUser
+        mockMessage.senderUser = MockUserType.createSelfUser(name: "Alice")
         mockMessage.conversation = mockConversation
         mockMessage.deliveryState = .read
         mockMessage.needsReadConfirmation = true

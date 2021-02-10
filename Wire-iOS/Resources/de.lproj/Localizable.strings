@@ -221,7 +221,7 @@
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "list.section.groups" = "Gruppen";
-"list.section.contacts" = "Kontakte";
+"list.section.contacts" = "Personen";
 "list.section.requests" = "Anfragen";
 "list.section.favorites" = "Favoriten";
 
@@ -520,7 +520,7 @@
 "content.system.reactivated_device" = "Sie haben %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
 "content.system.new_device" = "ein neues Gerät";
-"content.system.started_using" = "benutzen";
+"content.system.started_using" = "haben begonnen,";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
 "content.system.new_users" = "Teilnehmer hinzugefügt.";
@@ -533,17 +533,19 @@
 "content.system.missing_messages.title" = "Sie haben Wire eine Weile nicht benutzt. Einige ältere Nachrichten könnten nicht angezeigt werden.";
 "content.system.missing_messages.subtitle_start" = "In der Zwischenzeit";
 
-"content.system.cannot_decrypt" = "Eine Nachricht von %@ wurde nicht empfangen.";
+"content.system.cannot_decrypt.self" = "Eine Nachricht von **Ihnen** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.other" = "Eine Nachricht von **%@** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.reset_session" = "Entschlüsselung künftiger Nachrichten";
+"content.system.cannot_decrypt.error_details" = "(Behobener Fehler: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "Ihnen";
-"content.system.cannot_decrypt.why_part" = "Warum?";
+"content.system.cannot_decrypt_resolved.self" = "Sie können jetzt Nachrichten von sich selbst entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **müssen Sie sie erneut senden.**";
+"content.system.cannot_decrypt_resolved.other" = "Sie können jetzt künftige Nachrichten von **%1$@**entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **bitten Sie %1$@, sie erneut zu senden.**";
 
-"content.system.cannot_decrypt.identity" = "%@ Geräte-Identität hat sich geändert. Nachricht kann nicht entschlüsselt werden.";
-"content.system.cannot_decrypt.identity.you_part" = "Ihre";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@s"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Mehr erfahren";
-"content.system.cannot_decrypt.otherDevice_part" = "(Gerät %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Ihre** Geräte-Identität hat sich geändert. Unzustellbare Nachricht.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** Geräte-Identität hat sich geändert. Unzustellbare Nachricht."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = " **%@ konnte einige Ihrer Nachrichten nicht entschlüsseln, hat das Problem aber gelöst**. Dies betraf alle Unterhaltungen, die Sie gemeinsam nutzen.";
+"content.system.session_reset.self" = " **Sie konnten einige Ihrer Nachrichten nicht entschlüsseln, haben das Problem aber gelöst**. Dies betraf alle Unterhaltungen.";
 
 "content.system.unknown_message.body" = "Diese Meldung konnte nicht angezeigt werden. Möglicherweise verwenden Sie eine ältere Version von Wire.";
 
@@ -630,8 +632,8 @@
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.status.cbr" = "Konstante Bitrate";
 "voice.network_error.body" = "Sie brauchen eine Internetverbindung, um anzurufen. Überprüfen Sie die Verbindung und versuchen Sie es erneut.";
-"voice.degradation.new_self_device" = "Sie haben ein neues Gerät hinzugefügt.";
-"voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
+"voice.degradation.new_self_device" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"voice.degradation.new_user_device" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
 "voice.degradation_outgoing.prompt" = "Möchten Sie noch anrufen?";
 "voice.degradation_incoming.prompt" = "Möchten Sie den Anruf noch annehmen?";
 "voice.accept_button.title" = "Annehmen";
@@ -680,13 +682,13 @@
 "call.video.too_many.alert.message" = "Videoanrufe funktionieren nur in Gruppen von 4 oder weniger Personen.";
 
 "call.degraded.alert.title" = "Neues Gerät";
-"call.degraded.alert.message.self" = "Sie haben ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.user" = "%@ hat ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
+"call.degraded.alert.message.self" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.user" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.unknown" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
 "call.degraded.ended.alert.title" = "Anruf beendet";
-"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie ein neues Gerät verwendet haben.";
+"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie begonnen haben, ein neues Gerät zu nutzen.";
 "call.degraded.ended.alert.message.user" = "Der Anruf wurde unterbrochen, weil %@ kein verifizierter Kontakt mehr ist.";
 "call.degraded.ended.alert.message.unknown" = "Der Anruf wurde unterbrochen, weil jemand nicht mehr als verifizierter Kontakt gilt.";
 
@@ -782,9 +784,9 @@
 "meta.leave_conversation_button_leave_and_delete" = "Verlassen und Verlauf löschen";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
-"meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
-"meta.degraded.degradation_reason_message.someone" = "Jemand verwendet ein neues Gerät.";
+"meta.degraded.degradation_reason_message.singular" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"meta.degraded.degradation_reason_message.plural" = "%@ hat begonnen, neue Geräte zu nutzen.";
+"meta.degraded.degradation_reason_message.someone" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "meta.degraded.dialog_message" = "Möchten Sie die Nachricht noch senden?";
 "meta.degraded.verify_devices_button" = "Geräte überprüfen…";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
@@ -1802,8 +1804,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Kennwort erstellen";
-"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
-"create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
+"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie es vergessen, **kann es nicht wiederhergestellt werden.**";
+"create_passcode.info_label_forced_applock" = "Erstellen Sie einen Kennwort, um Wire zu entsperren. Merken Sie es sich, da **es nicht wiederhergestellt werden kann**.";
 "create_passcode.create_button.title" = "Kennwort erstellen";
 
 // Custom app lock - create passcode validation
@@ -1819,6 +1821,12 @@
 "unlock.wipe_button" = "Zugang als neues Gerät";
 "unlock.error_label" = "Falsches Kennwort";
 "unlock.submit_button.title" = "entsperren";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "Es gab eine Änderung bei Wire";
+"warning_screen.main_info.forced_applock" = "Ihre Organisation muss Ihre App sperren, wenn Wire nicht verwendet wird, um die Sicherheit des Teams zu gewährleisten.";
+"warning_screen.info_label.forced_applock" = "Entsperren Sie Wire beim nächsten Mal genauso wie Ihr Telefon.";
+"warning_screen.info_label.non_forced_applock" = "Ihre Organisation braucht keine App-Sperre mehr. Ab jetzt können Sie problemlos auf Wire zugreifen.";
 
 // Wipe database
 

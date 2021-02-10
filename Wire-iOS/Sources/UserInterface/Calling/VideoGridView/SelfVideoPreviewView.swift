@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,17 +22,24 @@ import avs
 
 final class SelfVideoPreviewView: BaseVideoPreviewView {
     
-    private let previewView = AVSVideoPreview()
+    var previewView = AVSVideoPreview()
         
+    override var stream: Stream {
+        didSet {
+            guard stream != oldValue else { return }
+            updateCaptureState()
+        }
+    }
+    
     deinit {
         stopCapture()
     }
     
     override func setupViews() {
+        super.setupViews()
         previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(previewView)
-        super.setupViews()
+        insertSubview(previewView, belowSubview: userDetailsView)
     }
     
     override func createConstraints() {
@@ -41,7 +48,8 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     }
     
     override func updateUserDetails() {
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState,
+                                                                  shouldPulse: stream.isParticipantActiveSpeaker)
         
         guard let name = stream.participantName else {
             return
@@ -53,8 +61,12 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.didMoveToWindow()
         
         if window != nil {
-            startCapture()
+            updateCaptureState()
         }
+    }
+    
+    private func updateCaptureState() {
+        stream.videoState == .some(.started) ? startCapture() : stopCapture()
     }
     
     func startCapture() {

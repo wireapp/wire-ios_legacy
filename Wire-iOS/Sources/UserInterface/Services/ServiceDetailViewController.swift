@@ -19,9 +19,11 @@
 import WireSyncEngine
 import UIKit
 
-extension ZMConversation {
+extension ConversationLike where Self: TeamProvider & AllowGuestsProvider {
     var botCanBeAdded: Bool {
-        return self.conversationType != .oneOnOne && self.team != nil && self.allowGuests
+        return conversationType != .oneOnOne &&
+               team != nil &&
+               allowGuests
     }
 }
 

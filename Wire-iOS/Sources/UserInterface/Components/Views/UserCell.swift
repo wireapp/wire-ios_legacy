@@ -44,7 +44,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let verifiedIconView = UIImageView()
     let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
-    let microphoneIconView = IconImageView()
+    let microphoneIconView = PulsingIconImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
@@ -217,7 +217,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     func configure(with user: UserType,
                    selfUser: UserType,
                    subtitle overrideSubtitle: NSAttributedString? = nil,
-                   conversation: ZMConversation? = nil) {
+                   conversation: GroupDetailsConversationType? = nil) {
         
         let subtitle: NSAttributedString?
         if overrideSubtitle == nil {

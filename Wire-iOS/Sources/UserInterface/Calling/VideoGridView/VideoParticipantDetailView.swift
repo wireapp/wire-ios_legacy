@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ final class VideoParticipantDetailsView: UIView {
     )
     
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    private let microphoneIconView = IconImageView()
+    private let microphoneIconView = PulsingIconImageView()
     
     var name: String? {
         didSet {

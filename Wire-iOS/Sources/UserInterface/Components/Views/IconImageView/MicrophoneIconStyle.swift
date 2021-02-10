@@ -20,17 +20,19 @@ import Foundation
 import WireCommonComponents
 import WireSyncEngine
 
-enum MicrophoneIconStyle: String, IconImageStyle {
+enum MicrophoneIconStyle: String {
     case muted
     case unmuted
-    case active
+    case unmutedPulsing
     case hidden
+}
 
+extension MicrophoneIconStyle: IconImageStyle {
     var icon: StyleKitIcon? {
         switch self {
         case .muted:
             return .microphoneWithStrikethrough
-        case .unmuted, .active:
+        case .unmuted, .unmutedPulsing:
             return .microphone
         case .hidden:
             return .none
@@ -39,8 +41,8 @@ enum MicrophoneIconStyle: String, IconImageStyle {
     
     var tintColor: UIColor? {
         switch self {
-        case .active:
-            return .green
+        case .unmutedPulsing:
+            return .accent()
         default:
             return nil
         }
@@ -55,13 +57,19 @@ enum MicrophoneIconStyle: String, IconImageStyle {
     }
 }
 
+extension MicrophoneIconStyle: PulsingIconImageStyle {
+    var shouldPulse: Bool { return self == .unmutedPulsing }
+}
+
 extension MicrophoneIconStyle {
-    init(state: MicrophoneState?) {
+    init(state: MicrophoneState?, shouldPulse: Bool) {
         guard let state = state else {
             self = .hidden
             return
         }
         switch state {
+        case .unmuted where shouldPulse:
+            self = .unmutedPulsing
         case .unmuted:
             self = .unmuted
         case .muted:
