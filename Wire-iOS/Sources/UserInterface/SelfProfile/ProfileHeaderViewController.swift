@@ -133,6 +133,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -151,7 +152,8 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.userSession = session
         imageView.user = user
         
-        if let session = session {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let session = session {
             tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
         

@@ -113,7 +113,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         
         startObservingChanges(for: message)
         
-        if let quotedMessage = message.textMessageData?.quote {
+        if let quotedMessage = message.textMessageData?.quoteMessage {
             startObservingChanges(for: quotedMessage)
         }
     }

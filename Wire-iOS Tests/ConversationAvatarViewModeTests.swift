@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,33 +18,64 @@
 import XCTest
 @testable import Wire
 
-final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelper {
+class MockStableRandomParticipantsConversation: SwiftMockConversation, StableRandomParticipantsProvider {
+    var stableRandomParticipants: [UserType] = []
+    
+    required override init() {
+        
+    }
+    
+    static func createOneOnOneConversation<T: MockStableRandomParticipantsConversation>(otherUser: MockUserType) -> T {
+        SelfUser.setupMockSelfUser()
+        let otherUserConversation = T()
+        
+        // avatar
+        otherUserConversation.stableRandomParticipants = [otherUser]
+        otherUserConversation.conversationType = .oneOnOne
+        
+        // title
+        otherUserConversation.displayName = otherUser.name!
+        
+        // subtitle
+        otherUserConversation.connectedUserType = otherUser
+        
+        return otherUserConversation
+    }
+}
+
+final class ConversationAvatarViewModeTests: XCTestCase {
     var sut: ConversationAvatarView!
-
-    var coreDataFixture: CoreDataFixture!
-
+    var otherUser: MockUserType!
+    var mockConversation: MockStableRandomParticipantsConversation!
+    
     override func setUp() {
         super.setUp()
-        coreDataFixture = CoreDataFixture()
+
+        mockConversation = MockStableRandomParticipantsConversation()
+
+        otherUser = MockUserType.createDefaultOtherUser()
         sut = ConversationAvatarView()
     }
 
     override func tearDown() {
         sut = nil
-        coreDataFixture = nil
+        mockConversation = nil
+        otherUser = nil
+
         super.tearDown()
     }
 
     func testThatModeIsOneWhenGroupConversationWithOneServiceUser() {
         // GIVEN
-        otherUser.serviceIdentifier = "serviceIdentifier"
-        otherUser.providerIdentifier = "providerIdentifier"
-        XCTAssert(otherUser.isServiceUser)
+        let mockServiceUser = MockServiceUserType()
+        mockServiceUser.serviceIdentifier = "serviceIdentifier"
+        mockServiceUser.providerIdentifier = "providerIdentifier"
+        XCTAssert(mockServiceUser.isServiceUser)
 
-        let conversation = createGroupConversation()
+        mockConversation.stableRandomParticipants = [mockServiceUser]
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation))
+        sut.configure(context: .conversation(conversation: mockConversation))
 
         // THEN
         XCTAssertEqual(sut.mode, .one(serviceUser: true))
@@ -53,10 +83,10 @@ final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testThatModeIsFourWhenGroupConversationWithOneUser() {
         // GIVEN
-        let conversation = createGroupConversation()
+        mockConversation.stableRandomParticipants = [otherUser]
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation))
+        sut.configure(context: .conversation(conversation: mockConversation))
 
         // THEN
         XCTAssertEqual(sut.mode, .four)
@@ -64,11 +94,9 @@ final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelp
 
     func testThatModeIsNoneWhenGroupConversationIsEmpty() {
         // GIVEN
-        let conversation = createGroupConversation()
-        conversation.removeParticipantsAndUpdateConversationState(users:[otherUser!], initiatingUser: selfUser)
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation))
+        sut.configure(context: .conversation(conversation: mockConversation))
 
         // THEN
         XCTAssertEqual(sut.mode, .none)

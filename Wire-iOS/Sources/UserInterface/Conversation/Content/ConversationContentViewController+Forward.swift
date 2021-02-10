@@ -31,6 +31,9 @@ extension ZMConversation: ShareDestination {
                 $0.isGuest(in: self) } != nil
     }
 
+}
+
+extension ShareDestination where Self: ConversationAvatarViewConversation {
     var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.configure(context: .conversation(conversation: self))
@@ -51,74 +54,73 @@ extension Array where Element == ZMConversation {
     }
 }
 
-func forward(_ message: ZMMessage, to: [AnyObject]) {
+extension ZMMessage: Shareable {
+    typealias I = ZMConversation
 
-    let conversations = to as! [ZMConversation]
+    func share<ZMConversation>(to: [ZMConversation]) {
+        forward(to: to as [AnyObject])
+    }
 
-    if message.isText {
-        let fetchLinkPreview = !Settings.disableLinkPreviews
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral {
-                do {
-                    // We should not forward any mentions to other conversations
-                    try $0.appendText(content: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
-                } catch {
-                    Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
-                }
-            }
-        }
-    } else if message.isImage, let imageData = message.imageMessageData?.imageData {
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral {
-                do {
-                    try $0.appendImage(from: imageData)
-                } catch {
-                    Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
-                }
-            }
-        }
-    } else if message.isVideo || message.isAudio || message.isFile {
-        let url  = message.fileMessageData!.fileURL!
-        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
+    func forward(to: [AnyObject]) {
+        
+        let conversations = to as! [ZMConversation]
+        
+        if isText {
+            let fetchLinkPreview = !Settings.disableLinkPreviews
             ZMUserSession.shared()?.perform {
                 conversations.forEachNonEphemeral {
                     do {
-                        try $0.appendFile(with: fileMetadata)
+                        // We should not forward any mentions to other conversations
+                        try $0.appendText(content: self.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
                     } catch {
-                        Logging.messageProcessing.warn("Failed to append file message. Reason: \(error.localizedDescription)")
+                        Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
                     }
                 }
             }
-        }
-    } else if message.isLocation {
-        let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral {
-                do {
-                    try $0.appendLocation(with: locationData)
-                } catch {
-                    Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
+        } else if isImage, let imageData = imageMessageData?.imageData {
+            ZMUserSession.shared()?.perform {
+                conversations.forEachNonEphemeral {
+                    do {
+                        try $0.appendImage(from: imageData)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
+                    }
                 }
             }
+        } else if isVideo || isAudio || isFile {
+            let url  = fileMessageData!.fileURL!
+            FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
+                ZMUserSession.shared()?.perform {
+                    conversations.forEachNonEphemeral {
+                        do {
+                            try $0.appendFile(with: fileMetadata)
+                        } catch {
+                            Logging.messageProcessing.warn("Failed to append file message. Reason: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        } else if isLocation {
+            let locationData = LocationData.locationData(withLatitude: locationMessageData!.latitude, longitude: locationMessageData!.longitude, name: locationMessageData!.name, zoomLevel: locationMessageData!.zoomLevel)
+            ZMUserSession.shared()?.perform {
+                conversations.forEachNonEphemeral {
+                    do {
+                        try $0.appendLocation(with: locationData)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
+                    }
+                }
+            }
+        } else {
+            fatal("Cannot forward message")
         }
-    } else {
-        fatal("Cannot forward message")
     }
-}
-
-extension ZMMessage: Shareable {
-
-    func share<ZMConversation>(to: [ZMConversation]) {
-        forward(self, to: to as [AnyObject])
-    }
-
-    typealias I = ZMConversation
 
 }
 
 extension ZMConversationMessage {
     func previewView() -> UIView? {
-        let view = self.preparePreviewView(shouldDisplaySender: false)
+        let view = preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
