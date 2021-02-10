@@ -67,12 +67,14 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
     }
 
     func testThatShowsResultsInConversationWithQuery() {
-        verifyInAllColorSchemes(createSut: {
-            createSUT()
-            sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
-
-            return sut
-        })
+        let createSut = { () -> UIViewController in
+            self.createSUT()
+            self.sut.users = [self.selfUser, self.otherUser].searchForMentions(withQuery: "u")
+            
+            return self.sut
+        }
+        
+        verifyInAllColorSchemes(createSut: createSut)
     }
 
     func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
