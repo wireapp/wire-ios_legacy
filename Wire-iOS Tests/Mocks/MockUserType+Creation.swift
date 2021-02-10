@@ -20,6 +20,8 @@ import Foundation
 
 extension MockUserType {
 
+    /// Create a connected Mock user with name selfUser and vividRed accent color
+    /// - Returns: a mock user
     class func createDefaultSelfUser() -> MockUserType {
         let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.accentColorValue = .vividRed

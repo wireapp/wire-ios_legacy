@@ -33,6 +33,15 @@
 "share_extension.not_signed_in.title" = "Необходимо войти в Wire, чтобы поделиться чем-либо";
 "share_extension.not_signed_in.close_button" = "Закрыть";
 
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Введите код доступа для разблокировки Wire";
+"share_extension.unlock.submit_button.title" = "разблокировать";
+"share_extension.unlock.textfield.placeholder" = "Введите код доступа";
+"share_extension.unlock.hint_label" = "Код доступа";
+"share_extension.unlock.error_label" = "Неверный код доступа";
+"share_extension.unlock.alert.message" = "Открыть Wire, чтобы создать пароль";
+"share_extension.unlock.reveal_passcode" = "Показать код доступа";
+
 "share_extension.timeout.title" = "Время соединения истекло.";
 "share_extension.timeout.message" = "Проверьте подключение к интернету и повторите попытку. Вложения были сохранены в беседе.";
 

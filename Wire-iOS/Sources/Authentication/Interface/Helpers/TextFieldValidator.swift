@@ -25,8 +25,8 @@ final class TextFieldValidator {
     var customValidator: ((String) -> ValidationError?)?
 
     enum ValidationError: Error, Equatable {
-        case tooShort(kind: AccessoryTextField.Kind)
-        case tooLong(kind: AccessoryTextField.Kind)
+        case tooShort(kind: ValidatedTextField.Kind)
+        case tooLong(kind: ValidatedTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
         case invalidPassword([PasswordValidationResult.Violation])
@@ -34,7 +34,7 @@ final class TextFieldValidator {
     }
 
     private func validatePasscode(text: String,
-                                  kind: AccessoryTextField.Kind,
+                                  kind: ValidatedTextField.Kind,
                                   isNew: Bool) -> TextFieldValidator.ValidationError? {
         if isNew {
             // If the user is registering, enforce the password rules
@@ -51,7 +51,7 @@ final class TextFieldValidator {
         }
     }
     
-    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError? {
+    func validate(text: String?, kind: ValidatedTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
             return nil
         }

@@ -1025,7 +1025,7 @@
 "self.settings.account_details.delete_account.title" = "Удалить аккаунт";
 
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
-"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам сообщение по email или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
+"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам email или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
 
 "self.settings.account_details.log_out.alert.title" = "Выйти";
 "self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
@@ -1271,7 +1271,7 @@
 "landing.welcome_submessage" = "К сожалению, это невозможно в приложении - как только вы создадите свою команду, вы сможете авторизоваться здесь.";
 "landing.create_account.title" = "Создать персональный аккаунт Wire";
 "landing.create_account.infotitle" = "Поболтать с друзьями и семьей?";
-"landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
+"landing.create_account.subtitle" = "Конфиденциальное общение с друзьями\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
