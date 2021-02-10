@@ -51,7 +51,7 @@ final class GroupConversationCellTests: XCTestCase {
         let groupConversation = MockStableRandomParticipantsConversation()
         
         var mockUsers = [MockUserType]()
-        for username in XCTestCase.usernames.prefix(upTo: 3) {
+        for username in MockUserType.usernames.prefix(upTo: 3) {
             mockUsers.append(MockUserType.createUser(name: username))
         }
         
