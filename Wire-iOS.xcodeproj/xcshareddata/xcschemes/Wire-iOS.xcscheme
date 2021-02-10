@@ -98,6 +98,9 @@
                   Identifier = "ConversationTextMessageTests/testSoundCloudSetMediaPreviewAttachment()">
                </Test>
                <Test
+                  Identifier = "ConversationVideoMessageCellTests/testDownloadedCell_fromThisDevice()">
+               </Test>
+               <Test
                   Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">
                </Test>
                <Test
