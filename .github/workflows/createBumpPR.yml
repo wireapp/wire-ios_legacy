@@ -13,18 +13,11 @@ jobs:
       - name: Event Information
         run: |
           echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-
-      - id: share-engine-version
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: wireapp/wire-ios-share-engine
         
       - name: checkout
         uses: actions/checkout@v2
 
       - name: create bump PR
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             
             updateCartfile () {
