@@ -35,7 +35,7 @@ jobs:
                 echo "ℹ️ CHILD_REPO is: $CHILD_REPO"
 
                 ### continue after non-support version format for now, e.g. "2.3-swift3.1"
-                LATEST_VERSION=`curl --silent "https://api.github.com/repos/$CHILD_REPO/releases/latest" | jq -r .tag_name` || true
+                LATEST_VERSION=`curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' --silent "https://api.github.com/repos/$CHILD_REPO/releases/latest" | jq -r .tag_name` || true
 
                 echo "ℹ️ latest version is: $LATEST_VERSION"
 
