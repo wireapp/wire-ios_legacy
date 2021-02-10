@@ -196,6 +196,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .authenticated(completedRegistration: let completedRegistration):
             configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
+            // TODO: [John] Avoid singleton.
             screenCurtain.delegate = ZMUserSession.shared()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
@@ -206,6 +207,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
                          toAccount: toAccount,
                          completion: completionBlock)
         case .locked:
+            // TODO: [John] Avoid singleton.
             screenCurtain.delegate = ZMUserSession.shared()
             showAppLock()
         }
