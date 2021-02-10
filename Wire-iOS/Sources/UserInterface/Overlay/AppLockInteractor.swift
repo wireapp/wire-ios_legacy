@@ -54,8 +54,6 @@ final class AppLockInteractor {
     private var userSession: AppLockInteractorUserSession? {
         return _userSession ?? ZMUserSession.shared()
     }
-
-    private let isReadyForAuthentication = DispatchSemaphore(value: 1)
     
     var appState: AppState?
 
@@ -119,7 +117,6 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func evaluateAuthentication(description: String) {
-        isReadyForAuthentication.wait()
         appLock?.evaluateAuthentication(scenario: authenticationScenario,
                                         description: description.localized) { [weak self] result, context in
             guard let `self` = self else { return }
@@ -130,7 +127,6 @@ extension AppLockInteractor: AppLockInteractorInput {
                 }
                 
                 self.output?.authenticationEvaluated(with: result)
-                self.isReadyForAuthentication.signal()
             }
         }
     }
