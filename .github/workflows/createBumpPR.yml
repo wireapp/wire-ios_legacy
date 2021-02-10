@@ -30,11 +30,12 @@ jobs:
             curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/updateCatfile.swift --output updateCarfile.swift
             chmod +x updateCarfile.swift
             swift updateCarfile.swift ${{ secrets.RATE_LIMIT_SECRET }} ./Cartfile
+            rm updateCarfile.swift
 
             carthage update --no-build
             git add .
             git commit -m"bump components"
-            git push --set-upstream origin chore/bump
+            git push --set-upstream origin $BRANCH
 
             echo "ℹ️ open bump PR"
             gh pr create --title "chore: bump components" --body "bump for components"
