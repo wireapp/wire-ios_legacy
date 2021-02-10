@@ -299,4 +299,9 @@ class MockUserType: NSObject, UserType, Decodable {
         refreshTeamDataCount += 1
     }
 
+    // MARK: - dummy user names
+
+    static let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
+                            "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                            "Brett", "Hannah", "Ana", "Paula"]
 }

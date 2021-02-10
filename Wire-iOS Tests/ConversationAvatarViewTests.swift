@@ -136,7 +136,7 @@ final class ConversationAvatarViewTests: XCTestCase {
         // GIVEN
 
         let conversation = MockStableRandomParticipantsConversation()
-        conversation.stableRandomParticipants = XCTestCase.usernames.map {MockUserType.createConnectedUser(name: $0)}
+        conversation.stableRandomParticipants = MockUserType.usernames.map {MockUserType.createConnectedUser(name: $0)}
 
         (conversation.stableRandomParticipants[0] as! MockUserType).accentColorValue = .vividRed
         (conversation.stableRandomParticipants[1] as! MockUserType).accentColorValue = .brightOrange

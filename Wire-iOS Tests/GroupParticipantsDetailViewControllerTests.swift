@@ -62,7 +62,10 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
     func testThatItRendersALotOfUsers() {
         // given
         let users: [MockUserType] = (0..<20).map {
-            MockUserType.createUser(name: "User #\($0)")
+            let user = MockUserType.createUser(name: "User #\($0)")
+            user.handle = nil
+            
+            return user
         }
 
         let selected = Array(users.dropLast(15))
