@@ -206,6 +206,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
                          toAccount: toAccount,
                          completion: completionBlock)
         case .locked:
+            screenCurtain.delegate = ZMUserSession.shared()
             showAppLock()
         }
     }
