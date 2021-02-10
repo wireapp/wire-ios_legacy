@@ -20,6 +20,17 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
+extension ConversationMessageContext {
+    fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
+                                                                       isTimeIntervalSinceLastMessageSignificant: false,
+                                                                       isFirstMessageOfTheDay: false,
+                                                                       isFirstUnreadMessage: false,
+                                                                       isLastMessage: false,
+                                                                       searchQueries: [],
+                                                                       previousMessageIsKnock: false,
+                                                                       spacing: 0)
+}
+
 extension XCTestCase {
     /**
      * Performs a snapshot test for a message
@@ -98,7 +109,7 @@ extension XCTestCase {
         waitForTextViewToLoad: Bool,
         snapshotBackgroundColor: UIColor?
     ) -> UIStackView {
-        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
+        let context = (context ?? ConversationMessageContext.defaultContext)!
 
         let section = ConversationMessageSectionController(message: message, context: context)
         let views = section.cellDescriptions.map({ $0.makeView() })
@@ -123,55 +134,6 @@ extension XCTestCase {
 
 }
 
-/**
- * A base test class for section-based messages. Use the section property to build
- * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
- */
-class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
-    var coreDataFixture: CoreDataFixture!
-
-    var mockSelfUser: MockUserType!
-
-    fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
-                                                                       isTimeIntervalSinceLastMessageSignificant: false,
-                                                                       isFirstMessageOfTheDay: false,
-                                                                       isFirstUnreadMessage: false,
-                                                                       isLastMessage: false,
-                                                                       searchQueries: [],
-                                                                       previousMessageIsKnock: false,
-                                                                       spacing: 0)
-
-    override class func setUp() {
-        resetDayFormatter()
-
-        [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
-            $0.locale = Locale(identifier: "en_US")
-            $0.timeZone = TimeZone(abbreviation: "CET")
-        }
-    }
-
-    override class func tearDown() {
-        ColorScheme.default.variant = .light
-    }
-
-    override func setUp() {
-        super.setUp()
-        coreDataFixture = CoreDataFixture()
-
-        ColorScheme.default.variant = .light
-
-        mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
-        mockSelfUser.accentColorValue = .vividRed
-    }
-
-    override func tearDown() {
-        coreDataFixture = nil
-        mockSelfUser = nil
-
-        super.tearDown()
-    }
-
-}
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {
     let classes = descriptions.map { String(describing: $0) }
