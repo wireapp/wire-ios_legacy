@@ -552,14 +552,14 @@ extension ShareExtensionViewController {
         }
     }
 
-    private func authenticationEvaluated(with result: AppLockController.AuthenticationResult, completion:  @escaping Completion) {
+    private func authenticationEvaluated(with result: AppLockAuthenticationResult, completion:  @escaping Completion) {
         switch result {
         case .granted:
             localAuthenticationStatus = .granted
             completion()
         case .needCustomPasscode:
-            let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
-            if isCustomPasscodeNotSet {
+            let isCustomPasscodeSet = sharingSession?.appLockController.isCustomPasscodeSet ?? false
+            if !isCustomPasscodeSet {
                 let alert = UIAlertController(title: "", message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
                 self.present(alert, animated: true, completion: nil)
                 
@@ -583,14 +583,17 @@ extension ShareExtensionViewController {
         presentUnlockScreen { [weak self] customPasscode in
             guard let `self` = self else { return }
             
-            guard let passcode = customPasscode,
+            guard
+                let passcode = customPasscode,
                 !passcode.isEmpty,
-                let passcodeData = self.sharingSession?.appLockController.fetchPasscode(),
-                passcode == String(data: passcodeData, encoding: .utf8) else {
-                    self.unlockViewController.showWrongPasscodeMessage()
-                    callback(.denied)
-                    return
+                let appLock = self.sharingSession?.appLockController,
+                appLock.evaluateAuthentication(customPasscode: passcode) == .granted
+            else {
+                self.unlockViewController.showWrongPasscodeMessage()
+                callback(.denied)
+                return
             }
+
             self.popConfigurationViewController()
             callback(.granted)
         }
