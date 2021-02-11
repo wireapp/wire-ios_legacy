@@ -13,11 +13,6 @@ jobs:
       - name: Event Information
         run: |
           echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-
-      - id: share-engine-version
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: wireapp/wire-ios-share-engine
         
       - name: checkout
         uses: actions/checkout@v2
@@ -25,6 +20,24 @@ jobs:
       - name: create bump PR
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            echo share engine latest version is: ${{ steps.share-engine-version.outputs.release }}
-            bash <(curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/createBumpPR.sh)
+        run: |            
+            echo "ℹ️ creating branch..."
+            TIME_STAMP=`date +"%Y-%m-%d-%H%M%S"`
+            BRANCH="chore/bump_$TIME_STAMP"
+            git branch $BRANCH
+            git checkout $BRANCH
+            
+            curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/updateCatfile.swift --output updateCarfile.swift
+            chmod +x updateCarfile.swift
+            swift updateCarfile.swift ${{ secrets.RATE_LIMIT_SECRET }} ./Cartfile
+            rm updateCarfile.swift
+
+            carthage update --no-build
+            git add .
+            git commit -m"bump components"
+            git push --set-upstream origin $BRANCH
+
+            echo "ℹ️ open bump PR"
+            gh pr create --title "chore: bump components" --body "bump for components"
+
+
