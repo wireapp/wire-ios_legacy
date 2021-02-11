@@ -113,10 +113,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// Whether an account was added.
     var addedAccount: Bool = false
 
-    var authenticationStatus: ZMAuthenticationStatus {
-        return unauthenticatedSession.authenticationStatus
-    }
-
     /// The user session to use before authentication has finished.
     var unauthenticatedSession: UnauthenticatedSession {
         return sessionManager.activeUnauthenticatedSession
