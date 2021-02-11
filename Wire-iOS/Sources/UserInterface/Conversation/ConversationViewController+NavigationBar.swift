@@ -92,6 +92,27 @@ extension ConversationViewController {
 
         return button
     }
+    
+    var shouldShowCollectionsButton: Bool {
+        guard
+            SecurityFlags.forceEncryptionAtRest.isEnabled == false,
+            session.encryptMessagesAtRest == false
+        else {
+            return false
+        }
+        
+        switch self.conversation.conversationType {
+        case .group: return true
+        case .oneOnOne:
+            if let connection = conversation.connection,
+                connection.status != .pending && connection.status != .sent {
+                return true
+            } else {
+                return nil != conversation.teamRemoteIdentifier
+            }
+        default: return false
+        }
+    }
 
     func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.localParticipants.count != 0 else { return [] }
@@ -114,7 +135,7 @@ extension ConversationViewController {
             items.append(backButton)
         }
 
-        if self.shouldShowCollectionsButton() {
+        if shouldShowCollectionsButton {
             items.append(collectionsBarButtonItem)
         }
 
@@ -128,27 +149,6 @@ extension ConversationViewController {
     /// Update left navigation bar items
     func updateLeftNavigationBarItems() {
         navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
-    }
-
-    private func shouldShowCollectionsButton() -> Bool {
-        guard
-            SecurityFlags.forceEncryptionAtRest.isEnabled == false,
-            session.encryptMessagesAtRest == false
-        else {
-            return false
-        }
-        
-        switch self.conversation.conversationType {
-        case .group: return true
-        case .oneOnOne:
-            if let connection = conversation.connection,
-                connection.status != .pending && connection.status != .sent {
-                return true
-            } else {
-                return nil != conversation.teamRemoteIdentifier
-            }
-        default: return false
-        }
     }
 
     @objc
