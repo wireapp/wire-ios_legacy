@@ -85,7 +85,6 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
-        button.isEnabled = !session.encryptMessagesAtRest
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()
@@ -132,6 +131,13 @@ extension ConversationViewController {
     }
 
     private func shouldShowCollectionsButton() -> Bool {
+        guard
+            SecurityFlags.forceEncryptionAtRest.isEnabled == false,
+            session.encryptMessagesAtRest == false
+        else {
+            return false
+        }
+        
         switch self.conversation.conversationType {
         case .group: return true
         case .oneOnOne:
