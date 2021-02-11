@@ -104,16 +104,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
+    private var registrationStatus: RegistrationStatus {
+        return unauthenticatedSession.registrationStatus
+    }
+    
     var pendingModal: UIViewController?
 
     /// Whether an account was added.
     var addedAccount: Bool = false
 
-    /// The object to use to register users and teams.
-    var registrationStatus: RegistrationStatus {
-        return unauthenticatedSession.registrationStatus
-    }
-    
     var authenticationStatus: ZMAuthenticationStatus {
         return unauthenticatedSession.authenticationStatus
     }
