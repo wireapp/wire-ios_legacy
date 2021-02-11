@@ -83,7 +83,9 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
         return mockParticipants
     }
     
+    var requestedCallParticipantsListKind: CallParticipantsListKind?
     func participants(ofKind kind: CallParticipantsListKind, activeSpeakersLimit limit: Int?) -> [CallParticipant] {
+        requestedCallParticipantsListKind = kind
         return mockParticipants
     }
     

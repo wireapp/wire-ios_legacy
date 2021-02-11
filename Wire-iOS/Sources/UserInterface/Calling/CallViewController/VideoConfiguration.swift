@@ -86,7 +86,7 @@ extension VoiceChannel {
         return (nil, [stream])
     }
     
-    private func participants(forPresentationMode mode: VideoGridPresentationMode) -> [CallParticipant] {
+    func participants(forPresentationMode mode: VideoGridPresentationMode) -> [CallParticipant] {
         var participants = self.participants(
             ofKind: mode.callParticipantsListKind,
             activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers
@@ -99,7 +99,7 @@ extension VoiceChannel {
         return participants
     }
     
-    private func activeVideoStreams(from participants: [CallParticipant]) -> [VideoStream] {
+    func activeVideoStreams(from participants: [CallParticipant]) -> [VideoStream] {
         return participants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState) where videoState != .stopped:
