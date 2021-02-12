@@ -69,23 +69,27 @@ extension MockUserType {
     ///
     /// - Returns: A standard mock user object with default values.
 
-    class func createUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
+    class func createUser(name: String,
+                          inTeam teamID: UUID? = nil) -> MockUserType {
         let user = MockUserType()
         user.name = name
+        user.handle = name.lowercased()
         user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
         return user
     }
-    
+
     /// Create a connected Mock user with name Bruno and orange accent color
     /// - Returns: a mock user
     class func createDefaultOtherUser() -> MockUserType {
         let user = MockUserType.createUser(name: "Bruno")
+        user.handle = "bruno"
+        user.initials = "B"
         user.accentColorValue = .brightOrange
         user.isConnected = true
-        
+
         return user
     }
 }

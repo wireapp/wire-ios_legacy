@@ -31,7 +31,7 @@ extension XCTestCase {
         let image = self.image(inTestBundleNamed: imageFileName)
 
 
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
 
         let sut = FullscreenImageViewController(message: message)
         sut.setBoundsSizeAsIPhone4_7Inch()

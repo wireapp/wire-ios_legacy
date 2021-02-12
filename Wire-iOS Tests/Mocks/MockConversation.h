@@ -21,7 +21,7 @@
 @import WireSyncEngine;
 #import "MockLoader.h"
 
-
+NS_CLASS_DEPRECATED_IOS(4_0, 13_0, "Use SwiftMockConversation instead")
 @interface MockConversation : NSObject<Mockable>    
 
 @property (nonatomic, copy) NSString *displayName;
