@@ -33,7 +33,8 @@ final class AppLockView: UIView {
 
         return label
     }()
-    let authenticateButton = Button(style: .fullMonochrome)
+    let actionButton = Button(style: .fullMonochrome)
+    let authenticationType: AuthenticationType
 
     private var contentWidthConstraint: NSLayoutConstraint!
     private var contentCenterConstraint: NSLayoutConstraint!
@@ -46,13 +47,15 @@ final class AppLockView: UIView {
 
     var showReauth: Bool = false {
         didSet {
+            self.setupActionButton()
             self.authenticateLabel.isHidden = !showReauth
-            self.authenticateButton.isHidden = !showReauth
+            self.actionButton.isHidden = !showReauth
         }
     }
 
     init(authenticationType: AuthenticationType = .current) {
-
+        self.authenticationType = authenticationType
+        
         super.init(frame: .zero)
 
         let shieldView = UIView.shieldView()
@@ -63,12 +66,12 @@ final class AppLockView: UIView {
 
         self.authenticateLabel.isHidden = true
         self.authenticateLabel.numberOfLines = 0
-        self.authenticateButton.isHidden = true
+        self.actionButton.isHidden = true
 
         addSubview(contentContainerView)
 
         contentContainerView.addSubview(authenticateLabel)
-        contentContainerView.addSubview(authenticateButton)
+        contentContainerView.addSubview(actionButton)
 
         switch authenticationType {
         case .touchID:
@@ -81,9 +84,7 @@ final class AppLockView: UIView {
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
         }
 
-        self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
-        self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
-
+        setupActionButton()
         createConstraints(nibView: shieldView)
 
         toggleConstraints()
@@ -95,7 +96,7 @@ final class AppLockView: UIView {
         shieldViewContainer.translatesAutoresizingMaskIntoConstraints = false
         blurView.translatesAutoresizingMaskIntoConstraints = false
         contentContainerView.translatesAutoresizingMaskIntoConstraints = false
-        authenticateButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
         authenticateLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Compact
@@ -134,13 +135,23 @@ final class AppLockView: UIView {
             authenticateLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
 
             // authenticateButton
-            authenticateButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
-            authenticateButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
-            authenticateButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
-            authenticateButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
-            authenticateButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
+            actionButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
+            actionButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
+            actionButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
+            actionButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
+            actionButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
-
+    
+    private func setupActionButton() {
+        if authenticationType != .unavailable {
+            self.actionButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
+            self.actionButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
+        } else {
+            self.actionButton.setTitle("registration.push_access_denied.settings_button.title".localized, for: .normal)
+            self.actionButton.addTarget(self, action: #selector(AppLockView.openSettings(_:)), for: .touchUpInside)
+        }
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -155,8 +166,20 @@ final class AppLockView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatal("init(coder) is not implemented")
     }
+}
 
-    @objc func onReauthenticatePressed(_ sender: AnyObject!) {
+// MARK: - Actions
+
+extension AppLockView {
+    @objc
+    private func onReauthenticatePressed(_ sender: AnyObject!) {
         self.onReauthRequested?()
+    }
+    
+    @objc
+    private func openSettings(_ sender: Any?) {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
