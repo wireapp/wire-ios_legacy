@@ -119,8 +119,13 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "ArticleViewTests",
+        "ArticleViewTests\/testArticleViewWithTruncatedURL()",
+        "BackgroundViewControllerTests",
         "ConversationInputBarViewControllerTests",
-        "ConversationVideoMessageCellTests\/testCancelledUploadCell_fromThisDevice()"
+        "ConversationVideoMessageCellTests",
+        "ConversationVideoMessageCellTests\/testCancelledUploadCell_fromThisDevice()",
+        "ConversationVideoMessageCellTests\/testUploadingCell_fromThisDevice()"
       ],
       "target" : {
         "containerPath" : "container:Wire-iOS.xcodeproj",
