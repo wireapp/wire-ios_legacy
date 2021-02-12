@@ -25,7 +25,7 @@ final class MultiParagraphSnapshotTests: XCTestCase {
 
         let mockSelfUser = MockUserType.createDefaultSelfUser()
 
-        let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)!
+        let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)
 
         verify(message: message)
     }

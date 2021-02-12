@@ -19,40 +19,6 @@
 import XCTest
 @testable import Wire
 
-final class MockGroupDetailsConversation: NSObject, GroupDetailsConversationType {
-    var freeParticipantSlots: Int = 1
-
-    var isUnderLegalHold: Bool = false
-    var isSelfAnActiveMember: Bool = true
-    var userDefinedName: String?
-
-    var displayName: String = ""
-
-    var sortedOtherParticipants: [UserType] = []
-    var sortedServiceUsers: [UserType] = []
-
-    var securityLevel: ZMConversationSecurityLevel = .secure
-
-    var allowGuests: Bool = false
-    var hasReadReceiptsEnabled: Bool = false
-
-    var conversationType: ZMConversationType = .group
-    var mutedMessageTypes: MutedMessageTypes = .none
-
-    var teamRemoteIdentifier: UUID?
-    var team: Team?
-
-    func localParticipantsContain(user: UserType) -> Bool {
-        return false
-    }
-    
-    var accessMode: ConversationAccessMode?
-    var accessRole: ConversationAccessRole?
-
-    var connectedUserType: UserType?
-    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout?
-}
-
 final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: GroupDetailsViewController!
@@ -68,6 +34,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockConversation.securityLevel = .notSecure
 
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.handle = nil
+
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
 
         otherUser = MockUserType.createUser(name: "Bruno")

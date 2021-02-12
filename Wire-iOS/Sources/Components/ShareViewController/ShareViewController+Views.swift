@@ -22,7 +22,7 @@ import UIKit
 extension ShareViewController {
 
     func createShareablePreview() {
-        let shareablePreviewView = self.shareable.previewView()
+        let shareablePreviewView = shareable.previewView()
         shareablePreviewView?.layer.cornerRadius = 4
         shareablePreviewView?.clipsToBounds = true
         self.shareablePreviewView = shareablePreviewView

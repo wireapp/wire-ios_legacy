@@ -82,7 +82,7 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "14.3"
+        ios_version = "14.4"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
