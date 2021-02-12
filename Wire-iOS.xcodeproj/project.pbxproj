@@ -6425,11 +6425,11 @@
 			isa = PBXGroup;
 			children = (
 				EE01D08025ADA3D5001DB205 /* AppLockModule.swift */,
-				EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */,
 				EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */,
 				EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */,
 				EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */,
 				8736F1831E4B67F0001CBA62 /* AppLockModule.View.LockView.swift */,
+				EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */,
 			);
 			path = "App Lock";
 			sourceTree = "<group>";
@@ -6465,10 +6465,10 @@
 		EE7F467525B1D5FF001B3EE4 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				EE7F466D25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift */,
 				EE7F466F25B1D031001B3EE4 /* AppLockModule.MockInteractor.swift */,
 				EE7F467125B1D058001B3EE4 /* AppLockModule.MockPresenter.swift */,
 				EE7F467325B1D0BA001B3EE4 /* AppLockModule.MockView.swift */,
+				EE7F466D25B1CFA6001B3EE4 /* AppLockModule.MockRouter.swift */,
 				EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */,
 				EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */,
 				EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */,
@@ -6479,10 +6479,10 @@
 		EE7F467625B1D61C001B3EE4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */,
 				EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */,
 				EEA2E56F25B2385D00E726C3 /* AppLockModulePresenterTests.swift */,
 				EEA2E57225B23A2B00E726C3 /* AppLockModuleViewTests.swift */,
+				EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

@@ -24,9 +24,9 @@ extension AppLockModule {
 
         // MARK: - Properties
 
-        var router: AppLockRouterPresenterInterface!
         var interactor: AppLockInteractorPresenterInterface!
         weak var view: AppLockViewPresenterInterface!
+        var router: AppLockRouterPresenterInterface!
 
     }
 

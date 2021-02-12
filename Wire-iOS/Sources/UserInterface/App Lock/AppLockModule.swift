@@ -35,7 +35,7 @@ enum AppLockModule: ModuleInterface {
         let presenter = Presenter()
         let view = View()
 
-        assemble(router: router, interactor: interactor, presenter: presenter, view: view)
+        assemble(interactor: interactor, presenter: presenter, view: view, router: router)
 
         return view
     }
@@ -82,14 +82,6 @@ extension AppLockModule {
 
 }
 
-// MARK: - Router
-
-protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
-
-    func performAction(_ action: AppLockModule.Action)
-
-}
-
 // MARK: - Interactor
 
 protocol AppLockInteractorPresenterInterface: InteractorPresenterInterface {
@@ -117,5 +109,13 @@ protocol AppLockPresenterViewInterface: PresenterViewInterface {
 protocol AppLockViewPresenterInterface: ViewPresenterInterface {
 
     func refresh(withModel model: AppLockModule.ViewModel)
+
+}
+
+// MARK: - Router
+
+protocol AppLockRouterPresenterInterface: RouterPresenterInterface {
+
+    func performAction(_ action: AppLockModule.Action)
 
 }

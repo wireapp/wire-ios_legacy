@@ -23,20 +23,20 @@ import XCTest
 final class AppLockModulePresenterTests: XCTestCase {
 
     private var sut: AppLockModule.Presenter!
-    private var router: AppLockModule.MockRouter!
     private var interactor: AppLockModule.MockInteractor!
     private var view: AppLockModule.MockView!
+    private var router: AppLockModule.MockRouter!
 
     override func setUp() {
         super.setUp()
         sut = .init()
-        router = .init()
         interactor = .init()
         view = .init()
+        router = .init()
 
-        sut.router = router
         sut.interactor = interactor
         sut.view = view
+        sut.router = router
     }
 
     override func tearDown() {
