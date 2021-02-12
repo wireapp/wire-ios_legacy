@@ -64,7 +64,7 @@ extension ZMConversationMessage {
     }
 
     var sortedReadReceipts: [ReadReceipt] {
-        return readReceipts.sorted { $0.user.name < $1.user.name }
+        return readReceipts.sorted { $0.userType.name < $1.userType.name }
     }
 
 }
