@@ -119,6 +119,8 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "ConversationInputBarViewControllerTests",
+        "ConversationVideoMessageCellTests\/testCancelledUploadCell_fromThisDevice()"
       ],
       "target" : {
         "containerPath" : "container:Wire-iOS.xcodeproj",

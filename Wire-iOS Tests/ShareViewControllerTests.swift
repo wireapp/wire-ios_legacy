@@ -123,7 +123,7 @@ final class ShareViewControllerTests: XCTestCase {
         let message: MockShareableMessage = MockMessageFactory.imageMessage(with: img)
         createSut(message: message)
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+        _ = waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup])
 
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
     }
