@@ -19,23 +19,7 @@
 import XCTest
 @testable import Wire
 
-private let accentColors: [ZMAccentColor] = [.vividRed, .softPink, .brightYellow, .strongBlue, .strongLimeGreen]
-
-extension Array where Element: ZMUser {
-
-    func assignSomeAccentColors() {
-        var index = 0
-        for user in self {
-            user.accentColorValue = accentColors[index % accentColors.count]
-            user.connection = ZMConnection.insertNewSentConnection(to: user)
-            user.connection!.status = .accepted
-            
-            index = index + 1
-        }
-    }
-}
-
-final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
+final class ConversationAvatarViewTests: XCTestCase {
 
     var sut: ConversationAvatarView!
 
@@ -51,113 +35,119 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersNoUserImages() {
         // GIVEN
-        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
-        thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
-        conversation?.removeParticipantsAndUpdateConversationState(users: [selfUser!, otherUser!, thirdUser], initiatingUser: selfUser)
+        let conversation = MockStableRandomParticipantsConversation()
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation!))
-        
+        sut.configure(context: .conversation(conversation: conversation))
+
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
 
-    
     func testThatItRendersSomeAndThenNoUserImages() {
         // GIVEN
-        otherUser.accentColorValue = .strongLimeGreen
-        otherUserConversation.conversationType = .oneOnOne
-        uiMOC.saveOrRollback()
-        
+        let otherUserConversation = MockStableRandomParticipantsConversation()
+
         // WHEN
-        sut.configure(context: .conversation(conversation: otherUserConversation!))
+        sut.configure(context: .conversation(conversation: otherUserConversation))
 
         // AND WHEN
         _ = sut.prepareForSnapshots()
-        
+
         // AND WHEN
-        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
-        thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
-        conversation?.removeParticipantsAndUpdateConversationState(users: [selfUser!, otherUser!, thirdUser], initiatingUser: selfUser)
-        
-        sut.configure(context: .conversation(conversation: conversation!))
+
+        let conversation = MockStableRandomParticipantsConversation()
+
+        sut.configure(context: .conversation(conversation: conversation))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersSingleUserImage() {
         // GIVEN
+        let otherUserConversation = MockStableRandomParticipantsConversation()
+        let otherUser = MockUserType.createDefaultOtherUser()
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
-        uiMOC.saveOrRollback()
-        
+        otherUserConversation.stableRandomParticipants = [otherUser]
+
         // WHEN
-        sut.configure(context: .conversation(conversation: otherUserConversation!))
+        sut.configure(context: .conversation(conversation: otherUserConversation))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersPendingConnection() {
         // GIVEN
+        let otherUser = MockUserType.createDefaultOtherUser()
         otherUser.accentColorValue = .strongLimeGreen
+        otherUser.isConnected = false
+        otherUser.isPendingApprovalBySelfUser = true
+        let otherUserConversation = MockStableRandomParticipantsConversation()
         otherUserConversation.conversationType = .connection
-        otherUserConversation.connection?.status = .pending
-        uiMOC.saveOrRollback()
-        
+        otherUserConversation.stableRandomParticipants = [otherUser]
+
         // WHEN
-        sut.configure(context: .conversation(conversation: otherUserConversation!))
+        sut.configure(context: .connect(users: [otherUser]))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersASingleServiceUser() {
         // GIVEN
+        let otherUser = MockServiceUserType()
+        otherUser.initials = "B"
         otherUser.serviceIdentifier = "serviceIdentifier"
         otherUser.providerIdentifier = "providerIdentifier"
+        otherUser.isConnected = true
         XCTAssert(otherUser.isServiceUser)
 
         otherUser.accentColorValue = .strongLimeGreen
+        let otherUserConversation = MockStableRandomParticipantsConversation()
         otherUserConversation.conversationType = .oneOnOne
-        uiMOC.saveOrRollback()
-        
+        otherUserConversation.stableRandomParticipants = [otherUser]
+
         // WHEN
-        sut.configure(context: .conversation(conversation: otherUserConversation!))
+        sut.configure(context: .conversation(conversation: otherUserConversation))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
 
     func testThatItRendersTwoUserImages() {
         // GIVEN
-        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
-        thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
-        
-        conversation?.sortedActiveParticipants.assignSomeAccentColors()
-        
+        let conversation = MockStableRandomParticipantsConversation()
+        let otherUser = MockUserType.createDefaultOtherUser()
+        let thirdUser = MockUserType.createConnectedUser(name: "Anna")
+        thirdUser.accentColorValue = .vividRed
+        conversation.stableRandomParticipants = [thirdUser, otherUser]
+
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation!))
+        sut.configure(context: .conversation(conversation: conversation))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
 
     func testThatItRendersManyUsers() {
         // GIVEN
-        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: usernames.map(createUser))
-        
-        conversation?.sortedActiveParticipants.assignSomeAccentColors()
+
+        let conversation = MockStableRandomParticipantsConversation()
+        conversation.stableRandomParticipants = MockUserType.usernames.map {MockUserType.createConnectedUser(name: $0)}
+
+        (conversation.stableRandomParticipants[0] as! MockUserType).accentColorValue = .vividRed
+        (conversation.stableRandomParticipants[1] as! MockUserType).accentColorValue = .brightOrange
+        (conversation.stableRandomParticipants[2] as! MockUserType).accentColorValue = .brightYellow
+        (conversation.stableRandomParticipants[3] as! MockUserType).accentColorValue = .strongBlue
 
         // WHEN
-        sut.configure(context: .conversation(conversation: conversation!))
+        sut.configure(context: .conversation(conversation: conversation))
 
         // THEN
-        verify(view: sut.prepareForSnapshots())
+        verify(matching: sut.prepareForSnapshots())
     }
 
 }
@@ -166,10 +156,11 @@ fileprivate extension UIView {
 
     func prepareForSnapshots() -> UIView {
         let container = UIView()
+        container.backgroundColor = .white
         container.addSubview(self)
         translatesAutoresizingMaskIntoConstraints = false
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             container.heightAnchor.constraint(equalToConstant: 24),
             container.widthAnchor.constraint(equalToConstant: 24),
@@ -179,8 +170,6 @@ fileprivate extension UIView {
             container.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
 
-        container.setNeedsLayout()
-        container.layoutIfNeeded()
         return container
     }
 

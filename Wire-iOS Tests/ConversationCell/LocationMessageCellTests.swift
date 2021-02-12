@@ -61,7 +61,7 @@ final class LocationMessageCellTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let locationMessage = MockMessageFactory.locationMessage(sender: mockSelfUser)!
+        let locationMessage = MockMessageFactory.locationMessage(sender: mockSelfUser)
         locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
 
         config?(locationMessage)

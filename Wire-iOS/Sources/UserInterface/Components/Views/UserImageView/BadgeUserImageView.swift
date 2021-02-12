@@ -61,6 +61,7 @@ final class BadgeUserImageView: UserImageView {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -104,7 +105,7 @@ final class BadgeUserImageView: UserImageView {
 
     /// Updates the badge icon.
     private func updateBadgeIcon() {
-        guard let user = self.user else {
+        guard let user = user else {
             badgeIcon = .none
             return
         }

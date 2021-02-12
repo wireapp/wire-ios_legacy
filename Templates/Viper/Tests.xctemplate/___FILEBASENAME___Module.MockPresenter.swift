@@ -25,16 +25,19 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var results = [Result]()
+        var events = [Event]()
 
         // MARK: - Methods
 
+        func handleResult(_ result: ___VARIABLE_productName:identifier___Module.Result) {
+            results.append(result)
+        }
+
+        func processEvent(_ event: ___VARIABLE_productName:identifier___Module.Event) {
+            events.append(event)
+        }
+
     }
-
-}
-
-extension ___VARIABLE_productName:identifier___Module.MockPresenter {
-
-    struct MethodCalls { }
 
 }
