@@ -73,14 +73,14 @@ extension UnsentSendable {
 
 class UnsentSendableBase {
 
-    let conversation: Conversation
+    let conversation: WireShareEngine.Conversation
     let sharingSession: SharingSession
 
     var needsPreparation = false
 
     var error: UnsentSendableError?
 
-    init(conversation: Conversation, sharingSession: SharingSession) {
+    init(conversation: WireShareEngine.Conversation, sharingSession: SharingSession) {
         self.conversation = conversation
         self.sharingSession = sharingSession
     }
@@ -92,7 +92,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
     private var text: String
     private let attachment: NSItemProvider?
 
-    init(conversation: Conversation, sharingSession: SharingSession, text: String, attachment: NSItemProvider? = nil) {
+    init(conversation: WireShareEngine.Conversation, sharingSession: SharingSession, text: String, attachment: NSItemProvider? = nil) {
         self.text = text
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
@@ -131,7 +131,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
     private let attachment: NSItemProvider
     private var imageData: Data?
 
-    init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
+    init?(conversation: WireShareEngine.Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         guard attachment.hasItemConformingToTypeIdentifier(kUTTypeImage as String) else { return nil }
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
@@ -212,7 +212,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     private let typeData: Bool
     private let typePass: Bool
 
-    init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
+    init?(conversation: WireShareEngine.Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
         self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
         self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)

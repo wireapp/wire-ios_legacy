@@ -21,10 +21,10 @@ import Cartography
 import UIKit
 import WireDataModel
 
-extension ConversationLike where Self: TeamProvider & AccessProvider {
+extension ConversationLike where Self: SwiftConversationLike {
     var canAddGuest: Bool {
         // If not a team conversation: possible to add any contact.
-        guard let _ = team else {
+        guard let _ = teamType else {
             return true
         }
         

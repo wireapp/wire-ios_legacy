@@ -66,7 +66,7 @@ The wretch often disguises himself, but you will know him at once by his rough v
 The wretch often disguises himself, but you will know him at once by his rough voice and his black feet.' The kids said: 'Dear mother, we will take good care of ourselves; you may go away without any anxiety.' Then the old one bleated, and went on her way with an easy mind.
 """
 
-        let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)!
+        let message = MockMessageFactory.textMessage(withText: messageText, sender: mockSelfUser, includingRichMedia: false)
 
         verify(message: message)
     }

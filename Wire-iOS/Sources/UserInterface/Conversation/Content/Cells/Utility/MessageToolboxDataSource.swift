@@ -26,13 +26,13 @@ enum MessageToolboxContent: Equatable {
     case sendFailure(NSAttributedString)
 
     /// Display the list of reactions.
-    case reactions(NSAttributedString, likers: [ZMUser])
+    case reactions(NSAttributedString)
     
     /// Display list of calls
     case callList(NSAttributedString)
 
     /// Display the message details (timestamp and/or status and/or countdown).
-    case details(timestamp: NSAttributedString?, status: NSAttributedString?, countdown: NSAttributedString?, likers: [ZMUser])
+    case details(timestamp: NSAttributedString?, status: NSAttributedString?, countdown: NSAttributedString?)
 }
 
 extension MessageToolboxContent: Comparable {
@@ -84,7 +84,7 @@ class MessageToolboxDataSource {
     /// Creates a toolbox data source for the given message.
     init(message: ZMConversationMessage) {
         self.message = message
-        self.content = .details(timestamp: nil, status: nil, countdown: nil, likers: [])
+        self.content = .details(timestamp: nil, status: nil, countdown: nil)
     }
 
     // MARK: - Content
@@ -98,7 +98,7 @@ class MessageToolboxDataSource {
 
     func updateContent(forceShowTimestamp: Bool, widthConstraint: CGFloat) -> SlideDirection? {
         // Compute the state
-        let likers = message.likers()
+        let likers = message.likers
         let isSentBySelfUser = message.senderUser?.isSelfUser == true
         let failedToSend = message.deliveryState == .failedToSend && isSentBySelfUser
         let showTimestamp = forceShowTimestamp || likers.isEmpty
@@ -118,13 +118,13 @@ class MessageToolboxDataSource {
         }
         // 3) Likers
         else if !showTimestamp {
-            let text = makeReactionsLabel(with: likers, widthConstraint: widthConstraint)
-            content = .reactions(text, likers: likers)
+            let text = makeReactionsLabel(with: message.likers, widthConstraint: widthConstraint)
+            content = .reactions(text)
         }
         // 4) Timestamp
         else {
             let (timestamp, status, countdown) = makeDetailsString()
-            content = .details(timestamp: timestamp, status: status, countdown: countdown, likers: likers)
+            content = .details(timestamp: timestamp, status: status, countdown: countdown)
         }
 
         // Only perform the changes if the content did change.
@@ -138,8 +138,8 @@ class MessageToolboxDataSource {
     // MARK: - Reactions
 
     /// Creates a label that display the likers of the message.
-    private func makeReactionsLabel(with likers: [ZMUser], widthConstraint: CGFloat) -> NSAttributedString {
-        let likers = message.likers()
+    private func makeReactionsLabel(with likers: [UserType], widthConstraint: CGFloat) -> NSAttributedString {
+        let likers = message.likers
 
         // If there is only one liker, always display the name, even if the width doesn't fit
         if likers.count == 1 {

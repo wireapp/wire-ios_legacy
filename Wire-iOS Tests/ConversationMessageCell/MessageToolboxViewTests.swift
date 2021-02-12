@@ -26,6 +26,8 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        SelfUser.setupMockSelfUser()
+
         message = MockMessageFactory.textMessage(withText: "Hello")
         message.deliveryState = .sent
         message.conversation = otherUserConversation
