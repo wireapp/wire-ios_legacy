@@ -132,7 +132,7 @@ extension ZMConversationList {///TODO mv to DM
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
-                conversation != excluding
+                !(conversation === excluding)
         }
     }
 }
@@ -168,7 +168,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
         endEditing()
 
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversationLike!)
 
         let shareViewController = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message as! ZMMessage,
