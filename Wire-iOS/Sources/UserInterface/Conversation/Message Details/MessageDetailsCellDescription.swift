@@ -72,7 +72,7 @@ extension MessageDetailsCellDescription {
             let formattedDate = $0.serverTimestamp.map(Message.shortDateTimeFormatter.string)
             let formattedAccessibleDate = $0.serverTimestamp.map(Message.spellOutDateTimeFormatter.string)
 
-            return MessageDetailsCellDescription(user: $0.user, subtitle: formattedDate,
+            return MessageDetailsCellDescription(user: $0.userType, subtitle: formattedDate,
                                                  accessibleSubtitleLabel: "message_details.user_read_timestamp_subtitle_label".localized,
                                                  accessibleSubtitleValue: formattedAccessibleDate)
         }
