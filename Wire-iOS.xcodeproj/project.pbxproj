@@ -1129,6 +1129,7 @@
 		EE948F1923E17778000A663E /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE948F1823E17778000A663E /* ContactsDataSource.swift */; };
 		EE997A1A2507A851008336D2 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE997A192507A851008336D2 /* Logging.swift */; };
 		EEA4F47C2410054100DBEA3D /* HashBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA4F47B2410054100DBEA3D /* HashBox.swift */; };
+		EEA65C2725D27A8300AA7519 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA65C2625D27A8300AA7519 /* Strings+Generated.swift */; };
 		EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */; };
 		EEA9A76121B0244D001F7B5C /* ConversationCreateErrorSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */; };
 		EEAC0A1221AD875900BE5F5D /* ConversationCreateNameSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */; };
@@ -2876,6 +2877,7 @@
 		EE948F1823E17778000A663E /* ContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDataSource.swift; sourceTree = "<group>"; };
 		EE997A192507A851008336D2 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		EEA4F47B2410054100DBEA3D /* HashBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashBox.swift; sourceTree = "<group>"; };
+		EEA65C2625D27A8300AA7519 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateErrorCell.swift; sourceTree = "<group>"; };
 		EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateErrorSectionController.swift; sourceTree = "<group>"; };
 		EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateNameSectionController.swift; sourceTree = "<group>"; };
@@ -5136,6 +5138,7 @@
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
 				8FC85083199245760008B66B /* Resources */,
+				EEA65C2525D27A8300AA7519 /* Generated */,
 				8FC850D8199245760008B66B /* Sources */,
 				8FC8564919924D4E0008B66B /* Supporting Files */,
 				BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */,
@@ -6422,6 +6425,15 @@
 			path = Viper;
 			sourceTree = "<group>";
 		};
+		EEA65C2525D27A8300AA7519 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				EEA65C2625D27A8300AA7519 /* Strings+Generated.swift */,
+			);
+			name = Generated;
+			path = "Wire-iOS/Generated";
+			sourceTree = "<group>";
+		};
 		EEFF3E7321B6755D000834A6 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
@@ -6981,6 +6993,7 @@
 				873AA0501D05A74B0038343B /* Strip BitCode */,
 				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
+				EEF9786E25D2923A00F7333E /* Run SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -7359,6 +7372,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Workaround for for carthage \"The file couldn’t be saved.\" error\nrm -rf ${TMPDIR}/TemporaryItems/*carthage*\n# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		EEF9786E25D2923A00F7333E /* Run SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftGen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -7923,6 +7954,7 @@
 				5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */,
 				636AD79A23A916CB004A3050 /* AppLockPresenter.swift in Sources */,
 				5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */,
+				EEA65C2725D27A8300AA7519 /* Strings+Generated.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
