@@ -103,14 +103,14 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
     
-    func testThatAppStateChanges_OnDidUpdateActiveUserSession() {
+    func testThatAppStateChanges_OnSessionLockChange() {
         // GIVEN
         let userSession = MockZMUserSession()
         userSession.lock = .database
         sut.applicationDidBecomeActive()
         
         // WHEN
-        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
+        sut.sessionManagerDidReportLockChange(forSession: userSession)
 
         // THEN
         XCTAssertEqual(sut.appState, .locked)
@@ -155,7 +155,7 @@ final class AppStateCalculatorTests: XCTestCase {
         delegate.wasNotified = false
 
         // WHEN
-        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
+        sut.sessionManagerDidReportLockChange(forSession: userSession)
 
         // THEN
         XCTAssertEqual(sut.appState, .locked)
@@ -164,7 +164,7 @@ final class AppStateCalculatorTests: XCTestCase {
     
     // MARK: - Tests When App Become Active
     
-    func testThatAppStateDoesntChange_OnDidReportDatabaseLockChange_BeforeAppBecomeActive() {
+    func testThatAppStateDoesntChange_OnDidReportLockChange_BeforeAppBecomeActive() {
         // GIVEN
         let userSession = MockZMUserSession()
         userSession.lock = .database
@@ -172,19 +172,19 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.applicationDidEnterBackground()
         
         // WHEN
-        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
+        sut.sessionManagerDidReportLockChange(forSession: userSession)
         
         // THEN
         XCTAssertFalse(delegate.wasNotified)
     }
     
-    func testThatAppStateChanges_OnDidReportDatabaseLockChange_AfterAppHasBecomeActive() {
+    func testThatAppStateChanges_OnDidReportLockChange_AfterAppHasBecomeActive() {
         // GIVEN
         let userSession = MockZMUserSession()
         userSession.lock = .database
         delegate.wasNotified = false
         sut.applicationDidEnterBackground()
-        sut.sessionManagerDidChangeActiveUserSession(userSession: userSession)
+        sut.sessionManagerDidReportLockChange(forSession: userSession)
         
         // WHEN
         sut.applicationDidBecomeActive()

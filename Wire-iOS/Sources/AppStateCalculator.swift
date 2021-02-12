@@ -141,8 +141,12 @@ extension AppStateCalculator: SessionManagerDelegate {
                    completion: userSessionCanBeTornDown)
     }
 
-    func sessionManagerDidChangeActiveUserSession(userSession: UserSessionAppLockInterface) {
-        if userSession.isLocked {
+    func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) {
+        // No op
+    }
+
+    func sessionManagerDidReportLockChange(forSession session: UserSessionAppLockInterface) {
+        if session.isLocked {
             transition(to: .locked)
         } else {
             transition(to: .authenticated(completedRegistration: false))
