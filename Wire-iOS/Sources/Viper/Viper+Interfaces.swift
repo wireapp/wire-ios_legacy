@@ -26,40 +26,27 @@ import UIKit
 
 protocol ModuleInterface {
 
-    associatedtype Router where Router: RouterInterface
     associatedtype Interactor where Interactor: InteractorInterface
     associatedtype Presenter where Presenter: PresenterInterface
     associatedtype View where View: UIViewController & ViewInterface
+    associatedtype Router where Router: RouterInterface
 
     /// Assembles the module by connecting each component together.
 
-    static func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View)
+    static func assemble(interactor: Interactor, presenter: Presenter, view: View, router: Router)
 
 }
 
 extension ModuleInterface {
 
-    static func assemble(router: Router, interactor: Interactor, presenter: Presenter, view: View) {
-        router.viewController = view
+    static func assemble(interactor: Interactor, presenter: Presenter, view: View, router: Router) {
         interactor.presenter = (presenter as! Self.Interactor.PresenterInteractor)
         presenter.interactor = (interactor as! Self.Presenter.InteractorPresenter)
         presenter.router = (router as! Self.Presenter.RouterPresenter)
         presenter.view = (view as! Self.Presenter.ViewPresenter)
         view.presenter = (presenter as! Self.View.PresenterView)
+        router.view = (view as! Self.Router.View)
     }
-
-}
-
-
-// MARK: - Router
-
-/// The module component responsible for view navigation.
-
-protocol RouterInterface: RouterPresenterInterface {
-
-    /// A weak reference to the view controller
-
-    var viewController: UIViewController? { get set }
 
 }
 
@@ -86,13 +73,9 @@ protocol InteractorInterface: InteractorPresenterInterface {
 
 protocol PresenterInterface: PresenterInteractorInterface & PresenterViewInterface {
 
-    associatedtype RouterPresenter
     associatedtype InteractorPresenter
     associatedtype ViewPresenter
-
-    /// A strong reference to the router.
-
-    var router: RouterPresenter! { get set }
+    associatedtype RouterPresenter
 
     /// A strong reference to the interactor.
 
@@ -101,6 +84,10 @@ protocol PresenterInterface: PresenterInteractorInterface & PresenterViewInterfa
     /// A weak reference to the view.
 
     var view: ViewPresenter! { get set }
+
+    /// A strong reference to the router.
+
+    var router: RouterPresenter! { get set }
 
 }
 
@@ -116,5 +103,19 @@ protocol ViewInterface: ViewPresenterInterface {
     /// A strong reference to the presenter.
 
     var presenter: PresenterView! { get set }
+
+}
+
+// MARK: - Router
+
+/// The module component responsible for navigation to other modules.
+
+protocol RouterInterface: RouterPresenterInterface {
+
+    associatedtype View: UIViewController
+
+    /// A weak reference to the view controller
+
+    var view: View! { get set }
 
 }
