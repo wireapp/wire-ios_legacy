@@ -23,14 +23,14 @@ final class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
-    fileprivate let conversation: ZMConversation
+    fileprivate let conversation: LegalHoldDetailsConversation
     
     convenience init?(user: UserType) {
         guard let conversation = user.oneToOneConversation else { return nil }
         self.init(conversation: conversation)
     }
         
-    init(conversation: ZMConversation) {
+    init(conversation: LegalHoldDetailsConversation) {
         self.conversation = conversation
         self.collectionViewController = SectionCollectionViewController()
         self.collectionViewController.collectionView = collectionView
@@ -43,6 +43,7 @@ final class LegalHoldDetailsViewController: UIViewController {
         collectionView.accessibilityIdentifier = "list.legalhold"
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -81,7 +82,7 @@ final class LegalHoldDetailsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        conversation.verifyLegalHoldSubjects()
+        (conversation as? ZMConversation)?.verifyLegalHoldSubjects()
     }
     
     fileprivate func setupViews() {

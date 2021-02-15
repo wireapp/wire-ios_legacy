@@ -32,7 +32,7 @@ final class LocationPreviewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         let mockMessage = MockMessageFactory.locationMessage()
-        sut = LocationPreviewController(message: mockMessage!, actionResponder: MockActionResponder())
+        sut = LocationPreviewController(message: mockMessage, actionResponder: MockActionResponder())
     }
     
     override func tearDown() {
