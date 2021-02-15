@@ -27,6 +27,8 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var videoStreams: [VideoStream] = []
 
     var networkQuality: NetworkQuality = .normal
+    
+    var presentationMode: VideoGridPresentationMode = .allVideoStreams
 }
 
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
@@ -64,7 +66,7 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.backgroundColor = .black
     }
         
-    func testForActiveSpeakers_OneToOne() {
+    func testActiveSpeakersIndicators_OneToOne() {
         configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
         configuration.floatingVideoStream = selfVideoStream
         configuration.shouldShowActiveSpeakerFrame = false
@@ -73,7 +75,7 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
     
-    func testForActiveSpeakers_Conference() {
+    func testActiveSpeakersIndicators_Conference() {
         configuration.videoStreams = [
             stubProvider.videoStream(participantName: "Alice", active: true),
             stubProvider.videoStream(participantName: "Bob", active: true),

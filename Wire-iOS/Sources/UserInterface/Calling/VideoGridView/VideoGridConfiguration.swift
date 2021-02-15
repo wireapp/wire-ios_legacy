@@ -25,6 +25,7 @@ protocol VideoGridConfiguration {
     var videoStreams: [VideoStream] { get }
     var networkQuality: NetworkQuality { get }
     var shouldShowActiveSpeakerFrame: Bool { get }
+    var presentationMode: VideoGridPresentationMode { get }
 
 }
 
@@ -44,7 +45,8 @@ extension VideoGridConfiguration {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
             networkQuality == other.networkQuality &&
-            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame
+            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
+            presentationMode == other.presentationMode
     }
 
 }
