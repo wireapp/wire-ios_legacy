@@ -85,13 +85,33 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
         button.accessibilityLabel = "conversation.action.search".localized
-        button.isEnabled = !session.encryptMessagesAtRest
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()
         }
 
         return button
+    }
+    
+    var shouldShowCollectionsButton: Bool {
+        guard
+            SecurityFlags.forceEncryptionAtRest.isEnabled == false,
+            session.encryptMessagesAtRest == false
+        else {
+            return false
+        }
+        
+        switch self.conversation.conversationType {
+        case .group: return true
+        case .oneOnOne:
+            if let connection = conversation.connection,
+                connection.status != .pending && connection.status != .sent {
+                return true
+            } else {
+                return nil != conversation.teamRemoteIdentifier
+            }
+        default: return false
+        }
     }
 
     func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
@@ -115,7 +135,7 @@ extension ConversationViewController {
             items.append(backButton)
         }
 
-        if self.shouldShowCollectionsButton() {
+        if shouldShowCollectionsButton {
             items.append(collectionsBarButtonItem)
         }
 
@@ -129,20 +149,6 @@ extension ConversationViewController {
     /// Update left navigation bar items
     func updateLeftNavigationBarItems() {
         navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
-    }
-
-    private func shouldShowCollectionsButton() -> Bool {
-        switch self.conversation.conversationType {
-        case .group: return true
-        case .oneOnOne:
-            if let connection = conversation.connection,
-                connection.status != .pending && connection.status != .sent {
-                return true
-            } else {
-                return nil != conversation.teamRemoteIdentifier
-            }
-        default: return false
-        }
     }
 
     @objc
