@@ -71,62 +71,63 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         return CallParticipant(user: user, clientId: UUID().transportString(), state: .connected(videoState: state, microphoneState: .unmuted), isActiveSpeaker: false)
     }
     
-    // MARK - sortedActiveVideoStates
+    // MARK: - activeVideoStreams(from participants:)
     
-    func testThatWithOneParticipantWithoutVideoItReturnsEmpty() {
+    func testThatActiveVideoStreams_ReturnsEmpty_ForOneParticipantWithoutVideo() {
         // GIVEN
         let participant = participantStub(for: mockUser1, videoEnabled: false)
-        sut.mockParticipants = [participant]
         
         // THEN
-        XCTAssert(sut.sortedActiveVideoStreams.isEmpty)
+        XCTAssert(sut.activeVideoStreams(from: [participant]).isEmpty)
     }
     
-    func testThatWithOneParticipantWithVideoItReturnsOneParticipantVideoState() {
+    func testThatActiveVideoStreams_ReturnsOneParticipantVideoState_ForOneParticipantWithVideo() {
         // GIVEN
         let participant = participantStub(for: mockUser1, videoEnabled: true)
-        sut.mockParticipants = [participant]
         
         // WHEN
-        let videoStreams = sut.sortedActiveVideoStreams
+        let videoStreams = sut.activeVideoStreams(from: [participant])
         
         // THEN
         XCTAssert(videoStreams.count == 1)
         XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId1)
     }
     
-    func testThatWithTwoParticipantsWithoutVideoItReturnsEmpty() {
+    func testThatActiveVideoStreams_ReturnsEmpty_ForTwoParticipantsWithoutVideo() {
         // GIVEN
-        let participant1 = participantStub(for: mockUser1, videoEnabled: false)
-        let participant2 = participantStub(for: mockUser2, videoEnabled: false)
-        sut.mockParticipants = [participant1, participant2]
+        let participants = [
+            participantStub(for: mockUser1, videoEnabled: false),
+            participantStub(for: mockUser2, videoEnabled: false)
+        ]
         
         // THEN
-        XCTAssert(sut.sortedActiveVideoStreams.isEmpty)
+        XCTAssert(sut.activeVideoStreams(from: participants).isEmpty)
     }
     
-    func testThatWithTwoParticipantsWithOneStartedAndOneStoppedVideoItReturnsOnlyOneVideoState() {
+    func testThatActiveVideoStreams_ReturnsOneVideoStream_ForTwoParticipantsWithOneStartedAndOneStoppedVideo() {
         // GIVEN
-        let participant1 = participantStub(for: mockUser1, videoEnabled: false)
-        let participant2 = participantStub(for: mockUser2, videoEnabled: true)
-        sut.mockParticipants = [participant1, participant2]
-        
+        let participants = [
+            participantStub(for: mockUser1, videoEnabled: false),
+            participantStub(for: mockUser2, videoEnabled: true)
+        ]
+
         // WHEN
-        let videoStreams = sut.sortedActiveVideoStreams
+        let videoStreams = sut.activeVideoStreams(from: participants)
         
         // THEN
         XCTAssert(videoStreams.count == 1)
         XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId2)
     }
     
-    func testThatWithTwoParticipantsWithTwoStartedVideosItReturnsTwoVideoStates() {
+    func testThatActiveVideoStreams_ReturnsTwoVideoStreams_ForTwoParticipantsWithTwoStartedVideos() {
         // GIVEN
-        let participant1 = participantStub(for: mockUser1, videoEnabled: true)
-        let participant2 = participantStub(for: mockUser2, videoEnabled: true)
-        sut.mockParticipants = [participant1, participant2]
+        let participants = [
+            participantStub(for: mockUser1, videoEnabled: true),
+            participantStub(for: mockUser2, videoEnabled: true)
+        ]
         
         // WHEN
-        let videoStreams = sut.sortedActiveVideoStreams
+        let videoStreams = sut.activeVideoStreams(from: participants)
         
         // THEN
         XCTAssert(videoStreams.count == 2)
@@ -134,7 +135,9 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         XCTAssert(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId2}))
     }
 
-    func testThatItSortsPartipantsByNameAlphabetically() {
+    // MARK: - participants(for presentationMode:)
+    
+    func testThatParticipants_ForMode_AllVideoStreams_SortsPartipantsByNameAlphabetically() {
         // GIVEN
         let participant1 = participantStub(for: mockUser1, videoEnabled: true)
         let participant2 = participantStub(for: mockUser2, videoEnabled: true)
@@ -142,17 +145,39 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         sut.mockParticipants = [participant1, participant2, participant3]
 
         // WHEN
-        let videoStreams = sut.sortedActiveVideoStreams
+        let participants = sut.participants(forPresentationMode: .allVideoStreams)
 
         // THEN
-        let streamUserIds = videoStreams.map(\.stream.streamId.userId)
-        XCTAssertEqual(streamUserIds.count, 3)
-        XCTAssertEqual(streamUserIds[0], remoteId2)
-        XCTAssertEqual(streamUserIds[1], remoteId1)
-        XCTAssertEqual(streamUserIds[2], remoteId3)
+        let userIds = participants.map(\.userId)
+        XCTAssertEqual(userIds.count, 3)
+        XCTAssertEqual(userIds[0], remoteId2)
+        XCTAssertEqual(userIds[1], remoteId1)
+        XCTAssertEqual(userIds[2], remoteId3)
     }
     
-    // MARK - arrangeVideoStreams
+    func testThatParticipants_ForMode_AllVideoStreams_GetsParticipantsList_OfKind_All() {
+        // GIVEN
+        sut.requestedCallParticipantsListKind = nil
+
+        // WHEN
+        _ = sut.participants(forPresentationMode: .allVideoStreams)
+
+        // THEN
+        XCTAssertEqual(sut.requestedCallParticipantsListKind, CallParticipantsListKind.all)
+    }
+    
+    func testThatParticipants_ForMode_ActiveSpeakers_GetsParticipantsList_OfKind_SmoothedActiveSpeakers() {
+        // GIVEN
+        sut.requestedCallParticipantsListKind = nil
+        
+        // WHEN
+        _ = sut.participants(forPresentationMode: .activeSpeakers)
+        
+        // THEN
+        XCTAssertEqual(sut.requestedCallParticipantsListKind, CallParticipantsListKind.smoothedActiveSpeakers)
+    }
+    
+    // MARK: - arrangeVideoStreams(for selfStream:participantsStreams:)
     
     func videoStreamStub(userId: UUID = UUID(), clientId: String = UUID().transportString()) -> VideoStream {
         let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),

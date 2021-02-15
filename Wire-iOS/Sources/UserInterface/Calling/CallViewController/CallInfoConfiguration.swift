@@ -274,7 +274,7 @@ fileprivate extension VoiceChannel {
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
     }
 
     private var hashboxFirstDegradedUser: HashBoxUser? {
