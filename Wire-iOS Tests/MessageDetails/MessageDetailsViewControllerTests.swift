@@ -80,6 +80,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
+        message.conversationLike = conversation
         message.updatedAt = Date(timeIntervalSince1970: 69)
         message.deliveryState = .read
         message.needsReadConfirmation = true
@@ -106,6 +107,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
+        message.conversationLike = conversation
         message.deliveryState = .read
         message.needsReadConfirmation = true
         
@@ -133,6 +135,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
+        message.conversationLike = conversation
         message.deliveryState = .sent
         message.needsReadConfirmation = true
         
@@ -210,6 +213,7 @@ final class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.conversation = conversation
+        message.conversationLike = conversation
         message.isEphemeral = true
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser]]
         message.needsReadConfirmation = true

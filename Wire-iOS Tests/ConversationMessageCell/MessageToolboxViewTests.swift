@@ -165,6 +165,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_NoLikers() {
         // WHEN
         message.conversation = createTeamGroupConversation()
+        message.conversationLike = message.conversation
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
         
         // THEN
@@ -174,6 +175,8 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_WithLikers_ShowingTimestamp() {
         // GIVEN
         message.conversation = createTeamGroupConversation()
+        message.conversationLike = message.conversation
+
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
         
         // WHEN
