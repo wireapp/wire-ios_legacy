@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,30 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireSyncEngine
+import Foundation
+@testable import Wire
 
-// MARK: - AppLock helper
-extension SettingsPropertyFactory {
-    
-    private var appLock: AppLockType? {
-        return userSession?.appLockController
+extension AppLockModule {
+
+    final class MockInteractor: AppLockInteractorPresenterInterface {
+
+        // MARK: - Metrics
+
+        var requests = [Request]()
+
+        // MARK: - Methods
+
+        func executeRequest(_ request: Request) {
+            requests.append(request)
+        }
+
     }
 
-    var isAppLockActive: Bool {
-        get { userSession?.appLockController.isActive ?? false }
-        set { userSession?.appLockController.isActive = newValue }
-    }
-    
-    var timeout: UInt {
-        return appLock?.timeout ?? .max
-    }
-    
-    var isAppLockForced: Bool {
-        return appLock?.isForced ?? false
-    }
-    
-    var isAppLockAvailable: Bool {
-        return appLock?.isAvailable ?? false
-    }
-    
 }

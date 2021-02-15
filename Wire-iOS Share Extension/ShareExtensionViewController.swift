@@ -162,10 +162,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let accountIdentifier = account?.userIdentifier
             else { return }
         let configuration = AppLockRules.fromBundle()
-        let appLockConfig = AppLockController.Config(useBiometricsOrCustomPasscode: configuration.useBiometricsOrCustomPasscode,
-                                                     forceAppLock: configuration.forceAppLock,
-                                                     timeOut: configuration.appLockTimeout)
-        
+        let appLockConfig = AppLockController.Config(
+            isAvailable: true,
+            isForced: configuration.forceAppLock,
+            timeout: configuration.appLockTimeout,
+            requireCustomPasscode: configuration.useBiometricsOrCustomPasscode
+        )
+
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
@@ -510,53 +513,53 @@ extension ShareExtensionViewController {
     
     /// @param completion; called when authentication evaluation is completed.
     private func requireLocalAuthenticationIfNeeded(with completion: @escaping Completion) {
-        
-        // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
-        
         guard
             let sharingSession = sharingSession,
             sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
-            else {
-                localAuthenticationStatus = .granted
-                completion()
-                return
+        else {
+            localAuthenticationStatus = .granted
+            completion()
+            return
         }
         
         guard localAuthenticationStatus == .denied || sharingSession.isDatabaseLocked else {
             completion()
             return
         }
-        
-        let scenario: AppLockController.AuthenticationScenario
-        
+
+        let appLock = sharingSession.appLockController
+        let description = "share_extension.privacy_security.lock_app.description".localized
+        let passcodePreference: AppLockPasscodePreference
+
         if sharingSession.encryptMessagesAtRest {
-            scenario = .databaseLock
+            passcodePreference = .deviceOnly
+        } else if appLock.requireCustomPasscode {
+            passcodePreference = .customOnly
         } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
+            passcodePreference = .deviceThenCustom
         }
-        
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                                description: "share_extension.privacy_security.lock_app.description".localized)
-        { [weak self] (result, context) in
+
+        appLock.evaluateAuthentication(passcodePreference: passcodePreference, description: description) { [weak self] result, context in
             guard let `self` = self else { return }
-            
-            self.dispatchQueue.async {
+
+            DispatchQueue.main.async {
                 if case .granted = result, let context = context as? LAContext {
-                    try? self.sharingSession?.unlockDatabase(with: context)
+                  try? self.sharingSession?.unlockDatabase(with: context)
                 }
+
                 self.authenticationEvaluated(with: result, completion: completion)
             }
         }
     }
-    
-    private func authenticationEvaluated(with result: AppLockController.AuthenticationResult, completion:  @escaping Completion) {
+
+    private func authenticationEvaluated(with result: AppLockAuthenticationResult, completion:  @escaping Completion) {
         switch result {
         case .granted:
             localAuthenticationStatus = .granted
             completion()
         case .needCustomPasscode:
-            let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
-            if isCustomPasscodeNotSet {
+            let isCustomPasscodeSet = sharingSession?.appLockController.isCustomPasscodeSet ?? false
+            if !isCustomPasscodeSet {
                 let alert = UIAlertController(title: "", message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
                 self.present(alert, animated: true, completion: nil)
                 
@@ -580,14 +583,17 @@ extension ShareExtensionViewController {
         presentUnlockScreen { [weak self] customPasscode in
             guard let `self` = self else { return }
             
-            guard let passcode = customPasscode,
+            guard
+                let passcode = customPasscode,
                 !passcode.isEmpty,
-                let passcodeData = self.sharingSession?.appLockController.fetchPasscode(),
-                passcode == String(data: passcodeData, encoding: .utf8) else {
-                    self.unlockViewController.showWrongPasscodeMessage()
-                    callback(.denied)
-                    return
+                let appLock = self.sharingSession?.appLockController,
+                appLock.evaluateAuthentication(customPasscode: passcode) == .granted
+            else {
+                self.unlockViewController.showWrongPasscodeMessage()
+                callback(.denied)
+                return
             }
+
             self.popConfigurationViewController()
             callback(.granted)
         }

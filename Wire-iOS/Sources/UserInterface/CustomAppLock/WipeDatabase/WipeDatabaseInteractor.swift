@@ -1,4 +1,3 @@
-//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,30 +15,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import WireSyncEngine
 
-// MARK: - AppLock helper
-extension SettingsPropertyFactory {
-    
-    private var appLock: AppLockType? {
-        return userSession?.appLockController
-    }
+protocol WipeDatabaseInteractorInput: class {
+    func deleteAccount()
+}
 
-    var isAppLockActive: Bool {
-        get { userSession?.appLockController.isActive ?? false }
-        set { userSession?.appLockController.isActive = newValue }
+protocol WipeDatabaseInteractorOutput: class {
+}
+
+final class WipeDatabaseInteractor {
+    weak var output: WipeDatabaseInteractorOutput?
+}
+
+// MARK: - Interface
+extension WipeDatabaseInteractor: WipeDatabaseInteractorInput {
+    func deleteAccount() {
+        guard
+            let sessionManager = SessionManager.shared,
+            let account = sessionManager.accountManager.selectedAccount
+        else {
+            return
+        }
+
+        sessionManager.wipeDatabase(for: account)
     }
-    
-    var timeout: UInt {
-        return appLock?.timeout ?? .max
-    }
-    
-    var isAppLockForced: Bool {
-        return appLock?.isForced ?? false
-    }
-    
-    var isAppLockAvailable: Bool {
-        return appLock?.isAvailable ?? false
-    }
-    
 }

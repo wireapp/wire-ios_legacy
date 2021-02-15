@@ -67,10 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return SessionManager.shared?.unauthenticatedSession
     }
 
-    var notificationsWindow: UIWindow? {
-        return appRootRouter?.overlayWindow
-    }
-
     var appCenterInitCompletion: Completion?
     var launchOptions: LaunchOptions = [:]
 

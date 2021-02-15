@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,30 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import WireSyncEngine
 
-// MARK: - AppLock helper
-extension SettingsPropertyFactory {
-    
-    private var appLock: AppLockType? {
-        return userSession?.appLockController
+protocol ScreenCurtainDelegate: class {
+
+    /// Whether the screen curtain should be shown when the app
+    /// resigns active.
+
+    var shouldShowScreenCurtain: Bool { get }
+
+}
+
+extension ZMUserSession: ScreenCurtainDelegate {
+
+    var shouldShowScreenCurtain: Bool {
+        return appLockController.isActive || encryptMessagesAtRest
     }
 
-    var isAppLockActive: Bool {
-        get { userSession?.appLockController.isActive ?? false }
-        set { userSession?.appLockController.isActive = newValue }
-    }
-    
-    var timeout: UInt {
-        return appLock?.timeout ?? .max
-    }
-    
-    var isAppLockForced: Bool {
-        return appLock?.isForced ?? false
-    }
-    
-    var isAppLockAvailable: Bool {
-        return appLock?.isAvailable ?? false
-    }
-    
 }

@@ -18,11 +18,11 @@
 import Foundation
 
 extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
-    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerWasDismissed() {
         //no-op
     }
 
-    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerDidFinish() {
         eventResponderChain.handleEvent(ofType: .passcodeSetupCompleted)
     }
 }

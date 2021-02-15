@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,30 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireSyncEngine
+import UIKit
 
-// MARK: - AppLock helper
-extension SettingsPropertyFactory {
-    
-    private var appLock: AppLockType? {
-        return userSession?.appLockController
-    }
-
-    var isAppLockActive: Bool {
-        get { userSession?.appLockController.isActive ?? false }
-        set { userSession?.appLockController.isActive = newValue }
-    }
-    
-    var timeout: UInt {
-        return appLock?.timeout ?? .max
-    }
-    
-    var isAppLockForced: Bool {
-        return appLock?.isForced ?? false
-    }
-    
-    var isAppLockAvailable: Bool {
-        return appLock?.isAvailable ?? false
+final class WipeDatabaseWireframe {
+    func createWipeDatabaseModule() -> WipeDatabaseViewController {
+        let interactor = WipeDatabaseInteractor()
+        let presenter = WipeDatabasePresenter()
+        let viewController = WipeDatabaseViewController()
+        
+        viewController.presenter = presenter
+        presenter.userInterface = viewController
+        presenter.interactorInput = interactor
+        interactor.output = presenter
+        
+        presenter.wireframe = self
+        
+        return viewController
     }
     
 }

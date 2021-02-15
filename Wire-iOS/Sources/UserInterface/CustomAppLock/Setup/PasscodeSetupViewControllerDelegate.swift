@@ -1,4 +1,3 @@
-//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,30 +15,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireSyncEngine
+import Foundation
 
-// MARK: - AppLock helper
-extension SettingsPropertyFactory {
-    
-    private var appLock: AppLockType? {
-        return userSession?.appLockController
-    }
+protocol PasscodeSetupViewControllerDelegate: class {
 
-    var isAppLockActive: Bool {
-        get { userSession?.appLockController.isActive ?? false }
-        set { userSession?.appLockController.isActive = newValue }
-    }
-    
-    var timeout: UInt {
-        return appLock?.timeout ?? .max
-    }
-    
-    var isAppLockForced: Bool {
-        return appLock?.isForced ?? false
-    }
-    
-    var isAppLockAvailable: Bool {
-        return appLock?.isAvailable ?? false
-    }
+    func passcodeSetupControllerDidFinish()
+    func passcodeSetupControllerWasDismissed()
     
 }
