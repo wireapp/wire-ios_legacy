@@ -23,7 +23,6 @@ import SnapshotTesting
 final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
 
     var sut: LegalHoldDetailsViewController!
-    var wrappedInVC: UINavigationController!
     var selfUser: MockUserType!
 
     override func setUp() {
@@ -31,11 +30,11 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         
         SelfUser.setupMockSelfUser(inTeam: UUID())
         selfUser = (SelfUser.current as! MockUserType)
+        selfUser.handle = nil
     }
 
     override func tearDown() {
         sut = nil
-        wrappedInVC = nil
         SelfUser.provider = nil
 
         super.tearDown()
