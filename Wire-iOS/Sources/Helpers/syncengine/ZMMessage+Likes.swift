@@ -25,7 +25,7 @@ extension ZMConversationMessage {
         guard let conversation = conversationLike else {
             return false
         }
-        
+
         let participatesInConversation = conversation.localParticipantsContain(user: SelfUser.current)
         let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
@@ -41,7 +41,7 @@ extension ZMConversationMessage {
             }
         }
         get {
-            return likers.contains{ $0.isSelfUser }
+            return likers.contains { $0.isSelfUser }
         }
     }
 

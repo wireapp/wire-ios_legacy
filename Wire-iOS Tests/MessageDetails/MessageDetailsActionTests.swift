@@ -21,11 +21,11 @@ import XCTest
 
 final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
-	override func setUp() {
-		super.setUp()
-		SelfUser.setupMockSelfUser()
-	}
-	
+    override func setUp() {
+        super.setUp()
+        SelfUser.setupMockSelfUser()
+    }
+
     // MARK: - One To One
 
     func testThatDetailsAreNotAvailableForOneToOne_Consumer() {
@@ -50,17 +50,17 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
             XCTAssertFalse(message.areReadReceiptsDetailsAvailable)
         }
     }
-    
+
     func testThatDetailsAreAvailableInTeamGroup_Receipts() {
         withGroupMessage(belongsToTeam: false, teamGroup: true) { message in
-			///TODO: tmp fix, will fix converation creation in new PR
-			message.conversationLike = message.conversation
+            /// TODO: tmp fix, will fix converation creation in new PR
+            message.conversationLike = message.conversation
 
-			XCTAssertTrue(message.areMessageDetailsAvailable)
+            XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
     }
-    
+
     // MARK: - Messages Sent by Other User
 
     func testThatDetailsAreNotAvailableInGroup_OtherUserMesaage() {
@@ -93,10 +93,10 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     func testThatDetailsAreAvailableInTeamGroup_Ephemeral() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
-			///TODO: tmp fix, will fix converation creation in new PR
-			message.conversationLike = message.conversation
+            /// TODO: tmp fix, will fix converation creation in new PR
+            message.conversationLike = message.conversation
 
-			XCTAssertFalse(message.canBeLiked)
+            XCTAssertFalse(message.canBeLiked)
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
@@ -120,9 +120,9 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")
-			message.senderUser = MockUserType.createSelfUser(name: "Alice", inTeam: belongsToTeam ? UUID() : nil)
+            message.senderUser = MockUserType.createSelfUser(name: "Alice", inTeam: belongsToTeam ? UUID() : nil)
             message.conversation = otherUserConversation
-			message.conversationLike = otherUserConversation
+            message.conversationLike = otherUserConversation
             block(message)
         }
     }
