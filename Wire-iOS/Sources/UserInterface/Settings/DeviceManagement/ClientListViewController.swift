@@ -173,7 +173,7 @@ final class ClientListViewController: UIViewController,
         super.viewDidDisappear(animated)
         dismissLoadingView()
 
-        ///prevent more then one removalObserver in self and SettingsClientViewController
+        /// prevent more then one removalObserver in self and SettingsClientViewController
         removalObserver = nil
     }
 
