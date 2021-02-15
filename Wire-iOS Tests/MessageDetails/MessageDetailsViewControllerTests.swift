@@ -40,10 +40,20 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		super.tearDown()
 	}
 
+    private func createReceipts(users: [UserType]) -> [MockReadReceipt]{
+        let receipts: [MockReadReceipt] = users.map({ user in
+            let receipt = MockReadReceipt(user: ZMUser())
+            receipt.userType = user
+            return receipt
+        })
+
+        return receipts
+    }
+    
 	// MARK: - Seen
 	func testThatItShowsReceipts_ShortList_11() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -51,13 +61,12 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		message.deliveryState = .read
 		message.needsReadConfirmation = true
 
-		let users = XCTestCase.usernames.prefix(upTo: 5).map({
+		let users = MockUserType.usernames.prefix(upTo: 5).map({
 			MockUserType.createUser(name: $0)
 		})
-		/// TODO: refactor this after ReadReceipt added UserType property
-		let receipts = users.map(MockReadReceipt.init)
 
-		message.readReceipts = receipts
+
+        message.readReceipts = createReceipts(users: users)
 		message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
 
 		// WHEN
@@ -67,10 +76,18 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		// THEN
 		snapshot(detailsViewController)
 	}
+    
+    private func createGroupConversation() -> SwiftMockConversation {
+        let conversation = SwiftMockConversation()
+        conversation.teamRemoteIdentifier = UUID()
+        conversation.mockLocalParticipantsContain = true
+        
+        return conversation
+    }
 
 	func testThatItShowsReceipts_ShortList_Edited_11() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+        conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -79,13 +96,13 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		message.deliveryState = .read
 		message.needsReadConfirmation = true
 
-		let users = XCTestCase.usernames.prefix(upTo: 5).map({
+		let users = MockUserType.usernames.prefix(upTo: 5).map({
 			MockUserType.createUser(name: $0)
 		})
-		let receipts = users.map(MockReadReceipt.init)
+        
+        message.readReceipts = createReceipts(users: users)
 
-		message.readReceipts = receipts
-		message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
 
 		// WHEN
 		let detailsViewController = MessageDetailsViewController(message: message)
@@ -97,7 +114,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsReceipts_LongList_12() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -106,12 +123,11 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		message.deliveryState = .read
 		message.needsReadConfirmation = true
 
-		let users = XCTestCase.usernames.prefix(upTo: 20).map({
+		let users = MockUserType.usernames.prefix(upTo: 20).map({
 			MockUserType.createUser(name: $0)
 		})
-		let receipts = users.map(MockReadReceipt.init)
 
-		message.readReceipts = receipts
+        message.readReceipts = createReceipts(users: users)
 		message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
 
 		// WHEN
@@ -124,7 +140,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsLikes_13() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -132,15 +148,13 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 		message.deliveryState = .read
 		message.needsReadConfirmation = true
 
-		let users = XCTestCase.usernames.prefix(upTo: 6).map({
-			MockUserType.createUser(name: $0)
+        let users: [UserType] = MockUserType.usernames.prefix(upTo: 6).map({
+			let user = MockUserType.createUser(name: $0)
+            user.handle = nil
+            return user
 		})
-		//        users.forEach {
-		/// TODO: handle gen
-		//            $0.setHandle($0.name)
-		//        }
 
-		message.readReceipts =  users.map(MockReadReceipt.init)
+        message.readReceipts = createReceipts(users: users)
 		message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
 
 		// WHEN
@@ -155,7 +169,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsNoLikesEmptyState_14() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -173,7 +187,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsNoReceiptsEmptyState_DisabledInConversation_15() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -192,7 +206,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsNoReceiptsEmptyState_EnabledInConversation_16() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -211,12 +225,14 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+        conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
 		message.conversationLike = conversation
-		message.readReceipts = [MockReadReceipt(user: otherUser)]
+        let mockReadReceipt = MockReadReceipt(user: ZMUser())
+        mockReadReceipt.userType = otherUser
+		message.readReceipts = [mockReadReceipt]
 		message.deliveryState = .read
 		message.needsReadConfirmation = true
 
@@ -232,7 +248,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsReceiptsOnly_Ephemeral() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = SelfUser.current
@@ -250,7 +266,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsLikesOnly_FromSelf_Consumer_17() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation()
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = MockUserType.createUser(name: "Bruno")
@@ -266,7 +282,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsLikesOnly_FromOther_Team_17() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.textMessage(withText: "Message")
 		message.senderUser = MockUserType.createUser(name: "Bruno")
@@ -282,7 +298,7 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 
 	func testThatItShowsReceiptsOnly_Pings() {
 		// GIVEN
-		conversation = SwiftMockConversation.createMockGroupConversation(inTeam: true)
+		conversation = createGroupConversation()
 
 		let message = MockMessageFactory.pingMessage()
 		message.senderUser = SelfUser.current
@@ -299,19 +315,19 @@ final class MessageDetailsViewControllerTests: XCTestCase {
 	// MARK: - Deallocation
 
 	func testThatItDeallocates() {
-		conversation = SwiftMockConversation.createMockGroupConversation()
 		verifyDeallocation { () -> MessageDetailsViewController in
 			// GIVEN
+            conversation = createGroupConversation()
+
 			let message = MockMessageFactory.textMessage(withText: "Message")
 			message.senderUser = SelfUser.current
 			message.conversationLike = conversation
 
-			let users = XCTestCase.usernames.prefix(upTo: 5).map({
+			let users = MockUserType.usernames.prefix(upTo: 5).map({
 				MockUserType.createUser(name: $0)
 			})
-			let receipts = users.map(MockReadReceipt.init)
 
-			message.readReceipts = receipts
+            message.readReceipts = createReceipts(users: users)
 			message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
 
 			// WHEN
