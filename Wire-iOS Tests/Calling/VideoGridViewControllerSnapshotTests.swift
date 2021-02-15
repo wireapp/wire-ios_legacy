@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
     var shouldShowActiveSpeakerFrame: Bool = true
@@ -31,7 +32,7 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
 }
 
-final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class VideoGridViewControllerSnapshotTests: XCTestCase {
     
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
@@ -72,7 +73,7 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testActiveSpeakersIndicators_Conference() {
@@ -83,12 +84,12 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         ]
         createSut()
         
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForBadNetwork(){
         configuration.networkQuality = .poor
         createSut()
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
