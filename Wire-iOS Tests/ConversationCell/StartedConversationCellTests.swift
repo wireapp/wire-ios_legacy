@@ -186,7 +186,7 @@ final class StartedConversationCellTests: XCTestCase {
         data.text = text
         data.userTypes = {
             // We add the sender to ensure it is removed
-            let users: [MockUserType] = XCTestCase.usernames.map {MockUserType.createUser(name: $0)}
+            let users: [MockUserType] = MockUserType.usernames.map {MockUserType.createUser(name: $0)}
 
             let additionalUsers: [MockUserType] = [mockSelfUser, mockOtherUser]
             switch fillUsers {

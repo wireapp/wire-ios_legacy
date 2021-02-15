@@ -46,11 +46,12 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         selfUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [selfUser]
         
-        verifyInAllColorSchemes(createSut: {
+        let createSut: () -> UIViewController = {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
-            wrappedInVC = self.sut.wrapInNavigationController()
-            return wrappedInVC
-        })
+            return self.sut.wrapInNavigationController()
+        }
+        
+        verifyInAllColorSchemes(createSut: createSut)
     }
     
     func testOtherUserUnderLegalHold() {
@@ -59,11 +60,12 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         otherUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [otherUser]
         
-        verifyInAllColorSchemes(createSut: {
+        let createSut: () -> UIViewController = {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
-            wrappedInVC = self.sut.wrapInNavigationController()
-            return wrappedInVC
-        })
+            return self.sut.wrapInNavigationController()
+        }
+
+        verifyInAllColorSchemes(createSut: createSut)
     }
 
 }

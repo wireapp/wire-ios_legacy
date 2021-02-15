@@ -25,6 +25,7 @@ import WireCommonComponents
 import WireLinkPreview
 import LocalAuthentication
 
+typealias Completion = () -> ()
 private let zmLog = ZMSLog(tag: "UI")
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
@@ -86,6 +87,11 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .denied
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
+    
+    var dispatchQueue: DispatchQueue = DispatchQueue.main
+    let stateAccessoryView = ConversationStateAccessoryView()
+    
+    lazy var unlockViewController = UnlockViewController()
 
     // MARK: - Host App State
 
@@ -433,11 +439,12 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseConversation() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
-            if let status = status, status != .denied {
-                self?.showChooseConversation()
-            }
-        })
+        requireLocalAuthenticationIfNeeded { [weak self] in
+            guard let `self` = self,
+                self.localAuthenticationStatus == .granted else { return }
+            
+            self.showChooseConversation()
+        }
     }
     
     func showChooseConversation() {
@@ -470,51 +477,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         
         pushConfigurationViewController(accountSelectionViewController)
     }
-
-    /// @param callback confirmation; called when authentication evaluation is completed.
-    fileprivate func requireLocalAuthenticationIfNeeded(with callback: @escaping (LocalAuthenticationStatus?)->()) {
-        
-        // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
-        
-        guard
-            let sharingSession = sharingSession,
-            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
-        else {
-            localAuthenticationStatus = .disabled
-            callback(localAuthenticationStatus)
-            return
-        }
-
-        guard localAuthenticationStatus == .denied || sharingSession.isDatabaseLocked else {
-            callback(localAuthenticationStatus)
-            return
-        }
-
-        let scenario: AppLockController.AuthenticationScenario
-        
-        if sharingSession.encryptMessagesAtRest {
-            scenario = .databaseLock
-        } else {
-            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
-        }
-        
-        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
-                                                                description: "share_extension.privacy_security.lock_app.description".localized)
-        { [weak self] (result, context) in
-            DispatchQueue.main.async {
-                if case .granted = result {
-                    self?.localAuthenticationStatus = .granted
-                    if let context = context as? LAContext {
-                        try? self?.sharingSession?.unlockDatabase(with: context)
-                    }
-                } else {
-                    self?.localAuthenticationStatus = .denied
-                }
-                callback(self?.localAuthenticationStatus)
-            }
-        }
-    }
-    
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(causedBy: change)
@@ -540,4 +502,100 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         return String.localizedStringWithFormat(template.localized, allUsers)
     }
 
+}
+
+// MARK: - Authentication
+
+extension ShareExtensionViewController {
+    
+    /// @param completion; called when authentication evaluation is completed.
+    private func requireLocalAuthenticationIfNeeded(with completion: @escaping Completion) {
+        
+        // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
+        
+        guard
+            let sharingSession = sharingSession,
+            sharingSession.appLockController.isActive || sharingSession.encryptMessagesAtRest
+            else {
+                localAuthenticationStatus = .disabled
+                completion()
+                return
+        }
+        
+        guard localAuthenticationStatus == .denied || sharingSession.isDatabaseLocked else {
+            completion()
+            return
+        }
+        
+        let scenario: AppLockController.AuthenticationScenario
+        
+        if sharingSession.encryptMessagesAtRest {
+            scenario = .databaseLock
+        } else {
+            scenario = .screenLock(requireBiometrics: sharingSession.appLockController.config.useBiometricsOrCustomPasscode)
+        }
+        
+        sharingSession.appLockController.evaluateAuthentication(scenario: scenario,
+                                                                description: "share_extension.privacy_security.lock_app.description".localized)
+        { [weak self] (result, context) in
+            guard let `self` = self else { return }
+            
+            self.dispatchQueue.async {
+                if case .granted = result, let context = context as? LAContext {
+                    try? self.sharingSession?.unlockDatabase(with: context)
+                }
+                self.authenticationEvaluated(with: result, completion: completion)
+            }
+        }
+    }
+    
+    private func authenticationEvaluated(with result: AppLockController.AuthenticationResult, completion:  @escaping Completion) {
+        switch result {
+        case .granted:
+            localAuthenticationStatus = .granted
+            completion()
+        case .needCustomPasscode:
+            let isCustomPasscodeNotSet = sharingSession?.appLockController.isCustomPasscodeNotSet ?? false
+            if isCustomPasscodeNotSet {
+                let alert = UIAlertController(title: "", message: "share_extension.unlock.alert.message".localized, alertAction: .ok(style: .cancel))
+                self.present(alert, animated: true, completion: nil)
+                
+                localAuthenticationStatus = .denied
+                completion()
+            } else {
+                requestCustomPasscode { [weak self] status in
+                    guard let `self` = self else { return }
+                    
+                    self.localAuthenticationStatus = status
+                    completion()
+                }
+            }
+        default:
+            localAuthenticationStatus = .denied
+            completion()
+        }
+    }
+    
+    private func requestCustomPasscode(with callback: @escaping (_ status: LocalAuthenticationStatus) -> ()) {
+        presentUnlockScreen { [weak self] customPasscode in
+            guard let `self` = self else { return }
+            
+            guard let passcode = customPasscode,
+                !passcode.isEmpty,
+                let passcodeData = self.sharingSession?.appLockController.fetchPasscode(),
+                passcode == String(data: passcodeData, encoding: .utf8) else {
+                    self.unlockViewController.showWrongPasscodeMessage()
+                    callback(.denied)
+                    return
+            }
+            self.popConfigurationViewController()
+            callback(.granted)
+        }
+    }
+    
+    private func presentUnlockScreen(with callback: @escaping (_ password: String?) -> ()) {
+        pushConfigurationViewController(unlockViewController)
+        
+        unlockViewController.callback = callback        
+    }
 }

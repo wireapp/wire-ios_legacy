@@ -538,7 +538,7 @@
 "content.system.cannot_decrypt.reset_session" = "今後のメッセージを修正する";
 "content.system.cannot_decrypt.error_details" = "(修正エラー: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "あなた自身からのメッセージを復号できるようになりました。紛失したメッセージを復号するには、**メッセージを再送信する必要があります**";
 "content.system.cannot_decrypt_resolved.other" = "**%1$@**からメッセージを復号することができます。紛失したメッセージを復号するには、** %1$@ に再送信を依頼してください。**";
 
 "content.system.cannot_decrypt_identity_changed.self" = "**あなた** のデバイスIDが変更されました。メッセージは配信されません。";
