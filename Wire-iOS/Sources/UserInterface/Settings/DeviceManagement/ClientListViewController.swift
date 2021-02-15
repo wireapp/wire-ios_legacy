@@ -66,7 +66,7 @@ final class ClientListViewController: UIViewController,
             if clients.count > 0 {
                 createRightBarButtonItem()
             } else {
-                self.navigationItem.rightBarButtonItem = nil
+                self.editingList = false
             }
         }
     }
