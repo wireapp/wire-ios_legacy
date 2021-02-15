@@ -25,16 +25,14 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var actions = [Action]()
 
         // MARK: - Methods
 
+        func performAction(_ action: ___VARIABLE_productName:identifier___Module.Action) {
+            actions.append(action)
+        }
+
     }
-
-}
-
-extension ___VARIABLE_productName:identifier___Module.MockRouter {
-
-    struct MethodCalls { }
 
 }

@@ -73,6 +73,7 @@ extension MockUserType {
                           inTeam teamID: UUID? = nil) -> MockUserType {
         let user = MockUserType()
         user.name = name
+        user.handle = name.lowercased()
         user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.teamIdentifier = teamID

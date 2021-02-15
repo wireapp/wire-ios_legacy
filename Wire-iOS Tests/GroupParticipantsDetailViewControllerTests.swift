@@ -62,7 +62,10 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
     func testThatItRendersALotOfUsers() {
         // given
         let users: [MockUserType] = (0..<20).map {
-            MockUserType.createUser(name: "User #\($0)")
+            let user = MockUserType.createUser(name: "User #\($0)")
+            user.handle = nil
+            
+            return user
         }
 
         let selected = Array(users.dropLast(15))
@@ -70,11 +73,12 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
         conversation.sortedOtherParticipants = users
 
         // when & then
-        verifyInAllColorSchemes(createSut: {
-            let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
-            return sut.wrapInNavigationController()
-        })
+		let createSut: () -> UIViewController = {
+			let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+			return sut.wrapInNavigationController()
+		}
 
+        verifyInAllColorSchemes(createSut: createSut)
     }
 
     func testEmptyState() {

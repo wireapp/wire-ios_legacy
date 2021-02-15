@@ -25,32 +25,29 @@ extension UIView {
     fileprivate func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         let container = ReplyRoundCornersView(containedView: self)
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
         container.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-        
-        container.setNeedsLayout()
-        container.layoutIfNeeded()
+
+		container.backgroundColor = UIColor.from(scheme: .contentBackground)
+
         return container
     }
 }
 
-class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
+final class MessageReplyPreviewViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
-    
+
     override func tearDown() {
         disableDarkColorScheme()
         super.tearDown()
     }
-    
+
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
-        
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -58,85 +55,60 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-    
+
+	private func verify(message: MockMessage,
+						file: StaticString = #file,
+						testName: String = #function,
+						line: UInt = #line) {
+		verifyInAllColorSchemes(createSut: {
+			message.replyPreview()!.prepareForSnapshot()
+		}, file: file, testName: testName, line: line)
+	}
+
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+
+		verify(message: message)
     }
-    
-    func testThatItRendersTextMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
+
     func testThatItRendersEmojiOnly() {
         let message = MockMessageFactory.textMessage(withText: "😀🌮")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
-    func testThatItRendersEmojiOnly_dark() {
-        activateDarkColorScheme()
 
-        let message = MockMessageFactory.textMessage(withText: "😀🌮")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
-    
-    func mentionMessage() -> MockMessage {
+
+    private func mentionMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Hello @user"
         let mockUser = SwiftMockLoader.mockUsers().first!
         let mention = Mention(range: NSRange(location: 6, length: 5), user: mockUser)
         textMessageData.mentions = [mention]
         message.backingTextMessageData = textMessageData
-        
+
         return message
     }
-    
+
     func testThatItRendersMention() {
-        verify(view: mentionMessage().replyPreview()!.prepareForSnapshot())
+		verify(message: mentionMessage())
     }
-    
-    func testThatItRendersMention_dark() {
-        activateDarkColorScheme()
-        verify(view: mentionMessage().replyPreview()!.prepareForSnapshot())
-    }
-    
+
     func testThatItRendersTextMessagePreview_LongText() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
-    
-    func testThatItRendersTextMessagePreview_LongText_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
+
     func testThatItRendersFileMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
-    
-    func testThatItRendersFileMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.fileTransferMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
+
     func testThatItRendersLocationMessagePreview() {
         let message = MockMessageFactory.locationMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
+		verify(message: message)
     }
-    
-    func testThatItRendersLocationMessagePreview_dark() {
-        activateDarkColorScheme()
-        let message = MockMessageFactory.locationMessage()
-        verify(view: message.replyPreview()!.prepareForSnapshot())
-    }
-    
+
     func testThatItRendersLinkPreviewMessagePreview() {
         let url = "https://www.example.com/article/1"
         let article = ArticleMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 0)
@@ -147,11 +119,11 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingTextMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         message.backingTextMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         message.backingTextMessageData.linkPreviewHasImage = true
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+
+        verify(matching: previewView.prepareForSnapshot())
     }
 
     func testThatItRendersImageMessagePreview() {
@@ -161,7 +133,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         let previewView = message.replyPreview()!
         XCTAssert(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verify(view: previewView.prepareForSnapshot())
+        verify(matching: previewView.prepareForSnapshot())
     }
 
     func testThatItRendersVideoMessagePreview() {
@@ -169,24 +141,24 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+
+        verify(matching: previewView.prepareForSnapshot())
     }
-    
+
     func testThatItRendersAudioMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "audio/x-m4a"
         message.backingFileMessageData.filename = "vacation.m4a"
-        
+
         let previewView = message.replyPreview()!
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
-        verify(view: previewView.prepareForSnapshot())
+
+        verify(matching: previewView.prepareForSnapshot())
     }
-    
+
     func testDeallocation() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         verifyDeallocation {

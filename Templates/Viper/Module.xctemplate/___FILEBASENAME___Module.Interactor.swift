@@ -22,6 +22,8 @@ extension ___VARIABLE_productName:identifier___Module {
 
     final class Interactor: InteractorInterface {
 
+        // MARK: - Properties
+
         weak var presenter: ___VARIABLE_productName:identifier___PresenterInteractorInterface!
 
     }
@@ -29,6 +31,14 @@ extension ___VARIABLE_productName:identifier___Module {
 }
 
 
-// MARK: - API for presenter
+// MARK: - Execute request
 
-extension ___VARIABLE_productName:identifier___Module.Interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface { }
+extension ___VARIABLE_productName:identifier___Module.Interactor: ___VARIABLE_productName:identifier___InteractorPresenterInterface {
+
+    func executeRequest(_ request: ___VARIABLE_productName:identifier___Module.Request) {
+        switch request {
+
+        }
+    }
+
+}

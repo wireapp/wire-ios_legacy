@@ -17,20 +17,17 @@
 //
 
 import Wire
-import XCTest
 
 final class MockReadReceipt: ReadReceipt {
 
-    var user: ZMUser {
-        XCTFail("This property should not be used in tests")
-        return ZMUser()
-    }
-    var userType: UserType
+	var user: ZMUser
+	var userType: UserType
     var serverTimestamp: Date?
 
-    init(user: UserType) {
-        userType = user
-        serverTimestamp = Date(timeIntervalSince1970: 0)
+    init(user: ZMUser) {
+        self.user = user
+		userType = user
+        self.serverTimestamp = Date(timeIntervalSince1970: 0)
     }
 
 }

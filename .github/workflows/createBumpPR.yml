@@ -1,18 +1,44 @@
-name: Run Carthage update, then create Bump Pull Request
+name: Create bump PR
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [newRelease]
 
 jobs:
   create-bump-pr:
     runs-on: macos-10.15
 
     steps:
+      - name: Event Information
+        run: |
+          echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
+        
       - name: checkout
         uses: actions/checkout@v2
 
       - name: create bump PR
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            bash <(curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/createBumpPR.sh)
+        run: |            
+            echo "ℹ️ creating branch..."
+            TIME_STAMP=`date +"%Y-%m-%d-%H%M%S"`
+            BRANCH="chore/bump_$TIME_STAMP"
+            git config --global user.email "iosx@wire.com"
+            git branch $BRANCH
+            git checkout $BRANCH
+            
+            curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/updateCatfile.swift --output updateCarfile.swift
+            chmod +x updateCarfile.swift
+            swift updateCarfile.swift ${{ secrets.DISPATCH_SECRET }} ./Cartfile
+            rm updateCarfile.swift
+            
+            ### Hack: carthage update may never done if framework dependency versions does not match. 
+            ### limit the maximum amount of cpu time to 60 sec to stop the update after timeout
+            ulimit -t 60; carthage update --no-build
+
+            git add .
+            git commit -m"bump components"
+            git push --set-upstream origin $BRANCH
+            echo "ℹ️ open bump PR"
+            gh pr create --title "chore: bump components" --body "bump for components"

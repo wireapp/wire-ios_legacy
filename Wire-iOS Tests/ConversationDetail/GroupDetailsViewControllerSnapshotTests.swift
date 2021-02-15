@@ -34,6 +34,8 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         mockConversation.securityLevel = .notSecure
 
         mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.handle = nil
+
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
 
         otherUser = MockUserType.createUser(name: "Bruno")

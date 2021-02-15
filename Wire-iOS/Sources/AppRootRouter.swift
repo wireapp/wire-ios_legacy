@@ -321,7 +321,7 @@ extension AppRootRouter {
     // MARK: - Helpers
     private func configureUnauthenticatedAppearance() {
         rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
-        AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
+        ValidatedTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
     }
     
     private func configureAuthenticatedAppearance() {
