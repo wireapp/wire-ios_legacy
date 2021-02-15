@@ -86,7 +86,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
             XCTAssertFalse(message.canBeLiked)
-            XCTAssertTrue(message.areMessageDetailsAvailable)
+            XCTAssertTrue(message.areMessageDetailsAvailable) ///TODO: false??
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
     }
@@ -100,6 +100,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
+            message.conversationLike = message.conversation
             block(message)
         }
     }
@@ -111,6 +112,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = otherUserConversation
+            message.conversationLike = message.conversation
             block(message)
         }
     }
