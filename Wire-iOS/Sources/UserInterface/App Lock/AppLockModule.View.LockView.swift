@@ -33,6 +33,12 @@ extension AppLockModule.View {
                 authenticateLabel.text = message
             }
         }
+
+        var buttonTitle: String = "" {
+            didSet {
+                authenticateButton.setTitle(buttonTitle, for: .normal)
+            }
+        }
         
         var showReauth: Bool = false {
             didSet {
@@ -83,7 +89,6 @@ extension AppLockModule.View {
             contentContainerView.addSubview(authenticateLabel)
             contentContainerView.addSubview(authenticateButton)
             
-            authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
             authenticateButton.addTarget(self, action: #selector(LockView.onReauthenticatePressed(_:)), for: .touchUpInside)
 
             createConstraints(nibView: shieldView)

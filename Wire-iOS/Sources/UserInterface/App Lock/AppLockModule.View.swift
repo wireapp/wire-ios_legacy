@@ -81,17 +81,21 @@ extension AppLockModule {
 
             switch authenticationType {
             case .faceID:
-                return "self.settings.privacy_security.lock_cancelled.description_face_id".localized
+                return Strings.Message.faceID
 
             case .touchID:
-                return "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
+                return Strings.Message.touchID
 
             case .passcode:
-                return "self.settings.privacy_security.lock_cancelled.description_passcode".localized
+                return Strings.Message.passcode
 
             case .unavailable:
-                return "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
+                return Strings.Message.passcodeUnavailable
             }
+        }
+
+        var buttonTitle: String {
+            return Strings.Button.title
         }
 
     }
@@ -105,6 +109,7 @@ extension AppLockModule.View: AppLockViewPresenterInterface {
     func refresh(withModel model: AppLockModule.ViewModel) {
         lockView.showReauth = model.showReauth
         lockView.message = model.message
+        lockView.buttonTitle = model.buttonTitle
     }
 
 }

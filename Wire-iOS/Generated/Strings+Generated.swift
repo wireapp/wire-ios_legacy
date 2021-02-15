@@ -81,6 +81,22 @@ internal enum L10n {
         }
       }
     }
+    internal enum AppLockModule {
+      internal enum Button {
+        /// Unlock
+        internal static let title = L10n.tr("Localizable", "appLockModule.button.title")
+      }
+      internal enum Message {
+        /// Unlock Wire with Face ID or Passcode
+        internal static let faceID = L10n.tr("Localizable", "appLockModule.message.faceID")
+        /// Unlock Wire with Passcode
+        internal static let passcode = L10n.tr("Localizable", "appLockModule.message.passcode")
+        /// To unlock Wire, turn on Passcode in your device settings
+        internal static let passcodeUnavailable = L10n.tr("Localizable", "appLockModule.message.passcodeUnavailable")
+        /// Unlock Wire with Touch ID or Passcode
+        internal static let touchID = L10n.tr("Localizable", "appLockModule.message.touchID")
+      }
+    }
     internal enum ArchivedList {
       /// archive
       internal static let title = L10n.tr("Localizable", "archived_list.title")
@@ -3783,18 +3799,6 @@ internal enum L10n {
               /// Unlock with Touch ID or enter your passcode.
               internal static let touchId = L10n.tr("Localizable", "self.settings.privacy_security.lock_app.subtitle.touch_id")
             }
-          }
-          internal enum LockCancelled {
-            /// Unlock
-            internal static let action = L10n.tr("Localizable", "self.settings.privacy_security.lock_cancelled.action")
-            /// Unlock Wire with Face ID or Passcode
-            internal static let descriptionFaceId = L10n.tr("Localizable", "self.settings.privacy_security.lock_cancelled.description_face_id")
-            /// Unlock Wire with Passcode
-            internal static let descriptionPasscode = L10n.tr("Localizable", "self.settings.privacy_security.lock_cancelled.description_passcode")
-            /// To unlock Wire, turn on Passcode in your device settings
-            internal static let descriptionPasscodeUnavailable = L10n.tr("Localizable", "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable")
-            /// Unlock Wire with Touch ID or Passcode
-            internal static let descriptionTouchId = L10n.tr("Localizable", "self.settings.privacy_security.lock_cancelled.description_touch_id")
           }
           internal enum LockPassword {
             internal enum Description {

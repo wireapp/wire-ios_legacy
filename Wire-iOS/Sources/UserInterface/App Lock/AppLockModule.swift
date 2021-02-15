@@ -28,6 +28,7 @@ enum AppLockModule: ModuleInterface {
     typealias Session = UserSessionAppLockInterface & UserSessionEncryptionAtRestInterface
     typealias PasscodePreference = AppLockPasscodePreference
     typealias AuthenticationResult = AppLockAuthenticationResult
+    typealias Strings = L10n.Localizable.AppLockModule
 
     static func build(session: Session) -> View {
         let router = Router()
