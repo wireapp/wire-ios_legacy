@@ -110,8 +110,9 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isSelfUser: Bool = false
 
+    var mockedIsServiceUser: Bool = false
     var isServiceUser: Bool {
-        return false
+        return mockedIsServiceUser
     }
 
     var isVerified: Bool = false
@@ -137,19 +138,23 @@ class MockUserType: NSObject, UserType, Decodable {
     var isConnected: Bool = false
 
     var isBlocked: Bool = false
-    
+
     var isIgnored: Bool = false
 
     var isPendingApprovalBySelfUser: Bool = false
 
     var isPendingApprovalByOtherUser: Bool = false
-    
-    func accept() { }
-    
-    func block() { }
-    
+
+    func accept() {
+        isBlocked = false
+    }
+
+    func block() {
+        isBlocked = true
+    }
+
     func ignore() { }
-    
+
     func cancelConnectionRequest() { }
 
     // MARK: - Wireless
@@ -294,4 +299,9 @@ class MockUserType: NSObject, UserType, Decodable {
         refreshTeamDataCount += 1
     }
 
+    // MARK: - dummy user names
+
+    static let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
+                            "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                            "Brett", "Hannah", "Ana", "Paula"]
 }

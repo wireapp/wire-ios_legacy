@@ -44,7 +44,7 @@ final class ClientListViewController: UIViewController,
 
     var editingList: Bool = false {
         didSet {
-            guard clients.count > 0 else {
+            guard !clients.isEmpty else {
                 self.navigationItem.rightBarButtonItem = nil
                 self.navigationItem.setHidesBackButton(false, animated: true)
                 return
@@ -63,10 +63,10 @@ final class ClientListViewController: UIViewController,
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
             self.clientsTableView?.reloadData()
 
-            if clients.count > 0 {
+            if !clients.isEmpty {
                 createRightBarButtonItem()
             } else {
-                self.navigationItem.rightBarButtonItem = nil
+                self.editingList = false
             }
         }
     }

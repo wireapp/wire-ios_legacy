@@ -25,13 +25,15 @@ fileprivate extension String {
     }
 }
 
+typealias GroupParticipantsDetailConversation = GroupDetailsConversationType & StableRandomParticipantsProvider
+
 final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate, ZMConversationObserver {
 
     private var internalParticipants: [UserType]
     private var filterQuery: String?
     
     let selectedParticipants: [UserType]
-    let conversation: ZMConversation
+    let conversation: GroupParticipantsDetailConversation
     var participantsDidChange: (() -> Void)? = nil
     
     fileprivate var token: NSObjectProtocol?
@@ -55,18 +57,25 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     var members = [UserType]()
 
     init(selectedParticipants: [UserType],
-         conversation: ZMConversation) {
+         conversation: GroupParticipantsDetailConversation) {
         internalParticipants = conversation.sortedOtherParticipants
         self.conversation = conversation
         self.selectedParticipants = selectedParticipants.sorted { $0.name < $1.name }
         
         super.init()
-        token = ConversationChangeInfo.add(observer: self, for: conversation)
+        
+        if let conversation = conversation as? ZMConversation {
+            token = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
+        
         computeVisibleParticipants()
     }
     
     private func computeVisibleParticipants() {
-        guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
+        guard let query = filterQuery,
+            query.isValidQuery else {
+                return participants = internalParticipants
+        }
         participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
     

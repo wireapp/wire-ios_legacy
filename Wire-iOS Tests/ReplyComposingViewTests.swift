@@ -33,7 +33,7 @@ fileprivate class ReplyComposingViewMockDelegate: NSObject, ReplyComposingViewDe
 
 final class ReplyComposingViewTests: XCTestCase {
     func testDeallocation() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         self.verifyDeallocation {
             return ReplyComposingView(message: message)
         }
@@ -41,7 +41,7 @@ final class ReplyComposingViewTests: XCTestCase {
     
     func testThatItCallsDelegateWhenTapped() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         let view = ReplyComposingView(message: message)
         let delegate = ReplyComposingViewMockDelegate()
         view.delegate = delegate
@@ -54,7 +54,7 @@ final class ReplyComposingViewTests: XCTestCase {
     
     func testThatItCallsDelegateWhenXCalled() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         let view = ReplyComposingView(message: message)
         let delegate = ReplyComposingViewMockDelegate()
         view.delegate = delegate

@@ -20,41 +20,6 @@ import XCTest
 @testable import Wire
 import WireCommonComponents
 
-final class MockInputBarConversationType: NSObject, InputBarConversationType {
-	var sortedOtherParticipants: [UserType] = []
-	
-	var sortedServiceUsers: [UserType] = []
-	
-    var typingUsers: [UserType] = []
-
-    var hasDraftMessage: Bool = false
-
-    var connectedUserType: UserType?
-
-    var draftMessage: DraftMessage?
-
-    var messageDestructionTimeoutValue: TimeInterval = 0
-    var messageDestructionTimeout: MessageDestructionTimeout?
-
-    var conversationType: ZMConversationType = .group
-
-    func setIsTyping(_ isTyping: Bool) {
-        //no-op
-    }
-
-    var isReadOnly: Bool = false
-
-    var displayName: String = ""
-
-    var isSelfAnActiveMember: Bool = true
-
-    var teamRemoteIdentifier: UUID?
-
-    func localParticipantsContain(user: UserType) -> Bool {
-        return false
-    }
-}
-
 final class ConversationInputBarViewControllerTests: XCTestCase {
 
     var sut: ConversationInputBarViewController!
