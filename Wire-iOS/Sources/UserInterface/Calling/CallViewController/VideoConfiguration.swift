@@ -148,9 +148,11 @@ extension VoiceChannel {
     }
 
     private func selfStream(from videoStreams: [VideoStream], createIfNeeded: Bool) -> VideoStream? {
-        let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId })
+        guard let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId }) else {
+            return createIfNeeded ? self.selfStream : nil
+        }
         
-        return selfStream ?? (createIfNeeded ? self.selfStream : nil)
+        return selfStream
     }
     
     // MARK: - Helpers
