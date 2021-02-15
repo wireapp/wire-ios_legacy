@@ -34,7 +34,6 @@ final class AppLockView: UIView {
         return label
     }()
     let actionButton = Button(style: .fullMonochrome)
-    let authenticationType: AuthenticationType
 
     private var contentWidthConstraint: NSLayoutConstraint!
     private var contentCenterConstraint: NSLayoutConstraint!
@@ -47,14 +46,12 @@ final class AppLockView: UIView {
 
     var showReauth: Bool = false {
         didSet {
-            self.setupActionButton()
             self.authenticateLabel.isHidden = !showReauth
             self.actionButton.isHidden = !showReauth
         }
     }
 
     init(authenticationType: AuthenticationType = .current) {
-        self.authenticationType = authenticationType
         
         super.init(frame: .zero)
 
@@ -84,7 +81,7 @@ final class AppLockView: UIView {
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
         }
 
-        setupActionButton()
+        setupActionButton(authenticationType)
         createConstraints(nibView: shieldView)
 
         toggleConstraints()
@@ -142,7 +139,7 @@ final class AppLockView: UIView {
             actionButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
     }
     
-    private func setupActionButton() {
+    private func setupActionButton(_ authenticationType: AuthenticationType ) {
         if authenticationType != .unavailable {
             self.actionButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
             self.actionButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
