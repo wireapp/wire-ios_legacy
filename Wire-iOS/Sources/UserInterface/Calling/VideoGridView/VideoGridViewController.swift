@@ -193,11 +193,15 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     private func displaySpinnerIfNeeded() {
-        guard configuration.videoStreams.isEmpty else {
+        guard
+            configuration.presentationMode == .activeSpeakers,
+            configuration.videoStreams.isEmpty
+        else {
             dismissSpinner?()
             return
         }
-        showLoadingView(title: "No active speakers")
+
+        showLoadingView(title: "call.grid.no_active_speakers".localized)
     }
     
     private func updateSelfPreview() {
