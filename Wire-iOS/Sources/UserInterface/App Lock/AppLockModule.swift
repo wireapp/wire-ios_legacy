@@ -49,7 +49,7 @@ extension AppLockModule {
 
         case viewDidLoad
         case unlockButtonTapped
-        case openSettingsTapped
+        case openSettingsButtonTapped
         case passcodeSetupCompleted
         case customPasscodeVerified
         case configChangeAcknowledged
