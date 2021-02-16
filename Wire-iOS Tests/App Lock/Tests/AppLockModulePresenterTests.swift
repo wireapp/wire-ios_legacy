@@ -148,5 +148,13 @@ final class AppLockModulePresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(interactor.requests, [.openAppLock])
     }
+    
+    func test_OpenDeviceSettingsButtonTapped() {
+        // When
+        sut.processEvent(.openDeviceSettingsButtonTapped)
+
+        // Then
+        XCTAssertEqual(router.actions, [.openDeviceSettings])
+    }
 
 }

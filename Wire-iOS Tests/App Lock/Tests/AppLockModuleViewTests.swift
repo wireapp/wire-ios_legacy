@@ -55,10 +55,23 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.loadViewIfNeeded()
 
         // When
+        sut.refresh(withModel: .locked(.faceID))
         sut.lockView.actionRequested?()
 
         // Then
         XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])
+    }
+
+    func test_ItSendsEvent_WhenLockViewRequestOpenDeviceSettings() {
+        // Given
+        sut.loadViewIfNeeded()
+
+        // When
+        sut.refresh(withModel: .locked(.unavailable))
+        sut.lockView.actionRequested?()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.viewDidLoad, .openDeviceSettingsButtonTapped])
     }
 
     func test_ItSendsEvent_WhenPasscodeSetupFinishes() {
