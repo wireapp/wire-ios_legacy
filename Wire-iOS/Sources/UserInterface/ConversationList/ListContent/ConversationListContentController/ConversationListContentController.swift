@@ -464,7 +464,7 @@ extension ConversationListContentController: ConversationListCellDelegate {
     }
 
     func conversationListCellOverscrolled(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else {
+        guard let conversation = cell.conversation as? ZMConversation else {
             return
         }
 
@@ -472,7 +472,7 @@ extension ConversationListContentController: ConversationListCellDelegate {
     }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else { return }
+        guard let conversation = cell.conversation as? ZMConversation else { return }
 
         startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()

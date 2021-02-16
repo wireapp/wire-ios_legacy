@@ -33,6 +33,15 @@
 "share_extension.not_signed_in.title" = "共有するためにはWireにサインインする必要があります";
 "share_extension.not_signed_in.close_button" = "閉じる";
 
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Wireのロックを解除するためのパスコードを入力してください";
+"share_extension.unlock.submit_button.title" = "ロック解除";
+"share_extension.unlock.textfield.placeholder" = "パスコードを入力してください";
+"share_extension.unlock.hint_label" = "パスコード";
+"share_extension.unlock.error_label" = "パスコードが間違っています";
+"share_extension.unlock.alert.message" = "パスコードを作成するためにWireを開きます。";
+"share_extension.unlock.reveal_passcode" = "パスコードを表示";
+
 "share_extension.timeout.title" = "接続がタイムアウトしました。";
 "share_extension.timeout.message" = "インターネット接続を確認して、もう一度やり直してください。添付ファイルは会話に保存されました。";
 

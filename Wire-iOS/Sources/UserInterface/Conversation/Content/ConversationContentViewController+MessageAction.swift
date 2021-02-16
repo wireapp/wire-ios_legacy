@@ -47,7 +47,7 @@ extension ConversationContentViewController {
             canvasViewController.sketchImage = UIImage(data: imageData)
         }
         canvasViewController.delegate = self
-        canvasViewController.title = message.conversation?.displayName.localizedUppercase
+        canvasViewController.title = message.conversationLike?.displayName.localizedUppercase
         canvasViewController.select(editMode: editMode, animated: false)
 
         present(canvasViewController.wrapInNavigationController(), animated: true)
@@ -147,7 +147,7 @@ extension ConversationContentViewController {
         case .reply:
             delegate?.conversationContentViewController(self, didTriggerReplyingTo: message)
         case .openQuote:
-            if let quote = message.textMessageData?.quote {
+            if let quote = message.textMessageData?.quoteMessage {
                 scroll(to: quote) { _ in
                     self.dataSource.highlight(message: quote)
                 }

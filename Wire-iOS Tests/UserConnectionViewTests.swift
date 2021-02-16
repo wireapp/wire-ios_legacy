@@ -18,15 +18,7 @@
 
 import Foundation
 @testable import Wire
-
-func getMockUser(user: AnyObject) -> MockUserCopyable {
-    if let mockUser = (user) as? MockUserCopyable {
-        return mockUser
-    }
-    else {
-        fatalError()
-    }
-}
+import XCTest
 
 extension UIView {
     func layoutForTest(in size: CGSize = CGSize(width: 320, height: 480)) {
@@ -35,41 +27,14 @@ extension UIView {
     }
 }
 
-final class MockUserCopyable: MockUser, Copyable {
-    convenience init(instance: MockUserCopyable) {
-        self.init(jsonObject: [:])
-        self.name = instance.name
-        self.emailAddress = instance.emailAddress
-        self.phoneNumber = instance.phoneNumber
-        self.handle = instance.handle
-        self.accentColorValue = instance.accentColorValue
-        self.isBlocked = instance.isBlocked
-        self.isIgnored = instance.isIgnored
-        self.isPendingApprovalByOtherUser = instance.isPendingApprovalByOtherUser
-        self.isPendingApprovalBySelfUser = instance.isPendingApprovalBySelfUser
-        self.isConnected = instance.isConnected
-        self.isSelfUser = instance.isSelfUser
-        self.connection = instance.connection
-        self.contact = instance.contact
-        self.remoteIdentifier = instance.remoteIdentifier
-    }
+final class UserConnectionViewTests: XCTestCase {
     
-    required init!(jsonObject: [AnyHashable : Any]!) {
-        super.init(jsonObject: jsonObject)
-    }
-
-}
-
-final class UserConnectionViewTests: ZMSnapshotTestCase {
-    
-    func sutForUser(_ user: ZMUser = MockUserCopyable.mockUsers().first!) -> UserConnectionView {
-        let mockUser = getMockUser(user: user)
+    func sutForUser(_ mockUser: MockUserType = SwiftMockLoader.mockUsers().first!) -> UserConnectionView {
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
-        mockUser.isTeamMember = false
         
-        let connectionView = UserConnectionView(user: user)
+        let connectionView = UserConnectionView(user: mockUser)
         connectionView.layoutForTest()
 
         return connectionView
@@ -80,27 +45,17 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         accentColor = .violet
     }
     
-    func copy(view: UserConnectionView) -> (UserConnectionView, MockUser) {
-        let copy = view.copyInstance()
-        let mockUser = getMockUser(user: view.user)
-        let copyMockUser = MockUserCopyable(instance: mockUser)
-        copy.user = (copyMockUser as AnyObject) as! ZMUser
-
-        return (copy, copyMockUser)
-    }
-    
     func testWithUserName() {
         let sut = sutForUser()
-        sut.layoutForTest()
-        verify(view: sut)        
+        verify(matching: sut)
     }
 
     func testWithoutUserName() {
         // The last mock user does not have a handle
-        let user = MockUserCopyable.mockUsers().last!
+        let user = SwiftMockLoader.mockUsers().last!
         let sut = sutForUser(user)
         sut.layoutForTest()
-        verify(view: sut)
+        verify(matching: sut)
     }
     
 }

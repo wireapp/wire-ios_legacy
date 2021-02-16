@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Mot de passe incorrect. Veuillez réessayer.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Mot de passe incorrect. Si vous avez récemment changé votre mot de passe, connectez-vous à internet et réessayez.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Déverrouillez Wire avec Face ID ou votre Code";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Déverrouillez Wire avec Touch ID ou votre Code";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Déverrouillez Wire avec votre Code";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
-"self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
 "self.settings.privacy_security.disable_link_previews.footer" = "Les aperçus peuvent toujours s'afficher pour les liens venant d'autres contacts.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Base de données supprimée";
 "wipe_database_completion.subtitle" = "Vos données et messages ont été supprimés. Vous pouvez maintenant vous reconnecter en tant que nouvel appareil.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Déverrouillez Wire avec Face ID ou votre Code";
+"appLockModule.message.touchID" = "Déverrouillez Wire avec Touch ID ou votre Code";
+"appLockModule.message.passcode" = "Déverrouillez Wire avec votre Code";
+"appLockModule.message.passcodeUnavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
+"appLockModule.button.title" = "Déverrouiller";

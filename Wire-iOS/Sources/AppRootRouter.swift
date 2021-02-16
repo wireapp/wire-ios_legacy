@@ -29,7 +29,7 @@ extension AppRootRouter {
 public class AppRootRouter: NSObject {
     
     // MARK: - Public Property
-    let overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
+    let screenCurtain = ScreenCurtain()
     
     // MARK: - Private Property
     private let navigator: NavigatorProtocol
@@ -143,8 +143,8 @@ public class AppRootRouter: NSObject {
     }
     
     private func setupAdditionalWindows() {
-        overlayWindow.makeKeyAndVisible()
-        overlayWindow.isHidden = true
+        screenCurtain.makeKeyAndVisible()
+        screenCurtain.isHidden = true
     }
     
     private func createLifeCycleObserverTokens() {
@@ -193,9 +193,11 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .unauthenticated(error: let error):
             configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
-        case .authenticated(completedRegistration: let completedRegistration, isDatabaseLocked: _):
+        case .authenticated(completedRegistration: let completedRegistration):
             configureAuthenticatedAppearance()
             executeAuthenticatedBlocks()
+            // TODO: [John] Avoid singleton.
+            screenCurtain.delegate = ZMUserSession.shared()
             showAuthenticated(isComingFromRegistration: completedRegistration,
                               completion: completionBlock)
         case .headless:
@@ -204,9 +206,13 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             showSkeleton(fromAccount: fromAccount,
                          toAccount: toAccount,
                          completion: completionBlock)
+        case .locked:
+            // TODO: [John] Avoid singleton.
+            screenCurtain.delegate = ZMUserSession.shared()
+            showAppLock()
         }
     }
-    
+
     private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
         switch state {
         case .unauthenticated:
@@ -295,6 +301,8 @@ extension AppRootRouter {
         
         rootViewController.set(childViewController: navigationController,
                                completion: completion)
+
+        presentAlertForDeletedAccountIfNeeded(error)
     }
     
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
@@ -307,10 +315,7 @@ extension AppRootRouter {
         }
         
         self.authenticatedRouter = authenticatedRouter
-        
-        //TODO: katerina we should do it in our slow sync
-        updateTeamFeature()
-        
+
         rootViewController.set(childViewController: authenticatedRouter.viewController,
                                completion: completion)
     }
@@ -320,11 +325,16 @@ extension AppRootRouter {
         rootViewController.set(childViewController: skeletonViewController,
                                completion: completion)
     }
+
+    private func showAppLock() {
+        guard let session = ZMUserSession.shared() else { fatalError() }
+        rootViewController.set(childViewController: AppLockModule.build(session: session))
+    }
     
     // MARK: - Helpers
     private func configureUnauthenticatedAppearance() {
         rootViewController.view.window?.tintColor = UIColor.Wire.primaryLabel
-        AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
+        ValidatedTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
     }
     
     private func configureAuthenticatedAppearance() {
@@ -383,13 +393,10 @@ extension AppRootRouter {
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
-        
-        presentAlertForDeletedAccount(appState)
     }
     
-    private func presentAlertForDeletedAccount(_ appState: AppState) {
+    private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
         guard
-            case .unauthenticated(let error) = appState,
             error?.userSessionErrorCode == .accountDeleted,
             let reason = error?.userInfo[ZMAccountDeletedReasonKey] as? ZMAccountDeletedReason
         else {
@@ -400,6 +407,12 @@ extension AppRootRouter {
         case .sessionExpired:
             rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
                                                         message: "account_deleted_session_expired_alert.message".localized)
+
+        case .databaseWiped:
+            let wipeCompletionViewController = WipeCompletionViewController()
+            wipeCompletionViewController.modalPresentationStyle = .fullScreen
+            rootViewController.present(wipeCompletionViewController, animated: true)
+
         default:
             break
         }
@@ -422,9 +435,6 @@ extension AppRootRouter: ApplicationStateObserving {
     func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
         teamMetadataRefresher.triggerRefreshIfNeeded()
-        
-        //TODO: katerina do not forget to remove it when we have events from BE
-        updateTeamFeature()
     }
     
     func applicationDidEnterBackground() {
@@ -438,9 +448,9 @@ extension AppRootRouter: ApplicationStateObserving {
     
     func updateOverlayWindowFrame(size: CGSize? = nil) {
         if let size = size {
-            overlayWindow.frame.size = size
+            screenCurtain.frame.size = size
         } else {
-            overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+            screenCurtain.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
         }
     }
 }
@@ -471,14 +481,5 @@ extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
 
-    }
-}
-
-extension AppRootRouter {
-    //TODO: katerina we should do it in our slow sync
-    private func updateTeamFeature() {
-        ZMUserSession.shared()?.perform {
-            ZMUser.selfUser()?.team?.enqueueBackendRefresh(for: .appLock)
-        }
     }
 }

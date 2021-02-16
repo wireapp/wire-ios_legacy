@@ -19,163 +19,127 @@
 import XCTest
 @testable import Wire
 
-final class UserCellTests: ZMSnapshotTestCase {
-    
-    var mockConversation: MockConversation!
-    
-    var conversation : ZMConversation {
-        return (mockConversation as Any) as! ZMConversation
-    }
-        
+final class UserCellTests: XCTestCase {
+
+    var sut: UserCell!
+    var teamID = UUID()
+    var conversation: MockGroupDetailsConversation!
+    var mockUser: MockUserType!
+
     override func setUp() {
         super.setUp()
-                
-        mockConversation = MockConversationFactory.mockConversation()
+
+        SelfUser.setupMockSelfUser(inTeam: teamID)
+
+        mockUser = MockUserType.createUser(name: "James Hetfield", inTeam: teamID)
+        mockUser.handle = "james_hetfield_1"
+
+        conversation = MockGroupDetailsConversation()
     }
-    
+
     override func tearDown() {
-        MockUser.mockSelf().isTeamMember = false
-        mockConversation = nil
+        conversation = nil
+        sut = nil
         super.tearDown()
     }
-    
-    func cell(_ configuration : (UserCell) -> Void) -> UserCell {
-        let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
-        cell.accessoryIconView.isHidden = false
-        configuration(cell)
-        cell.layoutIfNeeded()
-        return cell
+
+    private func verify(mockUser: UserType,
+                        conversation: GroupDetailsConversationType,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+
+        sut = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(with: mockUser,
+                      selfUser: SelfUser.current,
+                      conversation: conversation)
+        sut.accessoryIconView.isHidden = false
+
+        verifyInAllColorSchemes(matching: sut, file: file, testName: testName, line: line)
     }
 
     func testExternalUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
-        mockUser.isTeamMember = true
         mockUser.teamRole = .partner
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+
+        verify(mockUser: mockUser, conversation: conversation)
     }
 
     func testServiceUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
-        mockUser.isServiceUser = true
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        mockUser.mockedIsServiceUser = true
+
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
+
     func testNonTeamUser() {
-        let user = MockUser.mockUsers()[0]
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        mockUser.teamIdentifier = nil
+        mockUser.isConnected = true
+
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
+
     func testTrustedNonTeamUser() {
-        let mockUser = MockUser.firstMockUser()
-
         mockUser.isVerified = true
-        _ = mockUser.feature(withUserClients: 1)
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
-    }
-    
-    func testGuestUser() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
 
-        mockUser.isGuestInConversation = true
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
+
+    func testGuestUser() {
+        mockUser.isGuestInConversation = true
+
+        verify(mockUser: mockUser, conversation: conversation)
+    }
+
     func testGuestUser_Wireless() {
-        MockUser.mockSelf().isTeamMember = true
-        let mockUser = MockUser.firstMockUser()
         mockUser.isGuestInConversation = true
         mockUser.expiresAfter = 5_200
         mockUser.handle = nil
 
-        verifyInAllColorSchemes(view: cell {
-            $0.configure(with: mockUser,
-                         selfUser: MockUser.mockSelf(),
-                         conversation: conversation)
-        })
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
+
     func testTrustedGuestUser() {
-        MockUser.mockSelf().isTeamMember = true
-        
-        let mockUser = MockUser.firstMockUser()
         mockUser.isVerified = true
 
         mockUser.isGuestInConversation = true
-        _ = mockUser.feature(withUserClients: 1)
 
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: mockUser,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
+
     func testNonTeamUserWithoutHandle() {
-        let user = MockUser.mockUsers()[10]
-        
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            cell.configure(with: user,
-                           selfUser: MockUser.mockSelf(),
-                           conversation: conversation)
-        }))
+        mockUser = MockUserType.createUser(name: "Tarja Turunen")
+        mockUser.accentColorValue = .vividRed
+        mockUser.isConnected = true
+        mockUser.handle = nil
+
+        verify(mockUser: mockUser, conversation: conversation)
     }
-    
-    
+
     func testUserInsideOngoingVideoCall() {
-        let user = MockUser.mockUsers()[0]
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .started, microphoneState: .unmuted, isActiveSpeaker: false)
-            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
-        }))
+        let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: mockUser), videoState: .started, microphoneState: .unmuted, isActiveSpeaker: false)
+
+        sut = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(with: config, variant: .dark, selfUser: SelfUser.current)
+
+        verifyInAllColorSchemes(matching: sut)
     }
-    
+
     func testUserScreenSharingInsideOngoingVideoCall() {
-        let user = MockUser.mockUsers()[0]
-        verifyInAllColorSchemes(view: cell({ (cell) in
-            let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: user), videoState: .screenSharing, microphoneState: .unmuted, isActiveSpeaker: false)
-            cell.configure(with: config, variant: .dark, selfUser: MockUser.mockSelf())
-        }))
+        let config = CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: mockUser), videoState: .screenSharing, microphoneState: .unmuted, isActiveSpeaker: false)
+        sut = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        sut.configure(with: config, variant: .dark, selfUser: SelfUser.current)
+
+        verifyInAllColorSchemes(matching: sut)
     }
-    
+
+    // MARK: unit test
     func testThatAccessIDIsGenerated() {
-        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
-        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
-        
-        let user = MockUser.mockUsers().map(ParticipantsRowType.init)[0]
-        
+        let user = SwiftMockLoader.mockUsers().map(ParticipantsRowType.init)[0]
+
         let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
         cell.sectionName = "Members"
         cell.cellIdentifier = "participants.section.participants.cell"
         cell.configure(with: user, conversation: conversation, showSeparator: true)
         XCTAssertEqual(cell.accessibilityIdentifier, "Members - participants.section.participants.cell")
     }
-    
+
 }

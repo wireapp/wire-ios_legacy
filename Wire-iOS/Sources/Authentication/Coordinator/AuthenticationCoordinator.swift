@@ -165,7 +165,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             return
         }
 
-        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 

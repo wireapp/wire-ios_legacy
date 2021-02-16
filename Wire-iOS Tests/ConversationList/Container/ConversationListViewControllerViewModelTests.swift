@@ -60,6 +60,7 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
 
     func testThatShowPushPermissionDeniedDialogIfNeededReturnTrueWhenHandleExists() {
         /// GIVEN
+        selfUser.handle = nil
         var result = sut.showPushPermissionDeniedDialogIfNeeded()
         XCTAssertFalse(result)
 

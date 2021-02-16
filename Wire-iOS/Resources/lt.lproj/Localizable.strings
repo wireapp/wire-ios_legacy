@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Neteisingas slaptažodis. Bandykite dar kartą.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Neteisingas slaptažodis. Jei slaptažodį neseniai pasikeitėte, prisijunkite prie interneto ir bandykite dar kartą.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
-"self.settings.privacy_security.lock_cancelled.action" = "Atrakinti";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Rodyti svetainių vaizdą";
 "self.settings.privacy_security.disable_link_previews.footer" = "Kitų žmonių siunčiamų nuorodų peržiūros vis dar gali būti rodomos.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
+"appLockModule.message.touchID" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
+"appLockModule.message.passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
+"appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
+"appLockModule.button.title" = "Atrakinti";

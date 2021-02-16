@@ -38,7 +38,7 @@ final class TextFieldValidatorTests: XCTestCase {
     func testOneCharacterNameIsNotAccepted(){
         // GIVEN
         let text = "a"
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -51,7 +51,7 @@ final class TextFieldValidatorTests: XCTestCase {
     func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted(){
         // GIVEN
         let text = " a "
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -64,7 +64,7 @@ final class TextFieldValidatorTests: XCTestCase {
     func testNameWithTenSpaceIsNotAccepted(){
         // GIVEN
         let text = String(repeating: " ", count: 10)
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -77,7 +77,7 @@ final class TextFieldValidatorTests: XCTestCase {
     func testTwoCharacterNameIsAccepted(){
         // GIVEN
         let text = "aa"
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError? = .none
 
         // WHEN

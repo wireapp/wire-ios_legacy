@@ -31,15 +31,15 @@ extension SettingsPropertyFactory {
     }
     
     var timeout: UInt {
-        return appLock?.config.appLockTimeout ?? .max
+        return appLock?.timeout ?? .max
     }
     
     var isAppLockForced: Bool {
-        return appLock?.config.forceAppLock ?? false
+        return appLock?.isForced ?? false
     }
     
     var isAppLockAvailable: Bool {
-        return appLock?.config.isAvailable ?? false
+        return appLock?.isAvailable ?? false
     }
     
 }
