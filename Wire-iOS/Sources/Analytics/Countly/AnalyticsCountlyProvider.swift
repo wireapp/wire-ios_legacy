@@ -268,8 +268,8 @@ private extension ZMUser {
         return [
             .teamId: teamId,
             .teamRole: teamRole,
-            .teamSize: team.members.count,
-            .userContactsCount: team.members.count.logRound()
+            .teamSize: RoundedInt(team.members.count, factor: 6),
+            .userContactsCount: RoundedInt(team.members.count, factor: 6)
         ]
     }
 
