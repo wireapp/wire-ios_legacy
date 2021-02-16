@@ -53,9 +53,6 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
     func testThatDetailsAreAvailableInTeamGroup_Receipts() {
         withGroupMessage(belongsToTeam: false, teamGroup: true) { message in
-            /// TODO: tmp fix, will fix converation creation in new PR
-            message.conversationLike = message.conversation
-
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
         }
@@ -93,8 +90,6 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     func testThatDetailsAreAvailableInTeamGroup_Ephemeral() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
-            /// TODO: tmp fix, will fix converation creation in new PR
-            message.conversationLike = message.conversation
 
             XCTAssertFalse(message.canBeLiked)
             XCTAssertTrue(message.areMessageDetailsAvailable)
@@ -105,15 +100,15 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     // MARK: - Helpers
 
     private func withGroupMessage(belongsToTeam: Bool, teamGroup: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = belongsToTeam ? teamTest : nonTeamTest
-
-        context {
-            let message = MockMessageFactory.textMessage(withText: "Message")
-            message.senderUser = MockUserType.createSelfUser(name: "Alice")
-            message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
-            message.conversationLike = message.conversation
-            block(message)
+        let message = MockMessageFactory.textMessage(withText: "Message")
+        message.senderUser = SelfUser.current
+        let mockConversation = SwiftMockConversation()
+        mockConversation.mockLocalParticipantsContain = true
+        if teamGroup {
+            mockConversation.teamRemoteIdentifier = UUID()
         }
+        message.conversationLike = mockConversation
+        block(message)
     }
 
     private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
@@ -121,7 +116,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
 
         context {
             let message = MockMessageFactory.textMessage(withText: "Message")
-            message.senderUser = MockUserType.createSelfUser(name: "Alice", inTeam: belongsToTeam ? UUID() : nil)
+            message.senderUser = SelfUser.current
             message.conversation = otherUserConversation
             message.conversationLike = otherUserConversation
             block(message)
