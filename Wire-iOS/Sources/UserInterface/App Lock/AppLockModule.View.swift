@@ -95,15 +95,15 @@ extension AppLockModule {
         }
         
         var buttonTitle: String {
-            return Strings.Button.title
-            //            guard case let .locked(authenticationType) = self else { return "" }
-            //
-            //            switch authenticationType {
-            //            case .unavailable:
-            //                return "registration.push_access_denied.settings_button.title".localized
-            //            default:
-            //                return "self.settings.privacy_security.lock_cancelled.action".localized
-            //            }
+            
+            guard case let .locked(authenticationType) = self else { return "" }
+            
+            switch authenticationType {
+            case .unavailable:
+                return L10n.Localizable.Registration.PushAccessDenied.SettingsButton.title 
+            default:
+                return Strings.Button.title
+            }
         }
         
         var onEvent: AppLockModule.Event {
