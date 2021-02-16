@@ -1094,6 +1094,7 @@
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
+		EE05CCFB25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE05CCFA25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift */; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
@@ -2856,6 +2857,7 @@
 		EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Router.swift; sourceTree = "<group>"; };
 		EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Interactor.swift; sourceTree = "<group>"; };
 		EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.View.swift; sourceTree = "<group>"; };
+		EE05CCFA25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsAttributeKey+AppInfo.swift"; sourceTree = "<group>"; };
 		EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleRouterTests.swift; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
@@ -2870,9 +2872,9 @@
 		EE378E2B24BDE5D50014118A /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		EE378E2D24BDE5FF0014118A /* VideoStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStream.swift; sourceTree = "<group>"; };
 		EE378E2F24BDE6210014118A /* VideoGridConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridConfiguration.swift; sourceTree = "<group>"; };
-		EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCurtainDelegate.swift; sourceTree = "<group>"; };
 		EE41467525C8993900E750E8 /* CountlyInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountlyInterface.swift; sourceTree = "<group>"; };
 		EE41467725C8995900E750E8 /* CountlyUserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountlyUserInterface.swift; sourceTree = "<group>"; };
+		EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCurtainDelegate.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
 		EE497F3625CC32DA00BAB64A /* CountlyUserAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountlyUserAttributes.swift; sourceTree = "<group>"; };
@@ -4431,6 +4433,7 @@
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
 				5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */,
 				AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */,
+				EE05CCFA25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift */,
 				871BBFC31D34F56300DF0793 /* Events */,
 				871BBFF71D34F56300DF0793 /* Registration */,
 			);
@@ -6440,16 +6443,6 @@
 			path = "App Lock";
 			sourceTree = "<group>";
 		};
-		EE430EBA25C208A90056BDE3 /* Screen Curtain */ = {
-			isa = PBXGroup;
-			children = (
-				BFBBD1EC20D9238B00BFC4AD /* ScreenCurtain.swift */,
-				EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */,
-				8FC85255199245760008B66B /* ScreenCurtain.RootViewController.swift */,
-			);
-			path = "Screen Curtain";
-			sourceTree = "<group>";
-		};
 		EE41467425C8992000E750E8 /* Countly */ = {
 			isa = PBXGroup;
 			children = (
@@ -6459,6 +6452,16 @@
 				EE497F3625CC32DA00BAB64A /* CountlyUserAttributes.swift */,
 			);
 			path = Countly;
+			sourceTree = "<group>";
+		};
+		EE430EBA25C208A90056BDE3 /* Screen Curtain */ = {
+			isa = PBXGroup;
+			children = (
+				BFBBD1EC20D9238B00BFC4AD /* ScreenCurtain.swift */,
+				EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */,
+				8FC85255199245760008B66B /* ScreenCurtain.RootViewController.swift */,
+			);
+			path = "Screen Curtain";
 			sourceTree = "<group>";
 		};
 		EE5F54CF259B777B00F11F3C /* Viper */ = {
@@ -7873,6 +7876,7 @@
 				EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */,
 				EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
+				EE05CCFB25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift in Sources */,
 				EF864A0D236AEB400074DFF7 /* ZMConversation+Additions.swift in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */,
