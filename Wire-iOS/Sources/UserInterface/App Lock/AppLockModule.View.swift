@@ -81,30 +81,31 @@ extension AppLockModule {
 
             switch authenticationType {
             case .faceID:
-                return "self.settings.privacy_security.lock_cancelled.description_face_id".localized
+                return Strings.Message.faceID
 
             case .touchID:
-                return "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
+                return Strings.Message.touchID
 
             case .passcode:
-                return "self.settings.privacy_security.lock_cancelled.description_passcode".localized
+                return Strings.Message.passcode
 
             case .unavailable:
-                return "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
+                return Strings.Message.passcodeUnavailable
             }
         }
         
         var buttonTitle: String {
-            guard case let .locked(authenticationType) = self else { return "" }
-
-            switch authenticationType {
-            case .unavailable:
-                return "registration.push_access_denied.settings_button.title".localized
-            default:
-                return "self.settings.privacy_security.lock_cancelled.action".localized
-            }
+            return Strings.Button.title
+            //            guard case let .locked(authenticationType) = self else { return "" }
+            //
+            //            switch authenticationType {
+            //            case .unavailable:
+            //                return "registration.push_access_denied.settings_button.title".localized
+            //            default:
+            //                return "self.settings.privacy_security.lock_cancelled.action".localized
+            //            }
         }
-
+        
         var onEvent: AppLockModule.Event {
             guard case let .locked(authenticationType) = self else { return .unlockButtonTapped }
             

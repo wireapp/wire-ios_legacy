@@ -36,8 +36,9 @@ class SwiftMockConversation: NSObject, Conversation  {
 
     var teamRemoteIdentifier: UUID?
     
+    var mockLocalParticipantsContain: Bool = false
     func localParticipantsContain(user: UserType) -> Bool {
-        return false
+        return mockLocalParticipantsContain
     }
     
     var displayName: String = ""

@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Password errata. Riprova.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Password errata. Se hai cambiato di recente la password, connettiti ad internet e riprova.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Sblocca Wire con Face ID o codice d'accesso";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Sblocca Wire con Touch ID o Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Sblocca Wire con codice d'accesso";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Per sbloccare Wire, attiva il codice d'accesso nelle impostazioni del dispositivo";
-"self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Crea anteprime dei link";
 "self.settings.privacy_security.disable_link_previews.footer" = "È possibile che vengano comunque mostrate delle anteprime per i link inviati dagli altri utenti.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Sblocca Wire con Face ID o codice d'accesso";
+"appLockModule.message.touchID" = "Sblocca Wire con Touch ID o Passcode";
+"appLockModule.message.passcode" = "Sblocca Wire con codice d'accesso";
+"appLockModule.message.passcodeUnavailable" = "Per sbloccare Wire, attiva il codice d'accesso nelle impostazioni del dispositivo";
+"appLockModule.button.title" = "Sblocca";
