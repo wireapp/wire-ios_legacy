@@ -271,6 +271,7 @@ private extension ZMUser {
             .teamId: teamId,
             .teamRole: teamRole,
             .teamSize: RoundedInt(team.members.count, factor: 6),
+            // FIXME: This should be the number of contacts, not team size.
             .userContactsCount: RoundedInt(team.members.count, factor: 6)
         ]
     }
