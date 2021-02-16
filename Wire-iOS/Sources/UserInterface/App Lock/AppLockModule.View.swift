@@ -47,10 +47,6 @@ extension AppLockModule {
             view.addSubview(lockView)
             lockView.translatesAutoresizingMaskIntoConstraints = false
             lockView.fitInSuperview()
-
-            lockView.onReauthRequested = { [weak self] in
-                self?.presenter.processEvent(.unlockButtonTapped)
-            }
         }
 
     }
@@ -95,23 +91,18 @@ extension AppLockModule {
         }
         
         var buttonTitle: String {
-            
-            guard case let .locked(authenticationType) = self else { return "" }
-            
-            switch authenticationType {
-            case .unavailable:
-                return L10n.Localizable.Registration.PushAccessDenied.SettingsButton.title 
+            switch self {
+            case .locked(.unavailable):
+                return L10n.Localizable.Registration.PushAccessDenied.SettingsButton.title
             default:
                 return Strings.Button.title
             }
         }
         
-        var onEvent: AppLockModule.Event {
-            guard case let .locked(authenticationType) = self else { return .unlockButtonTapped }
-            
-            switch authenticationType {
-            case .unavailable:
-                return .openSettingsTapped
+        var buttonEvent: AppLockModule.Event {
+            switch self {
+            case .locked(.unavailable):
+                return .openDeviceSettingsButtonTapped
             default:
                 return .unlockButtonTapped
             }
@@ -128,8 +119,8 @@ extension AppLockModule.View: AppLockViewPresenterInterface {
         lockView.showReauth = model.showReauth
         lockView.message = model.message
         lockView.buttonTitle = model.buttonTitle
-        lockView.onReauthRequested = { [weak self] in
-            self?.presenter.processEvent(model.onEvent)
+        lockView.actionRequested = { [weak self] in
+            self?.presenter.processEvent(model.buttonEvent)
         }
     }
 

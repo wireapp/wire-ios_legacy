@@ -55,7 +55,7 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.loadViewIfNeeded()
 
         // When
-        sut.lockView.onReauthRequested?()
+        sut.lockView.actionRequested?()
 
         // Then
         XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])

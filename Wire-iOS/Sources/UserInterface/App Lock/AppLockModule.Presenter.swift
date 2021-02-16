@@ -78,8 +78,8 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
         case .configChangeAcknowledged:
             authenticate()
             
-        case .openSettingsTapped:
-            openSettings()
+        case .openDeviceSettingsButtonTapped:
+            router.performAction(.openDeviceSettings)
         }
     }
 
@@ -94,9 +94,4 @@ extension AppLockModule.Presenter {
         interactor.executeRequest(.evaluateAuthentication)
     }
 
-    private func openSettings() {
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-    }
 }

@@ -26,11 +26,11 @@ extension AppLockModule.View {
         
         // MARK: - Properties
         
-        var onReauthRequested: Completion?
+        var actionRequested: Completion?
         
         var message: String = "" {
             didSet {
-                authenticateLabel.text = message
+                messageLabel.text = message
             }
         }
         
@@ -42,7 +42,7 @@ extension AppLockModule.View {
         
         var showReauth: Bool = false {
             didSet {
-                self.authenticateLabel.isHidden = !showReauth
+                self.messageLabel.isHidden = !showReauth
                 self.actionButton.isHidden = !showReauth
             }
         }
@@ -51,7 +51,7 @@ extension AppLockModule.View {
         private let contentContainerView = UIView()
         private let blurView = UIVisualEffectView.blurView()
 
-        private let authenticateLabel: UILabel = {
+        private let messageLabel: UILabel = {
             let label = UILabel()
             label.font = .largeThinFont
             label.textColor = .from(scheme: .textForeground, variant: .dark)
@@ -80,16 +80,16 @@ extension AppLockModule.View {
             addSubview(shieldViewContainer)
             addSubview(blurView)
             
-            authenticateLabel.isHidden = true
-            authenticateLabel.numberOfLines = 0
+            messageLabel.isHidden = true
+            messageLabel.numberOfLines = 0
             actionButton.isHidden = true
             
             addSubview(contentContainerView)
             
-            contentContainerView.addSubview(authenticateLabel)
+            contentContainerView.addSubview(messageLabel)
             contentContainerView.addSubview(actionButton)
             
-            actionButton.addTarget(self, action: #selector(LockView.onReauthenticatePressed(_:)), for: .touchUpInside)
+            actionButton.addTarget(self, action: #selector(LockView.onButtonPressed(_:)), for: .touchUpInside)
 
             createConstraints(nibView: shieldView)
 
@@ -109,7 +109,7 @@ extension AppLockModule.View {
             blurView.translatesAutoresizingMaskIntoConstraints = false
             contentContainerView.translatesAutoresizingMaskIntoConstraints = false
             actionButton.translatesAutoresizingMaskIntoConstraints = false
-            authenticateLabel.translatesAutoresizingMaskIntoConstraints = false
+            messageLabel.translatesAutoresizingMaskIntoConstraints = false
             
             // Compact
             contentLeadingConstraint = contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor)
@@ -143,13 +143,13 @@ extension AppLockModule.View {
                 contentContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
                 
                 // authenticateLabel
-                authenticateLabel.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
-                authenticateLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
+                messageLabel.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 24),
+                messageLabel.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -24),
                 
                 // authenticateButton
                 actionButton.heightAnchor.constraint(equalToConstant: CGFloat.PasscodeUnlock.buttonHeight),
                 actionButton.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: CGFloat.PasscodeUnlock.buttonPadding),
-                actionButton.topAnchor.constraint(equalTo: authenticateLabel.bottomAnchor, constant: 24),
+                actionButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
                 actionButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding),
                 actionButton.bottomAnchor.constraint(equalTo: contentContainerView.safeBottomAnchor, constant: -CGFloat.PasscodeUnlock.buttonPadding)])
         }
@@ -168,8 +168,8 @@ extension AppLockModule.View {
         
         // MARK: - Actions
         
-        @objc func onReauthenticatePressed(_ sender: AnyObject!) {
-            onReauthRequested?()
+        @objc func onButtonPressed(_ sender: AnyObject!) {
+            actionRequested?()
         }
         
     }
