@@ -60,6 +60,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     /// Events that have been tracked before Countly has begun.
 
     private(set) var pendingEvents: [PendingEvent] = []
+    private(set) var pendingEvents2 = [AnalyticsEvent]()
 
     var isOptedOut: Bool {
         didSet {
@@ -165,7 +166,18 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     // MARK: - Tag events
 
     func tagEvent(_ event: AnalyticsEvent) {
-        tagEvent(event.name, attributes: event.attributes.rawValue)
+        guard selfUser != nil else {
+            pendingEvents2.append(event)
+            return
+        }
+
+        guard shouldTracksEvent else { return }
+
+        var segmentation = event.attributes
+        segmentation[.appName] = "ios"
+        segmentation[.appVersion] = Bundle.main.shortVersionString
+
+        countly.recordEvent(event.name, segmentation: segmentation.rawValue)
     }
 
     func tagEvent(_ event: String,
