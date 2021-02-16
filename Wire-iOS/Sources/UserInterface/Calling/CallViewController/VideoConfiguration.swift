@@ -30,7 +30,7 @@ struct VideoConfiguration: VideoGridConfiguration {
     let presentationMode: VideoGridPresentationMode
     
     init(voiceChannel: VoiceChannel) {
-        let videoStreamArrangment = voiceChannel.videoStreamArrangment()
+        let videoStreamArrangment = voiceChannel.createVideoStreamArrangment()
        
         floatingVideoStream = videoStreamArrangment.preview
         videoStreams = videoStreamArrangment.grid
@@ -52,7 +52,7 @@ extension VoiceChannel {
     
     typealias VideoStreamArrangment = (preview: VideoStream?, grid: [VideoStream])
         
-    fileprivate func videoStreamArrangment() -> VideoStreamArrangment {
+    fileprivate func createVideoStreamArrangment() -> VideoStreamArrangment {
         guard isEstablished else { return videoStreamArrangementForNonEstablishedCall }
         
         let participants = self.participants(forPresentationMode: videoGridPresentationMode)
