@@ -111,6 +111,7 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
             let message = MockMessageFactory.textMessage(withText: "Message")
             message.senderUser = MockUserType.createSelfUser(name: "Alice")
             message.conversation = teamGroup ? self.createTeamGroupConversation() : self.createGroupConversation()
+            message.conversationLike = message.conversation
             block(message)
         }
     }

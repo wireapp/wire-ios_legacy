@@ -53,7 +53,7 @@ struct CallCellViewModel {
             
             var detailKey = "missed-call"
             
-            if message.conversation?.conversationType == .group {
+            if message.conversationLike?.conversationType == .group {
                 detailKey.append(".groups")
             }
             

@@ -132,7 +132,7 @@ extension ZMConversationList {///TODO mv to DM
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
-                conversation != excluding
+                !(conversation === excluding)
         }
     }
 }

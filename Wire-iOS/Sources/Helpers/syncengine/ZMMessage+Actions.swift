@@ -43,7 +43,7 @@ extension ZMConversationMessage {
     
     /// Whether the message can be edited.
     var canBeEdited: Bool {
-        guard let conversation = self.conversation,
+        guard let conversation = conversationLike,
               let sender = senderUser else {
             return false
         }
@@ -56,7 +56,7 @@ extension ZMConversationMessage {
     
     /// Whether the message can be quoted.
     var canBeQuoted: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 
@@ -157,7 +157,7 @@ extension ZMConversationMessage {
 
     /// Wether the message sending failed in the past and we can attempt to resend the message.
     var canBeResent: Bool {
-        guard let conversation = self.conversation,
+        guard let conversation = conversationLike,
               let sender = senderUser else {
             return false
         }
