@@ -93,9 +93,9 @@ extension AppLockModule {
         var buttonTitle: String {
             switch self {
             case .locked(.unavailable):
-                return L10n.Localizable.Registration.PushAccessDenied.SettingsButton.title
+                return Strings.GoToSettingsButton.title
             default:
-                return Strings.Button.title
+                return Strings.UnlockButton.title
             }
         }
         

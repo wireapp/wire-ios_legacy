@@ -82,9 +82,9 @@ internal enum L10n {
       }
     }
     internal enum AppLockModule {
-      internal enum Button {
-        /// Unlock
-        internal static let title = L10n.tr("Localizable", "appLockModule.button.title")
+      internal enum GoToSettingsButton {
+        /// Go to settings
+        internal static let title = L10n.tr("Localizable", "appLockModule.goToSettingsButton.title")
       }
       internal enum Message {
         /// Unlock Wire with Face ID or Passcode
@@ -95,6 +95,10 @@ internal enum L10n {
         internal static let passcodeUnavailable = L10n.tr("Localizable", "appLockModule.message.passcodeUnavailable")
         /// Unlock Wire with Touch ID or Passcode
         internal static let touchID = L10n.tr("Localizable", "appLockModule.message.touchID")
+      }
+      internal enum UnlockButton {
+        /// Unlock
+        internal static let title = L10n.tr("Localizable", "appLockModule.unlockButton.title")
       }
     }
     internal enum ArchivedList {
