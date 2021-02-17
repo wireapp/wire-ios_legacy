@@ -32,14 +32,14 @@ extension AnalyticsEvent {
 
 enum AnalyticsContributionType: String, AnalyticsAttributeValue {
 
-    case text = "text"
+    case textMessage = "text"
+    case fileMessage = "file"
+    case imageMessage = "image"
+    case locationMessage = "location"
+    case audioMessage = "audio"
+    case videoMessage = "video"
     case like = "like"
     case ping = "ping"
-    case file = "file"
-    case image = "image"
-    case location = "location"
-    case audio = "audio"
-    case video = "video"
     case audioCall = "audio_call"
     case videoCall = "video_call"
 
