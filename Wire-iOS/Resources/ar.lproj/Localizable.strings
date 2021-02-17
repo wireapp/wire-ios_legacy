@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "كلمة مرور خاطئة. الرجاء حاول مرة أخرى.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
-
 "self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط";
 "self.settings.privacy_security.disable_link_previews.footer" = "قد تظهر المعاينات للروابط من الأشخاص الآخرين.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.button.title" = "فتح القفل";

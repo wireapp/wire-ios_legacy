@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireDataModel
 import WireSyncEngine
 
 /// Source of random values.
@@ -69,11 +68,11 @@ extension Array {
     }
 }
 
-extension ZMConversation {
+extension ZMConversation: StableRandomParticipantsProvider {
     /// Stable random list of the participants in the conversation. The list would be consistent between platforms
     /// because the conversation UUID is used as the random indexes source.
     var stableRandomParticipants: [UserType] {
-        let allUsers = self.sortedActiveParticipants
+        let allUsers = sortedActiveParticipants
         guard let remoteIdentifier = self.remoteIdentifier else {
             return allUsers
         }
@@ -136,12 +135,14 @@ extension Mode {
     }
 }
 
+typealias ConversationAvatarViewConversation = ConversationLike & StableRandomParticipantsProvider
+
 final class ConversationAvatarView: UIView {
     enum Context {
         // one or more users requesting connection to self user
         case connect(users: [UserType])
         // an established conversation or self user has a pending request to other users
-        case conversation(conversation: ZMConversation)
+        case conversation(conversation: ConversationAvatarViewConversation)
     }
 
     func configure(context: Context) {
@@ -157,10 +158,10 @@ final class ConversationAvatarView: UIView {
 
     private var users: [UserType] = []
 
-    private var conversation: ZMConversation? = .none {
+    private var conversation: ConversationAvatarViewConversation? = .none {
         didSet {
 
-            guard let conversation = self.conversation else {
+            guard let conversation = conversation else {
                 self.clippingView.subviews.forEach { $0.isHidden = true }
                 return
             }
@@ -171,7 +172,7 @@ final class ConversationAvatarView: UIView {
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
 
             if stableRandomParticipants.isEmpty,
-                let connectedUser = conversation.connectedUser {
+                let connectedUser = conversation.connectedUserType {
                 usersOnAvatar = [connectedUser]
             } else {
                 usersOnAvatar = stableRandomParticipants
@@ -235,7 +236,7 @@ final class ConversationAvatarView: UIView {
         }
     }
 
-    override public var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: CGFloat.ConversationAvatarView.iconSize, height: CGFloat.ConversationAvatarView.iconSize)
     }
 
@@ -277,7 +278,7 @@ final class ConversationAvatarView: UIView {
         return self.clippingView.bounds.size
     }
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         guard self.bounds != .zero else {
             return

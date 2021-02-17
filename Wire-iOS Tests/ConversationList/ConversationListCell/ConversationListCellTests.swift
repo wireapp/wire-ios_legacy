@@ -20,116 +20,239 @@ import UIKit
 @testable import Wire
 import XCTest
 
-final class ConversationListCellTests: CoreDataSnapshotTestCase {
+private final class MockConversation: MockStableRandomParticipantsConversation, ConversationStatusProvider, TypingStatusProvider, VoiceChannelProvider {
+    var voiceChannel: VoiceChannel?
+    
+    var typingUsers: [UserType] = []
+
+    func setIsTyping(_ isTyping: Bool) {
+        // no-op
+    }
+
+    var status: ConversationStatus
+
+    required init() {
+        status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+    }
+
+    static func createOneOnOneConversation(otherUser: MockUserType) -> MockConversation {
+        SelfUser.setupMockSelfUser()
+        let otherUserConversation = MockConversation()
+
+        // avatar
+        otherUserConversation.stableRandomParticipants = [otherUser]
+        otherUserConversation.conversationType = .oneOnOne
+
+        // title
+        otherUserConversation.displayName = otherUser.name!
+
+        // subtitle
+        otherUserConversation.connectedUserType = otherUser
+
+        return otherUserConversation
+    }
+}
+
+final class ConversationListCellTests: XCTestCase {
 
     // MARK: - Setup
-    
+
     var sut: ConversationListCell!
-    
+    fileprivate var otherUserConversation: MockConversation!
+    var otherUser: MockUserType!
+
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
+
+        otherUser = MockUserType.createDefaultOtherUser()
+        otherUserConversation = MockConversation.createOneOnOneConversation(otherUser: otherUser)
+
         accentColor = .strongBlue
-        ///The cell must higher than 64, otherwise it breaks the constraints.
+        /// The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
 
-        SelfUser.provider = selfUserProvider
     }
-    
+
     override func tearDown() {
         sut = nil
         SelfUser.provider = nil
+        otherUserConversation = nil
+        otherUser = nil
+
         super.tearDown()
     }
-    
+
     // MARK: - Helper
-    
-    private func verify(
-        _ conversation: ZMConversation,
-        file: StaticString = #file,
-        line: UInt = #line
-        ) {
-        sut.conversation = conversation
-        
-        verify(view: sut, file: file, line: line)
+
+    private func createNewMessage(text: String = "Hey there!") -> MockMessage {
+        let message: MockMessage = MockMessageFactory.textMessage(withText: text, sender: otherUser, conversation: otherUserConversation)
+
+        return message
     }
-    
+
+    private func createMentionSelfMessage() -> MockMessage {
+        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+
+        return mentionMessage
+    }
+
+    private func verify(
+        _ conversation: MockConversation,
+        icon: ConversationStatusIcon? = nil,
+        file: StaticString = #file,
+        testName: String = #function,
+        line: UInt = #line) {
+        sut.conversation = conversation
+
+        if let icon = icon {
+            sut.itemView.rightAccessory.icon = icon
+        }
+        sut.backgroundColor = .darkGray
+        verify(matching: sut, file: file, testName: testName, line: line)
+    }
+
     // MARK: - Tests
-    
+
     func testThatItRendersWithoutStatus() {
         // when & then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersMutedConversation() {
         // when
-        otherUserConversation.mutedMessageTypes = [.all]
-        
+        let status = ConversationStatus(isGroup: false, 
+                                        hasMessages: false, 
+                                        hasUnsentMessages: false, 
+                                        messagesRequiringAttention: [], 
+                                        messagesRequiringAttentionByType: [:], 
+                                        isTyping: false, 
+                                        mutedMessageTypes: [.all], 
+                                        isOngoingCall: false, 
+                                        isBlocked: false, 
+                                        isSelfAnActiveMember: true, 
+                                        hasSelfMention: false, 
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
 
     func testThatItRendersBlockedConversation() {
         // when
-        otherUserConversation.connectedUser?.toggleBlocked()
-        
+        otherUserConversation.connectedUserType?.toggleBlocked()
+
+        let status = ConversationStatus(isGroup: false, 
+                                        hasMessages: false, 
+                                        hasUnsentMessages: false, 
+                                        messagesRequiringAttention: [], 
+                                        messagesRequiringAttentionByType: [:], 
+                                        isTyping: false, 
+                                        mutedMessageTypes: [], 
+                                        isOngoingCall: false, 
+                                        isBlocked: true, 
+                                        isSelfAnActiveMember: true, 
+                                        hasSelfMention: false, 
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
+        otherUser.isConnected = false
+
         // then
         verify(otherUserConversation)
     }
-        
+
     func testThatItRendersConversationWithNewMessage() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        
+
+        let message = createNewMessage()
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.text: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversationWithNewMessages() {
         // when
-        (0..<8).forEach {_ in 
-            let message = try! otherUserConversation.appendText(content: "Hey there!")
-            (message as! ZMClientMessage).sender = otherUser
+        var messages: [MockMessage] = []
+        (0..<8).forEach {_ in
+            let message = createNewMessage()
+
+            messages.append(message)
         }
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: messages,
+                                        messagesRequiringAttentionByType: [.text: 8],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
-    
+
     func testThatItRendersConversation_TextMessagesThenMention() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
+        let message = createNewMessage()
+
+        let mentionMessage = createMentionSelfMessage()
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message, mentionMessage],
+                                        messagesRequiringAttentionByType: [.mention: 1, .text: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
 
     func testThatItRendersConversation_TextMessagesThenMentionThenReply() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
+        let replyMessage = createNewMessage(text: "Pong!")
 
-        let selfMessage = try! otherUserConversation.appendText(content: "Ping!")
-        (message as! ZMClientMessage).sender = selfUser
-
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-
-        let replyMessage = try! otherUserConversation.appendText(content: "Pong!", replyingTo: selfMessage)
-        (replyMessage as! ZMMessage).sender = otherUser
-
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [replyMessage],
+                                        messagesRequiringAttentionByType: [.mention: 1, .reply: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
@@ -137,14 +260,21 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersConversation_ReplySelfMessage() {
         // when
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = selfUser
+        let replyMessage = createNewMessage(text: "reply test")
 
-        let replyMessage = try! otherUserConversation.appendText(content: "reply test", replyingTo: message)
-        (replyMessage as! ZMMessage).sender = otherUser
-
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfReplyCountKey)
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [replyMessage],
+                                        messagesRequiringAttentionByType: [.reply: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: true)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
@@ -152,85 +282,163 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersConversation_MentionThenTextMessages() {
         // when
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
-        // then
-        verify(otherUserConversation)
-    }
-    
-    func testThatItRendersMutedConversation_TextMessagesThenMention() {
-        // when
-        otherUserConversation.mutedMessageTypes = [.all]
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
-        // then
-        verify(otherUserConversation)
-    }
-    
-    func testThatItRendersMutedConversation_MentionThenTextMessages() {
-        // when
-        otherUserConversation.mutedMessageTypes = [.all]
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (try! otherUserConversation.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        let message = try! otherUserConversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
-        // then
-        verify(otherUserConversation)
-    }
-    
-    func testThatItRendersConversationWithKnock() {
-        // when
-        let knock = try! otherUserConversation.appendKnock()
-        (knock as! ZMClientMessage).sender = otherUser
-        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        
-        // then
-        verify(otherUserConversation)
-    }
-    
-    func testThatItRendersConversationWithTypingOtherUser() {
-        // when
-        otherUserConversation.setTypingUsers([otherUser])
+        let message = createNewMessage()
+
+        let mentionMessage: MockMessage = MockMessageFactory.textMessage(withText: "@self test", sender: otherUser, conversation: otherUserConversation)
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [mentionMessage, message],
+                                        messagesRequiringAttentionByType: [.text: 1, .mention: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
 
         // then
         verify(otherUserConversation)
     }
-    
-    func testThatItRendersConversationWithTypingSelfUser() {
+
+    func testThatItRendersMutedConversation_TextMessagesThenMention() {
         // when
-        otherUserConversation.setIsTyping(true)
-        
+        let message = createNewMessage()
+        let mentionMessage = createMentionSelfMessage()
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [mentionMessage, message],
+                                        messagesRequiringAttentionByType: [.text: 1, .mention: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [.all],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
         // then
         verify(otherUserConversation)
     }
-    
+
+    // Notice: same result as testThatItRendersMutedConversation_TextMessagesThenMention with reversed message order
+    func testThatItRendersMutedConversation_MentionThenTextMessages() {
+        // when
+
+        let message = createNewMessage()
+        let mentionMessage = createMentionSelfMessage()
+
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message, mentionMessage],
+                                        messagesRequiringAttentionByType: [.mention: 1, .text: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [.all],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: true,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
+        // then
+        verify(otherUserConversation)
+    }
+
+    func testThatItRendersConversationWithKnock() {
+        // when
+        let message: MockMessage = MockMessageFactory.pingMessage()
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.knock: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
+        // then
+        verify(otherUserConversation)
+    }
+
+    func testThatItRendersConversationWithTypingOtherUser() {
+        // when
+        let status = ConversationStatus(isGroup: false,
+                                        hasMessages: true,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [],
+                                        messagesRequiringAttentionByType: [:],
+                                        isTyping: true,
+                                        mutedMessageTypes: [.none],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
+
+        // then
+        verify(otherUserConversation)
+    }
+
+    // no typing status and right icon
+    func testThatItRendersConversationWithTypingSelfUser() {
+        // when
+        otherUserConversation.setIsTyping(true)
+
+        // then
+        verify(otherUserConversation)
+    }
+
     func testThatItRendersGroupConversation() {
         // when
-        let conversation = createGroupConversation()
-        conversation.add(participants:[createUser(name: "Ana")])
+        let conversation = MockConversation()
+        let newUser = MockUserType.createUser(name: "Ana")
+        conversation.stableRandomParticipants = [newUser, otherUser]
+        conversation.displayName = "Ana, Bruno"
 
         // then
         verify(conversation)
     }
-    
+
+    private func createGroupConversation() -> MockConversation {
+        let conversation = MockConversation()
+        conversation.stableRandomParticipants = [otherUser]
+        conversation.displayName = otherUser.displayName
+
+        return conversation
+    }
+
+    /// test for SelfUserLeftMatcher is matched
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
-        conversation.removeParticipantsAndUpdateConversationState(users: [selfUser], initiatingUser: otherUser)
-        
+
+        let status = ConversationStatus(isGroup: true,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [],
+                                        messagesRequiringAttentionByType: [:],
+                                        isTyping: true,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: false,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        otherUserConversation.status = status
         // then
         verify(conversation)
     }
@@ -238,74 +446,76 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversationWithIncomingCall() {
         let conversation = createGroupConversation()
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
 
     func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
-    
+
     func testThatItRendersGroupConversationWithIncomingCall_SilencedAll() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
-    
+
     func testThatItRendersGroupConversationWithOngoingCall() {
         let conversation = createGroupConversation()
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation, icon: icon)
     }
 
     func testThatItRendersGroupConversationWithTextMessages() {
         // when
         let conversation = createGroupConversation()
-        let message = try! conversation.appendText(content: "Hey there!")
-        (message as! ZMClientMessage).sender = otherUser
-        
-        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
-        
+        let message = createNewMessage()
+
+        let status = ConversationStatus(isGroup: true,
+                                        hasMessages: false,
+                                        hasUnsentMessages: false,
+                                        messagesRequiringAttention: [message],
+                                        messagesRequiringAttentionByType: [.text: 1],
+                                        isTyping: false,
+                                        mutedMessageTypes: [],
+                                        isOngoingCall: false,
+                                        isBlocked: false,
+                                        isSelfAnActiveMember: true,
+                                        hasSelfMention: false,
+                                        hasSelfReply: false)
+        conversation.status = status
+
         // then
         verify(conversation)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .mentionsAndReplies
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedAll() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .all
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
-    
+
     func testThatItRendersOneOnOneConversationWithOngoingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
-        verify(conversation: conversation, icon: icon)
+        verify(conversation!, icon: icon)
     }
 
-    
-    func verify(conversation: ZMConversation?, icon: ConversationStatusIcon?) {
-        guard let conversation = conversation else { XCTFail(); return }
-        sut.conversation = conversation
-        sut.itemView.rightAccessory.icon = icon
-
-        verify(view: sut)
-    }
-    
 }

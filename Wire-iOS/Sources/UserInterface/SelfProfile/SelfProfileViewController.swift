@@ -252,11 +252,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 }
 
 extension SelfProfileViewController: PasscodeSetupViewControllerDelegate {
-    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerDidFinish() {
         //no-op
     }
     
-    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
+    func passcodeSetupControllerWasDismissed() {
         // refresh options applock switch
         (topViewController as? SettingsTableViewController)?.refreshData()
     }

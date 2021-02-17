@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Невірний пароль. Будь ласка, спробуйте ще раз.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Невірний пароль. Якщо ви нещодавно змінили ваш пароль, підключіться до Інтернету та спробуйте ще раз.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Розблокувати Wire за допомогою Face ID або коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Розблокувати Wire за допомогою коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
-"self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
 "self.settings.privacy_security.disable_link_previews.footer" = "Дана опція не впливає на попередній перегляд лінків від інших людей.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "База даних видалена";
 "wipe_database_completion.subtitle" = "Ваші дані та повідомлення було видалено. Тепер ви можете увійти ще раз з новим пристроєм.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Розблокувати Wire за допомогою Face ID або коду допуску";
+"appLockModule.message.touchID" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
+"appLockModule.message.passcode" = "Розблокувати Wire за допомогою коду допуску";
+"appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
+"appLockModule.button.title" = "Розблокувати";
