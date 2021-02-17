@@ -47,7 +47,6 @@ extension AnalyticsEvent {
 
     }
 
-
 }
 
 private extension AnalyticsAttributeKey {
