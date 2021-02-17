@@ -38,6 +38,7 @@ extension AppLockModule {
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpViews()
+            setUpObserver()
             presenter.processEvent(.viewDidLoad)
         }
 
@@ -47,6 +48,15 @@ extension AppLockModule {
             view.addSubview(lockView)
             lockView.translatesAutoresizingMaskIntoConstraints = false
             lockView.fitInSuperview()
+        }
+
+        private func setUpObserver() {
+            NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+        
+        @objc
+        private func applicationWillEnterForeground(_ notification: Notification!) {
+            presenter.processEvent(.applicationWillEnterForeground)
         }
 
     }

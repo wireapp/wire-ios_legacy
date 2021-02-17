@@ -72,6 +72,9 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
         case .viewDidLoad, .unlockButtonTapped:
             interactor.executeRequest(.initiateAuthentication)
 
+        case .applicationWillEnterForeground:
+            interactor.executeRequest(.evaluateAuthentication)
+
         case .passcodeSetupCompleted, .customPasscodeVerified:
             interactor.executeRequest(.openAppLock)
 
