@@ -80,9 +80,7 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
     }
     
     private func presentDeviceSettings() {
-        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        UIApplication.shared.openSettings()
     }
 
 }
