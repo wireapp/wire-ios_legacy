@@ -21,31 +21,32 @@ import WireDataModel
 
 extension AnalyticsEvent {
 
-    static func contributed(_ kind: AnalyticsContributionType, in conversation: ZMConversation) -> AnalyticsEvent {
+    static func contributed(_ kind: ContributionType, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "contributed")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.contributionType] = kind
         return event
     }
 
-}
+    enum ContributionType: String, AnalyticsAttributeValue {
 
-enum AnalyticsContributionType: String, AnalyticsAttributeValue {
+        case textMessage = "text"
+        case fileMessage = "file"
+        case imageMessage = "image"
+        case locationMessage = "location"
+        case audioMessage = "audio"
+        case videoMessage = "video"
+        case like = "like"
+        case ping = "ping"
+        case audioCall = "audio_call"
+        case videoCall = "video_call"
 
-    case textMessage = "text"
-    case fileMessage = "file"
-    case imageMessage = "image"
-    case locationMessage = "location"
-    case audioMessage = "audio"
-    case videoMessage = "video"
-    case like = "like"
-    case ping = "ping"
-    case audioCall = "audio_call"
-    case videoCall = "video_call"
+        var analyticsValue: String {
+            return rawValue
+        }
 
-    var analyticsValue: String {
-        return rawValue
     }
+
 
 }
 

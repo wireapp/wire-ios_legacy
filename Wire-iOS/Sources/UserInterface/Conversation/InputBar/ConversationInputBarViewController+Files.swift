@@ -184,7 +184,7 @@ extension ConversationInputBarViewController {
 
 private extension ZMFileMessageData {
 
-    var contributionType: AnalyticsContributionType {
+    var contributionType: AnalyticsEvent.ContributionType {
         if isVideo {
             return .videoMessage
         } else if isAudio {
