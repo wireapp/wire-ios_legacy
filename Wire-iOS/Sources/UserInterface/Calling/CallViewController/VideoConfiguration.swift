@@ -27,7 +27,8 @@ struct VideoConfiguration: VideoGridConfiguration {
     let videoStreams: [VideoStream]
     let networkQuality: NetworkQuality
     let shouldShowActiveSpeakerFrame: Bool
-
+    let presentationMode: VideoGridPresentationMode
+    
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.createVideoStreamArrangment()
        
@@ -35,6 +36,7 @@ struct VideoConfiguration: VideoGridConfiguration {
         videoStreams = videoStreamArrangment.grid
         networkQuality = voiceChannel.networkQuality
         shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
+        presentationMode = voiceChannel.videoGridPresentationMode
     }
 }
 

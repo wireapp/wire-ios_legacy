@@ -52,6 +52,7 @@ final class VideoGridViewController: UIViewController {
     var configuration: VideoGridConfiguration {
         didSet {
             guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
     }
@@ -139,6 +140,12 @@ final class VideoGridViewController: UIViewController {
         else { return false }
         
         return streamId == maximizedStreamId
+    }
+    
+    private func dismissMaximizedViewIfNeeded(oldPresentationMode: VideoGridPresentationMode) {
+        guard oldPresentationMode != configuration.presentationMode else { return }
+        maximizedView?.isMaximized = false
+        maximizedView = nil
     }
 
     // MARK: - UI Update
