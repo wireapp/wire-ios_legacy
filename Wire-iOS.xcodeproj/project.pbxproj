@@ -9159,6 +9159,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 arm64";
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -9170,6 +9171,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEVELOPMENT_TEAM = "";
 				EXCLUDED_ARCHS = "i386 arm64";
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
