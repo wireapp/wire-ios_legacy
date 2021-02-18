@@ -200,8 +200,8 @@ final class VideoGridViewController: SpinnerCapableViewController {
             dismissSpinner?()
             return
         }
-
-        showLoadingView(title: "call.grid.no_active_speakers".localized)
+        
+        showLoadingView(title: L10n.Localizable.Call.Grid.noActiveSpeakers)
     }
     
     private func updateSelfPreview() {
