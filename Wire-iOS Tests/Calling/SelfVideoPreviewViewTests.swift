@@ -57,7 +57,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         previewViewMock.isCapturing = false
 
         // When
-        sut.stream = stubProvider.videoStream(videoState: .started).stream
+        sut.updateCaptureState(with: .started)
 
         // Then
         XCTAssertTrue(previewViewMock.isCapturing)
@@ -68,7 +68,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         previewViewMock.isCapturing = false
         
         // When
-        sut.stream = stubProvider.videoStream(videoState: .stopped).stream
+        sut.updateCaptureState(with: .stopped)
         
         // Then
         XCTAssertFalse(previewViewMock.isCapturing)
@@ -79,7 +79,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         previewViewMock.isCapturing = false
         
         // When
-        sut.stream = stubProvider.videoStream(videoState: .paused).stream
+        sut.updateCaptureState(with: .paused)
         
         // Then
         XCTAssertFalse(previewViewMock.isCapturing)
@@ -90,7 +90,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         previewViewMock.isCapturing = false
         
         // When
-        sut.stream = stubProvider.videoStream(videoState: .badConnection).stream
+        sut.updateCaptureState(with: .badConnection)
         
         // Then
         XCTAssertFalse(previewViewMock.isCapturing)
@@ -101,9 +101,20 @@ class SelfVideoPreviewViewTests: XCTestCase {
         previewViewMock.isCapturing = false
         
         // When
-        sut.stream = stubProvider.videoStream(videoState: .screenSharing).stream
+        sut.updateCaptureState(with: .screenSharing)
         
         // Then
         XCTAssertFalse(previewViewMock.isCapturing)
+    }
+    
+    func testThatSettingStream_UpdatesCaptureState() {
+        // Given
+        previewViewMock.isCapturing = false
+        
+        // When
+        sut.stream = stubProvider.videoStream(videoState: .started).stream
+        
+        // Then
+        XCTAssertTrue(previewViewMock.isCapturing)
     }
 }

@@ -27,6 +27,8 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 
     var videoStreams: [VideoStream] = []
 
+    var videoState: VideoState = .stopped
+
     var networkQuality: NetworkQuality = .normal
     
     var presentationMode: VideoGridPresentationMode = .allVideoStreams

@@ -207,7 +207,9 @@ final class VideoGridViewController: SpinnerCapableViewController {
     private func updateSelfPreview() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
+        // No stream to show. Update the capture state.
         guard let selfStream = stream(with: selfStreamId) else {
+            Log.calling.debug("updating capture state to \(configuration.videoState)")
             selfPreviewView?.updateCaptureState(with: configuration.videoState)
             return
         }

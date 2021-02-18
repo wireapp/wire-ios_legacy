@@ -38,11 +38,6 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         stopCapture()
     }
     
-    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
-        super.init(stream: stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame)
-        videoState = stream.videoState
-    }
-    
     override func setupViews() {
         super.setupViews()
         previewView.backgroundColor = .clear
