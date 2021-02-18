@@ -290,7 +290,6 @@ final class ConversationInputBarViewController: UIViewController,
         super.viewDidLoad()
 
         setupCallStateObserver()
-        setupAppLockedObserver()
 
         setupSingleTapGestureRecognizer()
 

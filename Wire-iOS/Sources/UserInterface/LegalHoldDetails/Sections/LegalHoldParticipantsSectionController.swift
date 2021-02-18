@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 private struct LegalHoldParticipantsSectionViewModel {
@@ -42,23 +41,35 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
+typealias LegalHoldDetailsConversation = Conversation & GroupDetailsConversation
+
+private extension ConversationLike {
+    func createViewModel() -> LegalHoldParticipantsSectionViewModel {
+        return LegalHoldParticipantsSectionViewModel(participants: sortedActiveParticipantsUserTypes.filter(\.isUnderLegalHold))
+    }
+}
+
+final class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private var viewModel: LegalHoldParticipantsSectionViewModel
-    private let conversation: ZMConversation
+    private let conversation: LegalHoldDetailsConversation
     private var token: AnyObject?
     
     weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
-    init(conversation: ZMConversation) {
-        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
+    init(conversation: LegalHoldDetailsConversation) {
+        viewModel = conversation.createViewModel()
         self.conversation = conversation
         super.init()
         
         if let userSession = ZMUserSession.shared() {
             token = UserChangeInfo.add(userObserver: self, in: userSession)
         }
+    }
+    
+    private func setupViewModel() {
+        viewModel = LegalHoldParticipantsSectionViewModel(participants: conversation.sortedActiveParticipantsUserTypes.filter(\.isUnderLegalHold))
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {
@@ -84,7 +95,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         let showSeparator = (viewModel.participants.count - 1) != indexPath.row
         
-        cell.configure(with: participant, selfUser: ZMUser.selfUser(), conversation: conversation)
+        cell.configure(with: participant, selfUser: SelfUser.current, conversation: conversation)
         cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         cell.showSeparator = showSeparator
@@ -105,7 +116,7 @@ extension LegalHoldParticipantsSectionController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged || changeInfo.nameChanged || changeInfo.isUnderLegalHoldChanged else { return }
         
-        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
+        viewModel = conversation.createViewModel()
         collectionView?.reloadData()
     }
     

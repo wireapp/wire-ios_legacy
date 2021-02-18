@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-extension ZClientViewController {
+extension ZClientViewController: AppLockChangeWarningViewControllerDelegate {
     
     var appLock: AppLockType? {
         return _userSession?.appLockController
@@ -30,9 +30,11 @@ extension ZClientViewController {
             return nil
         }
         
-        return AppLockChangeWarningViewController(isAppLockActive: appLock.isActive) {
-            try? appLock.deletePasscode()
-        }
+        return AppLockChangeWarningViewController(isAppLockActive: appLock.isActive)
+    }
+
+    func appLockChangeWarningViewControllerDidDismiss() {
+        try? appLock?.deletePasscode()
     }
     
     func notifyUserOfDisabledAppLockIfNeeded() {

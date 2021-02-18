@@ -230,7 +230,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         let activeMediaPlayer = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer
         
         if activeMediaPlayer != nil &&
-            activeMediaPlayer?.sourceMessage?.conversation == conversation {
+            activeMediaPlayer?.sourceMessage?.conversationLike === conversation {
             toggleMediaPlayer()
         } else if conversation.canJoinCall {
             delegate?.conversationListCellJoinCallButtonTapped(self)

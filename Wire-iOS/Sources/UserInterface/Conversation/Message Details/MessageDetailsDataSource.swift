@@ -41,7 +41,7 @@ protocol MessageDetailsDataSourceObserver: class {
  * The data source to present message details.
  */
 
-class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserver {
+final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserver {
 
     /// The presented message.
     let message: ZMConversationMessage

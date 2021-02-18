@@ -334,7 +334,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
         
         if let mediaPlayingMessage = mediaPlayingMessage,
-            mediaPlayingMessage.conversation == conversation,
+            mediaPlayingMessage.conversationLike === conversation,
             !displaysMessage(mediaPlayingMessage),
             !mediaPlayingMessage.isVideo {
             DispatchQueue.main.async(execute: {

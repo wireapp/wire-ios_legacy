@@ -256,7 +256,7 @@ class MessageToolboxDataSource {
 
     /// Creates the status for the read receipts.
     fileprivate func selfStatusForReadDeliveryState(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let conversationType = message.conversation?.conversationType else {return nil}
+        guard let conversationType = message.conversationLike?.conversationType else {return nil}
 
         switch conversationType {
         case .group:
