@@ -102,7 +102,6 @@
 		1658D2041D3E742A00249609 /* new_message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA11D34FF0400105D44 /* new_message.caf */; };
 		1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA21D34FF0400105D44 /* ping_from_them.caf */; };
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
-		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
 		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
 		165C55C2254B0CB500731CA9 /* UIColor+NamedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
@@ -1719,7 +1718,6 @@
 		1658C19720A1E55200148F6D /* CallInfoRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoRootViewControllerTests.swift; sourceTree = "<group>"; };
 		1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoTestFixture.swift; sourceTree = "<group>"; };
 		1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInfoViewControllerInput.swift; sourceTree = "<group>"; };
-		16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+CallEvents.swift"; sourceTree = "<group>"; };
 		1659FCCC234E415200D06C1F /* MockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLabel.swift; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
@@ -4451,7 +4449,6 @@
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				EE05CD2C25DDB32900777A25 /* AnalyticsEvent+Contributed.swift */,
 				EE33144725DEB4BF009852CE /* AnalyticsEvent+Calling.swift */,
-				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
 				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
 				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
@@ -8420,7 +8417,6 @@
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
-				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
 				A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
 				5E8FFC2B21F08D5B0052DF03 /* PhoneNumberInputCell.swift in Sources */,
