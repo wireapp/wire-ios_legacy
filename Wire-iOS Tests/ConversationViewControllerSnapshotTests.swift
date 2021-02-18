@@ -67,7 +67,7 @@ extension ConversationViewControllerSnapshotTests {
         mockZMUserSession.encryptMessagesAtRest = true
         
         // then
-        XCTAssertFalse(sut.collectionsBarButtonItem.isEnabled)
+        XCTAssertFalse(sut.shouldShowCollectionsButton)
     }
     
     func testThatTheSearchButtonIsEnabledIfMessagesAreNotEncryptedInTheDataBase() {
@@ -77,6 +77,6 @@ extension ConversationViewControllerSnapshotTests {
         mockZMUserSession.encryptMessagesAtRest = false
         
         // then
-        XCTAssertTrue(sut.collectionsBarButtonItem.isEnabled)
+        XCTAssertTrue(sut.shouldShowCollectionsButton)
     }
 }

@@ -33,6 +33,15 @@
 "share_extension.not_signed_in.title" = "Sie müssen sich bei Wire anmelden, bevor Sie etwas freigeben können.";
 "share_extension.not_signed_in.close_button" = "Schließen";
 
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Kennwort zum Entsperren eingeben";
+"share_extension.unlock.submit_button.title" = "entsperren";
+"share_extension.unlock.textfield.placeholder" = "Geben Sie Ihr Kennwort ein";
+"share_extension.unlock.hint_label" = "Kennwort";
+"share_extension.unlock.error_label" = "Falsches Kennwort";
+"share_extension.unlock.alert.message" = "Öffnen Sie Wire, um ein Kennwort zu erstellen";
+"share_extension.unlock.reveal_passcode" = "Kennwort anzeigen";
+
 "share_extension.timeout.title" = "Zeitüberschreitung beim Verbindungsversuch.";
 "share_extension.timeout.message" = "Überprüfen Sie ihre Internetverbindung und versuchen Sie es erneut. Der Anhang wurde in der Unterhaltung gespeichert.";
 

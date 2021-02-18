@@ -66,7 +66,7 @@ final class ReplyComposingView: UIView {
     
     init(message: ZMConversationMessage) {
         require(message.canBeQuoted)
-        require(message.conversation != nil)
+        require(message.conversationLike != nil)
         
         self.message = message
         super.init(frame: .zero)

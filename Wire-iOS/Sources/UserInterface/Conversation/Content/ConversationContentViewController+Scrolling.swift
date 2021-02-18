@@ -30,7 +30,7 @@ extension ConversationContentViewController {
             } else {
                 dataSource.loadMessages(near: message) { index in
 
-                    guard message.conversation == self.conversation else {
+                    guard message.conversationLike === self.conversation else {
                         fatal("Message from the wrong conversation")
                     }
 

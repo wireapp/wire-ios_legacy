@@ -16,34 +16,30 @@
 //
 
 import Foundation
-import WireDataModel
+import WireSyncEngine
 
+/// from UI project, to randomize users display in avatar icon
+protocol StableRandomParticipantsProvider {
+    var stableRandomParticipants: [UserType] { get }
+}
 
-protocol DisplayNameProvider {
-    var displayName: String { get }
+protocol ConversationStatusProvider {
+    var status: ConversationStatus { get }
 }
 
 protocol ConnectedUserProvider {
     var connectedUserType: UserType? { get }
 }
 
-protocol AllowGuestsProvider {
-    var allowGuests: Bool { get }
+// MARK: - ZMConversation extension from sync engine
+protocol TypingStatusProvider {
+    var typingUsers: [UserType] { get }
+    func setIsTyping(_ isTyping: Bool)
 }
 
-protocol TeamProvider {
-    var team: Team? { get }
+protocol VoiceChannelProvider {
+    var voiceChannel: VoiceChannel? { get }
 }
-
-protocol AccessProvider {
-    var accessMode: ConversationAccessMode? { get }
-    var accessRole: ConversationAccessRole? { get }
-}
-
-protocol MessageDestructionTimeoutProvider {
-    var messageDestructionTimeout: WireDataModel.MessageDestructionTimeout? { get }
-}
-
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -54,49 +50,36 @@ protocol InputBarConversation {
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
-    func setIsTyping(_ isTyping: Bool)
 
     var isReadOnly: Bool { get }
 }
 
-typealias InputBarConversationType = InputBarConversation & ConnectedUserProvider & DisplayNameProvider & ConversationLike
-
-extension ZMConversation: ConnectedUserProvider {
-    var connectedUserType: UserType? {
-        return connectedUser
-    }
-}
+typealias InputBarConversationType = InputBarConversation & TypingStatusProvider & ConversationLike
 
 extension ZMConversation: InputBarConversation {}
 
 // MARK: - GroupDetailsConversation View controllers and child VCs
 
 protocol GroupDetailsConversation {
-    var isUnderLegalHold: Bool { get }
     var userDefinedName: String? { get set }
 
-    var securityLevel: ZMConversationSecurityLevel { get }
-
-    var sortedOtherParticipants: [UserType] { get }
     var sortedServiceUsers: [UserType] { get }
 
     var allowGuests: Bool { get }
     var hasReadReceiptsEnabled: Bool { get }
 
-    var mutedMessageTypes: MutedMessageTypes { get }
 
     var freeParticipantSlots: Int { get }
 
     var teamRemoteIdentifier: UUID? { get }
 }
 
-typealias GroupDetailsConversationType = GroupDetailsConversation & DisplayNameProvider & AllowGuestsProvider & TeamProvider & AccessProvider & MessageDestructionTimeoutProvider & ConnectedUserProvider & ConversationLike
+typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
 
-//TODO: Merge there with ConversationLike
-extension ZMConversation: DisplayNameProvider {}
-extension ZMConversation: AllowGuestsProvider {}
-extension ZMConversation: TeamProvider {}
-extension ZMConversation: AccessProvider {}
-extension ZMConversation: MessageDestructionTimeoutProvider {}
+extension ZMConversation: ConversationStatusProvider {}
+
+extension ZMConversation: TypingStatusProvider {}
+extension ZMConversation: VoiceChannelProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}
+

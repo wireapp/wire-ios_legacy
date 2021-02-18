@@ -33,6 +33,15 @@
 "share_extension.not_signed_in.title" = "您在登录Wire后才可以使用分享功能";
 "share_extension.not_signed_in.close_button" = "关闭";
 
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "解锁";
+"share_extension.unlock.textfield.placeholder" = "输入您的锁定码";
+"share_extension.unlock.hint_label" = "密码";
+"share_extension.unlock.error_label" = "密码错误";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
 "share_extension.timeout.title" = "连接已超时。";
 "share_extension.timeout.message" = "请检查您的互联网连接并重试。附件会保存在对话中。";
 

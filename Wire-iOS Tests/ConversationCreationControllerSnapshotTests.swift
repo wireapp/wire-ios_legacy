@@ -27,6 +27,7 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         accentColor = .violet
+        ColorScheme.default.variant = .light
     }
 
     override func tearDown() {

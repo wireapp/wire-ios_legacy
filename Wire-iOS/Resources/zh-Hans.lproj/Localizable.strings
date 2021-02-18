@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "密码错误，请重试。";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "密码错误，如果您最近更改过密码，连接到网路并重试。";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "使用Face ID或密码解锁Wire";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "通过Touch ID或Passcode解锁";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "使用密码解锁Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "要解锁Wire，请在设置中选择打开密码";
-"self.settings.privacy_security.lock_cancelled.action" = "解锁";
-
 "self.settings.privacy_security.disable_link_previews.title" = "创建链接预览";
 "self.settings.privacy_security.disable_link_previews.footer" = "仍会为其他人的链接显示预览";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "使用Face ID或密码解锁Wire";
+"appLockModule.message.touchID" = "通过Touch ID或Passcode解锁";
+"appLockModule.message.passcode" = "使用密码解锁Wire";
+"appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
+"appLockModule.button.title" = "解锁";

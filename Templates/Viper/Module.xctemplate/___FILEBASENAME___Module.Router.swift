@@ -23,12 +23,22 @@ extension ___VARIABLE_productName:identifier___Module {
 
     final class Router: RouterInterface {
 
-        weak var viewController: UIViewController?
+        // MARK: - Properties
+
+        weak var view: View!
 
     }
 
 }
 
-// MARK: - API for presenter
+// MARK: - Perform action
 
-extension ___VARIABLE_productName:identifier___Module.Router: ___VARIABLE_productName:identifier___RouterPresenterInterface { }
+extension ___VARIABLE_productName:identifier___Module.Router: ___VARIABLE_productName:identifier___RouterPresenterInterface {
+
+    func performAction(_ action: ___VARIABLE_productName:identifier___Module.Action) {
+        switch action {
+
+        }
+    }
+
+}
