@@ -58,6 +58,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.requireCustomPasscode = true
 
         // When
+        XCTAssertEqual(session.lock, .screen)
         sut.executeRequest(.initiateAuthentication)
 
         // Then
@@ -71,6 +72,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         authenticationType.current = .unavailable
 
         // When
+        XCTAssertEqual(session.lock, .screen)
         sut.executeRequest(.initiateAuthentication)
 
         // Then
@@ -84,6 +86,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
+        XCTAssertEqual(session.lock, .screen)
         sut.executeRequest(.initiateAuthentication)
 
         // Then
@@ -95,6 +98,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.isCustomPasscodeSet = true
 
         // When
+        XCTAssertEqual(session.lock, .screen)
         sut.executeRequest(.initiateAuthentication)
 
         // Then
@@ -107,11 +111,27 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
+        XCTAssertEqual(session.lock, .screen)
         sut.executeRequest(.initiateAuthentication)
 
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
+    
+    func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
+        // Given
+        session.lock = .none
+
+        // When
+        XCTAssertNil(session.lock)
+        sut.executeRequest(.initiateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(appLock.methodCalls.open.count, 1)
+    }
+
 
     // MARK: - Evaluate authentication
 

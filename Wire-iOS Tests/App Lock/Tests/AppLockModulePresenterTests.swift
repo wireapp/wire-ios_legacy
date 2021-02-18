@@ -162,7 +162,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.applicationWillEnterForeground)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
     }
 
 }
