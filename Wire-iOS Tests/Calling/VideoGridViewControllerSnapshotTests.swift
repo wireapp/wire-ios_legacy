@@ -66,6 +66,15 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
+    
+    func testNoActiveSpeakersSpinner() {
+        configuration.videoStreams = []
+        configuration.presentationMode = .activeSpeakers
+        
+        createSut()
+        
+        verify(matching: sut)
+    }
         
     func testActiveSpeakersIndicators_OneToOne() {
         configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
