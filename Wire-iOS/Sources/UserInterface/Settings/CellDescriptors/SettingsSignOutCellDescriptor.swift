@@ -51,7 +51,6 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
             })
         } else {
             guard let account = SessionManager.shared?.accountManager.selectedAccount else { return }
-            
             SessionManager.shared?.delete(account: account)
         }
         

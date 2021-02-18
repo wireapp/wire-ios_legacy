@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Falsches Passwort. Bitte erneut versuchen.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Falsches Passwort. Falls das Passwort kürzlich geändert wurde, bitte eine Verbindung zum Internet herstellen und erneut versuchen.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Kennwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Kennwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
-"self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
 "self.settings.privacy_security.disable_link_previews.footer" = "Vorschauen für Links von anderen Personen können weiterhin angezeigt werden.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Daten gelöscht";
 "wipe_database_completion.subtitle" = "Ihre Daten und Nachrichten wurden gelöscht. Sie können sich nun wieder anmelden.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Wire mit Face ID oder Kennwort entsperren";
+"appLockModule.message.touchID" = "Wire mit Touch ID oder Kennwort entsperren";
+"appLockModule.message.passcode" = "Wire mit Passwort entsperren";
+"appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
+"appLockModule.button.title" = "Entsperren";

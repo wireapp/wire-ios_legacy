@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Неверный пароль. Пожалуйста, попробуйте еще раз.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Неверный пароль. Если вы недавно сменили пароль, подключитесь к интернету и попробуйте еще раз.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокируйте Wire с помощью Touch ID или кода доступа";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Разблокировать Wire с помощью кода доступа";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
-"self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Показывать предпросмотр отправляемых вами ссылок";
 "self.settings.privacy_security.disable_link_previews.footer" = "Эта опция не влияет на предварительный просмотр ссылок от других пользователей.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "База данных удалена";
 "wipe_database_completion.subtitle" = "Ваши данные и сообщения были удалены. Теперь вы можете повторно авторизоваться как новое устройство.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Разблокировать Wire с помощью Face ID или кода доступа";
+"appLockModule.message.touchID" = "Разблокируйте Wire с помощью Touch ID или кода доступа";
+"appLockModule.message.passcode" = "Разблокировать Wire с помощью кода доступа";
+"appLockModule.message.passcodeUnavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
+"appLockModule.button.title" = "Разблокировать";

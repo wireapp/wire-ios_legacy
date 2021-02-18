@@ -26,6 +26,8 @@ import WireSyncEngine
 
 protocol ObservableSessionManager: SessionManagerType {
 
+    var loginDelegate: LoginDelegate? { get set }
+    
     var activeUnauthenticatedSession: UnauthenticatedSession { get }
 
     /**
@@ -53,6 +55,8 @@ protocol ObservableSessionManager: SessionManagerType {
     /// Deletes the selected account.
     func delete(account: Account)
 
+    /// Add a new account.
+    func addAccount(userInfo: [String: Any]?)
 }
 
 extension SessionManager: ObservableSessionManager {}
