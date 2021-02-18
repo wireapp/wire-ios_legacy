@@ -21,52 +21,68 @@ import Foundation
 enum ___FILEBASENAMEASIDENTIFIER___: ModuleInterface {
 
     static func build() -> View {
-        let router = Router()
         let interactor = Interactor()
         let presenter = Presenter()
         let view = View()
+        let router = Router()
 
-        assemble(router: router, interactor: interactor, presenter: presenter, view: view)
-
-        router.viewController = view
+        assemble(interactor: interactor, presenter: presenter, view: view, router: router)
 
         return view
     }
 
 }
 
-// MARK: - Router / Presenter
+extension ___FILEBASENAMEASIDENTIFIER___ {
 
-protocol ___VARIABLE_productName:identifier___RouterPresenterInterface: RouterPresenterInterface {
+  enum Event: Equatable {
 
-    /// Router API exposed to the presenter.
+      case viewDidLoad
+
+  }
+
+  enum Request: Equatable {}
+
+  enum Result: Equatable {}
+
+  enum Action: Equatable {}
 
 }
 
-// MARK: - Interactor / Presenter
-
-protocol ___VARIABLE_productName:identifier___PresenterInteractorInterface: PresenterInteractorInterface {
-
-    /// Presenter API exposed to the interactor.
-
-}
+// MARK: - Interactor
 
 protocol ___VARIABLE_productName:identifier___InteractorPresenterInterface: InteractorPresenterInterface {
 
-    /// Interactor API exposed to the presenter.
+    func executeRequest(_ request: ___FILEBASENAMEASIDENTIFIER___.Request)
 
 }
 
-// MARK: - View / Presenter
+// MARK: - Presenter
 
-protocol ___VARIABLE_productName:identifier___ViewPresenterInterface: ViewPresenterInterface {
+protocol ___VARIABLE_productName:identifier___PresenterInteractorInterface: PresenterInteractorInterface {
 
-    /// View API exposed to the presenter.
+    func handleResult(_ result: ___FILEBASENAMEASIDENTIFIER___.Result)
 
 }
 
 protocol ___VARIABLE_productName:identifier___PresenterViewInterface: PresenterViewInterface {
 
-    /// Presenter API exposed to the view.
+    func processEvent(_ event: ___FILEBASENAMEASIDENTIFIER___.Event)
+
+}
+
+// MARK: - View
+
+protocol ___VARIABLE_productName:identifier___ViewPresenterInterface: ViewPresenterInterface {
+
+    func refresh(withModel model: ___FILEBASENAMEASIDENTIFIER___.ViewModel)
+
+}
+
+// MARK: - Router
+
+protocol ___VARIABLE_productName:identifier___RouterPresenterInterface: RouterPresenterInterface {
+
+    func performAction(_ action: ___FILEBASENAMEASIDENTIFIER___.Action)
 
 }

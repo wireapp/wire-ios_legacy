@@ -100,8 +100,7 @@ class AuthenticationInterfaceBuilder {
 
         case .passcodeSetup:
             return PasscodeSetupViewController.createKeyboardAvoidingFullScreenView(variant: .light,
-                                                                                    context: .createPasscode,
-                                                                                    callback: nil)
+                                                                                    context: .createPasscode)
             
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()

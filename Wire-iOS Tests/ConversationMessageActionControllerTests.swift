@@ -36,7 +36,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
     
     func testThatImageIsPresentedOnSingleTapWhenDownloaded() {
         // GIVEN
-        let message = MockMessageFactory.imageMessage(with: image(inTestBundleNamed: "unsplash_burger.jpg"))!
+        let message = MockMessageFactory.imageMessage(with: image(inTestBundleNamed: "unsplash_burger.jpg"))
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         
@@ -50,7 +50,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
     
     func testThatImageIgnoresSingleTapWhenNotDownloaded() {
         // GIVEN
-        let message = MockMessageFactory.imageMessage(with: nil)!
+        let message = MockMessageFactory.imageMessage(with: nil)
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         
@@ -66,7 +66,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
 
     func testThatItAllowsToLikeMessage() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Super likeable")!
+        let message = MockMessageFactory.textMessage(withText: "Super likeable")
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
 
@@ -80,7 +80,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
 
     func testThatItDoesNotAllowToLikeEphemeralMessage() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Super likeable")!
+        let message = MockMessageFactory.textMessage(withText: "Super likeable")
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         message.isEphemeral = true
@@ -97,7 +97,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
 
     func testThatItDoesNotShowReplyItemForUnsentTextMessage() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Text")!
+        let message = MockMessageFactory.textMessage(withText: "Text")
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         message.deliveryState = .failedToSend
@@ -115,7 +115,7 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
 
     func testThatItShowsCopyItemForTextMessage() {
         // GIVEN
-         let message = MockMessageFactory.textMessage(withText: "Text")!
+        let message = MockMessageFactory.textMessage(withText: "Text")
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
         

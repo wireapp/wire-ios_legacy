@@ -20,37 +20,59 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
-    var coreDataFixture: CoreDataFixture!
 
-    var groupConversation: ZMConversation!
-    var sut: ShareViewController<ZMConversation, ZMMessage>!
+final class MockShareViewControllerConversation: SwiftMockConversation {}
+
+
+extension MockShareViewControllerConversation: ShareDestination {
+	var showsGuestIcon: Bool {
+		return false
+	}
+}
+
+extension MockShareViewControllerConversation: StableRandomParticipantsProvider {
+	var stableRandomParticipants: [UserType] {
+		return sortedOtherParticipants
+	}
+}
+
+
+final class ShareViewControllerTests: XCTestCase {
+    fileprivate var groupConversation: MockShareViewControllerConversation!
+    fileprivate var oneToOneConversation: MockShareViewControllerConversation!
+    fileprivate var sut: ShareViewController<MockShareViewControllerConversation, MockShareableMessage>!
 
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
+        let mockUser = MockUserType.createDefaultOtherUser()
 
-        groupConversation = createGroupConversation()
+        groupConversation = MockShareViewControllerConversation()
+        groupConversation.sortedOtherParticipants = [mockUser, MockUserType.createUser(name: "John Appleseed")]
+        groupConversation.displayName = "Bruno, John Appleseed"
+
+        oneToOneConversation = MockShareViewControllerConversation()
+        oneToOneConversation.conversationType = .oneOnOne
+        oneToOneConversation.sortedOtherParticipants = [mockUser]
+        oneToOneConversation.displayName = "Bruno"
     }
 
     override func tearDown() {
         groupConversation = nil
+        oneToOneConversation = nil
         sut = nil
         disableDarkColorScheme()
-
-        coreDataFixture = nil
 
         super.tearDown()
     }
 
-    func activateDarkColorScheme() {
+    private func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
 
-    func disableDarkColorScheme() {
+    private func disableDarkColorScheme() {
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
@@ -58,107 +80,74 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
     func testForAllowMultipleSelectionDisabled() {
         // GIVEN & WHEN
-        try! groupConversation.appendText(content: "This is a text message.")
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
+        createSut(message: message,
+                  allowsMultipleSelection: false)
 
-        createSut(allowsMultipleSelection: false)
-
-        //THEN
+        // THEN
         verify(matching: sut)
     }
 
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
-        try! groupConversation.appendText(content: "This is a text message.")
-        makeTestForShareViewController()
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "This is a text message.")
+        makeTestForShareViewController(message: message)
     }
 
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
-        try! groupConversation.appendText(content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
-        makeTestForShareViewController()
+        let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
+        makeTestForShareViewController(message: message)
     }
 
-    func testThatItRendersCorrectlyShareViewController_LocationMessage() throws {
-        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
-        try groupConversation.appendLocation(with: location)
-        makeTestForShareViewController()
+    private func verifyLocation(file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        let message: MockShareableMessage = MockMessageFactory.locationMessage()
+        message.backingLocationMessageData.name = "Stranger Place"
+        makeTestForShareViewController(message: message, file: file, testName: testName, line: line)
+    }
+
+    func testThatItRendersCorrectlyShareViewController_LocationMessage() {
+        verifyLocation()
     }
 
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
-        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
-        try! groupConversation.appendFile(with: file)
-        makeTestForShareViewController()
+        let message: MockShareableMessage = MockMessageFactory.fileTransferMessage()
+        makeTestForShareViewController(message: message)
+    }
+
+    private func verifyImage(file: StaticString = #file,
+                             testName: String = #function,
+                             line: UInt = #line) {
+        let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+
+        let message: MockShareableMessage = MockMessageFactory.imageMessage(with: img)
+        createSut(message: message)
+
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+
+        verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
     }
 
     func testThatItRendersCorrectlyShareViewController_Photos() {
-        let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        try! self.groupConversation.appendImage(from: img.imageData!)
-
-        createSut()
-
-        _ = sut.view // make sure view is loaded
-
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-
-        verifyInAllDeviceSizes(matching: sut)
-    }
-
-    func testThatItRendersCorrectlyShareViewController_DarkMode() {
-        activateDarkColorScheme()
-        try! groupConversation.appendText(content: "This is a text message.")
-        makeTestForShareViewController()
-    }
-
-    func testThatItRendersCorrectlyShareViewController_Image_DarkMode() {
-        activateDarkColorScheme()
-        let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        try! self.groupConversation.appendImage(at: img)
-
-        createSut()
-
-        _ = sut.view // make sure view is loaded
-
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        verifyInAllDeviceSizes(matching: sut)
+        verifyImage()
     }
 
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
         activateDarkColorScheme()
-        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
-        let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0)
-        let file = ZMFileMetadata(fileURL: videoURL, thumbnail: thumbnail)
-        try! self.groupConversation.appendFile(with: file)
+        let thumbnail = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
 
-        createSut()
-
-        _ = sut.view // make sure view is loaded
+        let message: MockShareableMessage = MockMessageFactory.videoMessage(sender: nil, previewImage: thumbnail)
+        createSut(message: message)
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         verifyInAllDeviceSizes(matching: sut)
     }
 
-    func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
-        activateDarkColorScheme()
-        let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
-        try! groupConversation.appendFile(with: file)
-        makeTestForShareViewController()
-    }
+    private func createSut(message: MockShareableMessage,
+                           allowsMultipleSelection: Bool = true) {
+        message.conversationLike = groupConversation
 
-    func testThatItRendersCorrectlyShareViewController_Location_DarkMode() throws {
-        activateDarkColorScheme()
-        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
-        try groupConversation.appendLocation(with: location)
-        makeTestForShareViewController()
-    }
-
-    private func createSut(allowsMultipleSelection: Bool = true) {
-        groupConversation.add(participants: [createUser(name: "John Appleseed")])
-        let oneToOneConversation = otherUserConversation!
-
-        guard let message = groupConversation.lastMessage else {
-            XCTFail("Cannot add test message to the group conversation")
-            return
-        }
-
-        sut = ShareViewController<ZMConversation, ZMMessage>(
+        sut = ShareViewController<MockShareViewControllerConversation, MockShareableMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true, allowsMultipleSelection: allowsMultipleSelection
@@ -166,12 +155,31 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     }
 
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
-    private func makeTestForShareViewController(file: StaticString = #file,
+    private func makeTestForShareViewController(message: MockShareableMessage,
+                                                inAllColorSchemes: Bool = false,
+                                                file: StaticString = #file,
                                                 testName: String = #function,
-                                        line: UInt = #line) {
-        createSut()
+                                                line: UInt = #line) {
+        createSut(message: message)
 
         verifyInAllDeviceSizes(matching: sut, file: file, testName: testName, line: line)
+
+        if inAllColorSchemes {
+            activateDarkColorScheme()
+
+            createSut(message: message)
+
+            verifyInAllDeviceSizes(matching: sut, file: file, testName: testName + "dark", line: line)
+        }
+
     }
 
+}
+
+final class MockShareableMessage: MockMessage, Shareable {
+    typealias I = MockShareViewControllerConversation
+
+    func share<SwiftMockConversation>(to: [SwiftMockConversation]) {
+        // no-op
+    }
 }

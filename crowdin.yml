@@ -1,0 +1,36 @@
+# Credentials.
+
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env" : "CROWDIN_API_TOKEN"
+"base_path" : "."
+"base_url" : "https://api.crowdin.com"
+
+# Preserve file structure on Crowdin.
+
+"preserve_hierarchy": true
+
+# Specify which source files to upload and where to store their
+# downloaded translation.
+
+files: [
+ {
+  "source" : "/Wire-iOS/Resources/Base.lproj/Localizable.strings",
+  "dest" : "/App/Wire-iOS/Resources/Localizable.strings",
+  "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",
+ },
+ {
+  "source" : "/Wire-iOS/Resources/Base.lproj/Localizable.stringsdict",
+  "dest" : "/App/Wire-iOS/Resources/Localizable.stringsdict",
+  "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",
+ },
+ {
+  "source" : "/Wire-iOS/Resources/Base.lproj/InfoPlist.strings",
+  "dest" : "/App/Wire-iOS/Resources/InfoPlist.strings",
+  "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",
+ },
+ {
+  "source" : "/Wire-iOS Share Extension/Base.lproj/Localizable.strings",
+  "dest" : "/App/Wire-iOS Share Extension/Localizable.strings",
+  "translation" : "/Wire-iOS Share Extension/%osx_code%/%original_file_name%",
+ },
+]

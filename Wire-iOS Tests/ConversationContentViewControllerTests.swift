@@ -34,7 +34,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
 
         mockConversation = createTeamGroupConversation()
 
-        mockMessage = MockMessageFactory.textMessage(withText: "Message")!
+        mockMessage = MockMessageFactory.textMessage(withText: "Message")
         mockMessage.senderUser = MockUserType.createSelfUser(name: "Alice")
         mockMessage.conversation = mockConversation
         mockMessage.deliveryState = .read
@@ -64,7 +64,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
         let view = UIView()
 
         // create deletionDialogPresenter
-        let message = MockMessageFactory.textMessage(withText: "test")!
+        let message = MockMessageFactory.textMessage(withText: "test")
         sut.messageAction(actionId: .delete, for: message, view: view)
 
         verify(matching: sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
