@@ -25,16 +25,14 @@ extension ___VARIABLE_productName:identifier___Module {
 
         // MARK: - Metrics
 
-        var methodCalls = MethodCalls()
+        var models = [ViewModel]()
 
         // MARK: - Methods
 
+        func refresh(withModel model: ___VARIABLE_productName:identifier___Module.ViewModel) {
+            models.append(model)
+        }
+
     }
-
-}
-
-extension ___VARIABLE_productName:identifier___Module.MockView {
-
-    struct MethodCalls { }
 
 }

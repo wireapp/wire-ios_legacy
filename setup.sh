@@ -46,7 +46,7 @@ XCODE_VERSION=( ${version//./ } )
 rm -rf ${TMPDIR}/TemporaryItems/*carthage*
 
 echo "ℹ️  Carthage bootstrap. This might take a while..."
-bash ./carthageXcode12.sh bootstrap --cache-builds --platform ios
+carthage bootstrap --use-xcframeworks --cache-builds --platform ios
 echo ""
 
 echo "ℹ️  Downloading AVS library..."

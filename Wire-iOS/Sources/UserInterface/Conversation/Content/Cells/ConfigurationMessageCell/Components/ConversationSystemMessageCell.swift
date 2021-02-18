@@ -585,7 +585,7 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
                                             icon: model.image())
         super.init()
         if !ProcessInfo.processInfo.isRunningTests,
-            let conversation = message.conversation {
+            let conversation = message.conversationLike as? ZMConversation {
             conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
         }
     }

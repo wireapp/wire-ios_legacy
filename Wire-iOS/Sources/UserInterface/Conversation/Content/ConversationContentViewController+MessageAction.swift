@@ -47,7 +47,7 @@ extension ConversationContentViewController {
             canvasViewController.sketchImage = UIImage(data: imageData)
         }
         canvasViewController.delegate = self
-        canvasViewController.title = message.conversation?.displayName.localizedUppercase
+        canvasViewController.title = message.conversationLike?.displayName.localizedUppercase
         canvasViewController.select(editMode: editMode, animated: false)
 
         present(canvasViewController.wrapInNavigationController(), animated: true)

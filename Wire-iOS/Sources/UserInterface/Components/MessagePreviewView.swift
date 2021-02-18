@@ -78,7 +78,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
-        require(message.conversation != nil)
+        require(message.conversationLike != nil)
         self.message = message
         self.displaySender = displaySender
         super.init(frame: .zero)

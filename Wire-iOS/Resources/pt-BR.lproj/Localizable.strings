@@ -1176,12 +1176,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Senha incorreta. Por favor, tente novamente.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Senha incorreta. Se você alterou sua senha recentemente, conecte-se à internet e tente novamente.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Desbloqueie o Wire com o Face ID ou Código";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Desbloqueie o Wire com o Touch ID ou Código";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Desbloquear Wire com senha";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
-"self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Criar pré-visualizações de links";
 "self.settings.privacy_security.disable_link_previews.footer" = "Pré-Visualizações ainda serão mostradas para links de outras pessoas.";
 
@@ -1848,3 +1842,11 @@
 
 "wipe_database_completion.title" = "Banco de dados excluído";
 "wipe_database_completion.subtitle" = "Seus dados e mensagens foram excluídos. Agora você pode fazer login novamente como um novo dispositivo.";
+
+// Mark: - App lock module
+
+"appLockModule.message.faceID" = "Desbloqueie o Wire com o Face ID ou Código";
+"appLockModule.message.touchID" = "Desbloqueie o Wire com o Touch ID ou Código";
+"appLockModule.message.passcode" = "Desbloquear Wire com senha";
+"appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
+"appLockModule.button.title" = "Desbloquear";

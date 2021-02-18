@@ -195,7 +195,7 @@ final class ConversationListItemView: UIView {
     private func mediaPlayerStateChanged(_ notification: Notification?) {
         DispatchQueue.main.async(execute: {
             if let conversation = self.conversation as? ZMConversation,
-                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == conversation {
+                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversationLike === conversation {
                 self.update(for: conversation)
             }
         })
@@ -265,7 +265,7 @@ final class ConversationListItemView: UIView {
         let statusIcon: ConversationStatusIcon?
         if let player = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
-            message.conversation === conversation {
+            message.conversationLike === conversation {
             statusIcon = .playingMedia
         } else {
             statusIcon = status.icon(for: conversation)

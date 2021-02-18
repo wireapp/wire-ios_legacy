@@ -642,7 +642,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
            let sender = message.senderUser,
            !sender.isSelfUser {
             
-            if systemMessage.users.contains(where: { $0.isSelfUser }) {
+            if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 let fullName = sender.name ?? ""
                 let result = String(format: "conversation.status.you_was_added".localized, fullName) && type(of: self).regularStyle
                 return self.addEmphasis(to: result, for: fullName)
@@ -659,7 +659,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
            let sender = message.senderUser,
            !sender.isSelfUser{
 
-            if systemMessage.users.contains(where: { $0.isSelfUser }) {
+            if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
             }
         }
