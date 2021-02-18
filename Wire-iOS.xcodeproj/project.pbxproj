@@ -9138,6 +9138,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 			};
 			name = Debug;
 		};
@@ -9148,6 +9149,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEVELOPMENT_TEAM = "";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 			};
 			name = Release;
 		};
