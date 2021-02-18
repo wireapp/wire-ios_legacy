@@ -97,6 +97,14 @@ final class AppLockModuleViewTests: XCTestCase {
         // Then
         XCTAssertEqual(presenter.events, [.configChangeAcknowledged])
     }
+    
+    func test_ItSendsEvent_WhenApplicationWillEnterForeground() {
+        // When
+        sut.applicationWillEnterForeground()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.applicationWillEnterForeground])
+    }
 
     // MARK: - View states
 
