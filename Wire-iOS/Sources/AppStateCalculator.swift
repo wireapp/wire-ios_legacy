@@ -28,6 +28,29 @@ enum AppState: Equatable {
     case jailbroken
     case migrating
     case loading(account: Account, from: Account?)
+    
+    static func ==(lhs: AppState, rhs: AppState) -> Bool {
+        switch (lhs, rhs) {
+        case (.headless, .headless):
+            return true
+        case (.locked, .locked):
+            return true
+        case (.authenticated, .authenticated):
+            return true
+        case let (.unauthenticated(error1), .unauthenticated(error2)):
+            return error1 == error2
+        case (blacklisted, blacklisted):
+            return true
+        case (jailbroken, jailbroken):
+            return true
+        case (migrating, migrating):
+            return true
+        case let (loading(accountTo1, accountFrom1), loading(accountTo2, accountFrom2)):
+            return accountTo1 == accountTo2 && accountFrom1 == accountFrom2
+        default:
+            return false
+        }
+    }
 }
 
 protocol AppStateCalculatorDelegate: class {

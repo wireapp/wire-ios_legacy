@@ -104,15 +104,14 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
+    private var registrationStatus: RegistrationStatus {
+        return unauthenticatedSession.registrationStatus
+    }
+    
     var pendingModal: UIViewController?
 
     /// Whether an account was added.
     var addedAccount: Bool = false
-
-    /// The object to use to register users and teams.
-    var registrationStatus: RegistrationStatus {
-        return unauthenticatedSession.registrationStatus
-    }
 
     /// The user session to use before authentication has finished.
     var unauthenticatedSession: UnauthenticatedSession {
@@ -204,8 +203,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func updateLoginObservers() {
         loginObservers = [
-            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
-            PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
@@ -213,6 +210,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
 
+        sessionManager.loginDelegate = self
         registrationStatus.delegate = self
     }
 
