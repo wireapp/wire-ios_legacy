@@ -176,34 +176,3 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
         }
     }
 }
-
-private extension CallClosedReason {
-    
-    var analyticsValue: String {
-        switch self {
-        case .canceled:
-            return "canceled"
-        case .normal, .stillOngoing:
-            return "normal"
-        case .inputOutputError:
-            return "io_error"
-        case .internalError:
-            return "internal_error"
-        case .securityDegraded:
-            return "security_degraded"
-        case .anweredElsewhere:
-            return "answered_elsewhere"
-        case .timeout:
-            return "timeout"
-        case .unknown:
-            return "unknown"
-        case .lostMedia:
-            return "drop"
-        case .rejectedElsewhere:
-            return "rejected_elsewhere"
-        case .outdatedClient:
-            return "outdated_client"
-            
-        }
-    }
-}

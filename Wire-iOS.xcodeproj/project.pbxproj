@@ -1103,6 +1103,7 @@
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
+		EE33144825DEB4BF009852CE /* AnalyticsEvent+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE33144725DEB4BF009852CE /* AnalyticsEvent+Calling.swift */; };
 		EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */; };
 		EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */; };
 		EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */; };
@@ -2867,6 +2868,7 @@
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
+		EE33144725DEB4BF009852CE /* AnalyticsEvent+Calling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsEvent+Calling.swift"; sourceTree = "<group>"; };
 		EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMetadataRefresher.swift; sourceTree = "<group>"; };
 		EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Units.swift"; sourceTree = "<group>"; };
 		EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TeamMetadataRefresherTests.swift; path = "Wire-iOS Tests/TeamMetadataRefresherTests.swift"; sourceTree = SOURCE_ROOT; };
@@ -4448,6 +4450,7 @@
 			children = (
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				EE05CD2C25DDB32900777A25 /* AnalyticsEvent+Contributed.swift */,
+				EE33144725DEB4BF009852CE /* AnalyticsEvent+Calling.swift */,
 				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
 				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
@@ -8502,6 +8505,7 @@
 				A9A687D9250B7AA900AEE878 /* WipeDatabaseWireframe.swift in Sources */,
 				EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */,
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
+				EE33144825DEB4BF009852CE /* AnalyticsEvent+Calling.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,
 				63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */,
 				F15650EC21DD1B4100210504 /* ImageCache.swift in Sources */,
