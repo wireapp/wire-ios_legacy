@@ -82,9 +82,9 @@ internal enum L10n {
       }
     }
     internal enum AppLockModule {
-      internal enum Button {
-        /// Unlock
-        internal static let title = L10n.tr("Localizable", "appLockModule.button.title")
+      internal enum GoToSettingsButton {
+        /// Go to settings
+        internal static let title = L10n.tr("Localizable", "appLockModule.goToSettingsButton.title")
       }
       internal enum Message {
         /// Unlock Wire with Face ID or Passcode
@@ -95,6 +95,10 @@ internal enum L10n {
         internal static let passcodeUnavailable = L10n.tr("Localizable", "appLockModule.message.passcodeUnavailable")
         /// Unlock Wire with Touch ID or Passcode
         internal static let touchID = L10n.tr("Localizable", "appLockModule.message.touchID")
+      }
+      internal enum UnlockButton {
+        /// Unlock
+        internal static let title = L10n.tr("Localizable", "appLockModule.unlockButton.title")
       }
     }
     internal enum ArchivedList {
@@ -703,8 +707,6 @@ internal enum L10n {
         internal static func messageTimerOffYou(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.message_timer_off-you", String(describing: p1))
         }
-        /// a new device
-        internal static let newDevice = L10n.tr("Localizable", "content.system.new_device")
         /// Plural format key: "%#@d_new_devices@"
         internal static func newDevices(_ p1: Int) -> String {
           return L10n.tr("Localizable", "content.system.new_devices", p1)
@@ -718,10 +720,6 @@ internal enum L10n {
         /// %@ added you
         internal static func otherAddedYou(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.other_added_you", String(describing: p1))
-        }
-        /// %@’s devices
-        internal static func otherDevices(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "content.system.other_devices", String(describing: p1))
         }
         /// %@ left
         internal static func otherLeft(_ p1: Any) -> String {
@@ -763,17 +761,25 @@ internal enum L10n {
         internal static func peopleStartedUsing(_ p1: Any, _ p2: Int, _ p3: Int) -> String {
           return L10n.tr("Localizable", "content.system.people_started_using", String(describing: p1), p2, p3)
         }
-        /// You started using %@ again. Messages sent in the meantime will not appear here.
+        /// You started using [this device](%@) again. Messages sent in the meantime will not appear here.
         internal static func reactivatedDevice(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.reactivated_device", String(describing: p1))
         }
-        /// started using
-        internal static let startedUsing = L10n.tr("Localizable", "content.system.started_using")
-        /// this device
-        internal static let thisDevice = L10n.tr("Localizable", "content.system.this_device")
-        /// %@ unverified one of %@
-        internal static func unverified(_ p1: Any, _ p2: Any) -> String {
-          return L10n.tr("Localizable", "content.system.unverified", String(describing: p1), String(describing: p2))
+        /// **You** started using [a new device](%@)
+        internal static func selfUserNewClient(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "content.system.self_user_new_client", String(describing: p1))
+        }
+        /// **You** started using [this device](%@)
+        internal static func selfUserNewSelfClient(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "content.system.self_user_new_self_client", String(describing: p1))
+        }
+        /// **You** unverified one of [%1$@’s devices](%2$@)
+        internal static func unverifiedOtherDevices(_ p1: Any, _ p2: Any) -> String {
+          return L10n.tr("Localizable", "content.system.unverified_other_devices", String(describing: p1), String(describing: p2))
+        }
+        /// **You** unverified one of [your devices](%@)
+        internal static func unverifiedSelfDevices(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "content.system.unverified_self_devices", String(describing: p1))
         }
         /// Verify devices
         internal static let verifyDevices = L10n.tr("Localizable", "content.system.verify_devices")
@@ -803,8 +809,6 @@ internal enum L10n {
         }
         /// You called
         internal static let youWantedToTalk = L10n.tr("Localizable", "content.system.you_wanted_to_talk")
-        /// your devices
-        internal static let yourDevices = L10n.tr("Localizable", "content.system.your_devices")
         internal enum Call {
           /// %@ called
           internal static func called(_ p1: Any) -> String {
