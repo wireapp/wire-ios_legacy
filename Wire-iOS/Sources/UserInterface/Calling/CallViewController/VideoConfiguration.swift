@@ -146,7 +146,7 @@ extension VoiceChannel {
     }
     
     private var selfStreamId: AVSClient? {
-        return ZMUser.selfUser()?.selfStreamId
+        return SelfUser.current.selfStreamId
     }
 
     private func selfStream(from videoStreams: [VideoStream], createIfNeeded: Bool) -> VideoStream? {

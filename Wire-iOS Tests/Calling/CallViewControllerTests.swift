@@ -43,16 +43,27 @@ final class CallViewControllerTests: XCTestCase {
     var mockVoiceChannel: MockVoiceChannel!
     var conversation: ZMConversation!
     var sut: CallViewController!
-
+    var coreDataFixture: CoreDataFixture!
+    
     override func setUp() {
         super.setUp()
+        coreDataFixture = CoreDataFixture()
+        
         conversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
         mockVoiceChannel = MockVoiceChannel(conversation: conversation)
         mockVoiceChannel.mockVideoState = VideoState.started
         mockVoiceChannel.mockIsVideoCall = true
         mockVoiceChannel.mockCallState = CallState.established
-        
-        sut = createCallViewController(selfUser: MockUserType.createSelfUser(name: "Alice"), mediaManager: ZMMockAVSMediaManager())
+
+        sut = createCallViewController(selfUser: coreDataFixture.selfUser, mediaManager: ZMMockAVSMediaManager())
+    }
+    
+    override func tearDown() {
+        sut = nil
+        conversation = nil
+        mockVoiceChannel = nil
+        coreDataFixture = nil
+        super.tearDown()
     }
     
     private func createCallViewController(selfUser: UserType,
