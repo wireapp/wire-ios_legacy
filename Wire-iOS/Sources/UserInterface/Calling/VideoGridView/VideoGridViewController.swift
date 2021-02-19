@@ -207,12 +207,14 @@ final class VideoGridViewController: SpinnerCapableViewController {
     private func updateSelfPreview() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
+        // No stream to show. Update the capture state.
         guard let selfStream = stream(with: selfStreamId) else {
-            (viewCache[selfStreamId] as? SelfVideoPreviewView)?.stopCapture()
+            Log.calling.debug("updating capture state to \(configuration.videoState)")
+            selfPreviewView?.updateCaptureState(with: configuration.videoState)
             return
         }
 
-        if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
+        if let view = selfPreviewView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
@@ -268,6 +270,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         let currentStreamsIds = configuration.allStreamIds
 
         for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
+            guard deletedStreamId != ZMUser.selfUser()?.selfStreamId else { return }
             viewCache[deletedStreamId]?.removeFromSuperview()
             viewCache.removeValue(forKey: deletedStreamId)
         }

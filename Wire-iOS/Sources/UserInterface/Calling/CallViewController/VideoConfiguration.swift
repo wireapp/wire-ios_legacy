@@ -25,6 +25,7 @@ struct VideoConfiguration: VideoGridConfiguration {
 
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
+    let videoState: VideoState
     let networkQuality: NetworkQuality
     let shouldShowActiveSpeakerFrame: Bool
     let presentationMode: VideoGridPresentationMode
@@ -34,6 +35,7 @@ struct VideoConfiguration: VideoGridConfiguration {
        
         floatingVideoStream = videoStreamArrangment.preview
         videoStreams = videoStreamArrangment.grid
+        videoState = voiceChannel.videoState
         networkQuality = voiceChannel.networkQuality
         shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
         presentationMode = voiceChannel.videoGridPresentationMode
@@ -82,7 +84,7 @@ extension VoiceChannel {
     }
     
     private var videoStreamArrangementForNonEstablishedCall: VideoStreamArrangment {
-        guard videoGridPresentationMode.needsSelfStream, let stream = selfStream else {
+        guard videoGridPresentationMode.needsSelfStream, let stream = createSelfStream() else {
             return (nil, [])
         }
         return (nil, [stream])
@@ -119,7 +121,7 @@ extension VoiceChannel {
     
     // MARK: - Self Stream
     
-    private var selfStream: VideoStream? {
+    private func createSelfStream() -> VideoStream? {
         guard
             let selfUser = ZMUser.selfUser(),
             let userId = selfUser.remoteIdentifier,
@@ -151,7 +153,7 @@ extension VoiceChannel {
 
     private func selfStream(from videoStreams: [VideoStream], createIfNeeded: Bool) -> VideoStream? {
         guard let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId }) else {
-            return createIfNeeded ? self.selfStream : nil
+            return createIfNeeded ? createSelfStream() : nil
         }
         
         return selfStream
