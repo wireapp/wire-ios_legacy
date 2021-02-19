@@ -21,16 +21,6 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
-protocol CountlyInstance {
-    func recordEvent(_ key: String, segmentation: [String : String]?)
-    func start(with config: CountlyConfig)
-    
-    static func sharedInstance() -> Self
-}
-
-extension Countly: CountlyInstance {}
-
-
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     typealias PendingEvent = (event: String, attribtues: [String: Any])
@@ -69,7 +59,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     /// Events that have been tracked before Countly has begun.
 
-    private(set) var pendingEvents: [PendingEvent] = []
+    private(set) var pendingEvents = [AnalyticsEvent]()
 
     var isOptedOut: Bool {
         didSet {
@@ -120,7 +110,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
             !isRecording,
             user.isTeamMember,
             let analyticsIdentifier = user.analyticsIdentifier,
-            let userAttributes = attributes(for: user)
+            let userAttributes = user.analyticsAttributes
         else {
             return
         }
@@ -168,24 +158,6 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         isRecording = false
     }
 
-    // MARK: - Countly user
-
-    private func attributes(for user: ZMUser) -> CountlyUserAttributes? {
-        guard
-            let team = user.team,
-            let teamId = team.remoteIdentifier
-        else {
-            return nil
-        }
-
-        return [
-            .teamId: teamId,
-            .teamRole: user.teamRole,
-            .teamSize: team.members.count,
-            .userContactsCount: team.members.count.logRound()
-        ]
-    }
-
     private var shouldTracksEvent: Bool {
         return selfUser?.isTeamMember == true
     }
@@ -193,34 +165,26 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     // MARK: - Tag events
 
     func tagEvent(_ event: AnalyticsEvent) {
-        tagEvent(event.name, attributes: event.attributes.rawValue)
+        guard selfUser != nil else {
+            pendingEvents.append(event)
+            return
+        }
+
+        guard shouldTracksEvent else { return }
+
+        var segmentation = event.attributes
+        segmentation[.appName] = "ios"
+        segmentation[.appVersion] = Bundle.main.shortVersionString
+
+        countly.recordEvent(event.name, segmentation: segmentation.rawValue)
     }
 
-    func tagEvent(_ event: String,
-                  attributes: [String: Any]) {
-        //store the event before self user is assigned, send it later when self user is ready.
-        guard selfUser != nil else {
-            pendingEvents.append(PendingEvent(event, attributes))
-            return
-        }
-
-        guard shouldTracksEvent else {
-            return
-        }
-
-        var convertedAttributes = attributes.countlyStringValueDictionary
-
-        convertedAttributes["app_name"] = "ios"
-        convertedAttributes["app_version"] = Bundle.main.shortVersionString
-
-        countly.recordEvent(event, segmentation: convertedAttributes)
+    func tagEvent(_ event: String, attributes: [String: Any]) {
+        // TODO: [John] Delete this
     }
 
     private func tagPendingEvents() {
-        for (event, attributes) in pendingEvents {
-            tagEvent(event, attributes: attributes)
-        }
-
+        pendingEvents.forEach(tagEvent)
         pendingEvents.removeAll()
     }
 
@@ -285,8 +249,31 @@ extension Dictionary where Key == String, Value == Any {
     }
 }
 
+// TODO: [John] Delete
+
 extension Int {
     func logRound(factor: Double = 6) -> Int {
         return Int(ceil(pow(2, (floor(factor * log2(Double(self))) / factor))))
     }
+}
+
+private extension ZMUser {
+
+    var analyticsAttributes: CountlyUserAttributes? {
+        guard
+            let team = team,
+            let teamId = team.remoteIdentifier
+        else {
+            return nil
+        }
+
+        return [
+            .teamId: teamId,
+            .teamRole: teamRole,
+            .teamSize: team.members.count.rounded(byFactor: 6),
+            // FIXME: This should be the number of contacts, not team size.
+            .userContactsCount: team.members.count.rounded(byFactor: 6)
+        ]
+    }
+
 }
