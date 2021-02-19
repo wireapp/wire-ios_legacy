@@ -68,6 +68,9 @@
                   Identifier = "ConversationInputBarViewControllerTests">
                </Test>
                <Test
+                  Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
+               </Test>
+               <Test
                   Identifier = "ConversationVideoMessageCellTests/testDownloadingCell_fromThisDevice()">
                </Test>
                <Test
