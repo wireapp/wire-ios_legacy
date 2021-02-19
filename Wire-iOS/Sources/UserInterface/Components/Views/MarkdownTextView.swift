@@ -631,6 +631,7 @@ extension DownStyle {
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
         style.listItemPrefixSpacing = 8
+        style.renderOnlyValidLinks = false
         return style
     }()
     

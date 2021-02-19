@@ -46,6 +46,9 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
 
         case .informUserOfConfigChange:
             presentWarningModule()
+            
+        case .openDeviceSettings:
+            presentDeviceSettings()
         }
     }
 
@@ -74,6 +77,10 @@ extension AppLockModule.Router: AppLockRouterPresenterInterface {
         warningViewController.modalPresentationStyle = .fullScreen
         warningViewController.delegate = view
         view.present(warningViewController, animated: false)
+    }
+    
+    private func presentDeviceSettings() {
+        UIApplication.shared.openSettings()
     }
 
 }

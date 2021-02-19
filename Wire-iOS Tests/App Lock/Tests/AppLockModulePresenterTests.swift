@@ -148,5 +148,21 @@ final class AppLockModulePresenterTests: XCTestCase {
         // Then
         XCTAssertEqual(interactor.requests, [.openAppLock])
     }
+    
+    func test_OpenDeviceSettingsButtonTapped() {
+        // When
+        sut.processEvent(.openDeviceSettingsButtonTapped)
+
+        // Then
+        XCTAssertEqual(router.actions, [.openDeviceSettings])
+    }
+
+    func test_ApplicationWillEnterForeground() {
+        // When
+        sut.processEvent(.applicationWillEnterForeground)
+
+        // Then
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+    }
 
 }
