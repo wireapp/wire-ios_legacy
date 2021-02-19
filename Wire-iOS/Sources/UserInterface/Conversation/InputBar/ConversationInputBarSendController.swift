@@ -43,8 +43,8 @@ final class ConversationInputBarSendController: NSObject {
                 Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
-                completionHandler?()
-            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: conversation)
+            completionHandler?()
+            Analytics.shared.tagEvent(.contributed(.imageMessage, in: conversation))
         })
     }
     
@@ -63,7 +63,7 @@ final class ConversationInputBarSendController: NSObject {
                 Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
-            Analytics.shared.tagMediaActionCompleted(.text, inConversation: conversation)
+            Analytics.shared.tagEvent(.contributed(.textMessage, in: conversation))
             
         })
     }
@@ -82,8 +82,8 @@ final class ConversationInputBarSendController: NSObject {
                 Logging.messageProcessing.warn("Failed to append text message with image data. Reason: \(error.localizedDescription)")
             }
         }, completionHandler: {
-            Analytics.shared.tagMediaActionCompleted(.photo, inConversation: conversation)
-            Analytics.shared.tagMediaActionCompleted(.text, inConversation: conversation)
+            Analytics.shared.tagEvent(.contributed(.imageMessage, in: conversation))
+            Analytics.shared.tagEvent(.contributed(.textMessage, in: conversation))
         })
     }
 }

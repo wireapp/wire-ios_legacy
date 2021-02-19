@@ -146,19 +146,10 @@ extension ConversationInputBarViewController {
 
                 weakSelf.impactFeedbackGenerator.impactOccurred()
 
-                var conversationMediaAction: ConversationMediaAction = .fileTransfer
-
                 do {
                     let message = try conversation.appendFile(with: metadata)
-                    if let fileMessageData = message.fileMessageData {
-                        if fileMessageData.isVideo {
-                            conversationMediaAction = .videoMessage
-                        } else if fileMessageData.isAudio {
-                            conversationMediaAction = .audioMessage
-                        }
-                    }
-
-                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: conversation)
+                    let contributionType = message.fileMessageData?.contributionType ?? .fileMessage
+                    Analytics.shared.tagEvent(.contributed(contributionType, in: conversation))
                 } catch {
                     Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
                 }
@@ -189,4 +180,18 @@ extension ConversationInputBarViewController {
         let alert = UIAlertController.alertWithOKButton(message: errorMessage)
         present(alert, animated: true)
     }
+}
+
+private extension ZMFileMessageData {
+
+    var contributionType: AnalyticsEvent.ContributionType {
+        if isVideo {
+            return .videoMessage
+        } else if isAudio {
+            return .audioMessage
+        } else {
+            return .fileMessage
+        }
+    }
+
 }
