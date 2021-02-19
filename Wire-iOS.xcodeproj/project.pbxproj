@@ -4278,6 +4278,7 @@
 		6340EF8E237AE90700EF8506 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
+				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */,
 				6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */,
 				6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */,
@@ -6057,7 +6058,6 @@
 				EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */,
 				EF6EB1CD20A5C296002F720D /* AppStateCalculatorTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
-				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
 				BFF9446B20F6480C00531BC3 /* ThumbnailCreationTests.swift */,
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
