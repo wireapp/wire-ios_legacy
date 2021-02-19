@@ -205,7 +205,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
     
     private func updateSelfPreview() {
-        guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
+        let selfStreamId = SelfUser.current.selfStreamId
 
         // No stream to show. Update the capture state.
         guard let selfStream = stream(with: selfStreamId) else {
@@ -270,7 +270,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         let currentStreamsIds = configuration.allStreamIds
 
         for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
-            guard deletedStreamId != ZMUser.selfUser()?.selfStreamId else { return }
+            guard deletedStreamId != SelfUser.current.selfStreamId else { return }
             viewCache[deletedStreamId]?.removeFromSuperview()
             viewCache.removeValue(forKey: deletedStreamId)
         }

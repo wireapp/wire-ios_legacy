@@ -147,8 +147,8 @@ extension VoiceChannel {
         }
     }
     
-    private var selfStreamId: AVSClient? {
-        return ZMUser.selfUser()?.selfStreamId
+    private var selfStreamId: AVSClient {
+        return SelfUser.current.selfStreamId
     }
 
     private func selfStream(from videoStreams: [VideoStream], createIfNeeded: Bool) -> VideoStream? {
@@ -197,7 +197,7 @@ private extension VideoGridPresentationMode {
 }
 
 private extension Array where Element == CallParticipant {
-    mutating func sortByName(selfStreamId: AVSClient?) {
+    mutating func sortByName(selfStreamId: AVSClient) {
         self = self.sorted {
             $0.streamId == selfStreamId ||
             $0.user.name?.lowercased() < $1.user.name?.lowercased()
