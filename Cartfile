@@ -8,4 +8,4 @@ github "wireapp/appcenter-sdk-apple" ~> 3.3.4
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/Down" "v2.3.0_Xcode11.4.1"
 github "wireapp/DifferenceKit" "1.1.5_XCode11.4.1"
-github "wireapp/countly-sdk-ios" ~> 20.04.3
+github "wireapp/countly-sdk-ios" ~> 20.11.1
