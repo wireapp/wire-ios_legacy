@@ -9074,6 +9074,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				EXCLUDED_ARCHS = "i386 arm64";
 			};
 			name = Debug;
 		};
