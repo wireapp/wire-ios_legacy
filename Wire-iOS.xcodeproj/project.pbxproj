@@ -9107,6 +9107,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				EXCLUDED_ARCHS = "i386 arm64";
 			};
 			name = Debug;
 		};
@@ -9141,7 +9142,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				EXCLUDED_ARCHS = i386;
+				EXCLUDED_ARCHS = "i386 arm64";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(PROJECT_DIR)/Carthage/Build/iOS/**",
