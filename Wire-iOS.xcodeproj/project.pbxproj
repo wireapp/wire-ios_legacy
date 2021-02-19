@@ -9100,7 +9100,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				VALIDATE_WORKSPACE = YES;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -9123,6 +9123,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
+				EXCLUDED_ARCHS = "i386 arm64";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_WORKSPACE = YES;
 			};
@@ -9133,7 +9134,7 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				VALIDATE_WORKSPACE = YES;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -9159,7 +9160,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEVELOPMENT_TEAM = "";
-				VALIDATE_WORKSPACE = YES;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
