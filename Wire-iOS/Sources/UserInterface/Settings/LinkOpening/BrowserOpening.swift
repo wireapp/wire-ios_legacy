@@ -127,7 +127,7 @@ extension URL {
     }
 
     var percentEncodingString: String {
-        return absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!;
+        return absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
     }
 
     var firefoxURL: URL? {

@@ -45,15 +45,15 @@ final private class WaveformBarsView: UIView {
     }
     
     fileprivate func setup() {
-        self.contentMode = .redraw;
+        self.contentMode = .redraw
     }
     
     override fileprivate func draw(_ rect: CGRect) {
         guard let c = UIGraphicsGetCurrentContext()  else { return }
         
-        c.clear(self.bounds);
-        self.backgroundColor?.setFill();
-        c.fill(rect);
+        c.clear(self.bounds)
+        self.backgroundColor?.setFill()
+        c.fill(rect)
         
         if samples.isEmpty {
             return

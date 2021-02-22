@@ -52,7 +52,7 @@ final class ThreeDotsLoadingView: UIView {
     
     func setupViews() {
         [dot1, dot2, dot3].forEach { (dot) in
-            dot.layer.cornerRadius = CGFloat(dotRadius);
+            dot.layer.cornerRadius = CGFloat(dotRadius)
             dot.backgroundColor = inactiveColor
         }
     }
@@ -99,7 +99,7 @@ final class ThreeDotsLoadingView: UIView {
         colorShift.keyTimes = [0, 0.33, 0.66, 1]
         colorShift.duration = 4 * stepDuration
         colorShift.repeatCount = Float.infinity
-        colorShift.speed = -1;
+        colorShift.speed = -1
         
         
         let colorShift1 = colorShift.copy() as! CAKeyframeAnimation

@@ -23,7 +23,7 @@ import WireUtilities
 @objc
 enum ColorSchemeVariant: UInt {
     case light, dark
-};
+}
 
 extension UIColor {
     static var graphite: UIColor = UIColor(rgb: (51, 55, 58))
