@@ -108,7 +108,7 @@ final class ConversationRootViewController: UIViewController {
             conversationViewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
             conversationViewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             conversationViewController.view.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            conversationViewController.view.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            conversationViewController.view.rightAnchor.constraint(equalTo: contentView.rightAnchor)
         ])
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)

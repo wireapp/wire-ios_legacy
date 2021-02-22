@@ -163,7 +163,7 @@ class AvatarImageView: UIControl {
 
             // initials
             initialsLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            initialsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            initialsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
     }
 

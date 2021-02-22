@@ -99,7 +99,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
             contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     

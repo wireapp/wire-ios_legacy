@@ -272,7 +272,7 @@ final class ConversationListViewController: UIViewController {
             
             noConversationLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
             noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
-            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
+            noConversationLabel.widthAnchor.constraint(equalToConstant: 240)
         ]
                 
         NSLayoutConstraint.activate(constraints)

@@ -130,7 +130,7 @@ final class ConversationListBottomBarController: UIViewController {
             buttonStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
             buttonStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
             buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
-            buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     

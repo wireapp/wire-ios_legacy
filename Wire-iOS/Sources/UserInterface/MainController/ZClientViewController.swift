@@ -613,7 +613,7 @@ final class ZClientViewController: UIViewController {
             topOverlayContainer.bottomAnchor.constraint(equalTo: wireSplitViewController.view.topAnchor),
             wireSplitViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             wireSplitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            wireSplitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            wireSplitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)

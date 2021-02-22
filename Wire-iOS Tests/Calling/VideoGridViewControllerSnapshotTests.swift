@@ -91,7 +91,7 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         configuration.videoStreams = [
             stubProvider.videoStream(participantName: "Alice", active: true),
             stubProvider.videoStream(participantName: "Bob", active: true),
-            stubProvider.videoStream(participantName: "Carol", active: true),
+            stubProvider.videoStream(participantName: "Carol", active: true)
         ]
         createSut()
         

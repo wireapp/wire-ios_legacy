@@ -88,7 +88,7 @@ final class SearchResultsView: UIView {
             accessoryContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             accessoryContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             accessoryContainerHeightConstraint!,
-            accessoryViewBottomOffsetConstraint!,
+            accessoryViewBottomOffsetConstraint!
         ])
     }
     

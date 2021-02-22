@@ -128,7 +128,7 @@ final class BackgroundViewController: UIViewController {
             darkenOverlay.leadingAnchor.constraint(equalTo: cropView.leadingAnchor),
             darkenOverlay.topAnchor.constraint(equalTo: cropView.topAnchor),
             darkenOverlay.trailingAnchor.constraint(equalTo: cropView.trailingAnchor),
-            darkenOverlay.bottomAnchor.constraint(equalTo: cropView.bottomAnchor),
+            darkenOverlay.bottomAnchor.constraint(equalTo: cropView.bottomAnchor)
         ]
 
         NSLayoutConstraint.activate(constraints)

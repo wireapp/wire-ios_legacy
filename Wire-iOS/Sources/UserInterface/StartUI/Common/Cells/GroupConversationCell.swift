@@ -117,7 +117,7 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.heightAnchor.constraint(equalToConstant: .hairline)
         ])
     }
     

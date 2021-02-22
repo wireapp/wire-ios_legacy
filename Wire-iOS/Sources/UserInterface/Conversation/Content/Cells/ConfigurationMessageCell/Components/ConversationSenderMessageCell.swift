@@ -76,7 +76,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
             senderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             senderView.topAnchor.constraint(equalTo: topAnchor),
             senderView.trailingAnchor.constraint(equalTo: indicatorImageView.leadingAnchor, constant: -8),
-            senderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            senderView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 

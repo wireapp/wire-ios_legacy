@@ -50,7 +50,7 @@ final class BackupStatusCell: UITableViewCell {
             descriptionLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
         
         descriptionLabel.attributedText = "self.settings.history_backup.description".localized && .paragraphSpacing(2)

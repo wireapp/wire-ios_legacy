@@ -127,7 +127,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 

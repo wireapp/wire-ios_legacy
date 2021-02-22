@@ -168,7 +168,7 @@ final class SelfProfileViewController: UIViewController {
             settingsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             settingsController.view.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor),
             settingsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+            settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor)
         ])
     }
 

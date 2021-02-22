@@ -90,7 +90,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
             inputField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             inputField.topAnchor.constraint(equalTo: containerView.topAnchor),
             inputField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            inputField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            inputField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
         return containerView

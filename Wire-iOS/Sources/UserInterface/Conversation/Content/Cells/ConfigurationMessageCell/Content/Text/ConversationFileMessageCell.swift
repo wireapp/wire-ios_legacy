@@ -77,7 +77,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
             obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
             obfuscationView.topAnchor.constraint(equalTo: topAnchor),
             obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 

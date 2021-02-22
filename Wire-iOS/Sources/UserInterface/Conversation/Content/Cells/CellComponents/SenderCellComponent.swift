@@ -108,7 +108,7 @@ final class SenderCellComponent: UIView {
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
             ])
     }
     

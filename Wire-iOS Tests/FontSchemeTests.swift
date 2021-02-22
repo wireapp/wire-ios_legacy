@@ -37,7 +37,7 @@ final class FontSchemeTests: XCTestCase {
                                                                               (fontWeight: .bold, name: "Bold"),
                                                                               (fontWeight: .heavy, name: "Heavy"),
                                                                               (fontWeight: .black, name: "Black"),
-                                                                              (fontWeight: .none, name: "Light"),
+                                                                              (fontWeight: .none, name: "Light")
                                                                               ]
 
 

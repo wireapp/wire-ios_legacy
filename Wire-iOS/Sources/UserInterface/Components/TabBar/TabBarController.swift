@@ -154,7 +154,7 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.topAnchor.constraint(equalTo: tabBar.bottomAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 

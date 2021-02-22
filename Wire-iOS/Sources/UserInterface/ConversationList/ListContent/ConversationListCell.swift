@@ -170,7 +170,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
                 superview.leadingAnchor.constraint(equalTo: menuDotsView.leadingAnchor),
                 superview.topAnchor.constraint(equalTo: menuDotsView.topAnchor),
                 superview.trailingAnchor.constraint(equalTo: menuDotsView.trailingAnchor),
-                superview.bottomAnchor.constraint(equalTo: menuDotsView.bottomAnchor),
+                superview.bottomAnchor.constraint(equalTo: menuDotsView.bottomAnchor)
             ]
 
             NSLayoutConstraint.activate(menuDotsViewEdges)

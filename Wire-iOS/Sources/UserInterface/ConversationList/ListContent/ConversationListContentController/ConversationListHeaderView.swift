@@ -178,7 +178,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             badgeView.heightAnchor.constraint(equalToConstant: 20),
             badgeWidthConstraint!,
             badgeView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            badgeView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
+            badgeView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin)
             ]
         )
     }

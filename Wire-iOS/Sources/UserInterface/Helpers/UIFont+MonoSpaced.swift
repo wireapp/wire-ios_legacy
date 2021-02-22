@@ -30,12 +30,12 @@ private let monospaceAttribute = [
 
 private let smallCapsFeatureSettingsAttributeLowerCase = [
     UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
-    UIFontDescriptor.FeatureKey.typeIdentifier: kLowerCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kLowerCaseSmallCapsSelector
 ]
 
 private let smallCapsFeatureSettingsAttributeUpperCase = [
     UIFontDescriptor.FeatureKey.featureIdentifier: kUpperCaseType,
-    UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector
 ]
 
 private let proportionalNumberSpacingFeatureSettingAttribute = [
