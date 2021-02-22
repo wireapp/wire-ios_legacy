@@ -20,9 +20,9 @@ import Foundation
 import WireSyncEngine
 
 final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
-    
+
     var requestPasswordController: RequestPasswordController?
-    
+
     init() {
         super.init(title: "self.sign_out".localized,
                    isDestructive: true,
@@ -32,19 +32,19 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
                    previewGenerator: nil,
                    icon: nil,
                    accessoryViewMode: .default)
-        
+
 
     }
-    
+
     private func logout(password: String? = nil) {
         guard let selfUser = ZMUser.selfUser() else { return }
-    
+
         if selfUser.usesCompanyLogin || password != nil {
             weak var topMostViewController: SpinnerCapableViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false) as? SpinnerCapableViewController
             topMostViewController?.isLoadingViewVisible = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
                 topMostViewController?.isLoadingViewVisible = false
-                
+
                 if case .failure(let error) = result {
                     topMostViewController?.showAlert(for: error)
                 }
@@ -53,14 +53,14 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
             guard let account = SessionManager.shared?.accountManager.selectedAccount else { return }
             SessionManager.shared?.delete(account: account)
         }
-        
+
     }
-    
+
     override func generateViewController() -> UIViewController? {
         guard let selfUser = ZMUser.selfUser() else { return nil }
-        
+
         var viewController: UIViewController? = nil
-        
+
         if selfUser.emailAddress == nil || selfUser.usesCompanyLogin {
             let alert = UIAlertController(title: "self.settings.account_details.log_out.alert.title".localized,
                                           message: "self.settings.account_details.log_out.alert.message".localized,
@@ -71,19 +71,19 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
             })
             alert.addAction(actionCancel)
             alert.addAction(actionLogout)
-            
+
             viewController = alert
         } else {
             requestPasswordController = RequestPasswordController(context: .logout, callback: { [weak self] (password) in
                 guard let password = password else { return }
-                
+
                 self?.logout(password: password)
             })
-            
+
             viewController = requestPasswordController?.alertController
         }
-        
+
         return viewController
     }
-    
+
 }

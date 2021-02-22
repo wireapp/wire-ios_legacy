@@ -36,7 +36,7 @@ extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
 }
 
 final class PasscodeSetupViewController: UIViewController {
-    
+
     enum Context {
         case forcedForTeam
         case createPasscode
@@ -51,7 +51,7 @@ final class PasscodeSetupViewController: UIViewController {
             }
         }
     }
-    
+
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
@@ -95,7 +95,7 @@ final class PasscodeSetupViewController: UIViewController {
         case .forcedForTeam:
             label.text = "warning_screen.title_label".localized
         }
-        
+
         label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
@@ -262,11 +262,11 @@ final class PasscodeSetupViewController: UIViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
                                                                       context: context,
                                                                       callback: nil)
-        
+
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
-        
+
         keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-        
+
         return keyboardAvoidingViewController
     }
 

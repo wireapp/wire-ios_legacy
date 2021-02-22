@@ -26,32 +26,32 @@ class SwiftMockConversation: NSObject, Conversation  {
 	func verifyLegalHoldSubjects() {
 		//no-op
 	}
-	
+
 	var sortedActiveParticipantsUserTypes: [UserType] = []
-	
+
     var isSelfAnActiveMember: Bool = true
-    
+
     var conversationType: ZMConversationType = .group
 
     var teamRemoteIdentifier: UUID?
-    
+
     var mockLocalParticipantsContain: Bool = false
     func localParticipantsContain(user: UserType) -> Bool {
         return mockLocalParticipantsContain
     }
-    
+
     var displayName: String = ""
 
     var connectedUserType: UserType?
-    
+
     var allowGuests: Bool = false
 
     var teamType: TeamType?
-    
+
     var accessMode: ConversationAccessMode?
-    
+
     var accessRole: ConversationAccessRole?
-    
+
     var messageDestructionTimeout: MessageDestructionTimeout?
 
     var isUnderLegalHold: Bool = false
@@ -62,25 +62,25 @@ class SwiftMockConversation: NSObject, Conversation  {
 
 final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation {
     var userDefinedName: String?
-        
+
     var freeParticipantSlots: Int = 1
 
     var hasReadReceiptsEnabled: Bool = false
 }
 
 final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation, TypingStatusProvider {
-    
+
     var typingUsers: [UserType] = []
 
     var hasDraftMessage: Bool = false
-        
+
     var draftMessage: DraftMessage?
-    
+
     var messageDestructionTimeoutValue: TimeInterval = 0
-        
+
     func setIsTyping(_ isTyping: Bool) {
         //no-op
     }
-    
-    var isReadOnly: Bool = false        
+
+    var isReadOnly: Bool = false
 }

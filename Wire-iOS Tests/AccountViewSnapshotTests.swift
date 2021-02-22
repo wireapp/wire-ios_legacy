@@ -55,7 +55,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
@@ -63,7 +63,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
@@ -73,7 +73,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccount_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
@@ -81,7 +81,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
@@ -91,7 +91,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
@@ -99,7 +99,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)

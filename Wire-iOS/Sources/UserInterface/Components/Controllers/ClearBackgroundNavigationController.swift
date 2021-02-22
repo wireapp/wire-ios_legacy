@@ -26,70 +26,70 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
 
     fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
     fileprivate lazy var popTransition = NavigationTransition(operation: .pop)
-    
+
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
-    
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.setup()
     }
-    
+
     override init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         super.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
         self.setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
     }
-    
+
     private func setup() {
         self.delegate = self
         self.transitioningDelegate = self
     }
-    
+
     var useDefaultPopGesture: Bool = false {
         didSet {
             self.interactivePopGestureRecognizer?.isEnabled = useDefaultPopGesture
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
         self.useDefaultPopGesture = false
-        
+
         self.navigationBar.tintColor = .white
         self.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
-                
+
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
         self.dismissGestureRecognizer.delegate = self
         self.view.addGestureRecognizer(self.dismissGestureRecognizer)
     }
-    
+
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         viewControllers.forEach { $0.hideDefaultButtonTitle() }
-        
+
         super.setViewControllers(viewControllers, animated: animated)
     }
-    
+
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hideDefaultButtonTitle()
-        
+
         super.pushViewController(viewController, animated: animated)
     }
-    
+
     @objc func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             self.popViewController(animated: true)
         }
     }
-    
+
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if let avoiding = viewController as? KeyboardAvoidingViewController {
             updateGesture(for: avoiding.viewController)
@@ -97,17 +97,17 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
             updateGesture(for: viewController)
         }
     }
-    
+
     private func updateGesture(for viewController: UIViewController) {
         let translucentBackground = viewController.view.backgroundColor?.alpha < 1.0
         useDefaultPopGesture = !translucentBackground
     }
-    
+
     // MARK: - status bar
     override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
     override var childForStatusBarHidden: UIViewController? {
         return topViewController
     }
@@ -126,7 +126,7 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
         if self.useDefaultPopGesture {
             return nil
         }
-        
+
         switch operation {
         case .push:
             return pushTransition
@@ -139,11 +139,11 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
 }
 
 extension ClearBackgroundNavigationController: UIViewControllerTransitioningDelegate {
-    
+
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SwizzleTransition(direction: .vertical)
     }
-    
+
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SwizzleTransition(direction: .vertical)
     }
@@ -156,7 +156,7 @@ extension ClearBackgroundNavigationController: UIGestureRecognizerDelegate {
         }
         return true
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }

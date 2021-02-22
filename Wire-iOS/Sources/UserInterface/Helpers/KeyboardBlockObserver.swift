@@ -19,7 +19,7 @@
 import UIKit
 
 final class KeyboardBlockObserver: NSObject {
-    
+
     struct ChangeInfo {
         enum Kind {
             case show, hide, change
@@ -55,17 +55,17 @@ final class KeyboardBlockObserver: NSObject {
             }
         }
     }
-    
+
     typealias ChangeBlock = (ChangeInfo) -> Void
-    
+
     private let changeBlock: ChangeBlock
-    
+
     init(block: @escaping ChangeBlock) {
         self.changeBlock = block
         super.init()
         registerKeyboardObservers()
     }
-    
+
     private func registerKeyboardObservers() {
         let center = NotificationCenter.default
 
@@ -73,17 +73,17 @@ final class KeyboardBlockObserver: NSObject {
         center.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
+
     @objc private func keyboardWillShow(_ note: Notification) {
         ChangeInfo(note, kind: .show).apply(changeBlock)
     }
-    
+
     @objc private func keyboardWillHide(_ note: Notification) {
         ChangeInfo(note, kind: .hide).apply(changeBlock)
     }
-    
+
     @objc private func keyboardWillChangeFrame(_ note: Notification) {
         ChangeInfo(note, kind: .change).apply(changeBlock)
     }
-    
+
 }

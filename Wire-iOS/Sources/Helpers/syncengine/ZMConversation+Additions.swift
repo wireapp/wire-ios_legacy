@@ -23,7 +23,7 @@ extension ZMConversation {
     ///TODO: move to DM
     var firstActiveParticipantOtherThanSelf: ZMUser? {
         guard let selfUser = ZMUser.selfUser() else { return localParticipants.first }
-        
+
         return localParticipants.first(where: {$0 != selfUser} )
     }
 

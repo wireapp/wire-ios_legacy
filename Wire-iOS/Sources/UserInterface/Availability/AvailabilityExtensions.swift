@@ -33,11 +33,11 @@ extension Availability {
             case .busy:         return "busy"
         }
     }
-    
+
     var localizedName: String {
         return "availability.\(canonicalName)".localized
     }
-    
+
     var iconType: StyleKitIcon? {
         switch self {
             case .none:         return nil

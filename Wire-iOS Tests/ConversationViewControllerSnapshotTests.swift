@@ -33,7 +33,7 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         coreDataFixture = CoreDataFixture()
         mockConversation = createTeamGroupConversation()
         mockZMUserSession = MockZMUserSession()
-    
+
         let mockAccount = Account(userName: "mock user", userIdentifier: UUID())
         let selfUser = MockUserType.createSelfUser(name: "Bob")
         let zClientViewController = ZClientViewController(account: mockAccount, selfUser: selfUser)
@@ -43,11 +43,11 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
                                          visibleMessage: nil,
                                          zClientViewController: zClientViewController)
     }
-    
+
     override func tearDown() {
         sut = nil
         coreDataFixture = nil
-        
+
         super.tearDown()
     }
 
@@ -59,23 +59,23 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
 // MARK: - Disable / Enable search in conversations
 
 extension ConversationViewControllerSnapshotTests {
-    
+
     func testThatTheSearchButtonIsDisabledIfMessagesAreEncryptedInTheDataBase() {
         // given
-        
+
         // when
         mockZMUserSession.encryptMessagesAtRest = true
-        
+
         // then
         XCTAssertFalse(sut.shouldShowCollectionsButton)
     }
-    
+
     func testThatTheSearchButtonIsEnabledIfMessagesAreNotEncryptedInTheDataBase() {
         // given
-        
+
         // when
         mockZMUserSession.encryptMessagesAtRest = false
-        
+
         // then
         XCTAssertTrue(sut.shouldShowCollectionsButton)
     }

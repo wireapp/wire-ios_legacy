@@ -21,12 +21,12 @@ protocol WipeDatabaseUserInterface: class {
     func presentConfirmAlert()
 }
 
-extension WipeDatabaseViewController: WipeDatabaseUserInterface {    
+extension WipeDatabaseViewController: WipeDatabaseUserInterface {
     func presentConfirmAlert() {
         let confirmController = RequestPasswordController(context: .wiping,
                                                           callback: presenter?.confirmAlertCallback() ?? { _ in },
                                                           inputValidation: presenter?.confirmAlertInputValidation())
-        
+
         self.confirmController = confirmController
         present(confirmController.alertController, animated: true)
     }
@@ -56,12 +56,12 @@ final class WipeDatabaseViewController: UIViewController {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        
+
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-        
+
         let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) &&
                                 UIFont.normalRegularFont &&
                                 baseAttributes
@@ -98,7 +98,7 @@ final class WipeDatabaseViewController: UIViewController {
     private func onConfirmButtonPressed(sender: Button?) {
         presentConfirmAlert()
     }
-        
+
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 

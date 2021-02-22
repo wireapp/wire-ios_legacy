@@ -31,7 +31,7 @@ class DefaultNavigationBar: UINavigationBar {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configure()
@@ -40,7 +40,7 @@ class DefaultNavigationBar: UINavigationBar {
     var colorSchemeVariant: ColorSchemeVariant {
         return ColorScheme.default.variant
     }
-    
+
     func configure() {
         tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
@@ -57,13 +57,13 @@ class DefaultNavigationBar: UINavigationBar {
         setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
-    
+
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key: Any] {
         return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
                 .foregroundColor: UIColor.from(scheme: .textForeground, variant: variant),
                 .baselineOffset: 1.0]
     }
-    
+
 }
 
 extension UIViewController {

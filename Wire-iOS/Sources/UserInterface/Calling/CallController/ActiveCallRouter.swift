@@ -40,35 +40,35 @@ protocol CallQualityRouterProtocol: class {
 
 // MARK: - ActiveCallRouter
 class ActiveCallRouter: NSObject {
-    
+
     // MARK: - Private Property
     private let rootViewController: RootViewController
     private let callController: CallController
     private let callQualityController: CallQualityController
     private var transitioningDelegate: CallQualityAnimator
-    
+
     private var isActiveCallShown = false
     private var isCallQualityShown = false
     private var isCallTopOverlayShown = false
     private var scheduledPostCallAction: (() -> Void)?
-    
+
     private var zClientViewController: ZClientViewController? {
         return rootViewController.firstChild(ofType: ZClientViewController.self)
     }
-    
+
     init(rootviewController: RootViewController) {
         self.rootViewController = rootviewController
         callController = CallController()
         callController.callConversationProvider = ZMUserSession.shared()
         callQualityController = CallQualityController()
         transitioningDelegate = CallQualityAnimator()
-        
+
         super.init()
-        
+
         callController.router = self
         callQualityController.router = self
     }
-        
+
     // MARK: - Public Implementation
     func updateActiveCallPresentationState() {
         callController.updateActiveCallPresentationState()
@@ -80,21 +80,21 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     // MARK: - ActiveCall
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool) {
         guard !isActiveCallShown else { return }
-        
+
         // NOTE: We resign first reponder for the input bar since it will attempt to restore
         // first responder when the call overlay is interactively dismissed but canceled.
         UIResponder.currentFirst?.resignFirstResponder()
 
         let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
         activeCallViewController.delegate = callController
-        
+
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController)
 
         rootViewController.isPresenting
             ? dismissPresentedAndPresentActiveCall(modalViewController: modalVC, animated: animated)
             : presentActiveCall(modalViewController: modalVC, animated: animated)
     }
-    
+
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {
         guard isActiveCallShown else { return }
         rootViewController.dismiss(animated: animated, completion: { [weak self] in
@@ -104,12 +104,12 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
             completion?()
         })
     }
-    
+
     func minimizeCall(animated: Bool = true, completion: Completion? = nil) {
         guard isActiveCallShown else { completion?(); return }
         dismissActiveCall(animated: animated, completion: completion)
     }
-    
+
     // MARK: - CallTopOverlay
     func showCallTopOverlay(for conversation: ZMConversation) {
         guard !isCallTopOverlayShown else { return }
@@ -118,12 +118,12 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         zClientViewController?.setTopOverlay(to: callTopOverlayController)
         isCallTopOverlayShown = true
     }
-    
+
     func hideCallTopOverlay() {
         zClientViewController?.setTopOverlay(to: nil)
         isCallTopOverlayShown = false
     }
-    
+
     // MARK: - Alerts
     func presentSecurityDegradedAlert(degradedUser: UserType?) {
         executeOrSchedulePostCallAction { [weak self] in
@@ -131,31 +131,31 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
             self?.rootViewController.present(alert, animated: true)
         }
     }
-    
+
     func presentUnsupportedVersionAlert() {
         executeOrSchedulePostCallAction { [weak self] in
             let alert = UIAlertController.unsupportedVersionAlert
             self?.rootViewController.present(alert, animated: true)
         }
     }
-    
+
     // MARK: - Private Navigation Helpers
-    
+
     private func dismissPresentedAndPresentActiveCall(modalViewController: ModalPresentationViewController,
                                                       animated: Bool) {
         rootViewController.presentedViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.presentActiveCall(modalViewController: modalViewController, animated: animated)
         })
     }
-    
+
     private func presentActiveCall(modalViewController: ModalPresentationViewController, animated: Bool) {
         rootViewController.present(modalViewController, animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = true
         })
     }
-    
+
     // MARK: - Helpers
-    
+
     private func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
         if isActiveCallShown {
             action()
@@ -169,14 +169,14 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 extension ActiveCallRouter: CallQualityRouterProtocol {
     func presentCallQualitySurvey(with callDuration: TimeInterval) {
         let qualityController = buildCallQualitySurvey(with: callDuration)
-        
+
         executeOrSchedulePostCallAction { [weak self] in
             self?.rootViewController.present(qualityController, animated: true, completion: { [weak self] in
                 self?.isCallQualityShown = true
             })
         }
     }
-    
+
     func dismissCallQualitySurvey(completion: Completion? = nil) {
         guard isCallQualityShown else { return }
         rootViewController.dismiss(animated: true, completion: { [weak self] in
@@ -191,20 +191,20 @@ extension ActiveCallRouter: CallQualityRouterProtocol {
             DebugAlert.showSendLogsMessage(message: logsMessage)
         }
     }
-    
+
     func presentCallQualityRejection() {
         let logsMessage = "Sending the debug logs can help us improve the quality of calls and the overall app experience."
         executeOrSchedulePostCallAction {
             DebugAlert.showSendLogsMessage(message: logsMessage)
         }
     }
-    
+
     private func buildCallQualitySurvey(with callDuration: TimeInterval) -> CallQualityViewController {
         let questionLabelText = NSLocalizedString("calling.quality_survey.question", comment: "")
         let qualityController = CallQualityViewController(questionLabelText: questionLabelText,
                                                           callDuration: Int(callDuration))
         qualityController.delegate = callQualityController
-        
+
         qualityController.modalPresentationCapturesStatusBarAppearance = true
         qualityController.modalPresentationStyle = .overFullScreen
         qualityController.transitioningDelegate = transitioningDelegate

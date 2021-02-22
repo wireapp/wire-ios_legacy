@@ -43,7 +43,7 @@ extension UIColor {
     static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
     static var graphiteDark: UIColor = UIColor(rgb: (50, 54, 57))
-      
+
     static var backgroundGraphite: UIColor = UIColor(rgb: (22, 24, 25))
     static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba: (22, 24, 25, 0.4))
 
@@ -122,7 +122,7 @@ enum ColorSchemeColor: Int {
 
     case selfMentionHighlight
     case cellHighlight
-    
+
     case replyBorder
     case replyHighlight
 
@@ -130,7 +130,7 @@ enum ColorSchemeColor: Int {
     case secondaryActionDimmed
 
     case errorIndicator
-    
+
     case landingScreen
 
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
@@ -231,7 +231,7 @@ enum ColorSchemeColor: Int {
 
         case .errorIndicator:
             return ColorPair(light: UIColor(rgb: 0xE60606), dark: UIColor(rgb: 0xFC3E37))
-            
+
         case .landingScreen:
             return ColorPair(light: .graphiteDark, dark: .white)
         }
@@ -240,25 +240,25 @@ enum ColorSchemeColor: Int {
 
 final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable: Any]?
-    
+
     var variant: ColorSchemeVariant = .light
-    
+
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
-        
+
     var keyboardAppearance: UIKeyboardAppearance {
         return ColorScheme.keyboardAppearance(for: variant)
     }
-    
+
     class func keyboardAppearance(for variant: ColorSchemeVariant) -> UIKeyboardAppearance {
         return variant == .light ? .light : .dark
     }
-    
+
     static let `default`: ColorScheme = ColorScheme()
 
     func color(named: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
         let colorSchemeVariant = variant ?? self.variant
-        
+
         let colorPair = named.colorPair(accentColor: accentColor)
         switch colorSchemeVariant {
         case .dark:
@@ -267,11 +267,11 @@ final class ColorScheme: NSObject {
             return colorPair.light
         }
     }
-    
+
     func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
     }
-    
+
 }
 
 fileprivate struct ColorPair {
@@ -286,7 +286,7 @@ fileprivate extension ColorPair {
 }
 
 extension UIColor {
-    
+
     static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
@@ -295,16 +295,16 @@ extension UIColor {
     // NB: the order of coefficients must match ZMAccentColor enum ordering
     private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
     private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
-    
+
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     class func nameColor(for accentColor: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-        
+
         assert(accentColor.rawValue <= ZMAccentColor.max.rawValue)
-        
+
         let coefficientsArray = variant == .dark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight
         let coefficient = coefficientsArray[Int(accentColor.rawValue)]
-    
-        
+
+
         let background: UIColor = variant == .dark ? .black : .white
         return background.mix(UIColor(fromZMAccentColor: accentColor), amount: coefficient)
     }

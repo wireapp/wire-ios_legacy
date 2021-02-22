@@ -30,7 +30,7 @@ extension ZMConversationMessage {
             return false
         }
     }
-    
+
     var audioTrack: AudioTrack? {
         return fileMessageData?.isAudio == true ? self as? AudioTrack : .none
     }
@@ -40,7 +40,7 @@ extension ZMAssetClientMessage: AudioTrack {
     var title: String? {
         get {
             guard let fileMessageData = self.fileMessageData else { return "" }
-            
+
             return fileMessageData.filename
         }
     }
@@ -49,20 +49,20 @@ extension ZMAssetClientMessage: AudioTrack {
             return self.sender?.name
         }
     }
-    
+
     var duration: TimeInterval {
         get {
             guard let fileMessageData = self.fileMessageData else { return 0 }
-            
+
             return TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
         }
     }
-    
+
     var streamURL: URL? {
         get {
             guard let fileMessageData = self.fileMessageData,
                 let fileURL = fileMessageData.fileURL else { return .none }
-            
+
             return fileURL as URL?
         }
     }

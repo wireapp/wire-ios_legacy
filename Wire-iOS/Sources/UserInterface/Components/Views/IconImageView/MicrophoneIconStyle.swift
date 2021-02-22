@@ -38,7 +38,7 @@ extension MicrophoneIconStyle: IconImageStyle {
             return .none
         }
     }
-    
+
     var tintColor: UIColor? {
         switch self {
         case .unmutedPulsing:
@@ -47,7 +47,7 @@ extension MicrophoneIconStyle: IconImageStyle {
             return nil
         }
     }
-    
+
     var accessibilityPrefix: String {
         return "img.microphone"
     }

@@ -22,16 +22,16 @@ import XCTest
 final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
 
     var isAddressBookAccessDisabled: Bool = false
-    
+
     var accessStatusDidChangeToGranted: Bool = true
 
 
     static var sharedHelper: AddressBookHelperProtocol = MockAddressBookHelper()
-    
+
     func persistCurrentAccessStatus() {
-        
+
     }
-    
+
     var isAddressBookAccessGranted: Bool {
         return false
     }
@@ -47,7 +47,7 @@ final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
 }
 
 final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+
     var sut: StartUIViewController!
     var mockAddressBookHelper: MockAddressBookHelper!
 

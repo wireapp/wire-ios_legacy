@@ -24,7 +24,7 @@ enum VideoIconStyle: String, IconImageStyle {
     case video
     case screenshare
     case hidden
-    
+
     var icon: StyleKitIcon? {
         switch self {
         case .hidden:

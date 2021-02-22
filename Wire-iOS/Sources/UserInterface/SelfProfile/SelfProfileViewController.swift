@@ -69,7 +69,7 @@ final class SelfProfileViewController: UIViewController {
     init(selfUser: SettingsSelfUser,
          userRightInterfaceType: UserRightInterface.Type = UserRight.self,
          userSession: UserSessionInterface? = ZMUserSession.shared()) {
-        
+
         self.selfUser = selfUser
 
         // Create the settings hierarchy
@@ -105,7 +105,7 @@ final class SelfProfileViewController: UIViewController {
 
         profileHeaderViewController.colorSchemeVariant = .dark
         profileHeaderViewController.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
-        
+
         addChild(profileHeaderViewController)
         profileContainerView.addSubview(profileHeaderViewController.view)
         view.addSubview(profileContainerView)
@@ -125,7 +125,7 @@ final class SelfProfileViewController: UIViewController {
         configureAccountTitle()
         createConstraints()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -141,7 +141,7 @@ final class SelfProfileViewController: UIViewController {
             title = "self.account".localized(uppercased: true)
         }
     }
-    
+
     private func createConstraints() {
         profileHeaderViewController.view.translatesAutoresizingMaskIntoConstraints = false
         profileContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -203,7 +203,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
-    
+
     /// Create or delete custom passcode when appLock option did change
     /// If custom passcode is not enabled, no action is taken
     ///
@@ -225,23 +225,23 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
             callback(newValue)
             return
         }
-        
+
         self.callback = callback
         let passcodeSetupViewController = PasscodeSetupViewController(variant: .dark,
                                                                       context: .createPasscode,
                                                                       callback: callback)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
-        
+
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
-        
+
         let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
-        
+
         let closeItem = passcodeSetupViewController.closeItem
 
         keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
-                    
+
         wrappedViewController.presentationController?.delegate = passcodeSetupViewController
-        
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             wrappedViewController.modalPresentationStyle = .popover
             present(wrappedViewController, animated: true)
@@ -255,7 +255,7 @@ extension SelfProfileViewController: PasscodeSetupViewControllerDelegate {
     func passcodeSetupControllerDidFinish() {
         //no-op
     }
-    
+
     func passcodeSetupControllerWasDismissed() {
         // refresh options applock switch
         (topViewController as? SettingsTableViewController)?.refreshData()

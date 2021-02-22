@@ -22,21 +22,21 @@ extension UIViewControllerContextTransitioning {
     var fromView: UIView? {
         return view(forKey: .from)
     }
-    
+
     var toView: UIView? {
         let returnView = view(forKey: .to)
-        
+
         if let view = viewController(forKey: .to) {
             returnView?.frame = finalFrame(for: view)
         }
-        
+
         return returnView
     }
-    
+
     var fromViewController: UIViewController? {
         return viewController(forKey: .from)
     }
-    
+
     var toViewController: UIViewController? {
         return viewController(forKey: .to)
     }

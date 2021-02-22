@@ -30,7 +30,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     static let isCoveredKey = "isCovered"
 
     // MARK: - Private Properties
-    
+
     private var videoStreams: [VideoStream] {
         if let videoStream = configuration.videoStreams.first(where: { isMaximized(stream: $0.stream) }) {
             return [videoStream]
@@ -118,31 +118,31 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     // MARK: - Public Interface
-    
+
     public func handleDoubleTap(gesture: UIGestureRecognizer) {
         let location = gesture.location(in: gridView)
         toggleMaximized(view: streamView(at: location))
     }
-    
+
     // MARK: - View maximization
-    
+
     private func toggleMaximized(view: BaseVideoPreviewView?) {
         let stream = view?.stream
-        
+
         maximizedView = isMaximized(stream: stream) ? nil : view
         view?.isMaximized = isMaximized(stream: stream)
         updateVideoGrid(with: videoStreams)
     }
-    
+
     private func isMaximized(stream: Stream?) -> Bool {
         guard
             let streamId = stream?.streamId,
             let maximizedStreamId = maximizedView?.stream.streamId
         else { return false }
-        
+
         return streamId == maximizedStreamId
     }
-    
+
     private func dismissMaximizedViewIfNeeded(oldPresentationMode: VideoGridPresentationMode) {
         guard oldPresentationMode != configuration.presentationMode else { return }
         maximizedView?.isMaximized = false
@@ -200,10 +200,10 @@ final class VideoGridViewController: SpinnerCapableViewController {
             dismissSpinner?()
             return
         }
-        
+
         showLoadingView(title: L10n.Localizable.Call.Grid.noActiveSpeakers)
     }
-    
+
     private func updateSelfPreview() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
@@ -311,7 +311,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     private func streamView(for stream: Stream) -> UIView? {
         return viewCache[stream.streamId]
     }
-    
+
     private func streamView(at location: CGPoint) -> BaseVideoPreviewView? {
         guard let indexPath = gridView.indexPathForItem(at: location) else {
             return nil
@@ -335,7 +335,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         }
         return viewCache[selfStreamId] as? SelfVideoPreviewView
     }
-    
+
     private func videoConfigurationDescription() -> String {
         return """
         showing self preview: \(selfPreviewView != nil)

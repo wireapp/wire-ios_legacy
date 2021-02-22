@@ -22,10 +22,10 @@ import WireCommonComponents
 import WireDataModel
 
 final class UserClientCell: SeparatorCollectionViewCell {
-    
+
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-    
+
     private let deviceTypeIconView = UIImageView()
     private let accessoryIconView = UIImageView()
     private let verifiedIconView = UIImageView()
@@ -33,12 +33,12 @@ final class UserClientCell: SeparatorCollectionViewCell {
     private var contentStackView: UIStackView!
     private var titleStackView: UIStackView!
     private var iconStackView: UIStackView!
-    
+
     private let boldFingerprintFont: UIFont = .smallSemiboldFont
     private let fingerprintFont: UIFont = .smallFont
-    
+
     private weak var client: UserClientType? = nil
-    
+
     override func setUp() {
         super.setUp()
 
@@ -61,11 +61,11 @@ final class UserClientCell: SeparatorCollectionViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .smallSemiboldFont
         titleLabel.accessibilityIdentifier = "device_cell.name"
-        
+
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = .smallRegularFont
         subtitleLabel.accessibilityIdentifier = "device_cell.identifier"
-        
+
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, accessoryIconView])
         iconStackView.spacing = 16
         iconStackView.axis = .horizontal
@@ -73,25 +73,25 @@ final class UserClientCell: SeparatorCollectionViewCell {
         iconStackView.alignment = .center
         iconStackView.translatesAutoresizingMaskIntoConstraints = false
         iconStackView.setContentHuggingPriority(.required, for: .horizontal)
-        
+
         titleStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         titleStackView.spacing = 4
         titleStackView.axis = .vertical
         titleStackView.distribution = .equalSpacing
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentStackView = UIStackView(arrangedSubviews: [deviceTypeIconView, titleStackView, iconStackView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(contentStackView)
-        
+
         createConstraints()
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             deviceTypeIconView.widthAnchor.constraint(equalToConstant: 64),
@@ -102,35 +102,35 @@ final class UserClientCell: SeparatorCollectionViewCell {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
-    
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        
+
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         let textForegroundColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         titleLabel.textColor = textForegroundColor
         subtitleLabel.textColor = textForegroundColor
-        
+
         updateDeviceIcon()
     }
-    
+
     func configure(with client: UserClientType) {
         self.client = client
-        
+
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: fingerprintFont.monospaced()]
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
-        
+
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
         verifiedIconView.accessibilityLabel = client.verified ? "device.verified".localized : "device.not_verified".localized
 
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
-        
+
         updateDeviceIcon()
     }
-    
+
     private func updateDeviceIcon() {
         switch client?.deviceClass {
         case .legalHold?:

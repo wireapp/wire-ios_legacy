@@ -31,7 +31,7 @@ final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
-    
+
     var audioTrackPlayer: AudioTrackPlayer? {
         let mediaManager = mediaPlaybackManager ?? AppDelegate.shared.mediaPlaybackManager
         let audioTrackPlayer = mediaManager?.audioTrackPlayer
@@ -85,7 +85,7 @@ final class AudioMessageView: UIView, TransferView {
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall: Bool
 
-    
+
     init(mediaPlaybackManager: MediaPlaybackManager? = nil) {
         isPausedForIncomingCall = false
         self.mediaPlaybackManager = mediaPlaybackManager
@@ -122,11 +122,11 @@ final class AudioMessageView: UIView, TransferView {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }

@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class CallInfoViewControllerSnapshotTests: XCTestCase {
-    
+
     // MARK: - OneToOne Audio
 
     func testOneToOneIncomingAudioRinging() {

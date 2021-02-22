@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ProfileClientViewController!
     var user: ZMUser!
     var client: UserClient!
@@ -35,7 +35,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         client.user = user
         client.deviceClass = .tablet
     }
-    
+
     override func tearDown() {
         sut = nil
         user = nil

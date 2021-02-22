@@ -27,12 +27,12 @@ final class ChangeEmailViewControllerTests: XCTestCase {
 
         let sut = ChangeEmailViewController(user: mockUser)
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
-        
+
         viewController.view.backgroundColor = .black
-        
+
         return viewController
     }
-    
+
     func testForChangingExistingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: "user@example.com")
@@ -44,7 +44,7 @@ final class ChangeEmailViewControllerTests: XCTestCase {
     func testForAddingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: nil)
-        
+
         // THEN
         verify(matching: viewController)
     }

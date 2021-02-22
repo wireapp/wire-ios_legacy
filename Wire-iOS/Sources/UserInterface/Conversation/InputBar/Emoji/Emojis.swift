@@ -36,7 +36,7 @@ final class EmojiDataSource: NSObject, UICollectionViewDataSource {
 
     private var sections: [EmojiSection]
     private let recentlyUsed: RecentlyUsedEmojiSection
-    
+
     init(provider: @escaping CellProvider) {
         cellProvider = provider
         self.recentlyUsed = RecentlyUsedEmojiPeristenceCoordinator.loadOrCreate()
@@ -44,27 +44,27 @@ final class EmojiDataSource: NSObject, UICollectionViewDataSource {
         super.init()
         insertRecentlyUsedSectionIfNeeded()
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self[section].emoji.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return cellProvider(self[indexPath], indexPath)
     }
-    
+
     subscript (index: Int) -> EmojiSection {
         return sections[index]
     }
-    
+
     subscript (indexPath: IndexPath) -> Emoji {
         return sections[indexPath.section][indexPath.item]
     }
-    
+
     func sectionIndex(for type: EmojiSectionType) -> Int? {
         return sections.map { $0.type }.firstIndex(of: type)
     }
@@ -86,7 +86,7 @@ final class EmojiDataSource: NSObject, UICollectionViewDataSource {
         sections.insert(recentlyUsed, at: 0)
         return true
     }
-    
+
 }
 
 
@@ -136,7 +136,7 @@ extension EmojiSection {
 }
 
 struct FileEmojiSection: EmojiSection {
-    
+
     init?(_ type: EmojiSectionType) {
         let filename = "emoji_\(type.rawValue)"
         guard let url = Bundle.main.url(forResource: filename, withExtension: "plist") else { return nil }
@@ -144,8 +144,8 @@ struct FileEmojiSection: EmojiSection {
         self.emoji = emoji
         self.type = type
     }
-    
+
     let emoji: [Emoji]
     let type: EmojiSectionType
-    
+
 }

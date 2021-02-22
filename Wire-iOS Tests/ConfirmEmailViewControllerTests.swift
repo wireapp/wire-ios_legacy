@@ -20,15 +20,15 @@ import XCTest
 @testable import Wire
 
 final class ConfirmEmailViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ConfirmEmailViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = ConfirmEmailViewController(newEmail: "bill@wire.com", delegate: nil)
         sut.view.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

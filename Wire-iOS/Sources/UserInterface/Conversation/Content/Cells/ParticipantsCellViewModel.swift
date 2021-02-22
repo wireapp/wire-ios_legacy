@@ -23,7 +23,7 @@ import WireDataModel
 enum ConversationActionType {
 
     case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
-    
+
     /// Some actions only involve the sender, others involve other users too.
     var involvesUsersOtherThanSender: Bool {
         switch self {
@@ -31,7 +31,7 @@ enum ConversationActionType {
         default:                                             return true
         }
     }
-    
+
     var allowsCollapsing: Bool {
         // Don't collapse when removing participants, since the collapsed
         // link is only used for participants in the conversation.
@@ -48,7 +48,7 @@ enum ConversationActionType {
         case .added:                            icon = .plus
         case .removed, .left, .teamMemberLeave: icon = .minus
         }
-        
+
         return icon.makeImage(size: .tiny, color: color)
     }
 }
@@ -67,40 +67,40 @@ extension ZMConversationMessage {
 }
 
 class ParticipantsCellViewModel {
-    
+
     private typealias NameList = ParticipantsStringFormatter.NameList
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
-    
+
     let font, boldFont, largeFont: UIFont?
     let textColor, iconColor: UIColor
     let message: ZMConversationMessage
-    
+
     private var action: ConversationActionType {
         return message.actionType
     }
-    
+
     private var maxShownUsers: Int {
         return isSelfIncludedInUsers ? 16 : 17
     }
-    
+
     private var maxShownUsersWhenCollapsed: Int {
         return isSelfIncludedInUsers ? 14 : 15
     }
-    
+
     var showInviteButton: Bool {
         guard case .started = action, let conversation = message.conversation else { return false }
         return conversation.canManageAccess && conversation.allowGuests
     }
-    
+
     private var showServiceUserWarning: Bool {
         guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversation else { return false }
         guard let users = Array(messageData.userTypes) as? [UserType] else { return false }
-        
+
         let selfAddedToServiceConversation = users.any(\.isSelfUser) && conversation.areServicesPresent
         let serviceAdded = users.any(\.isServiceUser)
         return selfAddedToServiceConversation || serviceAdded
     }
-    
+
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
     lazy var shownUsers: [UserType] = {
@@ -109,7 +109,7 @@ class ParticipantsCellViewModel {
         let result = users[..<boundary]
         return result + (isSelfIncludedInUsers ? [SelfUser.current] : [])
     }()
-    
+
     /// Users not displayed in the system message but collapsed into a link.
     /// E.g. `and 5 others`.
     private lazy var collapsedUsers: [UserType] = {
@@ -117,7 +117,7 @@ class ParticipantsCellViewModel {
         guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }()
-    
+
     /// The users to display when opening the participants details screen.
     var selectedUsers: [UserType] {
         switch action {
@@ -125,18 +125,18 @@ class ParticipantsCellViewModel {
         default: return []
         }
     }
-    
+
     lazy var isSelfIncludedInUsers: Bool = {
         return sortedUsers.any(\.isSelfUser)
     }()
-    
+
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
     lazy var sortedUsers: [UserType] = {
         guard let sender = message.senderUser else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
-        
+
         let usersWithoutSender: Set<AnyHashable>
         if let hashableSender = sender as? AnyHashable {
             usersWithoutSender = systemMessage.userTypes.subtracting([hashableSender])
@@ -144,7 +144,7 @@ class ParticipantsCellViewModel {
             usersWithoutSender = systemMessage.userTypes
         }
         guard let users = Array(usersWithoutSender) as? [UserType] else { return [] }
-        
+
         return users.sorted { name(for: $0) < name(for: $1) }
     }()
 
@@ -163,7 +163,7 @@ class ParticipantsCellViewModel {
         self.iconColor = iconColor
         self.message = message
     }
-    
+
     lazy var sortedUsersWithoutSelf: [UserType] = {
         return sortedUsers.filter { !$0.isSelfUser }
     }()
@@ -175,12 +175,12 @@ class ParticipantsCellViewModel {
             return user.name ?? "conversation.status.someone".localized
         }
     }
-    
+
     private var nameList: NameList {
         let userNames = shownUsers.map { self.name(for: $0) }
         return NameList(names: userNames, collapsed: collapsedUsers.count, selfIncluded: isSelfIncludedInUsers)
     }
-    
+
     /// The user will, depending on the context, be in a specific case within the
     /// sentence. This is important for localization of "you".
     private func grammaticalCase(for user: UserType) -> String {
@@ -190,20 +190,20 @@ class ParticipantsCellViewModel {
         if case .started = action { return "dative" }
         return "accusative"
     }
-    
+
     // ------------------------------------------------------------
-    
+
     func image() -> UIImage? {
         return action.image(with: iconColor)
     }
-    
+
     func attributedHeading() -> NSAttributedString? {
         guard
             case let .started(withName: conversationName?) = action,
             let sender = message.senderUser,
             let formatter = formatter(for: message)
             else { return nil }
-        
+
         let senderName = name(for: sender).capitalized
         return formatter.heading(senderName: senderName, senderIsSelf: sender.isSelfUser, convName: conversationName)
     }
@@ -213,24 +213,24 @@ class ParticipantsCellViewModel {
             let sender = message.senderUser,
             let formatter = formatter(for: message)
             else { return nil }
-        
+
         let senderName = name(for: sender).capitalized
-        
+
         if action.involvesUsersOtherThanSender {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }
     }
-    
+
     func warning() -> String? {
         guard showServiceUserWarning else { return nil }
         return "content.system.services.warning".localized
     }
-    
+
     private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {
         guard let font = font, let boldFont = boldFont, let largeFont = largeFont else { return nil }
-        
+
         return ParticipantsStringFormatter(
             message: message, font: font, boldFont: boldFont,
             largeFont: largeFont, textColor: textColor

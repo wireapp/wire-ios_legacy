@@ -50,7 +50,7 @@ final class TextFieldValidator {
             return text.isEmpty ? .tooShort(kind: kind) : nil
         }
     }
-    
+
     func validate(text: String?, kind: ValidatedTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
             return nil

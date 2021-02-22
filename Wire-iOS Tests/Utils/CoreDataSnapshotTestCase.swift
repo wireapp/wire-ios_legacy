@@ -73,7 +73,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         team = Team.insertNewObject(in: uiMOC)
         team!.remoteIdentifier = UUID()
-        
+
 
         teamMember = Member.insertNewObject(in: uiMOC)
         teamMember!.user = selfUser
@@ -117,14 +117,14 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
             team = nil
         }
     }
-    
+
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
         user.name = name
         user.remoteIdentifier = UUID()
         return user
     }
-    
+
     func createService(name: String) -> ZMUser {
         let user = createUser(name: name)
         user.serviceIdentifier = UUID.create().transportString()
@@ -145,7 +145,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         updateTeamStatus(wasInTeam: wasInTeam)
         block()
     }
-    
+
     func markAllMessagesAsUnread(in conversation: ZMConversation) {
         conversation.lastReadServerTimeStamp = Date.distantPast
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
@@ -153,15 +153,15 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
 
 //MARK: - mock conversation
-    
+
     func createGroupConversation() -> ZMConversation {
         return ZMConversation.createGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createTeamGroupConversation() -> ZMConversation {
         return ZMConversation.createTeamGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createGroupConversationOnlyAdmin() -> ZMConversation {
         return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
     }

@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 
 public final class TwoLineTitleView: UIView {
-    
+
     public let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
@@ -37,20 +37,20 @@ public final class TwoLineTitleView: UIView {
 
         return label
     }()
-    
+
     init(first: String, second: String) {
         super.init(frame: CGRect.zero)
         self.isAccessibilityElement = true
-        
+
         self.titleLabel.textAlignment = .center
         self.subtitleLabel.textAlignment = .center
-        
+
         self.titleLabel.text = first
         self.subtitleLabel.text = second
-        
+
         self.addSubview(self.titleLabel)
         self.addSubview(self.subtitleLabel)
-        
+
         translatesAutoresizingMaskIntoConstraints = false
         constrain(self, self.titleLabel, self.subtitleLabel) { selfView, titleLabel, subtitleLabel in
             titleLabel.leading == selfView.leading
@@ -62,7 +62,7 @@ public final class TwoLineTitleView: UIView {
             subtitleLabel.bottom == selfView.bottom
         }
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

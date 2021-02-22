@@ -37,14 +37,14 @@ extension Optional where Wrapped == String {
 }
 
 final class SimpleTextField: UITextField, Themeable {
-    
+
     var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     enum Value {
         case valid(String)
         case error(SimpleTextFieldValidator.ValidationError)
@@ -57,7 +57,7 @@ final class SimpleTextField: UITextField, Themeable {
     public var value: Value? {
         return text.value
     }
-    
+
     // MARK:- UI constants
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
@@ -104,7 +104,7 @@ final class SimpleTextField: UITextField, Themeable {
         delegate = textFieldValidator
         textFieldValidator.delegate = self
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
@@ -154,11 +154,11 @@ extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     func textFieldValueSubmitted(_ value: String) {
         textFieldDelegate?.textFieldReturnPressed(self)
     }
-    
+
     func textFieldDidEndEditing() {
         textFieldDelegate?.textFieldDidEndEditing(self)
     }
-    
+
     func textFieldDidBeginEditing() {
         textFieldDelegate?.textFieldDidBeginEditing(self)
     }

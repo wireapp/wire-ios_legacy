@@ -20,7 +20,7 @@
 import Cartography
 
 final class ConversationCellBurstTimestampView: UIView {
-    
+
     let unreadDot = UIView()
     public let label: UILabel = UILabel()
 
@@ -80,7 +80,7 @@ final class ConversationCellBurstTimestampView: UIView {
 
         setupStyle()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -98,11 +98,11 @@ final class ConversationCellBurstTimestampView: UIView {
     private func createConstraints() {
         constrain(self, label, leftSeparator, rightSeparator) { view, label, leftSeparator, rightSeparator in
             view.height == 40
-            
+
             leftSeparator.leading == view.leading
             leftSeparator.width == conversationHorizontalMargins.left - inset
             leftSeparator.centerY == view.centerY
-            
+
             label.centerY == view.centerY
             label.leading == leftSeparator.trailing + inset
 
@@ -133,7 +133,7 @@ final class ConversationCellBurstTimestampView: UIView {
         separatorColor = UIColor.from(scheme: .separator)
         separatorColorExpanded = UIColor.from(scheme: .paleSeparator)
     }
-    
+
     func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {
         if includeDayOfWeek {
             isSeparatorExpanded = true
@@ -146,7 +146,7 @@ final class ConversationCellBurstTimestampView: UIView {
             label.font = burstNormalFont
             label.text = timestamp.formattedDate.localizedUppercase
         }
-        
+
         isShowingUnreadDot = showUnreadDot
     }
 

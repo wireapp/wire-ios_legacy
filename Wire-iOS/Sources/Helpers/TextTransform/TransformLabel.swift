@@ -28,7 +28,7 @@ final class TransformLabel: UILabel {
         set {
             super.accessibilityValue = newValue
         }
-        
+
         get {
             return attributedText?.string ?? text
         }

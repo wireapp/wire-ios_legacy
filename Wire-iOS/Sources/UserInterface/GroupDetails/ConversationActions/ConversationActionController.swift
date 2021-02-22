@@ -19,12 +19,12 @@ import UIKit
 import WireSyncEngine
 
 final class ConversationActionController {
-    
+
     struct PresentationContext {
         let view: UIView
         let rect: CGRect
     }
-    
+
     enum Context {
         case list, details
     }
@@ -34,7 +34,7 @@ final class ConversationActionController {
     weak var sourceView: UIView?
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
-    
+
     init(conversation: GroupDetailsConversationType,
          target: UIViewController,
          sourceView: UIView?) {
@@ -50,7 +50,7 @@ final class ConversationActionController {
                 rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
             )
         }
-        
+
         let actions: [ZMConversation.Action]
         switch context {
         case .details:
@@ -58,7 +58,7 @@ final class ConversationActionController {
         case .list:
             actions = (conversation as? ZMConversation)?.listActions ?? []
         }
-        
+
         let title = context == .list ? conversation.displayName : nil
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         actions.map(alertAction).forEach(controller.addAction)
@@ -67,11 +67,11 @@ final class ConversationActionController {
 
         alertController = controller
     }
-    
+
     func enqueue(_ block: @escaping () -> Void) {
         ZMUserSession.shared()?.enqueue(block)
     }
-    
+
     func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true) {
             ZMUserSession.shared()?.enqueue(block)
@@ -80,7 +80,7 @@ final class ConversationActionController {
 
     func handleAction(_ action: ZMConversation.Action) {
         guard let conversation = conversation as? ZMConversation else { return }
-        
+
         switch action {
         case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
@@ -132,7 +132,7 @@ final class ConversationActionController {
         case .remove: fatalError()
         }
     }
-    
+
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
         return action.alertAction { [weak self] in
             guard let `self` = self else { return }
@@ -145,24 +145,24 @@ final class ConversationActionController {
                 currentContext: currentContext,
                 target: target)
     }
-    
+
     private func prepare(viewController: UIViewController, with context: PresentationContext) {
         viewController.popoverPresentationController.apply {
             $0.sourceView = context.view
             $0.sourceRect = context.rect
         }
     }
-    
+
     private func present(_ controller: UIViewController,
                  currentContext: PresentationContext?,
                  target: UIViewController) {
         currentContext.apply {
             prepare(viewController: controller, with: $0)
         }
-        
+
         controller.configPopover(pointToView: sourceView ?? target.view, popoverPresenter: target as? PopoverPresenterViewController)
 
         target.present(controller, animated: true)
     }
-    
+
 }

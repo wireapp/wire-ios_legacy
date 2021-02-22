@@ -37,7 +37,7 @@ final class ConversationRootViewController: UIViewController {
     init(conversation: ZMConversation,
          message: ZMConversationMessage?,
          clientViewController: ZClientViewController) {
-        
+
         let conversationController = ConversationViewController(session: ZMUserSession.shared()!,
                                                                 conversation: conversation,
                                                                 visibleMessage: message as? ZMMessage,
@@ -46,7 +46,7 @@ final class ConversationRootViewController: UIViewController {
 
 
         conversationViewController = conversationController
-        
+
         let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
@@ -55,13 +55,13 @@ final class ConversationRootViewController: UIViewController {
         navbar.barTintColor = UIColor.from(scheme: .barBackground)
         navbar.tintColor = UIColor.from(scheme: .textForeground)
         navbar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
-        
+
         navBarContainer = UINavigationBarContainer(navbar)
 
         super.init(nibName: .none, bundle: .none)
 
         networkStatusViewController.delegate = self
-        
+
         addChild(conversationController)
         contentView.addSubview(conversationController.view)
         conversationController.didMove(toParent: self)
@@ -85,26 +85,26 @@ final class ConversationRootViewController: UIViewController {
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
-        
+
         [contentView,
          conversationViewController.view,
          networkStatusViewController.view
         ].disableAutoresizingMaskTranslation()
-        
+
         NSLayoutConstraint.activate([
             networkStatusViewController.view.topAnchor.constraint(equalTo: self.safeTopAnchor),
             networkStatusViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             networkStatusViewController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
+
             navBarContainer.view.topAnchor.constraint(equalTo: networkStatusViewController.view.bottomAnchor),
             navBarContainer.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             navBarContainer.view.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
+
             contentView.leftAnchor.constraint(equalTo: view.leftAnchor),
             contentView.rightAnchor.constraint(equalTo: view.rightAnchor),
             contentView.topAnchor.constraint(equalTo: navBarContainer.view.bottomAnchor),
             contentView.bottomAnchor.constraint(equalTo: self.safeBottomAnchor),
-            
+
             conversationViewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
             conversationViewController.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             conversationViewController.view.leftAnchor.constraint(equalTo: contentView.leftAnchor),
@@ -127,7 +127,7 @@ final class ConversationRootViewController: UIViewController {
     override var childForStatusBarStyle: UIViewController? {
         return child
     }
-    
+
     override var childForStatusBarHidden: UIViewController? {
         return child
     }
@@ -149,7 +149,7 @@ extension ConversationRootViewController: NetworkStatusBarDelegate {
 }
 
 extension ZMConversation {
-    
+
     /// Check if the conversation data is out of date, and in case update it.
     /// This in an opportunistic update of the data, with an on-demand strategy.
     /// Whenever the conversation is opened by the user, we check if anything is missing.

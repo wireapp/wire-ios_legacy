@@ -51,10 +51,10 @@ final class AddressBookCorrelationFormatter: NSObject {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
-        
+
         return nil
     }
-    
+
 }
 
 
@@ -125,7 +125,7 @@ final class UserNameDetailView: UIView {
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

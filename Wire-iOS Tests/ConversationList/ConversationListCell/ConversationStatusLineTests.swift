@@ -26,58 +26,58 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         selfUserInTeam = true
         super.setUp()
     }
-    
+
     override var needsCaches: Bool {
         return true
     }
-    
+
     func testStatusForNotActiveConversationWithHandle() {
         // GIVEN
         let sut = self.otherUserConversation!
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "@" + otherUser.handle!)
     }
-    
+
     func testStatusForNotActiveConversationGroup() {
         // GIVEN
         let sut = self.createGroupConversation()
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
+
     func testStatusFailedToSend() {
         // GIVEN
         let sut = self.otherUserConversation!
         let message = try! sut.appendText(content: "text") as! ZMMessage
         message.expire()
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "⚠️ Unsent message")
     }
-    
+
     func testStatusBlocked() {
         // GIVEN
         let sut = self.otherUserConversation!
         self.otherUser.block()
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "Blocked")
     }
-    
+
     func testStatusMissedCall() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -86,7 +86,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "Missed call")
     }
@@ -102,7 +102,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "Missed call from Bruno")
     }
-    
+
     func testStatusRejectedCall() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -112,13 +112,13 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.relevantForConversationStatus = false
         sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "")
     }
-        
+
     func testStatusForMultipleTextMessagesInConversation() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -129,7 +129,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
@@ -143,12 +143,12 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         for index in 1...2 {
             appendReply(to: sut, selfMessage: selfMessage, text: "reply test \(index)")
         }
-        
+
         markAllMessagesAsUnread(in: sut)
 
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "reply test 2")
     }
@@ -160,7 +160,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         let selfMessage = try! sut.appendText(content: "I am a programmer") as! ZMMessage
         selfMessage.sender = selfUser
-        
+
         for index in 1...3 {
             (try! sut.appendText(content: "Yes, it is true \(index)", replyingTo: selfMessage) as! ZMMessage).sender = self.otherUser
         }
@@ -177,7 +177,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
 
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "3 replies, 1 missed call, 2 messages")
     }
@@ -188,20 +188,20 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         for index in 1...5 {
             (try! sut.appendText(content: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
-        
+
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (try! sut.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         sut.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "1 mention, 5 messages")
     }
-    
+
     func testStatusForMultipleTextMessagesInConversation_LastRename() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -212,28 +212,28 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .conversationNameChanged
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "test 5")
     }
-    
+
     func testStatusForSystemMessageILeft() {
         // GIVEN
         let sut = self.createGroupConversation()
         sut.removeParticipantsAndUpdateConversationState(users: [selfUser], initiatingUser: selfUser)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "You left")
     }
-    
+
     func testStatusForSystemMessageIWasAdded() {
         // GIVEN
         let sut = createGroupConversation()
@@ -243,16 +243,16 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.selfUser])
         otherMessage.addedUsers = Set([self.selfUser])
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "\(self.otherUser.name ?? "") added you")
     }
-    
+
     func testNoStatusForSystemMessageIAddedSomeone() {
         // GIVEN
         let sut = createGroupConversation()
@@ -262,16 +262,16 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
+
     func testNoStatusForSystemMessageIRemovedSomeone() {
         // GIVEN
         let sut = createGroupConversation()
@@ -282,16 +282,16 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
-        
+
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
+
     func testStatusForSystemMessageIWasRemoved() {
         // GIVEN
         let sut = createGroupConversation()
@@ -301,16 +301,16 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.selfUser])
         otherMessage.removedUsers = Set([self.selfUser])
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
 
         // THEN
         XCTAssertEqual(status.string, "You were removed")
     }
-    
+
     func testStatusForSystemMessageSomeoneWasRemoved() {
         // GIVEN
         let sut = createGroupConversation()
@@ -321,15 +321,15 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
         sut.append(otherMessage)
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
+
     func testStatusForConversationStarted() {
         // GIVEN
         let sut = self.createGroupConversation()
@@ -341,13 +341,13 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         sut.lastServerTimeStamp = Date()
         sut.append(otherMessage)
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "\(self.otherUser.name ?? "") started a conversation")
     }
-    
+
     func testNoStatusForSelfConversationStarted() {
         // GIVEN
         let sut = self.createGroupConversation()
@@ -357,27 +357,27 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.users = Set([self.otherUser, self.selfUser])
         otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
         sut.append(otherMessage)
-        
+
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
+
     func testThatTypingHasHigherPrioThanMentions() {
         // GIVEN
         let sut = self.createGroupConversation()
         sut.managedObjectContext?.saveOrRollback()
         sut.setTypingUsers([otherUser])
-        
+
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (try! sut.appendText(content: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        
+
         markAllMessagesAsUnread(in: sut)
-        
+
         // WHEN
         let status = sut.status
-        
+
         // THEN
         XCTAssertEqual(status.isTyping, true)
         XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)

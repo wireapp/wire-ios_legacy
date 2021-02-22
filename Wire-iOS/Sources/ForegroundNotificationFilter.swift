@@ -19,10 +19,10 @@
 import WireSyncEngine
 
 final class ForegroundNotificationFilter {
-    
+
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    
+
     // MARK: - Initialization
     public init(sessionManager: SessionManager? = nil) {
         self.sessionManager = sessionManager
@@ -31,15 +31,15 @@ final class ForegroundNotificationFilter {
 
 //TO DO: Ask for the logic, not clear when a notification shuld be presented
 extension ForegroundNotificationFilter: ForegroundNotificationResponder {
-    
-    
+
+
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
         let chatHeadsDisabled: Bool = Settings.shared[.chatHeadsDisabled] ?? false
         guard !chatHeadsDisabled else {
             return false
         }
-        
+
         // the concerned account is active
         guard
             let selfUserID = userInfo.selfUserID,
@@ -47,7 +47,7 @@ extension ForegroundNotificationFilter: ForegroundNotificationResponder {
         else {
             return true
         }
-        
+
         guard let clientVC = ZClientViewController.shared else {
             return true
         }
@@ -55,11 +55,11 @@ extension ForegroundNotificationFilter: ForegroundNotificationResponder {
         if clientVC.isConversationListVisible {
             return false
         }
-        
+
         guard clientVC.isConversationViewVisible else {
             return true
         }
-        
+
         // conversation view is visible for another conversation
         guard
             let convID = userInfo.conversationID,
@@ -67,7 +67,7 @@ extension ForegroundNotificationFilter: ForegroundNotificationResponder {
         else {
             return false
         }
-        
+
         return true
     }
 }

@@ -23,7 +23,7 @@ import UIKit
 typealias GroupConversationCellConversation = Conversation & StableRandomParticipantsProvider
 
 final class GroupConversationCell: UICollectionViewCell, Themeable {
-    
+
     let avatarSpacer = UIView()
     let avatarView = ConversationAvatarView()
     let titleLabel = UILabel()
@@ -31,14 +31,14 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
     let separator = UIView()
     var contentStackView: UIStackView!
     var titleStackView: UIStackView!
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     // if nil the background color is the default content background color for the theme
     @objc dynamic var contentBackgroundColor: UIColor? = nil {
         didSet {
@@ -46,38 +46,38 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted ? .init(white: 0, alpha: 0.08) : .clear
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
         return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
-    
+
     fileprivate func setup() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
         titleLabel.accessibilityIdentifier = "user_cell.name"
-        
+
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
-        
+
         avatarView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         avatarSpacer.addSubview(avatarView)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
 
@@ -86,22 +86,22 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         titleStackView.distribution = .equalSpacing
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         separator.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(contentStackView)
         contentView.addSubview(separator)
-        
+
         applyColorScheme(colorSchemeVariant)
         createConstraints()
     }
-    
+
     func createConstraints() {
         NSLayoutConstraint.activate([
             avatarView.widthAnchor.constraint(equalToConstant: 28),
@@ -120,7 +120,7 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
             separator.heightAnchor.constraint(equalToConstant: .hairline)
         ])
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
@@ -128,12 +128,12 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
     }
-    
+
     func configure(conversation: GroupConversationCellConversation) {
         avatarView.configure(context: .conversation(conversation: conversation))
 
         titleLabel.text = conversation.displayName
-        
+
         if conversation.conversationType == .oneOnOne, let handle = conversation.connectedUserType?.handle {
             subtitleLabel.isHidden = false
             subtitleLabel.text = "@\(handle)"
@@ -141,5 +141,5 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
             subtitleLabel.isHidden = true
         }
     }
-    
+
 }

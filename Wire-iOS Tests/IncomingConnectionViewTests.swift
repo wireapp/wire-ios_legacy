@@ -31,7 +31,7 @@ final class IncomingConnectionViewTests: XCTestCase {
     func testThatItRendersWithUserName() {
         let user = SwiftMockLoader.mockUsers().first!
         let sut = IncomingConnectionView(user: user)
-        
+
         sut.backgroundColor = .white
         verify(matching: sut.layoutForTest())
     }
@@ -43,7 +43,7 @@ final class IncomingConnectionViewTests: XCTestCase {
         sut.backgroundColor = .white
         verify(matching: sut.layoutForTest())
     }
-    
+
 }
 
 fileprivate extension UIView {

@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 extension String {
-    
+
     func image(renderedWithAttributes attributes: [NSAttributedString.Key: Any]) -> UIImage? {
         let attributedString = NSAttributedString(string: self, attributes: attributes)
         let size = attributedString.size()
@@ -29,8 +29,8 @@ extension String {
         attributedString.draw(in: rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         return image
     }
-    
+
 }

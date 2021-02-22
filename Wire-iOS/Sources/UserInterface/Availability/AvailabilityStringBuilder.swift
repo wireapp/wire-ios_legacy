@@ -21,12 +21,12 @@ import WireDataModel
 final class AvailabilityStringBuilder: NSObject {
 
     static func string(for user: UserType, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
-        
+
         var title: String = ""
         var color = color
         let availability = user.availability
         var fontSize: FontSize = .small
-        
+
         switch style {
             case .list: do {
                 if let name = user.name {
@@ -49,26 +49,26 @@ final class AvailabilityStringBuilder: NSObject {
                 title = "availability.\(availability.canonicalName)".localized.localizedUppercase
             }
         }
-        
+
         guard let textColor = color else { return nil }
         let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }
-    
+
     static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard availability != .none, let iconType = availability.iconType
             else { return nil }
-        
+
         let verticalCorrection: CGFloat
-        
+
         switch size {
         case .small:
             verticalCorrection = -1
         case .medium, .large, .normal:
             verticalCorrection = 0
         }
-        
+
         return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 10, verticalCorrection: verticalCorrection)
     }
 }

@@ -30,7 +30,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     private let fileTransferView = FileTransferView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .paperclip)
-    
+
     weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
 
@@ -108,7 +108,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 extension ConversationFileMessageCell: TransferViewDelegate {
     func transferView(_ view: TransferView, didSelect action: MessageAction) {
         guard let message = message else { return }
-        
+
         delegate?.perform(action: action, for: message, view: self)
     }
 }
@@ -136,5 +136,5 @@ final class ConversationFileMessageCellDescription: ConversationMessageCellDescr
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message)
     }
-        
+
 }

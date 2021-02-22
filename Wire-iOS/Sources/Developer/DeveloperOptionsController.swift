@@ -24,36 +24,36 @@ import MessageUI
 import UIKit
 
 class DeveloperOptionsController: UIViewController {
-    
+
     /// Cells
     var tableCells: [UITableViewCell]!
     /// Map from UISwitch to the action it should perform. 
     /// The parameter of the action is whether the switch is on or off
     var uiSwitchToAction: [UISwitch: (Bool)->()] = [:]
-    
+
     /// Map from UIButton to the action it should perform.
     var uiButtonToAction: [UIButton : ()->()] = [:]
-    
+
     var mailViewController: MFMailComposeViewController? = nil
 }
 
 extension DeveloperOptionsController {
-    
+
     override func loadView() {
         self.title = "OPTIONS"
         self.view = UIView()
         self.edgesForExtendedLayout = UIRectEdge()
         self.view.backgroundColor = .clear
-        
+
         self.tableCells = [forwardLogCell()] + ZMSLog.allTags.sorted().map { logSwitchCell(tag: $0) }
-        
+
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = false
         self.view.addSubview(tableView)
-        
+
         constrain(self.view, tableView) { view, tableView in
             tableView.edges == view.edges
         }
@@ -66,7 +66,7 @@ extension DeveloperOptionsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableCells.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.tableCells[indexPath.row]
     }
@@ -74,36 +74,36 @@ extension DeveloperOptionsController: UITableViewDataSource {
 
 // MARK: - Cells
 extension DeveloperOptionsController {
-    
+
     /// Creates a cell to switch a specific log tag on or off
     func logSwitchCell(tag: String) -> UITableViewCell {
         return self.createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
             Settings.shared.set(logTag: tag, enabled: isOn)
         }
     }
-    
+
     /// Creates a cell to forward logs
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
             let alert = UIAlertController(title: "Add explanation", message: "Please explain the problem that made you send the logs", preferredStyle: .alert)
-            
+
             alert.addAction(UIAlertAction(title: "Send to Devs", style: .default, handler: { _ in
                 guard let text = alert.textFields?.first?.text else { return }
                 DebugLogSender.sendLogsByEmail(message: text)
             }))
-            
+
             alert.addAction(UIAlertAction(title: "Send to Devs & AVS", style: .default, handler: { _ in
                 guard let text = alert.textFields?.first?.text else { return }
                 DebugLogSender.sendLogsByEmail(message: text, shareWithAVS: true)
             }))
-            
+
             alert.addTextField(configurationHandler: {(textField: UITextField!) in
                 textField.placeholder = "Please explain the problem"
             })
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+
     /// Creates a cell to forward logs
     func createCellWithButton(labelText: String, onTouchDown: @escaping ()->()) -> UITableViewCell {
         let button = UIButton()
@@ -117,7 +117,7 @@ extension DeveloperOptionsController {
         self.uiButtonToAction[button] = onTouchDown
         return self.createCellWithLabelAndView(labelText: labelText, view: button)
     }
-    
+
     /// Creates and sets the layout of a cell with a UISwitch
     func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool)->() ) -> UITableViewCell {
         let toggle = UISwitch()
@@ -127,25 +127,25 @@ extension DeveloperOptionsController {
         self.uiSwitchToAction[toggle] = onValueChange
         return self.createCellWithLabelAndView(labelText: labelText, view: toggle)
     }
-    
+
     /// Creates and sets the layout of a cell with a label and a view
     func createCellWithLabelAndView(labelText: String, view: UIView) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .clear
-        
+
         let label = UILabel()
         label.text = labelText
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(label)
-        
+
         constrain(cell.contentView, label) { contentView, label in
             label.centerY == contentView.centerY
             label.left == contentView.left + 20
         }
-        
+
         cell.contentView.addSubview(view)
-        
+
         constrain(cell.contentView, view, label) { contentView, view, label in
             view.trailing == contentView.trailing - 20
             label.trailing == view.leading
@@ -157,7 +157,7 @@ extension DeveloperOptionsController {
 
 // MARK: - Actions
 extension DeveloperOptionsController {
-    
+
     /// Invoked when one of the switches changes
     @objc func switchDidChange(sender: AnyObject) {
         if let toggle = sender as? UISwitch {
@@ -167,7 +167,7 @@ extension DeveloperOptionsController {
             action(toggle.isOn)
         }
     }
-    
+
     /// Invoked when one of the buttons is pressed
     @objc func didPressButton(sender: AnyObject) {
         if let button = sender as? UIButton {

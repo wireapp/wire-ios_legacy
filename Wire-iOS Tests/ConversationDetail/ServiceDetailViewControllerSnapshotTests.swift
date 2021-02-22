@@ -21,7 +21,7 @@ import XCTest
 
 
 final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+
     var sut: ServiceDetailViewController!
     var serviceUser: MockServiceUserType!
     var groupConversation: ZMConversation!
@@ -33,7 +33,7 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         groupConversation = createGroupConversation()
         mockSelfUser = .createSelfUser(name: "Bob")
     }
-    
+
     override func tearDown() {
         sut = nil
         serviceUser = nil

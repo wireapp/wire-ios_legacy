@@ -18,7 +18,7 @@
 import XCTest
 @testable import Wire
 
-extension UIColor {    
+extension UIColor {
     class var accentOverrideColor: ZMAccentColor? {
         return ZMUser.selfUser()?.accentColorValue
     }

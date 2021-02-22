@@ -52,10 +52,10 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContentView = UIView()
         mockContentView.backgroundColor = .white
         mockContainerViewController.view.addSubview(mockContentView)
-        
+
         sut.view.translatesAutoresizingMaskIntoConstraints = false
         mockContentView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             sut.view.topAnchor.constraint(equalTo: mockContainerViewController.safeTopAnchor),
             sut.view.leadingAnchor.constraint(equalTo: mockContainerViewController.view.leadingAnchor),

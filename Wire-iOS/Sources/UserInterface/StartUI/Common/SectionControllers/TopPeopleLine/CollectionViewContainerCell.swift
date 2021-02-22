@@ -29,7 +29,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
             collectionView.fitInSuperview()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityIdentifier = "topPeopleSection"

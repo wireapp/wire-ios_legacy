@@ -23,14 +23,14 @@ final class ReplyRoundCornersView: UIControl {
     let containedView: UIView
     private let grayBoxView = UIView()
     private let highlightLayer = UIView()
-    
+
     init(containedView: UIView) {
         self.containedView = containedView
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
     }
-    
+
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
@@ -46,7 +46,7 @@ final class ReplyRoundCornersView: UIControl {
         addSubview(grayBoxView)
         addSubview(highlightLayer)
     }
-    
+
     private func setupConstraints() {
         containedView.translatesAutoresizingMaskIntoConstraints = false
         grayBoxView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +67,7 @@ final class ReplyRoundCornersView: UIControl {
             highlightLayer.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

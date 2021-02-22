@@ -20,11 +20,11 @@ import XCTest
 @testable import Wire
 
 final class ProfileViewTests: ZMSnapshotTestCase {
-    
+
     func test_DefaultOptions() {
         verifyProfile(options: [])
     }
-    
+
     func testDefaultOptions_NoAvailability() {
         verifyProfile(options: [], availability: .none)
     }
@@ -32,23 +32,23 @@ final class ProfileViewTests: ZMSnapshotTestCase {
     func testDefaultOptions_NoAvailability_Edit() {
         verifyProfile(options: [.allowEditingAvailability], availability: .none)
     }
-    
+
     func test_DefaultOptions_AllowEditing() {
         verifyProfile(options: [.allowEditingAvailability])
     }
-    
+
     func test_HideName() {
         verifyProfile(options: [.hideUsername])
     }
-    
+
     func test_HideTeamName() {
         verifyProfile(options: [.hideTeamName])
     }
-    
+
     func test_HideHandle() {
         verifyProfile(options: [.hideHandle])
     }
-    
+
     func test_HideNameAndHandle() {
         verifyProfile(options: [.hideUsername, .hideHandle])
     }
@@ -56,9 +56,9 @@ final class ProfileViewTests: ZMSnapshotTestCase {
     func test_HideAvailability() {
         verifyProfile(options: [.hideAvailability])
     }
-    
+
     // MARK; - Helpers
-    
+
     func verifyProfile(options: ProfileHeaderViewController.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
         let selfUser = MockUserType.createSelfUser(name: "selfUser", inTeam: UUID())
         selfUser.teamName = "Stunning"
@@ -72,5 +72,5 @@ final class ProfileViewTests: ZMSnapshotTestCase {
 
         verify(view: sut.view, file: file, line: line)
     }
-        
+
 }

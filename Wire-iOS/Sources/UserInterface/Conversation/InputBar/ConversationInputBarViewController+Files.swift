@@ -168,7 +168,7 @@ extension ConversationInputBarViewController {
         }
         parent?.dismiss(animated: true)
     }
-    
+
     func execute(videoPermissions toExecute: @escaping () -> ()) {
         UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in
             if granted {

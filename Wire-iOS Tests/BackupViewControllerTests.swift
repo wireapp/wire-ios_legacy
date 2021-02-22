@@ -22,24 +22,24 @@ import XCTest
 
 class MockBackupSource: BackupSource {
     func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure) {
-        
+
     }
 }
 
 class BackupViewControllerTests: ZMSnapshotTestCase {
-    
+
     override func setUp() {
         super.setUp()
         self.snapshotBackgroundColor = .darkGray
     }
-    
+
     func testInitialState() {
         // GIVEN
         let sut = BackupViewController(backupSource: MockBackupSource())
         // WHEN && THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
-    
+
     func testLoading() {
         // GIVEN
         let sut = BackupViewController(backupSource: MockBackupSource())

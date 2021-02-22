@@ -24,7 +24,7 @@ import WireDataModel
 import WireSyncEngine
 
 final class ProfileClientViewController: UIViewController, SpinnerCapable {
-    
+
     let userClient: UserClient
     let contentView = UIView()
     let backButton = IconButton(style: .circular)
@@ -51,7 +51,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
             self.backButton.isHidden = !self.showBackButton
         }
     }
-    
+
     fileprivate let fingerprintSmallFont = FontSpec(.small, .light).font!
     fileprivate let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
     fileprivate let fingerprintFont = FontSpec(.normal, .none).font!
@@ -61,12 +61,12 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         self.init(client: client)
         self.fromConversation = fromConversation
     }
-    
+
     required init(client: UserClient) {
         self.userClient = client
 
         super.init(nibName: nil, bundle: nil)
-        
+
         self.userClientToken = UserClientChangeInfo.add(observer: self, for: client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueue({ () -> Void in
@@ -79,15 +79,15 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
         setupViews()
     }
-    
+
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -120,7 +120,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         super.viewWillAppear(animated)
         title = ""
     }
-    
+
     private func setupContentView() {
         self.view.addSubview(contentView)
     }
@@ -132,7 +132,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         backButton.isHidden = !self.showBackButton
         self.view.addSubview(backButton)
     }
-    
+
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
         showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
@@ -141,7 +141,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: showMyDeviceButton)
     }
-    
+
     private func setupDescriptionTextView() {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
@@ -149,7 +149,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
         descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
         descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.accent()]
-        
+
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = self.userClient.user {
@@ -162,12 +162,12 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
         self.contentView.addSubview(descriptionTextView)
     }
-    
+
     private func setupSeparatorLineView() {
         separatorLineView.backgroundColor = UIColor.from(scheme: .separator)
         self.contentView.addSubview(separatorLineView)
     }
-    
+
     private func setupTypeLabel() {
         typeLabel.text = self.userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
@@ -175,18 +175,18 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         typeLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(typeLabel)
     }
-    
+
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
         IDLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
-    
+
     private func updateIDLabel() {
         let fingerprintSmallMonospaceFont = self.fingerprintSmallFont.monospaced()
         let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
-        
+
         IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
             [.font: fingerprintSmallMonospaceFont],
             boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
@@ -199,7 +199,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         fullIDLabel.textColor = UIColor.from(scheme: .textForeground)
         self.contentView.addSubview(fullIDLabel)
     }
-    
+
     private func setupSpinner() {
         spinner.hidesWhenStopped = true
         self.contentView.addSubview(spinner)
@@ -208,7 +208,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     fileprivate func updateFingerprintLabel() {
         let fingerprintMonospaceFont = self.fingerprintFont.monospaced()
         let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
-        
+
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
             attributes: [.font: fingerprintMonospaceFont],
             boldAttributes: [.font: fingerprintBoldMonospaceFont],
@@ -230,7 +230,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         self.contentView.addSubview(verifiedToggle)
     }
-    
+
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
@@ -238,7 +238,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
     }
-    
+
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
@@ -247,7 +247,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         resetButton.accessibilityIdentifier = "reset session"
         self.contentView.addSubview(resetButton)
     }
-    
+
     private func setupDebugMenuButton() {
         guard Bundle.developerModeEnabled else { return }
         let debugButton = ButtonWithLargerHitArea()
@@ -258,7 +258,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         self.contentView.addSubview(debugButton)
         self.debugMenuButton = debugButton
     }
-    
+
     private func createConstraints() {
         constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
             contentView.left == view.left + 16
@@ -297,7 +297,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
 
         let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0
-        
+
         constrain(contentView, backButton, view) { contentView, backButton, selfView in
             backButton.left == contentView.left - 8
             backButton.top == selfView.top + topMargin
@@ -357,25 +357,25 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
         isLoadingViewVisible = true
     }
-    
+
     @objc private func onShowDebugActions(_ sender: AnyObject) {
         let actionSheet = UIAlertController(title: "Debug actions",
                                             message: "⚠️ will cause decryption errors ⚠️",
                                             preferredStyle: .actionSheet)
-        
+
         actionSheet.addAction(UIAlertAction(title: "Delete Session", style: .default, handler: { [weak self] (_) in
             self?.onDeleteDeviceTapped()
         }))
-        
+
         actionSheet.addAction(UIAlertAction(title: "Corrupt Session", style: .default, handler: { [weak self] (_) in
             self?.onCorruptSessionTapped()
         }))
-        
+
         actionSheet.addAction(.cancel())
-        
+
         present(actionSheet, animated: true)
     }
-    
+
     @objc private func onDeleteDeviceTapped() {
         let sync = self.userClient.managedObjectContext!.zm_sync!
         sync.performGroupedBlockAndWait {
@@ -385,14 +385,14 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
         self.presentingViewController?.dismiss(animated: true, completion: .none)
     }
-    
+
     @objc private func onCorruptSessionTapped() {
         let sync = self.userClient.managedObjectContext!.zm_sync!
         let selfClientID = ZMUser.selfUser()?.selfClient()?.objectID
         sync.performGroupedBlockAndWait {
             let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
             let selfClient = try! sync.existingObject(with: selfClientID!) as! UserClient
-            
+
             _ = selfClient.establishSessionWithClient(client, usingPreKey: "pQABAQACoQBYIBi1nXQxPf9hpIp1K1tBOj/tlBuERZHfTMOYEW38Ny7PA6EAoQBYIAZbZQ9KtsLVc9VpHkPjYy2+Bmz95fyR0MGKNUqtUUi1BPY=")
             sync.saveOrRollback()
         }
@@ -408,11 +408,11 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 extension ProfileClientViewController: UserClientObserver {
 
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        
+
         if changeInfo.fingerprintChanged {
             self.updateFingerprintLabel()
         }
-        
+
         if changeInfo.sessionHasBeenReset {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
             let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler: nil)

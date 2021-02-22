@@ -25,17 +25,17 @@ final class InputBarTests: ZMSnapshotTestCase {
     let shortText = "Lorem ipsum dolor"
     let longText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est"
     let LTRText = "ناك حقيقة مثبتة منذ"
-    
+
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
         b1.setIcon(.paperclip, size: .tiny, for: [])
-        
+
         let b2 = IconButton()
         b2.setIcon(.photo, size: .tiny, for: [])
-        
+
         let b3 = IconButton()
         b3.setIcon(.brush, size: .tiny, for: [])
-        
+
         let b4 = IconButton()
         b4.setIcon(.ping, size: .tiny, for: [])
 
@@ -79,27 +79,27 @@ final class InputBarTests: ZMSnapshotTestCase {
 
     func testShortText() {
         sut.textView.text = shortText
-        
-        
+
+
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
     func testLongText() {
         sut.textView.text = longText
 
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
     }
-    
+
     func testRTLText() {
         sut.textView.text = LTRText
         sut.textView.textAlignment = .right
-        
-        
+
+
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
     }
-    
+
     func testTruncatedMention() {
         guard let userWithLongName = MockUser.realMockUsers()?.last else { return XCTFail() }
         userWithLongName.name = "Matt loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name"
@@ -108,16 +108,16 @@ final class InputBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
     }
-    
+
     func testButtonsWithTitle() {
         let buttonsWithText = buttons()
-        
+
         for button in buttonsWithText {
             button.setTitle("NEW", for: [])
             button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
             button.setTitleColor(UIColor.red, for: [])
         }
-        
+
         let inputBar = InputBar(buttons: buttonsWithText)
         inputBar.leftAccessoryView.isHidden = true
         inputBar.rightAccessoryStackView.isHidden = true
@@ -126,7 +126,7 @@ final class InputBarTests: ZMSnapshotTestCase {
 
         verifyInAllPhoneWidths(view: inputBar)
     }
-    
+
     func testButtonsWrapsWithEllipsis() {
         let inputBar = InputBar(buttons: buttons() + buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
@@ -136,13 +136,13 @@ final class InputBarTests: ZMSnapshotTestCase {
 
         verifyInAllPhoneWidths(view: inputBar)
     }
-    
+
     func testEphemeralMode() {
         sut.textView.text = ""
         sut.setInputBarState(.writing(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-        
-        
+
+
         verifyInAllPhoneWidths(view: sut)
     }
 
@@ -160,7 +160,7 @@ final class InputBarTests: ZMSnapshotTestCase {
 
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
     func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText, mentions: []), animated: false)
 

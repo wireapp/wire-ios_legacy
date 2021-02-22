@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
-    
+
     var sut: SettingsTextCell!
     var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -34,7 +34,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
 
         settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

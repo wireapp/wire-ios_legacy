@@ -31,7 +31,7 @@ struct CallCellViewModel {
     let font, boldFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
-    
+
     func image() -> UIImage? {
         return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
     }
@@ -48,15 +48,15 @@ struct CallCellViewModel {
         let senderString: String
         var called = NSAttributedString()
         let childs = systemMessageData.childMessages.count
-        
+
         if systemMessageType == .missedCall {
-            
+
             var detailKey = "missed-call"
-            
+
             if message.conversationLike?.conversationType == .group {
                 detailKey.append(".groups")
             }
-            
+
             senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : (sender.name ?? "")
             called = key(with: detailKey).localized(pov: sender.pov, args: childs + 1, senderString) && labelFont
         } else {
@@ -64,7 +64,7 @@ struct CallCellViewModel {
             senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : (sender.name ?? "")
             called = key(with: detailKey).localized(pov: sender.pov, args: senderString) && labelFont
         }
-        
+
         var title = called.adding(font: labelBoldFont, to: senderString)
 
         if childs > 0 {
@@ -77,7 +77,7 @@ struct CallCellViewModel {
     private func key(with component: String) -> String {
         return "content.system.call.\(component)"
     }
-    
+
     private func selfKey(with component: String) -> String {
         return "\(key(with: component)).you"
     }

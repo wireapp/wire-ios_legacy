@@ -69,7 +69,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         cleanUpPendingTask()
         cleanUpPendingTimer()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -97,12 +97,12 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     private func setupNoResultLabel() {
         extendedLayoutIncludesOpaqueBars = true
-        
+
         noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
     }
-    
+
     private func setupCollectionView() {
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
@@ -114,7 +114,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
                                                    bottom: 0,
                                                    right: 0)
     }
-    
+
     private func setupNavigationItem() {
         searchBar.text = searchTerm
         searchBar.delegate = self
@@ -137,13 +137,13 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
             noResultsLabel.center == container.center
         }
     }
-    
+
     private func applyStyle() {
         collectionView?.backgroundColor = UIColor.from(scheme: .background)
         noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
         noResultsLabel.font = UIFont.smallLightFont
     }
-    
+
     // MARK: - Presentation
 
     func wrapInsideNavigationController() -> UINavigationController {

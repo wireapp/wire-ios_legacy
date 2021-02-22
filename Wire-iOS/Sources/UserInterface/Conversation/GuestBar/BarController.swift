@@ -27,39 +27,39 @@ protocol Bar {
 
 final class BarController: UIViewController {
     private let stackView = UIStackView()
-    
+
     public private(set) var bars: [UIViewController] = []
-    
+
     public var topBar: UIViewController? {
         return bars.last
     }
-    
+
     func present(bar: UIViewController) {
         if bars.contains(bar) {
             return
         }
-        
+
         bars.append(bar)
-        
+
         bars.sort { (left, right) -> Bool in
             let leftWeight = (left as? Bar)?.weight ?? 0
             let rightWeight = (right as? Bar)?.weight ?? 0
-            
+
             return leftWeight < rightWeight
         }
-        
+
         addChild(bar)
         updateStackView()
         bar.didMove(toParent: self)
     }
-    
+
     func dismiss(bar: UIViewController) {
         guard let index = bars.firstIndex(of: bar) else {
             return
         }
         bar.willMove(toParent: nil)
         bars.remove(at: index)
-        
+
         UIView.animate(withDuration: 0.35) {
             self.stackView.removeArrangedSubview(bar.view)
             bar.view.removeFromSuperview()
@@ -67,18 +67,18 @@ final class BarController: UIViewController {
 
         bar.removeFromParent()
     }
-    
+
     private func updateStackView() {
         UIView.animate(withDuration: 0.35) {
             self.stackView.arrangedSubviews.forEach {
                 self.stackView.removeArrangedSubview($0)
                 $0.removeFromSuperview()
             }
-            
+
             self.bars.map { $0.view }.forEach(self.stackView.addArrangedSubview)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

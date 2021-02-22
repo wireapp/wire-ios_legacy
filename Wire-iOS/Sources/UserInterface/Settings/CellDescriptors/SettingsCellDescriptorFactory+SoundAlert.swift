@@ -20,7 +20,7 @@ import Foundation
 import avs
 
 extension SettingsCellDescriptorFactory {
-    
+
     var soundAlertGroup: SettingsCellDescriptorType {
         return SettingsGroupCellDescriptor(
             items: [alertsSection],
@@ -29,43 +29,43 @@ extension SettingsCellDescriptorFactory {
             previewGenerator: alertPreviewGenerator
         )
     }
-    
+
     private var title: String {
         return "self.settings.sound_menu.title".localized
     }
-    
+
     private var soundAlertProperty: SettingsProperty {
         return settingsPropertyFactory.property(.soundAlerts)
     }
-    
+
     private var alertsSection: SettingsSectionDescriptorType {
         let property = soundAlertProperty
-        
+
         let allAlerts = SettingsPropertySelectValueCellDescriptor(
             settingsProperty: property,
             value: SettingsPropertyValue(AVSIntensityLevel.full.rawValue),
             title: "self.settings.sound_menu.all_sounds.title".localized
         )
-        
+
         let someAlerts = SettingsPropertySelectValueCellDescriptor(
             settingsProperty: property,
             value: SettingsPropertyValue(AVSIntensityLevel.some.rawValue),
             title: "self.settings.sound_menu.mute_while_talking.title".localized
         )
-        
+
         let noneAlerts = SettingsPropertySelectValueCellDescriptor(
             settingsProperty: property,
             value: SettingsPropertyValue(AVSIntensityLevel.none.rawValue),
             title: "self.settings.sound_menu.no_sounds.title".localized
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [allAlerts, someAlerts, noneAlerts],
             header: title,
             footer: .none
         )
     }
-    
+
     private var alertPreviewGenerator: PreviewGeneratorType {
         return {
             guard
@@ -74,7 +74,7 @@ extension SettingsCellDescriptorFactory {
             else {
                 return .text($0.title)
             }
-            
+
             switch intensityLevel {
             case .full:
                 return .text("self.settings.sound_menu.all_sounds.title".localized)

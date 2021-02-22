@@ -20,39 +20,39 @@ import XCTest
 @testable import Wire
 
 final class URLActionRouterTests: XCTestCase {
-    
+
     func testThatDeepLinkIsNotOpened_WhenDeepLinkIsNotValid() {
         // GIVEN
         let invalidDeepLinkUrl = URL(string: "wire://invalidDeepLinkUrl")!
         let router =  TestableURLActionRouter(viewController: RootViewController(), url: invalidDeepLinkUrl)
-        
+
         // WHEN
         router.openDeepLink(needsAuthentication: false)
-        
+
         // THEN
         XCTAssertFalse(router.wasDeepLinkOpened)
     }
-    
+
     func testThatDeepLinkIsOpened_WhenDeepLinkIsValid() {
         // GIVEN
         let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
         let router =  TestableURLActionRouter(viewController: RootViewController(), url: validDeepLink)
-        
+
         // WHEN
         router.openDeepLink()
-        
+
         // THEN
         XCTAssertTrue(router.wasDeepLinkOpened)
     }
-    
+
     func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndNeedsAuthentication() {
         // GIVEN
         let validDeepLink = URL(string: "wire://user/user_id")!
         let router =  TestableURLActionRouter(viewController: RootViewController(), url: validDeepLink)
-        
+
         // WHEN
         router.openDeepLink(needsAuthentication: true)
-        
+
         // THEN
         XCTAssertFalse(router.wasDeepLinkOpened)
     }

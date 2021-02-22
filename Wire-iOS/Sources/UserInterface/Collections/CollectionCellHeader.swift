@@ -30,24 +30,24 @@ final class CollectionCellHeader: UIView {
                   let sender = message.senderUser else {
                 return
             }
-            
+
             nameLabel.textColor = sender.nameAccentColor
-            
+
             nameLabel.text = sender.name
             dateLabel.text = serverTimestamp.formattedDate
         }
     }
-    
+
     required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.addSubview(self.nameLabel)
         self.addSubview(self.dateLabel)
-        
+
         constrain(self, self.nameLabel, self.dateLabel) { selfView, nameLabel, dateLabel in
             nameLabel.leading == selfView.leading
             nameLabel.trailing <= dateLabel.leading
@@ -57,7 +57,7 @@ final class CollectionCellHeader: UIView {
             dateLabel.centerY == nameLabel.centerY
         }
     }
-    
+
     var nameLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "sender name"

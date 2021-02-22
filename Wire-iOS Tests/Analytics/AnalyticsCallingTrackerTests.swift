@@ -130,21 +130,21 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
     func testThatMultipleScreenShareEventsWouldNotBeTagged() {
         //GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
-        
+
         //WHEN
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
-        
+
         //THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 1)
-        
+
         //WHEN
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
-        
+
         //THEN
-        XCTAssertEqual(sut.screenSharingStartTimes.count, 0)        
+        XCTAssertEqual(sut.screenSharingStartTimes.count, 0)
     }
-    
+
     private func participantStartScreenSharing(callParticipant: CallParticipant) {
         sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant])
     }

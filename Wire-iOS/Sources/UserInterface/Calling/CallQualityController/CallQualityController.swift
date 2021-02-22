@@ -26,15 +26,15 @@ import WireCommonComponents
  */
 
 class CallQualityController: NSObject {
-    
+
     weak var router: CallQualityRouterProtocol? = nil
 
     fileprivate var answeredCalls: [UUID: Date] = [:]
     fileprivate var token: Any?
-    
+
     override init() {
         super.init()
-        
+
         if let userSession = ZMUserSession.shared() {
             token = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
@@ -131,7 +131,7 @@ class CallQualityController: NSObject {
 // MARK: - Call State
 
 extension CallQualityController: WireCallCenterCallStateObserver {
-    
+
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         guard canPresentCallQualitySurvey else { return }
         let eventDate = Date()
@@ -159,7 +159,7 @@ extension CallQualityController: CallQualityViewControllerDelegate {
             guard self?.callQualityRejectionRange.contains(score) ?? false else { return }
             self?.handleCallQualityRejection()
         })
-        
+
         CallQualityController.updateLastSurveyDate(Date())
         Analytics.shared.tagCallQualityReview(.answered(score: score, duration: controller.callDuration))
     }

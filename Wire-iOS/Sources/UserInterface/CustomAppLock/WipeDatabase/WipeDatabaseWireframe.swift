@@ -22,15 +22,15 @@ final class WipeDatabaseWireframe {
         let interactor = WipeDatabaseInteractor()
         let presenter = WipeDatabasePresenter()
         let viewController = WipeDatabaseViewController()
-        
+
         viewController.presenter = presenter
         presenter.userInterface = viewController
         presenter.interactorInput = interactor
         interactor.output = presenter
-        
+
         presenter.wireframe = self
-        
+
         return viewController
     }
-    
+
 }

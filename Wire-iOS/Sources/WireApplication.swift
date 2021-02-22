@@ -21,7 +21,7 @@ import WireCommonComponents
 import WireSyncEngine
 
 final class WireApplication: UIApplication {
-        
+
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         DebugAlert.showSendLogsMessage(

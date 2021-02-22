@@ -22,29 +22,29 @@ import Photos
 import Cartography
 
 final class AssetCell: UICollectionViewCell {
-    
+
     let imageView = UIImageView()
     let durationView = UILabel()
-    
+
     var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
     var representedAssetIdentifier: String!
     var manager: ImageManagerProtocol!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.contentView.clipsToBounds = true
-        
+
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.backgroundColor = UIColor(white: 0, alpha: 0.1)
         self.contentView.addSubview(self.imageView)
-        
+
         self.durationView.textAlignment = .center
         self.durationView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         self.durationView.textColor = UIColor.white
         self.durationView.font = FontSpec(.small, .light).font!
         self.contentView.addSubview(self.durationView)
-        
+
         constrain(self.contentView, self.imageView, self.durationView) { contentView, imageView, durationView in
             imageView.edges == contentView.edges
             durationView.bottom == contentView.bottom
@@ -53,11 +53,11 @@ final class AssetCell: UICollectionViewCell {
             durationView.height == 20
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     static let imageFetchOptions: PHImageRequestOptions = {
         let options: PHImageRequestOptions = PHImageRequestOptions()
         options.deliveryMode = .opportunistic
@@ -65,7 +65,7 @@ final class AssetCell: UICollectionViewCell {
         options.isSynchronous = false
         return options
     }()
-    
+
     var asset: PHAsset? {
         didSet {
             self.imageView.image = nil
@@ -108,10 +108,10 @@ final class AssetCell: UICollectionViewCell {
             }
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         self.asset = .none
     }
 }

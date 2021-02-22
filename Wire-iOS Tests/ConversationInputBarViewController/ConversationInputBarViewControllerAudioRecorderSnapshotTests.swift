@@ -52,7 +52,7 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
         sut.loadViewIfNeeded()
-        
+
         mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
     }
 

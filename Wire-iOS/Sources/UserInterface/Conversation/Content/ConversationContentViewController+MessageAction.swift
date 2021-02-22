@@ -187,14 +187,14 @@ extension ConversationContentViewController {
 // MARK: - UserClientObserver
 
 extension ConversationContentViewController: UserClientObserver {
-    
+
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
         if changeInfo.sessionHasBeenReset {
             userClientToken = nil
             isLoadingViewVisible = false
         }
     }
-    
+
 }
 
 // MARK: - SignatureObserver

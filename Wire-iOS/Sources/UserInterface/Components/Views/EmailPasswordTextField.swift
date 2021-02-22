@@ -137,7 +137,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         emailField.text = email
         updateEmailFieldisEnabled()
     }
-    
+
     func updateEmailFieldisEnabled() {
         emailField.isEnabled = !hasPrefilledValue || allowEditingPrefilledValue
     }
@@ -203,7 +203,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
         }
-        
+
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
     }
 

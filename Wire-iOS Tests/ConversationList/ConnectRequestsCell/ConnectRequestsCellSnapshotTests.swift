@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class ConnectRequestsCellSnapshotTests: XCTestCase {
-    
+
     var sut: ConnectRequestsCell!
-    
+
     override func setUp() {
         super.setUp()
         sut = ConnectRequestsCell(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
@@ -32,7 +32,7 @@ final class ConnectRequestsCellSnapshotTests: XCTestCase {
         sut.itemView.configure(with: title, subtitle: nil, users: [otherUser])
         sut.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

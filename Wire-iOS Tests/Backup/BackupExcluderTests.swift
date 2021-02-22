@@ -25,21 +25,21 @@ private final class MockBackupExcluder: BackupExcluder {}
 final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
     private var sut: MockBackupExcluder!
     let filename = "test.txt"
-    
+
     override func setUp() {
         super.setUp()
-        
+
         delete(fileNamed: filename)
         sut = MockBackupExcluder()
     }
-    
+
     override func tearDown() {
         sut = nil
         delete(fileNamed: filename)
-        
+
         super.tearDown()
     }
-    
+
     func delete(fileNamed: String) {
         guard let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return }
         let file = URL(fileURLWithPath: path).appendingPathComponent(fileNamed)
@@ -53,26 +53,26 @@ final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
         let file = URL(fileURLWithPath: path).appendingPathComponent(fileNamed)
         try? text.write(to: file, atomically: false, encoding: String.Encoding.utf8)
     }
-    
+
     func testThatFileIsExcluded() {
         /// GIVEN
         let filesToExclude: [FileInDirectory] = [(FileManager.SearchPathDirectory.documentDirectory, filename)]
-        
+
         write(text: "test", to: filename)
-        
+
         filesToExclude.forEach { (directory, path) in
             let url = URL.directory(for: directory).appendingPathComponent(path)
-            
+
             XCTAssertFalse(url.isExcludedFromBackup)
         }
 
         /// WHEN
         try! MockBackupExcluder.exclude(filesToExclude: filesToExclude)
-        
+
         /// THEN
         filesToExclude.forEach { (directory, path) in
             let url = URL.directory(for: directory).appendingPathComponent(path)
-            
+
             XCTAssert(url.isExcludedFromBackup)
         }
 

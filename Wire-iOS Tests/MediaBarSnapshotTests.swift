@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class MediaBarSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: MediaBar!
-    
+
     override func setUp() {
         super.setUp()
         sut = MediaBar()
@@ -31,7 +31,7 @@ final class MediaBarSnapshotTests: ZMSnapshotTestCase {
         sut.backgroundColor = .black
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: sut.intrinsicContentSize.height)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

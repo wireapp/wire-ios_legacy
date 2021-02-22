@@ -22,7 +22,7 @@ final class KeyboardAvoidingAuthenticationCoordinatedViewController: KeyboardAvo
         get {
             return childAuthenticationCoordinatedViewController?.authenticationCoordinator
         }
-        
+
         set {
             childAuthenticationCoordinatedViewController?.authenticationCoordinator = newValue
         }
@@ -31,7 +31,7 @@ final class KeyboardAvoidingAuthenticationCoordinatedViewController: KeyboardAvo
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         childAuthenticationCoordinatedViewController?.executeErrorFeedbackAction(feedbackAction)
     }
-    
+
     func displayError(_ error: Error) {
         childAuthenticationCoordinatedViewController?.displayError(error)
     }

@@ -20,16 +20,16 @@ import XCTest
 @testable import Wire
 
 final class URL_EncodeTests: XCTestCase {
-    
+
     var sut: URL!
-    
+
     override func setUp() {
         super.setUp()
 
         // GIVEN
         sut = URL(string: "https://en.wikipedia.org/wiki/Wire_Swiss#History")
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

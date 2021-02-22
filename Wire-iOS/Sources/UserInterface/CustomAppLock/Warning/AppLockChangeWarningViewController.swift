@@ -36,7 +36,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     private var isAppLockActive: Bool
 
     private let contentView: UIView = UIView()
-    
+
     private lazy var confirmButton: Button = {
         let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
         button.setBackgroundImageColor(.strongBlue, for: .normal)
@@ -45,14 +45,14 @@ final class AppLockChangeWarningViewController: UIViewController {
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel()
         label.text = "warning_screen.title_label".localized
         label.accessibilityIdentifier = "warning_screen.label.title"
         return label
     }()
-    
+
     private lazy var messageLabel: UILabel = {
         let label = UILabel(size: .normal, weight: .regular, color: .landingScreen)
         label.text = messageLabelText
@@ -89,16 +89,16 @@ final class AppLockChangeWarningViewController: UIViewController {
     }
 
     // MARK: - Helpers
-    
+
     private func setupViews() {
         view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
 
         view.addSubview(contentView)
-        
+
         contentView.addSubview(titleLabel)
         contentView.addSubview(confirmButton)
         contentView.addSubview(messageLabel)
-                
+
         createConstraints()
     }
 
@@ -109,7 +109,7 @@ final class AppLockChangeWarningViewController: UIViewController {
          messageLabel].disableAutoresizingMaskTranslation()
 
         let contentPadding: CGFloat = 24
-                
+
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -120,7 +120,7 @@ final class AppLockChangeWarningViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 150),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentPadding),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentPadding),
-            
+
             // message Label
             messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: contentPadding),
             messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentPadding),
