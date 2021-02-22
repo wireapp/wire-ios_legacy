@@ -202,4 +202,3 @@ class MockAppStateCalculatorDelegate: AppStateCalculatorDelegate {
         wasNotified = true
     }
 }
-

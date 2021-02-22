@@ -199,4 +199,3 @@ extension BackgroundViewController: ZMUserObserver {
                        accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }
-

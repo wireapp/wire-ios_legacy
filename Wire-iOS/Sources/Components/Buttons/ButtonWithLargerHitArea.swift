@@ -52,4 +52,3 @@ class ButtonWithLargerHitArea: UIButton {
     }
 
 }
-

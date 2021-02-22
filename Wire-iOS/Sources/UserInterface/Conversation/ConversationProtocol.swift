@@ -82,4 +82,3 @@ extension ZMConversation: TypingStatusProvider {}
 extension ZMConversation: VoiceChannelProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}
-

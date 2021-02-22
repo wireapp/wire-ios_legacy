@@ -102,4 +102,3 @@ final class CollectionImageCell: CollectionCell {
         imageView.imageResource = message?.imageMessageData?.image
     }
 }
-

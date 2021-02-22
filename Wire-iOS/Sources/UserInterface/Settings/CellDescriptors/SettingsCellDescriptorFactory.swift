@@ -327,4 +327,3 @@ class SettingsCellDescriptorFactory {
         }, previewGenerator: .none)
     }
 }
-

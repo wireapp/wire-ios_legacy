@@ -245,4 +245,3 @@ final public class ConversationListAvatarView: UIView {
         clippingView.layer.cornerRadius = self.conversation?.conversationType == .group ? 4 : clippingView.layer.bounds.width / 2.0
     }
 }
-

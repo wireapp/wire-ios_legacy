@@ -58,4 +58,3 @@ extension ConversationCreateErrorSectionController {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 }
-

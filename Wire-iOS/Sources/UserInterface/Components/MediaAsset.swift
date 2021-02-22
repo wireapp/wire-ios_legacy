@@ -110,6 +110,3 @@ extension UIImageView: MediaAssetView {
         }
     }
 }
-
-
-

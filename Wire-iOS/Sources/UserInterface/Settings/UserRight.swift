@@ -61,4 +61,3 @@ final class UserRight: UserRightInterface {
         return ZMUser.selfUser()?.managedByWire ?? true
     }
 }
-

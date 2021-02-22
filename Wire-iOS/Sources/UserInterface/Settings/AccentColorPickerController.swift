@@ -242,5 +242,3 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         self.dismiss(animated: true, completion: .none)
     }
 }
-
-

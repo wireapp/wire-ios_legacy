@@ -181,4 +181,3 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         return serviceUser
     }
 }
-

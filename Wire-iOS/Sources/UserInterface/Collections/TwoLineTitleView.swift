@@ -67,4 +67,3 @@ public final class TwoLineTitleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

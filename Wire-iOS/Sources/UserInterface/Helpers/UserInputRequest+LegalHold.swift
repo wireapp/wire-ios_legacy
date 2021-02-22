@@ -62,4 +62,3 @@ extension UserType where Self: SelfLegalHoldSubject {
     }
 
 }
-

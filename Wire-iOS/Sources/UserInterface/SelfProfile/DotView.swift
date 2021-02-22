@@ -109,5 +109,3 @@ extension DotView: UserClientObserver {
         updateIndicator()
     }
 }
-
-

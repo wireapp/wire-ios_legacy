@@ -128,4 +128,3 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 }
-

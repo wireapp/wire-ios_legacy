@@ -32,4 +32,3 @@ extension MockUser {
         return (user as Any as? MockUser)!
     }
 }
-

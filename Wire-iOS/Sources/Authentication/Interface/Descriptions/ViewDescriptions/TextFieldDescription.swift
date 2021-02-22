@@ -120,4 +120,3 @@ extension TextFieldDescription: TextFieldValidationDelegate {
         self.validationError = error
     }
 }
-

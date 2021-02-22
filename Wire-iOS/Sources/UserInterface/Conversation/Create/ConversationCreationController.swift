@@ -335,4 +335,3 @@ extension ConversationCreationController {
         collectionView.performBatchUpdates(changes)
     }
 }
-

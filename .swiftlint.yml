@@ -1,5 +1,4 @@
 disabled_rules:
-    - trailing_newline
     - operator_whitespace
     - no_space_in_method_call
     - return_arrow_whitespace

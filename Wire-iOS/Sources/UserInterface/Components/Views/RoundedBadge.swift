@@ -103,4 +103,3 @@ final class RoundedTextBadge: RoundedBadge {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

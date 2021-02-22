@@ -164,4 +164,3 @@ extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     }
 
 }
-

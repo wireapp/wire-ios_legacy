@@ -111,4 +111,3 @@ extension ConversationListViewController.ViewModel {
     }
 
 }
-
