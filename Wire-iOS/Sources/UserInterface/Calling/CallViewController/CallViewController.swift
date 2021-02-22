@@ -317,9 +317,15 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation,
                                    participants: [CallParticipant]) {
         hapticsController.updateParticipants(participants)
+        updateVideoGridPresentationModeIfNeeded(participants: participants)
         updateConfiguration() // Has to succeed updating the timestamps
     }
 
+    private func updateVideoGridPresentationModeIfNeeded(participants: [CallParticipant]) {
+        guard participants.filter(\.state.isConnected).count <= 2 else { return }
+            
+        voiceChannel.videoGridPresentationMode = .allVideoStreams
+    }
 }
 
 extension CallViewController: AVSMediaManagerClientObserver {
