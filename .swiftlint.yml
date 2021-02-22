@@ -1,5 +1,4 @@
 disabled_rules:
-    - leading_whitespace
     - trailing_whitespace
     - trailing_newline
     - operator_whitespace

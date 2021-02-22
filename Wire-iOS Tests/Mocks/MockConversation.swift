@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2021 Wire Swiss GmbH
 //
