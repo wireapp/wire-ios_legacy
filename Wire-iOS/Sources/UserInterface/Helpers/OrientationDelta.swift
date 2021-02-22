@@ -26,7 +26,7 @@ enum OrientationDelta: Int, CaseIterable {
     case upsideDown
     case rotatedRight
 
-    static func +(lhs: OrientationDelta, rhs: OrientationDelta) -> OrientationDelta? {
+    static func + (lhs: OrientationDelta, rhs: OrientationDelta) -> OrientationDelta? {
         let value = (lhs.rawValue + rhs.rawValue) % OrientationDelta.allCases.count
         return OrientationDelta(rawValue: value)
     }
