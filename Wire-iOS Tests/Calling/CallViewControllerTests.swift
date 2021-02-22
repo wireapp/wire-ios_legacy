@@ -43,11 +43,9 @@ final class CallViewControllerTests: XCTestCase {
     var mockVoiceChannel: MockVoiceChannel!
     var conversation: ZMConversation!
     var sut: CallViewController!
-    var coreDataFixture: CoreDataFixture!
     
     override func setUp() {
         super.setUp()
-        coreDataFixture = CoreDataFixture()
         
         conversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
         mockVoiceChannel = MockVoiceChannel(conversation: conversation)
@@ -55,23 +53,28 @@ final class CallViewControllerTests: XCTestCase {
         mockVoiceChannel.mockIsVideoCall = true
         mockVoiceChannel.mockCallState = CallState.established
 
-        sut = createCallViewController(selfUser: coreDataFixture.selfUser, mediaManager: ZMMockAVSMediaManager())
+        let userClient = MockUserClient()
+        userClient.remoteIdentifier = UUID().transportString()
+        
+        let mockSelfUser = MockUser.mockUsers()[0]
+        MockUser.setMockSelf(mockSelfUser)
+        MockUser.mockSelf()?.remoteIdentifier = UUID()
+        MockUser.mockSelf()?.clients = [userClient]
+        MockUser.mockSelf()?.isSelfUser = true
+
+        sut = createCallViewController(selfUser: MockUser.mockSelf(), mediaManager: ZMMockAVSMediaManager())
     }
     
     override func tearDown() {
         sut = nil
         conversation = nil
         mockVoiceChannel = nil
-        coreDataFixture = nil
         super.tearDown()
     }
     
     private func createCallViewController(selfUser: UserType,
                                           mediaManager: ZMMockAVSMediaManager) -> CallViewController {
-        let mockSelfClient = MockUserClient()
-        mockSelfClient.remoteIdentifier = "selfClient123"
-        MockUser.mockSelf().clients = Set([mockSelfClient])
-        
+    
         let proximityManager = ProximityMonitorManager()
         let callController = CallViewController(voiceChannel: mockVoiceChannel, selfUser: selfUser, proximityMonitorManager: proximityManager, mediaManager:mediaManager)
         
