@@ -45,4 +45,4 @@ jobs:
             git commit -m"bump components"
             git push --set-upstream origin $BRANCH
             echo "ℹ️ open bump PR"
-            gh pr create --title "chore: bump components" --body "Bump framework(s) version for:\n${{ github.event.client_payload.repository }}"
+            gh pr create --title "chore: bump components" --body "Bump framework(s) version for: ${{ github.event.client_payload.repository }}"

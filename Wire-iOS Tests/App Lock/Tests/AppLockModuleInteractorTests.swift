@@ -112,6 +112,19 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
+    
+    func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
+        // Given
+        session.lock = .none
+
+        // When
+        sut.executeRequest(.initiateAuthentication)
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(appLock.methodCalls.open.count, 1)
+    }
+
 
     // MARK: - Evaluate authentication
 
