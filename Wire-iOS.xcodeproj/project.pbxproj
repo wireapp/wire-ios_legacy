@@ -9102,7 +9102,7 @@
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"EXCLUDED_ARCHS[sdk=*]" = "i386 arm64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = "i386 arm64";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				VALIDATE_WORKSPACE = YES;
 			};
