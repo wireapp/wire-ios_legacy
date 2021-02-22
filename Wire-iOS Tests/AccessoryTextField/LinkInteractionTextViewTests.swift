@@ -68,7 +68,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
             // GIVEN
             let str = "I'm a markdown link!"
             let url = URL(string: $0)!
-            let attrs: [NSAttributedString.Key: Any] = [.markdownID: Markdown.link, .link: url];
+            let attrs: [NSAttributedString.Key: Any] = [.markdownID: Markdown.link, .link: url]
             sut.attributedText = NSAttributedString(string: str, attributes: attrs)
             // WHEN
             let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
@@ -98,7 +98,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
             // GIVEN
             let str = "I'm a markdown link!"
             let url = URL(string: $0)!
-            let attrs: [NSAttributedString.Key: Any] = [.markdownID: Markdown.link, .link: url];
+            let attrs: [NSAttributedString.Key: Any] = [.markdownID: Markdown.link, .link: url]
             sut.attributedText = NSAttributedString(string: str, attributes: attrs)
             // WHEN
             let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)

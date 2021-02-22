@@ -81,7 +81,7 @@ struct BoolPair { // Tuple would work better, but it cannot conform to @c Copyab
     }
     
     func calculate() -> Bool {
-        return self.first && self.second;
+        return self.first && self.second
     }
 }
 

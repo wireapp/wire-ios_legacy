@@ -180,10 +180,10 @@ class ClientTableViewCell: UITableViewCell {
             self.showVerified {
             
             if userClient.verified {
-                self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "");
+                self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "")
             }
             else {
-                self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "");
+                self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "")
             }
         }
         else {

@@ -128,7 +128,7 @@ final class SettingsClientViewController: UIViewController,
             navController.viewControllers.count > 0 &&
             navController.viewControllers[0] == self,
             self.navigationItem.rightBarButtonItem == nil {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)))
             if fromConversation {
                 let barColor = Settings.shared.colorSchemeVariant == .light ? UIColor.white : UIColor.clear
                 navController.navigationBar.barTintColor = barColor

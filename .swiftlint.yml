@@ -1,5 +1,4 @@
 disabled_rules:
-    - trailing_semicolon
     - trailing_comma
     - leading_whitespace
     - trailing_whitespace

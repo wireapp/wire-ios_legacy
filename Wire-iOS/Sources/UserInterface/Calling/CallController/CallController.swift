@@ -45,7 +45,7 @@ final class CallController: NSObject {
     // MARK: - Public Implementation
     func updateActiveCallPresentationState() {
         guard let priorityCallConversation = priorityCallConversation else {
-            dismissCall();
+            dismissCall()
             return
         }
         
