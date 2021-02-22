@@ -9086,7 +9086,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				EXCLUDED_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -9120,8 +9119,6 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=*]" = "";
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -9131,7 +9128,6 @@
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				EXCLUDED_ARCHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Release;
@@ -9140,7 +9136,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
-				EXCLUDED_ARCHS = "i386 arm64";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_WORKSPACE = YES;
 			};
@@ -9161,7 +9156,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				EXCLUDED_ARCHS = i386;
 				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
