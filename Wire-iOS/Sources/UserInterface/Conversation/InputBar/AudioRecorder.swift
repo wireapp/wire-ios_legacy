@@ -225,7 +225,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     fileprivate func postRecordingProcessing() -> Bool {
         recordLevelCallBack?(0)
         removeDisplayLink()
-        guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
+        guard let filePath = audioRecorder?.url.path, fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
         return true
     }
@@ -252,7 +252,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     @objc fileprivate func displayLinkDidFire() {
         recordLevelCallBack?(levelForCurrentState())
-        guard let duration = durationForCurrentState() , currentDuration != duration else { return }
+        guard let duration = durationForCurrentState(), currentDuration != duration else { return }
         currentDuration = duration
         recordTimerCallback?(currentDuration)
         

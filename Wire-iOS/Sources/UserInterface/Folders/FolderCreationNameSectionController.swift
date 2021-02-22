@@ -70,7 +70,7 @@ class FolderCreationNameSectionController: NSObject, CollectionViewSectionContro
 
 extension FolderCreationNameSectionController {
     
-    func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
     

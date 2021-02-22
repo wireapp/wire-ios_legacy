@@ -22,7 +22,7 @@ import Cartography
 import WireCommonComponents
 
 protocol CanvasViewControllerDelegate: class {
-    func canvasViewController(_ canvasViewController: CanvasViewController,  didExportImage image: UIImage)
+    func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage)
 }
 
 enum CanvasViewControllerEditMode: UInt {
@@ -167,10 +167,10 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
                                               UIColor(red: 0.381, green: 0.192, blue: 0.006, alpha: 1),
                                               UIColor(red: 0.894, green: 0.735, blue: 0.274, alpha: 1),
                                               UIColor(red: 0.905, green: 0.317, blue: 0.466, alpha: 1),
-                                              UIColor(red: 0.58,  green: 0.088, blue: 0.318, alpha: 1),
-                                              UIColor(red: 0.431, green: 0.65,  blue: 0.749, alpha: 1),
-                                              UIColor(red: 0.6,   green: 0.588, blue: 0.278, alpha: 1),
-                                              UIColor(red: 0.44,  green: 0.44,  blue: 0.44,  alpha: 1)]
+                                              UIColor(red: 0.58, green: 0.088, blue: 0.318, alpha: 1),
+                                              UIColor(red: 0.431, green: 0.65, blue: 0.749, alpha: 1),
+                                              UIColor(red: 0.6, green: 0.588, blue: 0.278, alpha: 1),
+                                              UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1)]
         
         colorPickerController.view.addSubview(separatorLine)
         colorPickerController.delegate = self

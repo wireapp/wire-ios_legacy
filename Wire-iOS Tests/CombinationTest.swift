@@ -53,7 +53,7 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
             let new = current.map { variation -> [CombinationChainPair] in
                 let step = mutator.apply(variation.result)
                 return step.map {
-                    let newChain: [Variant] = [variation.combinationChain, [$0.combination]].reduce([],+)
+                    let newChain: [Variant] = [variation.combinationChain, [$0.combination]].reduce([], +)
                     return (combinationChain: newChain, result: $0.result)
                 }
             }
@@ -114,6 +114,6 @@ class CombinationTestTest: XCTestCase {
         
         XCTAssertEqual(test.testAll { (variation) -> (Bool?) in
             return variation.result.calculate() == variation.combinationChain.reduce(true) { $0 && $1 }
-        }.count,  0)
+        }.count, 0)
     }
 }

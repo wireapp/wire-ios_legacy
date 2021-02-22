@@ -211,7 +211,7 @@ final class InputBarButtonsView: UIView {
             previous = current
         }
         
-        if let reference = referenceButton , !rowIsFull {
+        if let reference = referenceButton, !rowIsFull {
             constrain(reference, buttons.last!) { reference, lastButton in
                 lastButton.width == reference.width
             }

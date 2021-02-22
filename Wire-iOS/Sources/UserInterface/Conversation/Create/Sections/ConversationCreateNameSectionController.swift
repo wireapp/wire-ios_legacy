@@ -61,7 +61,7 @@ final class ConversationCreateNameSectionController: NSObject, CollectionViewSec
 
     //MARK: - collectionView
     
-    func collectionView(_ collectionView: UICollectionView,numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
     
