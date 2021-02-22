@@ -25,7 +25,7 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
     let participantIconView = UIImageView()
     let titleLabel = UILabel()
     let accessoryIconView = UIImageView()
-    var contentStackView : UIStackView!
+    var contentStackView: UIStackView!
     
     var sectionName: String?
     var cellIdentifier: String?
@@ -38,7 +38,7 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
         }
     }
     
-    var variant : ColorSchemeVariant = ColorScheme.default.variant {
+    var variant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()

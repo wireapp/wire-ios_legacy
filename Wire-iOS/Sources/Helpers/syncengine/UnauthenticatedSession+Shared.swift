@@ -22,7 +22,7 @@ import WireSyncEngine
 extension UnauthenticatedSession {
     
     @objc
-    static var sharedSession : UnauthenticatedSession? {
+    static var sharedSession: UnauthenticatedSession? {
         
         return AppDelegate.shared.unauthenticatedSession
         

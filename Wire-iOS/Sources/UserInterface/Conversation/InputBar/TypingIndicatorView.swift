@@ -21,13 +21,13 @@ import Cartography
 import WireDataModel
 
 
-final class AnimatedPenView : UIView {
+final class AnimatedPenView: UIView {
     
     private let WritingAnimationKey = "writing"
     private let dots = UIImageView()
     private let pen = UIImageView()
     
-    var isAnimating : Bool = false {
+    var isAnimating: Bool = false {
         didSet {
             pen.layer.speed = isAnimating ? 1 : 0
             pen.layer.beginTime = pen.layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -99,7 +99,7 @@ final class AnimatedPenView : UIView {
         pen.layer.removeAnimation(forKey: WritingAnimationKey)
     }
     
-    @objc func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         startWritingAnimation()
     }
 
@@ -128,7 +128,7 @@ final class TypingIndicatorView: UIView {
         return view
     }()
 
-    private var expandingLineWidth : NSLayoutConstraint?
+    private var expandingLineWidth: NSLayoutConstraint?
     
     var typingUsers: [UserType] = [] {
         didSet {
@@ -180,7 +180,7 @@ final class TypingIndicatorView: UIView {
         nameLabel.text = typingUsers.compactMap { $0.name?.uppercased(with: Locale.current) }.joined(separator: ", ")
     }
     
-    func setHidden(_ hidden : Bool, animated : Bool, completion: Completion? = nil) {
+    func setHidden(_ hidden: Bool, animated: Bool, completion: Completion? = nil) {
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0

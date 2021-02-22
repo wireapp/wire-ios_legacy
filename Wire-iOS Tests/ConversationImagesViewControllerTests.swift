@@ -47,7 +47,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let initialMessage = try! otherUserConversation.appendImage(from: image.imageData!)
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
-        let collection = MockCollection(messages: [ imagesCategoryMatch : [initialMessage] ])
+        let collection = MockCollection(messages: [ imagesCategoryMatch: [initialMessage] ])
         let delegate = AssetCollectionMulticastDelegate()
         
         let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])

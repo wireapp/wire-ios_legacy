@@ -33,7 +33,7 @@ func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedStrin
 }
 
 func +(left: String, right: NSAttributedString) -> NSAttributedString {
-    var range : NSRange? = NSMakeRange(0, 0)
+    var range: NSRange? = NSMakeRange(0, 0)
     let attributes = right.length > 0 ? right.attributes(at: 0, effectiveRange: &range!) : [:]
 
     let result = NSMutableAttributedString()
@@ -44,12 +44,12 @@ func +(left: String, right: NSAttributedString) -> NSAttributedString {
 }
 
 func +(left: NSAttributedString, right: String) -> NSAttributedString {
-    var range : NSRange? = NSMakeRange(0, 0)
+    var range: NSRange? = NSMakeRange(0, 0)
     let attributes = left.length > 0 ? left.attributes(at: left.length - 1, effectiveRange: &range!) : [:]
     
     let result = NSMutableAttributedString()
     result.append(left)
-    result.append(NSAttributedString(string:right, attributes: attributes))
+    result.append(NSAttributedString(string: right, attributes: attributes))
     return NSAttributedString(attributedString: result)
 }
 

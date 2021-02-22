@@ -270,7 +270,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         if !ProcessInfo.processInfo.isRunningTests,
            let conversation = conversation as? ZMConversation {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
             typingObserverToken = conversation.addTypingObserver(self)
         }
 
@@ -335,12 +335,12 @@ final class ConversationInputBarViewController: UIViewController,
         
         if conversationObserverToken == nil,
            let conversation = conversation as? ZMConversation {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
         }
         
         if let connectedUser = conversation.connectedUserType as? ZMUser,
            let userSession = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, in: userSession)
         }
     }
 

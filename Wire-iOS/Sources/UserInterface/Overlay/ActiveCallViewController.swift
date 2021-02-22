@@ -30,11 +30,11 @@ protocol ActiveCallViewControllerDelegate: class {
 }
 
 /// ViewController container for CallViewControllers. Displays the active the controller for active or incoming calls.
-final class ActiveCallViewController : UIViewController {
+final class ActiveCallViewController: UIViewController {
     
     weak var delegate: ActiveCallViewControllerDelegate?
     
-    var callStateObserverToken : Any?
+    var callStateObserverToken: Any?
     
     init(voiceChannel: VoiceChannel) {
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
@@ -55,7 +55,7 @@ final class ActiveCallViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var visibleVoiceChannelViewController : CallViewController {
+    var visibleVoiceChannelViewController: CallViewController {
         didSet {
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
@@ -122,13 +122,13 @@ final class ActiveCallViewController : UIViewController {
         })
     }
     
-    var ongoingCallConversation : ZMConversation? {
+    var ongoingCallConversation: ZMConversation? {
         return ZMUserSession.shared()?.ongoingCallConversation
     }
     
 }
 
-extension ActiveCallViewController : WireCallCenterCallStateObserver {
+extension ActiveCallViewController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
         updateVisibleVoiceChannelViewController()

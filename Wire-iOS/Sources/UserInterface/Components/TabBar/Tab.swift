@@ -28,7 +28,7 @@ class Tab: Button {
         }
     }
 
-    var colorSchemeVariant : ColorSchemeVariant {
+    var colorSchemeVariant: ColorSchemeVariant {
         didSet {
             updateColors()
         }

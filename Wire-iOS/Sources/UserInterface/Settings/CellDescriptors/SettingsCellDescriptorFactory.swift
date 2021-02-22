@@ -231,7 +231,7 @@ class SettingsCellDescriptorFactory {
         let showAnalyticsIdentiferButton = SettingsButtonCellDescriptor(title: "What's my analytics id?", isDestructive: false, selectAction: DebugActions.showAnalyticsIdentifier)
         developerCellDescriptors.append(showAnalyticsIdentiferButton)
 
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)], title: title, icon: .robot)
     }
     
     func helpSection() -> SettingsCellDescriptorType {

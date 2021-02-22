@@ -67,7 +67,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
         super.init(nibName: nil, bundle: nil)
         
-        self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
+        self.userClientToken = UserClientChangeInfo.add(observer: self, for: client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueue({ () -> Void in
                 self.userClient.fetchFingerprintOrPrekeys()
@@ -75,7 +75,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
         self.updateFingerprintLabel()
         self.modalPresentationStyle = .overCurrentContext
-        self.title = NSLocalizedString("registration.devices.title", comment:"")
+        self.title = NSLocalizedString("registration.devices.title", comment: "")
 
         setupViews()
     }
@@ -148,7 +148,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
         descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
-        descriptionTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
+        descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.accent()]
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
@@ -328,7 +328,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient!,
-                                                                fromConversation:self.fromConversation,
+                                                                fromConversation: self.fromConversation,
                                                                 variant: ColorScheme.default.variant)
 
         let navigationControllerWrapper = selfClientController.wrapInNavigationController()
@@ -415,7 +415,7 @@ extension ProfileClientViewController: UserClientObserver {
         
         if changeInfo.sessionHasBeenReset {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
-            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler:  nil)
+            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: .none)
             isLoadingViewVisible = false

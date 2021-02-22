@@ -23,7 +23,7 @@ import WireDataModel
 
 //TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
 protocol UserClientTypeAttributedString {
-    func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
+    func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key: AnyObject], boldAttributes: [NSAttributedString.Key: AnyObject], uppercase: Bool) -> NSAttributedString
 }
 
 private let UserClientIdentifierMinimumLength = 16
@@ -47,7 +47,7 @@ extension Sequence where Element: UserClientType {
 
 extension UserClientType {
     
-    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key: AnyObject], boldAttributes: [NSAttributedString.Key: AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
         let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier

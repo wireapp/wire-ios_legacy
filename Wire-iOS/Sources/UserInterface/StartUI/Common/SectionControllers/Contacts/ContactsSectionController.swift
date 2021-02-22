@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-class ContactsSectionController : SearchSectionController {
+class ContactsSectionController: SearchSectionController {
     
     var contacts: [UserType] = []
     var selection: UserSelection? = nil {
@@ -35,7 +35,7 @@ class ContactsSectionController : SearchSectionController {
         selection?.remove(observer: self)
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)

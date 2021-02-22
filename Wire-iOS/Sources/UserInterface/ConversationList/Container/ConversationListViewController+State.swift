@@ -52,7 +52,7 @@ extension ConversationListViewController {
     }
 
     func selectInboxAndFocusOnView(focus: Bool) {
-        setState(.conversationList, animated:false)
+        setState(.conversationList, animated: false)
         listContentController.selectInboxAndFocus(onView: focus)
     }
 

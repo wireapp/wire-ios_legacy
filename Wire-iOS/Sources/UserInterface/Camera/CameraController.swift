@@ -41,7 +41,7 @@ final class CameraController {
     private var canSwitchInputs: Bool = false
     
     private let photoOutput = AVCapturePhotoOutput()
-    private var captureDelegates = [Int64 : PhotoCaptureDelegate]()
+    private var captureDelegates = [Int64: PhotoCaptureDelegate]()
     
     init?(camera: SettingsCamera) {
         guard !UIDevice.isSimulator else { return nil }

@@ -73,7 +73,7 @@ extension URL {
 
 extension NSMutableAttributedString {
     
-    static private func mention(for user: UserType, name: String, link: URL, suggestedAttributes: [NSAttributedString.Key : Any] = [:]) -> NSAttributedString {
+    static private func mention(for user: UserType, name: String, link: URL, suggestedAttributes: [NSAttributedString.Key: Any] = [:]) -> NSAttributedString {
         let color: UIColor
         let backgroundColor: UIColor
         

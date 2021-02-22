@@ -49,7 +49,7 @@ final class FileTransferView: UIView, TransferView {
     let labelFont: UIFont = .smallLightFont
     let labelBoldFont: UIFont = .smallSemiboldFont
 
-    private var allViews : [UIView] = []
+    private var allViews: [UIView] = []
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -207,7 +207,7 @@ final class FileTransferView: UIView, TransferView {
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
         guard let state = FileMessageViewState.fromConversationMessage(message) else { return }
         
-        var visibleViews : [UIView] = [topLabel, bottomLabel]
+        var visibleViews: [UIView] = [topLabel, bottomLabel]
         
         switch state {
         case .obfuscated:

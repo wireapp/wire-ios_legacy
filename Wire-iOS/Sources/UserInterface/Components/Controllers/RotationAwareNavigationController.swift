@@ -29,7 +29,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?    
     
-    override var shouldAutorotate : Bool {
+    override var shouldAutorotate: Bool {
         if let topController = self.viewControllers.last {
             return topController.shouldAutorotate
         }
@@ -38,7 +38,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
     }
     
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if let topController = self.viewControllers.last {
             return topController.supportedInterfaceOrientations
         }
@@ -47,7 +47,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
     }
     
-    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         if let topController = self.viewControllers.last {
             return topController.preferredInterfaceOrientationForPresentation
         }

@@ -24,7 +24,7 @@ enum DictionaryMergeStrategy {
 
 extension Dictionary {
     
-    mutating func merge(_ other: [Dictionary.Key : Dictionary.Value], strategy: DictionaryMergeStrategy) {
+    mutating func merge(_ other: [Dictionary.Key: Dictionary.Value], strategy: DictionaryMergeStrategy) {
         switch strategy {
         case .preferNew:
             merge(other) { (_, new) in new }

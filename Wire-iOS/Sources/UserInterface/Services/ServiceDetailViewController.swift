@@ -243,7 +243,7 @@ fileprivate extension Button {
         return button
     }
 
-    convenience init(style: ButtonStyle, title:String) {
+    convenience init(style: ButtonStyle, title: String) {
         self.init(style: style)
         setTitle(title, for: .normal)
     }

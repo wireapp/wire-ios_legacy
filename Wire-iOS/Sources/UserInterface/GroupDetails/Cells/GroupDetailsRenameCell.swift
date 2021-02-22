@@ -22,14 +22,14 @@ import UIKit
 import WireDataModel
 import WireCommonComponents
 
-final class GroupDetailsRenameCell : UICollectionViewCell {
+final class GroupDetailsRenameCell: UICollectionViewCell {
     
     let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleTextField = SimpleTextField()
     var contentStackView: UIStackView!
     
-    var variant : ColorSchemeVariant = ColorScheme.default.variant {
+    var variant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()
