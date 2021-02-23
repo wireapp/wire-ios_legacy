@@ -170,6 +170,7 @@ final class TypingIndicatorView: UIView {
             animatedPen.centerY == container.centerY
             
             nameLabel.top == container.top + 4
+            ///lower the priority to prevent this breaks when container's height = 0
             nameLabel.bottom == container.bottom - 4 ~ .defaultHigh
             nameLabel.right == container.right - 8
             
