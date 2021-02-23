@@ -108,10 +108,11 @@ extension XCTestCase {
                         line: UInt = #line) {
         let container = containerView(with: value,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
-        let widthConstraint = container.addWidthConstraint(width: 300)
+        let widthConstraint = container.addWidthConstraint(width: widths.first!)
 
         for width in widths {
             widthConstraint.constant = width
+            container.layoutIfNeeded()
 
             let nameWithProperty: String
             if let name = name {
@@ -126,6 +127,15 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
         }
+    }
+
+    func verifyInAllPhoneWidths(matching value: UIViewController,
+                                snapshotBackgroundColor: UIColor? = nil,
+                                named name: String? = nil,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        verifyInAllPhoneWidths(matching: value.view, snapshotBackgroundColor: snapshotBackgroundColor, named: name, file: file, testName: testName, line: line)
     }
 
     func verifyInAllPhoneWidths(matching value: UIView,
