@@ -48,7 +48,7 @@ fileprivate extension VoiceChannel {
                     .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState,
-                                     isActiveSpeaker: $0.isActiveSpeaker)
+                                     activeSpeakerState: $0.activeSpeakerState)
                 })
 
             } else if let remoteParticipant = conversation?.connectedUser {
