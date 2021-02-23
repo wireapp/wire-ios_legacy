@@ -50,14 +50,14 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
     // MARK: - Typing indication
 
-    func testTypingIndicationIsShown() {
+    func testTypingIndicationIsShown() { ///TODO: fix timer icon lowered
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
         sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
         sut.typingIndicatorView.setHidden(false, animated: false)
 
         // THEN
-        verifyInAllPhoneWidths(matching: sut.view)
+        verifyInAllPhoneWidths(matching: sut)
     }
 
     // MARK: - Ephemeral indicator button
