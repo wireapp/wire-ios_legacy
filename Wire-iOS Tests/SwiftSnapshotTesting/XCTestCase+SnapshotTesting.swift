@@ -99,6 +99,22 @@ extension XCTestCase {
         }
     }
 
+    func verifyInWidths(matching value: UIViewController,
+                        widths: Set<CGFloat>,
+                        snapshotBackgroundColor: UIColor,
+                        named name: String? = nil,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        verifyInWidths(matching: value.view,
+                       widths: widths,
+                       snapshotBackgroundColor: snapshotBackgroundColor,
+                       named: name,
+                       file: file,
+                       testName: testName,
+                       line: line)
+    }
+
     func verifyInWidths(matching value: UIView,
                         widths: Set<CGFloat>,
                         snapshotBackgroundColor: UIColor,
