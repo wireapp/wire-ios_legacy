@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Jij belde";
 "content.system.ephemeral_time_remaining" = "%@ verliet";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Jij";
-"content.system.this_device" = "dit apparaat";
 
 "content.system.call.called" = "%@ belde";
 "content.system.call.called-you" = "%@ belde";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "een nieuw apparaat";
-"content.system.started_using" = "begon met het gebruik van";
 "content.system.is_verified" = "Alle vingerafdrukken zijn geverifieerd";
 
 "content.system.new_users" = "Nieuwe gebruiker toegevoegd.";
 "content.system.verify_devices" = "Controleer apparaten";
 
-"content.system.unverified" = "%@ trok de verificatie van %@ in"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "jouw apparaten";
-"content.system.other_devices" = "%@’s apparaten";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Je hebt dit apparaat een tijdje niet gebruikt. Sommige berichten worden hier niet getoond.";
 "content.system.missing_messages.subtitle_start" = "Tijdens,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Toon alle (%@)";
 "call.participants.list.title" = "Deelnemers";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Video is gepauzeerd";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Ontgrendel Wire met Face ID of Wachtwoord";
 "appLockModule.message.touchID" = "Ontgrendel Wire met Touch ID of Wachtwoord";
 "appLockModule.message.passcode" = "Ontgrendel Wire met wachtwoord";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "Ontgrendel";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

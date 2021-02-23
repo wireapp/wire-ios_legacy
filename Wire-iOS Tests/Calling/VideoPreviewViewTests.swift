@@ -87,7 +87,7 @@ class VideoPreviewViewTests: XCTestCase {
 
     func testActiveState() {
         // GIVEN / WHEN
-        let stream = stubProvider.videoStream(muted: false, active: true).stream
+        let stream = stubProvider.videoStream(muted: false, activeSpeakerState: .active(audioLevelNow: 100)).stream
         sut = createView(from: stream, isCovered: false)
 
         // THEN
