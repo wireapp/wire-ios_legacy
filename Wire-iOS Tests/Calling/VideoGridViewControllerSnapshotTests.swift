@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
     var shouldShowActiveSpeakerFrame: Bool = true
@@ -26,10 +27,14 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 
     var videoStreams: [VideoStream] = []
 
+    var videoState: VideoState = .stopped
+
     var networkQuality: NetworkQuality = .normal
+    
+    var presentationMode: VideoGridPresentationMode = .allVideoStreams
 }
 
-final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class VideoGridViewControllerSnapshotTests: XCTestCase {
     
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
@@ -63,17 +68,26 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
+    
+    func testNoActiveSpeakersSpinner() {
+        configuration.videoStreams = []
+        configuration.presentationMode = .activeSpeakers
         
-    func testForActiveSpeakers_OneToOne() {
+        createSut()
+        
+        verify(matching: sut)
+    }
+        
+    func testActiveSpeakersIndicators_OneToOne() {
         configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
         configuration.floatingVideoStream = selfVideoStream
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
-    func testForActiveSpeakers_Conference() {
+    func testActiveSpeakersIndicators_Conference() {
         configuration.videoStreams = [
             stubProvider.videoStream(participantName: "Alice", active: true),
             stubProvider.videoStream(participantName: "Bob", active: true),
@@ -81,12 +95,12 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         ]
         createSut()
         
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForBadNetwork(){
         configuration.networkQuality = .poor
         createSut()
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }

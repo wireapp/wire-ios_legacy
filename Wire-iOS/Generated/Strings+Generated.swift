@@ -268,6 +268,18 @@ internal enum L10n {
           }
         }
       }
+      internal enum Grid {
+        /// No active speakers...
+        internal static let noActiveSpeakers = L10n.tr("Localizable", "call.grid.no_active_speakers")
+      }
+      internal enum Overlay {
+        internal enum SwitchTo {
+          /// ALL
+          internal static let all = L10n.tr("Localizable", "call.overlay.switch_to.all")
+          /// SPEAKERS
+          internal static let speakers = L10n.tr("Localizable", "call.overlay.switch_to.speakers")
+        }
+      }
       internal enum Participants {
         /// Show All (%@)
         internal static func showAll(_ p1: Any) -> String {

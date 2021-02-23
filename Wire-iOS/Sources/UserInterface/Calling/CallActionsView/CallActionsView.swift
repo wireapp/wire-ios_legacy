@@ -60,6 +60,8 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
     var callState: CallStateExtending { get }
+    var videoGridPresentationMode: VideoGridPresentationMode { get }
+    var allowPresentationModeUpdates: Bool { get }
 }
 
 extension CallActionsViewInputType {
@@ -72,17 +74,35 @@ extension CallActionsViewInputType {
     }
 }
 
+extension VideoGridPresentationMode {
+    var title: String {
+        switch self {
+        case .activeSpeakers:
+            return "call.overlay.switch_to.speakers".localized
+        case .allVideoStreams:
+            return "call.overlay.switch_to.all".localized
+        }
+    }
+    
+    var accessibilityIdentifier: String {
+        switch self {
+        case .activeSpeakers:
+            return "speakers"
+        case .allVideoStreams:
+            return "all"
+        }
+    }
+    
+    var index: Int {
+        type(of: self).allCases.firstIndex(of: self)!
+    }
+}
+
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
 final class CallActionsView: UIView {
     
     weak var delegate: CallActionsViewDelegate?
-    
-    var isCompact = false {
-        didSet {
-            lastInput.apply(update)
-        }
-    }
 
     private let verticalStackView = UIStackView(axis: .vertical)
     private let topStackView = UIStackView(axis: .horizontal)
@@ -91,6 +111,8 @@ final class CallActionsView: UIView {
     private var lastInput: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
     
+    private let speakersAllSegmentedView = RoundedSegmentedView()
+
     // Buttons
     private let muteCallButton = IconLabelButton.muteCall()
     private let videoButton = IconLabelButton.video()
@@ -121,19 +143,33 @@ final class CallActionsView: UIView {
     }
     
     private func setupViews() {
-        videoButtonDisabled.translatesAutoresizingMaskIntoConstraints = false
+        setupSegmentedView()
         videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
+        topStackView.spacing = 32
         bottomStackView.distribution = .equalSpacing
         bottomStackView.alignment = .top
+        bottomStackView.spacing = 32
+        verticalStackView.alignment = .center
+        verticalStackView.spacing = 64
         addSubview(verticalStackView)
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
-        [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
+        [speakersAllSegmentedView, topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(videoButtonDisabled)
     }
 
+    private func setupSegmentedView() {
+        VideoGridPresentationMode.allCases.forEach { mode in
+            speakersAllSegmentedView.addButton(
+                withTitle: mode.title,
+                actionHandler: { [weak self] in self?.updateVideoGridPresentationMode(with: mode) }
+            )
+        }
+        speakersAllSegmentedView.setSelected(true, forItemAt: VideoGridPresentationMode.allVideoStreams.index)
+    }
+    
     private func setupAccessibility() {
         muteCallButton.accessibilityLabel = "voice.mute_button.title".localized
         videoButton.accessibilityLabel = "voice.video_button.title".localized
@@ -143,12 +179,16 @@ final class CallActionsView: UIView {
     }
     
     private func createConstraints() {
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        [verticalStackView, videoButtonDisabled, speakersAllSegmentedView].forEach {
+           $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             topAnchor.constraint(equalTo: verticalStackView.topAnchor),
             trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor),
+            topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
+            bottomStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             firstBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
             firstBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height),
             secondBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
@@ -157,6 +197,8 @@ final class CallActionsView: UIView {
             videoButtonDisabled.rightAnchor.constraint(equalTo: videoButton.rightAnchor),
             videoButtonDisabled.topAnchor.constraint(equalTo: videoButton.topAnchor),
             videoButtonDisabled.bottomAnchor.constraint(equalTo: videoButton.bottomAnchor),
+            speakersAllSegmentedView.widthAnchor.constraint(equalToConstant: 180),
+            speakersAllSegmentedView.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -165,6 +207,8 @@ final class CallActionsView: UIView {
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
+        speakersAllSegmentedView.isHidden = !input.allowPresentationModeUpdates
+        speakersAllSegmentedView.setSelected(true, forItemAt: input.videoGridPresentationMode.index)
         muteCallButton.isSelected = input.isMuted
         muteCallButton.isEnabled = canToggleMuteButton(input)
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
@@ -177,9 +221,7 @@ final class CallActionsView: UIView {
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
         speakerButton.isEnabled = canToggleSpeakerButton(input)
         acceptCallButton.isHidden = !input.callState.canAccept
-        firstBottomRowSpacer.isHidden = input.callState.canAccept || isCompact
-        secondBottomRowSpacer.isHidden = isCompact
-        verticalStackView.axis = isCompact ? .horizontal : .vertical
+        firstBottomRowSpacer.isHidden = input.callState.canAccept
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.callState.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.callState.isTerminating
@@ -196,20 +238,13 @@ final class CallActionsView: UIView {
     private func canToggleSpeakerButton(_ input: CallActionsViewInputType) -> Bool {
         return input.callState.isConnected && input.mediaState.canSpeakerBeToggled
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        verticalStackView.spacing = {
-            guard isCompact else { return 64 } // Calculate the spacing manually in compact mode
-            let iconCount = topStackView.visibleSubviews.count + bottomStackView.visibleSubviews.count
-            return (bounds.width - (CGFloat(iconCount) * IconButton.width)) / CGFloat(iconCount - 1)
-        }()
-        topStackView.spacing = isCompact ? verticalStackView.spacing : 32
-        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
-    }
     
     // MARK: - Action Output
     
+    func updateVideoGridPresentationMode(with mode: VideoGridPresentationMode) {
+        delegate?.callActionsView(self, perform: .updateVideoGridPresentationMode(mode))
+    }
+
     @objc private func performButtonAction(_ sender: IconLabelButton) {
         delegate?.callActionsView(self, perform: action(for: sender))
     }
@@ -240,6 +275,8 @@ final class CallActionsView: UIView {
 
         let targetCamera = input.cameraType == .front ? "back" : "front"
         flipCameraButton.accessibilityLabel = "call.actions.label.switch_to_\(targetCamera)_camera".localized
+        
+        speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }
 
 }

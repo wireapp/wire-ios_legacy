@@ -28,6 +28,25 @@ extension ScreenCurtain {
             return true
         }
 
+        override var shouldAutorotate: Bool {
+            return topmostViewController?.shouldAutorotate ?? true
+        }
+
+        override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+            return topmostViewController?.supportedInterfaceOrientations ?? wr_supportedInterfaceOrientations
+        }
+
+        private var topmostViewController: UIViewController? {
+            guard
+                let topmostViewController = UIApplication.shared.topmostViewController(),
+                !(topmostViewController is Self)
+            else {
+                return nil
+            }
+
+            return topmostViewController
+        }
+
         // MARK: - Life cycle
         
         override func viewDidLoad() {

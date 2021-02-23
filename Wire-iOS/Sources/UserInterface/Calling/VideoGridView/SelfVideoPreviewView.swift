@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import avs
+import WireSyncEngine
 
 final class SelfVideoPreviewView: BaseVideoPreviewView {
     
@@ -27,10 +28,12 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     override var stream: Stream {
         didSet {
             guard stream != oldValue else { return }
-            updateCaptureState()
+            updateCaptureState(with: stream.videoState)
         }
     }
     
+    private var videoState: VideoState?
+
     deinit {
         stopCapture()
     }
@@ -61,12 +64,15 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.didMoveToWindow()
         
         if window != nil {
-            updateCaptureState()
+            updateCaptureState(with: stream.videoState)
         }
     }
     
-    private func updateCaptureState() {
-        stream.videoState == .some(.started) ? startCapture() : stopCapture()
+    func updateCaptureState(with newVideoState: VideoState?) {
+        guard newVideoState != self.videoState else { return }
+        
+        newVideoState == .some(.started) ? startCapture() : stopCapture()
+        self.videoState = newVideoState
     }
     
     func startCapture() {

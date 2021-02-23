@@ -675,6 +675,11 @@
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
 
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
 "call.video.paused" = "Video paused";
 
 "call.video.too_many.alert.title" = "Too many people for Video";
