@@ -141,14 +141,3 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
     }
     
 }
-
-extension ActiveSpeakerState {
-    var isSpeakingNow: Bool {
-        switch self {
-        case .active(audioLevelNow: let audioLevel):
-            return audioLevel > 0
-        default:
-            return false
-        }
-    }
-}
