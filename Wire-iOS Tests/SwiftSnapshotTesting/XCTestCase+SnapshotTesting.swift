@@ -108,10 +108,11 @@ extension XCTestCase {
                         line: UInt = #line) {
         let container = containerView(with: value,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
-        let widthConstraint = container.addWidthConstraint(width: 300)
+        let widthConstraint = container.addWidthConstraint(width: widths.first!)
 
         for width in widths {
             widthConstraint.constant = width
+            container.layoutIfNeeded()
 
             let nameWithProperty: String
             if let name = name {

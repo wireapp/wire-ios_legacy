@@ -42,8 +42,8 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     }
 
     func testNormalState() {
-        verifyInAllPhoneWidths(matching: sut.view)
-        verifyInWidths(matching: sut.view,
+        verifyInAllPhoneWidths(matching: sut)
+        verifyInWidths(matching: sut,
                        widths: tabletWidths(), snapshotBackgroundColor: .white)
 
     }
