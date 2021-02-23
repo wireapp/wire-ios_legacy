@@ -117,7 +117,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Given
         session.lock = .database
         appLock.isCustomPasscodeSet = false
-        appLock.requireCustomPasscode = true
+        authenticationType.current = .unavailable
 
         // When
         sut.executeRequest(.initiateAuthentication)
