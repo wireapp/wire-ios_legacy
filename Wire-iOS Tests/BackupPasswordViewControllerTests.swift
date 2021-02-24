@@ -39,7 +39,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
             expectation.fulfill()
         }
         // WHEN
-        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: validPassword))
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: validPassword))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
         // THEN
         self.waitForExpectations(timeout: 0.5) { error in
@@ -53,7 +53,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
             XCTFail()
         }
         // WHEN
-        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "              "))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "              "))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
     }
 }

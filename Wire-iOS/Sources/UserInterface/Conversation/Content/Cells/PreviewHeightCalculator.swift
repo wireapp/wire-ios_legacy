@@ -37,7 +37,7 @@ class PreviewHeightCalculator: NSObject {
     }
     
     static func compressedSizeForView(_ view: UIView) -> CGFloat {
-        return view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height;
+        return view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
     }
     
     static func heightForVideo() -> CGFloat {

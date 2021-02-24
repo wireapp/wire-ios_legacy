@@ -58,7 +58,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
             
             self.isAnimationRunning = true
             self.imageView.alpha = 1.0
-            self.animationBlock!(self.animationBlock as Any, 2);
+            self.animationBlock!(self.animationBlock as Any, 2)
         }
     }
     

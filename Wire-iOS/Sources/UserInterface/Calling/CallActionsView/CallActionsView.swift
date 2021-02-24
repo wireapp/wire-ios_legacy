@@ -270,7 +270,7 @@ final class CallActionsView: UIView {
         speakerButton.accessibilityLabel = "call.actions.label.toggle_speaker_\(input.mediaState.isSpeakerEnabled ? "off" : "on")".localized
         acceptCallButton.accessibilityLabel = "call.actions.label.accept_call".localized
         endCallButton.accessibilityLabel = "call.actions.label.\(input.callState.canAccept ? "reject" : "terminate")_call".localized
-        videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized;
+        videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized
         videoButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
 
         let targetCamera = input.cameraType == .front ? "back" : "front"

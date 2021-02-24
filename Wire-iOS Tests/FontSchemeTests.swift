@@ -23,10 +23,10 @@ import XCTest
 final class FontSchemeTests: XCTestCase {
 
     fileprivate func insertFontSizeItems(_ points: [FontSize: CGFloat], _ multiplier: CGFloat, _ fixedFontNames: inout [FontSpec: String], _ fontTextStyle: FontTextStyle) {
-        let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: round(points[FontSize.large]! * multiplier)),
+        let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: round(points[FontSize.large]! * multiplier)),
                                                                          (fontSize: .normal, point: round(points[FontSize.normal]! * multiplier)),
                                                                          (fontSize: .medium, point: round(points[FontSize.medium]! * multiplier)),
-                                                                         (fontSize: .small,  point: round(points[FontSize.small]! * multiplier))]
+                                                                         (fontSize: .small, point: round(points[FontSize.small]! * multiplier))]
 
         let allFontWeightTuples: [(fontWeight: FontWeight?, name: String)] = [(fontWeight: .ultraLight, name: "Ultralight"),
                                                                               (fontWeight: .thin, name: "Thin"),

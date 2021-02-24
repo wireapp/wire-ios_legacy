@@ -170,11 +170,11 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     // This property has to be computed in order to return the correct call duration
     var state: CallStatusViewState {
         switch voiceChannelSnapshot.state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
+        case .incoming(_, shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_, shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }

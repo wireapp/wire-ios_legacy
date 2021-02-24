@@ -490,7 +490,7 @@ final class InputBar: UIView {
 
     func undo() {
         guard inputBarState.isEditing else { return }
-        guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
+        guard let undoManager = textView.undoManager, undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()
     }

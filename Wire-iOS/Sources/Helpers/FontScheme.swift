@@ -173,17 +173,17 @@ final class FontScheme {
 
 
         // The ratio is following 11:12:16:24, same as default case
-        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
+        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 40),
                                                                                 (fontSize: .normal, point: 26),
                                                                                 (fontSize: .medium, point: 20),
-                                                                                (fontSize: .small,  point: 18)]
+                                                                                (fontSize: .small, point: 18)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
 
 
-        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 21),
+        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 21),
                                                                                (fontSize: .normal, point: 14),
                                                                                (fontSize: .medium, point: 11),
-                                                                               (fontSize: .small,  point: 10)]
+                                                                               (fontSize: .small, point: 10)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none

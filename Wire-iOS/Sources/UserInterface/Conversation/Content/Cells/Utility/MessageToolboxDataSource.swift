@@ -295,7 +295,7 @@ class MessageToolboxDataSource {
         if let editedTimeString = message.formattedEditedDate() {
             timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, editedTimeString)
         } else if let dateTimeString = message.formattedReceivedDate() {
-            if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
+            if let systemMessage = message as? ZMSystemMessage, systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
             } else if let durationString = message.systemMessageData?.callDurationString() {
                 timestampString = dateTimeString + MessageToolboxDataSource.separator + durationString

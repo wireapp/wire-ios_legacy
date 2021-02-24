@@ -79,7 +79,7 @@ extension ConversationInputBarViewController {
         controller.addAction(uploadTestAlertAction(size: 41943040, title: "40 MB file", fileName: "40MBFile.bin"))
 
         if ZMUser.selfUser()?.hasTeam == true {
-            controller.addAction(uploadTestAlertAction(size: 83886080,  title: "80 MB file",  fileName: "80MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 83886080, title: "80 MB file", fileName: "80MBFile.bin"))
             controller.addAction(uploadTestAlertAction(size: 125829120, title: "120 MB file", fileName: "120MBFile.bin"))
         }
         #endif
