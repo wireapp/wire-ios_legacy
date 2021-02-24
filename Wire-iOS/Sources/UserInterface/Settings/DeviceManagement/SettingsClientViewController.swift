@@ -54,7 +54,7 @@ final class SettingsClientViewController: UIViewController,
     var tableView: UITableView!
     let topSeparator = OverflowSeparatorView()
     
-    var fromConversation : Bool = false
+    var fromConversation: Bool = false
 
     var variant: ColorSchemeVariant? {
         didSet {
@@ -93,7 +93,7 @@ final class SettingsClientViewController: UIViewController,
         self.credentials = credentials
     }
     
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
     
@@ -385,7 +385,7 @@ final class SettingsClientViewController: UIViewController,
         if changeInfo.sessionHasBeenReset {
             isLoadingViewVisible = false
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
-            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler:  { [unowned alert] (_) -> Void in
+            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default, handler: { [unowned alert] (_) -> Void in
                 alert.dismiss(animated: true, completion: .none)
             })
             alert.addAction(okAction)

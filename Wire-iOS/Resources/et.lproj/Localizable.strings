@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Sina helistasid";
 "content.system.ephemeral_time_remaining" = "%@ lahkus";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Sina";
-"content.system.this_device" = "see seade";
 
 "content.system.call.called" = "%@ helistas";
 "content.system.call.called-you" = "%@ helistasid";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "uut seadet";
-"content.system.started_using" = "hakkasid kasutama";
 "content.system.is_verified" = "Kontrollitakse kõiki sõrmejälgi";
 
 "content.system.new_users" = "Uus kasutaja liitus.";
 "content.system.verify_devices" = "Kinnita seadmed";
 
-"content.system.unverified" = "%@ tunnistas valeks ühe %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "sinu seadmetest";
-"content.system.other_devices" = "kasutaja %@ seadmed";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Sa ei ole seda seadet mõnda aega kasutanud. Osad sõnumid ei pruugi siia ilmuda.";
 "content.system.missing_messages.subtitle_start" = "Samal ajal,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Näita kõik (%@)";
 "call.participants.list.title" = "Osalejad";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Video pausil";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
 "appLockModule.message.touchID" = "Ava Wire Touch ID või parooliga";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "Vabasta lukust";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

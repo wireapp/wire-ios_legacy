@@ -28,9 +28,9 @@ protocol ZMUserSessionInterface: class {
     
     func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?)
 
-    var isNotificationContentHidden : Bool { get set }
+    var isNotificationContentHidden: Bool { get set }
     
-    var encryptMessagesAtRest : Bool { get }
+    var encryptMessagesAtRest: Bool { get }
 }
 
 // an interface for ZMUserSession's Swift-only functions

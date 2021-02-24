@@ -60,7 +60,7 @@ final class NetworkConditionHelper {
         }
     }
 
-    func bestQualityType(cellularTypeDict: [String : String]?) -> NetworkQualityType {
+    func bestQualityType(cellularTypeDict: [String: String]?) -> NetworkQualityType {
 
         guard let cellularTypeDict = cellularTypeDict else { return .unknown }
 

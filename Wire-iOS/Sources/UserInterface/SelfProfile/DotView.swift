@@ -26,7 +26,7 @@ final class DotView: UIView {
     fileprivate let centerView = ShapeView()
     private var userObserver: NSObjectProtocol!
     private var clientsObserverTokens: [NSObjectProtocol] = []
-    private let user : ZMUser?
+    private let user: ZMUser?
     public var hasUnreadMessages: Bool = false {
         didSet { self.updateIndicator() }
     }

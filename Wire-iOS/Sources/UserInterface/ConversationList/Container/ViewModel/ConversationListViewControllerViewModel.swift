@@ -123,7 +123,7 @@ extension ConversationListViewController.ViewModel {
                 completion: Completion? = nil) {
         selectedConversation = conversation
 
-        viewController?.setState(.conversationList, animated:animated) { [weak self] in
+        viewController?.setState(.conversationList, animated: animated) { [weak self] in
             self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         }
     }

@@ -24,11 +24,11 @@ import WireSyncEngine
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
-final class ProximityMonitorManager : NSObject {
+final class ProximityMonitorManager: NSObject {
     
     typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
 
-    var callStateObserverToken : Any?
+    var callStateObserverToken: Any?
 
     fileprivate(set) var raisedToEar: Bool = false {
         didSet {
@@ -113,7 +113,7 @@ final class ProximityMonitorManager : NSObject {
     
 }
 
-extension ProximityMonitorManager : WireCallCenterCallStateObserver {
+extension ProximityMonitorManager: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateProximityMonitorState()
@@ -121,7 +121,7 @@ extension ProximityMonitorManager : WireCallCenterCallStateObserver {
     
 }
 
-extension ProximityMonitorManager : AVSMediaManagerClientObserver {
+extension ProximityMonitorManager: AVSMediaManagerClientObserver {
     
     func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
         if notification.speakerEnableChanged {

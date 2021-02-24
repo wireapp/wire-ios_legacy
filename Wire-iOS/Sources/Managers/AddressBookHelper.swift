@@ -23,22 +23,22 @@ import WireSyncEngine
 import UIKit
 
 protocol AddressBookHelperProtocol: class {
-    var isAddressBookAccessGranted : Bool { get }
-    var isAddressBookAccessUnknown : Bool { get }
-    var isAddressBookAccessDisabled : Bool { get }
+    var isAddressBookAccessGranted: Bool { get }
+    var isAddressBookAccessUnknown: Bool { get }
+    var isAddressBookAccessDisabled: Bool { get }
     var accessStatusDidChangeToGranted: Bool { get }
     
-    static var sharedHelper : AddressBookHelperProtocol { get }
+    static var sharedHelper: AddressBookHelperProtocol { get }
     
     func requestPermissions(_ callback: ((Bool)->())?)
     func persistCurrentAccessStatus()
 }
 
 /// Allows access to address book for search
-final class AddressBookHelper : AddressBookHelperProtocol {
+final class AddressBookHelper: AddressBookHelperProtocol {
 
     /// Singleton
-    static var sharedHelper : AddressBookHelperProtocol = AddressBookHelper()
+    static var sharedHelper: AddressBookHelperProtocol = AddressBookHelper()
 
     // MARK: - Constants
 
@@ -46,15 +46,15 @@ final class AddressBookHelper : AddressBookHelperProtocol {
 
     // MARK: - Permissions
     
-    var isAddressBookAccessUnknown : Bool {
+    var isAddressBookAccessUnknown: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
     }
     
-    var isAddressBookAccessGranted : Bool {
+    var isAddressBookAccessGranted: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
     
-    var isAddressBookAccessDisabled : Bool {
+    var isAddressBookAccessDisabled: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .denied
     }
     

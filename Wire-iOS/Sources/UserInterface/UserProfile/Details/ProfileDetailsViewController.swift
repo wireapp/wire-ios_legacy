@@ -155,7 +155,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         return ColorScheme.default.statusBarStyle
     }
     
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
     

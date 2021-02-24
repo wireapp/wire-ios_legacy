@@ -25,14 +25,14 @@ class VideoStreamStubProvider {
         client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
         muted: Bool = false,
         videoState: VideoState = .started,
-        active: Bool = false,
+        activeSpeakerState: ActiveSpeakerState = .inactive,
         paused: Bool = false) -> VideoStream {
         let stream = Wire.Stream(
             streamId: client,
             participantName: participantName,
             microphoneState: muted ? .muted : .unmuted,
             videoState: videoState,
-            isParticipantActiveSpeaker: active
+            activeSpeakerState: activeSpeakerState
         )
         return VideoStream(stream: stream, isPaused: paused)
     }

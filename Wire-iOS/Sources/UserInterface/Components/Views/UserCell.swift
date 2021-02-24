@@ -44,9 +44,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     let videoIconView = IconImageView()
     let checkmarkIconView = UIImageView()
     let microphoneIconView = PulsingIconImageView()
-    var contentStackView : UIStackView!
-    var titleStackView : UIStackView!
-    var iconStackView : UIStackView!
+    var contentStackView: UIStackView!
+    var titleStackView: UIStackView!
+    var iconStackView: UIStackView!
     
     fileprivate var avatarSpacerWidthConstraint: NSLayoutConstraint?
     
@@ -67,7 +67,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     var sectionName: String?
-    var cellIdentifier : String?
+    var cellIdentifier: String?
 
     override var isSelected: Bool {
         didSet {
@@ -265,7 +265,7 @@ extension UserCell {
         return summary && UserCell.boldFont
     }
 
-    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+    static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] = [:]
 }
 
 // MARK: - Availability

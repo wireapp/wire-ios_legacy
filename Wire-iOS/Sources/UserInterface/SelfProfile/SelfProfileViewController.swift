@@ -46,7 +46,7 @@ final class SelfProfileViewController: UIViewController {
 
     // MARK: - Configuration
 
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 

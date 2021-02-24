@@ -32,9 +32,9 @@ final class ImageToolbarView: UIView {
     let emojiButton = IconButton()
     let textButton = IconButton()
     let expandButton = IconButton()
-    var buttons : [IconButton] = []
+    var buttons: [IconButton] = []
     
-    var configuration : ImageToolbarConfiguration {
+    var configuration: ImageToolbarConfiguration {
         didSet {
             guard oldValue != configuration else { return }
             
@@ -56,7 +56,7 @@ final class ImageToolbarView: UIView {
         }
     }
     
-    var isPlacedOnImage : Bool = false {
+    var isPlacedOnImage: Bool = false {
         didSet {
             backgroundColor = isPlacedOnImage ? UIColor(white: 0, alpha: 0.40) : UIColor.clear
             updateButtonStyle()
@@ -122,7 +122,7 @@ final class ImageToolbarView: UIView {
     }
     
     func createButtonConstraints() {
-        let spacing : CGFloat = 16
+        let spacing: CGFloat = 16
         
         if let firstButton = buttons.first {
             constrain(buttonContainer, firstButton) { container, firstButton in

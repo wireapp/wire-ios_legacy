@@ -99,7 +99,7 @@ class Settings {
     subscript<E: RawRepresentable>(index: SettingKey) -> E? {
         get {
             if let value: E.RawValue = defaults.value(forKey: index.rawValue) as? E.RawValue {
-                return E(rawValue:value)
+                return E(rawValue: value)
             }
 
             return nil
@@ -111,7 +111,7 @@ class Settings {
 
     subscript(index: SettingKey) -> LocationData? {
         get {
-            if let value = defaults.value(forKey: index.rawValue) as? [String : Any] {
+            if let value = defaults.value(forKey: index.rawValue) as? [String: Any] {
                 return LocationData.locationData(fromDictionary: value)
             }
             

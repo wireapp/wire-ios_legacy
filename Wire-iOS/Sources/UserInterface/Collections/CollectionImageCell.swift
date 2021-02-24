@@ -87,7 +87,7 @@ final class CollectionImageCell: CollectionCell {
         loadImage()
     }
 
-    var saveableImage : SavableImage?
+    var saveableImage: SavableImage?
     
     @objc func save(_ sender: AnyObject!) {
         guard let imageMessageData = self.message?.imageMessageData, let imageData = imageMessageData.imageData else { return }

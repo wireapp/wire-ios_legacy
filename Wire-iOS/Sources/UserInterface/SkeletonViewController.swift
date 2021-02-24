@@ -37,14 +37,14 @@ final class ListSkeletonCellNameItemView: UIView {
     }
 }
 
-final class ListSkeletonCellView : UIView {
+final class ListSkeletonCellView: UIView {
     
-    let avatarView : UIView
-    let lineView : ListSkeletonCellNameItemView
+    let avatarView: UIView
+    let lineView: ListSkeletonCellNameItemView
     
-    var lineConstraint : NSLayoutConstraint?
+    var lineConstraint: NSLayoutConstraint?
     
-    var lineInset : Float {
+    var lineInset: Float {
         set {
             lineConstraint?.constant = -CGFloat(newValue + 16)
         }
@@ -99,7 +99,7 @@ final class ListSkeletonCell: UITableViewCell {
     
     static let estimatedHeight = 64.0
     
-    private let skeletonCellView : ListSkeletonCellView
+    private let skeletonCellView: ListSkeletonCellView
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         skeletonCellView = ListSkeletonCellView()
@@ -115,7 +115,7 @@ final class ListSkeletonCell: UITableViewCell {
         }
     }
     
-    var lineInset : Float {
+    var lineInset: Float {
         set {
             skeletonCellView.lineInset = newValue
         }
@@ -130,7 +130,7 @@ final class ListSkeletonCell: UITableViewCell {
     
 }
 
-final class ListSkeletonContentView : UITableView, UITableViewDataSource {
+final class ListSkeletonContentView: UITableView, UITableViewDataSource {
     let randomizeDummyItem: Bool
     
     init(randomizeDummyItem: Bool) {
@@ -183,8 +183,8 @@ final class ListSkeletonView: UIView {
         return bar
     }()
     
-    let listContentView : ListSkeletonContentView
-    var buttonRowView : UIStackView!
+    let listContentView: ListSkeletonContentView
+    var buttonRowView: UIStackView!
     
     init(_ account: Account, randomizeDummyItem: Bool) {
         let accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
@@ -248,11 +248,11 @@ final class ListSkeletonView: UIView {
 
 final class SkeletonViewController: UIViewController {
     
-    let account : Account
-    let backgroundImageView : UIImageView
-    let blurEffectView : UIVisualEffectView
-    let listView : ListSkeletonView
-    let customSplitViewController : SplitViewController
+    let account: Account
+    let backgroundImageView: UIImageView
+    let blurEffectView: UIVisualEffectView
+    let listView: ListSkeletonView
+    let customSplitViewController: SplitViewController
     
     init(from: Account?,
          to: Account,

@@ -30,7 +30,7 @@ enum TeamInviteEvent: Event {
         }
     }
     
-    var attributes: [AnyHashable : Any]? {
+    var attributes: [AnyHashable: Any]? {
         switch self {
         case .sentInvite(let method): return ["method": method.rawValue]
         }

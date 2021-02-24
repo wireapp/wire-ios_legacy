@@ -22,8 +22,8 @@ import UIKit
 
 final class ConversationListOnboardingHint: UIView {
     
-    let messageLabel : UILabel = UILabel()
-    let arrowView : UIImageView = UIImageView()
+    let messageLabel: UILabel = UILabel()
+    let arrowView: UIImageView = UIImageView()
     weak var arrowPointToView: UIView? {
         didSet {
             guard let arrowPointToView = arrowPointToView else { return }

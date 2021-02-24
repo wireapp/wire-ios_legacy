@@ -214,7 +214,7 @@ extension ActiveCallRouter: CallQualityRouterProtocol {
 
 // MARK: - CallTopOverlayControllerDelegate
 extension ActiveCallRouter: CallTopOverlayControllerDelegate {
-    func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel:VoiceChannel?) {
+    func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?) {
         guard let voiceChannel = voiceChannel else { return }
         presentActiveCall(for: voiceChannel, animated: true)
     }

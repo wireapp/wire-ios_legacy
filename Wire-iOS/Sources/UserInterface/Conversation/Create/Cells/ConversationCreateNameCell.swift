@@ -23,7 +23,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
     
     let textField = SimpleTextField()
     
-    var variant : ColorSchemeVariant = ColorScheme.default.variant {
+    var variant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()

@@ -33,14 +33,18 @@ extension AVSVideoView: AVSIdentifierProvider {
             participantName: nil,
             microphoneState: .unmuted,
             videoState: .none,
-            isParticipantActiveSpeaker: false
+            activeSpeakerState: .inactive
         )
     }
 }
 
 private extension Stream {
-    var isParticipantUnmutedAndActiveSpeaker: Bool {
-        return isParticipantActiveSpeaker && microphoneState == .unmuted
+    var isParticipantUnmutedAndSpeakingNow: Bool {
+        return activeSpeakerState.isSpeakingNow && microphoneState == .unmuted
+    }
+    
+    var isParticipantUnmutedAndActive: Bool {
+        return activeSpeakerState != .inactive && microphoneState == .unmuted
     }
 }
 
@@ -103,7 +107,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.isParticipantActiveSpeaker)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
     }
     
@@ -130,7 +134,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         
     private func updateActiveSpeakerFrame() {
         let showFrame = shouldShowActiveSpeakerFrame
-            && stream.isParticipantUnmutedAndActiveSpeaker
+            && stream.isParticipantUnmutedAndSpeakingNow
             && !isMaximized
         layer.borderWidth = showFrame ? 1 : 0
     }
@@ -176,7 +180,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         get {
             let name = stream.participantName ?? ""
             let maximizationState = isMaximized ? "maximized" : "minimized"
-            let activityState = stream.isParticipantUnmutedAndActiveSpeaker ? "active" : "inactive"
+            let activityState = stream.isParticipantUnmutedAndActive ? "active" : "inactive"
             return "VideoView.\(name).\(maximizationState).\(activityState)"
         }
         set {}

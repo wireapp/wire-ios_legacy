@@ -19,18 +19,18 @@
 import Foundation
 import UIKit
 
-final class SearchResultsView : UIView {
+final class SearchResultsView: UIView {
     
-    let accessoryViewMargin : CGFloat = 16.0
+    let accessoryViewMargin: CGFloat = 16.0
     let emptyResultContainer = UIView()
 
     @objc
-    let collectionView : UICollectionView
-    let collectionViewLayout : UICollectionViewFlowLayout
+    let collectionView: UICollectionView
+    let collectionViewLayout: UICollectionViewFlowLayout
     let accessoryContainer = UIView()
-    var lastLayoutBounds : CGRect = CGRect.zero
+    var lastLayoutBounds: CGRect = CGRect.zero
     var accessoryContainerHeightConstraint: NSLayoutConstraint?
-    var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
+    var accessoryViewBottomOffsetConstraint: NSLayoutConstraint?
     weak var parentViewController: UIViewController?
     
     init() {
@@ -102,7 +102,7 @@ final class SearchResultsView : UIView {
         super.layoutSubviews()
     }
 
-    var accessoryView : UIView? {
+    var accessoryView: UIView? {
         didSet {
             guard oldValue != accessoryView else { return }
             
@@ -128,7 +128,7 @@ final class SearchResultsView : UIView {
         }
     }
 
-    var emptyResultView : UIView? {
+    var emptyResultView: UIView? {
         didSet {
             guard oldValue != emptyResultView else { return }
             

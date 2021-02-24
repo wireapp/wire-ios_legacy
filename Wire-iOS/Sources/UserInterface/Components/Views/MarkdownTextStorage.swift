@@ -33,11 +33,11 @@ class MarkdownTextStorage: NSTextStorage {
     var currentMarkdown: Markdown = .none
     private var needsCheck: Bool = false
     
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key : Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
         return storage.attributes(at: location, effectiveRange: range)
     }
     
-    override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
+    override func setAttributes(_ attrs: [NSAttributedString.Key: Any]?, range: NSRange) {
         beginEditing()
         storage.setAttributes(attrs, range: range)
         
@@ -54,7 +54,7 @@ class MarkdownTextStorage: NSTextStorage {
         endEditing()
     }
     
-    override func addAttributes(_ attrs: [NSAttributedString.Key : Any], range: NSRange) {
+    override func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
         beginEditing()
         storage.addAttributes(attrs, range: range)
         

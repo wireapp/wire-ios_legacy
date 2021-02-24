@@ -37,7 +37,7 @@ final class ConversationInputBarSendController: NSObject {
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
-                try conversation.appendImage(from:imageData)
+                try conversation.appendImage(from: imageData)
                 self.feedbackGenerator.impactOccurred()
             } catch {
                 Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
@@ -57,7 +57,7 @@ final class ConversationInputBarSendController: NSObject {
             let shouldFetchLinkPreview = !Settings.disableLinkPreviews
 
             do {
-                try conversation.appendText(content:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
+                try conversation.appendText(content: text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
                 conversation.draftMessage = nil
             } catch {
                 Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")

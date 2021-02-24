@@ -52,7 +52,11 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         MockUser.mockSelf().clients = Set([mockSelfClient])
         
         let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
-        selfVideoStream = stubProvider.videoStream(participantName: "Alice", client: client, active: true)
+        selfVideoStream = stubProvider.videoStream(
+            participantName: "Alice",
+            client: client,
+            activeSpeakerState: .active(audioLevelNow: 100)
+        )
     }
     
     override func tearDown() {
@@ -79,7 +83,7 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
     }
         
     func testActiveSpeakersIndicators_OneToOne() {
-        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
+        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100))]
         configuration.floatingVideoStream = selfVideoStream
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
@@ -89,9 +93,9 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
     
     func testActiveSpeakersIndicators_Conference() {
         configuration.videoStreams = [
-            stubProvider.videoStream(participantName: "Alice", active: true),
-            stubProvider.videoStream(participantName: "Bob", active: true),
-            stubProvider.videoStream(participantName: "Carol", active: true),
+            stubProvider.videoStream(participantName: "Alice", activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(participantName: "Carol", activeSpeakerState: .active(audioLevelNow: 100)),
         ]
         createSut()
         

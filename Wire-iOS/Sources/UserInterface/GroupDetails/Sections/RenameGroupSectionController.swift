@@ -88,7 +88,7 @@ final class RenameGroupSectionController: NSObject, CollectionViewSectionControl
     
 }
 
-extension RenameGroupSectionController : ZMConversationObserver {
+extension RenameGroupSectionController: ZMConversationObserver {
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.securityLevelChanged || changeInfo.nameChanged else { return }

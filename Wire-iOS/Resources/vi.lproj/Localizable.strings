@@ -1,0 +1,1857 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// General strings
+
+
+"general.ok" = "OK";
+"general.next" = "Tiếp theo";
+"general.cancel" = "Huỷ";
+"general.close" = "Đóng";
+"general.back" = "Trở lại";
+"general.open_settings" = "Mở Cài đặt Wire";
+"general.edit" = "Sửa";
+"general.done" = "Xong";
+"general.confirm" = "OK";
+"general.later" = "Để sau";
+"general.skip" = "Không phải bây giờ";
+"general.accept" = "Chấp nhận";
+"general.decline" = "Không, cảm ơn";
+"general.failure" = "Đã xảy ra lỗi";
+"general.failure.try_again" = "Vui lòng thử lại sau.";
+"general.service" = "Dịch vụ";
+"general.off" = "Tắt";
+"general.on" = "Bật";
+"general.loading" = "Đang tải…";
+"general.paste" = "Dán";
+
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Phòng khách";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Bạn)";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Tìm kiếm bằng tên hoặc tên người dùng";
+"peoplepicker.header.top_people" = "Mọi người Hàng đầu";
+"peoplepicker.button.create_conversation" = "Tạo nhóm";
+"peoplepicker.button.add_to_conversation" = "Thêm Người tham gia vào Nhóm";
+"peoplepicker.header.conversations" = "Nhóm";
+"peoplepicker.header.team_conversations" = "%@ Nhóm";
+"peoplepicker.header.send_invitation" = "Mời";
+"peoplepicker.header.contacts" = "Danh bạ";
+"peoplepicker.header.contacts_personal" = "Danh bạ Cá nhân";
+"peoplepicker.header.directory" = "Kết nối";
+
+"peoplepicker.group.title.singular" = "Thêm người tham gia";
+"peoplepicker.group.title.plural" = "Thêm người tham gia (%d)";
+"peoplepicker.group.skip" = "Bỏ qua";
+"peoplepicker.group.done" = "Xong";
+"peoplepicker.group.create" = "Tạo";
+
+"peoplepicker.header.people" = "Mọi người";
+"peoplepicker.header.services" = "Dịch vụ";
+"peoplepicker.services.open_conversation.item" = "Mở cuộc hội thoại";
+"peoplepicker.services.add_service.button" = "Thêm dịch vụ";
+"peoplepicker.services.add_service.error.title" = "Dịch vụ không thể thêm";
+"peoplepicker.services.add_service.error.default" = "Dịch vụ không khả dụng vào lúc này";
+"peoplepicker.services.add_service.error.full" = "Cuộc hội thoại đã đầy";
+
+"peoplepicker.title.create_conversation" = "Tạo nhóm";
+"peoplepicker.title.add_to_conversation" = "Thêm người tham gia";
+
+"peoplepicker.no_contacts_title" = "Không có Danh bạ.";
+
+"peoplepicker.no_matching_results_title" = "Không có kết quả.";
+"peoplepicker.no_matching_results_message" = "Nhập địa chỉ email đầy đủ.";
+"peoplepicker.no_search_results" = "Kết quả không khớp. Thử nhập lại một cái tên khác.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Gửi lời mời";
+"peoplepicker.no_matching_results.action.share_contacts" = "Chia sẽ danh bạ";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "Vui lòng nhập email hợp lệ";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Không có kết quả.";
+"peoplepicker.no_matching_results_services_title" = "Các dịch vụ là các công cụ có thể cải thiện năng suất làm việc của bạn. Để kích hoạt chúng, liên hệ quản trị viên của bạn.";
+"peoplepicker.no_matching_results_services_admin_title" = "Các dịch vụ là công cụ có thể cải thiện năng suất làm việc của bạn.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Quản lý Dịch vụ";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Nhập địa chỉ email đầy đủ hoặc";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "chia sẽ danh bạ";
+
+"peoplepicker.share_contacts.no_results.title" = "Tìm mọi người bằng tên hoặc địa chỉ email";
+
+"peoplepicker.send_invitation.dialog.title" = "Lời mời đã gửi";
+"peoplepicker.send_invitation.dialog.message" = "Nó có thể được dùng trong 2 tuần. Gửi một cái mới nếu đã quá hạn.";
+"peoplepicker.send_invitation.dialog.ok" = "OK";
+
+"peoplepicker.invite_more_people" = "Mời nhiều người hơn";
+"peoplepicker.invite_team_members" = "Mời mọi người vào nhóm";
+"peoplepicker.quick-action.open-conversation" = "Mở";
+"peoplepicker.quick-action.create-conversation" = "Tạo nhóm";
+"peoplepicker.quick-action.create-guest-room" = "Tạo phòng khách";
+"peoplepicker.quick-action.admin-services" = "Quản lý Dịch vụ";
+
+"add_participants.all_contacts_added" = "Mọi người đã ở đây.";
+
+"add_participants.alert.title" = "Nhóm đã đầy";
+"add_participants.alert.message.new_conversation" = "Lên đến %d người có thể tham gia một cuộc hội thoại.";
+"add_participants.alert.message.existing_conversation" = "Lên đến %1$d người có thể tham gia một cuộc hội thoại. Hiện tại phòng chỉ còn %2$d người nữa.";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Tìm kiếm bằng tên";
+"contacts_ui.invite_others" = "Mời người khác";
+"contacts_ui.name_in_contacts" = "%@ trong Danh bạ";
+"contacts_ui.connection_request" = "Được yêu cầu kết nối";
+"contacts_ui.action_button.invite" = "Mời";
+"contacts_ui.action_button.open" = "Mở";
+"contacts_ui.invite_sheet.cancel_button_title" = "Huỷ";
+"contacts_ui.notification.invitation_sent" = "Lời mời đã gửi";
+"contacts_ui.notification.invitation_failed" = "Gửi lời mời không thành công";
+"contacts_ui.title" = "Mời mọi người";
+
+"conversation_list.empty.all_archived.message" = "Mọi thứ đã được lưu trữ";
+"conversation_list.empty.no_contacts.message" = "Bắt đầu một cuộc hội thoại hoặc\ntạo một nhóm.";
+
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Tham gia";
+"conversation_list.header.self_team.accessibility_value" = "%@ tài khoản.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Chạm để kích hoạt.";
+"conversation_list.header.self_team.accessibility_value.active" = "Kích hoạt ngay.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Có tin nhắn mới.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.data_usage_permission_alert.title" = "Giúp chúng tôi làm cho Wire tốt hơn";
+"conversation_list.data_usage_permission_alert.message" = "Tôi đồng ý rằng Wire có thể tạo và sử dụng các dữ liệu ẩn danh và báo cáo lỗi để cải thiện Ứng dụng Wire. Tôi có thể thu hồi sự đồng tình này bất cứ lúc nào.";
+"conversation_list.data_usage_permission_alert.disagree" = "Không";
+"conversation_list.data_usage_permission_alert.agree" = "Tôi đồng ý";
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "trong Danh bạ";
+
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Mở hội thoại";
+"conversation_list.voiceover.status.pending_connection" = "đang chờ";
+"conversation_list.voiceover.status.active_call" = "thực hiện cuộc gọi";
+"conversation_list.voiceover.status.missed_call" = "gọi nhỡ";
+"conversation_list.voiceover.status.pause_media" = "tạm dừng đa phương tiện";
+"conversation_list.voiceover.status.play_media" = "chơi đa phương tiện";
+"conversation_list.voiceover.status.silenced" = "đã tắt âm";
+"conversation_list.voiceover.status.typing" = "đang nhập";
+"conversation_list.voiceover.status.ping" = "ghim";
+"conversation_list.voiceover.status.mention" = "bạn đã được nhắc đến";
+"conversation_list.voiceover.status.reply" = "trả lời";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "hiện tại";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "danh sách các cuộc hội thoại hiện tại";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "thư mục";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "danh sách các cuộc hội thoại được tổ chức trong các thư mục";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "đã lưu trữ";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "danh sách các cuộc hội thoại đã lưu trữ";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "danh bạ";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "tìm kiếm mọi người trên Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "soạn";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "soạn tin nhắn và lưu vào mẫu";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "máy ảnh";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "chụp ảnh và gửi ngay";
+"conversation_list.voiceover.unread_messages.hint" = "Bạn chưa đọc tin nhắn.";
+
+// Archived List
+"archived_list.title" = "lưu trữ";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "Bắt đầu cuộc hội thoại ngay đây";
+"tool_tip.contacts.message" = "Bắt đầu cuộc hội thoại. Gọi, nhắn tin bà chia sẽ trong riêng tư hoặc với nhóm.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Biết %@";
+"peoplepicker.suggested.knows_two" = "Biết %@ và %@";
+"peoplepicker.hide_search_result" = "Ẩn";
+"peoplepicker.hide_search_result_progress" = "Đang ẩn…";
+
+"send_invitation.subject" = "Kết nối với tôi trên Wire";
+"send_invitation.text" = "Tôi trên Wire, tìm %@ hoặc ghé thăm get.wire.com";
+"send_invitation_no_email.text" = "Tôi trên Wire. Ghé thăm get.wire.com để kết nối với tôi.";
+
+// Folders
+
+"folder.creation.name.title" = "Tạo thư mục mới";
+"folder.creation.name.button.create" = "Tạo";
+"folder.creation.name.header" = "Di chuyển cuộc hội thoại \"%@\" vào một thư mục mới.";
+"folder.creation.name.footer" = "Tối đa 64 kí tự";
+"folder.creation.name.placeholder" = "Tên thư mục";
+
+"folder.picker.title" = "Di chuyển đến";
+"folder.picker.empty.hint" = "Tạo một thư mục mới bằng cách ấn phím +";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "đã chia sẽ hình ảnh";
+"notifications.pinged" = "đã ping";
+"notifications.sent_file" = "đã chia sẽ tập tin";
+"notifications.sent_location" = "đã chia sẽ vị trí";
+"notifications.sent_video" = "đã chia sẽ video";
+"notifications.sent_audio" = "đã chia sẽ đoạn thoại";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ trong cuộc hội thoại này";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.title" = "Các cuộc hội thoại";
+"list.archived_conversations" = "LƯU TRỮ";
+"list.archived_conversations_close" = "Đóng lưu trữ";
+
+"list.section.groups" = "Nhóm";
+"list.section.contacts" = "Mọi người";
+"list.section.requests" = "Các yêu cầu";
+"list.section.favorites" = "Các ưa thích";
+
+"conversation.voiceover.verified" = "đã xác minh";
+"conversation.voiceover.legalhold" = "nắm giữ hợp pháp";
+"conversation.voiceover.value.active" = "kích hoạt";
+"conversation.voiceover.value.disabled" = "vô hiệu hoá";
+
+"conversation.status.secutity_alert.default" = "Cảnh báo bảo mật mới";
+
+"conversation.status.typing" = "Đang nhập tin nhắn…";
+"conversation.status.typing.group" = "%@: đang nhập tin nhắn…";
+"conversation.status.silenced" = "Đã tắt âm";
+"conversation.status.poor_connection" = "Kết nối chậm";
+"conversation.status.blocked" = "Đã chặn";
+"conversation.status.incoming_call" = "%@ đang gọi…";
+"conversation.status.incoming_call.unknown" = "Ai đó đang gọi…";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Chia sẽ liên kết";
+"conversation.status.message.image" = "Chia sẽ hình ảnh";
+"conversation.status.message.location" = "Chia sẽ vị trí";
+"conversation.status.message.audio" = "Chia sẽ tin nhắn thoại";
+"conversation.status.message.video" = "Chia sẽ video";
+"conversation.status.message.file" = "Đã chia sẽ tệp tin";
+"conversation.status.message.knock" = "Đã ghim";
+"conversation.status.message.missedcall" = "Cuộc gọi nhỡ";
+"conversation.status.message.missedcall.groups" = "Cuộc gọi nhỡ từ %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
+"conversation.status.message.ephemeral" = "Gửi một tin nhắn";
+"conversation.status.message.ephemeral.group" = "Ai đó đã gửi một tin nhắn";
+"conversation.status.message.ephemeral.mention" = "Đã nhắc đến bạn";
+"conversation.status.message.ephemeral.mention.group" = "Ai đó đã nhắc đến bạn";
+"conversation.status.message.ephemeral.reply" = "Đã trả lời tin nhắn của bạn";
+"conversation.status.message.ephemeral.reply.group" = "Ai đó đã trả lời tin nhắn của bạn";
+"conversation.status.message.ephemeral.knock" = "Đã ghim";
+"conversation.status.message.ephemeral.knock.group" = "Ai đó đã ghim";
+
+"conversation.status.unsent" = "⚠️ Tin nhắn chưa được gửi";
+"conversation.status.you" = "Bạn";
+"conversation.status.someone" = "Ai đó";
+"conversation.status.you_was_added" = "%@ đã thêm bạn";
+"conversation.status.you_were_removed" = "Bạn đã bị xóa bỏ";
+"conversation.status.you_left" = "Còn bạn";
+"conversation.status.started_conversation" = "%@ đã bắt đầu cuộc hội thoại mới";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Cuộc hội thoại";
+"compose.message.title" = "Tin nhắn";
+
+"conversation_details.open_button.accessibility_hint" = "Chạm hai lần để hiển thị thông tin chi tiết của cuộc hội thoại.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Truyền tải thông điệp!";
+"conversation.invite_more_people.description" = "Thêm mọi người vào cuộc hội thoại này";
+"conversation.invite_more_people.explanation_url" = "https://support.wire.com";
+"conversation.invite_more_people.button_title" = "Thêm Mọi người";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Cuộc hội thoại Rỗng";
+
+"conversation.input_bar.verified" = "Đã xác minh";
+"conversation.input_bar.placeholder" = "Nhập tin nhắn";
+"conversation.input_bar.placeholder_ephemeral" = "Hẹn giờ tin nhắn";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Vuốt lên để gửi";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Chạm để gửi";
+"conversation.input_bar.audio_message.too_long.title" = "Ghi âm đã dừng";
+"conversation.input_bar.audio_message.too_long.message" = "Các tin nhắn âm thanh được giới hạn đến %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "Kích thước được giới hạn cho tin nhắn âm thanh là %@.";
+
+"conversation.input_bar.audio_message.send" = "Gửi";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Chạm để ghi\nBạn có thể %@ sau đó";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Chọn một bộ lọc";
+
+"conversation.call.many_participants_confirmation.title" = "Bắt đầu cuộc gọi";
+"conversation.call.many_participants_confirmation.message" = "Điều này sẽ gọi %d người";
+"conversation.call.many_participants_confirmation.call" = "Gọi";
+
+"conversation.connection_view.in_address_book" = "trong Danh bạ";
+
+"conversation.input_bar.shortcut.send" = "Gửi Tin nhắn";
+"conversation.input_bar.shortcut.newline" = "Chèn ngắt dòng";
+"conversation.input_bar.shortcut.edit_last_message" = "Chỉnh sửa Tin nhắn cuối cùng";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Huỷ";
+
+"conversation.input_bar.message_too_long.title" = "Tin nhắn quá dài";
+"conversation.input_bar.message_too_long.message" = "Bạn có thể gửi tin nhắn dài tối đa %d kí tự.";
+
+"conversation.create.group_name.title" = "Tạo nhóm";
+"conversation.create.group_name.placeholder" = "Tên nhóm";
+"conversation.create.guidance.empty" = "Ít nhất 1 kí tự";
+"conversation.create.guidance.toolong" = "Quá nhiều kí tự";
+"conversation.create.options.title" = "Tuỳ chọn cuộc hội thoại";
+"conversation.create.options.subtitle" = "Khách vãn lai và dịch vụ: %@, Người đọc %@";
+"conversation.create.guests.title" = "Cho phép khách vãn lai và các dịch vụ";
+"conversation.create.guests.subtitle" = "Mở cuộc hội thoại này cho dịch vụ và mọi người ngoài nhóm của bạn.";
+"conversation.create.receipts.title" = "Người đọc";
+"conversation.create.receipts.subtitle" = "Khi chức năng này được bật, mọi người có thể nhìn thấy khi tin nhắn của họ được đọc trong cuộc hội thoại này.";
+
+"conversation.input_bar.ongoing_call_alert.title" = "Đang thực hiện cuộc gọi";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Bạn không thể ghi âm tin nhắn âm thanh khi đang thực hiện cuộc gọi.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Bạn không thể quay video khi đang thực hiện cuộc gọi.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Bạn không thể chụp hình khi đang thực hiện cuộc gọi.";
+
+"conversation.alert.message_deleted" = "Tin nhắn này đã bị xoá.";
+
+"conversation.guests_present" = "Khách vãn lai đang trực tuyến";
+"conversation.services_present" = "Dịch vụ được kích hoạt";
+"conversation.guests_services_present" = "Khách vãn lai và dịch vụ đang trực tuyến";
+"conversation.action.search" = "Tìm kiếm";
+
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Hình ảnh";
+"conversation.input_bar.message_preview.location" = "Vị trí";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Tin nhắn âm thanh";
+"conversation.input_bar.message_preview.file" = "Tập tin";
+"conversation.input_bar.close_reply" = "Huỷ câu trả lời";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Đang trả lời tin nhắn: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Tin nhắn hình ảnh";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Tin nhắn vị trí";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Tin nhắn video";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Tin nhắn âm thanh";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Tin nhắn tập tin (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Tin nhắn vô định";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ từ %@";
+
+"image_confirmer.confirm" = "OK";
+"image_confirmer.cancel" = "Huỷ";
+"image.add_sketch" = "Thêm bản phát hoạ";
+"image.add_emoji" = "Add an emoji";
+"image.edit_image" = "Sửa ảnh";
+
+// Camera access
+"camera_access.denied" = "Wire needs access to the camera";
+"video_call.camera_access.denied" = "Wire không truy cập vào camera";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Kích hoạt nó trong Thiết lập Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Cài đặt";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire cần truy cập vào camera và hình ảnh của bạn."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire cần truy cập vào hình ảnh của bạn.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire cần truy cập vào camera của bạn.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Bạn không thể truy cập vào camera khi bạn đang trong cuộc gọi video.";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "Khoá AE/AF";
+
+// Location
+"location.send_button.title" = "Gửi";
+"location.unauthorized_alert.title" = "Kích hoạt Dịch vụ Vị trí";
+"location.unauthorized_alert.message" = "Để gửi vị trí của bạn, kích hoạt Dịch vụ Vị trí và cho phép Wire truy cập vào vị trí của bạn.";
+"location.unauthorized_alert.cancel" = "Huỷ";
+"location.unauthorized_alert.settings" = "Cài đặt";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ trên Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Tắt";
+"input.ephemeral.title" = "Đặt thời gian cho tin nhắn biến mất";
+
+// System messages
+"content.system.you_nominative" = "bạn";
+"content.system.you_dative" = "bạn";
+"content.system.and_you_dative" = "và bạn";
+"content.system.you_accusative" = "bạn";
+
+"content.system.continued_conversation" = "Bắt đầu cuộc hội thoại với %@";
+"content.system.started_conversation.truncated_people" = "và %@";
+"content.system.started_conversation.truncated_people.others" = "%@ khác";
+"content.system.started_conversation.complete_team" = "tất cả thành viên";
+"content.system.started_conversation.complete_team.guests" = "tất cả thành viên và %@ khách";
+
+"content.system.other_started_conversation" = "%@ đã bắt đầu một cuộc hội thoại với %@";
+"content.system.you_started_conversation" = "Bạn đã bắt đầu hội thoại với %@";
+
+"content.system.you_added_participant" = "Bạn đã thêm %@";
+"content.system.other_added_participant" = "%@ đã thêm %@";
+"content.system.other_added_you" = "%@ đã thêm bạn";
+
+"content.system.participants_you" = "Bạn";
+"content.system.participants_1_other" = "%@ và %@";
+"content.system.other_left" = "%@ còn lại";
+"content.system.you_left" = "Bạn đã rời khỏi";
+"content.system.other_removed_other" = "%@ đã xóa bỏ %@";
+"content.system.other_removed_you" = "%@ đã xóa bỏ bạn";
+"content.system.you_removed_other" = "Bạn đã xóa bỏ %@";
+
+"content.system.services.warning" = "Tất cả dịch vụ được truy cập vào nội dung của cuộc hội thoại này";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "Xem trước video YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Xem trước bài hát SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Xem trước danh sách phát SOundCloud";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.other.started" = "%@ đã bắt đầu hội thoại với %@";
+"content.system.conversation.other.added" = "%@ đã thêm %@";
+"content.system.conversation.other.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.other.left" = "%@ còn lại";
+
+"content.system.conversation.you.started" = "%@ đã bắt đầu hội thoại với %@";
+"content.system.conversation.you.added" = "%@ đã thêm %@";
+"content.system.conversation.you.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.you.left" = "%@ còn lại";
+"content.system.conversation.team.member-leave" = "%@ đã bị xóa khỏi nhóm.";
+"content.system.conversation.guest.joined" = "%@ đã tham gia";
+
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Mời mọi người";
+
+"content.system.other_renamed_conv_to_nothing" = "%@ đã xóa bỏ tên cuộc hội thoại";
+"content.system.you_renamed_conv_to_nothing" = "Bạn đã xóa bỏ tên cuộc hội thoại";
+"content.system.pending_message_timestamp" = "Đang gửi…";
+"content.system.message_sent_timestamp" = "Gửi";
+"content.system.message_delivered_timestamp" = "Đã gửi";
+"content.system.message_read_timestamp" = "Seen";
+"content.system.failedtosend_message_timestamp" = "Gửi đã thất bại.";
+"content.system.failedtosend_message_timestamp_resend" = "Gửi lại";
+"content.system.failedtosend_message_timestamp_delete" = "Xóa";
+"content.system.like_tooltip" = "Chạm để thích";
+"content.system.deleted_message_prefix_timestamp" = "Đã xóa: %@";
+"content.system.edited_message_prefix_timestamp" = "Đã sửa: %@";
+"content.system.connecting_to" = "Đã kết nối với %@.\nBắt đầu một cuộc hội thoại";
+"content.system.connected_to" = "Đã kết nối với %@\nBắt đầu một cuộc hội thoại";
+"content.system.other_wanted_to_talk" = "%@ đã huỷ";
+"content.system.you_wanted_to_talk" = "Bạn đã gọi";
+"content.system.ephemeral_time_remaining" = "%@ còn lại";
+
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
+"content.system.you_started" = "Bạn";
+
+"content.system.call.called" = "%@ đã huỷ";
+"content.system.call.called-you" = "%@ đã huỷ";
+"content.system.call.called.you" = "Bạn";
+
+"content.system.call.missed-call" = "Cuộc gọi nhỡ";
+"content.system.call.missed-call-you" = "Cuộc gọi nhỡ";
+
+"content.system.call.missed-call.groups" = "Cuộc gọi nhỡ từ %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Bạn";
+
+"content.system.renamed_conv.title" = "%@ đã đổi tên cuộc hội thoại";
+"content.system.renamed_conv.title-you" = "%@ đã đổi tên cuộc hội thoại";
+"content.system.renamed_conv.title.you" = "Bạn";
+
+"content.system.conversation.with_name.title" = "%@ đã bắt đầu một cuộc hội thoại";
+"content.system.conversation.with_name.title-you" = "%@ đã bắt đầu một cuộc hội thoại";
+
+"content.system.conversation.with_name.participants" = "với";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Tìm hiểu thêm";
+
+//
+
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+
+"content.system.is_verified" = "Tất cả dấu vân tay đã xác thực";
+
+"content.system.new_users" = "Người dùng mới đã tham gia.";
+"content.system.verify_devices" = "Xác thực thiết bị";
+
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+
+"content.system.missing_messages.title" = "Bạn chưa sử dụng thiết bị này trong một khoản thời gian. Một vài tin nhắn sẽ có thể không xuất hiện tại đây.";
+"content.system.missing_messages.subtitle_start" = "Trong khi đó,";
+
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+
+"content.file.uploading" = "Đang tải lên…";
+"content.file.downloading" = "Đang tải về…";
+"content.file.upload_failed" = "Tải lên thất bại";
+"content.file.upload_cancelled" = "Đã huỷ tải lên";
+"content.file.upload_video" = "Video";
+"content.file.take_video" = "Quay video";
+"content.file.browse" = "Browse";
+
+"content.file.save_video" = "Lưu";
+"content.file.save_audio" = "Lưu";
+"content.image.save_image" = "Lưu";
+
+"content.message.delete" = "Xóa";
+"content.message.save" = "Lưu";
+"content.message.resend" = "Gửi lại";
+
+"content.message.delete_ellipsis" = "Delete…";
+
+"content.message.like" = "Thích";
+"content.message.unlike" = "Không thích";
+"content.message.forward" = "Chia sẽ";
+"content.message.go_to_conversation" = "Hiển thị";
+"content.message.forward.to" = "Tìm kiếm…";
+"content.message.open" = "Mở";
+"content.message.sign" = "Sign";
+"content.message.copy" = "Copy";
+"content.message.download" = "Download";
+"content.message.details" = "Chi tiết";
+
+// Reply
+"content.message.reply" = "Trả lời";
+"content.message.original_label" = "Original message";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Mở";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
+
+"content.reactions_list.likers" = "Đã thích bởi";
+
+"content.file.too_big" = "Bạn có thể gửi tối đa %@ tập tin";
+// Someone pinged
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
+
+// Current user pinged
+"content.ping.text.you" = "Bạn";
+
+// Inline Player
+"content.player.unable_to_play" = "KHÔNG THỂ CHƠI TRACK";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Kết nối đến %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
+"missive.connection_request.default_message" = "Xin chào %@,\nHãy kết nối trên Wire nhé.\n%@";
+
+"connection_request_pending_title" = "Connection Request";
+"connection_request.send_button_title" = "Kết nối";
+"inbox.connection_request.connect_button_title" = "Kết nối";
+"inbox.connection_request.ignore_button_title" = "Bỏ qua";
+
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.joining" = "%@\nĐang kết nối";
+"voice.status.leaving" = "%@\nCall ended";
+"voice.status.video_not_available" = "Đã tắt video";
+"voice.status.low_connection" = "Kết nối kém";
+"voice.network_error.title" = "Không có kết nối Internet";
+"voice.status.cbr" = "Tốc độ Không đổi";
+"voice.network_error.body" = "Bạn phải trực tuyến để gọi. Kiểm tra lại kết nối và thử lại.";
+"voice.degradation.new_self_device" = "Bạn đã bắt đầu sử dụng một thiết bị mới.";
+"voice.degradation.new_user_device" = "%@ đã bắt đầu sử dụng thiết bị mới.";
+"voice.degradation_outgoing.prompt" = "Bạn vẫn muốn giữ cuộc gọi chứ?";
+"voice.degradation_incoming.prompt" = "Bạn vẫn muốn chấp nhận cuộc gọi chứ?";
+"voice.accept_button.title" = "Chấp nhận";
+"voice.decline_button.title" = "Từ chối";
+"voice.hang_up_button.title" = "Chờ";
+"voice.mute_button.title" = "Tắt âm";
+"voice.video_button.title" = "Video";
+"voice.flip_video_button.title" = "Flip";
+"voice.speaker_button.title" = "Người nói";
+"voice.cancel_button.title" = "Huỷ";
+"voice.call_button.title" = "Gọi";
+"voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Vui lòng cập nhật Wire";
+"voice.call_error.unsupported_version.message" = "Bạn đã nhận một cuộc gọi không được hỗ trợ trong phiên bản này của Wire.\nHãy cập nhật phiên bản mới nhất trên App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Để sau";
+
+"voice.alert.call_in_progress.title" = "Đang thực hiện cuộc gọi";
+"voice.alert.call_in_progress.message" = "Bạn chỉ có thể thực hiện một cuộc gọi vào lúc này";
+"voice.alert.call_in_progress.confirm" = "OK";
+
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
+
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+
+"voice.top_overlay.tap_to_return" = "Chạm để trở lại cuộc gọi";
+"voice.top_overlay.accessibility_title" = "Đang thực hiện cuộc gọi";
+
+// Voice New
+
+"call.status.connecting" = "Đang kết nối…";
+"call.status.incoming.user" = "%@ đang gọi…";
+"call.status.incoming" = "Đang gọi…";
+"call.status.outgoing" = "Đang đổ chuông…";
+"call.status.outgoing.user" = "Đang gọi %@…";
+"call.status.reconnecting" = "Đang kết nối…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "Tốc độ Không đổi";
+"call.status.variable_bitrate" = "Variable Bit Rate";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
+"call.video.paused" = "Video paused";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "Bạn đã bắt đầu sử dụng một thiết bị mới.";
+"call.degraded.alert.message.user" = "%@ đã bắt đầu sử dụng một thiết bị mới.";
+"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.action.continue" = "Vẫn gọi";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
+"call.alert.ongoing.alert_title" = "This will end your other call.";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.button" = "Vẫn gọi";
+"call.alert.ongoing.join.button" = "Join anyway";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Tắt âm";
+"call.actions.label.toggle_mute_off" = "Bật âm";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "End call";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Join call";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Add";
+"participants.avatar.guest.title" = "Khách";
+
+"participants.title" = "Chi tiết";
+"participants.all.title" = "Mọi người";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Tuỳ chọn";
+"participants.footer.add_title" = "Thêm người tham gia";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
+
+// Meta Menu
+"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.rename" = "Đổi tên";
+"meta.menu.leave" = "Leave Group…";
+"meta.menu.archive" = "Lưu trữ";
+"meta.menu.unarchive" = "Bỏ lưu trữ";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.silence.mute" = "Tắt âm";
+"meta.menu.silence.unmute" = "Bật âm";
+"meta.menu.cancel" = "Huỷ";
+"meta.menu.cancel_connection_request" = "Huỷ Yêu cầu";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.open_self_profile" = "Open Profile";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.leave_as_well_message" = "Cũng rời khỏi cuộc hội thoại";
+"meta.menu.delete_content.button_cancel" = "Huỷ";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Huỷ";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Rời cuộc hội thoại?";
+"meta.leave_conversation_dialog_message" = "Những người tham gia sẽ được thông báo và cuộc hội thoại sẽ bị xóa bỏ khỏi danh sách của bạn.";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation_button_cancel" = "Huỷ";
+"meta.leave_conversation_button_leave" = "Rời khỏi";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ đã bắt đầu sử dụng một thiết bị mới.";
+"meta.degraded.degradation_reason_message.plural" = "%@ đã bắt đầu sử dụng thiết bị mới.";
+"meta.degraded.degradation_reason_message.someone" = "Someone started using a new device.";
+"meta.degraded.dialog_message" = "Bạn vẫn muớn gửi tin nhắn của mình chứ?";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.cancel_sending_button" = "Huỷ";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Xóa bỏ?";
+"profile.remove_dialog_message" = "%@ sẽ không thể gửi hoặc nhận tin nhắn trong cuộc hội thoại này.";
+"profile.remove_dialog_button_cancel" = "Huỷ";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+
+// Block dialog
+"profile.block_dialog.title" = "Chặn chứ?";
+"profile.block_dialog.message" = "%@ sẽ không thể liên hệ bạn hoặc thêm bạn vào nhóm.";
+"profile.block_dialog.button_cancel" = "Huỷ";
+"profile.block_dialog.button_block" = "Chặn";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Điều này không thể hoàn tác.";
+"message.delete_dialog.action.cancel" = "Huỷ";
+"message.delete_dialog.action.hide" = "Xóa đối với Tôi";
+"message.delete_dialog.action.delete" = "Xóa đối với Mọi người";
+
+// Edit message
+"message.menu.edit.title" = "Sửa";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Chấp nhận chứ?";
+"profile.connection_request_dialog.message" = "Điều này sế kết nối bạn và mở cuộc hội thoại với %@.";
+"profile.connection_request_dialog.button_cancel" = "Bỏ qua";
+"profile.connection_request_dialog.button_connect" = "Kết nối";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Huỷ Yêu cầu chứ?";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.button_no" = "Không";
+"profile.cancel_connection_request_dialog.button_yes" = "Có";
+
+// Unblock button
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
+
+"profile.block_button_title_action" = "Chặn";
+"profile.unblock_button_title_action" = "Bỏ chặn";
+
+"profile.cancel_connection_button_title" = "HUỶ YÊU CẦU";
+"profile.connection_request_state.blocked" = "ĐÃ CHẶN";
+"profile.create_conversation_button_title" = "Tạo nhóm";
+"profile.open_conversation_button_title" = "Mở cuộc hội thoại";
+
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
+"profile.extended_metadata.header" = "Information";
+
+// User Details
+"profile.details.title" = "Chi tiết";
+"profile.details.guest" = "Khách";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
+
+"profile_view.accessibility.handle" = "Tên người dùng";
+"profile_view.accessibility.name" = "Hiển thị tên";
+"profile_view.accessibility.team_name" = "Tên nhóm";
+
+// Device list
+"profile.devices.title" = "Thiết bị";
+"profile.devices.fingerprint_message_unencrypted" = "%@ đang dùng phiên bản cũ của Wire. Không có thiết bị được hiển thị tại đây.";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.link" = "Tại sao lại xác minh hội thoại?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Xác minh điều này khớp với vân tay hiển thị trên thiết bị của %@.";
+"profile.devices.detail.verify_message.link" = "Làm thế nào nhỉ?";
+"profile.devices.detail.show_my_device.title" = "Hiển thị vân tay thiết bị của mình";
+"profile.devices.detail.reset_session.title" = "Thiết lập lại Phiên làm việc";
+"device.verified" = "Đã xác minh";
+"device.not_verified" = "Chưa được Xác thực";
+
+"device.class.legalhold" = "Legal Hold";
+"device.class.desktop" = "Máy tính";
+"device.class.tablet" = "Máy tính bảng";
+"device.class.phone" = "Di động";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
+
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.enabled" = "Bật";
+"group_details.guest_options_cell.disabled" = "Tắt";
+"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Thông báo";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Người đọc";
+"group_details.receipt_options_cell.description" = "Khi chức năng này được bật, mọi người có thể nhìn thấy khi tin nhắn của họ được đọc trong cuộc hội thoại này.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Cài đặt";
+"self.profile" = "Hồ sơ";
+"self.account" = "Tài khoản";
+"self.help_center" = "Hỗ trợ";
+"self.help_center.support_website" = "Trang web Hỗ trợ Wire";
+"self.help_center.contact_support" = "Liên hệ Hỗ trợ";
+"self.about" = "Thông tin";
+"self.sign_out" = "Đăng xuất";
+"self.report_abuse" = "Báo báo Lợi dụng";
+"self.voiceover.label" = "Hồ sơ";
+"self.voiceover.hint" = "Mở hồ sơ và thiết lập";
+"self.new-device.voiceover.label" = "Hồ sơ, thiết bị mới đã thêm";
+
+"self.add_phone_number" = "Thêm số di động";
+"self.add_email_password" = "Thêm địa chỉ email và mật khẩu";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+
+// About screen
+"about.tos.title" = "Điều khoản Sử dụng";
+"about.privacy.title" = "Chính sách Riêng tư";
+"about.license.title" = "Thông tin Giấy phép";
+"about.website.title" = "Trang web Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Chi tiết";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
+// Self new devices
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
+"self.new_device_alert.manage_devices" = "Quản lí thiết bị";
+"self.new_device_alert.trust_devices" = "OK";
+
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
+// Settings - top level
+"self.settings.create_team.title" = "Tạo nhóm";
+"self.settings.manage_team.title" = "Quản lí nhóm";
+"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_account.title" = "Thêm tài khoản";
+
+"self.settings.add_account.error.title" = "Ba tài khoản hoạt động";
+"self.settings.add_account.error.message" = "Bạn chỉ có thể đăng nhập ba tài khoản trong một lần. Đăng xuất một cái để thêm cái khác.";
+
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
+
+// Settings - Account details
+"self.settings.account_section" = "Tài khoản";
+
+"self.settings.account_details_group.info.title" = "Thông tin";
+"self.settings.account_details_group.personal.title" = "Cá nhân";
+
+"self.settings.account_section.name.title" = "Tên";
+"self.settings.account_section.email.title" = "Email";
+"self.settings.account_section.phone.title" = "Di động";
+"self.settings.account_section.handle.title" = "Tên người dùng";
+"self.settings.account_section.add_handle.title" = "Thêm tên người dùng";
+
+"self.settings.account_details_group.info.footer" = "Mọi người có thể tìm bạn với thông tin này.";
+"self.settings.account_details_group.personal.footer" = "Thông tin này có thể không thấy.";
+
+"self.settings.account_details.remove_device.title" = "Xóa bỏ Thiết bị";
+"self.settings.account_details.key_fingerprint.title" = "Khoá Vân tay";
+"self.settings.account_details.remove_device.message" = "Mật khẩu của bạn là bắt buộc để xóa bỏ thiết bị";
+"self.settings.account_details.remove_device.password" = "Mật khẩu";
+"self.settings.account_details.remove_device.password.error" = "Sai mật khẩu";
+
+"self.settings.account_appearance_group.title" = "Chủ đề";
+
+"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
+"self.settings.account_picture_group.picture" = "Ảnh";
+"self.settings.account_picture_group.color" = "Màu sắc";
+
+"self.settings.account_personal_information_group.title" = "Personal Information";
+
+"self.settings.account_picture_group.theme" = "Theme";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire cho mọi thiết bị một dấu vân tay riêmg biệt. So sánh chúng và xác thực thiết bị của bạn và cuộc hội thoại.";
+"self.settings.device_details.reset_session.subtitle" = "Nếu dấu vân tay không khớp, đặt lại phiên làm việc để tạo khoá mã hoá mới trên cả hai mặt.";
+"self.settings.device_details.remove_device.subtitle" = "Xoá bỏ thiết bị này nếu bạn đã ngừng sử dụng. Bạn sẽ bị đăng xuất khỏi thiết bị này một cách tự động.";
+"self.settings.device_details.reset_session.success" = "Phiên làm việc đã đặt lại";
+
+"self.settings.account_details.actions.title" = "Hành động";
+
+"self.settings.account_details.delete_account.title" = "Xóa Tài khoản";
+
+"self.settings.account_details.delete_account.alert.title" = "Xóa Tài khoản";
+"self.settings.account_details.delete_account.alert.message" = "Chúng tôi sẽ gửi cho bạn một tin nhắn qua email hoặc SMS. Theo đường dẫn để hoàn tất việc xóa tài khoản của bạn.";
+
+"self.settings.account_details.log_out.alert.title" = "Đăng xuất";
+"self.settings.account_details.log_out.alert.message" = "Lịch sử nhắn tin của bạn sẽ bị xoá trên thiết bị này.";
+"self.settings.account_details.log_out.alert.password" = "Mật khẩu";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Báo cáo Lạm dụng và Sự cố";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+
+"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
+
+
+
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Tên người dùng";
+"self.settings.account_section.handle.change.save" = "Lưu";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Đã có người lấy";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Không thể đặt tên người dùng";
+"self.settings.account_section.handle.change.failure_alert.message" = "Đã xãy ra lỗi khi đang đặt tên người dùng của bạn. Vui lòng thử lại.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Lưu";
+
+"self.settings.account_section.email.change.verify.title" = "Xác minh email";
+"self.settings.account_section.email.change.verify.description" = "Kiểm tra hộp thư đến và làm theo hướng dẫn.";
+"self.settings.account_section.email.change.verify.resend" = "Gửi lại trong %@";
+
+"self.settings.account_section.email.change.resend.title" = "Gửi lại Email";
+"self.settings.account_section.email.change.resend.message" = "Thư xác minh đã gửi lại đến %@. Kiểm tra hộp thư đến và làm theo hướng dẫn.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Di động";
+"self.settings.account_section.phone_number.change.save" = "Lưu";
+"self.settings.account_section.phone_number.change.remove" = "Xóa Số Di động";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Xóa Số Di động";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Lưu";
+"self.settings.account_section.phone_number.change.verify.title" = "Xác minh";
+"self.settings.account_section.phone_number.change.verify.description" = "Nhận mã xác minh chúng tôi đã gửi cho: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Nhập mã";
+"self.settings.account_section.phone_number.change.verify.resend" = "Gửi lại Mã";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Không có mã hiển thị?\nBạn có thể yêu cầu mã mới mỗi 30 giây.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Gửi lại mã";
+"self.settings.account_section.phone_number.change.resend.message" = "Mã xác minh đã gửi lại cho %@.";
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Thông báo";
+"self.settings.notifications.push_notification.toogle" = "Xem trước Tin nhắn";
+"self.settings.notifications.push_notification.footer" = "Tên người gửi và tin nhắn trên màn hình khoá và trong Trung tâm Thông báo.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Cấm Tin nhắn";
+"self.settings.notifications.chat_alerts.footer" = "Tin nhắn mới trong cuộc hội thoại khác.";
+
+"self.settings.sound_menu.sounds.title" = "Âm thanh";
+"self.settings.sound_menu.ringtone.title" = "Nhạc chuông";
+"self.settings.sound_menu.message.title" = "Giai điệu Văn bản";
+"self.settings.sound_menu.ping.title" = "Ghim";
+"self.settings.sound_menu.ringtones.title" = "Nhạc chuông";
+"self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Không có";
+
+"self.settings.callkit.title" = "Cuộc gọi";
+"self.settings.callkit.caption" = "Chia sẽ với iOS";
+"self.settings.callkit.description" = "Hiển thị cuộc gọi Wire trên màn hình khoá và trong lịch sử cuộc gọi iOS. Nếu iCloud đã kích hoạt, lịch sử cuộc gọi đã chia sẽ với Apple.";
+
+"self.settings.vbr.title" = "Thay đổi Tốc độ Mã hoá";
+"self.settings.vbr.description" = "Điều này làm âm thanh cuộc gọi sử dụng ít dữ liệu và hoạt động tốt hơn trên mạng kém. Tắt để sử dụng Cải thiện Tốc độ Mã hoá.";
+
+"self.settings.sound_menu.sounds.wire_call" = "Cuộc gọi Wire";
+"self.settings.sound_menu.sounds.wire_message" = "Tin nhắn Wire";
+"self.settings.sound_menu.sounds.wire_ping" = "Ghim Wire";
+
+// By popular demand
+"self.settings.popular_demand.title" = "Bởi nhu cầu phổ biến";
+"self.settings.popular_demand.send_button.title" = "Nút Gửi";
+"self.settings.popular_demand.send_button.footer" = "Vô hiệu hoá để gửi bằng phím trở lại.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
+
+// Open in
+"self.settings.external_apps.header" = "Mở bằng";
+
+"self.settings.link_options.twitter.title" = "Tweet";
+"self.settings.link_options.maps.title" = "Địa điểm";
+"self.settings.link_options.browser.title" = "Trình duyệt";
+
+"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Bản đồ";
+"open_link.maps.option.google" = "Google Map";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Âm Cảnh báo";
+"self.settings.sound_menu.no_sounds.title" = "Không có";
+"self.settings.sound_menu.all_sounds.title" = "Tất cả";
+"self.settings.sound_menu.mute_while_talking.title" = "Tin nhắn và ghim đầu tiên";
+
+// Developer options
+"self.settings.developer_options.title" = "Tuỳ chọn Nhà phát triển";
+"self.settings.apns_logging.title" = "Đăng nhập APNS";
+
+// Privacy (visibility) options
+"self.settings.options_menu.title" = "Tuỳ chọn";
+
+"self.settings.privacy_contacts_section.title" = "Danh bạ";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Mở Thiết lập Danh bạ";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Điều này sẽ giúp bạn kết nối với người khác. Chúng tôi giữ bí mật tất cả thông tin và không chia sẽ nó với ai khách. Cho phép truy cập qua Thiết lập > Riêng tư > Danh bạ.";
+
+"self.settings.privacy_security.lock_app" = "Khoá với Mật khẩu";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
+
+"self.settings.privacy_security.lock_app.description" = "Mở khoá Wire";
+"self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Tạo Đường dẫn Xem trước";
+"self.settings.privacy_security.disable_link_previews.footer" = "Xem trước có thể vẫn hiển thị đường dẫn từ người khác.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Thiết bị";
+
+"self.settings.privacy.clear_history.title" = "Xóa Lịch sử";
+"self.settings.privacy.clear_history.subtitle" = "Điều này sẽ xóa hoàn toàn nội dung của tất cả cuộc hội thoại của bạn.";
+
+"self.settings.advanced.title" = "Nâng cao";
+"self.settings.advanced.troubleshooting.title" = "Giải quyết Sự cố";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.reset_push_token.title" = "Đặt lại Token Thông báo đẩy";
+"self.settings.advanced.reset_push_token.subtitle" = "Nếu bạn gặp vấn đề với thông báo đẩy, Hỗ Trợ Wire có thể yêu cầu bạn đặt lại token thông báo này.";
+"self.settings.advanced.reset_push_token_alert.title" = "Token đẩy đã đặt lại";
+"self.settings.advanced.reset_push_token_alert.message" = "Thông báo sẽ khôi phục lại trong vài giây.";
+"self.settings.advanced.version_technical_details.title" = "Chi tiết Phiên bản Kỹ Thuật";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Báo cáo Kỹ Thuật";
+"self.settings.technical_report.send_report" = "Gửi báo cáo cho Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.include_log" = "Bao gồm nhật ký chi tiết";
+"self.settings.technical_report.privacy_warning" = "Nhật ký chi tiết có thể chứa dữ liệu cá nhân";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Đặt lại Mật khẩu";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Mời mọi người";
+
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Huỷ";
+"self.settings.history_backup.password.next" = "Tiếp theo";
+"self.settings.history_backup.password.placeholder" = "Mật khẩu";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Không có Internet";
+"system_status_bar.no_internet.explanation" = "Có vẻ là một vấn đề với kết nối Internet của bạn. Vui lòng chắc chắn rằng nó hoạt động.";
+"system_status_bar.poor_connectivity.title" = "Kết nối kém, không thể gọi ngay lúc này";
+"system_status_bar.poor_connectivity.explanation" = "Chúng tôi không thể đảm bảo chất lượng giọng nói. Kết nối Wi-Fi hoặc thử thay đổi vị trí của bạn.";
+
+// View user profile and options menu & text field validation
+"name.placeholder" = "Tên đầy đủ";
+"name.guidance.tooshort" = "Ít nhất 2 kí tự";
+"name.guidance.toolong" = "Quá nhiều kí tự";
+
+"email.placeholder" = "Email";
+"email.guidance.invalid" = "Địa chỉ email không hợp lệ";
+"email.guidance.tooshort" = "Email quá ngắn";
+"email.guidance.toolong" = "Quá nhiều kí tự";
+
+"password.placeholder" = "Mật khẩu";
+"password.guidance.toolong" = "Quá nhiều kí tự";
+
+"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Quá nhiều kí tự";
+
+// Landing screen
+
+"landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_team.title" = "Pro";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.login.hints" = "Đã có tài khoản?";
+"landing.login.button.title" = "Đăng nhập";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
+// Create team
+
+"team.name.headline" = "Tên nhóm của bạn";
+"team.name.subheadline" = "Bạn luôn có thể đổi nó sau.";
+"team.name.textfield.placeholder" = "tên nhóm";
+"team.name.textfield.accessibility" = "Đặt tên nhóm";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
+
+"team.email.headline" = "Tài khoản của bạn";
+"team.email.subheadline" = "Nhập địa chỉ email công việc của bạn.";
+"team.email.textfield.placeholder" = "Email công ti của bạn";
+"team.email.button.learn_more" = "Tìm hiểu thêm";
+
+"team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
+"team.activation_code.subheadline" = "Nhập mã xác minh chúng tôi gửi cho %@.";
+"team.activation_code.button.resend" = "Gửi lại mã";
+"team.activation_code.button.change_email" = "Thay đổi email";
+"team.activation_code.button.change_phone" = "Change phone number";
+
+"team.full_name.headline" = "Tên của bạn";
+"team.full_name.textfield.placeholder" = "Tên đầy đủ";
+"team.full_name.textfield.accessibility" = "Đặt tên đầy đủ";
+
+"team.password.headline" = "Đặt mật khẩu";
+
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.learn_more.title" = "Tìm hiểu thêm";
+"team.invite.top_bar.skip" = "Bỏ qua";
+"team.invite.top_bar.done" = "Xong";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Đã xảy ra lỗi, vui lòng thử lại";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "Không có kết nối Internet";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Cho phép khách vãn lai và các dịch vụ";
+"guest_room.allow_guests.subtitle" = "Mở cuộc hội thoại này cho dịch vụ và mọi người ngoài nhóm của bạn.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Xóa bỏ";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Đã xảy ra lỗi";
+"guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Registration
+
+"registration.launch_back_button.label" = "Trở lại";
+
+"registration.title" = "Đăng ký";
+"registration.close_email_invitation_button.email_title" = "Sử dụng email khác";
+"registration.close_email_invitation_button.phone_title" = "Đăng ký bằng di động";
+"registration.close_phone_invitation_button.email_title" = "Đăng ký bằng email";
+"registration.close_phone_invitation_button.phone_title" = "Dùng số di động khác";
+
+"registration.register_by_phone" = "Di động";
+"registration.register_by_email" = "Email";
+
+"registration.enter_phone_number.title" = "Sửa số di động";
+"registration.enter_phone_number.placeholder" = "Số di động";
+
+"registration.verify_phone_number.instructions" = "Nhập mã xác nhận chúng tôi đã gửi cho %@";
+"registration.verify_phone_number.resend" = "Gửi lại";
+"registration.verify_phone_number.resend_placeholder" = "Không có mã hiển thị?\nBạn có thể yêu cầu mã mới trong %.0f giây";
+
+"registration.verify_email.instructions" = "Chúng tôi gửi một email cho %@.\n Theo đường dẫn để xác minh địa chỉ của bạn.";
+"registration.verify_email.resend.instructions" = "Chưa nhận đươc tin nhắn?";
+"registration.verify_email.resend.button_title" = "Gửi lại";
+
+"registration.no_history.hero" = "Đây là lần đầu bạn sử dụng Wire trên thiết bị này.";
+"registration.no_history.subtitle" = "Vì lý do riêng tư, lịch sử hội thoại của bạn sẽ không xuất hiện ở đây.";
+"registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Đăng nhập";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Đã xảy ra lỗi";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.action" = "Đăng nhập";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Please try again later.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Mật khẩu";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
+
+"registration.no_history.logged_out.hero" = "Bạn đã sử dụng Wire trên thiết bị này trước kia.";
+"registration.no_history.logged_out.subtitle" = "Tin nhắn đã gửi trong lúc này sẽ không hiển thị.";
+"registration.no_history.logged_out.got_it" = "OK";
+
+"registration.enter_name.title" = "Sửa Tên";
+"registration.enter_name.hero" = "Chúng tôi gọi gì cho bạn?";
+"registration.enter_name.placeholder" = "Tên đầy đủ";
+
+"registration.terms_of_use.title" = "Chào mừng đến với Wire.";
+"registration.terms_of_use.terms" = "Bằng cách tiếp tục bạn chấp thuận với Điều khoản Sử dụng của Wire.";
+"registration.terms_of_use.terms.link" = "Điều khoản Sử dụng";
+"registration.terms_of_use.agree" = "Tôi chấp thuận";
+
+"registration.terms_of_use.terms.title" = "Điều khoản Sử dụng";
+"registration.terms_of_use.terms.message" = "Vui lòng chấp thuận Điều khoản Sử dụng để tiếp tục.";
+"registration.terms_of_use.terms.view" = "Xem";
+"registration.terms_of_use.accept" = "Chấp nhận";
+
+"registration.email_flow.title" = "Đăng ký bằng Email";
+"registration.email_flow.email_step.title" = "Sử Thông tin";
+
+"registration.country_select.title" = "Quốc gia";
+
+"registration.share_contacts.hero.title" = "Tìm mọi người trên Wire";
+"registration.share_contacts.hero.paragraph" = "Chia sẽ danh bạ của bạn nên chúng tôi có thể kết nối bạn với người khác. Chúng tôi giữ bí mật tất cả thông tin và không chia sẽ nó với ai khác.";
+"registration.share_contacts.find_friends_button.title" = "Chia sẽ danh bạ";
+"registration.share_contacts.skip_button.title" = "Không phải lúc này";
+
+"registration.address_book_access_denied.hero.title" = "Wire không truy cập danh bạ của bạn.";
+"registration.address_book_access_denied.hero.paragraph1" = "Wirw giúp tìm bạn bè của bạn nếu bạn chia sẽ danh bạ của bạn.";
+"registration.address_book_access_denied.hero.paragraph2" = "Để kích hoạt truy cập Thiết lập và mở Danh bạ.";
+"registration.address_book_access_denied.settings_button.title" = "Cài đặt";
+"registration.address_book_access_denied.maybe_later_button.title" = "Có lẽ để sau";
+
+"registration.push_access_denied.hero.title" = "Không bao giờ lỡ cuộc gọi hoặc tin nhắn.";
+"registration.push_access_denied.hero.paragraph1" = "Bật Thông báo trong Thiết lập.";
+"registration.push_access_denied.settings_button.title" = "Đi đến Thiết lập";
+"registration.push_access_denied.maybe_later_button.title" = "Có lẽ để sau";
+
+"registration.personal.title" = "Tạo một tài khoản";
+"registration.signin.title" = "Đăng nhập";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.subtitle" = "Xóa bỏ khỏi thiết bị khác của bạn để sử dụng Wire trên thiết bị này.";
+"registration.signin.too_many_devices.manage_button.title" = "Quản lí thiết bị";
+"registration.signin.too_many_devices.sign_out_button.title" = "Đăng xuất";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
+"registration.devices.title" = "Thiết bị";
+"registration.devices.active_list_header" = "Kích hoạt";
+"registration.devices.current_list_header" = "Hiện tại";
+"registration.devices.active_list_subtitle" = "Nếu bạn không nhận ra thiết bị ở trên, xóa bỏ nó và đặt lại mật khẩu của bạn.";
+"registration.devices.activated" = "Activated %@";
+"registration.devices.id" = "ID:";
+
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
+"signin.forgot_password" = "Quên mật khẩu?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Đăng nhập";
+"signin.company_idp.button.title" = "For Companies";
+
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
+"registration.phone_country" = "Quốc gia";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
+
+"registration.add_phone_number.hero.title" = "Thêm số điện thoại";
+"registration.add_phone_number.hero.paragraph" = "Điều này sẽ giúp chúng tôi tìm người mà bạn có thể biết. Chúng tôi không bao giờ chia sẽ nó.";
+"registration.add_phone_number.skip_button.title" = "Không phải lúc này";
+
+"registration.add_email_password.hero.title" = "Add your email and password";
+"registration.add_email_password.hero.paragraph" = "Điều này sẽ cho bạn sử dụng Wire trên nhiều thiết bị.";
+
+"registration.email_invitation.title" = "Lời mời";
+"registration.email_invitation.hero.title" = "Xin chào, %@";
+"registration.email_invitation.hero.paragraph" = "Chọn nật khẩu để tạo tài khoản của bạn.";
+
+"registration.phone_invitation.title" = "Lời mời";
+"registration.phone_invitation.hero.title" = "Xin chào, %@";
+"registration.phone_invitation.hero.paragraph" = "Bạn vừa xong bước đầu tiên trong việc tạo tài khoản của bạn.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
+
+"error.name_and_email" = "Vui lòng nhập tên đầy đủ và email hợp lệ";
+"error.full_name" = "Vui lòng nhập tên đầy đủ";
+"error.email" = "Xin hãy nhập một địa chỉ email hợp lệ";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
+"error.email.invalid" = "Xin hãy nhập một địa chỉ email hợp lệ";
+"error.phone.invalid" = "Vui lòng nhập số di động hợp lệ";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.subtitle" = "Nhận tên bồi thường của bạn trên Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Tìm hiểu thêm";
+
+"registration.select_handle.takeover.choose_own" = "Chọn của bạn";
+"registration.select_handle.takeover.keep_suggested" = "Giữ lại thứ này";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Đã xảy ra lỗi, vui lòng thử lại";
+"error.user.needs_credentials" = "Vui lòng xác minh thông tin của bạn và thử lại.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.invalid_credentials" = "Vui lòng xác minh thông tin của bạn và thử lại.";
+"error.user.account_pending_activation" = "Tài khoản bạn đang cố truy cập đang chờ kích hoạt. Vui lòng xác minh thông tin của bạn.";
+"error.user.network_error" = "Xem ra đã có vấn đề với mạng của bạn. Vui lòng thử lại sau.";
+"error.user.email_is_taken" = "Địa chỉ email bạn đã cung cấp đã được đăng kí. Vui lòng thử lại.";
+"error.user.phone_is_taken" = "Số di động bạn đã cung cấp đã được đăng kí. Vui lòng thử lại.";
+"error.user.phone_code_invalid" = "Vui lòng nhập mã hợp lệ";
+"error.user.phone_code_too_many" = "Chúng tôi đã gửi cho bạn mã qua SMS. Chạm Gửi lại sau 10 phút để nhận mã mới.";
+"error.user.registration_unknown_error" = "Đã xảy ra lỗi. Vui lòng thử lại.";
+"error.user.device_deleted_remotely" = "Bạn đã đăng xuất từ thiết bị khác.";
+"error.user.last_identity_cant_be_deleted" = "Một địa chỉ email hoặc số điện thoại là bắt buộc.";
+"error.user.account_suspended" = "Tài khoản này không có quyền được đăng nhập.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Không thể cập nhật mật khẩu của bạn.";
+
+"error.group_call.too_many_members_in_conversation.title" = "Có quá nhiều người gọi";
+"error.group_call.too_many_members_in_conversation" = "Cuộc gọi công việc trong hội thoại với %d người.";
+"error.group_call.too_many_participants_in_the_call.title" = "Cuộc gọi đã đầy";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.call.gsm_ongoing.title" = "Dữ liệu cuộc gọi";
+"error.call.gsm_ongoing" = "Vui lòng huỷ dữ liệu cuộc gọi trước khi gọi trên Wire.";
+"error.call.general.title" = "Cuộc gọi lỗi";
+"error.call.general" = "Vui lòng thử gọi lại trong vài phút.";
+"error.call.slow_connection.title" = "Kết nối kém";
+"error.call.slow_connection" = "Bạn có thể gặp vấn đề trong khi gọi";
+"error.call.slow_connection.call_anyway" = "Vẫn gọi";
+
+"error.invite.no_email_provider" = "Vui lòng cấu hình email máy khách của bạn để có thể gửi lời mời bằng email";
+"error.invite.no_messaging_provider" = "Vui lòng cấu hình SMS của bạn để có thể gửi lời mời bằng SMS";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "Cuộc hội thoại đã đầy";
+"error.conversation.offline" = "Có vẻ là một vấn đề với kết nối Internet của bạn. Vui lòng chắc chắn rằng nó hoạt động.";
+
+"sketchpad.initial_hint" = "Chạm vào màu để đổi kích thước";
+
+"migration.please_wait_message" = "Đợi một lát, làm ơn";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ đã tham gia Wire";
+"push.notification.new_message" = "Tin nhắn mới";
+
+
+//Force Update
+"force.update.title" = "Cập nhật cần thiết";
+"force.update.message" = "Bạn đã lỡ các tính năng mới. Tải phiên bản mới nhất của Wire trên App Store.";
+"force.update.ok_button" = "Đi đến App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Third Party
+"giphy.conversation.message" = "%@ · bằng giphy.com";
+"giphy.conversation.random_message" = "bằng giphy.com";
+"giphy.error.no_more_results" = "hết gifs";
+"giphy.error.no_result" = "không tìm thấy gif";
+
+"giphy.confirm" = "gửi";
+"giphy.cancel" = "huỷ";
+"giphy.search_placeholder" = "Tìm Giphy";
+
+"invite_banner.title" = "Mang bạn bè của bạn đến với Wire!";
+"invite_banner.message" = "Tham gia cuộc gọi, tin nhắn, thảo luận, GIFs và nhiều hơn trong riêng tư hoặc với nhóm.";
+"invite_banner.invite_button_title" = "Mời nhiều người hơn";
+
+// Collections
+"collections.section.images.title" = "Ảnh";
+"collections.section.files.title" = "Tập tin";
+"collections.section.videos.title" = "Video";
+"collections.section.links.title" = "Đường dẫn";
+"collections.section.all.button" = "Hiển thị tất cả %d →";
+"collections.section.no_items" = "Không có mục rong bộ sưu tập";
+"collections.image_viewer.copied.title" = "Đã sao chép ảnh";
+
+"collections.search.field.placeholder" = "Tìm tin nhắn chữ";
+"collections.search.no_items" = "Không có kết quả";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Tin nhắn";
+"compose.drafts.empty.title" = "Không có tin nhắn";
+"compose.drafts.empty.subtitle" = "Chạm + để soạn tin";
+"compose.drafts.compose.title" = "Nhập tin nhắn";
+"compose.drafts.compose.subject.placeholder" = "Chạm để đặt chủ đề";
+
+"compose.drafts.compose.delete.confirm.title" = "Xác nhận Xóa";
+"compose.drafts.compose.delete.confirm.message" = "Hành động nàh sẽ xóa hoàn toàn bản nháp và không thể hoàn tác.";
+"compose.drafts.compose.delete.confirm.action.title" = "Xóa";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Lưu như nháp";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Lưu";
+"compose.drafts.compose.dismiss.delete.action.title" = "Xóa";
+
+"availability.message.cancel" = "Huỷ";
+"availability.message.set_status" = "Đặt trạng thái";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
+
+"availability.none" = "Không có";
+"availability.available" = "Rỗi";
+"availability.away" = "Vắng";
+"availability.busy" = "Bận";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "OK";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Bỏ qua";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Invalid link.";
+"url_action.invalid_link.message" = "The link you opened is not valid.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.button.privacy_policy.title" = "Chính sách Riêng tư";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Đã sửa: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Tên người dùng";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Tìm hiểu thêm";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Xóa";
+"wipe_database.alert.confirm_input" = "Xóa";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

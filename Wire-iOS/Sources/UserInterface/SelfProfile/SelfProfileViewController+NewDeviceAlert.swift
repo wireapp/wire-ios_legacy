@@ -39,13 +39,13 @@ extension SelfProfileViewController {
     fileprivate func presentNewLoginAlertController(_ clients: Set<UserClient>) {
         let newLoginAlertController = UIAlertController(forNewSelfClients: clients)
         
-        let actionManageDevices = UIAlertAction(title: "self.new_device_alert.manage_devices".localized, style:.default) { _ in
+        let actionManageDevices = UIAlertAction(title: "self.new_device_alert.manage_devices".localized, style: .default) { _ in
             self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
         }
         
         newLoginAlertController.addAction(actionManageDevices)
         
-        let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.default) { [weak self] _ in
+        let actionTrustDevices = UIAlertAction(title: "self.new_device_alert.trust_devices".localized, style: .default) { [weak self] _ in
             self?.presentUserSettingChangeControllerIfNeeded()
         }
         

@@ -75,7 +75,7 @@ enum SettingsPropertyValue: Equatable {
  *  Generic settings property
  */
 protocol SettingsProperty {
-    var propertyName : SettingsPropertyName { get }
+    var propertyName: SettingsPropertyName { get }
     func value() -> SettingsPropertyValue
     func set(newValue: SettingsPropertyValue) throws
     var enabled: Bool { get set }
@@ -122,7 +122,7 @@ func << (value: inout Any?, property: SettingsProperty) {
 }
 
 /// Generic user defaults property
-class SettingsUserDefaultsProperty : SettingsProperty {
+class SettingsUserDefaultsProperty: SettingsProperty {
     var enabled: Bool = true
 
     func set(newValue: SettingsPropertyValue) throws {
@@ -146,8 +146,8 @@ class SettingsUserDefaultsProperty : SettingsProperty {
         Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
-    let propertyName : SettingsPropertyName
-    let userDefaults : UserDefaults
+    let propertyName: SettingsPropertyName
+    let userDefaults: UserDefaults
     
     let userDefaultsKey: String
     
@@ -162,10 +162,10 @@ typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
 typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> ()
 
 /// Genetic block property
-final class SettingsBlockProperty : SettingsProperty {
+final class SettingsBlockProperty: SettingsProperty {
     var enabled: Bool = true
 
-    let propertyName : SettingsPropertyName
+    let propertyName: SettingsPropertyName
     func value() -> SettingsPropertyValue {
         return self.getAction(self)
     }
@@ -180,8 +180,8 @@ final class SettingsBlockProperty : SettingsProperty {
         Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
-    fileprivate let getAction : GetAction
-    fileprivate let setAction : SetAction
+    fileprivate let getAction: GetAction
+    fileprivate let setAction: SetAction
     
     init(propertyName: SettingsPropertyName, getAction: @escaping GetAction, setAction: @escaping SetAction) {
         self.propertyName = propertyName

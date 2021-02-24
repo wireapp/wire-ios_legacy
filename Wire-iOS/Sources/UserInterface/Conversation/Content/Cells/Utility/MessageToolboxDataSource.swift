@@ -152,7 +152,7 @@ class MessageToolboxDataSource {
         let likersNamesAttributedString = likersNames && attributes
 
         // Check if the list of likers fits on the screen. Otheriwse, show the summary
-        let constrainedSize = CGSize(width:  CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        let constrainedSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         let labelSize = likersNamesAttributedString.boundingRect(with: constrainedSize, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
 
         if likers.count >= 3 || labelSize.width > widthConstraint {
