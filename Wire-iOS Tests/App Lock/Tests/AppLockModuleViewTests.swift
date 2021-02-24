@@ -42,12 +42,12 @@ final class AppLockModuleViewTests: XCTestCase {
 
     // MARK: - Event sending
 
-    func test_ItSendsEvent_WhenViewLoads() {
+    func test_ItSendsEvent_WhenViewAppears() {
         // When
-        sut.loadViewIfNeeded()
+        sut.viewDidAppear(false)
 
         // Then
-        XCTAssertEqual(presenter.events, [.viewDidLoad])
+        XCTAssertEqual(presenter.events, [.viewDidAppear])
     }
 
     func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
@@ -59,7 +59,7 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.lockView.actionRequested?()
 
         // Then
-        XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])
+        XCTAssertEqual(presenter.events, [.unlockButtonTapped])
     }
 
     func test_ItSendsEvent_WhenLockViewRequestOpenDeviceSettings() {
@@ -71,7 +71,7 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.lockView.actionRequested?()
 
         // Then
-        XCTAssertEqual(presenter.events, [.viewDidLoad, .openDeviceSettingsButtonTapped])
+        XCTAssertEqual(presenter.events, [.openDeviceSettingsButtonTapped])
     }
 
     func test_ItSendsEvent_WhenPasscodeSetupFinishes() {

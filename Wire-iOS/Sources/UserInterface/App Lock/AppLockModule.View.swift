@@ -39,7 +39,11 @@ extension AppLockModule {
             super.viewDidLoad()
             setUpViews()
             setUpObserver()
-            presenter.processEvent(.viewDidLoad)
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            presenter.processEvent(.viewDidAppear)
         }
 
         // MARK: - Methods
