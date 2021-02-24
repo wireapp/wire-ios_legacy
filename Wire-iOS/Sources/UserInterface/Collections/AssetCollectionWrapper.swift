@@ -42,13 +42,13 @@ final class AssetCollectionMulticastDelegate: MulticastDelegate<AssetCollectionD
 }
 
 extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
+    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch: [ZMConversationMessage]], hasMore: Bool) {
         self.call {
             $0.assetCollectionDidFetch(collection: collection, messages: messages, hasMore: hasMore)
         }
     }
     
-    func assetCollectionDidFinishFetching(collection: ZMCollection, result : AssetFetchResult) {
+    func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
         self.call {
             $0.assetCollectionDidFinishFetching(collection: collection, result: result)
         }

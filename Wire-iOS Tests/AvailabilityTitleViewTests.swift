@@ -113,7 +113,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
 }
 
 extension ZMUser {
-    func updateAvailability(_ newValue : Availability) {
+    func updateAvailability(_ newValue: Availability) {
         self.willChangeValue(forKey: AvailabilityKey)
         self.setPrimitiveValue(NSNumber(value: newValue.rawValue), forKey: AvailabilityKey)
         self.didChangeValue(forKey: AvailabilityKey)

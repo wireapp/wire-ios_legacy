@@ -21,13 +21,13 @@ import Cartography
 import WireDataModel
 
 
-final class AnimatedPenView : UIView {
+final class AnimatedPenView: UIView {
     
     private let WritingAnimationKey = "writing"
     private let dots = UIImageView()
     private let pen = UIImageView()
     
-    var isAnimating : Bool = false {
+    var isAnimating: Bool = false {
         didSet {
             pen.layer.speed = isAnimating ? 1 : 0
             pen.layer.beginTime = pen.layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -69,7 +69,8 @@ final class AnimatedPenView : UIView {
     
     func setupConstraints() {
         constrain(self, dots, pen) { container, dots, pen in
-            distribute(by: 2, horizontally: dots, pen)
+            ///lower the priority to prevent this breaks when TypingIndicatorView's width = 0
+            distribute(by: 2, horizontally: dots, pen) ~ .defaultHigh
             
             dots.left == container.left
             dots.top == container.top
@@ -99,7 +100,7 @@ final class AnimatedPenView : UIView {
         pen.layer.removeAnimation(forKey: WritingAnimationKey)
     }
     
-    @objc func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         startWritingAnimation()
     }
 
@@ -128,7 +129,7 @@ final class TypingIndicatorView: UIView {
         return view
     }()
 
-    private var expandingLineWidth : NSLayoutConstraint?
+    private var expandingLineWidth: NSLayoutConstraint?
     
     var typingUsers: [UserType] = [] {
         didSet {
@@ -147,6 +148,7 @@ final class TypingIndicatorView: UIView {
         setupConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -161,13 +163,15 @@ final class TypingIndicatorView: UIView {
         constrain(self, container, nameLabel, animatedPen, expandingLine) { view, container, nameLabel, animatedPen, expandingLine in
             container.edges == view.edges
             
-            distribute(by: 4, horizontally: animatedPen, nameLabel)
+            ///lower the priority to prevent this breaks when TypingIndicatorView's width = 0
+            distribute(by: 4, horizontally: animatedPen, nameLabel) ~ .defaultHigh
             
             animatedPen.left == container.left + 8
             animatedPen.centerY == container.centerY
             
             nameLabel.top == container.top + 4
-            nameLabel.bottom == container.bottom - 4
+            ///lower the priority to prevent this breaks when container's height = 0
+            nameLabel.bottom == container.bottom - 4 ~ .defaultHigh
             nameLabel.right == container.right - 8
             
             expandingLine.center == view.center
@@ -180,7 +184,7 @@ final class TypingIndicatorView: UIView {
         nameLabel.text = typingUsers.compactMap { $0.name?.uppercased(with: Locale.current) }.joined(separator: ", ")
     }
     
-    func setHidden(_ hidden : Bool, animated : Bool, completion: Completion? = nil) {
+    func setHidden(_ hidden: Bool, animated: Bool, completion: Completion? = nil) {
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0

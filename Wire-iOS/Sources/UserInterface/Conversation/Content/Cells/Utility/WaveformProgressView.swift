@@ -22,13 +22,13 @@ import Cartography
 
 final private class WaveformBarsView: UIView {
     
-    var samples : [Float] = [] {
+    var samples: [Float] = [] {
         didSet {
             setNeedsDisplay()
         }
     }
     
-    var barColor : UIColor = UIColor.gray {
+    var barColor: UIColor = UIColor.gray {
         didSet {
             setNeedsDisplay()
         }
@@ -59,9 +59,9 @@ final private class WaveformBarsView: UIView {
             return
         }
         
-        let barWidth : CGFloat = 2
-        let minHeight : CGFloat = 1
-        let barspacing : CGFloat = 1
+        let barWidth: CGFloat = 2
+        let minHeight: CGFloat = 1
+        let barspacing: CGFloat = 1
         let stepSpacing = barWidth + barspacing
         let numbersOfBars = Int((rect.width + barspacing) / stepSpacing)
         
@@ -88,26 +88,26 @@ final public class WaveformProgressView: UIView {
     fileprivate let foregroundWaveform = WaveformBarsView()
     fileprivate var maskShape = CAShapeLayer()
     
-    public var samples : [Float] = [] {
+    public var samples: [Float] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples
         }
     }
     
-    public var barColor : UIColor = UIColor.gray {
+    public var barColor: UIColor = UIColor.gray {
         didSet {
             backgroundWaveform.barColor = barColor
         }
     }
     
-    public var highlightedBarColor : UIColor = UIColor.accent() {
+    public var highlightedBarColor: UIColor = UIColor.accent() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
     }
     
-    public var progress : Float = 0.0 {
+    public var progress: Float = 0.0 {
         didSet {
             setProgress(progress, animated: false)
         }

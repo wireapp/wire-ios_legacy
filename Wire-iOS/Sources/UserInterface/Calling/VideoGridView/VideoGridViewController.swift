@@ -24,8 +24,7 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
-final class VideoGridViewController: UIViewController {
-
+final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
@@ -52,6 +51,7 @@ final class VideoGridViewController: UIViewController {
     var configuration: VideoGridConfiguration {
         didSet {
             guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
     }
@@ -69,6 +69,8 @@ final class VideoGridViewController: UIViewController {
             animateNetworkConditionView()
         }
     }
+
+    var dismissSpinner: SpinnerCompletion?
 
     // MARK: - Initialization
 
@@ -140,6 +142,12 @@ final class VideoGridViewController: UIViewController {
         
         return streamId == maximizedStreamId
     }
+    
+    private func dismissMaximizedViewIfNeeded(oldPresentationMode: VideoGridPresentationMode) {
+        guard oldPresentationMode != configuration.presentationMode else { return }
+        maximizedView?.isMaximized = false
+        maximizedView = nil
+    }
 
     // MARK: - UI Update
 
@@ -174,6 +182,7 @@ final class VideoGridViewController: UIViewController {
     private func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
+        displaySpinnerIfNeeded()
         updateSelfPreview()
         updateFloatingVideo(with: configuration.floatingVideoStream)
         updateVideoGrid(with: videoStreams)
@@ -183,15 +192,29 @@ final class VideoGridViewController: UIViewController {
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
+    private func displaySpinnerIfNeeded() {
+        guard
+            configuration.presentationMode == .activeSpeakers,
+            configuration.videoStreams.isEmpty
+        else {
+            dismissSpinner?()
+            return
+        }
+        
+        showLoadingView(title: L10n.Localizable.Call.Grid.noActiveSpeakers)
+    }
+    
     private func updateSelfPreview() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
+        // No stream to show. Update the capture state.
         guard let selfStream = stream(with: selfStreamId) else {
-            (viewCache[selfStreamId] as? SelfVideoPreviewView)?.stopCapture()
+            Log.calling.debug("updating capture state to \(configuration.videoState)")
+            selfPreviewView?.updateCaptureState(with: configuration.videoState)
             return
         }
 
-        if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
+        if let view = selfPreviewView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
@@ -247,6 +270,7 @@ final class VideoGridViewController: UIViewController {
         let currentStreamsIds = configuration.allStreamIds
 
         for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
+            guard deletedStreamId != ZMUser.selfUser()?.selfStreamId else { return }
             viewCache[deletedStreamId]?.removeFromSuperview()
             viewCache.removeValue(forKey: deletedStreamId)
         }

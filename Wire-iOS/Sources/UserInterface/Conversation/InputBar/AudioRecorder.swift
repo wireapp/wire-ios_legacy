@@ -93,10 +93,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public let format: AudioRecorderFormat
     public var state: AudioRecorderState = .initializing
     
-    var audioRecorder : AVAudioRecorder?
+    var audioRecorder: AVAudioRecorder?
     
     var displayLink: CADisplayLink?
-    var audioPlayer : AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer?
     var audioPlayerDelegate: AudioPlayerDelegate?
     var pauseButtonCallback: Any?
     public var maxRecordingDuration: TimeInterval? = .none
@@ -137,9 +137,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
         self.fileURL = fileURL
         let settings = [
-            AVFormatIDKey : self.format.audioFormat(),
-            AVSampleRateKey : 32000,
-            AVNumberOfChannelsKey : 1,
+            AVFormatIDKey: self.format.audioFormat(),
+            AVSampleRateKey: 32000,
+            AVNumberOfChannelsKey: 1,
             ]
         
         let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)

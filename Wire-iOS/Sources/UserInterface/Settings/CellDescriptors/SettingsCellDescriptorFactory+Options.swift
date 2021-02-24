@@ -55,7 +55,7 @@ extension SettingsCellDescriptorFactory {
             title: "self.settings.privacy_contacts_menu.settings_button.title".localized,
             isDestructive: false,
             selectAction: { _ in
-                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         })
         
         return SettingsSectionDescriptor(
@@ -121,7 +121,7 @@ extension SettingsCellDescriptorFactory {
         
         return SettingsSectionDescriptor(
             cellDescriptors: [callKitToggle],
-            header:  "self.settings.callkit.title".localized,
+            header: "self.settings.callkit.title".localized,
             footer: "self.settings.callkit.description".localized,
             visibilityAction: .none
         )
@@ -170,7 +170,7 @@ extension SettingsCellDescriptorFactory {
         
         return SettingsSectionDescriptor(
             cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup],
-            header:  "self.settings.sound_menu.sounds.title".localized
+            header: "self.settings.sound_menu.sounds.title".localized
         )
     }
     

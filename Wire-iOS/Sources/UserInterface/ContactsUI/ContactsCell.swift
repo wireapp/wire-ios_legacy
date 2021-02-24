@@ -204,7 +204,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key : Any]?) -> Float {
+    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key: Any]?) -> Float {
         var width: CGFloat = 0
         for title: String in actionButtonTitles {
             let transformedTitle = title.applying(transform: textTransform)
@@ -248,7 +248,7 @@ extension ContactsCell: Themeable {
 }
 
 extension ContactsCell: UserCellSubtitleProtocol {
-    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+    static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] = [:]
 }
 
 extension ContactsCell {

@@ -18,8 +18,7 @@
 
 import Foundation
 
-final class MockVoiceChannel: NSObject, VoiceChannel {
-
+final class MockVoiceChannel: NSObject, VoiceChannel {    
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?
@@ -84,7 +83,9 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
         return mockParticipants
     }
     
-    func participants(activeSpeakersLimit limit: Int?) -> [CallParticipant] {
+    var requestedCallParticipantsListKind: CallParticipantsListKind?
+    func participants(ofKind kind: CallParticipantsListKind, activeSpeakersLimit limit: Int?) -> [CallParticipant] {
+        requestedCallParticipantsListKind = kind
         return mockParticipants
     }
     

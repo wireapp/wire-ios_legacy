@@ -61,7 +61,7 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         self.useDefaultPopGesture = false
         
         self.navigationBar.tintColor = .white
-        self.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)

@@ -30,7 +30,7 @@ extension ConversationInputBarViewController {
     func setupCallStateObserver() {
         if !ProcessInfo.processInfo.isRunningTests,
            let userSession = ZMUserSession.shared() {
-            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
     }
 
@@ -62,7 +62,7 @@ extension ConversationInputBarViewController {
     }
 
     private func displayAudioMessageAlertIfNeeded() -> Bool {
-        return CameraAccess.displayAlertIfOngoingCall(at:.recordAudioMessage, from:self)
+        return CameraAccess.displayAlertIfOngoingCall(at: .recordAudioMessage, from: self)
     }
 
     @objc func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {

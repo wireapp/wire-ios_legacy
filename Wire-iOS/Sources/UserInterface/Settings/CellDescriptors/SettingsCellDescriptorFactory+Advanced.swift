@@ -86,7 +86,7 @@ extension SettingsCellDescriptorFactory {
     
     private var debuggingToolsSection: SettingsSectionDescriptor {
 
-        let findUnreadConversationSection = SettingsSectionDescriptor(cellDescriptors:[
+        let findUnreadConversationSection = SettingsSectionDescriptor(cellDescriptors: [
             SettingsButtonCellDescriptor(
                 title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized,
                 isDestructive: false,

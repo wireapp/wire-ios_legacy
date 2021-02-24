@@ -219,7 +219,7 @@ extension ConversationMessageCellDescription {
     
 }
 
-extension ConversationMessageCellDescription where View.Configuration : Equatable {
+extension ConversationMessageCellDescription where View.Configuration: Equatable {
     
     /// Default implementation of isConfigurationEqual
     ///

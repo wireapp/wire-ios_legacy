@@ -43,7 +43,7 @@ final class UserNameTakeOverViewController: UIViewController {
     private let name: String
 
     private let learnMore = "registration.select_handle.takeover.subtitle_link".localized
-    fileprivate let learnMoreURL = URL(string:"action://learn-more")!
+    fileprivate let learnMoreURL = URL(string: "action://learn-more")!
 
     weak var delegate: UserNameTakeOverViewControllerDelegate?
 
@@ -126,25 +126,25 @@ final class UserNameTakeOverViewController: UIViewController {
         let edgeInsets = EdgeInsets(margin: inset)
 
         contentView.fitInSuperview()
-        topContainer.fitInSuperview(with:edgeInsets, exclude: [.bottom])
+        topContainer.fitInSuperview(with: edgeInsets, exclude: [.bottom])
 
         NSLayoutConstraint.activate([
             topContainer.bottomAnchor.constraint(equalTo: subtitleTextView.topAnchor)
             ])
 
-        subtitleTextView.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+        subtitleTextView.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
 
         NSLayoutConstraint.activate([
             subtitleTextView.bottomAnchor.constraint(equalTo: chooseOwnButton.topAnchor, constant: -inset)
             ])
 
-        chooseOwnButton.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+        chooseOwnButton.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
         NSLayoutConstraint.activate([
             chooseOwnButton.bottomAnchor.constraint(equalTo: keepSuggestedButton.topAnchor, constant: -8),
             chooseOwnButton.heightAnchor.constraint(equalToConstant: 40)
             ])
 
-        keepSuggestedButton.fitInSuperview(with:edgeInsets, exclude: [.top])
+        keepSuggestedButton.fitInSuperview(with: edgeInsets, exclude: [.top])
 
         NSLayoutConstraint.activate([
             keepSuggestedButton.heightAnchor.constraint(equalToConstant: 40)

@@ -854,7 +854,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         let string = (BaseLocalizationString + ".reset_session").localized.localizedUppercase
         
         return NSAttributedString(string: string,
-                                  attributes: [.link : resetSessionURL,
+                                  attributes: [.link: resetSessionURL,
                                                .foregroundColor: UIColor.accent(),
                                                .font: UIFont.mediumSemiboldFont])
     }
@@ -894,9 +894,9 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     }
     
     struct TextAttributes {
-        let senderAttributes : [NSAttributedString.Key: AnyObject]
-        let startedUsingAttributes : [NSAttributedString.Key: AnyObject]
-        let linkAttributes : [NSAttributedString.Key: AnyObject]
+        let senderAttributes: [NSAttributedString.Key: AnyObject]
+        let startedUsingAttributes: [NSAttributedString.Key: AnyObject]
+        let linkAttributes: [NSAttributedString.Key: AnyObject]
         
         init(boldFont: UIFont, normalFont: UIFont, textColor: UIColor, link: URL) {
             senderAttributes = [.font: boldFont, .foregroundColor: textColor]

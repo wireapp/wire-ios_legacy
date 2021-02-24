@@ -48,7 +48,7 @@ fileprivate extension VoiceChannel {
                     .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState,
-                                     isActiveSpeaker: $0.isActiveSpeaker)
+                                     activeSpeakerState: $0.activeSpeakerState)
                 })
 
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -132,6 +132,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
     let callState: CallStateExtending
+    let videoGridPresentationMode: VideoGridPresentationMode
+    let allowPresentationModeUpdates: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -161,6 +163,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
         callState = voiceChannel.state
+        videoGridPresentationMode = voiceChannel.videoGridPresentationMode
+        allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -262,11 +266,19 @@ fileprivate extension VoiceChannel {
         default: return false
         }
     }
+    
+    var allowPresentationModeUpdates: Bool {
+        return connectedParticipants.count > 2
+            && internalIsVideoCall
+            && isActiveSpeakersTabEnabled
+    }
+    
+    private var isActiveSpeakersTabEnabled: Bool { false }
 }
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
     }
 
     private var hashboxFirstDegradedUser: HashBoxUser? {

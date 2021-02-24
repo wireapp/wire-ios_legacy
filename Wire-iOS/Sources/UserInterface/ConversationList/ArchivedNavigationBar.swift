@@ -93,7 +93,7 @@ final class ArchivedNavigationBar: UIView {
         dismissButtonHandler?()
     }
     
-    override var intrinsicContentSize : CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: barHeight + statusbarHeight)
     }
     

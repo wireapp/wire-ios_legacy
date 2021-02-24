@@ -185,7 +185,7 @@ extension ZMSnapshotTestCase {
                                                             defaultImageDiffDirectory: (IMAGE_DIFF_DIR))
 
         if errorDescription.count > 0 {
-            XCTFail("\(errorDescription)", file:file, line:line)
+            XCTFail("\(errorDescription)", file: file, line: line)
         } else {
             XCTAssert(true)
         }
@@ -301,7 +301,7 @@ extension ZMSnapshotTestCase {
         let identifier = finalIdentifier(deviceName: "\(Int(width))", identifier: identifier)
 
         snapshotVerify(view: container,
-                       identifier:identifier,
+                       identifier: identifier,
                        tolerance: tolerance,
                        file: file,
                        line: line)

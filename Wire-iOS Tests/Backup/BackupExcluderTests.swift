@@ -42,7 +42,7 @@ final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
     
     func delete(fileNamed: String) {
         guard let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return }
-        let file = URL(fileURLWithPath:path).appendingPathComponent(fileNamed)
+        let file = URL(fileURLWithPath: path).appendingPathComponent(fileNamed)
 
         let fileManager = FileManager.default
         try? fileManager.removeItem(at: file)
@@ -50,13 +50,13 @@ final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
 
     func write(text: String, to fileNamed: String) {
         guard let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return }
-        let file = URL(fileURLWithPath:path).appendingPathComponent(fileNamed)
+        let file = URL(fileURLWithPath: path).appendingPathComponent(fileNamed)
         try? text.write(to: file, atomically: false, encoding: String.Encoding.utf8)
     }
     
     func testThatFileIsExcluded() {
         /// GIVEN
-        let filesToExclude:[FileInDirectory] = [(FileManager.SearchPathDirectory.documentDirectory, filename)]
+        let filesToExclude: [FileInDirectory] = [(FileManager.SearchPathDirectory.documentDirectory, filename)]
         
         write(text: "test", to: filename)
         

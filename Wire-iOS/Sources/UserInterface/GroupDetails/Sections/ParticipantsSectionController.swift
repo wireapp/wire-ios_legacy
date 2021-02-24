@@ -170,7 +170,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView?.register(ShowAllParticipantsCell.self, forCellWithReuseIdentifier: ShowAllParticipantsCell.reuseIdentifier)

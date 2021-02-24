@@ -40,14 +40,14 @@ final class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
 final class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     var isMicrophoneMuted: Bool = false
 
-    var intensityLevel : AVSIntensityLevel = .none
+    var intensityLevel: AVSIntensityLevel = .none
     
     func playMediaByName(_ name: String!) { }
 }
 
 final class ZMMockTracking: TrackingInterface {
-    var disableCrashSharing : Bool = false
-    var disableAnalyticsSharing : Bool = false
+    var disableCrashSharing: Bool = false
+    var disableAnalyticsSharing: Bool = false
     var disableCrashAndAnalyticsSharing: Bool = false
 }
 
@@ -71,7 +71,7 @@ final class SettingsPropertyTests: XCTestCase {
                          line: UInt = #line) throws where T: Equatable {
         var property = property
         try property << value
-        if let readValue : T = property.rawValue() as? T {
+        if let readValue: T = property.rawValue() as? T {
             if value != readValue {
                 recordFailure(
                     withDescription: "Wrong property value, read \(readValue) but expected \(value)",
@@ -170,7 +170,7 @@ final class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
@@ -183,7 +183,7 @@ final class SettingsPropertyTests: XCTestCase {
             userDefaults: userDefaults,
             tracking: ZMMockTracking(),
             mediaManager: ZMMockAVSMediaManager(),
-            userSession : MockZMUserSession(),
+            userSession: MockZMUserSession(),
             selfUser: MockZMEditableUser()
         )
 

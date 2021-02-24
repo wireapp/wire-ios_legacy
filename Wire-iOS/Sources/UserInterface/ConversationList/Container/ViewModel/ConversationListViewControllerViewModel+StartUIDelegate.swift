@@ -62,7 +62,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         
         guard let userSession = ZMUserSession.shared() else { return }
         
-        viewController?.setState(.conversationList, animated:true) {
+        viewController?.setState(.conversationList, animated: true) {
             var oneToOneConversation: ZMConversation? = nil
             userSession.enqueue({
                 oneToOneConversation = user.oneToOneConversation
@@ -86,7 +86,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                                                                   team: ZMUser.selfUser().team,
                                                                   allowGuests: allowGuests,
                                                                   readReceipts: enableReceipts)
-        }, completionHandler:{
+        }, completionHandler: {
             delay(0.3) {
                 ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
             }

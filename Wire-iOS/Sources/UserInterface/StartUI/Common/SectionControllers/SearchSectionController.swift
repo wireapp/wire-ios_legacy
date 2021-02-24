@@ -44,7 +44,7 @@ class SearchSectionController: NSObject, CollectionViewSectionController {
         return "section_header"
     }
         
-    func prepareForUse(in collectionView : UICollectionView?) {
+    func prepareForUse(in collectionView: UICollectionView?) {
         collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
     

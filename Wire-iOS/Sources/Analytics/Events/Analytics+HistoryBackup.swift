@@ -31,7 +31,7 @@ enum BackupEvent: Event {
         }
     }
     
-    var attributes: [AnyHashable : Any]? {
+    var attributes: [AnyHashable: Any]? {
         return nil
     }
 }

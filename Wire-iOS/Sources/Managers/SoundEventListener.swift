@@ -45,19 +45,19 @@ extension ZMConversationMessage {
     }
 }
 
-class SoundEventListener : NSObject {
+class SoundEventListener: NSObject {
     
     weak var userSession: ZMUserSession?
     
     static let SoundEventListenerIgnoreTimeForPushStart = 2.0
     
     let soundEventWatchDog = SoundEventRulesWatchDog(ignoreTime: SoundEventListenerIgnoreTimeForPushStart)
-    var previousCallStates : [UUID : CallState] = [:]
+    var previousCallStates: [UUID: CallState] = [:]
     
-    var unreadMessageObserverToken : NSObjectProtocol?
-    var unreadKnockMessageObserverToken : NSObjectProtocol?
-    var callStateObserverToken : Any?
-    var networkAvailabilityObserverToken : Any?
+    var unreadMessageObserverToken: NSObjectProtocol?
+    var unreadKnockMessageObserverToken: NSObjectProtocol?
+    var callStateObserverToken: Any?
+    var networkAvailabilityObserverToken: Any?
     
     init(userSession: ZMUserSession) {
         self.userSession = userSession
@@ -74,7 +74,7 @@ class SoundEventListener : NSObject {
         soundEventWatchDog.isMuted = UIApplication.shared.applicationState == .background
     }
     
-    func playSoundIfAllowed(_ mediaManagerSound : MediaManagerSound) {
+    func playSoundIfAllowed(_ mediaManagerSound: MediaManagerSound) {
         guard soundEventWatchDog.outputAllowed else { return }
         AVSMediaManager.sharedInstance()?.play(sound: mediaManagerSound)
     }
@@ -91,7 +91,7 @@ class SoundEventListener : NSObject {
     }
 }
 
-extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver {
+extension SoundEventListener: ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver {
     
     func didReceiveNewUnreadMessages(_ changeInfo: NewUnreadMessagesChangeInfo) {
         
@@ -140,7 +140,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
     
 }
 
-extension SoundEventListener : WireCallCenterCallStateObserver {
+extension SoundEventListener: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         
@@ -218,7 +218,7 @@ extension SoundEventListener {
     }
 }
 
-extension SoundEventListener : ZMNetworkAvailabilityObserver {
+extension SoundEventListener: ZMNetworkAvailabilityObserver {
     
     func didChangeAvailability(newState: ZMNetworkState) {
         guard UIApplication.shared.applicationState != .background else { return }
