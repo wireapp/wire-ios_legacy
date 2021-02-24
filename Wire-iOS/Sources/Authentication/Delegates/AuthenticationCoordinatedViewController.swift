@@ -22,7 +22,7 @@ import Foundation
  * Actions that can be performed by the view controllers when authentication fails.
  */
 
-enum AuthenticationErrorFeedbackAction : Int {
+enum AuthenticationErrorFeedbackAction: Int {
     /// The view should display a guidance dot to indicate user input is invalid.
     case showGuidanceDot
     /// The view should clear the input fields.

@@ -96,7 +96,7 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
     }
     
     @objc private func openSettings() {
-        guard let url = URL(string:UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
+        guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url)
     }
     

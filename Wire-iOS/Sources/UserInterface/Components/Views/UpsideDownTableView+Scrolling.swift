@@ -47,6 +47,6 @@ private extension UITableView {
         self.setContentOffset(self.contentOffset, animated: false)
         
         // scroll completely to top
-        self.setContentOffset(CGPoint(x: 0, y: -self.contentInset.top), animated:animated)
+        self.setContentOffset(CGPoint(x: 0, y: -self.contentInset.top), animated: animated)
     }
 }

@@ -34,7 +34,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
     let avatarViewContainer = UIView()
-    var avatarView : UIView?
+    var avatarView: UIView?
     private let shieldView: UIImageView = {
         let imageView = UIImageView(image: verifiedShieldImage)
         imageView.accessibilityIdentifier = "verifiedShield"

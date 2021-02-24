@@ -25,7 +25,7 @@ class UserClientCellTests: ZMSnapshotTestCase {
         super.setUp()
     }
     
-    func cell(_ configuration : (UserClientCell) -> Void) -> UserClientCell {
+    func cell(_ configuration: (UserClientCell) -> Void) -> UserClientCell {
         let cell = UserClientCell(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
         configuration(cell)
         cell.layoutIfNeeded()

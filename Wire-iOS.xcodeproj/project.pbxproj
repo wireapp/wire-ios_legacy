@@ -475,6 +475,7 @@
 		63A5E6F624C87E0000F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */; };
 		63AFE23825B6E16B0054B067 /* RoundedSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */; };
 		63B2366F251B634C009EDB02 /* UIAlertController+OutdatedClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */; };
+		63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */; };
 		63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */; };
 		63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */; };
 		63F65EFB2464444B00534A69 /* TimedCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EF92464426200534A69 /* TimedCircularProgressView.swift */; };
@@ -2111,6 +2112,7 @@
 		63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+SoundAlert.swift"; sourceTree = "<group>"; };
 		63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSegmentedView.swift; sourceTree = "<group>"; };
 		63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+OutdatedClient.swift"; sourceTree = "<group>"; };
+		63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveSpeakerState+Helper.swift"; sourceTree = "<group>"; };
 		63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDeltaTests.swift; sourceTree = "<group>"; };
 		63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewController.swift; sourceTree = "<group>"; };
 		63F65EF92464426200534A69 /* TimedCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedCircularProgressView.swift; sourceTree = "<group>"; };
@@ -2851,6 +2853,7 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		EE00ACE225E44506005FEC14 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		EE01D08025ADA3D5001DB205 /* AppLockModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.swift; sourceTree = "<group>"; };
 		EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Presenter.swift; sourceTree = "<group>"; };
 		EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Router.swift; sourceTree = "<group>"; };
@@ -5174,6 +5177,7 @@
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
 				5E181908216B734C003659CB /* Cartfile.resolved */,
 				5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */,
+				EE00ACE225E44506005FEC14 /* .swiftlint.yml */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -6229,6 +6233,7 @@
 				BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */,
 				BFAC71FA20A1CDAF002711C4 /* VoiceChannel+Helper.swift */,
 				BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */,
+				63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */,
 				BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */,
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
@@ -7069,6 +7074,7 @@
 				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
 				EEF9786E25D2923A00F7333E /* Run SwiftGen */,
+				EE00ACE125E43FA2005FEC14 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -7448,6 +7454,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Workaround for for carthage \"The file couldn’t be saved.\" error\nrm -rf ${TMPDIR}/TemporaryItems/*carthage*\n# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks\n";
 		};
+		EE00ACE125E43FA2005FEC14 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		EEF9786E25D2923A00F7333E /* Run SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -7557,6 +7581,7 @@
 				A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
 				5E8DA788211C499900360979 /* AuthenticationCoordinator+LoginDelegate.swift in Sources */,
+				63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */,
 				A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				5E21345321E39AE100273D0D /* EmailPasswordTextField.swift in Sources */,

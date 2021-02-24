@@ -19,12 +19,12 @@
 import UIKit
 import Cartography
 
-class SketchToolbar : UIView {
+class SketchToolbar: UIView {
 
     let containerView = UIView()
-    let leftButton : UIButton!
-    let rightButton : UIButton!
-    let centerButtons : [UIButton]
+    let leftButton: UIButton!
+    let rightButton: UIButton!
+    let centerButtons: [UIButton]
     let centerButtonContainer = UIView()
     let separatorLine = UIView()
     
@@ -67,7 +67,7 @@ class SketchToolbar : UIView {
     }
     
     func createConstraints() {
-        let buttonSpacing : CGFloat = 8
+        let buttonSpacing: CGFloat = 8
 
         constrain(self, containerView) { parentView, container in
             container.left == parentView.left
@@ -101,7 +101,7 @@ class SketchToolbar : UIView {
     func createCenterButtonConstraints() {
         guard !centerButtons.isEmpty else { return }
         
-        let buttonSpacing : CGFloat = 32
+        let buttonSpacing: CGFloat = 32
         let leftButton = centerButtons.first!
         let rightButton = centerButtons.last!
         

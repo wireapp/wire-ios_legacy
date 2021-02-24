@@ -24,7 +24,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     var isSelectedOnListContentController = false
     
     init(viewModel: ConversationListViewController.ViewModel) {
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

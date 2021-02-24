@@ -24,7 +24,7 @@ enum BlockerViewControllerContext {
     case jailbroken
 }
 
-final class BlockerViewController : LaunchImageViewController {
+final class BlockerViewController: LaunchImageViewController {
     
     private var context: BlockerViewControllerContext = .blacklist
     

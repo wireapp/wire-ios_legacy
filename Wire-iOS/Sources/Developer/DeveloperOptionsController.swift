@@ -23,18 +23,18 @@ import Cartography
 import MessageUI
 import UIKit
 
-class DeveloperOptionsController : UIViewController {
+class DeveloperOptionsController: UIViewController {
     
     /// Cells
-    var tableCells : [UITableViewCell]!
+    var tableCells: [UITableViewCell]!
     /// Map from UISwitch to the action it should perform. 
     /// The parameter of the action is whether the switch is on or off
-    var uiSwitchToAction : [UISwitch : (Bool)->()] = [:]
+    var uiSwitchToAction: [UISwitch: (Bool)->()] = [:]
     
     /// Map from UIButton to the action it should perform.
-    var uiButtonToAction : [UIButton : ()->()] = [:]
+    var uiButtonToAction: [UIButton : ()->()] = [:]
     
-    var mailViewController : MFMailComposeViewController? = nil
+    var mailViewController: MFMailComposeViewController? = nil
 }
 
 extension DeveloperOptionsController {
@@ -61,7 +61,7 @@ extension DeveloperOptionsController {
 
 }
 
-extension DeveloperOptionsController : UITableViewDataSource {
+extension DeveloperOptionsController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableCells.count

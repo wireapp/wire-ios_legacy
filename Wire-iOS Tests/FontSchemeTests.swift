@@ -22,7 +22,7 @@ import XCTest
 
 final class FontSchemeTests: XCTestCase {
 
-    fileprivate func insertFontSizeItems(_ points: [FontSize : CGFloat], _ multiplier: CGFloat, _ fixedFontNames: inout [FontSpec : String], _ fontTextStyle: FontTextStyle) {
+    fileprivate func insertFontSizeItems(_ points: [FontSize: CGFloat], _ multiplier: CGFloat, _ fixedFontNames: inout [FontSpec: String], _ fontTextStyle: FontTextStyle) {
         let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: round(points[FontSize.large]! * multiplier)),
                                                                          (fontSize: .normal, point: round(points[FontSize.normal]! * multiplier)),
                                                                          (fontSize: .medium, point: round(points[FontSize.medium]! * multiplier)),
@@ -48,9 +48,9 @@ final class FontSchemeTests: XCTestCase {
         }
     }
 
-    fileprivate func insertInputTextFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
+    fileprivate func insertInputTextFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec: String]) {
         let fontTextStyle: FontTextStyle = .inputText
-        let points: [FontSize : CGFloat] = [FontSize.large: 21,
+        let points: [FontSize: CGFloat] = [FontSize.large: 21,
                                             FontSize.normal: 14,
                                             FontSize.medium: 11,
                                             FontSize.small: 10]
@@ -58,9 +58,9 @@ final class FontSchemeTests: XCTestCase {
         insertFontSizeItems(points, multiplier, &fixedFontNames, fontTextStyle)
     }
 
-    fileprivate func insertLargeTitleFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
+    fileprivate func insertLargeTitleFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec: String]) {
         let fontTextStyle: FontTextStyle = .largeTitle
-        let points: [FontSize : CGFloat] = [FontSize.large: 40,
+        let points: [FontSize: CGFloat] = [FontSize.large: 40,
                                             FontSize.normal: 26,
                                             FontSize.medium: 20,
                                             FontSize.small: 18]

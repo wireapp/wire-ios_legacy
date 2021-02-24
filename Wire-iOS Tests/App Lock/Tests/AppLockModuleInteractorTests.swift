@@ -113,6 +113,19 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
     
+    func test_InitiateAuthentication_DoesNotNeedToCreateCustomPasscode_WhenDatabaseIsLocked() {
+        // Given
+        session.lock = .database
+        appLock.isCustomPasscodeSet = false
+        authenticationType.current = .unavailable
+
+        // When
+        sut.executeRequest(.initiateAuthentication)
+
+        // Then
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
+    }
+    
     func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
         // Given
         session.lock = .none

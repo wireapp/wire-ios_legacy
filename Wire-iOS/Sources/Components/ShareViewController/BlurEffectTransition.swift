@@ -19,13 +19,13 @@
 import Foundation
 import UIKit
 
-class BlurEffectTransition : NSObject, UIViewControllerAnimatedTransitioning {
+class BlurEffectTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
-    let reverse : Bool
+    let reverse: Bool
     let visualEffectView: UIVisualEffectView
     let crossfadingViews: [UIView]
     
-    init(visualEffectView: UIVisualEffectView, crossfadingViews: [UIView], reverse : Bool) {
+    init(visualEffectView: UIVisualEffectView, crossfadingViews: [UIView], reverse: Bool) {
         self.reverse = reverse
         self.visualEffectView = visualEffectView
         self.crossfadingViews = crossfadingViews

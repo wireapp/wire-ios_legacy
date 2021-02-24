@@ -33,7 +33,7 @@ final class CallParticipantsListHelper {
         return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
                                                                                           videoState: videoState,
                                                                                           microphoneState: microphoneState,
-                                                                                          isActiveSpeaker: false)
+                                                                                          activeSpeakerState: .inactive)
         }
     }
 

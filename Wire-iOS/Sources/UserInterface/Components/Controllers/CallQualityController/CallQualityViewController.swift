@@ -25,7 +25,7 @@ protocol CallQualityViewControllerDelegate: class {
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
-final class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
+final class CallQualityViewController: UIViewController, UIGestureRecognizerDelegate {
 
     let questionLabelText: String
     let callDuration: Int
@@ -38,8 +38,8 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
     let titleLabel = UILabel()
     let questionLabel = UILabel()
 
-    var callQualityStackView : CustomSpacingStackView!
-    var scoreSelectorView : QualityScoreSelectorView!
+    var callQualityStackView: CustomSpacingStackView!
+    var scoreSelectorView: QualityScoreSelectorView!
     var dismissTapGestureRecognizer: UITapGestureRecognizer!
 
     // MARK: Contraints
@@ -224,7 +224,7 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
 
 }
 
-class CallQualityView : UIStackView {
+class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
     let scoreButton = Button()
     let callback: (Int)->()
@@ -279,7 +279,7 @@ class CallQualityView : UIStackView {
     }
 }
 
-class QualityScoreSelectorView : UIView {
+class QualityScoreSelectorView: UIView {
     private let scoreStackView = UIStackView()
     
     weak var delegate: CallQualityViewControllerDelegate?

@@ -63,7 +63,7 @@ final class FileBackupExcluder: BackupExcluder {
         }
     }
 
-    func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
+    func excludeLibraryFolderInSharedContainer(sharedContainerURL: URL ) {
         do {
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()

@@ -43,7 +43,7 @@ final class ProfileSelfPictureViewController: UIViewController {
         }
         
         if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self,
+            userObserverToken = UserChangeInfo.add(observer: self,
                                                    for: ZMUser.selfUser(),
                                                    in: session)
         }
@@ -100,7 +100,7 @@ final class ProfileSelfPictureViewController: UIViewController {
             bottomOffset = -UIScreen.safeArea.bottom + 20.0
         }
 
-        cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x:0, y:bottomOffset))
+        cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x: 0, y: bottomOffset))
 
         cameraButton.setIconColor(.white, for: .normal)
         cameraButton.setIcon(.cameraLens, size: 40, for: .normal)
@@ -248,7 +248,7 @@ final class ProfileSelfPictureViewController: UIViewController {
             return
         }
         
-        guard !CameraAccess.displayAlertIfOngoingCall(at:.takePhoto, from: self) else { return }
+        guard !CameraAccess.displayAlertIfOngoingCall(at: .takePhoto, from: self) else { return }
         
         let picker = UIImagePickerController()
         

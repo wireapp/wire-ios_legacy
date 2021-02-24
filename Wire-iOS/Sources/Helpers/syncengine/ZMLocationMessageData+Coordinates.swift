@@ -49,7 +49,7 @@ public extension LocationMessageData {
     }
     
     var mapItem: MKMapItem? {
-        var addressDictionary: [String : AnyObject]? = nil
+        var addressDictionary: [String: AnyObject]? = nil
         if let name = name {
             addressDictionary = [CNPostalAddressStreetKey: name as AnyObject]
         }

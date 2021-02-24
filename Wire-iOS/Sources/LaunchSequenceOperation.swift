@@ -146,7 +146,7 @@ extension AppCenterOperation: MSDistributeDelegate {
 
         let alertController = UIAlertController(title: "Update available \(details?.shortVersion ?? "") (\(details?.version ?? ""))",
             message: "Release Note:\n\n\(details?.releaseNotes ?? "")\n\nDo you want to update?",
-            preferredStyle:.actionSheet)
+            preferredStyle: .actionSheet)
         alertController.configPopover(pointToView: window)
 
         alertController.addAction(UIAlertAction(title: "Update", style: .cancel) {_ in

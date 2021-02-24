@@ -76,7 +76,7 @@ final class CallViewControllerTests: XCTestCase {
                                           mediaManager: ZMMockAVSMediaManager) -> CallViewController {
     
         let proximityManager = ProximityMonitorManager()
-        let callController = CallViewController(voiceChannel: mockVoiceChannel, selfUser: selfUser, proximityMonitorManager: proximityManager, mediaManager:mediaManager)
+        let callController = CallViewController(voiceChannel: mockVoiceChannel, selfUser: selfUser, proximityMonitorManager: proximityManager, mediaManager: mediaManager)
         
         return callController
     }
@@ -86,7 +86,7 @@ final class CallViewControllerTests: XCTestCase {
         
         for _ in 0..<amount {
             participants.append(
-                CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+                CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
             )
         }
         

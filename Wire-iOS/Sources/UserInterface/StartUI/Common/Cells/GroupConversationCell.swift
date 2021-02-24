@@ -29,8 +29,8 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let separator = UIView()
-    var contentStackView : UIStackView!
-    var titleStackView : UIStackView!
+    var contentStackView: UIStackView!
+    var titleStackView: UIStackView!
     
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {

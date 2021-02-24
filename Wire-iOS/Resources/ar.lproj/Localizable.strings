@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "اتّصلت أنت";
 "content.system.ephemeral_time_remaining" = "غادر %@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "أنت";
-"content.system.this_device" = "هذا الجهاز";
 
 "content.system.call.called" = "اتصل %@";
 "content.system.call.called-you" = "اتصل %@";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "جهاز جديد";
-"content.system.started_using" = "بدأت استخدام";
 "content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
 "content.system.new_users" = "انضمّ مستخدم جديد.";
 "content.system.verify_devices" = "التحقق من الأجهزة";
 
-"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "أجهزتك";
-"content.system.other_devices" = "أجهزة %@";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "لم تستخدم هذا الجهاز لمدة. بعض الرسائل لن تظهر هُنَا.";
 "content.system.missing_messages.subtitle_start" = "في هذه الأثناء،";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "المشاركون";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "تم إيقاف الفيديو مؤقتاً";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
 "appLockModule.message.touchID" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "فتح القفل";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

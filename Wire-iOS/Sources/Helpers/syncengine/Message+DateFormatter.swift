@@ -28,7 +28,7 @@ extension Message {
         return shortTimeFormatter
     }()
     
-    static let shortDateFormatter : DateFormatter = {
+    static let shortDateFormatter: DateFormatter = {
         var shortDateFormatter = DateFormatter()
         shortDateFormatter.dateStyle = .short
         shortDateFormatter.timeStyle = .none

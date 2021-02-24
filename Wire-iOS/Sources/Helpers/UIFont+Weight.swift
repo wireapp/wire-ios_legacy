@@ -28,11 +28,11 @@ public extension UIFont {
         var symbolicTraits = fontDescriptor.symbolicTraits
         symbolicTraits.remove(.traitBold)
         
-        var traits = fontDescriptor.fontAttributes[.traits] as? [String : Any] ?? [:]
+        var traits = fontDescriptor.fontAttributes[.traits] as? [String: Any] ?? [:]
         traits[kCTFontWeightTrait as String] = weight
         traits[kCTFontSymbolicTrait as String] = symbolicTraits.rawValue
         
-        var fontAttributes: [UIFontDescriptor.AttributeName : Any] = [:]
+        var fontAttributes: [UIFontDescriptor.AttributeName: Any] = [:]
         fontAttributes[.family] = familyName
         fontAttributes[.traits] = traits
         

@@ -33,7 +33,7 @@ protocol NetworkStatusViewControllerDelegate: class {
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool
 }
 
-final class NetworkStatusViewController : UIViewController {
+final class NetworkStatusViewController: UIViewController {
 
     weak var delegate: NetworkStatusBarDelegate? {
         didSet {

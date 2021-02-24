@@ -50,7 +50,7 @@ enum PasscodeError: CaseIterable {
         
         let attributedString: NSAttributedString = NSAttributedString(string: message) && font
         
-        return NSAttributedString(attachment:textAttachment) + attributedString
+        return NSAttributedString(attachment: textAttachment) + attributedString
 
     }
     
