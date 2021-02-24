@@ -69,7 +69,8 @@ final class AnimatedPenView: UIView {
     
     func setupConstraints() {
         constrain(self, dots, pen) { container, dots, pen in
-            distribute(by: 2, horizontally: dots, pen)
+            ///lower the priority to prevent this breaks when TypingIndicatorView's width = 0
+            distribute(by: 2, horizontally: dots, pen) ~ .defaultHigh
             
             dots.left == container.left
             dots.top == container.top
@@ -147,6 +148,7 @@ final class TypingIndicatorView: UIView {
         setupConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -161,13 +163,15 @@ final class TypingIndicatorView: UIView {
         constrain(self, container, nameLabel, animatedPen, expandingLine) { view, container, nameLabel, animatedPen, expandingLine in
             container.edges == view.edges
             
-            distribute(by: 4, horizontally: animatedPen, nameLabel)
+            ///lower the priority to prevent this breaks when TypingIndicatorView's width = 0
+            distribute(by: 4, horizontally: animatedPen, nameLabel) ~ .defaultHigh
             
             animatedPen.left == container.left + 8
             animatedPen.centerY == container.centerY
             
             nameLabel.top == container.top + 4
-            nameLabel.bottom == container.bottom - 4
+            ///lower the priority to prevent this breaks when container's height = 0
+            nameLabel.bottom == container.bottom - 4 ~ .defaultHigh
             nameLabel.right == container.right - 8
             
             expandingLine.center == view.center
