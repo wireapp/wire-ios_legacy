@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import Cartography
 import WireSyncEngine
@@ -73,7 +72,6 @@ final class ConversationListBottomBarController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     private func createViews() {
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)

@@ -27,7 +27,6 @@ enum CameraAccessFeature: Int {
 
 final class CameraAccess: NSObject {
 
-
     /// if there is an on going call, show a alert and return true
     ///
     /// - Parameters:

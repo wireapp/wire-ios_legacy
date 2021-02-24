@@ -20,7 +20,6 @@ import UIKit
 import WireUtilities
 import WireDataModel
 
-
 protocol ConversationMessageCellDelegate: MessageActionResponder {
 
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
@@ -207,7 +206,6 @@ extension ConversationMessageCellDescription {
             _ = message?.startSelfDestructionIfNeeded()
         }
     }
-
 
     /// Default implementation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
     ///

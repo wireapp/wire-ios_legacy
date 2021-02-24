@@ -30,7 +30,6 @@ protocol CountlyInstance {
 
 extension Countly: CountlyInstance {}
 
-
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     typealias PendingEvent = (event: String, attribtues: [String: Any])

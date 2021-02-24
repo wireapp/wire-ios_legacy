@@ -163,7 +163,6 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
         itemView.fitInSuperview()
 
-
         if let superview = menuDotsView.superview {
             let menuDotsViewEdges = [
 
@@ -181,7 +180,6 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     override func drawerScrollingStarts() {
         overscrollStartDate = nil
     }
-
 
     override func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, updateUI doUpdate: Bool) {
         super.setVisualDrawerOffset(visualDrawerOffset, updateUI: doUpdate)
@@ -221,7 +219,6 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     class func invalidateCachedCellSize() {
         cachedSize = CGSize.zero
     }
-
 
     @objc
     private func onRightAccessorySelected(_ sender: UIButton?) {

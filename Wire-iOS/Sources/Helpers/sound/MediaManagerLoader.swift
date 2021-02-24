@@ -20,14 +20,12 @@ import Foundation
 import avs
 import WireSyncEngine
 
-
 // The AVS library consists of several components, those are:
 // - FlowManager: the component for establishing the network media flows.
 // - MediaManager: the part responsible for audio routing on the device.
 // - wcall: the Calling3 implementation.
 // The entities must be initialized in certain expected order. The main requirement is that the MediaManager is only
 // initialized after the FlowManager.
-
 
 enum LoadingMessage {
     // Called when the app is starting
@@ -42,7 +40,6 @@ enum MediaManagerState {
     // MediaManager is loaded.
     case loaded
 }
-
 
 // This enum is implementing the redundant Elm architecture state change. There is a single state and it's mutated by
 // sending it the messages (there is no way to directly alter the state).

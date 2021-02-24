@@ -211,7 +211,6 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
             return .zero
         }
 
-
         return CGSize(width: representation.width.rawValue, height: representation.height.rawValue)
     }
 

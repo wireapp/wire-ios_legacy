@@ -284,7 +284,6 @@ extension CompanyLoginController {
         }
     }
 
-
     /// Updates backend environment to the specified url
     ///
     /// - Parameter url: backend url to switch to

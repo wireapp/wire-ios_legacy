@@ -39,7 +39,6 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
 			return navigationController
 		}
 
-
         verifyInDarkScheme(createSut: createSut)
     }
 

@@ -20,7 +20,6 @@ import Foundation
 import WireSyncEngine
 import AppCenterCrashes
 
-
 enum DebugActions {
 
     /// Shows an alert with the option to copy text to the clipboard
@@ -258,7 +257,6 @@ enum DebugActions {
         _ callback: @escaping (String)->())
     {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
-
 
         let controller = UIAlertController(
             title: title,

@@ -17,7 +17,6 @@
 
 import Foundation
 
-
 extension ConversationListViewController {
     func setState(_ state: ConversationListState,
                   animated: Bool,

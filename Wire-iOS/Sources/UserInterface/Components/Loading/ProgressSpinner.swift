@@ -111,7 +111,6 @@ final class ProgressSpinner: UIView {
         return spinner.image?.size ?? super.intrinsicContentSize
     }
 
-
     private func setupConstraints() {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerInSuperview()

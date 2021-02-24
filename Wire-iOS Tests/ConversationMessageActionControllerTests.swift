@@ -119,7 +119,6 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
         message.senderUser = MockUserType.createUser(name: "Bob")
         message.conversation = otherUserConversation
 
-
         // WHEN
         let actionController = ConversationMessageActionController(responder: nil, message: message, context: .content, view: UIView())
         let supportsCopy = actionController.canPerformAction(#selector(ConversationMessageActionController.copyMessage))

@@ -38,7 +38,6 @@ final class ProximityMonitorManager: NSObject {
         }
     }
 
-
     var stateChanged: RaisedToEarHandler? = nil
     var listening: Bool = false
 
@@ -109,7 +108,6 @@ final class ProximityMonitorManager: NSObject {
     @objc func handleProximityChange(_ notification: Notification) {
         self.raisedToEar = UIDevice.current.proximityState
     }
-
 
 }
 

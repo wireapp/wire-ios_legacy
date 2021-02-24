@@ -143,7 +143,6 @@ extension ConversationStatusLineTests_Muting {
         markAllMessagesAsUnread(in: sut)
         sut.mutedMessageTypes = .regular
 
-
         // WHEN
         let status = sut.status.description(for: sut)
 

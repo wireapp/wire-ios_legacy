@@ -201,7 +201,6 @@ final class ConversationListItemView: UIView {
         })
     }
 
-
     func configure(with title: NSAttributedString?,
                    subtitle: NSAttributedString?) {
         titleText = title

@@ -209,7 +209,6 @@ extension ConversationStatusMatcher {
     }
 }
 
-
 final class ContentSizeCategoryUpdater {
     private let callback: () -> ()
     private var observer: NSObjectProtocol!
@@ -434,7 +433,6 @@ final class SilencedMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-
 extension ConversationStatus {
 
     var showingAllMessages: Bool {
@@ -476,7 +474,6 @@ extension ConversationStatus {
         }
     }
 }
-
 
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"

@@ -40,7 +40,6 @@ final class FontSchemeTests: XCTestCase {
                                                                               (fontWeight: .none, name: "Light")
                                                                               ]
 
-
         for fontWeightTuple in allFontWeightTuples {
             for fontSizeTuple in allFontSizeTuples {
                 fixedFontNames[FontSpec(fontSizeTuple.fontSize, fontWeightTuple.fontWeight, fontTextStyle)] = "System-\(fontWeightTuple.name) \(fontSizeTuple.point)"

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import WireCommonComponents
 import Cartography
@@ -118,7 +117,6 @@ final class EphemeralKeyboardViewController: UIViewController {
     private let conversation: ZMConversation!
     private let picker = PickerView()
 
-
     /// Allow conversation argument is nil for testing
     ///
     /// - Parameter conversation: nil for testing only
@@ -207,7 +205,6 @@ final class EphemeralKeyboardViewController: UIViewController {
     }
 }
 
-
 /// This class is a workaround to make the selector color
 /// of a `UIPickerView` changeable. It relies on the height of the selector
 /// views, which means that the behaviour could break in future iOS updates.
@@ -271,7 +268,6 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
     }
 
 }
-
 
 extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 

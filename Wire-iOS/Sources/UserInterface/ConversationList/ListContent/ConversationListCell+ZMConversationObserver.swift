@@ -29,7 +29,6 @@ extension ConversationListCell: ZMConversationObserver {
             change.mutedMessageTypesChanged ||
             change.messagesChanged) else { return }
 
-
         updateAppearance()
     }
 }

@@ -82,7 +82,6 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
         self.mediaPlaybackManager = mediaPlaybackManager
 
-
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
 

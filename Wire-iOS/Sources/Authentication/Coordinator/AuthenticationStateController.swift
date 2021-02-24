@@ -64,7 +64,6 @@ class AuthenticationStateController {
 
         case replace
 
-
         /**
          * The state was pushed onto the stack. You can enable the back button, if there are previous
          * states in the stack.

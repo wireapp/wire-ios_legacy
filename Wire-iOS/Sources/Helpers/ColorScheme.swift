@@ -70,7 +70,6 @@ extension UIColor {
     static var amberAlpha80: UIColor = UIColor(rgba: (254, 191, 2, 0.8))
 }
 
-
 enum ColorSchemeColor: Int {
     case textForeground
     case textBackground
@@ -303,7 +302,6 @@ extension UIColor {
 
         let coefficientsArray = variant == .dark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight
         let coefficient = coefficientsArray[Int(accentColor.rawValue)]
-
 
         let background: UIColor = variant == .dark ? .black : .white
         return background.mix(UIColor(fromZMAccentColor: accentColor), amount: coefficient)

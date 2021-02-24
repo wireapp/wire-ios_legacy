@@ -25,7 +25,6 @@ enum ConversationListState {
     case archived
 }
 
-
 final class ConversationListViewController: UIViewController {
     let viewModel: ViewModel
     /// internal View Model

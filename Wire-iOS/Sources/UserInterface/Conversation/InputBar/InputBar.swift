@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import Cartography
 import Down
@@ -216,7 +215,6 @@ final class InputBar: UIView {
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
 
-
         setupViews()
         updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
@@ -229,7 +227,6 @@ final class InputBar: UIView {
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(sendButtonEnablingDidApplyChanges), name: NSNotification.Name.disableSendButtonChanged, object: nil)
     }
-
 
     /// Update return key type when receiving a notification (from setting->toggle send key option)
     @objc

@@ -52,7 +52,6 @@ extension UIFont {
         return FontSpec(.small, .semibold).font!
     }
 
-
     // MARK: - Normal
 
     class var normalFont: UIFont {
@@ -110,6 +109,5 @@ extension UIFont {
     class var largeSemiboldFont: UIFont {
         return FontSpec(.large, .semibold).font!
     }
-
 
 }

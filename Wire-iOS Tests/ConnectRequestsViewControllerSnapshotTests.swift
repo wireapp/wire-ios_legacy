@@ -66,7 +66,6 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         let secondConnectionRequest = SwiftMockConversation()
         secondConnectionRequest.connectedUserType = otherUser
 
-
         sut.connectionRequests = [secondConnectionRequest, mockConnectionRequest]
         sut.reload(animated: false)
 

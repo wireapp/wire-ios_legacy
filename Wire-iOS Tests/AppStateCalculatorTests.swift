@@ -50,7 +50,6 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
 
-
     func testThatAppStateChanges_OnDidJailbreakCurrentVersion() {
         // WHEN
         sut.applicationDidBecomeActive()

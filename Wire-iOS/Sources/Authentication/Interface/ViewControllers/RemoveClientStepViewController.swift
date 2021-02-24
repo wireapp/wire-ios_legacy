@@ -131,7 +131,6 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     }
 }
 
-
 // MARK: - ClientListViewControllerDelegate
 
 extension RemoveClientStepViewController: ClientListViewControllerDelegate {

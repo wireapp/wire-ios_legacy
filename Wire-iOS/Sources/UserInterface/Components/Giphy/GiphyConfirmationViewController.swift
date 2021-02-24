@@ -39,7 +39,6 @@ final class GiphyConfirmationViewController: UIViewController {
     let ziph: Ziph?
     var imageData: Data?
 
-
     /// init method with optional arguments for remove dependency for testing
     ///
     /// - Parameters:

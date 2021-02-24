@@ -60,7 +60,6 @@ final class ProfileSelfPictureViewController: UIViewController {
         guard let selfImageData = selfImageData,
               let jpegData: Data = selfImageData.isJPEG ? selfImageData : UIImage(data: selfImageData)?.jpegData(compressionQuality: 1.0) else { return }
 
-
         ZMUserSession.shared()?.enqueue({
             ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
         })
@@ -185,7 +184,6 @@ final class ProfileSelfPictureViewController: UIViewController {
         topView.fitInSuperview(exclude: [.bottom])
 
         topView.backgroundColor = .clear
-
 
         selfUserImageView.clipsToBounds = true
         selfUserImageView.contentMode = .scaleAspectFill

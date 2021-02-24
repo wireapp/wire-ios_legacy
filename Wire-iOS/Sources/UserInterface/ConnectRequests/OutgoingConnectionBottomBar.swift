@@ -16,15 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import Cartography
-
 
 enum OutgoingConnectionBottomBarAction: UInt {
     case cancel, archive
 }
-
 
 final class OutgoingConnectionViewController: UIViewController {
 

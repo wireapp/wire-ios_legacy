@@ -110,7 +110,6 @@ final class DatabaseStatisticsController: UIViewController {
                 let messagesCount = try syncMoc.count(for: messages)
                 self.addRow(title: "Number of messages", contents: "\(messagesCount)")
 
-
                 let assetMessages = ZMAssetClientMessage.fetchRequest()
                 let allAssets = try syncMoc.fetch(assetMessages)
                     .compactMap {

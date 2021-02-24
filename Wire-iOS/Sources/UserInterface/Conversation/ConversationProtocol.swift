@@ -50,7 +50,6 @@ protocol InputBarConversation {
     var messageDestructionTimeoutValue: TimeInterval { get }
     var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
-
     var isReadOnly: Bool { get }
 }
 
@@ -67,7 +66,6 @@ protocol GroupDetailsConversation {
 
     var allowGuests: Bool { get }
     var hasReadReceiptsEnabled: Bool { get }
-
 
     var freeParticipantSlots: Int { get }
 

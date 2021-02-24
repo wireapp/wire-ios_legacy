@@ -48,7 +48,6 @@ final class MockAssetCreationRequest: AssetCreationRequestProtocol {
         MockAssetCreationRequest.image = UIImage(data: data)
     }
 
-
 }
 
 final class MockOwner {

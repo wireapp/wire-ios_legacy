@@ -74,7 +74,6 @@ final class MessagePresenterTests: XCTestCase {
         XCTAssertNil(sut.videoPlayerObserver)
     }
 
-
     // MARK: - Pass
 
     func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){

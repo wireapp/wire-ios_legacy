@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireSyncEngine
@@ -75,7 +74,6 @@ final class UserConnectionViewController: UIViewController {
 
     let userSession: ZMUserSession
     let user: ZMUser
-
 
     init(userSession: ZMUserSession, user: ZMUser) {
         self.userSession = userSession

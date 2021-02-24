@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireDataModel
 import WireSyncEngine
@@ -50,7 +49,6 @@ final class ArchivedListViewModel: NSObject {
     }
 
 }
-
 
 extension ArchivedListViewModel: ZMConversationListObserver {
     func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {

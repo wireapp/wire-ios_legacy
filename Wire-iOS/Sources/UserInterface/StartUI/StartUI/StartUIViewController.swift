@@ -115,7 +115,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView
         searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
 
-
         if let team = (selfUser as? ZMUser)?.team {
             title = team.name?.uppercased()
         } else {

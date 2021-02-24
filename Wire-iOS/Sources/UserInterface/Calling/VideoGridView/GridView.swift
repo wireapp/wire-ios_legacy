@@ -61,7 +61,6 @@ final class GridView: UICollectionView {
     }
 }
 
-
 // MARK: - Segment calculation
 
 private extension GridView {

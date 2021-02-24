@@ -30,7 +30,6 @@ protocol VideoGridConfiguration {
 
 }
 
-
 extension VideoGridConfiguration {
 
     var allStreamIds: Set<AVSClient> {

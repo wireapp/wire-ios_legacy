@@ -26,7 +26,6 @@ protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
 }
 
-
 final class MarkdownBarView: UIView {
 
     weak var delegate: MarkdownBarViewDelegate?
@@ -70,7 +69,6 @@ final class MarkdownBarView: UIView {
         stackView.alignment = .center
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: buttonMargin)
         stackView.isLayoutMarginsRelativeArrangement = true
-
 
         headerButton.setIcon(.markdownH1, size: .tiny, for: .normal)
         boldButton.setIcon(.markdownBold, size: .tiny, for: .normal)

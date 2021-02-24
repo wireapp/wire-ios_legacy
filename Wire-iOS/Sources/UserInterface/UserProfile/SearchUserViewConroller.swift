@@ -88,7 +88,6 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
             profileUser = nil
         }
 
-
         if let profileUser = profileUser {
             let profileViewController = ProfileViewController(user: profileUser, viewer: ZMUser.selfUser(), context: .profileViewer)
             profileViewController.delegate = profileViewControllerDelegate

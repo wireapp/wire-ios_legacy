@@ -22,7 +22,6 @@ import WireSyncEngine
 
 final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
-
     private let emptySectionHeaderHeight: CGFloat = 24
 
     let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
@@ -69,7 +68,6 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell

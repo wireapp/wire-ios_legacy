@@ -62,5 +62,4 @@ final class GroupConversationsSectionController: SearchSectionController {
         delegate?.searchSectionController(self, didSelectConversation: conversation, at: indexPath)
     }
 
-
 }

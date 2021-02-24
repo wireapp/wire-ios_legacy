@@ -20,7 +20,6 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-
 final class ProfileDetailsViewControllerTests: XCTestCase {
 
     var selfUserTeam: UUID!
@@ -1061,8 +1060,6 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: guest, viewer: selfUser, conversation: nil, context: .profileViewer)
     }
-
-
 
     // MARK: - Helpers
 

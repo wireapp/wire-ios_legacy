@@ -25,7 +25,6 @@ class CollectionViewCellAdapter: UICollectionViewCell {
         super.init(frame: frame)
     }
 
-
     var wrappedView: UIView? {
         didSet {
             guard wrappedView != oldValue else { return }

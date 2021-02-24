@@ -35,7 +35,6 @@ final class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelega
     }
 }
 
-
 final class CharacterInputFieldTests: XCTestCase {
     var sut: CharacterInputField! = nil
     var delegate: TestCharacterInputFieldDelegate! = nil
@@ -94,7 +93,6 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, text)
     }
-
 
     func testThatItDoesNotCallDelegateForSettingTextDirectly() {
         // when

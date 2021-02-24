@@ -16,16 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import Cartography
-
 
 protocol EmojiKeyboardViewControllerDelegate: class {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String)
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController)
 }
-
 
 final class EmojiKeyboardViewController: UIViewController {
 
@@ -120,7 +117,6 @@ final class EmojiKeyboardViewController: UIViewController {
         }
     }
 
-
 }
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
@@ -197,7 +193,6 @@ class EmojiCollectionViewCell: UICollectionViewCell {
     }
 
 }
-
 
 class EmojiCollectionView: UICollectionView {
 

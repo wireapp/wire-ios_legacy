@@ -47,7 +47,6 @@ class FolderCreationNameSectionController: NSObject, CollectionViewSectionContro
         return key.localized(args: self.conversationName)
     }()
 
-
     init(delegate: SimpleTextFieldDelegate? = nil, conversationName: String) {
         self.textFieldDelegate = delegate
         self.conversationName = conversationName

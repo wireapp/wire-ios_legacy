@@ -22,7 +22,6 @@ import WireSystem
 /// User default key for the array of enabled logs
 private let enabledLogsKey = "WireEnabledZMLogTags"
 
-
 extension Settings {
 
     /// Enable/disable a log

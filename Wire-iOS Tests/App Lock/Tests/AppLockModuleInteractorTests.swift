@@ -138,7 +138,6 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
-
     // MARK: - Evaluate authentication
 
     func test_EvaluateAuthentication_SessionIsAlreadyUnlocked() {

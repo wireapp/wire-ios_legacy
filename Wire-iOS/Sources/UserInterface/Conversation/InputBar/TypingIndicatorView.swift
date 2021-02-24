@@ -20,7 +20,6 @@ import UIKit
 import Cartography
 import WireDataModel
 
-
 final class AnimatedPenView: UIView {
 
     private let WritingAnimationKey = "writing"

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireCommonComponents
@@ -88,7 +87,6 @@ final class EmojiDataSource: NSObject, UICollectionViewDataSource {
     }
 
 }
-
 
 enum EmojiSectionType: String {
 

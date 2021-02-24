@@ -98,7 +98,6 @@ extension BackendEnvironment {
 
 }
 
-
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
@@ -168,8 +167,6 @@ extension URL {
     static var wr_emailInUseLearnMore: URL {
         return BackendEnvironment.websiteLink(path: "support/email-in-use")
     }
-
-
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {

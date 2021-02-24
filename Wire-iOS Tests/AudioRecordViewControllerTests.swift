@@ -123,7 +123,6 @@ final class AudioRecordViewControllerTests: ZMSnapshotTestCase {
 
 }
 
-
 private extension UIViewController {
     @discardableResult func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)

@@ -87,7 +87,6 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-
     // MARK : Uploading
 
     func testUploadingCell_fromThisDevice() {

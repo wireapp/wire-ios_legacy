@@ -60,7 +60,6 @@ extension CollectionCell: SelectableView {
     }
 }
 
-
 final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import MediaPlayer
 import WireSyncEngine
@@ -370,7 +369,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     }
 }
 
-
 extension AudioRecorder: AVAudioRecorderDelegate {
     public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
 
@@ -417,8 +415,6 @@ final class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate {
         playerDidFinishClosure(flag)
     }
 }
-
-
 
 // MARK: Power Provider
 

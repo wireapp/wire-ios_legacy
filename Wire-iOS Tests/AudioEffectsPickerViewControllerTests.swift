@@ -22,7 +22,6 @@ import XCTest
 final class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     var sut: AudioEffectsPickerViewController! = .none
 
-
     override func tearDown() {
         sut = nil
         super.tearDown()

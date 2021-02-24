@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 @testable import Wire
 
@@ -80,7 +79,6 @@ final class InputBarTests: ZMSnapshotTestCase {
     func testShortText() {
         sut.textView.text = shortText
 
-
         verifyInAllPhoneWidths(view: sut)
     }
 
@@ -94,7 +92,6 @@ final class InputBarTests: ZMSnapshotTestCase {
     func testRTLText() {
         sut.textView.text = LTRText
         sut.textView.textAlignment = .right
-
 
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
@@ -141,7 +138,6 @@ final class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.setInputBarState(.writing(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-
 
         verifyInAllPhoneWidths(view: sut)
     }

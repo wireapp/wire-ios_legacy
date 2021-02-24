@@ -26,7 +26,6 @@ final class MockLegalHoldDataSource: NSObject {
 
 extension MockUser: SelfLegalHoldSubject {
 
-
     public var needsToAcknowledgeLegalHoldStatus: Bool {
         return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
     }

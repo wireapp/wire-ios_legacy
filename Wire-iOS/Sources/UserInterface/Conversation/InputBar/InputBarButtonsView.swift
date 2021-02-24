@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 import WireCommonComponents
@@ -32,7 +31,6 @@ private struct InputBarRowConstants {
         return width <= CGFloat.iPhone4Inch.width ? minimumButtonWidthIPhone5 : minimumButtonWidth
     }
 }
-
 
 final class InputBarButtonsView: UIView {
 

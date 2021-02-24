@@ -92,7 +92,6 @@ final class CallHapticsController {
     }
 }
 
-
 // MARK - Helper
 
 fileprivate extension CallState {

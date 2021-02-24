@@ -1,9 +1,7 @@
 disabled_rules:
-    - operator_whitespace
     - no_space_in_method_call
     - return_arrow_whitespace
     - comment_spacing
-    - vertical_whitespace
     - vertical_parameter_alignment
     - closing_brace
     - line_length

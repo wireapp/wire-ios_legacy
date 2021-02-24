@@ -33,7 +33,6 @@ extension AppLockModule {
 
 }
 
-
 // MARK: - Handle result
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {

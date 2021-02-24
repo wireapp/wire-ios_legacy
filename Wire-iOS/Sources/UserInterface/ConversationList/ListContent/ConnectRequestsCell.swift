@@ -81,7 +81,6 @@ final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
         }
     }
 
-
     override func updateConstraints() {
         if !hasCreatedInitialConstraints {
             hasCreatedInitialConstraints = true
@@ -113,11 +112,9 @@ final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
         }
     }
 
-
     private
     func updateAppearance() {
         guard let userSession = ZMUserSession.shared() else { return }
-
 
         let connectionRequests = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
 

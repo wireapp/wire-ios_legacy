@@ -39,7 +39,6 @@ final class FolderPickerViewController: UIViewController {
         return UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout)
     }()
 
-
     init(conversation: ZMConversation, directory: ConversationDirectoryType) {
         self.conversation = conversation
         self.conversationDirectory = directory
@@ -126,7 +125,6 @@ final class FolderPickerViewController: UIViewController {
         folderCreation.delegate = self
         self.navigationController?.pushViewController(folderCreation, animated: true)
     }
-
 
 }
 

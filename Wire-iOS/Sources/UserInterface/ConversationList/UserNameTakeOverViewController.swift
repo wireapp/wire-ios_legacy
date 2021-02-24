@@ -16,18 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 
 protocol UserNameTakeOverViewControllerDelegate: class {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
 }
 
-
 enum UserNameTakeOverViewControllerAction {
     case chooseOwn(String), keepSuggestion(String), learnMore
 }
-
 
 final class UserNameTakeOverViewController: UIViewController {
 
@@ -115,7 +112,6 @@ final class UserNameTakeOverViewController: UIViewController {
 
         displayNameLabel.fitInSuperview(exclude: [.top, .bottom])
         suggestedHandleLabel.fitInSuperview(exclude: [.top, .bottom])
-
 
         NSLayoutConstraint.activate([
             displayNameLabel.bottomAnchor.constraint(equalTo: topContainer.centerYAnchor, constant: -4),

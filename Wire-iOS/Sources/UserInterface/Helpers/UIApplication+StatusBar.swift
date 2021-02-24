@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 
 extension UIApplication {
@@ -45,7 +44,6 @@ extension UIApplication {
 
         return visibleWindow.last
     }
-
 
     /// Get the top most view controller
     ///

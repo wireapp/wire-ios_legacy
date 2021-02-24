@@ -106,7 +106,6 @@ final class ProfileViewController: UIViewController {
         }
     }
 
-
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -315,7 +314,6 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
     }
 
-
     private func performAction(_ action: ProfileAction,
                        targetView: UIView) {
         switch action {
@@ -370,7 +368,6 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         present(alert, animated: true)
     }
 
-
     // MARK: Legal Hold
 
     private var legalholdItem: UIBarButtonItem {
@@ -385,7 +382,6 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         let user = viewModel.user
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
-
 
     // MARK: Block
 
@@ -425,7 +421,6 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         ClearContentResult.options(for: conversation).map { $0.action(viewModel.handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
-
 
     // MARK: Remove User
 

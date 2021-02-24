@@ -120,7 +120,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             iconImageViewLeadingConstraint?.constant = 0
         }
 
-
         titleLabel.textColor = mainColor
 
         titleLabel.text = title

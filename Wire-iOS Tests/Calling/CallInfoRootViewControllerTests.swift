@@ -285,7 +285,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-
     // MARK: - Missing Video Permissions
 
     func testGroupVideoUndeterminedVideoPermissions() {

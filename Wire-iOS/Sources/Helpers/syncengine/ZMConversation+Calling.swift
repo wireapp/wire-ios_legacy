@@ -96,7 +96,6 @@ extension ZMConversation {
                 handler(true)
             }))
 
-
             ZClientViewController.shared?.present(badConnectionController, animated: true)
         } else {
             handler(false)

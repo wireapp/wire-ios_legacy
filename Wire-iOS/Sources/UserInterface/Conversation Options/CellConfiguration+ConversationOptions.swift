@@ -18,7 +18,6 @@
 
 import Foundation
 
-
 extension CellConfiguration {
 
     static func groupAdminToogle(get: @escaping () -> Bool,

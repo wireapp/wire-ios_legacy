@@ -100,7 +100,6 @@ public struct FontSpec: Hashable {
     public let weight: FontWeight?
     public let fontTextStyle: FontTextStyle?
 
-
     /// init method of FontSpec
     ///
     /// - Parameters:
@@ -171,14 +170,12 @@ final class FontScheme {
     public static func defaultFontMapping(with contentSizeCategory: UIContentSizeCategory) -> FontMapping {
         var mapping: FontMapping = [:]
 
-
         // The ratio is following 11:12:16:24, same as default case
         let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 40),
                                                                                 (fontSize: .normal, point: 26),
                                                                                 (fontSize: .medium, point: 20),
                                                                                 (fontSize: .small, point: 18)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
-
 
         let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 21),
                                                                                (fontSize: .normal, point: 14),

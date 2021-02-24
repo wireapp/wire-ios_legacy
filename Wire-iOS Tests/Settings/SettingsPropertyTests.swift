@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 import WireCommonComponents
 @testable import Wire
@@ -63,7 +62,6 @@ final class SettingsPropertyTests: XCTestCase {
         userDefaults = nil
         super.tearDown()
     }
-
 
     func saveAndCheck<T>(_ property: SettingsProperty,
                          value: T,
@@ -138,7 +136,6 @@ final class SettingsPropertyTests: XCTestCase {
         // when & then
         try! saveAndCheck(property, value: 2)
     }
-
 
     func testThatSoundLevelPropertySetsValue() {
         // given

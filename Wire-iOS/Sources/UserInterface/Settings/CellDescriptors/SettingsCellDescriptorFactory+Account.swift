@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireDataModel
@@ -152,7 +151,6 @@ extension SettingsCellDescriptorFactory {
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
 
-
     func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
         return textValueCellDescriptor(propertyName: .profileName, enabled: enabled)
     }
@@ -263,8 +261,6 @@ extension SettingsCellDescriptorFactory {
     }
 
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
-
-
 
         return SettingsPropertyToggleCellDescriptor(settingsProperty:
             self.settingsPropertyFactory.property(.readReceiptsEnabled),

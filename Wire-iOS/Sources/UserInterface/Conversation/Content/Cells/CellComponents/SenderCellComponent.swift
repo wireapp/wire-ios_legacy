@@ -74,13 +74,11 @@ final class SenderCellComponent: UIView {
         authorLabel.accessibilityIdentifier = "author.name"
         authorLabel.numberOfLines = 1
 
-
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial
         avatar.size = .badge
         avatar.translatesAutoresizingMaskIntoConstraints = false
         avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnAvatar)))
-
 
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
@@ -155,7 +153,6 @@ final class SenderCellComponent: UIView {
 
         SessionManager.shared?.showUserProfile(user: user)
     }
-
 
 }
 

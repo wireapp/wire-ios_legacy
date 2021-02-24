@@ -160,7 +160,6 @@ final class ListSkeletonContentView: UITableView, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "ListSkeletonCell")
 
-
         if let skeletonCell = cell as? ListSkeletonCell {
             skeletonCell.lineInset =  randomizeDummyItem ? Float(arc4random() % 200) : 0
         }
@@ -193,7 +192,6 @@ final class ListSkeletonView: UIView {
         self.listContentView = ListSkeletonContentView(randomizeDummyItem: randomizeDummyItem)
 
         super.init(frame: CGRect.zero)
-
 
         buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
         buttonRowView.distribution = .equalCentering
