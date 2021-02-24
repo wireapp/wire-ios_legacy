@@ -269,7 +269,7 @@ internal enum L10n {
         }
       }
       internal enum Grid {
-        /// No active speakers...
+        /// No active video speakers...
         internal static let noActiveSpeakers = L10n.tr("Localizable", "call.grid.no_active_speakers")
       }
       internal enum Overlay {
