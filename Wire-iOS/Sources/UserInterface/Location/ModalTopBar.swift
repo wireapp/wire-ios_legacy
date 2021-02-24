@@ -63,7 +63,7 @@ final class ModalTopBar: UIView {
 
     weak var delegate: ModalTopBarDelegate?
     private var contentTopConstraint: NSLayoutConstraint?
-    
+
     private var title: String? {
         didSet {
             titleLabel.text = title?.localizedUppercase
@@ -111,7 +111,7 @@ final class ModalTopBar: UIView {
         self.subtitle = subtitle
         self.titleLabel.font = subtitle == nil ? .mediumSemiboldFont : .systemFont(ofSize: 11, weight: .semibold)
     }
-    
+
     fileprivate func configureViews() {
         backgroundColor = .from(scheme: .background)
         titleLabel.isHidden = true
@@ -158,7 +158,7 @@ final class ModalTopBar: UIView {
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
         subtitleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
-    
+
     @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {
         delegate?.modelTopBarWantsToBeDismissed(self)
     }

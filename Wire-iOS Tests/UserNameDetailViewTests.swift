@@ -58,6 +58,6 @@ class UserNameDetailViewTests: ZMSnapshotTestCase {
         let sut = createSutWithHeadStyle(user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
 }
 

@@ -73,7 +73,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         backgroundColor = .clear
     }
 
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -210,7 +210,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
-        
+
         setupViews()
     }
 
@@ -387,5 +387,5 @@ fileprivate extension String {
     var isEqualToUnicodeName: Bool {
         return applyingTransform(.toUnicodeName, reverse: false) == self
     }
-    
+
 }

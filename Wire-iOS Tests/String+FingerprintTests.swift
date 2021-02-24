@@ -33,7 +33,7 @@ final class String_FingerprintTests: XCTestCase {
         // THEN
         stride(from: 0, to: 20, by: 6).forEach {
             let boldRange = NSRange(location: $0, length: 2)
-            
+
             let substring = attributedString.attributedSubstring(from: boldRange)
             let attrs = substring.attributes(at: 0, effectiveRange: nil)
 

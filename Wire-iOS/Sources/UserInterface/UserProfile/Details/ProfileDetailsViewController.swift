@@ -35,7 +35,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     let conversation: ZMConversation?
 
     let context: ProfileViewControllerContext
-    
+
     /// The current group admin status.
     var isAdminRole: Bool {
         didSet {
@@ -63,7 +63,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     // MARK: - Initialization
 
     /**
@@ -73,17 +73,17 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
      * - parameter conversation: The conversation where the profile is displayed.
      * - parameter context: The context of the profile screen.
      */
-    
+
     init(user: UserType,
          viewer: UserType,
          conversation: ZMConversation?,
          context: ProfileViewControllerContext) {
-        
+
         var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]
-        
+
         // The availability status has been moved to the left of the user name, so now we can always hide this status in the user's profile.
         profileHeaderOptions.insert(.hideAvailability)
-        
+
         self.user = user
         isAdminRole = conversation.map(user.isGroupAdmin) ?? false
         self.viewer = viewer
@@ -91,27 +91,27 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         self.context = context
         profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
         contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         contentController.delegate = self
 
         IconToggleSubtitleCell.register(in: tableView)
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - View Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubviews()
         configureConstraints()
     }
-    
+
     private func configureSubviews() {
         tableView.dataSource = contentController
         tableView.delegate = contentController
@@ -120,18 +120,18 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         tableView.estimatedRowHeight = 56
         tableView.contentInset.bottom = 88
         view.addSubview(tableView)
-        
+
         profileHeaderViewController.willMove(toParent: self)
         profileHeaderViewController.imageView.isAccessibilityElement = false
         profileHeaderViewController.imageView.isUserInteractionEnabled = false
         profileHeaderViewController.view.sizeToFit()
         tableView.tableHeaderView = profileHeaderViewController.view
         addChild(profileHeaderViewController)
-        
+
         tableView.backgroundColor = .clear
         applyColorScheme(colorSchemeVariant)
     }
-    
+
     private func configureConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -143,32 +143,32 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
         tableView.separatorColor = UIColor.from(scheme: .separator, variant: colorSchemeVariant)
     }
-        
+
     // MARK: - Layout
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         // Update the header by recalculating its frame
         guard let headerView = tableView.tableHeaderView else {
             return
         }
-        
+
         let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        
+
         if headerView.frame.size.height != size.height {
             headerView.frame.size.height = size.height
             // We need to reassign the header view on iOS 10 to resize the header properly.
@@ -176,19 +176,19 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
             tableView.layoutIfNeeded()
         }
     }
-    
+
 }
 
 // MARK: - ProfileDetailsContentController
 
 extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate {
-    
+
     func profileGroupRoleDidChange(isAdminRole: Bool) {
         self.isAdminRole = isAdminRole
     }
-    
+
     func profileDetailsContentDidChange() {
         tableView.reloadData()
     }
-    
+
 }

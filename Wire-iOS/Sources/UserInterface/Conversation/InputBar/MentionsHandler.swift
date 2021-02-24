@@ -36,7 +36,7 @@ final class MentionsHandler: NSObject {
 
     init?(text: String?, cursorPosition: Int) {
         guard let text = text, !text.isEmpty else { return nil }
-        
+
         let matches = mentionRegex.matches(in: text, range: text.wholeRange)
         // Cursor is a separator between characters, we are interested in the character before the cursor
         let characterPosition = max(0, cursorPosition - 1)

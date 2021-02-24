@@ -28,7 +28,7 @@ final class ScreenCurtain: UIWindow {
     weak var delegate: ScreenCurtainDelegate?
 
     // MARK: - Life cycle
-    
+
     override init(frame: CGRect = UIScreen.main.bounds) {
         super.init(frame: frame)
         rootViewController = RootViewController()
@@ -52,7 +52,7 @@ final class ScreenCurtain: UIWindow {
             object: nil
         )
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

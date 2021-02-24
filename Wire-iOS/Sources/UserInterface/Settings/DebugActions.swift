@@ -22,7 +22,7 @@ import AppCenterCrashes
 
 
 enum DebugActions {
-    
+
     /// Shows an alert with the option to copy text to the clipboard
     static func alert(
         _ message: String,
@@ -39,18 +39,18 @@ enum DebugActions {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         controller.present(alert, animated: false)
     }
-    
+
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
     static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
-        
+
         let uiMOC = userSession.managedObjectContext
         let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
         let allConversations = uiMOC.fetchOrAssert(request: fetchRequest)
-        
+
         if let convo = allConversations.first(where: { predicate.evaluate(with: $0) }) {
-            
+
             let message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
@@ -61,25 +61,25 @@ enum DebugActions {
             alert("No unread conversation")
         }
     }
-    
+
     /// Shows the user ID of the self user
     static func showUserId(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared(),
             let selfUser = (userSession.selfUser as? ZMUser)
         else { return }
-        
+
         alert(
             selfUser.remoteIdentifier.uuidString,
             title: "User Id",
             textToCopy: selfUser.remoteIdentifier.uuidString
         )
     }
-    
+
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
     static func findUnreadConversationContributingToBackArrowDot(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
-        
+
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
             .first(where: predicate.evaluate)
         {
@@ -89,12 +89,12 @@ enum DebugActions {
                 ].joined(separator: "\n")
             let textToCopy = convo.remoteIdentifier?.uuidString
             alert(message, textToCopy: textToCopy)
-            
+
         } else {
             alert("No unread conversation")
         }
     }
-    
+
     /// Sends a message that will fail to decode on every other device, on the first conversation of the list
     static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
         guard
@@ -103,18 +103,18 @@ enum DebugActions {
             else {
                 return
         }
-        
+
         var external = External()
         if let otr = "broken_key".data(using: .utf8)  {
              external.otrKey = otr
         }
         let genericMessage = GenericMessage(content: external)
-        
+
         userSession.enqueue {
             try! conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
     }
-    
+
     /// Sends a number of messages to the top conversation in the list, in an asynchronous fashion
     static func spamWithMessages(amount: Int) {
         guard
@@ -125,7 +125,7 @@ enum DebugActions {
                 return
         }
         let nonce = UUID()
-        
+
         func sendNext(count: Int) {
             userSession.enqueue {
                 try! conversation.appendText(content: "Message #\(count+1), series \(nonce)")
@@ -136,10 +136,10 @@ enum DebugActions {
                 execute: { sendNext(count: count + 1) }
             )
         }
-        
+
         sendNext(count: 0)
     }
-    
+
     static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
         ZMUserSession.shared()?.syncManagedObjectContext.performGroupedBlock {
             ZMUserSession.shared()?.requestSlowSync()
@@ -164,16 +164,16 @@ enum DebugActions {
 
         controller.present(alert, animated: true)
     }
-    
+
     static func generateTestCrash(_ type: SettingsCellDescriptorType) {
         MSCrashes.generateTestCrash()
     }
-    
+
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
         guard let appRootRouter = (UIApplication.shared.delegate as? AppDelegate)?.appRootRouter else {
             return
         }
-        
+
         appRootRouter.reload()
     }
 
@@ -188,19 +188,19 @@ enum DebugActions {
 
         controller.present(alert, animated: true)
     }
-    
+
     /// Accepts a debug command
     static func enterDebugCommand(_ type: SettingsCellDescriptorType) {
         askString(title: "Debug command") { _ in
             alert("Command not recognized")
         }
     }
-    
+
     static func appendMessagesToDatabase(count: Int) {
         let userSession = ZMUserSession.shared()!
         let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
         let conversationId = conversation.objectID
-        
+
         let syncContext = userSession.syncManagedObjectContext
         syncContext.performGroupedBlock {
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
@@ -210,21 +210,21 @@ enum DebugActions {
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
                 try! clientMessage.setUnderlyingMessage(genericMessage)
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
-                
+
                 clientMessage.expire()
                 clientMessage.linkPreviewState = .done
-                
+
                 return clientMessage
             }
             syncConversation.mutableMessages.addObjects(from: messages)
             userSession.syncManagedObjectContext.saveOrRollback()
         }
     }
-    
+
     static func recalculateBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
-        
+
         var conversations: [ZMConversation]? = nil
         userSession.syncManagedObjectContext.performGroupedBlock {
             conversations = try? userSession.syncManagedObjectContext.fetch(NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName()))
@@ -235,11 +235,11 @@ enum DebugActions {
             conversations = nil
             userSession.syncManagedObjectContext.saveOrRollback()
         }
-        
+
         let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", alertAction: .ok(style: .cancel))
         controller.show(alertController, sender: nil)
     }
-    
+
     static func askNumber(
         title: String,
         _ callback: @escaping (Int)->())
@@ -252,55 +252,55 @@ enum DebugActions {
             }
         }
     }
-    
+
     static func askString(
         title: String,
         _ callback: @escaping (String)->())
     {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
-        
+
         let controller = UIAlertController(
             title: title,
             message: nil,
             preferredStyle: .alert
         )
-        
+
         let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
             callback(controller.textFields?.first?.text ?? "")
         }
-        
+
         controller.addTextField()
-        
+
         controller.addAction(.cancel { })
         controller.addAction(okAction)
         controllerToPresentOver.present(controller, animated: true, completion: nil)
     }
-    
+
     static func appendMessagesInBatches(count: Int) {
         var left = count
         let step = 10_000
-        
+
         repeat {
             let toAppendInThisStep = left < step ? left : step
-            
+
             left = left - toAppendInThisStep
-            
+
             appendMessages(count: toAppendInThisStep)
         }
         while(left > 0)
     }
-    
+
     static func appendMessages(count: Int) {
         let batchSize = 5_000
-        
+
         var currentCount = count
-        
+
         repeat {
             let thisBatchCount = currentCount > batchSize ? batchSize : currentCount
 
             appendMessagesToDatabase(count: thisBatchCount)
-            
+
             currentCount = currentCount - thisBatchCount
         }
         while (currentCount > 0)

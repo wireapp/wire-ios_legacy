@@ -92,7 +92,7 @@ extension ConversationViewController {
 
         return button
     }
-    
+
     var shouldShowCollectionsButton: Bool {
         guard
             SecurityFlags.forceEncryptionAtRest.isEnabled == false,
@@ -100,7 +100,7 @@ extension ConversationViewController {
         else {
             return false
         }
-        
+
         switch self.conversation.conversationType {
         case .group: return true
         case .oneOnOne:

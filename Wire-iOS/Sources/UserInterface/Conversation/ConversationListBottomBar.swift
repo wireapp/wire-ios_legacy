@@ -34,14 +34,14 @@ final class ConversationListBottomBarController: UIViewController {
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let buttonStackview = UIStackView(axis: .horizontal)
-    
+
     let startUIButton  = IconButton()
     let listButton     = IconButton()
     let folderButton   = IconButton()
     let archivedButton = IconButton()
 
     let separator = UIView()
-    
+
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
     private let xInset: CGFloat = 16
@@ -56,14 +56,14 @@ final class ConversationListBottomBarController: UIViewController {
         set { separator.fadeAndHide(!newValue) }
         get { return !separator.isHidden }
     }
-    
+
     private var allButtons: [IconButton] {
         return [startUIButton, listButton, folderButton, archivedButton]
     }
 
     required init() {
         super.init(nibName: nil, bundle: nil)
-        
+
         createViews()
         createConstraints()
         updateColorScheme()
@@ -79,19 +79,19 @@ final class ConversationListBottomBarController: UIViewController {
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
         separator.isHidden = true
         separator.translatesAutoresizingMaskIntoConstraints = false
-        
+
         listButton.setIcon(.recentList, size: .tiny, for: [])
         listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
         listButton.accessibilityIdentifier = "bottomBarRecentListButton"
         listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.recent_button.label".localized
         listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.recent_button.hint".localized
-        
+
         folderButton.setIcon(.folderList, size: .tiny, for: [])
         folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
         folderButton.accessibilityIdentifier = "bottomBarFolderListButton"
         folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.folder_button.label".localized
         folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.folder_button.hint".localized
-        
+
         archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
@@ -104,16 +104,16 @@ final class ConversationListBottomBarController: UIViewController {
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
-        
+
         buttonStackview.distribution = .equalSpacing
         buttonStackview.alignment = .center
         buttonStackview.translatesAutoresizingMaskIntoConstraints = false
-        
+
         allButtons.forEach { button in
             button.translatesAutoresizingMaskIntoConstraints = false
             buttonStackview.addArrangedSubview(button)
         }
-        
+
         view.addSubview(buttonStackview)
         view.addSubview(separator)
     }
@@ -121,25 +121,25 @@ final class ConversationListBottomBarController: UIViewController {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: heightConstant),
-            
+
             separator.heightAnchor.constraint(equalToConstant: .hairline),
             separator.leftAnchor.constraint(equalTo: view.leftAnchor),
             separator.rightAnchor.constraint(equalTo: view.rightAnchor),
             separator.topAnchor.constraint(equalTo: view.topAnchor),
-            
+
             buttonStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
             buttonStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
             buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
             buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     private func addObservers() {
         guard let userSession = ZMUserSession.shared() else { return }
-        
+
         userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
     }
-    
+
     fileprivate func updateColorScheme() {
         allButtons.forEach { button in
             button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
@@ -148,29 +148,29 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     // MARK: - Target Action
-    
+
     @objc
     private func listButtonTapped(_ sender: IconButton) {
         updateSelection(with: sender)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
     }
-    
+
     @objc
     private func folderButtonTapped(_ sender: IconButton) {
         updateSelection(with: sender)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
     }
-    
+
     @objc
     private func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
-    
+
     @objc
     private func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
-    
+
     private func updateSelection(with button: IconButton) {
         allButtons.forEach({ $0.isSelected = $0 == button })
     }
@@ -179,7 +179,7 @@ final class ConversationListBottomBarController: UIViewController {
 // MARK: - Helper
 
 extension UIView {
-    
+
     func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {
             alpha = 0
@@ -190,7 +190,7 @@ extension UIView {
         let completion: (Bool) -> Void = { _ in self.isHidden = hide }
         UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
     }
-    
+
 }
 
 // MARK: - ConversationListViewModelRestorationDelegate
@@ -205,11 +205,11 @@ extension ConversationListBottomBarController: ConversationListViewModelRestorat
 }
 
 extension ConversationListBottomBarController: ZMUserObserver {
-    
+
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.accentColorValueChanged else { return }
-        
+
         updateColorScheme()
     }
-    
+
 }

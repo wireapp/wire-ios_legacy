@@ -47,24 +47,24 @@ final class ExtensionSettingsTests: XCTestCase {
 
     func testThatItHandlesCrashReportPreferenceChange() {
         XCTAssert(settings.disableCrashSharing)
-        
+
         settings.disableCrashSharing = false
         XCTAssertFalse(settings.disableCrashSharing)
-        
+
         settings.disableCrashSharing = true
         XCTAssert(settings.disableCrashSharing)
     }
-    
+
     func testThatItHandlesAnalyticsPreferenceChange() {
         XCTAssertFalse(settings.disableAnalyticsSharing)
-        
+
         settings.disableAnalyticsSharing = true
         XCTAssert(settings.disableAnalyticsSharing)
-        
+
         settings.disableAnalyticsSharing = false
         XCTAssertFalse(settings.disableAnalyticsSharing)
     }
-    
+
     func testThatItEnablesLinkPreviewsByDefault() {
         XCTAssertFalse(settings.disableLinkPreviews)
     }

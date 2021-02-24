@@ -52,7 +52,7 @@ final class UserNameTakeOverViewController: UIViewController {
         self.name = name
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -68,12 +68,12 @@ final class UserNameTakeOverViewController: UIViewController {
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
-        
+
         displayNameLabel.font = FontSpec(.large, .thin).font!
         displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
-        
+
         suggestedHandleLabel.font = FontSpec(.large, .none).font!
         suggestedHandleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         suggestedHandleLabel.text = "@" + suggestedHandle

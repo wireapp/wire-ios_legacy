@@ -36,36 +36,36 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         }
         return UInt(fetch.count)
     }
-    
+
     public enum AssetError: Error {
         case outOfRange, notLoadedError
     }
-    
+
     func asset(atIndex index: UInt) throws -> PHAsset {
         guard let fetch = self.fetch else {
             throw AssetError.notLoadedError
         }
-        
+
         if index >= count {
             throw AssetError.outOfRange
         }
         return fetch.object(at: Int(index))
     }
-    
+
     func refetchAssets(synchronous: Bool = false) {
         guard !self.fetchingAssets else {
             return
         }
-        
+
         self.fetchingAssets = true
-        
+
         let syncOperation = {
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             self.fetch = PHAsset.fetchAssets(with: options)
             self.notifyChangeToDelegate()
         }
-        
+
         if synchronous {
             syncOperation()
         }
@@ -88,7 +88,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         self.notifyChangeToDelegate()
 
     }
-    
+
     fileprivate var fetch: PHFetchResult<PHAsset>?
 
     fileprivate func notifyChangeToDelegate() {

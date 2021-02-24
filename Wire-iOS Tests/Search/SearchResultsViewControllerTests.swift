@@ -20,19 +20,19 @@ import XCTest
 
 final class SearchResultsViewControllerTests: XCTestCase {
     weak var sut: SearchResultsViewController!
-    
+
     func testThatSearchResultsViewControllerIsNotRetained() {
         autoreleasepool {
             // GIVEN
             var searchResultsViewController: SearchResultsViewController! = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
             sut = searchResultsViewController
-            
+
             // WHEN
             searchResultsViewController.viewDidLoad()
-            
+
             searchResultsViewController = nil
         }
-        
+
         // THEN
         XCTAssertNil(sut)
     }

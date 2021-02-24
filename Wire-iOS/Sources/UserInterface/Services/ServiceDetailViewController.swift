@@ -59,11 +59,11 @@ final class ServiceDetailViewController: UIViewController {
             self.detailView.service = service
         }
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -94,7 +94,7 @@ final class ServiceDetailViewController: UIViewController {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
         self.selfUser = selfUser
-        
+
         detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
@@ -194,7 +194,7 @@ final class ServiceDetailViewController: UIViewController {
             switch type {
             case let .addService(conversation):
                 conversation.add(serviceUser: serviceUser, in: userSession) { result in
-                    
+
                     switch result {
                     case .success:
                         Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
@@ -213,7 +213,7 @@ final class ServiceDetailViewController: UIViewController {
                         if case let .success(conversation) = result {
                             Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         }
-                        
+
                         switch result {
                         case .success(let conversation):
                             completion?(.success(conversation: conversation))

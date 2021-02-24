@@ -44,7 +44,7 @@ final class CrossfadeTransition: NSObject, UIViewControllerAnimatedTransitioning
             transitionContext.completeTransition(true)
             return
         }
-        
+
         containerView.layoutIfNeeded()
 
         toView?.alpha = 0

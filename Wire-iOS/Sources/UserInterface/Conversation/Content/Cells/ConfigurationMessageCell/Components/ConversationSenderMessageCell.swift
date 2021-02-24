@@ -27,12 +27,12 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         let message: ZMConversationMessage
         let indicatorIcon: UIImage?
     }
-    
+
     weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
 
     var isSelected: Bool = false
-    
+
     private let senderView = SenderCellComponent()
     private let indicatorImageView = UIImageView()
 
@@ -94,7 +94,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 16
 
@@ -107,7 +107,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
 
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message
-        
+
         var icon: UIImage? = nil
         let iconColor = UIColor.from(scheme: .iconNormal)
 
@@ -120,5 +120,5 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.configuration = View.Configuration(user: sender, message: message, indicatorIcon: icon)
         actionController = nil
     }
-    
+
 }

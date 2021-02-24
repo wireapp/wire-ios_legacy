@@ -20,16 +20,16 @@ import XCTest
 @testable import Wire
 
 final class TopPeopleCellSnapshotTests: XCTestCase {
-    
+
     var sut: TopPeopleCell!
-    
+
     override func setUp() {
         super.setUp()
         sut = TopPeopleCell(frame: CGRect(x: 0, y: 0, width: 56, height: 78))
         sut.user = MockUserType.createDefaultOtherUser()
         sut.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

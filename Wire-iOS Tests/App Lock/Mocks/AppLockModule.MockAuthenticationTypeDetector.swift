@@ -26,5 +26,5 @@ extension AppLockModule {
         var current: AuthenticationType = .passcode
 
     }
-    
+
 }

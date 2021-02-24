@@ -21,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 
 extension ConversationActionController {
-    
+
     func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
         let alertController = UIAlertController.confirmController(
             title: "conversation.delete_request_dialog.title".localized,
@@ -31,10 +31,10 @@ extension ConversationActionController {
         )
         present(alertController)
     }
-    
+
     func handleDeleteGroupResult(_ result: Bool, conversation: ZMConversation, in userSession: ZMUserSession) {
         guard result else { return }
-        
+
         transitionToListAndEnqueue {
             conversation.delete(in: userSession) { (result) in
                 switch result {

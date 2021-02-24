@@ -36,7 +36,7 @@ extension UIAlertController {
 
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             let browserViewController = BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
-            
+
             browserViewController.completion = {
                 UIAlertController.showNewsletterSubscriptionDialog(over: viewController, completionHandler: completionHandler)
             }
@@ -65,7 +65,7 @@ extension UIAlertController {
             UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
-    
+
     private static  var dataCollectionDisabled: Bool {
         #if DATA_COLLECTION_DISABLED
         return true

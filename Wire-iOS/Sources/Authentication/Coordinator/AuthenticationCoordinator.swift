@@ -47,7 +47,7 @@ protocol AuthenticationCoordinatorDelegate: class {
  */
 
 class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
-    
+
     /// The handle to the OS log for authentication events.
     let log = ZMSLog(tag: "Authentication")
 
@@ -78,7 +78,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
-    
+
     /// The object hepls accessing to some authentication information.
     let statusProvider: AuthenticationStatusProvider
 
@@ -107,7 +107,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var registrationStatus: RegistrationStatus {
         return unauthenticatedSession.registrationStatus
     }
-    
+
     var pendingModal: UIViewController?
 
     /// Whether an account was added.

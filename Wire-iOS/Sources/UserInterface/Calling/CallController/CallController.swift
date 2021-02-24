@@ -24,15 +24,15 @@ final class CallController: NSObject {
     // MARK: - Public Implentation
     weak var router: ActiveCallRouterProtocol?
     var callConversationProvider: CallConversationProvider?
-    
+
     // MARK: - Private Implentation
     private var observerTokens: [Any] = []
     private var minimizedCall: ZMConversation?
-    
+
     private var priorityCallConversation: ZMConversation? {
         return callConversationProvider?.priorityCallConversation
     }
-    
+
     private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
 
@@ -41,18 +41,18 @@ final class CallController: NSObject {
         super.init()
         addObservers()
     }
-    
+
     // MARK: - Public Implementation
     func updateActiveCallPresentationState() {
         guard let priorityCallConversation = priorityCallConversation else {
             dismissCall()
             return
         }
-        
+
         showCallTopOverlay(for: priorityCallConversation)
         presentOrMinimizeActiveCall(for: priorityCallConversation)
     }
-    
+
     // MARK: - Private Implementation
     private func addObservers() {
         if let userSession = ZMUserSession.shared() {
@@ -60,13 +60,13 @@ final class CallController: NSObject {
             observerTokens.append(WireCallCenterV3.addCallErrorObserver(observer: self, userSession: userSession))
         }
     }
-    
+
     private func presentOrMinimizeActiveCall(for conversation: ZMConversation) {
         conversation == minimizedCall
             ? minimizeCall()
             : presentCall(in: conversation)
     }
-    
+
     private func minimizeCall() {
         router?.minimizeCall(animated: true, completion: nil)
     }
@@ -74,7 +74,7 @@ final class CallController: NSObject {
     private func presentCall(in conversation: ZMConversation) {
         guard let voiceChannel = conversation.voiceChannel else { return }
         if minimizedCall == conversation { minimizedCall = nil }
-        
+
         let animated = shouldAnimateTransitionForCall(in: conversation)
         router?.presentActiveCall(for: voiceChannel, animated: animated)
     }
@@ -85,20 +85,20 @@ final class CallController: NSObject {
             self?.minimizedCall = nil
         })
     }
-    
+
     private func showCallTopOverlay(for conversation: ZMConversation) {
         router?.showCallTopOverlay(for: conversation)
     }
-    
+
     private func hideCallTopOverlay() {
         router?.hideCallTopOverlay()
     }
-    
+
     private func shouldAnimateTransitionForCall(in conversation: ZMConversation) -> Bool {
         guard SessionManager.shared?.callNotificationStyle == .callKit else {
             return true
         }
-        
+
         switch conversation.voiceChannel?.state {
         case .outgoing?:
             return true
@@ -106,7 +106,7 @@ final class CallController: NSObject {
             return false // We don't want animate when transition from CallKit screen
         }
     }
-    
+
     private func isClientOutdated(callState: CallState) -> Bool {
         switch callState {
         case .terminating(let reason) where reason == .outdatedClient:
@@ -129,12 +129,12 @@ extension CallController: WireCallCenterCallStateObserver {
         presentSecurityDegradedAlertIfNecessary(for: conversation.voiceChannel)
         updateActiveCallPresentationState()
     }
-    
+
     private func presentUnsupportedVersionAlertIfNecessary(callState: CallState) {
         guard isClientOutdated(callState: callState) else { return }
         router?.presentUnsupportedVersionAlert()
     }
-    
+
     private func presentSecurityDegradedAlertIfNecessary(for voiceChannel: VoiceChannel?) {
         guard let degradationState = voiceChannel?.degradationState else {
             return
@@ -170,7 +170,7 @@ extension CallController: WireCallCenterCallErrorObserver {
         dateOfLastErrorAlertByConversationId[conversationId] = Date()
         router?.presentUnsupportedVersionAlert()
     }
-    
+
     private func shouldDisplayErrorAlert(for conversation: UUID) -> Bool {
            guard let dateOfLastErrorAlert = dateOfLastErrorAlertByConversationId[conversation] else {
                return true

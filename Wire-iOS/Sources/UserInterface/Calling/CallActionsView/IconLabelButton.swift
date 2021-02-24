@@ -22,17 +22,17 @@ import WireCommonComponents
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
     private static let height: CGFloat = 88
-    
+
     private(set) var iconButton = IconButton()
     private(set) var subtitleLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    
+
     var appearance: CallActionAppearance = .dark(blurred: false) {
         didSet {
             updateState()
         }
     }
-    
+
     init(icon: StyleKitIcon, label: String, accessibilityIdentifier: String) {
         super.init(frame: .zero)
         setupViews()
@@ -41,17 +41,17 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleLabel.text = label
         self.accessibilityIdentifier = accessibilityIdentifier
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
         updateState()
     }
-    
+
     private func setupViews() {
         iconButton.translatesAutoresizingMaskIntoConstraints = false
         iconButton.isUserInteractionEnabled = false
@@ -67,7 +67,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         titleLabel?.font = FontSpec(.small, .semibold).font!
         [blurView, iconButton, subtitleLabel].forEach(addSubview)
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
@@ -92,36 +92,36 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleLabel.font = titleLabel?.font
         subtitleLabel.textColor = titleColor(for: state)
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             iconButton.isHighlighted = isHighlighted
             updateState()
         }
     }
-    
+
     override var isSelected: Bool {
         didSet {
             iconButton.isSelected = isSelected
             updateState()
         }
     }
-    
+
     override var isEnabled: Bool {
         didSet {
             iconButton.isEnabled = isEnabled
             updateState()
         }
     }
-    
+
     private func apply(_ configuration: CallActionAppearance) {
         setTitleColor(configuration.iconColorNormal, for: .normal)
         iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
         iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
-        
+
         iconButton.setIconColor(configuration.iconColorSelected, for: .selected)
         iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .selected)
-        
+
         setTitleColor(configuration.iconColorNormal.withAlphaComponent(0.4), for: .disabled)
         iconButton.setIconColor(configuration.iconColorNormal.withAlphaComponent(0.4), for: .disabled)
         iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .disabled)
@@ -129,9 +129,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
         setTitleColor(configuration.iconColorNormal.withAlphaComponent(0.4), for: .disabledAndSelected)
         iconButton.setIconColor(configuration.iconColorSelected.withAlphaComponent(0.4), for: .disabledAndSelected)
         iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .disabledAndSelected)
-        
+
         iconButton.setBackgroundImageColor(configuration.backgroundColorSelectedAndHighlighted, for: .selectedAndHighlighted)
-        
+
         blurView.isHidden = !configuration.showBlur
     }
 

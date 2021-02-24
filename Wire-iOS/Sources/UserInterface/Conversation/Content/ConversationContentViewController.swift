@@ -36,24 +36,24 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             setTableViewBottomMargin(bottomMargin)
         }
     }
-    
+
     let tableView: UpsideDownTableView = UpsideDownTableView(frame: .zero, style: .plain)
     let bottomContainer: UIView = UIView(frame: .zero)
     var searchQueries: [String]? {
         didSet {
             guard let searchQueries = searchQueries,
                 !searchQueries.isEmpty else { return }
-            
+
             dataSource.searchQueries = searchQueries
         }
     }
-    
+
     let mentionsSearchResultsViewController: UserSearchResultsViewController = UserSearchResultsViewController()
-    
+
     lazy var dataSource: ConversationTableViewDataSource = {
         return ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
     }()
-    
+
     let messagePresenter: MessagePresenter
     var deletionDialogPresenter: DeletionDialogPresenter?
     let session: ZMUserSessionInterface
@@ -61,7 +61,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     var digitalSignatureToken: Any?
     var userClientToken: Any?
     var isDigitalSignatureVerificationShown: Bool = false
-    
+
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [IndexPath: CGFloat] = [:]
     private var hasDoneInitialLayout = false
@@ -77,33 +77,33 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         self.session = session
         self.conversation = conversation
         messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         self.mediaPlaybackManager = mediaPlaybackManager
-       
-        
+
+
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
-        
+
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.updateMediaBar()
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         super.loadView()
-        
+
         view.addSubview(tableView)
-        
+
         bottomContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bottomContainer)
-        
+
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -117,10 +117,10 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         heightCollapsingConstraint.priority = .defaultHigh
         heightCollapsingConstraint.isActive = true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.estimatedRowHeight = 80
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = true
@@ -263,76 +263,76 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             }
             dataSource.selectedMessage = message
             dataSource.select(indexPath: indexPath)
-            
+
             return indexPath
         }
     }
-    
+
     // MARK: - Get/set
-    
+
     func setTableViewBottomMargin(_ bottomMargin: CGFloat) {
         var insets = tableView.correctedContentInset
         insets.bottom = bottomMargin
         tableView.correctedContentInset = insets
         tableView.contentOffset = CGPoint(x: tableView.contentOffset.x, y: -bottomMargin)
     }
-    
+
     var isScrolledToBottom: Bool {
         return !dataSource.hasNewerMessagesToLoad &&
                tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
     }
-    
+
     // MARK: - Actions
     func highlight(_ message: ZMConversationMessage) {
         dataSource.highlight(message: message)
     }
-    
+
     private func updateVisibleMessagesWindow() {
         guard UIApplication.shared.applicationState == .active else {
             return // We only update the last read if the app is active
         }
-        
+
         // We should not update last read if the view is not visible to the user
-        
+
         guard let window = view.window,
             window.convert(view.bounds, from: view).intersects(window.bounds) else {
                 return
         }
-        
+
         guard !view.isHidden, view.alpha != 0 else {
             return
         }
-        
+
         //  Workaround to fix incorrect first/last cells in conversation
         //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
         _ = tableView.visibleCells
-        
+
         let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows
-        
+
         if let firstIndexPath = indexPathsForVisibleRows?.first {
             let lastVisibleMessage = dataSource.messages[firstIndexPath.section]
             conversation.markMessagesAsRead(until: lastVisibleMessage)
         }
-        
+
         /// update media bar visiblity
         updateMediaBar()
     }
-    
+
     // MARK: - Custom UI, utilities
-    
+
     func removeHighlightsAndMenu() {
         UIMenuController.shared.setMenuVisible(false, animated: true)
     }
-    
+
     func didFinishEditing(_ message: ZMConversationMessage?) {
         dataSource.editingMessage = nil
     }
-    
+
     // MARK: - MediaPlayer
-    
+
     private func updateMediaBar() {
         let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
-        
+
         if let mediaPlayingMessage = mediaPlayingMessage,
             mediaPlayingMessage.conversationLike === conversation,
             !displaysMessage(mediaPlayingMessage),
@@ -346,18 +346,18 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             })
         }
     }
-    
+
     private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
         guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
-        
+
         let index = dataSource.indexOfMessage(message)
-        
+
         for indexPath in indexPathsForVisibleRows {
             if indexPath.section == index {
                 return true
             }
         }
-        
+
         return false
     }
 }
@@ -369,27 +369,27 @@ extension ConversationContentViewController: UITableViewDelegate {
         if onScreen {
             cell.willDisplayCell()
         }
-        
+
         // using dispatch_async because when this method gets run, the cell is not yet in visible cells,
         // so the update will fail
         // dispatch_async runs it with next runloop, when the cell has been added to visible cells
         DispatchQueue.main.async(execute: {
             self.updateVisibleMessagesWindow()
         })
-        
+
         cachedRowHeights[indexPath] = cell.frame.size.height
     }
-    
+
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.didEndDisplayingCell()
-        
+
         cachedRowHeights[indexPath] = cell.frame.size.height
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return cachedRowHeights[indexPath] ?? UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return willSelectRow(at: indexPath, tableView: tableView)
     }

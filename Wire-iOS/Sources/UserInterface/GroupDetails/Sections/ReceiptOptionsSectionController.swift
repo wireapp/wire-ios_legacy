@@ -22,7 +22,7 @@ import WireSyncEngine
 
 final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
-    
+
     private let emptySectionHeaderHeight: CGFloat = 24
 
     let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
@@ -34,7 +34,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     private var footerView = SectionFooter(frame: .zero)
     private weak var presentingViewController: UIViewController?
-    
+
     override var isHidden: Bool {
         return !SelfUser.current.canModifyReadReceiptSettings(in: conversation)
     }
@@ -51,7 +51,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     }
 
     // MARK: - Collection View
-    
+
     override var sectionTitle: String {
         return ""
     }
@@ -73,15 +73,15 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell
-        
+
         cell.configure(with: conversation)
         cell.action = { [weak self] enabled in
             guard let userSession = ZMUserSession.shared(), let conversation = self?.conversation else { return }
-            
+
             cell.isUserInteractionEnabled = false
             (conversation as? ZMConversation)?.setEnableReadReceipts(enabled, in: userSession, { result in
                 cell.isUserInteractionEnabled = true
-                
+
                 switch result {
                 case .failure(_):
                     cell.configure(with: conversation)
@@ -90,20 +90,20 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
                     break
                 }
             })
-            
+
         }
-        
+
         cell.showSeparator = false
         cell.isUserInteractionEnabled = syncCompleted
         cell.alpha = syncCompleted ? 1 : 0.48
 
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return false
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return false
     }
@@ -130,5 +130,5 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         (view as? SectionFooter)?.titleLabel.text = "group_details.receipt_options_cell.description".localized
         return view
     }
-    
+
 }

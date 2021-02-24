@@ -82,7 +82,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
             canInsertMention,
             UIDevice.current.type == .iPad || isMentionsViewKeyboardCollapsed {
-            
+
             insertBestMatchMention()
             return false
         }
@@ -122,7 +122,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         if textView.text.count > 0 {
             conversation.setIsTyping(false)
         }
-        
+
         guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
         let draft = draftMessage(from: textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)

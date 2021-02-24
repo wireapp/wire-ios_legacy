@@ -20,20 +20,20 @@ import UIKit
 import Cartography
 
 final class TeamInviteTextFieldFooterView: UIView {
-    
+
     private let textFieldDescriptor = TextFieldDescription(
         placeholder: "team.invite.textfield.placeholder".localized,
         actionDescription: "team.invite.textfield.accesibility".localized,
         kind: .email,
         uppercasePlaceholder: true
     )
-    
+
     var isLoading = false {
         didSet {
             updateLoadingState()
         }
     }
-    
+
     let errorButton = Button()
     private let textField: ValidatedTextField
     private let errorLabel = UILabel()
@@ -45,23 +45,23 @@ final class TeamInviteTextFieldFooterView: UIView {
             }
         }
     }
-    
+
     var onConfirm: ((Any) -> Void)? {
         didSet {
             textFieldDescriptor.valueSubmitted = onConfirm
         }
     }
-    
+
     var errorMessage: String? {
         didSet {
             errorLabel.text = errorMessage
         }
     }
-    
+
     @discardableResult override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
-    
+
     init() {
         textField = textFieldDescriptor.create() as! ValidatedTextField
         super.init(frame: .zero)
@@ -70,11 +70,11 @@ final class TeamInviteTextFieldFooterView: UIView {
         isAccessibilityElement = false
         accessibilityElements = [textField, errorLabel, errorButton]
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         errorButton.isHidden = true
         errorLabel.textAlignment = .center
@@ -99,7 +99,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
     }
-    
+
     private func createConstraints() {
         constrain(self, textField, errorLabel, errorButton) { view, textField, errorLabel, errorButton in
             textField.leading == view.leading
@@ -115,17 +115,17 @@ final class TeamInviteTextFieldFooterView: UIView {
             errorButton.bottom == view.bottom - 12
         }
     }
-    
+
     func clearInput() {
         textField.text = ""
         textField.textFieldDidChange(textField: textField)
     }
-    
+
     @objc private func showLearnMorePage() {
         let url = URL.wr_emailAlreadyInUseLearnMore
         UIApplication.shared.open(url)
     }
-    
+
     private func updateLoadingState() {
         textField.isLoading = isLoading
         textFieldDescriptor.acceptsInput = !isLoading

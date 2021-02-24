@@ -119,7 +119,7 @@ extension ConversationInputBarViewController {
             if #available(iOS 11.0, *) {
                 documentPickerViewController.allowsMultipleSelection = true
             }
-            
+
             self.parent?.present(documentPickerViewController, animated: true)
         }
 

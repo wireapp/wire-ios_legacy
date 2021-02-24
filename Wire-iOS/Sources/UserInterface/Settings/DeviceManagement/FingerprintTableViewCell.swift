@@ -51,50 +51,50 @@ class FingerprintTableViewCell: UITableViewCell {
             self.updateFingerprint()
         }
     }
-    
+
     var fingerprint: Data? {
         didSet {
             self.updateFingerprint()
         }
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
         self.titleLabel.accessibilityIdentifier = "fingerprint title"
         self.fingerprintLabel.numberOfLines = 0
         self.fingerprintLabel.accessibilityIdentifier = "fingerprint"
         self.spinner.hidesWhenStopped = true
-        
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.fingerprintLabel)
         self.contentView.addSubview(self.spinner)
-        
+
         constrain(self.contentView, self.titleLabel, self.fingerprintLabel, self.spinner) { contentView, titleLabel, fingerprintLabel, spinner in
             titleLabel.top == contentView.top + 16
             titleLabel.left == contentView.left + 16
             titleLabel.right <= contentView.right - 16
-            
+
             fingerprintLabel.top == titleLabel.bottom + 4
             fingerprintLabel.left == contentView.left + 16
             fingerprintLabel.right == contentView.right - 16
             fingerprintLabel.bottom == contentView.bottom - 16
-            
+
             spinner.centerX == contentView.centerX
             spinner.top >= titleLabel.bottom + 4
             spinner.bottom <= contentView.bottom - 16
         }
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
-        
+
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
 
         setupStyle()
     }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -114,7 +114,7 @@ class FingerprintTableViewCell: UITableViewCell {
                 attributes: [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 uppercase: false) {
-                
+
                     self.fingerprintLabel.attributedText = attributedFingerprint
                     self.spinner.stopAnimating()
         }

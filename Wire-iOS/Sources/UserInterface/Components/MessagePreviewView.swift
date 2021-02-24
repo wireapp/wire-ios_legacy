@@ -28,7 +28,7 @@ extension ZMConversationMessage {
         }
         return preparePreviewView()
     }
-    
+
     func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
             return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
@@ -47,15 +47,15 @@ extension UITextView {
         textView.textContainer.lineFragmentPadding = 0
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
-        
+
         textView.isEditable = false
         textView.isSelectable = true
-        
+
         textView.backgroundColor = .clear
         textView.textColor = .from(scheme: .textForeground)
-        
+
         textView.setContentCompressionResistancePriority(.required, for: .vertical)
-        
+
         return textView
     }
 }
@@ -68,14 +68,14 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private let displaySender: Bool
 
     let message: ZMConversationMessage
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
         require(message.conversationLike != nil)
@@ -87,7 +87,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         setupMessageObserver()
         updateForMessage()
     }
-    
+
     private func setupMessageObserver() {
         if let userSession = ZMUserSession.shared() {
             observerToken = MessageChangeInfo.add(observer: self,
@@ -95,32 +95,32 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
                                                   userSession: userSession)
         }
     }
-    
+
     private static let thumbnailSize: CGFloat = 42
-    
+
     private func setupSubviews() {
         var allViews: [UIView] = [contentTextView, imagePreview]
-        
+
         if displaySender {
             allViews.append(senderLabel)
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         }
-        
+
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
-        
+
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
     }
-    
+
     private func setupConstraints() {
-        
+
         let inset: CGFloat = 12
-        
+
         NSLayoutConstraint.activate([
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             contentTextView.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
@@ -130,10 +130,10 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             imagePreview.widthAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize),
             imagePreview.heightAnchor.constraint(equalToConstant: MessageThumbnailPreviewView.thumbnailSize)
             ])
-        
+
         if displaySender {
             NSLayoutConstraint.activate([
-                
+
                 senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
                 senderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
                 senderLabel.trailingAnchor.constraint(equalTo: imagePreview.leadingAnchor, constant: inset),
@@ -153,7 +153,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             return NSAttributedString()
         }
     }
-    
+
     private func updateForMessage() {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
@@ -166,7 +166,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
-            
+
             if let imageResource = message.imageMessageData?.image {
                 imagePreview.setImageResource(imageResource)
             }
@@ -175,18 +175,18 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
-            
+
             imagePreview.setImageResource(fileMessageData.thumbnailImage)
         }
         else {
             fatal("Unknown message for preview: \(message)")
         }
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         updateForMessage()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -197,27 +197,27 @@ extension MessageThumbnailPreviewView: ZMMessageObserver {
         guard !message.hasBeenDeleted else {
             return // Deleted message won't have any content
         }
-        
+
         updateForMessage()
     }
 }
 
 final class MessagePreviewView: UIView, Themeable {
-    
+
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any? = nil
     private let displaySender: Bool
 
     let message: ZMConversationMessage
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
         require(message.conversationLike != nil)
@@ -229,7 +229,7 @@ final class MessagePreviewView: UIView, Themeable {
         setupMessageObserver()
         updateForMessage()
     }
-    
+
     private func setupMessageObserver() {
         if let userSession = ZMUserSession.shared() {
             observerToken = MessageChangeInfo.add(observer: self,
@@ -237,21 +237,21 @@ final class MessagePreviewView: UIView, Themeable {
                                                   userSession: userSession)
         }
     }
-    
+
     private func setupSubviews() {
         var allViews: [UIView] = [contentTextView]
-        
+
         if displaySender {
             allViews.append(senderLabel)
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         }
-        
+
         allViews.prepareForLayout()
         allViews.forEach(self.addSubview)
     }
-    
+
     private func setupConstraints() {
         let inset: CGFloat = 12
 
@@ -260,7 +260,7 @@ final class MessagePreviewView: UIView, Themeable {
             contentTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset)
         ])
-        
+
         if displaySender {
             NSLayoutConstraint.activate([
                 senderLabel.topAnchor.constraint(equalTo: topAnchor, constant: inset),
@@ -272,7 +272,7 @@ final class MessagePreviewView: UIView, Themeable {
             contentTextView.topAnchor.constraint(equalTo: topAnchor, constant: inset).isActive = true
         }
     }
-    
+
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
             return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
@@ -285,14 +285,14 @@ final class MessagePreviewView: UIView, Themeable {
     private func updateForMessage() {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
-        
+
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
-        
+
         if let textMessageData = message.textMessageData {
             contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true, variant: colorSchemeVariant)
         }
         else if let location = message.locationMessageData {
-            
+
             let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
@@ -308,11 +308,11 @@ final class MessagePreviewView: UIView, Themeable {
             contentTextView.attributedText = initialString && attributes
         }
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         updateForMessage()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

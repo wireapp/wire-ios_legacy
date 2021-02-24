@@ -23,35 +23,35 @@ import AVFoundation
 fileprivate let zmLog = ZMSLog(tag: "UI")
 
 final class CameraController {
-    
+
     private(set) var currentCamera: SettingsCamera
-    
+
     var previewLayer: AVCaptureVideoPreviewLayer!
 
     private enum SetupResult { case success, notAuthorized, failed }
     private var setupResult: SetupResult = .success
-    
+
     private var session = AVCaptureSession()
     private let sessionQueue = DispatchQueue(label: "com.wire.camera_controller_session")
-    
+
     private var frontCameraDeviceInput: AVCaptureDeviceInput?
     private var backCameraDeviceInput: AVCaptureDeviceInput?
-    
+
     private var isSwitching = false
     private var canSwitchInputs: Bool = false
-    
+
     private let photoOutput = AVCapturePhotoOutput()
     private var captureDelegates = [Int64: PhotoCaptureDelegate]()
-    
+
     init?(camera: SettingsCamera) {
         guard !UIDevice.isSimulator else { return nil }
         currentCamera = camera
         setupSession()
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
     }
-    
+
     // MARK: - Session Management
-    
+
     private func requestAccess() {
         sessionQueue.suspend()
         AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -59,36 +59,36 @@ final class CameraController {
             self.sessionQueue.resume()
         }
     }
-    
+
     private func setupSession() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:       break
         case .notDetermined:    requestAccess()
         default:                setupResult = .notAuthorized
         }
-        
+
         sessionQueue.async(execute: configureSession)
     }
-    
+
     private func configureSession() {
         guard setupResult == .success else { return }
-        
+
         session.beginConfiguration()
         defer { session.commitConfiguration() }
-        
+
         session.sessionPreset = .photo
-        
+
         // SETUP INPUTS
-        
+
         let availableInputs = [AVCaptureDevice.Position.front, .back]
             .compactMap { cameraDevice(for: $0) }
             .compactMap { try? AVCaptureDeviceInput(device: $0) }
             .filter { session.canAddInput($0) }
-        
+
         switch availableInputs.count {
         case 1:
             let input = availableInputs.first!
-            
+
             if input.device.position == .front {
                 currentCamera = .front
                 frontCameraDeviceInput = input
@@ -96,22 +96,22 @@ final class CameraController {
                 currentCamera = .back
                 backCameraDeviceInput = input
             }
-            
+
         case 2:
             frontCameraDeviceInput = availableInputs.first!
             backCameraDeviceInput = availableInputs.last!
             canSwitchInputs = true
-            
+
         default:
             zmLog.error("CameraController could not add any inputs.")
             setupResult = .failed
             return
         }
-        
+
         connectInput(for: currentCamera)
-        
+
         // SETUP OUTPUTS
-        
+
         guard session.canAddOutput(photoOutput) else {
             zmLog.error("CameraController could not add photo capture output.")
             setupResult = .failed
@@ -120,24 +120,24 @@ final class CameraController {
 
         session.addOutput(photoOutput)
     }
-    
+
     func startRunning() {
         sessionQueue.async { self.session.startRunning() }
     }
-    
+
     func stopRunning() {
         sessionQueue.async { self.session.stopRunning() }
     }
-    
+
     // MARK: - Device Management
-    
+
     /**
      * The capture device for the given camera position, if available.
      */
     private func cameraDevice(for position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position)
     }
-    
+
     /**
      * The device input for the given camera, if available.
      */
@@ -156,7 +156,7 @@ final class CameraController {
             let input = input(for: camera),
             session.canAddInput(input)
             else { return }
-        
+
         sessionQueue.async {
             self.session.beginConfiguration()
             self.session.addInput(input)
@@ -164,7 +164,7 @@ final class CameraController {
             self.session.commitConfiguration()
         }
     }
-    
+
     /**
      * Disconnects the current camera and connects the given camera, but only
      * if both camera inputs are available. The completion callback is passed
@@ -172,15 +172,15 @@ final class CameraController {
      */
     func switchCamera(completion: @escaping (_ currentCamera: SettingsCamera) -> Void) {
         let newCamera = currentCamera == .front ? SettingsCamera.back : .front
-        
+
         guard
             !isSwitching, canSwitchInputs,
             let toRemove = input(for: currentCamera),
             let toAdd = input(for: newCamera)
             else { return completion(currentCamera) }
-        
+
         isSwitching = true
-        
+
         sessionQueue.async {
             self.session.beginConfiguration()
             self.session.removeInput(toRemove)
@@ -193,7 +193,7 @@ final class CameraController {
             }
         }
     }
-    
+
     /**
      * Updates the orientation of the video preview layer to best fit the
      * device/ui orientation.
@@ -203,61 +203,61 @@ final class CameraController {
             let connection = previewLayer.connection,
             connection.isVideoOrientationSupported
             else { return }
-        
+
         connection.videoOrientation = AVCaptureVideoOrientation.current
     }
-    
+
     // MARK: - Image Capture
-    
+
     typealias PhotoResult = (data: Data?, error: Error?)
-    
+
     /**
      * Asynchronously attempts to capture a photo within the currently
      * configured session. The result is passed into the given handler
      * callback.
      */
     func capturePhoto(_ handler: @escaping (PhotoResult) -> Void) {
-        
+
         // For iPad split/slide over mode, the session is not running.
         guard session.isRunning else { return }
         let currentOrientation = AVCaptureVideoOrientation.current
-        
+
         sessionQueue.async {
             guard let connection = self.photoOutput.connection(with: .video) else { return }
             connection.videoOrientation = currentOrientation
             connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = false
-            
+
             let jpegType: Any
             if #available(iOS 11.0, *) {
                 jpegType = AVVideoCodecType.jpeg
             } else {
                 jpegType = AVVideoCodecJPEG
             }
-            
+
             let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: jpegType,
                                                            AVVideoCompressionPropertiesKey: [AVVideoQualityKey: 0.9]])
-            
+
             let delegate = PhotoCaptureDelegate(settings: settings, handler: handler) {
                 self.sessionQueue.async { self.captureDelegates[settings.uniqueID] = nil }
             }
-            
+
             self.captureDelegates[settings.uniqueID] = delegate
             self.photoOutput.capturePhoto(with: settings, delegate: delegate)
         }
     }
-    
+
     /**
      * A PhotoCaptureDelegate is responsible for processing the photo buffers
      * returned from `AVCapturePhotoOutput`. For each photo captured, there is
      * one unique delegate object responsible.
      */
     private class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
-        
+
         private let settings: AVCapturePhotoSettings
         private let handler: (PhotoResult) -> Void
         private let completion: () -> Void
-        
+
         init(settings: AVCapturePhotoSettings,
              handler: @escaping (PhotoResult) -> Void,
              completion: @escaping () -> Void)
@@ -266,20 +266,20 @@ final class CameraController {
             self.handler = handler
             self.completion = completion
         }
-        
+
         @available(iOS 11.0, *)
         func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
             defer { completion() }
-            
+
             if let error = error {
                 zmLog.error("PhotoCaptureDelegate encountered error while processing photo:\(error.localizedDescription)")
                 handler(PhotoResult(nil, error))
                 return
             }
-            
-            
+
+
             let imageData = photo.fileDataRepresentation()
-            
+
             handler(PhotoResult(imageData, nil))
         }
 
@@ -294,19 +294,19 @@ final class CameraController {
             if #available(iOS 11, *) { return }
 
             defer { completion() }
-            
+
             if let error = error {
                 zmLog.error("PhotoCaptureDelegate encountered error while processing photo:\(error.localizedDescription)")
                 handler(PhotoResult(nil, error))
                 return
             }
-            
+
             guard let buffer = photoSampleBuffer else { return }
-            
+
             let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(
                     forJPEGSampleBuffer: buffer,
                     previewPhotoSampleBuffer: previewPhotoSampleBuffer)
-            
+
             handler(PhotoResult(imageData, nil))
         }
     }
@@ -314,7 +314,7 @@ final class CameraController {
 
 
 private extension AVCaptureVideoOrientation {
-    
+
     /// The video orientation matches against first the device orientation,
     /// then the interface orientation. Must be called on the main thread.
     static var current: AVCaptureVideoOrientation {
@@ -339,7 +339,7 @@ private extension AVCaptureVideoOrientation {
         default:                    return nil
         }
     }
-    
+
     init?(uiOrientation: UIInterfaceOrientation) {
         switch uiOrientation {
         case .landscapeLeft:        self = .landscapeLeft

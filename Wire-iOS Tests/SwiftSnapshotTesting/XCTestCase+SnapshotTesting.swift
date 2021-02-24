@@ -112,7 +112,7 @@ extension XCTestCase {
 
         for width in widths {
             widthConstraint.constant = width
-            
+
             verifyWithWidthInName(matching: container,
                                   width: width,
                                   named: name,
@@ -121,7 +121,7 @@ extension XCTestCase {
                                   line: line)
         }
     }
-    
+
     private func verifyWithWidthInName(matching value: UIView,
                                  width: CGFloat,
                                  named name: String? = nil,
@@ -134,7 +134,7 @@ extension XCTestCase {
         } else {
             nameWithProperty = "\(width)"
         }
-        
+
         verify(matching: value,
                named: nameWithProperty,
                file: file,
@@ -442,7 +442,7 @@ extension XCTestCase {
 
 
     //MARK: - verify a UIViewController with a set of widths. The SUT is created
-    
+
     func verifyInAllPhoneWidths(createSut: () -> UIViewController,
                                 snapshotBackgroundColor: UIColor? = nil,
                                 named name: String? = nil,
@@ -457,7 +457,7 @@ extension XCTestCase {
                        testName: testName,
                        line: line)
     }
-    
+
     func verifyInWidths(createSut: () -> UIViewController,
                         widths: Set<CGFloat>,
                         snapshotBackgroundColor: UIColor,
@@ -465,7 +465,7 @@ extension XCTestCase {
                         file: StaticString = #file,
                         testName: String = #function,
                         line: UInt = #line) {
-        
+
         for width in widths {
             verifyInWidth(createSut: createSut,
                           width: width,
@@ -476,7 +476,7 @@ extension XCTestCase {
                           line: line)
         }
     }
-    
+
     func verifyInWidth(createSut: () -> UIViewController,
                        width: CGFloat,
                        snapshotBackgroundColor: UIColor,
@@ -489,7 +489,7 @@ extension XCTestCase {
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
 
-        
+
         verifyWithWidthInName(matching: container,
                               width: width,
                               named: name,

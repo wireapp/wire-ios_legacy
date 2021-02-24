@@ -53,7 +53,7 @@ extension MockUser: SelfLegalHoldSubject {
     public func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
         legalHoldDataSource.legalHoldRequest = request
     }
-    
+
     public func legalHoldRequestWasCancelled() {
         legalHoldDataSource.legalHoldRequest = nil
     }

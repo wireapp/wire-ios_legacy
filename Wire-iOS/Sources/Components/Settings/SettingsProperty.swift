@@ -39,24 +39,24 @@ enum SettingsPropertyValue: Equatable {
     init(_ int: Int16) {
         self = .number(value: NSNumber(value: int))
     }
-    
+
     init(_ int: UInt32) {
         self = .number(value: NSNumber(value: int))
     }
-    
+
     static func propertyValue(_ object: Any?) -> SettingsPropertyValue {
         switch(object) {
         case let number as NSNumber:
             return SettingsPropertyValue.number(value: number)
-            
+
         case let stringValue as Swift.String:
             return SettingsPropertyValue.string(value: stringValue)
-            
+
         default:
             return .none
         }
     }
-    
+
     func value() -> Any? {
         switch (self) {
         case .number(let value):
@@ -95,7 +95,7 @@ extension SettingsProperty {
  */
 func << (property: inout SettingsProperty, expr: @autoclosure () -> Any) throws {
     let value = expr()
-    
+
     try property.set(newValue: SettingsPropertyValue.propertyValue(value))
 }
 
@@ -107,7 +107,7 @@ func << (property: inout SettingsProperty, expr: @autoclosure () -> Any) throws 
  */
 func << (property: inout SettingsProperty, expr: @autoclosure () -> SettingsPropertyValue) throws {
     let value = expr()
-    
+
     try property.set(newValue: value)
 }
 
@@ -130,7 +130,7 @@ class SettingsUserDefaultsProperty: SettingsProperty {
         NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
         self.trackNewValue()
     }
-    
+
     func value() -> SettingsPropertyValue {
         switch self.userDefaults.object(forKey: self.userDefaultsKey) as AnyObject? {
         case let numberValue as NSNumber:
@@ -145,12 +145,12 @@ class SettingsUserDefaultsProperty: SettingsProperty {
     func trackNewValue() {
         Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
-    
+
     let propertyName: SettingsPropertyName
     let userDefaults: UserDefaults
-    
+
     let userDefaultsKey: String
-    
+
     init(propertyName: SettingsPropertyName, userDefaultsKey: String, userDefaults: UserDefaults) {
         self.propertyName = propertyName
         self.userDefaultsKey = userDefaultsKey
@@ -169,20 +169,20 @@ final class SettingsBlockProperty: SettingsProperty {
     func value() -> SettingsPropertyValue {
         return self.getAction(self)
     }
-    
+
     func set(newValue: SettingsPropertyValue) throws {
         try setAction(self, newValue)
         NotificationCenter.default.post(name: Notification.Name(rawValue: propertyName.changeNotificationName), object: self)
         trackNewValue()
     }
-    
+
     func trackNewValue() {
         Analytics.shared.tagSettingsChanged(for: self.propertyName, to: self.value())
     }
-    
+
     fileprivate let getAction: GetAction
     fileprivate let setAction: SetAction
-    
+
     init(propertyName: SettingsPropertyName, getAction: @escaping GetAction, setAction: @escaping SetAction) {
         self.propertyName = propertyName
         self.getAction = getAction

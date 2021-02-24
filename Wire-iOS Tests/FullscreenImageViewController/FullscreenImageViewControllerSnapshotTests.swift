@@ -21,14 +21,14 @@ import XCTest
 @testable import Wire
 
 final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: FullscreenImageViewController!
 
     override func setUp() {
         super.setUp()
     }
-    
-    
+
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -56,10 +56,10 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         // THEN
         verify(view: sut.view)
     }
-    
+
     func testThatImageIsDarkenWhenSelectedByMenu() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
-        
+
         sut.setSelectedByMenu(true, animated: false)
         // test for tap again does not add one more layer
         sut.setSelectedByMenu(false, animated: false)

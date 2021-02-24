@@ -28,11 +28,11 @@ protocol ParticipantsCellConfigurable: Reusable {
 enum ParticipantsRowType {
     case user(UserType)
     case showAll(Int)
-    
+
     init(_ user: UserType) {
         self = .user(user)
     }
-    
+
     var cellType: ParticipantsCellConfigurable.Type {
         switch self {
         case .user: return UserCell.self
@@ -43,7 +43,7 @@ enum ParticipantsRowType {
 
 enum ConversationRole {
     case admin, member
-    
+
     var name: String {
         switch self {
         case .admin:
@@ -56,9 +56,9 @@ enum ConversationRole {
 
 private struct ParticipantsSectionViewModel {
     let rows: [ParticipantsRowType]
-    let participants: [UserType]    
+    let participants: [UserType]
     let conversationRole: ConversationRole
-    
+
     let showSectionCount: Bool
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     var sectionTitle: String? {
@@ -69,7 +69,7 @@ private struct ParticipantsSectionViewModel {
             return showSectionCount ? ("group_details.conversation_admins_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count)) : "group_details.conversation_admins_header.title".localized.localizedUppercase
         }
     }
-   
+
     var footerTitle: String {
         switch conversationRole {
             case .admin:
@@ -82,11 +82,11 @@ private struct ParticipantsSectionViewModel {
     var footerVisible: Bool {
         return participants.isEmpty
     }
-    
+
     var accessibilityTitle: String {
         return conversationRole.name
     }
-        
+
     /// init method
     ///
     /// - Parameters:
@@ -115,7 +115,7 @@ private struct ParticipantsSectionViewModel {
                                                                       maxDisplayedParticipants: maxDisplayedParticipants) :
                              participants.map(ParticipantsRowType.init)
     }
-    
+
     static func computeRows(_ participants: [UserType], totalParticipantsCount: Int, maxParticipants: Int, maxDisplayedParticipants: Int) -> [ParticipantsRowType] {
         guard participants.count > maxParticipants else { return participants.map(ParticipantsRowType.init) }
         return participants[0..<maxDisplayedParticipants].map(ParticipantsRowType.init) + [.showAll(totalParticipantsCount)]
@@ -133,7 +133,7 @@ extension UserCell: ParticipantsCellConfigurable {
 }
 
 final class ParticipantsSectionController: GroupDetailsSectionController {
-    
+
     fileprivate weak var collectionView: UICollectionView? {
         didSet {
             guard let collectionView =  collectionView else { return }
@@ -144,7 +144,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     private var viewModel: ParticipantsSectionViewModel
     private let conversation: GroupDetailsConversationType
     private var token: AnyObject?
-    
+
     init(participants: [UserType],
          conversationRole: ConversationRole,
          conversation: GroupDetailsConversationType,
@@ -164,12 +164,12 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         self.conversation = conversation
         self.delegate = delegate
         super.init()
-        
+
         if let userSession = ZMUserSession.shared() {
             token = UserChangeInfo.add(userObserver: self, in: userSession)
         }
     }
-    
+
     override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
@@ -180,15 +180,15 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     override var sectionTitle: String? {
         return viewModel.sectionTitle
     }
-    
+
     override var sectionAccessibilityIdentifier: String {
         return viewModel.sectionAccesibilityIdentifier
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.rows.count
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let configuration = viewModel.rows[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
@@ -198,23 +198,23 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         cell.configure(with: configuration, conversation: conversation, showSeparator: showSeparator)
         return cell
     }
-    
+
     ///MARK: - footer
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        
+
         guard viewModel.footerVisible,
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
-        
+
         footer.titleLabel.text = viewModel.footerTitle
-        
+
         footer.size(fittingWidth: collectionView.bounds.width)
         return footer.bounds.size
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionFooter else { return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
-        
+
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
         (view as? SectionFooter)?.titleLabel.text = viewModel.footerTitle
         return view
@@ -228,7 +228,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
             delegate?.presentFullParticipantsList(for: viewModel.participants, in: conversation)
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         switch viewModel.rows[indexPath.row] {
         case .user(let bareUser):
@@ -241,10 +241,10 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
 }
 
 extension ParticipantsSectionController: ZMUserObserver {
-    
+
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged || changeInfo.nameChanged else { return }
         collectionView?.reloadData()
     }
-    
+
 }

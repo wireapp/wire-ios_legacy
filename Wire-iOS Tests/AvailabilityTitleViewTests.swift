@@ -20,79 +20,79 @@ import XCTest
 @testable import Wire
 
 class AvailabilityTitleViewTests: ZMSnapshotTestCase {
-    
+
     var selfUser: ZMUser!
     var otherUser: ZMUser?
-    
+
     override func setUp() {
         super.setUp()
         otherUser = ZMUser.insertNewObject(in: self.uiMOC)
         otherUser?.name = "Giovanni"
         selfUser = ZMUser.selfUser()
     }
-    
+
     override func tearDown() {
         selfUser = nil
         otherUser = nil
         super.tearDown()
     }
-    
+
     // MARK: - Self Profile
-    
+
     func testThatItRendersCorrectly_SelfProfile_NoneAvailability() {
         createTest(for: [.allowSettingStatus], with: .none, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_SelfProfile_AvailableAvailability() {
         createTest(for: [.allowSettingStatus], with: .available, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_SelfProfile_AwayAvailability() {
         createTest(for: [.allowSettingStatus], with: .away, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_SelfProfile_BusyAvailability() {
         createTest(for: [.allowSettingStatus], with: .busy, on: selfUser)
     }
-    
+
     // MARK: - Headers profile
-    
+
     func testThatItRendersCorrectly_Header_NoneAvailability() {
         createTest(for: .header, with: .none, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_Header_AvailableAvailability() {
         createTest(for: .header, with: .available, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_Header_AwayAvailability() {
         createTest(for: .header, with: .away, on: selfUser)
     }
-    
+
     func testThatItRendersCorrectly_Header_BusyAvailability() {
         createTest(for: .header, with: .busy, on: selfUser)
     }
-    
+
     // MARK: - Other profile
-    
+
     func testThatItRendersCorrectly_OtherProfile_NoneAvailability() {
         createTest(for: [.hideActionHint], with: .none, on: otherUser!, colorSchemeVariant: .light)
     }
-    
+
     func testThatItRendersCorrectly_OtherProfile_AvailableAvailability() {
         createTest(for: [.hideActionHint], with: .available, on: otherUser!, colorSchemeVariant: .light)
     }
-    
+
     func testThatItRendersCorrectly_OtherProfile_AwayAvailability() {
         createTest(for: [.hideActionHint], with: .away, on: otherUser!, colorSchemeVariant: .light)
     }
-    
+
     func testThatItRendersCorrectly_OtherProfile_BusyAvailability() {
         createTest(for: [.hideActionHint], with: .busy, on: otherUser!, colorSchemeVariant: .light)
     }
-    
+
     // MARK: - Common methods
-    
+
     private func createTest(for options: AvailabilityTitleView.Options, with availability: Availability, on user: ZMUser, colorSchemeVariant: ColorSchemeVariant = .dark, file: StaticString = #file, line: UInt = #line) {
         updateAvailability(for: user, newValue: availability)
         let sut = AvailabilityTitleView(user: user, options: options)
@@ -100,7 +100,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
         sut.backgroundColor = colorSchemeVariant == .light ? .white : .black
         verify(view: sut, file: file, line: line)
     }
-    
+
     func updateAvailability(for user: ZMUser, newValue: Availability) {
         if user == ZMUser.selfUser() {
             user.availability = newValue
@@ -109,7 +109,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
             user.updateAvailability(newValue)
         }
     }
-    
+
 }
 
 extension ZMUser {

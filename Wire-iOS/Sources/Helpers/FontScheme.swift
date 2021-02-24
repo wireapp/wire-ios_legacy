@@ -56,7 +56,7 @@ extension FontWeight {
         .heavy: UIFont.Weight.heavy,
         .black: UIFont.Weight.black
     ]
-    
+
     /// Weight mapping used when the bold text accessibility setting is
     /// enabled. Light weight fonts won't render bold, so we use regular
     /// weights instead.
@@ -71,13 +71,13 @@ extension FontWeight {
         .heavy: UIFont.Weight.heavy,
         .black: UIFont.Weight.black
     ]
-    
+
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
         let boldTextEnabled = accessibilityBoldText ?? UIAccessibility.isBoldTextEnabled
         let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
         return mapping[self]!
     }
-    
+
     public init(weight: UIFont.Weight) {
         self = (type(of: self).weightMapping.filter {
             $0.value == weight
@@ -154,9 +154,9 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
 
 final class FontScheme {
     public typealias FontMapping = [FontSpec: UIFont]
-    
+
     public var fontMapping: FontMapping = [:]
-    
+
     fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec: UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
         let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
         for fontWeight in allFontWeights {
@@ -218,15 +218,15 @@ final class FontScheme {
 
         return mapping
     }
-    
+
     convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
-    
+
     public init(fontMapping: FontMapping) {
         self.fontMapping = fontMapping
     }
-    
+
     public func font(for fontType: FontSpec) -> UIFont? {
         return self.fontMapping[fontType]
     }

@@ -35,43 +35,43 @@ final class NoResultsView: UIView {
             label.accessibilityLabel = newValue
         }
     }
-    
+
     public var icon: StyleKitIcon? = nil {
         didSet {
             self.iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }
     }
-    
+
     public var placeholderColor: UIColor {
         let backgroundColor = UIColor.from(scheme: .background)
         return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.accessibilityElements = [self.label]
-        
+
         self.label.numberOfLines = 0
         self.label.textColor = placeholderColor
         self.label.textAlignment = .center
         label.font = .mediumSemiboldFont
         self.addSubview(self.label)
-        
+
         self.iconView.contentMode = .scaleAspectFit
         self.addSubview(self.iconView)
-        
+
         constrain(self, self.label, self.iconView) { selfView, label, iconView in
             iconView.top == selfView.top
             iconView.centerX == selfView.centerX
-            
+
             label.top == iconView.bottom + 24
             label.bottom == selfView.bottom
             label.leading == selfView.leading
             label.trailing == selfView.trailing
         }
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }

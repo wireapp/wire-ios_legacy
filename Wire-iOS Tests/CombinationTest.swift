@@ -28,7 +28,7 @@ struct Mutator<SUT: Copyable, Variant: Hashable> {
         self.applicator = applicator
         self.combinations = combinations
     }
-    
+
     func apply(_ element: SUT) -> [CombinationPair] {
         return combinations.map {
             (combination: $0, result: self.applicator(element, $0))
@@ -45,10 +45,10 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
         self.mutable = mutable
         self.mutators = mutators
     }
-    
+
     func allCombinations() -> [CombinationChainPair] {
         var current: [CombinationChainPair] = [(combinationChain: [], result: mutable)]
-        
+
         self.mutators.forEach { mutator in
             let new = current.map { variation -> [CombinationChainPair] in
                 let step = mutator.apply(variation.result)
@@ -57,13 +57,13 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
                     return (combinationChain: newChain, result: $0.result)
                 }
             }
-            
+
             current = new.flatMap { $0 }
         }
-        
+
         return current
     }
-    
+
     @discardableResult func testAll(_ test: (CombinationChainPair)->(Bool?)) -> [CombinationChainPair] {
         return self.allCombinations().compactMap {
             !(test($0) ?? true) ? $0 : .none
@@ -74,12 +74,12 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
 struct BoolPair { // Tuple would work better, but it cannot conform to @c Copyable
     var first: Bool
     var second: Bool
-    
+
     init(first: Bool, second: Bool) {
         self.first = first
         self.second = second
     }
-    
+
     func calculate() -> Bool {
         return self.first && self.second
     }
@@ -95,23 +95,23 @@ extension BoolPair: Copyable {
 class CombinationTestTest: XCTestCase {
     func testBoolConjunctionCombination() {
         let boolCombinations = Set<Bool>(arrayLiteral: false, true)
-        
+
         let firstMutation = { (proto: BoolPair, value: Bool) -> BoolPair in
             var new = proto.copyInstance()
             new.first = value
             return new
         }
         let firstMutator = Mutator<BoolPair, Bool>(applicator: firstMutation, combinations: boolCombinations)
-        
+
         let secondMutation = { (proto: BoolPair, value: Bool) -> BoolPair in
             var new = proto.copyInstance()
             new.second = value
             return new
         }
         let secondMutator = Mutator<BoolPair, Bool>(applicator: secondMutation, combinations: boolCombinations)
-        
+
         let test = CombinationTest(mutable: BoolPair(first: false, second: false), mutators: [firstMutator, secondMutator])
-        
+
         XCTAssertEqual(test.testAll { (variation) -> (Bool?) in
             return variation.result.calculate() == variation.combinationChain.reduce(true) { $0 && $1 }
         }.count, 0)

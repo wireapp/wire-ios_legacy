@@ -28,7 +28,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
     override func setUp() {
         super.setUp()
         UIColor.setAccentOverride(.vividRed)
-        
+
         mockSelfUser = MockUserType.createDefaultSelfUser()
 
         message = MockMessageFactory.videoMessage(sender: mockSelfUser,
@@ -38,185 +38,185 @@ final class ConversationVideoMessageCellTests: XCTestCase {
     override func tearDown() {
         message = nil
         mockSelfUser = nil
-        
+
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
-        
+
         super.tearDown()
     }
 
     // MARK : Uploaded (File not downloaded)
-    
+
     func testUploadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testUploadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testUploadedCell_fromOtherUser_withoutPreview() {
         let message = MockMessageFactory.videoMessage()
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message)
     }
-    
+
     func testUploadedCell_fromThisDevice_bigFileSize() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         (message.backingFileMessageData as! MockFileMessageData).size = UInt64(1024 * 1024 * 25)
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
-    
+
+
     // MARK : Uploading
-    
+
     func testUploadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testUploadingCell_fromOtherUser_withoutPreview() {
         let message = MockMessageFactory.videoMessage()
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message)
     }
-    
+
     func testUploadingCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK : Downloading
-    
+
     func testDownloadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testDownloadingCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message)
     }
-    
+
     // MARK : Downloaded
-    
+
     func testDownloadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testDownloadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK : Download Failed
-    
+
     func testFailedDownloadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testFailedDownloadCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK : Upload Failed
-    
+
     func testFailedUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testFailedUploadCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploadingFailed
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK : Upload Cancelled
-    
+
     func testCancelledUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingCancelled
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     func testCancelledUploadCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploadingCancelled
         message.backingFileMessageData.fileURL = nil
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK: No Duration
-    
+
     func testDownloadedCell_fromThisDevice_NoDuration() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
         message.backingFileMessageData.durationMilliseconds = 0
-        
+
         verify(message: message, waitForImagesToLoad: true)
     }
-    
+
     // MARK : Obfuscated
-    
+
     func testObfuscatedFileTransferCell() {
         message.isObfuscated = true
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-        
-        
+
+
         verify(message: message, waitForImagesToLoad: true)
     }
 

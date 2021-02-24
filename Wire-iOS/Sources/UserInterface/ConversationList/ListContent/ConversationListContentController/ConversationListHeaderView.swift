@@ -38,7 +38,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             badgeView.isHidden = isHidden
             badgeMarginConstraint?.constant = isHidden ? 0 : -spacing
             badgeWidthConstraint?.constant = isHidden ? 0 : 28
-            
+
             let text: String?
             switch folderBadge {
             case 1...99:
@@ -51,12 +51,12 @@ final class ConversationListHeaderView: UICollectionReusableView {
             badgeView.textLabel.text = text
         }
     }
-    
+
     var collapsed = false {
         didSet {
             guard collapsed != oldValue else { return }
             // update rotation
-            
+
             if collapsed {
                 arrowIconImageView.rotate(to: -90)
             } else {
@@ -64,7 +64,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             }
         }
     }
-    
+
     var tapHandler: TapHandler? = nil
 
     private var badgeMarginConstraint: NSLayoutConstraint?
@@ -78,15 +78,15 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         return label
     }()
-    
+
     let badgeView: RoundedTextBadge = {
         let margin: CGFloat = 12
         let roundedTextBadge = RoundedTextBadge(contentInset: UIEdgeInsets(top: 2, left: margin, bottom: 2, right: margin), font: FontSpec(.medium, .semibold).font!)
-        
+
         roundedTextBadge.textLabel.textColor = .white
         roundedTextBadge.backgroundColor = .blackAlpha16
         roundedTextBadge.isHidden = true
-        
+
         return roundedTextBadge
     }()
 
@@ -123,9 +123,9 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     private let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
-        
+
         let imageView = UIImageView(image: image)
-        
+
         return imageView
     }()
 
@@ -135,13 +135,13 @@ final class ConversationListHeaderView: UICollectionReusableView {
         [titleLabel, arrowIconImageView, badgeView].forEach(addSubview)
 
         createConstraints()
-        
+
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggledCollapsed)))
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
     }
-    
+
     @objc
     private func toggledCollapsed() {
         let newCollaped = !collapsed
@@ -165,14 +165,14 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         badgeMarginConstraint = titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: badgeView.leadingAnchor, constant: 0)
         badgeWidthConstraint = badgeView.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
-        
+
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
+
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: spacing),
-            
+
             badgeMarginConstraint!,
             badgeView.heightAnchor.constraint(equalToConstant: 20),
             badgeWidthConstraint!,

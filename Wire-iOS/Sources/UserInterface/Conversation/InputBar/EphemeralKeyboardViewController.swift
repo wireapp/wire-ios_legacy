@@ -43,7 +43,7 @@ extension InputBarConversation {
             return nil
         }
     }
-    
+
     var timeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value)
@@ -53,7 +53,7 @@ extension InputBarConversation {
         guard let value = self.destructionTimeout else { return nil }
         return timeoutImage(for: value, withColor: .lightGraphite)
     }
-    
+
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
         if timeout.isYears    { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
         if timeout.isWeeks    { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
@@ -69,7 +69,7 @@ extension UIAlertController {
     enum AlertError: Error {
         case userRejected
     }
-    
+
     static func requestCustomTimeInterval(over controller: UIViewController,
                                           with completion: @escaping (Result<TimeInterval>)->()) {
         let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
@@ -83,22 +83,22 @@ extension UIAlertController {
                 let selectedTimeInterval = TimeInterval(inputText) else {
                     return
             }
-            
+
             completion(.success(selectedTimeInterval))
         }
-        
+
         alertController.addAction(confirmAction)
-        
+
         let cancelAction = UIAlertAction.cancel {
             completion(.failure(AlertError.userRejected))
         }
-        
+
         alertController.addAction(cancelAction)
         controller.present(alertController, animated: true) { [weak alertController] in
             guard let input = alertController?.textFields?.first else {
                 return
             }
-            
+
             input.becomeFirstResponder()
         }
     }
@@ -132,7 +132,7 @@ final class EphemeralKeyboardViewController: UIViewController {
         }
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -153,7 +153,7 @@ final class EphemeralKeyboardViewController: UIViewController {
     }
 
     private func setupViews() {
-        
+
         picker.delegate = self
         picker.dataSource = self
         picker.backgroundColor = .clear
@@ -189,20 +189,20 @@ final class EphemeralKeyboardViewController: UIViewController {
 
     fileprivate func displayCustomPicker() {
         delegate?.ephemeralKeyboardWantsToBeDismissed(self)
-        
+
         UIAlertController.requestCustomTimeInterval(over: UIApplication.shared.topmostViewController(onlyFullScreen: true)!) { [weak self] result in
-            
+
             guard let `self` = self else {
                 return
             }
-            
+
             switch result {
             case .success(let value):
                 self.delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: value)
             default:
                 break
             }
-            
+
         }
     }
 }
@@ -223,7 +223,7 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -300,7 +300,7 @@ extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDat
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let timeout = timeouts[row]
-        
+
         if let actualTimeout = timeout {
             delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: actualTimeout.rawValue)
         }
@@ -308,5 +308,5 @@ extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDat
             displayCustomPicker()
         }
     }
-    
+
 }

@@ -34,7 +34,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
+
         let toView = transitionContext.toView
         let fromView = transitionContext.fromView
         let containerView = transitionContext.containerView

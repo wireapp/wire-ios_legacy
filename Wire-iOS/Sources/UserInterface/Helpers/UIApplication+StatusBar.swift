@@ -20,7 +20,7 @@
 import UIKit
 
 extension UIApplication {
-    
+
     static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
     /// return the visible window on the top most which fulfills these conditions:
@@ -39,7 +39,7 @@ extension UIApplication {
             if controller is RootViewController  {
                 return true
             }
-            
+
             return false
         }
 
@@ -57,15 +57,15 @@ extension UIApplication {
             var topController = window.rootViewController else {
                 return .none
         }
-        
+
         while let presentedController = topController.presentedViewController,
             (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
             topController = presentedController
         }
-        
+
         return topController
     }
-    
+
     @available(iOS 12.0, *)
     static var userInterfaceStyle: UIUserInterfaceStyle? {
             UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
@@ -76,7 +76,7 @@ extension UINavigationController {
     override open var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
     override open var childForStatusBarHidden: UIViewController? {
         return topViewController
     }

@@ -38,22 +38,22 @@ final class SettingsClientViewController: UIViewController,
                                           UserClientObserver,
                                           ClientColorVariantProtocol,
                                           SpinnerCapable {
-        
+
     //MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
     fileprivate static let resetCellReuseIdentifier: String = "ResetCellReuseIdentifier"
     fileprivate static let verifiedCellReuseIdentifier: String = "VerifiedCellReuseIdentifier"
-    
+
     let userClient: UserClient
-    
+
     var userClientToken: NSObjectProtocol!
     var credentials: ZMEmailCredentials?
 
     var tableView: UITableView!
     let topSeparator = OverflowSeparatorView()
-    
+
     var fromConversation: Bool = false
 
     var variant: ColorSchemeVariant? {
@@ -61,7 +61,7 @@ final class SettingsClientViewController: UIViewController,
             setColor(for: variant)
         }
     }
-    
+
     var removalObserver: ClientRemovalObserver?
 
     convenience init(userClient: UserClient,
@@ -71,7 +71,7 @@ final class SettingsClientViewController: UIViewController,
         self.init(userClient: userClient, credentials: credentials, variant: variant)
         self.fromConversation = fromConversation
     }
-    
+
     required init(userClient: UserClient,
                   credentials: ZMEmailCredentials? = .none,
                   variant: ColorSchemeVariant? = .none) {
@@ -92,22 +92,22 @@ final class SettingsClientViewController: UIViewController,
         self.title = userClient.deviceClass?.localizedDescription.localizedUppercase
         self.credentials = credentials
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.addSubview(self.topSeparator)
         self.createTableView()
         self.createConstraints()
-        
+
 
         if fromConversation {
             setupFromConversationStyle()
@@ -135,7 +135,7 @@ final class SettingsClientViewController: UIViewController,
             }
         }
     }
-    
+
     fileprivate func createTableView() {
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.delegate = self
@@ -153,28 +153,28 @@ final class SettingsClientViewController: UIViewController,
         self.tableView = tableView
         self.view.addSubview(tableView)
     }
-    
+
     private func createConstraints() {
         constrain(tableView, self.view, self.topSeparator) { tableView, selfView, topSeparator in
             tableView.edges == selfView.edges
-            
+
             topSeparator.left == tableView.left
             topSeparator.right == tableView.right
             topSeparator.top == tableView.top
         }
     }
-    
+
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func onVerifiedChanged(_ sender: UISwitch!) {
         let selfClient = ZMUserSession.shared()!.selfUserClient
-        
+
         ZMUserSession.shared()?.enqueue({
             if (sender.isOn) {
                 selfClient?.trustClient(self.userClient)
@@ -185,15 +185,15 @@ final class SettingsClientViewController: UIViewController,
             sender.isOn = self.userClient.verified
         })
     }
-    
+
     @objc func onDonePressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: .none)
     }
-    
+
     // MARK: - UITableViewDelegate, UITableViewDataSource
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        
+
         if let userClient = ZMUserSession.shared()?.selfUserClient, self.userClient == userClient {
             return 2
         } else {
@@ -204,7 +204,7 @@ final class SettingsClientViewController: UIViewController,
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let clientSection = ClientSection(rawValue: section) else { return 0 }
         switch clientSection {
-            
+
         case .info:
             return 1
         case .fingerprintAndVerify:
@@ -220,12 +220,12 @@ final class SettingsClientViewController: UIViewController,
             return 1
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let clientSection = ClientSection(rawValue: (indexPath as NSIndexPath).section) else { return UITableViewCell() }
 
         switch clientSection {
-            
+
         case .info:
             if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
                 cell.selectionStyle = .default
@@ -238,11 +238,11 @@ final class SettingsClientViewController: UIViewController,
             }
 
             break
-        
+
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
-                    
+
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
                         cell.variant = self.variant
@@ -269,7 +269,7 @@ final class SettingsClientViewController: UIViewController,
                 cell.variant = self.variant
                 return cell
             }
-            
+
             break
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
@@ -278,16 +278,16 @@ final class SettingsClientViewController: UIViewController,
                 cell.variant = self.variant
                 return cell
             }
-            
+
             break
         }
-        
+
         return UITableViewCell()
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         guard let clientSection = ClientSection(rawValue: (indexPath as NSIndexPath).section) else { return }
 
         switch clientSection {
@@ -295,7 +295,7 @@ final class SettingsClientViewController: UIViewController,
             self.userClient.resetSession()
             isLoadingViewVisible = true
             break
-            
+
         case .removeDevice:
             removalObserver = nil
 
@@ -309,7 +309,7 @@ final class SettingsClientViewController: UIViewController,
                                                     delegate: self,
                                                     credentials: credentials,
                                                     completion: completion)
-                
+
 
             removalObserver?.startRemoval()
 
@@ -321,19 +321,19 @@ final class SettingsClientViewController: UIViewController,
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         guard let clientSection = ClientSection(rawValue: section) else { return .none }
         switch clientSection {
-           
+
         case .fingerprintAndVerify:
             return NSLocalizedString("self.settings.device_details.fingerprint.subtitle", comment: "")
         case .resetSession:
             return NSLocalizedString("self.settings.device_details.reset_session.subtitle", comment: "")
         case .removeDevice:
             return NSLocalizedString("self.settings.device_details.remove_device.subtitle", comment: "")
-            
+
         default:
             return .none
         }
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = headerFooterViewTextColor
@@ -376,12 +376,12 @@ final class SettingsClientViewController: UIViewController,
     }
 
     // MARK: - UserClientObserver
-    
+
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
         if let tableView = self.tableView {
             tableView.reloadData()
         }
-        
+
         if changeInfo.sessionHasBeenReset {
             isLoadingViewVisible = false
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
@@ -400,7 +400,7 @@ extension SettingsClientViewController: ClientRemovalObserverDelegate {
     func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {
         isLoadingViewVisible = isVisible
     }
-    
+
     func present(_ clientRemovalObserver: ClientRemovalObserver, viewControllerToPresent: UIViewController) {
         present(viewControllerToPresent, animated: true)
     }

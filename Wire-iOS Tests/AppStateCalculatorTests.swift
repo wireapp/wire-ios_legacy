@@ -23,7 +23,7 @@ final class AppStateCalculatorTests: XCTestCase {
 
     var sut: AppStateCalculator!
     var delegate: MockAppStateCalculatorDelegate!
-    
+
     override func setUp() {
         super.setUp()
         sut = AppStateCalculator()
@@ -39,7 +39,7 @@ final class AppStateCalculatorTests: XCTestCase {
     }
 
     // MARK: - Tests AppState Cases
-    
+
     func testThatAppStateChanges_OnDidBlacklistCurrentVersion() {
         // WHEN
         sut.applicationDidBecomeActive()
@@ -49,8 +49,8 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .blacklisted)
         XCTAssertTrue(delegate.wasNotified)
     }
-    
-        
+
+
     func testThatAppStateChanges_OnDidJailbreakCurrentVersion() {
         // WHEN
         sut.applicationDidBecomeActive()
@@ -60,7 +60,7 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .jailbroken)
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnWillMigrateAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())
@@ -68,20 +68,20 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.testHelper_setAppState(.loading(account: account, from: selectedAccount))
         delegate.wasNotified = false
         sut.applicationDidBecomeActive()
-        
+
         // WHEN
         sut.sessionManagerWillMigrateAccount(userSessionCanBeTornDown: {})
-        
+
         // THEN
         XCTAssertEqual(sut.appState, .migrating)
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnSessionManagerWillLogout() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.unknownError, userInfo: nil)
         sut.applicationDidBecomeActive()
-        
+
         // WHEN
         sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: nil)
 
@@ -89,12 +89,12 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnDidFailToLogin() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.invalidCredentials, userInfo: nil)
         sut.applicationDidBecomeActive()
-        
+
         // WHEN
         sut.sessionManagerDidFailToLogin(error: error)
 
@@ -102,13 +102,13 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .unauthenticated(error: error))
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnSessionLockChange() {
         // GIVEN
         let userSession = MockZMUserSession()
         userSession.lock = .database
         sut.applicationDidBecomeActive()
-        
+
         // WHEN
         sut.sessionManagerDidReportLockChange(forSession: userSession)
 
@@ -116,28 +116,28 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .locked)
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnUserAuthenticationDidComplete() {
         // GIVEN
         let addedAccount = false
         sut.applicationDidBecomeActive()
-        
+
         // WHEN
         sut.userAuthenticationDidComplete(addedAccount: addedAccount)
-        
+
         // THEN
         XCTAssertEqual(sut.appState, .authenticated(completedRegistration: addedAccount))
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     // MARK: - Tests AppState Changes
-    
+
     func testApplicationDontTransit_WhenAppStateDontChanges() {
         // GIVEN
         sut.applicationDidBecomeActive()
         sut.testHelper_setAppState(.blacklisted)
         delegate.wasNotified = false
-        
+
         // WHEN
         sut.sessionManagerDidBlacklistCurrentVersion()
 
@@ -145,7 +145,7 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .blacklisted)
         XCTAssertFalse(delegate.wasNotified)
     }
-    
+
     func testApplicationTransit_WhenAppStateChanges() {
         // WHEN
         let userSession = MockZMUserSession()
@@ -161,23 +161,23 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertEqual(sut.appState, .locked)
         XCTAssertTrue(delegate.wasNotified)
     }
-    
+
     // MARK: - Tests When App Become Active
-    
+
     func testThatAppStateDoesntChange_OnDidReportLockChange_BeforeAppBecomeActive() {
         // GIVEN
         let userSession = MockZMUserSession()
         userSession.lock = .database
         delegate.wasNotified = false
         sut.applicationDidEnterBackground()
-        
+
         // WHEN
         sut.sessionManagerDidReportLockChange(forSession: userSession)
-        
+
         // THEN
         XCTAssertFalse(delegate.wasNotified)
     }
-    
+
     func testThatAppStateChanges_OnDidReportLockChange_AfterAppHasBecomeActive() {
         // GIVEN
         let userSession = MockZMUserSession()
@@ -185,10 +185,10 @@ final class AppStateCalculatorTests: XCTestCase {
         delegate.wasNotified = false
         sut.applicationDidEnterBackground()
         sut.sessionManagerDidReportLockChange(forSession: userSession)
-        
+
         // WHEN
         sut.applicationDidBecomeActive()
-        
+
         // THEN
         XCTAssertTrue(delegate.wasNotified)
     }

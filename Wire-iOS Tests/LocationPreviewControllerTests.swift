@@ -26,15 +26,15 @@ final class MockActionResponder: NSObject, MessageActionResponder {
 }
 
 final class LocationPreviewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: LocationPreviewController!
-    
+
     override func setUp() {
         super.setUp()
         let mockMessage = MockMessageFactory.locationMessage()
         sut = LocationPreviewController(message: mockMessage, actionResponder: MockActionResponder())
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

@@ -31,40 +31,40 @@ public enum DigitalSignatureVerificationError: Error {
 class DigitalSignatureVerificationViewController: UIViewController {
 
     typealias DigitalSignatureCompletion = ((_ result: VoidResult) -> Void)
-    
+
     // MARK: - Private Property
     private var completion: DigitalSignatureCompletion?
-    
+
     private var webView = WKWebView(frame: .zero)
     private var url: URL?
-    
+
     // MARK: - Init
     init(url: URL, completion: DigitalSignatureCompletion? = nil) {
         self.url = url
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWebView()
         loadURL()
     }
-    
+
     // MARK: - Private Method
     private func setupWebView() {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         updateButtonMode()
-        
+
         view.addSubview(webView)
         webView.fitInSuperview()
     }
-    
+
     private func updateButtonMode() {
         let buttonItem = UIBarButtonItem(title: "general.done".localized,
                                          style: .done,
@@ -75,13 +75,13 @@ class DigitalSignatureVerificationViewController: UIViewController {
         buttonItem.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = buttonItem
     }
-    
+
     private func loadURL() {
         guard let url = url else { return }
         let request = URLRequest(url: url)
         webView.load(request)
     }
-    
+
     @objc private func onClose() {
         dismiss(animated: true, completion: nil)
     }
@@ -99,7 +99,7 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-        
+
         switch response {
         case .success:
             completion?(.success)
@@ -109,7 +109,7 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
         }
     }
-    
+
     func parseVerificationURL(_ url: URL) -> VoidResult? {
         let urlComponents = URLComponents(string: url.absoluteString)
         let postCode = urlComponents?.queryItems?

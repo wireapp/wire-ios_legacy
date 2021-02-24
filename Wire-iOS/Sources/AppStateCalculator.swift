@@ -28,7 +28,7 @@ enum AppState: Equatable {
     case jailbroken
     case migrating
     case loading(account: Account, from: Account?)
-    
+
     static func ==(lhs: AppState, rhs: AppState) -> Bool {
         switch (lhs, rhs) {
         case (.headless, .headless):
@@ -60,15 +60,15 @@ protocol AppStateCalculatorDelegate: class {
 }
 
 class AppStateCalculator {
-    
+
     init() {
         setupApplicationNotifications()
     }
-    
+
     deinit {
         removeObserverToken()
     }
-    
+
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
     var wasUnauthenticated: Bool {
@@ -86,11 +86,11 @@ class AppStateCalculator {
             previousAppState = appState
         }
     }
-    
+
     // MARK: - Private Property
     private var observerTokens: [NSObjectProtocol] = []
     private var hasEnteredForeground: Bool = false
-    
+
     // MARK: - Private Implementation
     private func transition(to appState: AppState,
                             completion: (() -> Void)? = nil) {
@@ -99,12 +99,12 @@ class AppStateCalculator {
             completion?()
             return
         }
-        
+
         guard self.appState != appState else {
             completion?()
             return
         }
-        
+
         self.appState = appState
         self.pendingAppState = nil
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
@@ -119,11 +119,11 @@ extension AppStateCalculator: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
-    
+
     func removeObserverToken() {
         observerTokens.removeAll()
     }
-    
+
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
         transition(to: pendingAppState ?? appState)
@@ -138,23 +138,23 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
     }
-    
+
     func sessionManagerDidFailToLogin(error: Error?) {
         transition(to: .unauthenticated(error: error as NSError?))
     }
-        
+
     func sessionManagerDidBlacklistCurrentVersion() {
         transition(to: .blacklisted)
     }
-    
+
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
     }
-        
+
     func sessionManagerWillMigrateAccount(userSessionCanBeTornDown: @escaping () -> Void) {
         transition(to: .migrating, completion: userSessionCanBeTornDown)
     }
-    
+
     func sessionManagerWillOpenAccount(_ account: Account,
                                        from selectedAccount: Account?,
                                        userSessionCanBeTornDown: @escaping () -> Void) {

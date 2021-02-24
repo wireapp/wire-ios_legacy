@@ -21,18 +21,18 @@ import Foundation
 import UIKit
 
 public class GuestIndicator: UIImageView, Themeable {
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
     }
-    
+
     init() {
         super.init(frame: .zero)
         contentMode = .scaleToFill
@@ -43,7 +43,7 @@ public class GuestIndicator: UIImageView, Themeable {
         accessibilityIdentifier = "img.guest"
         applyColorScheme(colorSchemeVariant)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

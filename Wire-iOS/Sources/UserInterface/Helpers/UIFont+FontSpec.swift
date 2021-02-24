@@ -29,9 +29,9 @@ extension UIFont {
 
 // Objective-C compatiblity layer for the Swift only FontSpec
 extension UIFont {
-    
+
     // MARK: - Small
-    
+
     class var smallFont: UIFont {
         return FontSpec(.small, .none).font!
     }
@@ -43,15 +43,15 @@ extension UIFont {
     class var smallRegularFont: UIFont {
         return FontSpec(.small, .regular).font!
     }
-    
+
     class var smallMediumFont: UIFont {
         return FontSpec(.small, .medium).font!
     }
-    
+
     class var smallSemiboldFont: UIFont {
         return FontSpec(.small, .semibold).font!
     }
-    
+
 
     // MARK: - Normal
 
@@ -90,26 +90,26 @@ extension UIFont {
     }
 
     // MARK: - Large
-    
+
     class var largeThinFont: UIFont {
         return FontSpec(.large, .thin).font!
     }
-    
+
     class var largeLightFont: UIFont {
         return FontSpec(.large, .light).font!
     }
-    
+
     class var largeRegularFont: UIFont {
         return FontSpec(.large, .regular).font!
     }
-    
+
     class var largeMediumFont: UIFont {
         return FontSpec(.large, .medium).font!
     }
-    
+
     class var largeSemiboldFont: UIFont {
         return FontSpec(.large, .semibold).font!
     }
 
-    
+
 }

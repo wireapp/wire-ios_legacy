@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class ArchivedNavigationBarTests: ZMSnapshotTestCase {
-    
+
     var sut: ArchivedNavigationBar!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -30,7 +30,7 @@ final class ArchivedNavigationBarTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor(white: 0.2, alpha: 1)
         sut = ArchivedNavigationBar(title: "ARCHIVE")
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

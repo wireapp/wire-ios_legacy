@@ -21,17 +21,17 @@ import UIKit
 import Photos
 
 extension UIApplication {
-    
+
     class func wr_requestOrWarnAboutMicrophoneAccess(_ grantedHandler: @escaping (_ granted: Bool) -> Void) {
         let audioPermissionsWereNotDetermined = AVCaptureDevice.authorizationStatus(for: .audio) == .notDetermined
-        
+
         AVAudioSession.sharedInstance().requestRecordPermission({ granted in
-            
+
             DispatchQueue.main.async(execute: {
                 if !granted {
                     self.wr_warnAboutMicrophonePermission()
                 }
-                
+
                 if audioPermissionsWereNotDetermined && granted {
                     NotificationCenter.default.post(name: Notification.Name.UserGrantedAudioPermissions, object: nil)
                 }
@@ -39,7 +39,7 @@ extension UIApplication {
             })
         })
     }
-    
+
     class func wr_requestOrWarnAboutVideoAccess(_ grantedHandler: @escaping (_ granted: Bool) -> Void) {
         UIApplication.wr_requestVideoAccess({ granted in
             DispatchQueue.main.async(execute: {
@@ -53,7 +53,7 @@ extension UIApplication {
             })
         })
     }
-    
+
     static func wr_requestOrWarnAboutPhotoLibraryAccess(_ grantedHandler: ((Bool) -> Swift.Void)!) {
         PHPhotoLibrary.requestAuthorization({ status in
             DispatchQueue.main.async(execute: {
@@ -73,7 +73,7 @@ extension UIApplication {
             })
         })
     }
-    
+
     class func wr_requestVideoAccess(_ grantedHandler: @escaping (_ granted: Bool) -> Void) {
         AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
             DispatchQueue.main.async(execute: {
@@ -81,30 +81,30 @@ extension UIApplication {
             })
         })
     }
-    
+
     private class func wr_warnAboutCameraPermission(withCompletion completion: AlertActionHandler?) {
         let currentResponder = UIResponder.currentFirst
         (currentResponder as? UIView)?.endEditing(true)
-        
+
         let alert = UIAlertController.cameraPermissionAlert(with: completion)
-        
+
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
-    
+
     private class func wr_warnAboutMicrophonePermission() {
         let alert = UIAlertController.microphonePermissionAlert
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
-    
+
     private class func wr_warnAboutPhotoLibraryRestricted() {
         let alert = UIAlertController.alertWithOKButton(
             title: "library.alert.permission_warning.title".localized,
             message: "library.alert.permission_warning.restrictions.explaination".localized
         )
-        
+
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
-    
+
     private class func wr_warnAboutPhotoLibaryDenied() {
         let alert = UIAlertController.photoLibraryPermissionAlert
         AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)

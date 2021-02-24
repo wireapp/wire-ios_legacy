@@ -22,16 +22,16 @@ import UIKit
 final class ServiceDetailView: UIView {
     private let serviceView: ServiceView
     private let descriptionTextView = UITextView()
-    
+
     public let variant: ColorSchemeVariant
-    
+
     public var service: Service {
         didSet {
             updateForService()
             serviceView.service = self.service
         }
     }
-    
+
     init(service: Service, variant: ColorSchemeVariant) {
         self.service = service
         self.variant = variant
@@ -48,7 +48,7 @@ final class ServiceDetailView: UIView {
         case .light:
             backgroundColor = .white
         }
-        
+
         descriptionTextView.backgroundColor = .clear
         descriptionTextView.textContainerInset = .zero
         descriptionTextView.textColor = UIColor.from(scheme: .textForeground, variant: variant)
@@ -56,7 +56,7 @@ final class ServiceDetailView: UIView {
         descriptionTextView.isEditable = false
         updateForService()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,13 +84,13 @@ final class ServiceView: UIView {
     private let providerLabel = UILabel()
 
     public let variant: ColorSchemeVariant
-    
+
     public var service: Service {
         didSet {
             updateForService()
         }
     }
-    
+
     init(service: Service, variant: ColorSchemeVariant) {
         self.service = service
         self.variant = variant
@@ -101,17 +101,17 @@ final class ServiceView: UIView {
 
 
         backgroundColor = .clear
-        
+
         nameLabel.font = FontSpec(.large, .regular).font
         nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         nameLabel.backgroundColor = .clear
-        
+
         providerLabel.font = FontSpec(.medium, .regular).font
         providerLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         providerLabel.backgroundColor = .clear
         updateForService()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

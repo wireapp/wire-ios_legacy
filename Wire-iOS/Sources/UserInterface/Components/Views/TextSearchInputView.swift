@@ -35,7 +35,7 @@ final class TextSearchInputView: UIView {
     let cancelButton = IconButton(style: .default)
 
     private let spinner = ProgressSpinner()
-    
+
     weak var delegate: TextSearchInputViewDelegate?
     var query: String = "" {
         didSet {
@@ -43,7 +43,7 @@ final class TextSearchInputView: UIView {
             self.delegate?.searchView(self, didChangeQueryTo: self.query)
         }
     }
-    
+
     var placeholderString: String = "" {
         didSet {
             self.placeholderLabel.text = placeholderString
@@ -55,15 +55,15 @@ final class TextSearchInputView: UIView {
             spinner.isAnimating = isLoading
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = UIColor.from(scheme: .barBackground)
-        
+
         iconView.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground))
         iconView.contentMode = .center
-        
+
         searchInput.delegate = self
         searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
@@ -74,7 +74,7 @@ final class TextSearchInputView: UIView {
         searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
         searchInput.font = .normalFont
         searchInput.textColor = .from(scheme: .textForeground)
-        
+
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         placeholderLabel.font = .smallRegularFont
@@ -91,17 +91,17 @@ final class TextSearchInputView: UIView {
 
         self.createConstraints()
     }
-    
+
     private func createConstraints() {
         constrain(self, iconView, searchInput, placeholderLabel, cancelButton) { selfView, iconView, searchInput, placeholderLabel, cancelButton in
             iconView.leading == searchInput.leading + 8
             iconView.centerY == searchInput.centerY
-            
+
             iconView.top == selfView.top
             iconView.bottom == selfView.bottom
-            
+
             selfView.height <= 100
-            
+
             searchInput.edges == inset(selfView.edges, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
 
             placeholderLabel.leading == searchInput.leading + 48
@@ -121,21 +121,21 @@ final class TextSearchInputView: UIView {
             spinner.width == StyleKitIcon.Size.tiny.rawValue
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder aDecoder: NSCoder) is not implemented")
     }
-    
+
     @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
         self.query = ""
         self.searchInput.text = ""
         self.searchInput.resignFirstResponder()
     }
-    
+
     fileprivate func updatePlaceholderLabel() {
         self.placeholderLabel.isHidden = !self.query.isEmpty
     }
-    
+
     fileprivate func updateForSearchQuery() {
         self.updatePlaceholderLabel()
         cancelButton.isHidden = self.query.isEmpty
@@ -143,26 +143,26 @@ final class TextSearchInputView: UIView {
 }
 
 extension TextSearchInputView: UITextViewDelegate {
-    
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let currentText = textView.text else {
             return true
         }
         let containsReturn = text.rangeOfCharacter(from: .newlines, options: [], range: .none) != .none
-        
+
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         self.query = containsReturn ? currentText : newText
-        
+
         if containsReturn {
             let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
             if shouldReturn {
                 textView.resignFirstResponder()
             }
         }
-        
+
         return !containsReturn
     }
-        
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
     }

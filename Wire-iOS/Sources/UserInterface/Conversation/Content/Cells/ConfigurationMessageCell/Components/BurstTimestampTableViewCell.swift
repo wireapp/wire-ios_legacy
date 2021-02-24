@@ -26,14 +26,14 @@ struct BurstTimestampSenderMessageCellConfiguration {
 }
 
 final class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
-    
+
     typealias View = BurstTimestampSenderMessageCell
     let configuration: View.Configuration
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 0
 
@@ -52,7 +52,7 @@ final class BurstTimestampSenderMessageCellDescription: ConversationMessageCellD
     init(configuration: View.Configuration) {
         self.configuration = configuration
     }
-    
+
 }
 
 final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
@@ -60,10 +60,10 @@ final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
     private let timestampView = ConversationCellBurstTimestampView()
     private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil
     private var timer: Timer? = nil
-    
+
     weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
@@ -93,39 +93,39 @@ final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
-        
+
         if self.window == nil {
             stopTimer()
         }
     }
-    
+
     func willDisplay() {
         startTimer()
     }
-    
+
     func didEndDisplaying() {
         stopTimer()
     }
-    
+
     private func reconfigure() {
         guard let configuration = self.configuration else {
             return
         }
         configure(with: configuration, animated: false)
     }
-    
+
     private func startTimer() {
         stopTimer()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             self?.reconfigure()
         })
     }
-    
+
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
-    
+
     // MARK: - Cell
 
     var isSelected: Bool = false

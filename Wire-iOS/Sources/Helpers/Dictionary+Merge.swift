@@ -23,7 +23,7 @@ enum DictionaryMergeStrategy {
 }
 
 extension Dictionary {
-    
+
     mutating func merge(_ other: [Dictionary.Key: Dictionary.Value], strategy: DictionaryMergeStrategy) {
         switch strategy {
         case .preferNew:
@@ -32,6 +32,6 @@ extension Dictionary {
             merge(other) { (old, _) in old }
         }
     }
-    
+
 }
 

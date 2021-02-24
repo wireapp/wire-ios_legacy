@@ -19,7 +19,7 @@ import Foundation
 import UIKit
 
 extension UIView {
-        
+
     /// The reason why we are touching the window here is to workaround a bug where,
     /// We now force the window to be the key window and to be the first responder to ensure that we can
     /// show the menu controller.
@@ -32,7 +32,7 @@ extension UIView {
 }
 
 extension UIViewController {
-    
+
     func prepareShowingMenu() {
         view.prepareShowingMenu()
         becomeFirstResponder()

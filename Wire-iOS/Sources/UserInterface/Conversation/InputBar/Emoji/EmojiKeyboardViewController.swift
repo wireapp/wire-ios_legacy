@@ -28,7 +28,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 
 
 final class EmojiKeyboardViewController: UIViewController {
-    
+
     weak var delegate: EmojiKeyboardViewControllerDelegate?
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
@@ -60,7 +60,7 @@ final class EmojiKeyboardViewController: UIViewController {
         super.viewDidLayoutSubviews()
         updateSectionSelection()
     }
-    
+
     func setupViews() {
         let colorScheme = ColorScheme()
         colorScheme.variant = .light
@@ -71,7 +71,7 @@ final class EmojiKeyboardViewController: UIViewController {
         view.addSubview(sectionViewController.view)
         sectionViewController.didMove(toParent: self)
     }
-    
+
     func createConstraints() {
         constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
             collectionView.top == view.top
@@ -84,7 +84,7 @@ final class EmojiKeyboardViewController: UIViewController {
             sectionView.width <= 400
         }
     }
-    
+
     func cellForEmoji(_ emoji: Emoji, indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.zm_reuseIdentifier, for: indexPath) as! EmojiCollectionViewCell
         cell.titleLabel.text = emoji
@@ -120,7 +120,7 @@ final class EmojiKeyboardViewController: UIViewController {
         }
     }
 
-    
+
 }
 
 extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
@@ -134,13 +134,13 @@ extension EmojiKeyboardViewController: EmojiSectionViewControllerDelegate {
 }
 
 extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let emoji = emojiDataSource[indexPath]
         delegate?.emojiKeyboardViewController(self, didSelectEmoji: emoji)
         guard let result = emojiDataSource.register(used: emoji) else { return }
-        collectionView.performBatchUpdates({ 
+        collectionView.performBatchUpdates({
             switch result {
             case .insert(let section): collectionView.insertSections(IndexSet(integer: section))
             case .reload(let section): collectionView.reloadSections(IndexSet(integer: section))
@@ -149,7 +149,7 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
             self.updateSectionSelection()
         })
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let (first, last) = (section == 0, section == collectionView.numberOfSections)
         return UIEdgeInsets(top: 0, left: !first ? 12 : 0, bottom: 0, right: !last ? 12 : 0)
@@ -169,19 +169,19 @@ class EmojiCollectionViewCell: UICollectionViewCell {
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.1) { 
+            UIView.animate(withDuration: 0.1) {
                 self.alpha = self.isHighlighted ? 0.6 : 1
             }
         }
     }
-    
+
     func setupViews() {
         titleLabel.textAlignment = .center
         let fontSize: CGFloat =  UIDevice.current.userInterfaceIdiom == .pad ? 40 : 28
@@ -189,7 +189,7 @@ class EmojiCollectionViewCell: UICollectionViewCell {
         titleLabel.adjustsFontSizeToFitWidth = true
         addSubview(titleLabel)
     }
-    
+
     func createConstraints() {
         constrain(self, titleLabel) { view, label in
             label.edges == view.edges
@@ -200,9 +200,9 @@ class EmojiCollectionViewCell: UICollectionViewCell {
 
 
 class EmojiCollectionView: UICollectionView {
-    
+
     private let layout = UICollectionViewFlowLayout()
-    
+
     init() {
         super.init(frame: .zero, collectionViewLayout: layout)
         backgroundColor = .clear
@@ -217,13 +217,13 @@ class EmojiCollectionView: UICollectionView {
         let size = contentSize.height / 5
         layout.itemSize = CGSize(width: size, height: size)
     }
-    
+
     func setupLayout() {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

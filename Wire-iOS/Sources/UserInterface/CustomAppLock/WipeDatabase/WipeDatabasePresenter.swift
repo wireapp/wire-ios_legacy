@@ -27,11 +27,11 @@ final class WipeDatabasePresenter {
             guard confirmText == "wipe_database.alert.confirm_input".localized else {
                 return
             }
-            
-            self?.interactorInput?.deleteAccount()            
+
+            self?.interactorInput?.deleteAccount()
         }
     }
-    
+
     func confirmAlertInputValidation() -> RequestPasswordController.InputValidation {
         return { confirmText in
             return confirmText == "wipe_database.alert.confirm_input".localized

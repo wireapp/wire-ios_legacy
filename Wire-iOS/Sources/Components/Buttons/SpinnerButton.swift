@@ -99,7 +99,7 @@ final class SpinnerButton: Button {
         setBackgroundImageColor(.clear, for: .normal)
 
         layer.borderWidth = 1
-            
+
         let states: [UIControl.State] = [.normal, .highlighted, .disabled]
         states.forEach() {
             let color: UIColor

@@ -20,27 +20,27 @@ import Foundation
 import UIKit
 
 final class SectionHeaderView: UIView, Themeable {
-    
+
     let titleLabel = UILabel()
- 
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         createConstraints()
         applyColorScheme(colorSchemeVariant)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ final class SectionHeaderView: UIView, Themeable {
         titleLabel.accessibilityTraits.insert(.header)
         addSubview(titleLabel)
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -57,11 +57,11 @@ final class SectionHeaderView: UIView, Themeable {
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         titleLabel.textColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
     }
-    
+
 }
 
 class SectionHeader: UICollectionReusableView, Themeable {

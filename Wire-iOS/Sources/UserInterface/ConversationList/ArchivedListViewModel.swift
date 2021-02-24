@@ -31,7 +31,7 @@ final class ArchivedListViewModel: NSObject {
     weak var delegate: ArchivedListViewModelDelegate?
     var archivedConversationListObserverToken: NSObjectProtocol?
     var archivedConversations = [ZMConversation]()
-    
+
     override init() {
         super.init()
         if let userSession = ZMUserSession.shared() {
@@ -40,15 +40,15 @@ final class ArchivedListViewModel: NSObject {
             archivedConversations = list.asArray() as! [ZMConversation]
         }
     }
-    
+
     var count: Int {
         return archivedConversations.count
     }
-    
+
     subscript(key: Int) -> ZMConversation? {
         return archivedConversations[key]
     }
-    
+
 }
 
 
@@ -59,7 +59,7 @@ extension ArchivedListViewModel: ZMConversationListObserver {
             self?.archivedConversations = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!).asArray() as! [ZMConversation]
         }
     }
-    
+
     func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         delegate?.archivedListViewModel(self, didUpdateConversationWithChange: changeInfo)
     }

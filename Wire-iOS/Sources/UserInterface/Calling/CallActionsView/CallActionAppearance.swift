@@ -20,42 +20,42 @@ import UIKit
 
 enum CallActionAppearance: Equatable {
     case light, dark(blurred: Bool)
-    
+
     var showBlur: Bool {
         switch self {
         case .light: return false
         case .dark(blurred: let blurred): return blurred
         }
     }
-    
+
     var backgroundColorNormal: UIColor {
         switch self {
         case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
         case .dark: return UIColor.white.withAlphaComponent(0.24)
         }
     }
-    
+
     var backgroundColorSelected: UIColor {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
         }
     }
-    
+
     var iconColorNormal: UIColor {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
         }
     }
-    
+
     var iconColorSelected: UIColor {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .dark)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .light)
         }
     }
-    
+
     var backgroundColorSelectedAndHighlighted: UIColor {
         switch self {
         case .light: return UIColor.black.withAlphaComponent(0.16)

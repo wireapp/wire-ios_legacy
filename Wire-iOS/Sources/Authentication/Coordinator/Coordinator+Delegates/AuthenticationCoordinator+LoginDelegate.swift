@@ -20,16 +20,16 @@ import Foundation
 import WireSyncEngine
 
 extension AuthenticationCoordinator: LoginDelegate {
-    
+
     func loginCodeRequestDidFail(_ error: NSError) {
         eventResponderChain.handleEvent(ofType: .authenticationFailure(error as NSError))
     }
-    
+
     /// Invoked when requesting a login code succeded
     func loginCodeRequestDidSucceed() {
         eventResponderChain.handleEvent(ofType: .loginCodeAvailable)
     }
-    
+
     /// Invoked when the authentication failed, or when the cookie was revoked
     func authenticationDidFail(_ error: NSError) {
         eventResponderChain.handleEvent(ofType: .authenticationFailure(error as NSError))
@@ -39,7 +39,7 @@ extension AuthenticationCoordinator: LoginDelegate {
     func authenticationInvalidated(_ error: NSError, accountId: UUID) {
         authenticationDidFail(error)
     }
-    
+
     /// Invoked when the authentication succeeded and the user now has a valid
     func authenticationDidSucceed() {
         log.info("Received \"authentication did succeed\" event. Ignoring, waiting for client registration event.")
@@ -50,7 +50,7 @@ extension AuthenticationCoordinator: LoginDelegate {
         addedAccount = !existingAccount
         eventResponderChain.handleEvent(ofType: .backupReady(existingAccount))
     }
-    
+
     /// Invoked when a client is successfully registered
     func clientRegistrationDidSucceed(accountId: UUID) {
         eventResponderChain.handleEvent(ofType: .clientRegistrationSuccess)

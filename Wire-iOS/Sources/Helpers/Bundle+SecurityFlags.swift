@@ -32,9 +32,9 @@ enum SecurityFlags {
     case backup
 
     /// Whether encryption at rest is enabled and can't be disabled.
-    
+
     case forceEncryptionAtRest
-    
+
     var bundleKey: String {
         switch self {
         case .clipboard:
@@ -63,7 +63,7 @@ enum SecurityFlags {
             return "ForceEncryptionAtRestEnabled"
         }
     }
-    
+
     var isEnabled: Bool {
         return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
     }

@@ -24,7 +24,7 @@ import UIKit
 import WireSyncEngine
 
 final class UserConnectionView: UIView, Copyable {
-    
+
     public convenience init(instance: UserConnectionView) {
         self.init(user: instance.user)
     }
@@ -41,14 +41,14 @@ final class UserConnectionView: UIView, Copyable {
     private let secondLabel = UILabel()
     private let labelContainer = UIView()
     private let userImageView = UserImageView()
-    
+
     public var user: UserType {
         didSet {
             self.updateLabels()
             self.userImageView.user = self.user
         }
     }
-    
+
     public init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
@@ -56,11 +56,11 @@ final class UserConnectionView: UIView, Copyable {
         self.setup()
         self.createConstraints()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
         [firstLabel, secondLabel].forEach {
             $0.numberOfLines = 0
@@ -70,7 +70,7 @@ final class UserConnectionView: UIView, Copyable {
         self.userImageView.accessibilityLabel = "user image"
         self.userImageView.size = .big
         self.userImageView.user = self.user
-        
+
         [self.labelContainer, self.userImageView].forEach(self.addSubview)
         [self.firstLabel, self.secondLabel].forEach(labelContainer.addSubview)
         self.updateLabels()
@@ -111,7 +111,7 @@ final class UserConnectionView: UIView, Copyable {
             addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
     }
-    
+
     private func createConstraints() {
         constrain(self, self.labelContainer, self.userImageView) { selfView, labelContainer, userImageView in
             labelContainer.centerX == selfView.centerX

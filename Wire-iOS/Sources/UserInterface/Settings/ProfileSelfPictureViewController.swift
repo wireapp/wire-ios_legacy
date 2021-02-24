@@ -31,41 +31,41 @@ final class ProfileSelfPictureViewController: UIViewController {
     private let libraryButton: IconButton = IconButton()
     private let closeButton: IconButton = IconButton()
     private let imagePickerConfirmationController: ImagePickerConfirmationController = ImagePickerConfirmationController()
-    
+
     private var userObserverToken: NSObjectProtocol?
-    
+
     init() {
         super.init(nibName: nil, bundle: nil)
-        
+
         imagePickerConfirmationController.imagePickedBlock = { [weak self] imageData in
             self?.dismiss(animated: true)
             self?.setSelfImageTo(imageData)
         }
-        
+
         if let session = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer: self,
                                                    for: ZMUser.selfUser(),
                                                    in: session)
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
     private func setSelfImageTo(_ selfImageData: Data?) {
         // iOS11 uses HEIF image format, but BE expects JPEG
         guard let selfImageData = selfImageData,
               let jpegData: Data = selfImageData.isJPEG ? selfImageData : UIImage(data: selfImageData)?.jpegData(compressionQuality: 1.0) else { return }
-        
-        
+
+
         ZMUserSession.shared()?.enqueue({
             ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
         })
     }
-    
+
     // MARK: - Button Handling
     @objc
     private func closeButtonTapped(_ sender: Any?) {
@@ -90,11 +90,11 @@ final class ProfileSelfPictureViewController: UIViewController {
     }
 
     private func addCameraButton() {
-        
+
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)
-        
+
         var bottomOffset: CGFloat = 0.0
         if UIScreen.safeArea.bottom > 0 {
             bottomOffset = -UIScreen.safeArea.bottom + 20.0
@@ -109,7 +109,7 @@ final class ProfileSelfPictureViewController: UIViewController {
     }
 
     private func addCloseButton() {
-        
+
         closeButton.accessibilityIdentifier = "CloseButton"
 
         bottomOverlayView.addSubview(closeButton)
@@ -131,7 +131,7 @@ final class ProfileSelfPictureViewController: UIViewController {
     private func addLibraryButton() {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
-        
+
         libraryButton.isHidden = !SecurityFlags.cameraRoll.isEnabled
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
@@ -177,7 +177,7 @@ final class ProfileSelfPictureViewController: UIViewController {
     }
 
     private func setupTopView() {
-        
+
         topView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topView)
 
@@ -186,10 +186,10 @@ final class ProfileSelfPictureViewController: UIViewController {
 
         topView.backgroundColor = .clear
 
-        
+
         selfUserImageView.clipsToBounds = true
         selfUserImageView.contentMode = .scaleAspectFill
-        
+
         if let data = ZMUser.selfUser().imageMediumData {
             selfUserImageView.image = UIImage(data: data)
         }
@@ -247,11 +247,11 @@ final class ProfileSelfPictureViewController: UIViewController {
         if !UIImagePickerController.isSourceTypeAvailable(.camera) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
             return
         }
-        
+
         guard !CameraAccess.displayAlertIfOngoingCall(at: .takePhoto, from: self) else { return }
-        
+
         let picker = UIImagePickerController()
-        
+
         picker.sourceType = .camera
         picker.delegate = imagePickerConfirmationController
         picker.allowsEditing = true
@@ -263,7 +263,7 @@ final class ProfileSelfPictureViewController: UIViewController {
 }
 
 extension ProfileSelfPictureViewController: ZMUserObserver {
-    
+
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard
             changeInfo.imageMediumDataChanged,
@@ -271,7 +271,7 @@ extension ProfileSelfPictureViewController: ZMUserObserver {
         else {
             return
         }
-        
+
         changeInfo.user.fetchProfileImage(session: userSession,
                                           imageCache: UIImage.defaultUserImageCache,
                                           sizeLimit: nil,

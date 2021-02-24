@@ -21,7 +21,7 @@ import Cartography
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
-    
+
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: GroupDetailsConversationType
     fileprivate let footerView = GroupDetailsFooterView()
@@ -35,7 +35,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             collectionViewController.sections = computeVisibleSections()
         }
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
@@ -47,9 +47,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     init(conversation: GroupDetailsConversationType) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
 
         createSubviews()
 
@@ -62,7 +62,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             }
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -91,7 +91,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
         footerView.update(for: conversation)
-        
+
         collectionViewController.sections = computeVisibleSections()
 
     }
@@ -101,10 +101,10 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         title = "participants.title".localized(uppercased: true)
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         updateLegalHoldIndicator()
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
@@ -119,8 +119,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     func updateLegalHoldIndicator() {
         navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
-    
-   
+
+
 
     func computeVisibleSections() -> [CollectionViewSectionController] {
 
@@ -133,12 +133,12 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
-        
+
         if !participants.isEmpty {
-            
+
             let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
             let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
-            
+
             if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
                 if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
                     let adminSection = ParticipantsSectionController(participants: admins,
@@ -167,7 +167,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             } else { // Display only one section without the ShowAll button
                 let adminSection = ParticipantsSectionController(participants: admins,
                                                                  conversationRole: .admin, conversation: conversation,
-                                                                 
+
                                                                  delegate: self, totalParticipantsCount: participants.count, clipSection: true)
                 sections.append(adminSection)
             }
@@ -178,7 +178,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         if optionsSectionController.hasOptions {
             sections.append(optionsSectionController)
         }
-        
+
         if conversation.teamRemoteIdentifier != nil &&
             SelfUser.current.canModifyReadReceiptSettings(in: conversation) {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
@@ -187,17 +187,17 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
         }
-        
+
         // MARK: services sections
-        
+
         if !serviceUsers.isEmpty {
             let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
             sections.append(servicesSection)
         }
-        
+
         return sections
     }
-    
+
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard let conversation = conversation as? ZMConversation,
             changeInfo.participantsChanged ||
@@ -207,16 +207,16 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             changeInfo.mutedMessageTypesChanged ||
             changeInfo.legalHoldStatusChanged
             else { return }
-        
+
         updateLegalHoldIndicator()
         collectionViewController.sections = computeVisibleSections()
         footerView.update(for: conversation)
-        
+
         if changeInfo.participantsChanged, !conversation.isSelfAnActiveMember {
            navigationController?.popToRootViewController(animated: true)
         }
     }
-    
+
     func footerView(_ view: GroupDetailsFooterView,
                     shouldPerformAction action: GroupDetailsFooterView.Action) {
         switch action {
@@ -232,7 +232,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             actionController?.presentMenu(from: view, context: .details)
         }
     }
-    
+
     func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         guard let conversation = conversation as? ZMConversation else { return }
 
@@ -247,7 +247,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 }
 
 extension GroupDetailsViewController {
-    
+
     fileprivate var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.setLegalHoldAccessibility()
@@ -261,7 +261,7 @@ extension GroupDetailsViewController {
 
         LegalHoldDetailsViewController.present(in: self, conversation: conversation)
     }
-    
+
 }
 
 extension GroupDetailsViewController: ViewControllerDismisser {
@@ -270,13 +270,13 @@ extension GroupDetailsViewController: ViewControllerDismisser {
     }
 }
 
-extension GroupDetailsViewController: ProfileViewControllerDelegate {    
+extension GroupDetailsViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
             ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
-    
+
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         //no-op
     }
@@ -296,11 +296,11 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
+
     func presentFullParticipantsList(for users: [UserType], in conversation: GroupDetailsConversationType) {
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
-    
+
     func presentGuestOptions(animated: Bool) {
         guard let conversation = conversation as? ZMConversation else { return }
 
@@ -315,7 +315,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }
-    
+
     func presentNotificationsOptions(animated: Bool) {
         guard let conversation = conversation as? ZMConversation else { return }
 
@@ -323,5 +323,5 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }
-    
+
 }

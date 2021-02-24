@@ -36,7 +36,7 @@ final class FilePreviewGeneratorTests: XCTestCase {
         // then
         self.waitForExpectations(timeout: 2, handler: nil)
     }
-    
+
     func testThatItDoesNotBreakOnHugePDF() {
         // given
         let pdfPath = Bundle(for: type(of: self)).path(forResource: "huge", ofType: "pdf")!

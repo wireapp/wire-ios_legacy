@@ -25,7 +25,7 @@ protocol CallAccessoryViewControllerDelegate: class {
 }
 
 final class CallAccessoryViewController: UIViewController, CallParticipantsViewControllerDelegate {
-    
+
     weak var delegate: CallAccessoryViewControllerDelegate?
     private let participantsViewController: CallParticipantsViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
@@ -105,7 +105,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
         videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
     }
-    
+
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
         delegate?.callAccessoryViewControllerDidSelectShowMore(viewController: self)
     }

@@ -21,7 +21,7 @@ import XCTest
 import Ziphy
 
 final class GiphySearchViewControllerTests: XCTestCase {
-    
+
     weak var sut: GiphySearchViewController!
 
     var mockConversation: MockConversation!
@@ -37,7 +37,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
         client = ZiphyClient(host: "localhost", requester: requester, downloadSession: requester)
         resultsController = ZiphySearchResultsController(client: client, pageSize: 5)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockConversation = nil

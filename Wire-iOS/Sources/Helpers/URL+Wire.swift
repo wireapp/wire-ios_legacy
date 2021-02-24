@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "URL")
 
 enum TeamSource: Int {
     case onboarding, settings
-    
+
     var parameterValue: String {
         switch self {
         case .onboarding: return "client_landing"
@@ -87,11 +87,11 @@ extension BackendEnvironment {
     fileprivate static func websiteLink(path: String) -> URL {
         return shared.websiteURL.appendingPathComponent(path)
     }
-    
+
     fileprivate static func accountsLink(path: String) -> URL {
         return shared.accountsURL.appendingPathComponent(path)
     }
-    
+
     fileprivate static func teamsLink(path: String) -> URL {
         return shared.teamsURL.appendingPathComponent(path)
     }
@@ -104,7 +104,7 @@ extension URL {
     static var wr_wireAppOnItunes: URL {
         return WireUrl.shared.wireAppOnItunes
     }
-    
+
     static var wr_randomProfilePictureSource: URL {
         return WireUrl.shared.randomProfilePictureSource
     }
@@ -112,7 +112,7 @@ extension URL {
     static var wr_emailAlreadyInUseLearnMore: URL {
         return wr_support.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")
     }
-    
+
     static var wr_support: URL {
         return WireUrl.shared.support
     }
@@ -148,7 +148,7 @@ extension URL {
     static var wr_askSupport: URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
-    
+
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }
@@ -169,7 +169,7 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "support/email-in-use")
     }
 
-    
+
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {

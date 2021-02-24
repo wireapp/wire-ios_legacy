@@ -34,28 +34,28 @@ final class AccountSelectorController: UIViewController {
             }
             self.updateShowAccountsIfNeeded()
         })
-        
+
         accountsView.delegate = self
         self.view.addSubview(accountsView)
         constrain(self.view, accountsView) { selfView, accountsView in
             accountsView.edges == selfView.edges
         }
-        
+
         setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private var showAccounts: Bool = false
-    
+
     func updateShowAccountsIfNeeded() {
         let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
         guard showAccounts != self.showAccounts else { return }
         setShowAccounts(to: showAccounts)
     }
-    
+
     private func setShowAccounts(to showAccounts: Bool) {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
@@ -64,7 +64,7 @@ final class AccountSelectorController: UIViewController {
 }
 
 extension AccountSelectorController: AccountSelectorViewDelegate {
-    
+
     func accountSelectorDidSelect(account: Account) {
         guard
             account != SessionManager.shared?.accountManager.selectedAccount,
@@ -72,7 +72,7 @@ extension AccountSelectorController: AccountSelectorViewDelegate {
         else {
             return
         }
-        
+
         ZClientViewController.shared?.conversationListViewController.dismiss(animated: true,
                                                                              completion: {
             AppDelegate.shared.mediaPlaybackManager?.stop()

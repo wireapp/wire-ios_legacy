@@ -28,7 +28,7 @@ final class ConversationCreationValues {
 
     private var unfilteredParticipants: UserSet
     private let selfUser: UserType
-    
+
     var allowGuests: Bool
     var enableReceipts: Bool
     var name: String
@@ -48,7 +48,7 @@ final class ConversationCreationValues {
             unfilteredParticipants = newValue
         }
     }
-    
+
     init (name: String = "",
           participants: UserSet = UserSet(),
           allowGuests: Bool = true,
@@ -69,7 +69,7 @@ protocol ConversationCreationControllerDelegate: class {
                                         participants: UserSet,
                                         allowGuests: Bool,
                                         enableReceipts: Bool)
-    
+
 }
 
 final class ConversationCreationController: UIViewController {
@@ -77,74 +77,74 @@ final class ConversationCreationController: UIViewController {
     private let selfUser: UserType
     static let mainViewHeight: CGFloat = 56
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
-    
+
     private let collectionViewController = SectionCollectionViewController()
 
     private lazy var nameSection: ConversationCreateNameSectionController = ConversationCreateNameSectionController(selfUser: selfUser, delegate: self)
-    
+
     private lazy var errorSection: ConversationCreateErrorSectionController = {
         return ConversationCreateErrorSectionController()
     }()
-    
+
     private lazy var optionsSection: ConversationCreateOptionsSectionController = {
         let section = ConversationCreateOptionsSectionController(values: self.values)
         section.tapHandler = self.optionsTapped
         return section
     }()
-    
+
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
         let section = ConversationCreateGuestsSectionController(values: self.values)
         section.isHidden = true
-        
+
         section.toggleAction = { [unowned self] allowGuests in
             self.values.allowGuests = allowGuests
             self.updateOptions()
         }
-        
+
         return section
     }()
-    
+
     private lazy var receiptsSection: ConversationCreateReceiptsSectionController = {
         let section = ConversationCreateReceiptsSectionController(values: self.values)
         section.isHidden = true
-        
+
         section.toggleAction = { [unowned self] enableReceipts in
             self.values.enableReceipts = enableReceipts
             self.updateOptions()
         }
-        
+
         return section
     }()
-    
+
     var optionsExpanded: Bool = false {
         didSet {
             self.guestsSection.isHidden = !optionsExpanded
             self.receiptsSection.isHidden = !optionsExpanded
         }
     }
-    
+
     fileprivate var navBarBackgroundView = UIView()
 
     fileprivate lazy var values = ConversationCreationValues(selfUser: selfUser)
 
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: UserSet?
-    
+
     convenience init() {
         self.init(preSelectedParticipants: nil, selfUser: ZMUser.selfUser())
     }
-    
+
     init(preSelectedParticipants: UserSet?, selfUser: UserType) {
         self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
         self.preSelectedParticipants = preSelectedParticipants
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -154,10 +154,10 @@ final class ConversationCreationController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
         title = "conversation.create.group_name.title".localized(uppercased: true)
-        
+
         setupNavigationBar()
         setupViews()
-        
+
         // try to overtake the first responder from the other view
         if let _ = UIResponder.currentFirst {
             nameSection.becomeFirstResponder()
@@ -172,28 +172,28 @@ final class ConversationCreationController: UIViewController {
         super.viewDidAppear(animated)
         nameSection.becomeFirstResponder()
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
-    
+
     private func setupViews() {
         // TODO: if keyboard is open, it should scroll.
         let collectionView = UICollectionView(forGroupedSections: ())
-        
+
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
-        
+
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.fitInSuperview(safely: true)
-        
+
         collectionViewController.collectionView = collectionView
         collectionViewController.sections = [nameSection, errorSection]
-        
+
         if selfUser.isTeamMember {
             collectionViewController.sections.append(contentsOf: [
                 optionsSection,
@@ -201,12 +201,12 @@ final class ConversationCreationController: UIViewController {
                 receiptsSection
             ])
         }
-        
+
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         view.addSubview(navBarBackgroundView)
-        
+
         navBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             navBarBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -218,19 +218,19 @@ final class ConversationCreationController: UIViewController {
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
-        
+
         if navigationController?.viewControllers.count ?? 0 <= 1 {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
-        
+
         let nextButtonItem = UIBarButtonItem(title: "general.next".localized(uppercased: true), style: .plain, target: self, action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newgroup.next"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false
-    
+
         navigationItem.rightBarButtonItem = nextButtonItem
     }
-    
+
     func proceedWith(value: SimpleTextField.Value) {
         switch value {
         case let .error(error):
@@ -239,7 +239,7 @@ final class ConversationCreationController: UIViewController {
             let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
             nameSection.resignFirstResponder()
             values.name = trimmed
-            
+
             if let parts = preSelectedParticipants {
                 values.participants = parts
             }
@@ -249,12 +249,12 @@ final class ConversationCreationController: UIViewController {
             navigationController?.pushViewController(participantsController, animated: true)
         }
     }
-    
+
     @objc fileprivate func tryToProceed() {
         guard let value = nameSection.value else { return }
         proceedWith(value: value)
     }
-    
+
     private func updateOptions() {
         self.optionsSection.configure(with: values)
         self.guestsSection.configure(with: values)
@@ -265,7 +265,7 @@ final class ConversationCreationController: UIViewController {
 // MARK: - AddParticipantsConversationCreationDelegate
 
 extension ConversationCreationController: AddParticipantsConversationCreationDelegate {
-    
+
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
@@ -274,7 +274,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
         case .create:
             var allParticipants = values.participants
             allParticipants.insert(selfUser)
-            
+
             delegate?.conversationCreationController(
                 self,
                 didSelectName: values.name,
@@ -296,42 +296,42 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
         case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
         }
-        
+
     }
 
     func textFieldReturnPressed(_ textField: SimpleTextField) {
         tryToProceed()
     }
-    
+
     func textFieldDidBeginEditing(_ textField: SimpleTextField) {
-        
+
     }
-    
+
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
-        
+
     }
 }
 
 // MARK: - Handlers
 
 extension ConversationCreationController {
-    
+
     private func optionsTapped(expanded: Bool) {
         guard let collectionView = collectionViewController.collectionView else {
             return
         }
-        
+
         optionsExpanded = expanded
-        
+
         let changes: () -> Void
-        
+
         if expanded {
             nameSection.resignFirstResponder()
             changes = { collectionView.insertSections([3, 4]) }
         } else {
             changes = { collectionView.deleteSections([3, 4]) }
         }
-        
+
         collectionView.performBatchUpdates(changes)
     }
 }

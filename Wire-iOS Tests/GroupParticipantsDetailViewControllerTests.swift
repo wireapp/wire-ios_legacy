@@ -55,7 +55,7 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
 
     override func tearDown() {
         SelfUser.provider = nil
-        
+
         super.tearDown()
     }
 
@@ -64,7 +64,7 @@ final class GroupParticipantsDetailViewControllerTests: XCTestCase {
         let users: [MockUserType] = (0..<20).map {
             let user = MockUserType.createUser(name: "User #\($0)")
             user.handle = nil
-            
+
             return user
         }
 

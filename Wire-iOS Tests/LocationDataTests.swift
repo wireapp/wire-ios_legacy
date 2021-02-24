@@ -24,7 +24,7 @@ import MapKit
 
 
 final class LocationDataTests: XCTestCase {
-    
+
     class override func tearDown() {
         Settings.shared.reset()
     }
@@ -36,13 +36,13 @@ final class LocationDataTests: XCTestCase {
 
         // when
         let sut: LocationData? = Settings.shared[.lastUserLocation]
-        
+
         // then
         XCTAssertEqual(sut?.latitude, 1)
         XCTAssertEqual(sut?.longitude, 2)
         XCTAssertEqual(sut?.zoomLevel, 3)
     }
-    
+
     func testThatLocationDataCanBeConvertedToADictionary() {
         // given
         let sut = LocationData.locationData(
@@ -51,16 +51,16 @@ final class LocationDataTests: XCTestCase {
             name: name,
             zoomLevel: 5
         )
-        
+
         // when
         let dict = sut.toDictionary()
-        
+
         // then
         XCTAssertEqual(dict["LastLocationLatitudeKey"] as? Float, Float(45))
         XCTAssertEqual(dict["LastLocationLongitudeKey"] as? Float, Float(75))
         XCTAssertEqual(dict["LastLocationZoomLevelKey"] as? Int, 5)
     }
-    
+
     func testThatLocationDataCanBeCreatedFromADictionary() {
         // when
         let sut = LocationData.locationData(fromDictionary: [

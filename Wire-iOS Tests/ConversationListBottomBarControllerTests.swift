@@ -40,7 +40,7 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
 }
 
 final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ConversationListBottomBarController!
     var mockDelegate: MockConversationListBottomBarDelegate!
 
@@ -60,11 +60,11 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
                 ])
         })
     }
-    
+
     override func tearDown() {
         sut = nil
         mockDelegate = nil
-        
+
         super.tearDown()
     }
 
@@ -120,19 +120,19 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
     }
-    
+
     func testThatItCallsTheDelegateWhenTheListButtonIsTapped() {
         // when
         sut.listButton.sendActions(for: .touchUpInside)
-        
+
         // then
         XCTAssertEqual(mockDelegate.listButtonCallCount, 1)
     }
-    
+
     func testThatItCallsTheDelegateWhenTheFolderButtonIsTapped() {
         // when
         sut.folderButton.sendActions(for: .touchUpInside)
-        
+
         // then
         XCTAssertEqual(mockDelegate.folderButtonTapCount, 1)
     }

@@ -20,9 +20,9 @@ import UIKit
 import Cartography
 
 final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable {
-    
+
     private let spinner = ProgressSpinner()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(spinner)
@@ -33,11 +33,11 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
             spinner.height == 120
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         spinner.color = UIColor.from(scheme: .textForeground, variant: variant)
         spinner.isAnimating = false
