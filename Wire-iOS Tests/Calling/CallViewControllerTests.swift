@@ -86,7 +86,7 @@ final class CallViewControllerTests: XCTestCase {
         
         for _ in 0..<amount {
             participants.append(
-                CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), isActiveSpeaker: false)
+                CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
             )
         }
         

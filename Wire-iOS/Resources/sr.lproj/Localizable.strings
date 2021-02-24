@@ -1,0 +1,1857 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// General strings
+
+
+"general.ok" = "У реду";
+"general.next" = "Следећи";
+"general.cancel" = "Откажи";
+"general.close" = "Затвори";
+"general.back" = " Назад";
+"general.open_settings" = "Отвори поставке Вајера";
+"general.edit" = "Уређивање";
+"general.done" = "Готово";
+"general.confirm" = "У реду";
+"general.later" = "Касније";
+"general.skip" = "Не сада";
+"general.accept" = "Прихвати";
+"general.decline" = "ne hvala";
+"general.failure" = "Нешто је пошло наопако";
+"general.failure.try_again" = "Молимо покушај поново.";
+"general.service" = "Услуга";
+"general.off" = "искључено";
+"general.on" = "укључено";
+"general.loading" = "Loading…";
+"general.paste" = "Налепи";
+
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Гостинска соба";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Тражи по имену или корисничком имену";
+"peoplepicker.header.top_people" = "Најчешће контактирани";
+"peoplepicker.button.create_conversation" = "Направи групу";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.header.conversations" = "Групе";
+"peoplepicker.header.team_conversations" = "%@ Groups";
+"peoplepicker.header.send_invitation" = "Позивница";
+"peoplepicker.header.contacts" = "Контакти";
+"peoplepicker.header.contacts_personal" = "Personal Contacts";
+"peoplepicker.header.directory" = "Повежи се";
+
+"peoplepicker.group.title.singular" = "Add Participants";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
+"peoplepicker.group.skip" = "Прескочи";
+"peoplepicker.group.done" = "Готово";
+"peoplepicker.group.create" = "Направи";
+
+"peoplepicker.header.people" = "Особе";
+"peoplepicker.header.services" = "Услуге";
+"peoplepicker.services.open_conversation.item" = "отвори разговор";
+"peoplepicker.services.add_service.button" = "Додајте услугу";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.default" = "Услуга је тренутно недоступна";
+"peoplepicker.services.add_service.error.full" = "Разговор је попуњен";
+
+"peoplepicker.title.create_conversation" = "Направи групу";
+"peoplepicker.title.add_to_conversation" = "Додајте учеснике";
+
+"peoplepicker.no_contacts_title" = "Нема контаката.";
+
+"peoplepicker.no_matching_results_title" = "Нема резултата.";
+"peoplepicker.no_matching_results_message" = "Унесите адресу е-поште.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Пошаљи позивницу";
+"peoplepicker.no_matching_results.action.share_contacts" = "Дели контакте";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "Унесите важећу адресу е-поште";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Нема резултата.";
+"peoplepicker.no_matching_results_services_title" = "Услуге су помоћ која може побољшати вашу брзину рада. Да бисте их омогућили, питајте свог администратора.";
+"peoplepicker.no_matching_results_services_admin_title" = "Услуге су помоћ која може побољшати ваш рад.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Управљање услугама";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Унесите адресу е-поште или";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "поделите контакте";
+
+"peoplepicker.share_contacts.no_results.title" = "Пронађи људе по имену или адреси е-поште";
+
+"peoplepicker.send_invitation.dialog.title" = "Позивница је послата";
+"peoplepicker.send_invitation.dialog.message" = "Важи две недеље. Пошаљите нову ако ова истекне.";
+"peoplepicker.send_invitation.dialog.ok" = "У реду";
+
+"peoplepicker.invite_more_people" = "Позовите још људи";
+"peoplepicker.invite_team_members" = "Позовите људе да се придруже тиму";
+"peoplepicker.quick-action.open-conversation" = "Отвори";
+"peoplepicker.quick-action.create-conversation" = "Направи групу";
+"peoplepicker.quick-action.create-guest-room" = "Направите собу за госте";
+"peoplepicker.quick-action.admin-services" = "Управљање услугама";
+
+"add_participants.all_contacts_added" = "Everyone’s here.";
+
+"add_participants.alert.title" = "Група је попуњена";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Претрага по имену";
+"contacts_ui.invite_others" = "Позови остале";
+"contacts_ui.name_in_contacts" = "%@ у контактима";
+"contacts_ui.connection_request" = "Тражено повезивање";
+"contacts_ui.action_button.invite" = "Позивница";
+"contacts_ui.action_button.open" = "Отвори";
+"contacts_ui.invite_sheet.cancel_button_title" = "Откажи";
+"contacts_ui.notification.invitation_sent" = "Позивница је послата";
+"contacts_ui.notification.invitation_failed" = "Неуспело слање позивнице";
+"contacts_ui.title" = "Позови људе";
+
+"conversation_list.empty.all_archived.message" = "Све је архивирано";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
+
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Придружи се";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
+"conversation_list.header.self_team.accessibility_value.active" = "Active now.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.data_usage_permission_alert.title" = "Помозите нам да Вајер буде бољи";
+"conversation_list.data_usage_permission_alert.message" = "Слажем се да Вајер може креирати и користити анонимне извештаје о коришћењу и грешкама за побољшање апликације Вајер. Могу у било којем тренутку опозвати ову сагласност.";
+"conversation_list.data_usage_permission_alert.disagree" = "Не";
+"conversation_list.data_usage_permission_alert.agree" = "Слажем се";
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "у контактима";
+
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "отвори разговор";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "пинг";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "одговор";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+
+// Archived List
+"archived_list.title" = "архива";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "Разговор почиње овде";
+"tool_tip.contacts.message" = "Започните разговор. Позивом, поруком или делећи, лично или у групама.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Познаје %@";
+"peoplepicker.suggested.knows_two" = "Познаје %@ и %@";
+"peoplepicker.hide_search_result" = "Сакриј";
+"peoplepicker.hide_search_result_progress" = "Сакривам…";
+
+"send_invitation.subject" = "Повежимо се на Вајеру";
+"send_invitation.text" = "Ја сам на Вајеру. Потражи %@ или посети get.wire.com";
+"send_invitation_no_email.text" = "Ја сам на Вајеру. Посети get.wire.com да се повежемо.";
+
+// Folders
+
+"folder.creation.name.title" = "Креирајте нову фасциклу";
+"folder.creation.name.button.create" = "Направи";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Име фасцикле";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Креирајте нову фасциклу притиском на дугме +";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "подели слику";
+"notifications.pinged" = "пингова";
+"notifications.sent_file" = "подели фајл";
+"notifications.sent_location" = "подели локацију";
+"notifications.sent_video" = "подели видео";
+"notifications.sent_audio" = "подели звучни запис";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ у овом разговору";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.title" = "Разговори";
+"list.archived_conversations" = "АРХИВА";
+"list.archived_conversations_close" = "Затвори архиву";
+
+"list.section.groups" = "Групе";
+"list.section.contacts" = "Особе";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Омиљено";
+
+"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
+
+"conversation.status.secutity_alert.default" = "New security alert";
+
+"conversation.status.typing" = "куца поруку…";
+"conversation.status.typing.group" = "%@: typing a message…";
+"conversation.status.silenced" = "Muted";
+"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.blocked" = "Блокирано";
+"conversation.status.incoming_call" = "%@ is calling…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Shared a link";
+"conversation.status.message.image" = "подели слику";
+"conversation.status.message.location" = "подели локацију";
+"conversation.status.message.audio" = "подели звучну поруку";
+"conversation.status.message.video" = "подели видео";
+"conversation.status.message.file" = "подели фајл";
+"conversation.status.message.knock" = "Пинг";
+"conversation.status.message.missedcall" = "Пропуштен позив";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
+"conversation.status.message.ephemeral" = "вам посла поруку";
+"conversation.status.message.ephemeral.group" = "Неко је послао поруку";
+"conversation.status.message.ephemeral.mention" = "вас спомену";
+"conversation.status.message.ephemeral.mention.group" = "Неко те споменуо";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
+"conversation.status.message.ephemeral.knock" = "пингова";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+
+"conversation.status.unsent" = "⚠️ Unsent message";
+"conversation.status.you" = "Ви";
+"conversation.status.someone" = "неко";
+"conversation.status.you_was_added" = "%@ додаде вас";
+"conversation.status.you_were_removed" = "уклоњени сте";
+"conversation.status.you_left" = "изашли сте";
+"conversation.status.started_conversation" = "%@ started a conversation";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Разговор";
+"compose.message.title" = "Порука";
+
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Разгласите!";
+"conversation.invite_more_people.description" = "Додај људе у овај разговор";
+"conversation.invite_more_people.explanation_url" = "https://support.wire.com";
+"conversation.invite_more_people.button_title" = "Додај људе";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Празан групни разговор";
+
+"conversation.input_bar.verified" = "Верификован";
+"conversation.input_bar.placeholder" = "унесите поруку";
+"conversation.input_bar.placeholder_ephemeral" = "Темпирана порука";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Превуци на горе за слање";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Тапните за слање";
+"conversation.input_bar.audio_message.too_long.title" = "Снимање заустављено";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
+"conversation.input_bar.audio_message.send" = "Пошаљи";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Тапните за снимање\nНакон тога  %@  је";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Изаберите филтер изнад";
+
+"conversation.call.many_participants_confirmation.title" = "Позовите";
+"conversation.call.many_participants_confirmation.message" = "This will call %d people";
+"conversation.call.many_participants_confirmation.call" = "Позови";
+
+"conversation.connection_view.in_address_book" = "у контактима";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Откажи";
+
+"conversation.input_bar.message_too_long.title" = "Порука је предугачка";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
+"conversation.create.group_name.title" = "Направи групу";
+"conversation.create.group_name.placeholder" = "Назив групе";
+"conversation.create.guidance.empty" = "Барем 1 знак";
+"conversation.create.guidance.toolong" = "Предугачко";
+"conversation.create.options.title" = "Опције разговора";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Дозволи госте и услуге";
+"conversation.create.guests.subtitle" = "Отворите овај разговор службама и људима ван ваше групе.";
+"conversation.create.receipts.title" = "Потврде читања";
+"conversation.create.receipts.subtitle" = "Када је ово укључено, људи могу видети када се читају њихове поруке у овом разговору.";
+
+"conversation.input_bar.ongoing_call_alert.title" = "Актуелни позив";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
+
+"conversation.guests_present" = "Гости су присутни";
+"conversation.services_present" = "Услуге су активне";
+"conversation.guests_services_present" = "Гости и услуге су присутни";
+"conversation.action.search" = "Претрага";
+
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Локација";
+"conversation.input_bar.message_preview.video" = "Видео";
+"conversation.input_bar.message_preview.audio" = "Аудио порука";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
+"image_confirmer.confirm" = "У реду";
+"image_confirmer.cancel" = "Откажи";
+"image.add_sketch" = "Додај цртеж";
+"image.add_emoji" = "Add an emoji";
+"image.edit_image" = "Измени слику";
+
+// Camera access
+"camera_access.denied" = "Wire needs access to the camera";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Подесите у поставкама Вајера";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Поставке";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "AE/AF Lock";
+
+// Location
+"location.send_button.title" = "Пошаљи";
+"location.unauthorized_alert.title" = "Укључи услугу локације";
+"location.unauthorized_alert.message" = "Да шаљете локацију, укључите услугу лоцирања и Вајеру дозволите приступ.";
+"location.unauthorized_alert.cancel" = "Откажи";
+"location.unauthorized_alert.settings" = "Поставке";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ на Твитеру";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Искључено";
+"input.ephemeral.title" = "Подесите време нестајања поруке";
+
+// System messages
+"content.system.you_nominative" = "ви";
+"content.system.you_dative" = "ви";
+"content.system.and_you_dative" = "and you";
+"content.system.you_accusative" = "ви";
+
+"content.system.continued_conversation" = "Започните разговор са %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+
+"content.system.other_started_conversation" = "%@ започе разговор са %@";
+"content.system.you_started_conversation" = "Ви започесте разговор са %@";
+
+"content.system.you_added_participant" = "Додали сте %@";
+"content.system.other_added_participant" = "%@ додаде %@";
+"content.system.other_added_you" = "%@ додаде вас";
+
+"content.system.participants_you" = "Ви";
+"content.system.participants_1_other" = "%@ и %@";
+"content.system.other_left" = "%@ изађе";
+"content.system.you_left" = "Ви изађосте";
+"content.system.other_removed_other" = "%@ уклони %@";
+"content.system.other_removed_you" = "%@ уклони вас";
+"content.system.you_removed_other" = "Ви уклонисте %@";
+
+"content.system.services.warning" = "Услуге имају приступ садржају овог разговора";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.other.started" = "%@ започе разговор са %@";
+"content.system.conversation.other.added" = "%@ додаде %@";
+"content.system.conversation.other.removed" = "%@ уклони %@";
+"content.system.conversation.other.left" = "%@ изађе";
+
+"content.system.conversation.you.started" = "%@ започе разговор са %@";
+"content.system.conversation.you.added" = "%@ додаде %@";
+"content.system.conversation.you.removed" = "%@ уклони %@";
+"content.system.conversation.you.left" = "%@ изађе";
+"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.guest.joined" = "%@ joined";
+
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Позови људе";
+
+"content.system.other_renamed_conv_to_nothing" = "%@ уклони назив разговора";
+"content.system.you_renamed_conv_to_nothing" = "Ви уклонисте назив разговора";
+"content.system.pending_message_timestamp" = "Шаљем…";
+"content.system.message_sent_timestamp" = "послато";
+"content.system.message_delivered_timestamp" = "испоручено";
+"content.system.message_read_timestamp" = "Seen";
+"content.system.failedtosend_message_timestamp" = "Слање није успело.";
+"content.system.failedtosend_message_timestamp_resend" = "Понови";
+"content.system.failedtosend_message_timestamp_delete" = "Обриши";
+"content.system.like_tooltip" = "тапните да лајкујете";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.connecting_to" = "Повезивање са %@\nЗапочните разговор";
+"content.system.connected_to" = "Повезан са %@\nЗапочните разговор";
+"content.system.other_wanted_to_talk" = "%@ позва";
+"content.system.you_wanted_to_talk" = "Ви позвасте";
+"content.system.ephemeral_time_remaining" = "%@ изађе";
+
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
+"content.system.you_started" = "Ви";
+
+"content.system.call.called" = "%@ позва";
+"content.system.call.called-you" = "%@ позва";
+"content.system.call.called.you" = "Ви";
+
+"content.system.call.missed-call" = "Пропуштен позив";
+"content.system.call.missed-call-you" = "Пропуштен позив";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Ви";
+
+"content.system.renamed_conv.title" = "%@ преименова разговор";
+"content.system.renamed_conv.title-you" = "%@ преименова разговор";
+"content.system.renamed_conv.title.you" = "Ви";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Потврде о читању су укључене";
+
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Овај разговор је под законским задржавањем";
+"content.system.message_legal_hold.disabled" = "Законски задржавање је деактивирано за овај разговор";
+
+"content.system.message_legal_hold.learn_more" = "Сазнајте више";
+
+//
+
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+
+"content.system.is_verified" = "Сви отисци су верификовани";
+
+"content.system.new_users" = "Нови корисник се придружио.";
+"content.system.verify_devices" = "Верификуј уређаје";
+
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+
+"content.system.missing_messages.title" = "Овај уређај нисте користили неко време. Неке поруке се можда неће приказати овде.";
+"content.system.missing_messages.subtitle_start" = "Meanwhile,";
+
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+
+"content.file.uploading" = "Отпремам…";
+"content.file.downloading" = "Преузимам…";
+"content.file.upload_failed" = "Неуспело отпремање";
+"content.file.upload_cancelled" = "Отпремање отказано";
+"content.file.upload_video" = "Видео снимци";
+"content.file.take_video" = "Сними видео";
+"content.file.browse" = "Browse";
+
+"content.file.save_video" = "Сачувај";
+"content.file.save_audio" = "Сачувај";
+"content.image.save_image" = "Сачувај";
+
+"content.message.delete" = "Избриши";
+"content.message.save" = "Сачувај";
+"content.message.resend" = "Понови";
+
+"content.message.delete_ellipsis" = "Delete…";
+
+"content.message.like" = "Свиђа ми се";
+"content.message.unlike" = "Не свиђа ми се";
+"content.message.forward" = "Подели";
+"content.message.go_to_conversation" = "Reveal";
+"content.message.forward.to" = "Претражи…";
+"content.message.open" = "Отвори";
+"content.message.sign" = "Sign";
+"content.message.copy" = "Копирај";
+"content.message.download" = "Преузми";
+"content.message.details" = "Детаљи";
+
+// Reply
+"content.message.reply" = "Одговори";
+"content.message.original_label" = "Original message";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "Не можете да видите ову поруку.";
+"content.message.reply.edited_message" = "Измена";
+
+"content.message.open_link_alert.title" = "Посетите Линк";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Отвори";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
+
+"content.reactions_list.likers" = "Воли";
+
+"content.file.too_big" = "Можете слати фајлове до %@";
+// Someone pinged
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
+
+// Current user pinged
+"content.ping.text.you" = "Ви";
+
+// Inline Player
+"content.player.unable_to_play" = "НЕ МОГУ ДА ПУСТИМ НУМЕРУ";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Connect to %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
+"missive.connection_request.default_message" = "Здраво %@,\nПовежимо се на Вајеру.\n%@";
+
+"connection_request_pending_title" = "Connection Request";
+"connection_request.send_button_title" = "Повежи се";
+"inbox.connection_request.connect_button_title" = "Повежи се";
+"inbox.connection_request.ignore_button_title" = "Игнориши";
+
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.joining" = "%@\nповезивање";
+"voice.status.leaving" = "%@\nCall ended";
+"voice.status.video_not_available" = "Видео искључен";
+"voice.status.low_connection" = "Лоша веза";
+"voice.network_error.title" = "Нема везе са интернетом";
+"voice.status.cbr" = "Constant Bit Rate";
+"voice.network_error.body" = "Морате бити на вези да бисте позивали. Проверите везу и покушајте поново.";
+"voice.degradation.new_self_device" = "You started using a new device.";
+"voice.degradation.new_user_device" = "%@ користи нови уређај.";
+"voice.degradation_outgoing.prompt" = "Још увек желите да упутите позив?";
+"voice.degradation_incoming.prompt" = "Још увек желите да прихватите позив?";
+"voice.accept_button.title" = "Прихвати";
+"voice.decline_button.title" = "Одбиј";
+"voice.hang_up_button.title" = "Прекини везу";
+"voice.mute_button.title" = "Ућуткај";
+"voice.video_button.title" = "Видео";
+"voice.flip_video_button.title" = "Flip";
+"voice.speaker_button.title" = "Звучник";
+"voice.cancel_button.title" = "Откажи";
+"voice.call_button.title" = "Позив";
+"voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Касније";
+
+"voice.alert.call_in_progress.title" = "Call in progress";
+"voice.alert.call_in_progress.message" = "You can have only one active call at a time";
+"voice.alert.call_in_progress.confirm" = "У реду";
+
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
+
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+
+"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "Актуелни позив";
+
+// Voice New
+
+"call.status.connecting" = "Повезивање…";
+"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming" = "Позивање…";
+"call.status.outgoing" = "Звони…";
+"call.status.outgoing.user" = "Calling %@…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "Constant Bit Rate";
+"call.status.variable_bitrate" = "Variable Bit Rate";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
+"call.video.paused" = "Видео је паузиран";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "You started using a new device.";
+"call.degraded.alert.message.user" = "%@ користи нови уређај.";
+"call.degraded.alert.message.unknown" = "Неко користи нови уређај.";
+"call.degraded.alert.action.continue" = "Свеједно позови";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
+"call.alert.ongoing.alert_title" = "This will end your other call.";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.button" = "Свеједно позови";
+"call.alert.ongoing.join.button" = "Join anyway";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Ућуткај";
+"call.actions.label.toggle_mute_off" = "Укључи звук";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Прихвати позив";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "Заврши позив";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "придружи се позиву";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Додај";
+"participants.avatar.guest.title" = "Гост";
+
+"participants.title" = "Детаљи";
+"participants.all.title" = "Особе";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Опције";
+"participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.admins.footer" = "Нема администратора";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
+
+// Meta Menu
+"meta.menu.accessibility_more_options_button" = "још радњи";
+"meta.menu.rename" = "Преименуј";
+"meta.menu.leave" = "Leave Group…";
+"meta.menu.archive" = "Архивирај";
+"meta.menu.unarchive" = "Деархивирај";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Премести у…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.silence.mute" = "Ућуткај";
+"meta.menu.silence.unmute" = "Укључи звук";
+"meta.menu.cancel" = "Откажи";
+"meta.menu.cancel_connection_request" = "Откажи захтев";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Обавештења…";
+"meta.menu.open_self_profile" = "Open Profile";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Обрисати садржај?";
+"meta.menu.delete_content.dialog_message" = "Ово ће обрисати историју разговора на свим вашим уређајима.";
+"meta.menu.delete_content.leave_as_well_message" = "Такође напусти разговор";
+"meta.menu.delete_content.button_cancel" = "Откажи";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Обавести ме о:";
+"meta.menu.configure_notification.button_everything" = "све";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Спомене и одговори";
+"meta.menu.configure_notification.button_nothing" = "Ништа";
+"meta.menu.configure_notification.button_cancel" = "Откажи";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Напустити разговор?";
+"meta.leave_conversation_dialog_message" = "Учесници ће бити обавештени а разговор ће бити уклоњен са ваше листе.";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation_button_cancel" = "Откажи";
+"meta.leave_conversation_button_leave" = "Изађи";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ користи нови уређај.";
+"meta.degraded.degradation_reason_message.plural" = "%@ користи нове уређаје.";
+"meta.degraded.degradation_reason_message.someone" = "Неко користи нови уређај.";
+"meta.degraded.dialog_message" = "Још увек желите да пошаљете своју поруку?";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.cancel_sending_button" = "Откажи";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Уклонити?";
+"profile.remove_dialog_message" = "%@ неће моћи да шаље или прима поруке у овом разговору.";
+"profile.remove_dialog_button_cancel" = "Откажи";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+
+// Block dialog
+"profile.block_dialog.title" = "Блокирати?";
+"profile.block_dialog.message" = "%@ неће моћи да вас контактира или позове на групне разговоре.";
+"profile.block_dialog.button_cancel" = "Откажи";
+"profile.block_dialog.button_block" = "Блокирај";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Ово се не може опозвати.";
+"message.delete_dialog.action.cancel" = "Откажи";
+"message.delete_dialog.action.hide" = "Обриши за мене";
+"message.delete_dialog.action.delete" = "Обриши за све";
+
+// Edit message
+"message.menu.edit.title" = "Уређивање";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Прихватити?";
+"profile.connection_request_dialog.message" = "This will connect you and open the conversation with %@.";
+"profile.connection_request_dialog.button_cancel" = "Игнориши";
+"profile.connection_request_dialog.button_connect" = "Повежи се";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Обрисати групни разговор?";
+"conversation.delete_request_dialog.message" = "Ово ће избрисати групу и сав садржај за све учеснике на свим уређајима. Не постоји опција за враћање садржаја. Сви учесници ће бити обавештени.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Отказати захтев?";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.button_no" = "Не";
+"profile.cancel_connection_request_dialog.button_yes" = "Да";
+
+// Unblock button
+"profile.block_button_title" = "Блокирати…";
+"profile.unblock_button_title" = "Деблокирај…";
+
+// Favorite button
+"profile.favorite_button_title" = "Додај у фаворите";
+"profile.unfavorite_button_title" = "Избаци из омиљених";
+
+"profile.block_button_title_action" = "Блокирај";
+"profile.unblock_button_title_action" = "Одблокирај";
+
+"profile.cancel_connection_button_title" = "ОТКАЖИ ЗАХТЕВ";
+"profile.connection_request_state.blocked" = "БЛОКИРАН";
+"profile.create_conversation_button_title" = "Направи групу";
+"profile.open_conversation_button_title" = "отвори разговор";
+
+"profile.read_receipts_enabled_memo.header" = "ИМАТЕ УКЉУЧЕНЕ ПРОЧИТАНЕ ПРИЈЕМЕ";
+"profile.read_receipts_disabled_memo.header" = "ИМАТЕ ИСКЉУЧЕНЕ ПРОЧИТАНЕ ПРИЈЕМЕ";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
+"profile.extended_metadata.header" = "Information";
+
+// User Details
+"profile.details.title" = "Детаљи";
+"profile.details.guest" = "Гост";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
+
+"profile_view.accessibility.handle" = "Корисничко име";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Име тима";
+
+// Device list
+"profile.devices.title" = "Уређаји";
+"profile.devices.fingerprint_message_unencrypted" = "%@ користи стару верзију Вајера. Овде нема уређаја.";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.link" = "Зашто проверавати разговоре?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Проверите да се ово поклапа са отиском на уређају %@.";
+"profile.devices.detail.verify_message.link" = "Како ово радим?";
+"profile.devices.detail.show_my_device.title" = "Прикажи отисак мог уређаја";
+"profile.devices.detail.reset_session.title" = "Ресетуј сесију";
+"device.verified" = "Верификован";
+"device.not_verified" = "Није верификован";
+
+"device.class.legalhold" = "легално задржавање";
+"device.class.desktop" = "Рачунар";
+"device.class.tablet" = "Таблет";
+"device.class.phone" = "Телефон";
+"device.class.unknown" = "Непознато";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "легално задржавање";
+"device.type.unknown" = "Непознато";
+
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Гости и услуге";
+"group_details.guest_options_cell.enabled" = "укључено";
+"group_details.guest_options_cell.disabled" = "искључено";
+"group_details.timeout_options_cell.title" = "Временске поруке";
+"group_details.notification_options_cell.title" = "Обавештења";
+"group_details.notification_options_cell.description" = "Можете бити обавештени о свему (укључујући аудио и видео позиве) или само када вас неко спомене или одговори на једну од ваших порука.";
+"group_details.receipt_options_cell.title" = "Потврде читања";
+"group_details.receipt_options_cell.description" = "Када је ово укључено, људи могу видети када се читају њихове поруке у овом разговору.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "легално задржавање";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Поставке";
+"self.profile" = "Профил";
+"self.account" = "Налог";
+"self.help_center" = "Подршка";
+"self.help_center.support_website" = "Веб сајт Вајер подршке";
+"self.help_center.contact_support" = "Контактирај подршку";
+"self.about" = "О програму";
+"self.sign_out" = "Одјави се";
+"self.report_abuse" = "Пријавите злоупотребу";
+"self.voiceover.label" = "Профил";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
+
+"self.add_phone_number" = "Додајте број телефона";
+"self.add_email_password" = "Додај адресу е-поште и лозинку";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+
+// About screen
+"about.tos.title" = "Услови коришћења";
+"about.privacy.title" = "Политика приватности";
+"about.license.title" = "Информације о лиценци";
+"about.website.title" = "Веб сајт Вајера";
+"about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Детаљи";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
+// Self new devices
+"self.new_device_alert.title" = "Ваш налог је коришћен:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
+"self.new_device_alert.manage_devices" = "Управљање уређајима";
+"self.new_device_alert.trust_devices" = "У реду";
+
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Омогућили сте потврде о читању";
+"self.read_receipts_disabled.title" = "Онемогућили сте потврде о читању";
+"self.read_receipts_description.title" = "Ову опцију можете да промените у подешавањима налога.";
+
+// Settings - top level
+"self.settings.create_team.title" = "Направи тим";
+"self.settings.manage_team.title" = "Управљај тимом";
+"self.settings.add_team_or_account.title" = "Додај налог";
+"self.settings.add_account.title" = "Додај налог";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
+
+// Settings - Account details
+"self.settings.account_section" = "Налог";
+
+"self.settings.account_details_group.info.title" = "Инфо";
+"self.settings.account_details_group.personal.title" = "Лично";
+
+"self.settings.account_section.name.title" = "Име";
+"self.settings.account_section.email.title" = "E-пошта";
+"self.settings.account_section.phone.title" = "Телефон";
+"self.settings.account_section.handle.title" = "Корисничко име";
+"self.settings.account_section.add_handle.title" = "Додај корисничко име";
+
+"self.settings.account_details_group.info.footer" = "Људи вас могу наћи по овим подацима.";
+"self.settings.account_details_group.personal.footer" = "Ови подаци нису видљиви";
+
+"self.settings.account_details.remove_device.title" = "Уклони уређај";
+"self.settings.account_details.key_fingerprint.title" = "Отисак кључа";
+"self.settings.account_details.remove_device.message" = "Ваша лозинка је неопходна за уклањање уређаја";
+"self.settings.account_details.remove_device.password" = "Лозинка";
+"self.settings.account_details.remove_device.password.error" = "Погрешна лозинка";
+
+"self.settings.account_appearance_group.title" = "Изглед";
+
+"self.settings.privacy_section_group.title" = "Приватност";
+"self.settings.enable_read_receipts.title" = "Пошаљи потврде за читање";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
+"self.settings.account_picture_group.picture" = "Слика";
+"self.settings.account_picture_group.color" = "Боја";
+
+"self.settings.account_personal_information_group.title" = "Личне информације";
+
+"self.settings.account_picture_group.theme" = "Theme";
+
+"self.settings.device_details.fingerprint.subtitle" = "Вајер сваком уређају додељује јединствени отисак. Упоредите отиске да проверите ваше уређаје и разговоре.";
+"self.settings.device_details.reset_session.subtitle" = "Ако се отисци не поклапају, ресетујте сесију, на обе стране, да генеришете нове кључеве шифровања.";
+"self.settings.device_details.remove_device.subtitle" = "Уклоните уређај ако га више не користите. Бићете одмах одјављени са њега.";
+"self.settings.device_details.reset_session.success" = "Сесија је ресетована";
+
+"self.settings.account_details.actions.title" = "Радње";
+
+"self.settings.account_details.delete_account.title" = "Обриши налог";
+
+"self.settings.account_details.delete_account.alert.title" = "Обриши налог";
+"self.settings.account_details.delete_account.alert.message" = "Послаћемо поруку путем е-поште или СМС-а. Следите везу у њој за трајно брисање вашег налога.";
+
+"self.settings.account_details.log_out.alert.title" = "Одјави се";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.password" = "Лозинка";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Коришћење и извештаји о паду";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Шаљи анонимне податке о употреби";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+
+"self.settings.receiveNews_and_offers.title" = "примајте новости";
+"self.settings.receiveNews_and_offers.description.title" = "Примајте вести и ажурирања производа од компаније Вајер путем е-поште.";
+
+
+
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Корисничко име";
+"self.settings.account_section.handle.change.save" = "Сачувај";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Већ заузето";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Не могу да поставим корисничко име";
+"self.settings.account_section.handle.change.failure_alert.message" = "There was an error setting your username. Please try again.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-пошта";
+"self.settings.account_section.email.change.save" = "Сачувај";
+
+"self.settings.account_section.email.change.verify.title" = "Оверите е-адресу";
+"self.settings.account_section.email.change.verify.description" = "Проверите сандуче е-поште и следите упутства.";
+"self.settings.account_section.email.change.verify.resend" = "Понови слање на %@";
+
+"self.settings.account_section.email.change.resend.title" = "Е-пошта послата";
+"self.settings.account_section.email.change.resend.message" = "Confirmation email was resent to %@. Check your email inbox and follow the instructions.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Телефон";
+"self.settings.account_section.phone_number.change.save" = "Сачувај";
+"self.settings.account_section.phone_number.change.remove" = "Уклони број телефона";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Уклони број телефона";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Сачувај";
+"self.settings.account_section.phone_number.change.verify.title" = "Провера";
+"self.settings.account_section.phone_number.change.verify.description" = "Унесите верификациони код који смо послали на %@";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Унесите код";
+"self.settings.account_section.phone_number.change.verify.resend" = "Понови слање кода";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "No code showing up?\nYou can request a new one every 30 seconds.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Code resent";
+"self.settings.account_section.phone_number.change.resend.message" = "Verification code was resent to %@.";
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Обавештења";
+"self.settings.notifications.push_notification.toogle" = "Преглед поруке";
+"self.settings.notifications.push_notification.footer" = "Sender name and message on the lock screen and in Notification Center.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Message Banners";
+"self.settings.notifications.chat_alerts.footer" = "New messages in other conversations.";
+
+"self.settings.sound_menu.sounds.title" = "Звукови";
+"self.settings.sound_menu.ringtone.title" = "Мелодија звона";
+"self.settings.sound_menu.message.title" = "Тон поруке";
+"self.settings.sound_menu.ping.title" = "Пинг";
+"self.settings.sound_menu.ringtones.title" = "Мелодија звона";
+"self.settings.sound_menu.sounds.wire_sound" = "Вајер";
+"self.settings.sound_menu.sounds.none" = "без";
+
+"self.settings.callkit.title" = "Позиви";
+"self.settings.callkit.caption" = "Share with iOS";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.vbr.title" = "Кодирање са променљивим протоком";
+"self.settings.vbr.description" = "Ово чини да гласовни позиви троше мање података и раде боље на споријим везама. Искључите да користите кодирање сталним протоком.";
+
+"self.settings.sound_menu.sounds.wire_call" = "Вајер позив";
+"self.settings.sound_menu.sounds.wire_message" = "Вајер порука";
+"self.settings.sound_menu.sounds.wire_ping" = "Вајер пинг";
+
+// By popular demand
+"self.settings.popular_demand.title" = "По захтеву корисника";
+"self.settings.popular_demand.send_button.title" = "Дугме за слање";
+"self.settings.popular_demand.send_button.footer" = "Disable to send via the return key.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
+
+// Open in
+"self.settings.external_apps.header" = "Отвори помоћу";
+
+"self.settings.link_options.twitter.title" = "Твитови";
+"self.settings.link_options.maps.title" = "Локације";
+"self.settings.link_options.browser.title" = "Прегледач";
+
+"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.tweetbot" = "Твитбот";
+"open_link.twitter.option.twitterrific" = "Твитерифик";
+
+"open_link.maps.option.apple" = "Мапе";
+"open_link.maps.option.google" = "Гугл мапе";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+
+"open_link.browser.option.safari" = "Сафари";
+"open_link.browser.option.chrome" = "Хром";
+"open_link.browser.option.firefox" = "Фајерфокс";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Звучна обавештења";
+"self.settings.sound_menu.no_sounds.title" = "ништа";
+"self.settings.sound_menu.all_sounds.title" = "сва";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
+
+// Developer options
+"self.settings.developer_options.title" = "Опције за програмера";
+"self.settings.apns_logging.title" = "APNS Logging";
+
+// Privacy (visibility) options
+"self.settings.options_menu.title" = "Опције";
+
+"self.settings.privacy_contacts_section.title" = "Контакти";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Open Contacts Settings";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
+
+"self.settings.privacy_security.lock_app" = "Lock With Passcode";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
+
+"self.settings.privacy_security.lock_app.description" = "Unlock Wire";
+"self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Погрешна лозинка. Покушајте поново.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.footer" = "Прегледи могу да се прикажу за везе других људи.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Уређаји";
+
+"self.settings.privacy.clear_history.title" = "Чишћење историјата";
+"self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
+
+"self.settings.advanced.title" = "Напредно";
+"self.settings.advanced.troubleshooting.title" = "Решавање проблема";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
+"self.settings.advanced.reset_push_token.subtitle" = "Ако наиђете на проблеме са push нотификацијама, подршка путем рачунара може да затражи да ресетујете овај token.";
+"self.settings.advanced.reset_push_token_alert.title" = "Push token је ресетован";
+"self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
+"self.settings.advanced.version_technical_details.title" = "Version Technical Details";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Дозволе употребе података";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Технички извештај";
+"self.settings.technical_report.send_report" = "Send report to Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.include_log" = "Include detailed log";
+"self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Ресетуј лозинку";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Позови људе";
+
+// History backup
+
+"self.settings.conversations.title" = "Историја";
+"self.settings.history_backup.title" = "Израда резервних копија разговора";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.action" = "НОВА РЕЗЕРВНА КОПИЈА";
+"self.settings.history_backup.error.title" = "Грешка";
+
+"self.settings.history_backup.set_email.title" = "Подесите е-мајл и лозинку.";
+"self.settings.history_backup.set_email.message" = "Да бисте направили сигурносну копију историје разговора, потребна вам је е-пошта и лозинка. То можете да урадите са странице налога у подешавањима.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Постави лозинку";
+"self.settings.history_backup.password.cancel" = "Откажи";
+"self.settings.history_backup.password.next" = "Следећи";
+"self.settings.history_backup.password.placeholder" = "Лозинка";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Нема интернета";
+"system_status_bar.no_internet.explanation" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
+"system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
+
+// View user profile and options menu & text field validation
+"name.placeholder" = "Ваше пуно име";
+"name.guidance.tooshort" = "бар 2 знака";
+"name.guidance.toolong" = "Предугачко";
+
+"email.placeholder" = "E-пошта";
+"email.guidance.invalid" = "Неисправна адреса е-поште";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Предугачко";
+
+"password.placeholder" = "Лозинка";
+"password.guidance.toolong" = "Предугачко";
+
+"phone.guidance.invalid" = "Неисправан број телефона";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Предугачко";
+
+// Landing screen
+
+"landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_team.title" = "Професионалац";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.login.hints" = "Већ имате налог?";
+"landing.login.button.title" = "Пријави се";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Пријава помоћу ССО";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Прикажи више";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
+// Create team
+
+"team.name.headline" = "Дајте име свом тиму";
+"team.name.subheadline" = "Увек га можете променити касније.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "Шта је Wire Про?";
+
+"team.email.headline" = "Ваш налог";
+"team.email.subheadline" = "Унесите своју адресу е-поште за посао.";
+"team.email.textfield.placeholder" = "Your company email";
+"team.email.button.learn_more" = "Сазнајте више";
+
+"team.activation_code.headline" = "Имате пошту";
+"team.phone_activation_code.headline" = "Verification";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.button.resend" = "Поново пошаљи шифру";
+"team.activation_code.button.change_email" = "Промени е-пошту";
+"team.activation_code.button.change_phone" = "Промени број телефона";
+
+"team.full_name.headline" = "Ваше име";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Постави лозинку";
+
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Изградите свој тим";
+"team.invite.header.subtitle" = "Ваша Wire група је спремна за рад. Позовите своје колеге као чланове.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.learn_more.title" = "Сазнајте више";
+"team.invite.top_bar.skip" = "Прескочи";
+"team.invite.top_bar.done" = "Готово";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Нешто је пошло наопако. Покушајте поново";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "Ова адреса е-поште је већ позвана";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "Нема везе са интернетом";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Дозволи госте и услуге";
+"guest_room.allow_guests.subtitle" = "Отворите овај разговор службама и људима ван ваше групе.";
+"guest_room.remove_guests.message" = "Тренутни гости и услуге биће уклоњени из разговора. Нови гости и услуге неће бити дозвољени.";
+"guest_room.remove_guests.action" = "Уклони";
+"guest_room.revoke_link.message" = "Нови гости се неће моћи придружити овом линку. Садашњи гости и даље ће имати приступ.";
+"guest_room.revoke_link.action" = "Поништи линк";
+
+"guest_room.error.generic.title" = "Нешто је пошло наопако";
+"guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Позовите друге путем везе";
+"guest_room.link.header.subtitle" = "Свако ко има линк може се придружити разговору, чак и ако нема Wire.";
+
+"guest_room.link.button.title" = "Креирајте линк";
+
+"guest_room.actions.copy_link" = "Копирај линк";
+"guest_room.actions.copied_link" = "Линк је копиран!";
+"guest_room.actions.share_link" = "Подели линк";
+"guest_room.actions.revoke_link" = "Опозови линк";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Registration
+
+"registration.launch_back_button.label" = " Назад";
+
+"registration.title" = "Регистрација";
+"registration.close_email_invitation_button.email_title" = "Use another email";
+"registration.close_email_invitation_button.phone_title" = "Register by phone";
+"registration.close_phone_invitation_button.email_title" = "Register by email";
+"registration.close_phone_invitation_button.phone_title" = "Use another phone";
+
+"registration.register_by_phone" = "Телефон";
+"registration.register_by_email" = "E-пошта";
+
+"registration.enter_phone_number.title" = "Уреди број телефона";
+"registration.enter_phone_number.placeholder" = "Број телефона";
+
+"registration.verify_phone_number.instructions" = "Унесите верификациони код који смо послали на %@";
+"registration.verify_phone_number.resend" = "Понови";
+"registration.verify_phone_number.resend_placeholder" = "No code showing up?\nYou can request a new one in %.0f seconds";
+
+"registration.verify_email.instructions" = "Послали смо поруку на %@.\n Испратите везу за оверу ваше адресе.";
+"registration.verify_email.resend.instructions" = "Нисте добили поруку?";
+"registration.verify_email.resend.button_title" = "Понови";
+
+"registration.no_history.hero" = "Ово је први пут да Вајер користите на овом уређају.";
+"registration.no_history.subtitle" = "Ради приватности, историјат разговора неће се приказивати овде.";
+"registration.no_history.got_it" = "У реду";
+"registration.no_history.restore_backup" = "Врати из резервне копије";
+
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Пријави се";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Врати историју";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Одаберите датотеку сигурносне копије";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Покушај поново";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Нешто је пошло наопако";
+"registration.no_history.restore_backup_failed.message" = "Није могуће вратити историју.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Некомпатибилна резервна копија";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Не можете да вратите историју са другог налога.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Некомпатибилна резервна копија";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Ова резервна копија је креирана новијом или застарелом верзијом Wire и овде се не може вратити.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Компанијска пријава";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.action" = "Пријави се";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO код";
+
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+
+"login.sso.error.offline.alert.message" = "Проверите везу са интернетом и покушајте поново.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+
+"login.sso.error.alert.invalid_code.message" = "Провјерите SSO приступни код ваше компаније и покушајте поново.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "Ова е-пошта се не може употребити за компанијску пријаву. Унесите ССО код за наставак.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Покушајте поново касније.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Лозинка";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
+
+"registration.no_history.logged_out.hero" = "Већ сте користили Вајер на овом уређају.";
+"registration.no_history.logged_out.subtitle" = "Поруке послате у међувремену се неће појавити овде.";
+"registration.no_history.logged_out.got_it" = "У реду";
+
+"registration.enter_name.title" = "Уреди име";
+"registration.enter_name.hero" = "Како се зовете?";
+"registration.enter_name.placeholder" = "Ваше пуно име";
+
+"registration.terms_of_use.title" = "Добродошли у Вајер.";
+"registration.terms_of_use.terms" = "By continuing you agree to the Wire Terms of Use.";
+"registration.terms_of_use.terms.link" = "Услови коришћења";
+"registration.terms_of_use.agree" = "Слажем се";
+
+"registration.terms_of_use.terms.title" = "Услови коришћења";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "Приказ";
+"registration.terms_of_use.accept" = "Прихвати";
+
+"registration.email_flow.title" = "Register by Email";
+"registration.email_flow.email_step.title" = "Измени детаље";
+
+"registration.country_select.title" = "Земља";
+
+"registration.share_contacts.hero.title" = "Нађите људе на Вајеру";
+"registration.share_contacts.hero.paragraph" = "Share your contacts so we can connect you with others. We anonymize all information and do not share it with anyone else.";
+"registration.share_contacts.find_friends_button.title" = "Дели контакте";
+"registration.share_contacts.skip_button.title" = "Не сада";
+
+"registration.address_book_access_denied.hero.title" = "Wire does not have access to your contacts.";
+"registration.address_book_access_denied.hero.paragraph1" = "Wire helps find your friends if you share your contacts.";
+"registration.address_book_access_denied.hero.paragraph2" = "To enable access tap Settings and turn on Contacts.";
+"registration.address_book_access_denied.settings_button.title" = "Поставке";
+"registration.address_book_access_denied.maybe_later_button.title" = "Можда касније";
+
+"registration.push_access_denied.hero.title" = "Never miss a call or a message.";
+"registration.push_access_denied.hero.paragraph1" = "Enable Notifications in Settings.";
+"registration.push_access_denied.settings_button.title" = "Go to Settings";
+"registration.push_access_denied.maybe_later_button.title" = "Можда касније";
+
+"registration.personal.title" = "Направи налог";
+"registration.signin.title" = "Пријави се";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.subtitle" = "Уклоните неки од ваших уређаја да бисте користили Вајер на овом.";
+"registration.signin.too_many_devices.manage_button.title" = "Управљање уређајима";
+"registration.signin.too_many_devices.sign_out_button.title" = "Одјави се";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
+"registration.devices.title" = "Уређаји";
+"registration.devices.active_list_header" = "Активни";
+"registration.devices.current_list_header" = "Тренутни";
+"registration.devices.active_list_subtitle" = "Ако не препознајете уређај изнад, уклоните га и ресетујте лозинку.";
+"registration.devices.activated" = "Activated %@";
+"registration.devices.id" = "ИД:";
+
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
+"signin.forgot_password" = "Заборавили сте лозинку?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Пријави се";
+"signin.company_idp.button.title" = "For Companies";
+
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
+"registration.phone_country" = "Земља";
+"registration.phone_code" = "Код државе";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Оверите број телефона";
+"registration.phone.verify_field.label" = "Verification Code";
+
+"registration.add_phone_number.hero.title" = "Додајте број телефона";
+"registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
+"registration.add_phone_number.skip_button.title" = "Не сада";
+
+"registration.add_email_password.hero.title" = "Add your email and password";
+"registration.add_email_password.hero.paragraph" = "Ово омогућава коришћење Вајера на више уређаја.";
+
+"registration.email_invitation.title" = "Invitation";
+"registration.email_invitation.hero.title" = "Hello, %@";
+"registration.email_invitation.hero.paragraph" = "Изаберите лозинку да направите свој налог.";
+
+"registration.phone_invitation.title" = "Invitation";
+"registration.phone_invitation.hero.title" = "Hello, %@";
+"registration.phone_invitation.hero.paragraph" = "На корак сте од стварања вашег налога.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
+
+"error.name_and_email" = "Унесите ваше пуно име и важећу е-адресу";
+"error.full_name" = "Унесите пуно име";
+"error.email" = "Унесите важећу адресу е-поште";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
+"error.email.invalid" = "Унесите важећу адресу е-поште";
+"error.phone.invalid" = "Унесите исправан број телефона";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.subtitle" = "Обезбедите ваше на Вајеру.";
+"registration.select_handle.takeover.subtitle_link" = "Сазнајте више";
+
+"registration.select_handle.takeover.choose_own" = "Изаберите ваше";
+"registration.select_handle.takeover.keep_suggested" = "Остави ову";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Нешто је пошло наопако. Покушајте поново";
+"error.user.needs_credentials" = "Проверите детаље и покушајте поново.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.invalid_credentials" = "Проверите детаље и покушајте поново.";
+"error.user.account_pending_activation" = "The account you are trying access is pending activation. Please verify your details.";
+"error.user.network_error" = "There seems to be a problem with your network. Please try again later.";
+"error.user.email_is_taken" = "The email address you provided has already been registered. Please try again.";
+"error.user.phone_is_taken" = "Број телефона који сте навели је већ регистрован. Покушајте поново.";
+"error.user.phone_code_invalid" = "Унесите исправан код";
+"error.user.phone_code_too_many" = "Већ смо вам послали код путем СМС-а. Тапните на „Понови“ након 10 минута да добијете нови.";
+"error.user.registration_unknown_error" = "Нешто је пошло наопако. Покушајте поново.";
+"error.user.device_deleted_remotely" = "You have been logged out from another device.";
+"error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
+"error.user.account_suspended" = "Овај налог више није овлашћен за пријаву.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Couldn’t update your password.";
+
+"error.group_call.too_many_members_in_conversation.title" = "Превише људи за позивање";
+"error.group_call.too_many_members_in_conversation" = "Позиви раде у разговорима до %d корисника.";
+"error.group_call.too_many_participants_in_the_call.title" = "Разговор је попуњен";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.call.gsm_ongoing.title" = "Мобилни позив";
+"error.call.gsm_ongoing" = "Откажите мобилни позив пре позивања Вајером.";
+"error.call.general.title" = "Call error";
+"error.call.general" = "Please try calling again in several minutes.";
+"error.call.slow_connection.title" = "Slow connection";
+"error.call.slow_connection" = "Можда ћете имати сметње током позива";
+"error.call.slow_connection.call_anyway" = "Свеједно позови";
+
+"error.invite.no_email_provider" = "Please configure your email client to be able to send the invites via email";
+"error.invite.no_messaging_provider" = "Please configure your SMS to be able to send the invites via SMS";
+
+"error.conversation.title" = "Грешка";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "Разговор је попуњен";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+
+"sketchpad.initial_hint" = "Tap colors to change brush size";
+
+"migration.please_wait_message" = "One moment, please";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ joined Wire";
+"push.notification.new_message" = "Нова порука";
+
+
+//Force Update
+"force.update.title" = "Update necessary";
+"force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
+"force.update.ok_button" = "Go to App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Third Party
+"giphy.conversation.message" = "%@ · преко giphy.com";
+"giphy.conversation.random_message" = "преко giphy.com";
+"giphy.error.no_more_results" = "no more gifs";
+"giphy.error.no_result" = "no gif found";
+
+"giphy.confirm" = "пошаљи";
+"giphy.cancel" = "откажи";
+"giphy.search_placeholder" = "Претражи Giphy";
+
+"invite_banner.title" = "Доведите пријатеље у Вајер!";
+"invite_banner.message" = "Enjoy calls, messages, sketches, GIFs and more in private or with groups.";
+"invite_banner.invite_button_title" = "Позовите још људи";
+
+// Collections
+"collections.section.images.title" = "Слике";
+"collections.section.files.title" = "Фајлови";
+"collections.section.videos.title" = "Видео снимци";
+"collections.section.links.title" = "Везе";
+"collections.section.all.button" = "Show all %d →";
+"collections.section.no_items" = "Нема ставки у збирци";
+"collections.image_viewer.copied.title" = "Слика копирана";
+
+"collections.search.field.placeholder" = "претражи текст порука";
+"collections.search.no_items" = "Нема резултата";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Поруке";
+"compose.drafts.empty.title" = "No messages";
+"compose.drafts.empty.subtitle" = "Tap + to compose one";
+"compose.drafts.compose.title" = "унесите поруку";
+"compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
+
+"compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Обриши";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Сачувај";
+"compose.drafts.compose.dismiss.delete.action.title" = "Обриши";
+
+"availability.message.cancel" = "Откажи";
+"availability.message.set_status" = "Подесите статус";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
+
+"availability.none" = "без";
+"availability.available" = "На располагању";
+"availability.away" = "Одсутан";
+"availability.busy" = "заузет";
+
+"availability.reminder.away.title" = "Постављени сте на невидљив";
+"availability.reminder.away.message" = "Приказаћете се као Одсутни. Нећете примати обавештења о долазним позивима или порукама.";
+"availability.reminder.busy.title" = "Постављени сте на Заузето";
+"availability.reminder.busy.message" = "Изгледаћете као заузети за друге људе. Обавијести ћете примати само за спомињања, одговоре и позиве у разговорима који нису искључени.";
+"availability.reminder.available.title" = "Постављени сте на Доступно";
+"availability.reminder.available.message" = "Приказаћете се као Доступни. Добићете обавештења о долазним позивима и порукама у складу са поставкама обавештења у сваком разговору.";
+"availability.reminder.none.title" = "Није постављен статус";
+"availability.reminder.none.message" = "Добићете обавештења о долазним позивима и порукама у складу са поставком Обавештења у сваком разговору.";
+"availability.reminder.action.dont_remind_me" = "Не приказујте поново ове информације";
+"availability.reminder.action.ok" = "У реду";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Прескочи";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Потврди";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Повежите се на сервер";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Сервер не реагује";
+"url_action.switch_backend.error.invalid_backend" = "The server is not responding";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire не може да нађе ову особу.";
+"url_action.invalid_user.message" = "Можда немате дозволу за овај налог или он више не постоји.\n";
+
+"url_action.invalid_conversation.title" = "Wire не може да отвори овај разговор.";
+"url_action.invalid_conversation.message" = "Можда немате дозволу за овај налог или особа можда није на Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Неважећи линк";
+"url_action.invalid_link.message" = "Линк коју сте отворили није важећи.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Да ли желите да путем е-поште добијате вести и ажурирања производа од компаније Wire?";
+"news_offers.consent.message" = "Можете се одјавити у било ком тренутку.";
+"news_offers.consent.button.privacy_policy.title" = "Политика приватности";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Нико још није обележио да му се свиђа.";
+"message_details.empty_read_receipts" = "Још нико није прочитао ову поруку.";
+"message_details.read_receipts_disabled" = "Потврде читања нису биле укључене када је та порука послата.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Edited: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Корисничко име";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Будуће поруке се неће снимати.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Унесите лозинку за потврду.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Сазнајте више";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Ваша сесија је истекла";
+"account_deleted_session_expired_alert.message" = "Апликација није комуницирала са сервером дужи временски период или је ваша сесија даљински неважећа.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Ваш одговор не може бити послан, покушајте поново.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Лозинка";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Обриши";
+"wipe_database.alert.confirm_input" = "Обриши";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

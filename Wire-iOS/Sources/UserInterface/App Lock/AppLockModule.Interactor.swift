@@ -70,6 +70,7 @@ extension AppLockModule {
         }
 
         private var needsToCreateCustomPasscode: Bool {
+            guard passcodePreference != .deviceOnly else { return false }
             guard !appLock.isCustomPasscodeSet else { return false }
             return appLock.requireCustomPasscode || authenticationType.current == .unavailable
         }

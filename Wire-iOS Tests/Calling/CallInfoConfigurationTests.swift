@@ -58,7 +58,7 @@ final class CallInfoConfigurationTests: XCTestCase {
                                                                        userId: UUID(),
                                                                        clientId: "123",
                                                                        state: state,
-                                                                       isActiveSpeaker: false) })
+                                                                       activeSpeakerState: .inactive) })
     }
 
     // MARK: - OneToOne Audio
