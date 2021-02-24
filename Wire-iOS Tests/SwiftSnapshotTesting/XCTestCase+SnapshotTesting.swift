@@ -128,7 +128,6 @@ extension XCTestCase {
 
         for width in widths {
             widthConstraint.constant = width
-            container.layoutIfNeeded()
 
             let nameWithProperty: String
             if let name = name {
