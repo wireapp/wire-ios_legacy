@@ -65,9 +65,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ConversationInputBarViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ConversationVideoMessageCellTests">
                </Test>
                <Test
