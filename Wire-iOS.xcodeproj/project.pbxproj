@@ -9134,7 +9134,10 @@
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 arm64";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
@@ -9143,6 +9146,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				SDKROOT = iphoneos;
 				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
@@ -9200,6 +9204,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEVELOPMENT_TEAM = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "i386 arm64";
 				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
