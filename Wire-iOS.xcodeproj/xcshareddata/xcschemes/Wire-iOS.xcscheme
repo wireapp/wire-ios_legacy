@@ -53,9 +53,6 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
-                  Identifier = "ArticleViewTests">
-               </Test>
-               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -63,21 +60,6 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
-               </Test>
-               <Test
-                  Identifier = "ConversationVideoMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
-               </Test>
-               <Test
-                  Identifier = "ConversationVideoMessageCellTests/testDownloadingCell_fromThisDevice()">
-               </Test>
-               <Test
-                  Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
-               </Test>
-               <Test
-                  Identifier = "SearchResultLabelTests">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
