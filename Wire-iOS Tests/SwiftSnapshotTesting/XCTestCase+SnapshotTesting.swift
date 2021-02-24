@@ -113,7 +113,7 @@ extension XCTestCase {
         for width in widths {
             widthConstraint.constant = width
             
-            verifyWithWidthInName(matching: value,
+            verifyWithWidthInName(matching: container,
                                   width: width,
                                   named: name,
                                   file: file,
@@ -467,7 +467,6 @@ extension XCTestCase {
                         line: UInt = #line) {
         
         for width in widths {
-            
             verifyInWidth(createSut: createSut,
                           width: width,
                           snapshotBackgroundColor: snapshotBackgroundColor,
