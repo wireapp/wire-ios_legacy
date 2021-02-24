@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
+"NSMicrophoneUsageDescription" = "Permet a Wire accedir al teu micròfon perquè puguis parlar amb gent i enviar missatges d'àudio.";
+"NSLocationWhenInUseUsageDescription" = "Permet a Wire accedir a la teva localització per a que puguis enviar la teva localització als altres.";
+"NSCameraUsageDescription" = "Permet a Wire accedir a la teva càmera per a que puguis fer videotrucades i enviar fotografies.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Permet a Wire desar les fotografies que tens a la biblioteca de fotos.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Permet a Wire accedir a les imatges desades a la biblioteca de fotografies.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Per autenticar l'app permet a Wire accedir a l'opció de Face ID.";
