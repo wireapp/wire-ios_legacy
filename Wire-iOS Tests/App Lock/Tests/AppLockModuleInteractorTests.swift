@@ -42,7 +42,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         sut = .init(session: session,
                     authenticationType: authenticationType,
                     applicationStateProvider: applicationStateProvider)
-        
+
         sut.presenter = presenter
     }
     
@@ -147,9 +147,23 @@ final class AppLockModuleInteractorTests: XCTestCase {
 
     // MARK: - Evaluate authentication
 
-    func test_EvaluateAuthentication_OnlyIfApplicationIsActive() {
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInactive() {
         // Given
         applicationStateProvider.applicationState = .inactive
+        authenticationType.current = .faceID
+
+        // When
+        sut.executeRequest(.evaluateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+    }
+
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInBackground() {
+        // Given
+        applicationStateProvider.applicationState = .background
         authenticationType.current = .faceID
 
         // When
