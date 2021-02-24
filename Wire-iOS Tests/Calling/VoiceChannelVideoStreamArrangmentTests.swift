@@ -240,5 +240,3 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         XCTAssert(videoStreamArrangement.preview == nil)
     }
 }
-
-

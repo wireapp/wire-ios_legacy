@@ -73,6 +73,3 @@ extension SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver,
         soundEventListeners[accountID] = nil
     }
 }
-
-
-

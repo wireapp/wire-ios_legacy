@@ -49,4 +49,3 @@ class BackupViewControllerTests: ZMSnapshotTestCase {
         self.verifyInIPhoneSize(view: sut.view)
     }
 }
-

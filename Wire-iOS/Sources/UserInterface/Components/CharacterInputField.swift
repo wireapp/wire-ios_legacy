@@ -297,4 +297,3 @@ extension CharacterInputField: UIKeyInput {
         return !storage.isEmpty
     }
 }
-

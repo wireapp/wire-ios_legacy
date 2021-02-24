@@ -26,4 +26,3 @@ extension XCTestCase {
         return EmoticonSubstitutionConfiguration(configurationFile: path)
     }
 }
-

@@ -76,7 +76,6 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
 
     func testThatItTriggersCorrectEventWhenAParticipantJoins() {
         // given
-
         let first = CallParticipant(user: firstUser, clientId: clientId1, state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
         let second = CallParticipant(user: secondUser, clientId: clientId2, state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
 

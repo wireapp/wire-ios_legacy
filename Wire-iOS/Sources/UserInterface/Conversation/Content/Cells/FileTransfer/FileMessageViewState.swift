@@ -144,4 +144,3 @@ public enum FileMessageViewState {
     }
 
 }
-

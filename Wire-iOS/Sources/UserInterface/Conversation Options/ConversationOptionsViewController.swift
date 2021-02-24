@@ -146,4 +146,3 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
 
 }
-

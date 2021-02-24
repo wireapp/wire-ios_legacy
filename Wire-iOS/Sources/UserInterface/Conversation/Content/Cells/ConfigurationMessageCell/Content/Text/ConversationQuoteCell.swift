@@ -259,4 +259,3 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
     }
 
 }
-

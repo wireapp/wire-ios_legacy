@@ -154,4 +154,3 @@ public struct PasswordRuleSet: Decodable {
     }
 
 }
-

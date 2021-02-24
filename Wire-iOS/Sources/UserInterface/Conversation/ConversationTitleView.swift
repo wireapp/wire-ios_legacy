@@ -97,4 +97,3 @@ extension NSTextAttachment {
         return attachment
     }
 }
-

@@ -28,4 +28,3 @@ protocol TransferView {
     var fileMessage: ZMConversationMessage? { get set }
     func configure(for: ZMConversationMessage, isInitial: Bool)
 }
-

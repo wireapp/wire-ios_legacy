@@ -108,4 +108,3 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
         return label
     }
 }
-

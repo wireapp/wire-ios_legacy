@@ -115,4 +115,3 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         })
     }
 }
-

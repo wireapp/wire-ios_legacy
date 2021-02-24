@@ -95,4 +95,3 @@ final class VersionInfoViewController: UIViewController {
         dismiss(animated: true)
     }
 }
-

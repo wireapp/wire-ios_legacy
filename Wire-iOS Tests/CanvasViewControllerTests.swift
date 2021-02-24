@@ -45,4 +45,3 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
 }
-

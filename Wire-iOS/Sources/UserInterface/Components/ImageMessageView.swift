@@ -160,4 +160,3 @@ final class ImageMessageView: UIView {
         self.updateImageLayout()
     }
 }
-

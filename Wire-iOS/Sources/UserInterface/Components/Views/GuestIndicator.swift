@@ -49,4 +49,3 @@ public class GuestIndicator: UIImageView, Themeable {
     }
 
 }
-

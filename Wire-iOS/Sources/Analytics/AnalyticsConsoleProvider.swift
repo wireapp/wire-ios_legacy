@@ -93,4 +93,3 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         completion?()
     }
 }
-

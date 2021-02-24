@@ -232,4 +232,3 @@ extension ConfirmPhoneViewController: ZMTimerClient {
         reloadResendCell()
     }
 }
-

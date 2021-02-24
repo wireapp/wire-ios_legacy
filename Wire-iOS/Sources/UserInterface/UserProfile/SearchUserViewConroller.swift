@@ -111,4 +111,3 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
         dismiss(animated: true)
     }
 }
-

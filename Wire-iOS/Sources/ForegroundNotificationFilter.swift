@@ -71,4 +71,3 @@ extension ForegroundNotificationFilter: ForegroundNotificationResponder {
         return true
     }
 }
-

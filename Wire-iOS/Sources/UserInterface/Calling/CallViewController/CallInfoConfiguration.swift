@@ -274,6 +274,7 @@ fileprivate extension VoiceChannel {
     }
 
     private var isActiveSpeakersTabEnabled: Bool { false }
+
 }
 
 extension VoiceChannel {

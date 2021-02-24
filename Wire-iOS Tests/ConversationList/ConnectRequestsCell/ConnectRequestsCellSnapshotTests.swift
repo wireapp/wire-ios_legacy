@@ -42,4 +42,3 @@ final class ConnectRequestsCellSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 }
-

@@ -57,4 +57,3 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
     }
 }
-

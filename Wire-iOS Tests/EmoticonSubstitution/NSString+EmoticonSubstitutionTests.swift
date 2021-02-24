@@ -129,4 +129,3 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         XCTAssertEqual(resolvedString, targetString)
     }
 }
-

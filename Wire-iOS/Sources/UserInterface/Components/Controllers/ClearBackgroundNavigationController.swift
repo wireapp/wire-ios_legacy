@@ -161,4 +161,3 @@ extension ClearBackgroundNavigationController: UIGestureRecognizerDelegate {
         return true
     }
 }
-
