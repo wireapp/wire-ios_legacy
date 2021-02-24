@@ -107,7 +107,7 @@ final class MessageDetailsActionTests: XCTestCase {
         let message = MockMessageFactory.textMessage(withText: "Message")
         message.senderUser = SelfUser.current
         let mockConversation = SwiftMockConversation()
-        mockConversation.localParticipantsContainUser = true
+        mockConversation.mockLocalParticipantsContain = true
 
         if teamGroup {
             mockConversation.teamRemoteIdentifier = UUID()
