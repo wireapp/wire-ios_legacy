@@ -123,7 +123,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .camera,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 
@@ -133,7 +133,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .photoLibrary,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 

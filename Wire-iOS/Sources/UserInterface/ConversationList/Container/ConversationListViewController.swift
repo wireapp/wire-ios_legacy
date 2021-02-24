@@ -100,7 +100,7 @@ final class ConversationListViewController: UIViewController {
         topBarViewController = ConversationListTopBarViewController(account: viewModel.account,
                                                                     selfUser: viewModel.selfUser)
 
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
 
         definesPresentationContext = true
 
@@ -350,7 +350,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     func hideArchivedConversations() {
-        setState(.conversationList, animated:true)
+        setState(.conversationList, animated: true)
     }
 
     func presentPeoplePicker() {
@@ -378,7 +378,7 @@ fileprivate extension NSAttributedString {
         paragraphStyle.paragraphSpacing = 10
         paragraphStyle.alignment = .center
 
-        let titleAttributes: [NSAttributedString.Key : Any] = [
+        let titleAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.smallMediumFont,
             NSAttributedString.Key.paragraphStyle: paragraphStyle

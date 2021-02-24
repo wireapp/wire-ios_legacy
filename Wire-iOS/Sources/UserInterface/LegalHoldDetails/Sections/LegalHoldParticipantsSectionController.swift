@@ -72,7 +72,7 @@ final class LegalHoldParticipantsSectionController: GroupDetailsSectionControlle
         viewModel = LegalHoldParticipantsSectionViewModel(participants: conversation.sortedActiveParticipantsUserTypes.filter(\.isUnderLegalHold))
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         self.collectionView = collectionView

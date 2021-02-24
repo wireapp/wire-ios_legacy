@@ -91,7 +91,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         let format = "self.settings.account_section.phone_number.change.verify.description".localized
         let text = String(format: format, newNumber)
         if let font = FontSpec(.normal, .medium).font {
-            let attributedString = NSAttributedString(string: text).addAttributes([.font : font], toSubstring: newNumber)
+            let attributedString = NSAttributedString(string: text).addAttributes([.font: font], toSubstring: newNumber)
             description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
             description.descriptionLabel.attributedText = attributedString
         }
@@ -192,7 +192,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
-            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, PhoneNumber(fullNumber: currentPhoneNumber) == PhoneNumber(fullNumber:newNumber) {
+            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, PhoneNumber(fullNumber: currentPhoneNumber) == PhoneNumber(fullNumber: newNumber) {
                 navigationController?.isLoadingViewVisible = false
                 delegate?.didConfirmPhone(inController: self)
             }

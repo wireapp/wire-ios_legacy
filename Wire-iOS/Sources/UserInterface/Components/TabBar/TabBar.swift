@@ -19,7 +19,7 @@
 
 import Cartography
 
-protocol TabBarDelegate : class {
+protocol TabBarDelegate: class {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
 }
 
@@ -28,9 +28,9 @@ final class TabBar: UIView {
 
     // MARK: - Properties
 
-    weak var delegate : TabBarDelegate?
+    weak var delegate: TabBarDelegate?
     var animatesTransition = true
-    fileprivate(set) var items : [UITabBarItem] = []
+    fileprivate(set) var items: [UITabBarItem] = []
     private let tabInset: CGFloat = 16
 
     private let selectionLineView = UIView()
@@ -44,13 +44,13 @@ final class TabBar: UIView {
         }
     }
 
-    fileprivate(set) var selectedIndex : Int {
+    fileprivate(set) var selectedIndex: Int {
         didSet {
             updateButtonSelection()
         }
     }
 
-    fileprivate var selectedTab : Tab {
+    fileprivate var selectedTab: Tab {
         return self.tabs[selectedIndex]
     }
 

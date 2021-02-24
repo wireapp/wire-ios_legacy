@@ -229,13 +229,13 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 }
 
 extension StartUIViewController: SearchHeaderViewControllerDelegate {
-    func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
+    func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         searchResults.cancelPreviousSearch()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
         perform(#selector(performSearch), with: nil, afterDelay: 0.2)
     }
     
-    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController) {
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         searchHeaderViewController.resetQuery()
     }
 }

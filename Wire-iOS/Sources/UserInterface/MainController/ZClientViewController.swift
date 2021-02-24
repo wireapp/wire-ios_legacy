@@ -67,7 +67,7 @@ final class ZClientViewController: UIViewController {
         backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession as? ZMUserSession)
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
         
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
         
         proximityMonitorManager = ProximityMonitorManager()
         mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")

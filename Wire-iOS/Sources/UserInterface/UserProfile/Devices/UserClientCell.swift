@@ -30,9 +30,9 @@ final class UserClientCell: SeparatorCollectionViewCell {
     private let accessoryIconView = UIImageView()
     private let verifiedIconView = UIImageView()
 
-    private var contentStackView : UIStackView!
-    private var titleStackView : UIStackView!
-    private var iconStackView : UIStackView!
+    private var contentStackView: UIStackView!
+    private var titleStackView: UIStackView!
+    private var iconStackView: UIStackView!
     
     private let boldFingerprintFont: UIFont = .smallSemiboldFont
     private let fingerprintFont: UIFont = .smallFont

@@ -88,7 +88,7 @@ final class PermissionDeniedViewController: UIViewController {
     }
     
     required init() {
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
 
         view.addSubview(backgroundBlurView)
         backgroundBlurView.isHidden = backgroundBlurDisabled

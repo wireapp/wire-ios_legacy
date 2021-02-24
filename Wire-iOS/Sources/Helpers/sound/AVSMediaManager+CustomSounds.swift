@@ -42,7 +42,7 @@ enum MediaManagerSound: String {
 private let zmLog = ZMSLog(tag: "AVSMediaManager CustomSounds")
 
 extension AVSMediaManager {
-    static private var MediaManagerSoundConfig: [AnyHashable : Any]? = nil
+    static private var MediaManagerSoundConfig: [AnyHashable: Any]? = nil
 
     func play(sound: MediaManagerSound) {
         playSound(sound.rawValue)
@@ -68,7 +68,7 @@ extension AVSMediaManager {
         if AVSMediaManager.MediaManagerSoundConfig == nil,
            let path = Bundle.main.path(forResource: "MediaManagerConfig", ofType: "plist", inDirectory: audioDir) {
             
-            let soundConfig = NSDictionary(contentsOfFile: path) as? [AnyHashable : Any]
+            let soundConfig = NSDictionary(contentsOfFile: path) as? [AnyHashable: Any]
             
             if soundConfig == nil {
                 zmLog.error("Couldn't load sound config file: \(path)")

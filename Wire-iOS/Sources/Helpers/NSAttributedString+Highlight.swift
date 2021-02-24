@@ -93,7 +93,7 @@ extension NSAttributedString {
         }
         else {
             // Check if we accidentally jumped to the previous line
-            let textSkipped = text.substring(with: NSRange(location: previousSpace.location + previousSpace.length, length:from - previousSpace.location))
+            let textSkipped = text.substring(with: NSRange(location: previousSpace.location + previousSpace.length, length: from - previousSpace.location))
             let skippedNewline = textSkipped.containsCharacters(from: .newlines)
             
             if skippedNewline {
@@ -110,7 +110,7 @@ extension NSAttributedString {
         }
         else {
             // Check if we accidentally jumped to the previous line
-            let textSkipped = text.substring(with: NSRange(location: prePreviousSpace.location + prePreviousSpace.length, length:from - prePreviousSpace.location))
+            let textSkipped = text.substring(with: NSRange(location: prePreviousSpace.location + prePreviousSpace.length, length: from - prePreviousSpace.location))
             let preSkippedNewline = textSkipped.containsCharacters(from: .newlines)
 
             if preSkippedNewline {

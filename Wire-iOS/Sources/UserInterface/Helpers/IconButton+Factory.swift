@@ -53,7 +53,7 @@ extension IconButton {
         let sendButton = IconButton(
             icon: .send,
             accessibilityId: "sendButton",
-            backgroundColor: [.normal:      UIColor.accent(),
+            backgroundColor: [.normal: UIColor.accent(),
                               .highlighted: UIColor.accentDarken],
             iconColor: [.normal: sendButtonIconColor,
                         .highlighted: sendButtonIconColor,

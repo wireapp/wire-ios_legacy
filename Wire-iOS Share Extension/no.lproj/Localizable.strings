@@ -1,0 +1,61 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+
+
+
+"general.ok" = "OK";
+
+"share_extension.conversation_selection.account" = "Konto:";
+"share_extension.conversation_selection.title" = "Samtale:";
+"share_extension.send_button.title" = "Send";
+"share_extension.conversation_selection.empty.value" = "Velg";
+"share_extension.input.placeholder" = "Skriv inn en melding";
+"share_extension.sending_progress.title" = "Sender…";
+"share_extension.preparing.title" = "Forbereder…";
+"share_extension.no_internet_connection.title" = "Ingen Internett-tilkobling";
+"share_extension.not_signed_in.title" = "Du må logge deg på Wire før du kan dele noe";
+"share_extension.not_signed_in.close_button" = "Lukk";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Passord";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
+"share_extension.timeout.title" = "Forbindelsen har gått ut.";
+"share_extension.timeout.message" = "Sjekk Internett-tilkoblingen din og prøv igjen. Vedleggene ble lagret i samtalen.";
+
+"content.file.too_big" = "Du kan sende filer opp til %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
+"share_extension.privacy_security.lock_app.description" = "Lås opp Wire";
+"share_extension.logged_out.title" = "Du har blitt logget ut fra denne kontoen.";
+"share_extension.logged_out.message" = "Vennligst velg en annen konto.";
+
+"conversation.displayname.emptygroup" = "Tom gruppesamtale";
+"meta.degraded.degradation_reason_message.singular" = "%@ begynte å bruke en ny enhet.";
+"meta.degraded.degradation_reason_message.plural" = "%@ begynte å bruke nye enheter.";
+"meta.degraded.dialog_message" = "Ønsker du fortsatt å sende din melding?";
+"meta.degraded.cancel_sending_button" = "Ikke send";
+"meta.degraded.send_anyway_button" = "Send uansett";

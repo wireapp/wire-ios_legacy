@@ -57,7 +57,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
 
-    private var _collectionViewSelectedIndex : Int? = .none
+    private var _collectionViewSelectedIndex: Int? = .none
     private var collectionViewSelectedIndex: Int? {
         get{
             return _collectionViewSelectedIndex

@@ -21,7 +21,7 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "ProfileViewController")
 
-enum ProfileViewControllerTabBarIndex : Int {
+enum ProfileViewControllerTabBarIndex: Int {
     case details = 0
     case devices
 }
@@ -96,7 +96,7 @@ final class ProfileViewController: UIViewController {
     
     required init(viewModel: ProfileViewControllerViewModel) {
         self.viewModel = viewModel
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
 
         let user = viewModel.user
 

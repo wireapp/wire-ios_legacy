@@ -52,7 +52,7 @@ extension Settings {
         enableLogs(tagsToEnable)
     }
     
-    private func enableLogs(_ tags : Set<String>) {
+    private func enableLogs(_ tags: Set<String>) {
         tags.forEach { (tag) in
             ZMSLog.set(level: .debug, tag: tag)
         }

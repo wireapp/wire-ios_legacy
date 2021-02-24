@@ -53,7 +53,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
     func testForActionMenu() {
         coreDataFixture.teamTest {
             sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
-            verify(matching:(sut?.actionsController?.alertController)!)
+            verify(matching: (sut?.actionsController?.alertController)!)
         }
     }
 
@@ -61,14 +61,14 @@ final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
         coreDataFixture.teamTest {
             coreDataFixture.otherUserConversation.isArchived = true
             sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
-            verify(matching:(sut?.actionsController?.alertController)!)
+            verify(matching: (sut?.actionsController?.alertController)!)
         }
     }
 
     func testForActionMenu_NoTeam() {
         coreDataFixture.nonTeamTest {
             sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
-            verify(matching:(sut?.actionsController?.alertController)!)
+            verify(matching: (sut?.actionsController?.alertController)!)
         }
     }
 }

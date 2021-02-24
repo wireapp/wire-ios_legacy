@@ -24,13 +24,13 @@ protocol CollectionViewSectionController: UICollectionViewDataSource, UICollecti
     
     var isHidden: Bool { get }
     
-    func prepareForUse(in collectionView : UICollectionView?)
+    func prepareForUse(in collectionView: UICollectionView?)
     
 }
 
 final class SectionCollectionViewController: NSObject {
     
-    var collectionView : UICollectionView? = nil {
+    var collectionView: UICollectionView? = nil {
         didSet {
             collectionView?.dataSource = self
             collectionView?.delegate = self
@@ -57,7 +57,7 @@ final class SectionCollectionViewController: NSObject {
         return sections.filter({ !$0.isHidden })
     }
     
-    init(sections : [CollectionViewSectionController] = []) {
+    init(sections: [CollectionViewSectionController] = []) {
         self.sections = sections
     }
 }
@@ -113,7 +113,7 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
             fatal("Unknown section, indexPath: \(indexPath)")
         }
 
-        return visibleSections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
+        return visibleSections[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -121,7 +121,7 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
             fatal("Unknown section, indexPath: \(indexPath)")
         }
 
-        return visibleSections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
+        return visibleSections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
     }
     
 }

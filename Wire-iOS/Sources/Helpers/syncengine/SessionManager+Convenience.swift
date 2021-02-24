@@ -22,7 +22,7 @@ import AVFoundation
 import WireSyncEngine
 
 extension SessionManager {
-    static var shared : SessionManager? {
+    static var shared: SessionManager? {
         return AppDelegate.shared.appRootRouter?.sessionManager
     }
     

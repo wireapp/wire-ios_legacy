@@ -25,7 +25,7 @@ final class StartUIInviteActionBar: UIView {
 
     private(set) var inviteButton: Button!
 
-    private let padding:CGFloat = 12
+    private let padding: CGFloat = 12
 
 
     init() {

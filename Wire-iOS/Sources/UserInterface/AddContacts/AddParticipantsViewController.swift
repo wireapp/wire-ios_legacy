@@ -43,7 +43,7 @@ extension ConversationLike where Self: SwiftConversationLike {
 
 protocol AddParticipantsConversationCreationDelegate: class {
 
-    func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
+    func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
 }
 
 extension AddParticipantsViewController.Context {
@@ -100,21 +100,21 @@ final class AddParticipantsViewController: UIViewController {
     }
     
     fileprivate let variant: ColorSchemeVariant
-    fileprivate let searchResultsViewController : SearchResultsViewController
-    fileprivate let searchGroupSelector : SearchGroupSelector
-    fileprivate let searchHeaderViewController : SearchHeaderViewController
-    let userSelection : UserSelection = UserSelection()
-    fileprivate let collectionView : UICollectionView
-    fileprivate let collectionViewLayout : UICollectionViewFlowLayout
+    fileprivate let searchResultsViewController: SearchResultsViewController
+    fileprivate let searchGroupSelector: SearchGroupSelector
+    fileprivate let searchHeaderViewController: SearchHeaderViewController
+    let userSelection: UserSelection = UserSelection()
+    fileprivate let collectionView: UICollectionView
+    fileprivate let collectionViewLayout: UICollectionViewFlowLayout
     fileprivate let confirmButtonHeight: CGFloat = 46.0
-    fileprivate let confirmButton : IconButton
+    fileprivate let confirmButton: IconButton
     fileprivate let emptyResultView: EmptySearchResultsView
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
     private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
     
-    weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
+    weak var conversationCreationDelegate: AddParticipantsConversationCreationDelegate?
     
     fileprivate var viewModel: AddParticipantsViewModel {
         didSet {
@@ -379,7 +379,7 @@ final class AddParticipantsViewController: UIViewController {
     }
 }
 
-extension AddParticipantsViewController : UserSelectionObserver {
+extension AddParticipantsViewController: UserSelectionObserver {
     
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         updateSelectionValues()
@@ -395,7 +395,7 @@ extension AddParticipantsViewController : UserSelectionObserver {
     
 }
 
-extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
+extension AddParticipantsViewController: SearchHeaderViewControllerDelegate {
     
     @objc func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
@@ -412,7 +412,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
 }
 
-extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
+extension AddParticipantsViewController: UIPopoverPresentationControllerDelegate {
 
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen

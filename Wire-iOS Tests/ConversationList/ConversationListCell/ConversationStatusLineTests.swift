@@ -275,7 +275,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testNoStatusForSystemMessageIRemovedSomeone() {
         // GIVEN
         let sut = createGroupConversation()
-        sut.add(participants:[createUser(name: "Vanessa")])
+        sut.add(participants: [createUser(name: "Vanessa")])
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.selfUser
@@ -314,7 +314,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForSystemMessageSomeoneWasRemoved() {
         // GIVEN
         let sut = createGroupConversation()
-        sut.add(participants:createUser(name: "Lilly"))
+        sut.add(participants: createUser(name: "Lilly"))
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.otherUser

@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import avs
 
-struct AudioEffectCellBorders : OptionSet {
+struct AudioEffectCellBorders: OptionSet {
     let rawValue: Int
     
     init(rawValue: Int) {

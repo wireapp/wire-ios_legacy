@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-enum ConversationCellType : Int {
+enum ConversationCellType: Int {
     case text
     case textWithRichMedia
     case image

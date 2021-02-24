@@ -32,7 +32,7 @@ final class ServicesSectionController: GroupDetailsSectionController {
         self.delegate = delegate
     }
     
-    override func prepareForUse(in collectionView : UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
