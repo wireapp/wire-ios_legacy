@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "あなたの発信";
 "content.system.ephemeral_time_remaining" = "%@が退出しました";
 
+"content.system.self_user_new_client" = "**あなた**は[新しいデバイス](%@) を使い始めました";
+"content.system.self_user_new_self_client" = "**あなた** は [このデバイス](%@ ) を使い始めました";
+
 "content.system.you_started" = "あなた";
-"content.system.this_device" = "このデバイス";
 
 "content.system.call.called" = "%@ からの着信";
 "content.system.call.called-you" = "%@ からの着信";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
+"content.system.reactivated_device" = "[このデバイス](%@)の使用を再開しました。使用休止中に送信されたメッセージはここには表示されません。";
 
-"content.system.new_device" = "新しいデバイス";
-"content.system.started_using" = "使用を始めます";
 "content.system.is_verified" = "すべてのフィンガープリントは確認済みです";
 
 "content.system.new_users" = "新しいユーザーが参加しました。";
 "content.system.verify_devices" = "デバイスを認証する";
 
-"content.system.unverified" = "%@%@デバイスの一つは認証されませんでした。"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "あなたのデバイス";
-"content.system.other_devices" = "%@ のデバイス";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "しばらくの間、このデバイスでWireを利用していなかったため、いくつかのメッセージがここに表示されない可能性があります。";
 "content.system.missing_messages.subtitle_start" = "同時に";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "全てを表示 (%@)";
 "call.participants.list.title" = "参加者";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "一時停止中";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
-"appLockModule.message.faceID" = "Face ID またはパスコードでWireのロックを解除する";
-"appLockModule.message.touchID" = "Touch ID またはパスコードでWireのロックを解除する";
-"appLockModule.message.passcode" = "パスコードでWireのロックを解除する";
-"appLockModule.message.passcodeUnavailable" = "Wireのロック解除には、デバイス設定からパスコードを設定します。";
-"appLockModule.button.title" = "ロックを解除";
+"appLockModule.message.faceID" = "Touch ID またはパスコードで Wire をロック解除してください。";
+"appLockModule.message.touchID" = "Touch ID またはパスコードで Wire をロック解除してください";
+"appLockModule.message.passcode" = "パスコードで Wire をロック解除してください";
+"appLockModule.message.passcodeUnavailable" = "Wire をロック解除するには、デバイス設定でパスコードを有効にしてください";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

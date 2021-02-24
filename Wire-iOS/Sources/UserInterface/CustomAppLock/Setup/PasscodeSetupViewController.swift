@@ -240,6 +240,7 @@ final class PasscodeSetupViewController: UIViewController {
         presenter.storePasscode(passcode: passcode, callback: callback)
 
         authenticationCoordinator?.passcodeSetupControllerDidFinish()
+        passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidFinish()
         dismiss(animated: true)
     }
 
@@ -262,6 +263,8 @@ final class PasscodeSetupViewController: UIViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
                                                                       context: context,
                                                                       callback: nil)
+
+        passcodeSetupViewController.passcodeSetupViewControllerDelegate = delegate
 
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
 
