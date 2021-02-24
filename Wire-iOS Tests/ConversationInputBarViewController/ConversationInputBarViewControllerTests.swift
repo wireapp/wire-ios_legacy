@@ -28,7 +28,6 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         super.setUp()
 
         UIColor.setAccentOverride(.vividRed)
-
         mockConversation = MockInputBarConversationType()
     }
 
