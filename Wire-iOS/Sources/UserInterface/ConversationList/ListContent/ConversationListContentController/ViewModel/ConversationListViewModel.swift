@@ -141,7 +141,7 @@ final class ConversationListViewModel: NSObject {
             return kind.identifier
         }
         
-        init<C>(source: ConversationListViewModel.Section, elements: C) where C : Collection, C.Element == SectionItem {
+        init<C>(source: ConversationListViewModel.Section, elements: C) where C: Collection, C.Element == SectionItem {
             self.kind = source.kind
             self.collapsed = source.collapsed
             items = Array(elements)
@@ -623,7 +623,7 @@ final class ConversationListViewModel: NSObject {
         }
 
         var newValue = sections
-        newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
+        newValue[sectionNumber] = Section(kind: kind, conversationDirectory: conversationDirectory, collapsed: collapsed)
         
         if batchUpdate {
             let changeset = StagedChangeset(source: sections, target: newValue)

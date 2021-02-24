@@ -174,13 +174,13 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
-    var availabilityPlaceholder : NSAttributedString? {
+    var availabilityPlaceholder: NSAttributedString? {
         didSet {
             updatePlaceholder()
         }
@@ -237,6 +237,7 @@ final class InputBar: UIView {
         updateReturnKey()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -489,7 +490,7 @@ final class InputBar: UIView {
 
     func undo() {
         guard inputBarState.isEditing else { return }
-        guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
+        guard let undoManager = textView.undoManager, undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()
     }

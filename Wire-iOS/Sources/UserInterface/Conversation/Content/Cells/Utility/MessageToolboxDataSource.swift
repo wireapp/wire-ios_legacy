@@ -152,7 +152,7 @@ class MessageToolboxDataSource {
         let likersNamesAttributedString = likersNames && attributes
 
         // Check if the list of likers fits on the screen. Otheriwse, show the summary
-        let constrainedSize = CGSize(width:  CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        let constrainedSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         let labelSize = likersNamesAttributedString.boundingRect(with: constrainedSize, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
 
         if likers.count >= 3 || labelSize.width > widthConstraint {
@@ -295,7 +295,7 @@ class MessageToolboxDataSource {
         if let editedTimeString = message.formattedEditedDate() {
             timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, editedTimeString)
         } else if let dateTimeString = message.formattedReceivedDate() {
-            if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
+            if let systemMessage = message as? ZMSystemMessage, systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
             } else if let durationString = message.systemMessageData?.callDurationString() {
                 timestampString = dateTimeString + MessageToolboxDataSource.separator + durationString

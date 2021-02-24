@@ -47,14 +47,14 @@ public enum FontWeight: String {
 extension FontWeight {
     static let weightMapping: [FontWeight: UIFont.Weight] = [
         .ultraLight: UIFont.Weight.ultraLight,
-        .thin:       UIFont.Weight.thin,
-        .light:      UIFont.Weight.light,
-        .regular:    UIFont.Weight.regular,
-        .medium:     UIFont.Weight.medium,
-        .semibold:   UIFont.Weight.semibold,
-        .bold:       UIFont.Weight.bold,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .thin: UIFont.Weight.thin,
+        .light: UIFont.Weight.light,
+        .regular: UIFont.Weight.regular,
+        .medium: UIFont.Weight.medium,
+        .semibold: UIFont.Weight.semibold,
+        .bold: UIFont.Weight.bold,
+        .heavy: UIFont.Weight.heavy,
+        .black: UIFont.Weight.black
     ]
     
     /// Weight mapping used when the bold text accessibility setting is
@@ -62,14 +62,14 @@ extension FontWeight {
     /// weights instead.
     static let accessibilityWeightMapping: [FontWeight: UIFont.Weight] = [
         .ultraLight: UIFont.Weight.regular,
-        .thin:       UIFont.Weight.regular,
-        .light:      UIFont.Weight.regular,
-        .regular:    UIFont.Weight.regular,
-        .medium:     UIFont.Weight.medium,
-        .semibold:   UIFont.Weight.semibold,
-        .bold:       UIFont.Weight.bold,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .thin: UIFont.Weight.regular,
+        .light: UIFont.Weight.regular,
+        .regular: UIFont.Weight.regular,
+        .medium: UIFont.Weight.medium,
+        .semibold: UIFont.Weight.semibold,
+        .bold: UIFont.Weight.bold,
+        .heavy: UIFont.Weight.heavy,
+        .black: UIFont.Weight.black
     ]
     
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
@@ -157,7 +157,7 @@ final class FontScheme {
     
     public var fontMapping: FontMapping = [:]
     
-    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec : UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
+    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec: UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
         let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
         for fontWeight in allFontWeights {
             for fontSizeTuple in allFontSizes {
@@ -173,17 +173,17 @@ final class FontScheme {
 
 
         // The ratio is following 11:12:16:24, same as default case
-        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
+        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 40),
                                                                                 (fontSize: .normal, point: 26),
                                                                                 (fontSize: .medium, point: 20),
-                                                                                (fontSize: .small,  point: 18)]
+                                                                                (fontSize: .small, point: 18)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
 
 
-        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 21),
+        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 21),
                                                                                (fontSize: .normal, point: 14),
                                                                                (fontSize: .medium, point: 11),
-                                                                               (fontSize: .small,  point: 10)]
+                                                                               (fontSize: .small, point: 10)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none

@@ -27,25 +27,25 @@ enum ColorSchemeVariant: UInt {
 
 extension UIColor {
     static var graphite: UIColor = UIColor(rgb: (51, 55, 58))
-    static var graphiteAlpha4: UIColor = UIColor(rgba:(51, 55, 58, 0.04))
-    static var graphiteAlpha8: UIColor = UIColor(rgba:(51, 55, 58, 0.08))
-    static var graphiteAlpha16: UIColor = UIColor(rgba:(51, 55, 58, 0.16))
-    static var graphiteAlpha40: UIColor = UIColor(rgba:(51, 55, 58, 0.4))
+    static var graphiteAlpha4: UIColor = UIColor(rgba: (51, 55, 58, 0.04))
+    static var graphiteAlpha8: UIColor = UIColor(rgba: (51, 55, 58, 0.08))
+    static var graphiteAlpha16: UIColor = UIColor(rgba: (51, 55, 58, 0.16))
+    static var graphiteAlpha40: UIColor = UIColor(rgba: (51, 55, 58, 0.4))
 
-    static var backgroundLightGraphite: UIColor = UIColor(rgb:(30, 32, 33))
+    static var backgroundLightGraphite: UIColor = UIColor(rgb: (30, 32, 33))
 
-    static var lightGraphite: UIColor = UIColor(rgb:(141, 152, 159))
-    static var lightGraphiteAlpha8: UIColor = UIColor(rgba:(141, 152, 159, 0.08))
-    static var lightGraphiteAlpha24: UIColor = UIColor(rgba:(141, 152, 159, 0.24))
-    static var lightGraphiteAlpha48: UIColor = UIColor(rgba:(141, 152, 159, 0.48))
-    static var lightGraphiteAlpha64: UIColor = UIColor(rgba:(141, 152, 159, 0.64))
+    static var lightGraphite: UIColor = UIColor(rgb: (141, 152, 159))
+    static var lightGraphiteAlpha8: UIColor = UIColor(rgba: (141, 152, 159, 0.08))
+    static var lightGraphiteAlpha24: UIColor = UIColor(rgba: (141, 152, 159, 0.24))
+    static var lightGraphiteAlpha48: UIColor = UIColor(rgba: (141, 152, 159, 0.48))
+    static var lightGraphiteAlpha64: UIColor = UIColor(rgba: (141, 152, 159, 0.64))
     static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)
     static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
-    static var graphiteDark: UIColor = UIColor(rgb:(50, 54, 57))
+    static var graphiteDark: UIColor = UIColor(rgb: (50, 54, 57))
       
-    static var backgroundGraphite: UIColor = UIColor(rgb:(22, 24, 25))
-    static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba:(22, 24, 25, 0.4))
+    static var backgroundGraphite: UIColor = UIColor(rgb: (22, 24, 25))
+    static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba: (22, 24, 25, 0.4))
 
     static var white97: UIColor = UIColor(white: 0.97, alpha: 1)
     static var white98: UIColor = UIColor(white: 0.98, alpha: 1)
@@ -66,8 +66,8 @@ extension UIColor {
     static var blackAlpha40: UIColor = UIColor(white: 0.0, alpha: 0.4)
     static var blackAlpha80: UIColor = UIColor(white: 0.0, alpha: 0.8)
 
-    static var amberAlpha48: UIColor = UIColor(rgba:(254, 191, 2, 0.48))
-    static var amberAlpha80: UIColor = UIColor(rgba:(254, 191, 2, 0.8))
+    static var amberAlpha48: UIColor = UIColor(rgba: (254, 191, 2, 0.48))
+    static var amberAlpha80: UIColor = UIColor(rgba: (254, 191, 2, 0.8))
 }
 
 
@@ -239,7 +239,7 @@ enum ColorSchemeColor: Int {
 }
 
 final class ColorScheme: NSObject {
-    private(set) var colors: [AnyHashable : Any]?
+    private(set) var colors: [AnyHashable: Any]?
     
     var variant: ColorSchemeVariant = .light
     

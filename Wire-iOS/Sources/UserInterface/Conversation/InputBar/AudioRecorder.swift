@@ -93,10 +93,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public let format: AudioRecorderFormat
     public var state: AudioRecorderState = .initializing
     
-    var audioRecorder : AVAudioRecorder?
+    var audioRecorder: AVAudioRecorder?
     
     var displayLink: CADisplayLink?
-    var audioPlayer : AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer?
     var audioPlayerDelegate: AudioPlayerDelegate?
     var pauseButtonCallback: Any?
     public var maxRecordingDuration: TimeInterval? = .none
@@ -137,9 +137,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
         self.fileURL = fileURL
         let settings = [
-            AVFormatIDKey : self.format.audioFormat(),
-            AVSampleRateKey : 32000,
-            AVNumberOfChannelsKey : 1,
+            AVFormatIDKey: self.format.audioFormat(),
+            AVSampleRateKey: 32000,
+            AVNumberOfChannelsKey: 1,
             ]
         
         let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
@@ -225,7 +225,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     fileprivate func postRecordingProcessing() -> Bool {
         recordLevelCallBack?(0)
         removeDisplayLink()
-        guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
+        guard let filePath = audioRecorder?.url.path, fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
         return true
     }
@@ -252,7 +252,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     @objc fileprivate func displayLinkDidFire() {
         recordLevelCallBack?(levelForCurrentState())
-        guard let duration = durationForCurrentState() , currentDuration != duration else { return }
+        guard let duration = durationForCurrentState(), currentDuration != duration else { return }
         currentDuration = duration
         recordTimerCallback?(currentDuration)
         

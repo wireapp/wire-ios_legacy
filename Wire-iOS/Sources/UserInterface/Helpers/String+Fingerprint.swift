@@ -30,7 +30,7 @@ extension String {
     }
     
     var fingerprintStringWithSpaces: String {
-        return split(every:2).joined(separator: " ")
+        return split(every: 2).joined(separator: " ")
     }
     
     func fingerprintString(attributes: [NSAttributedString.Key: Any],

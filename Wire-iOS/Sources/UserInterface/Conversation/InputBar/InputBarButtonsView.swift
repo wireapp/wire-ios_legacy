@@ -95,7 +95,7 @@ final class InputBarButtonsView: UIView {
             innerContainer.bottom == outerContainer.bottom
             buttonRowHeight = innerContainer.height == 0
             
-            outerContainer.height == constants.buttonsBarHeight
+            outerContainer.height == innerContainer.height
             outerContainer.bottom == view.bottom - UIScreen.safeArea.bottom
             outerContainer.leading == view.leading
             outerContainer.trailing == view.trailing
@@ -211,7 +211,7 @@ final class InputBarButtonsView: UIView {
             previous = current
         }
         
-        if let reference = referenceButton , !rowIsFull {
+        if let reference = referenceButton, !rowIsFull {
             constrain(reference, buttons.last!) { reference, lastButton in
                 lastButton.width == reference.width
             }

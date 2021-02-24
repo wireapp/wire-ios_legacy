@@ -122,10 +122,10 @@ extension StatusMessageType {
     }
 
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
-        .participantsAdded:   .addParticipants,
+        .participantsAdded: .addParticipants,
         .participantsRemoved: .removeParticipants,
-        .missedCall:          .missedCall,
-        .newConversation:     .newConversation
+        .missedCall: .missedCall,
+        .newConversation: .newConversation
     ]
     
     init?(message: ZMConversationMessage) {
@@ -243,9 +243,9 @@ final class ConversationStatusStyle {
             }
             
             self.regularStyle = [.font: FontSpec(.medium, .none).font!,
-                                 .foregroundColor: UIColor(white:1.0, alpha:0.64)]
+                                 .foregroundColor: UIColor(white: 1.0, alpha: 0.64)]
             self.emphasisStyle = [.font: FontSpec(.medium, .medium).font!,
-                                  .foregroundColor: UIColor(white:1.0, alpha:0.64)]
+                                  .foregroundColor: UIColor(white: 1.0, alpha: 0.64)]
         }
     }
 }
@@ -489,17 +489,17 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
     let localizationRootPath = "conversation.status.message"
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
-        .mention:    "mention",
-        .reply:      "reply",
+        .mention: "mention",
+        .reply: "reply",
         .missedCall: "missedcall",
-        .knock:      "knock",
-        .text:       "text",
-        .link:       "link",
-        .image:      "image",
-        .location:   "location",
-        .audio:      "audio",
-        .video:      "video",
-        .file:       "file"
+        .knock: "knock",
+        .text: "text",
+        .link: "link",
+        .image: "image",
+        .location: "location",
+        .audio: "audio",
+        .video: "video",
+        .file: "file"
     ]
 
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {

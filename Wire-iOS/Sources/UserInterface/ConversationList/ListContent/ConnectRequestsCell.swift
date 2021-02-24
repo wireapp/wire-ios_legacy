@@ -41,7 +41,7 @@ extension SectionListCellType {
     }
 }
 
-final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
+final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
     var sectionName: String?
     var cellIdentifier: String?
 

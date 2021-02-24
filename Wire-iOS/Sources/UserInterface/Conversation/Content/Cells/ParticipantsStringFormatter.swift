@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-private typealias Attributes = [NSAttributedString.Key : AnyObject]
+private typealias Attributes = [NSAttributedString.Key: AnyObject]
 
 private extension ConversationActionType {
     func formatKey(senderIsSelfUser: Bool) -> String {

@@ -43,7 +43,7 @@ final class StringFingerprintTests: XCTestCase {
         for i in 0..<testStrings.count {
             // when
 
-            let splitString = testStrings[i].split(every:4).joined(separator: " ")
+            let splitString = testStrings[i].split(every: 4).joined(separator: " ")
 
             // then
             XCTAssertEqual(splitString, resultStrings[i])

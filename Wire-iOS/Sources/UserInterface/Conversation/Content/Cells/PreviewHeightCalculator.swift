@@ -21,12 +21,12 @@ import UIKit
 
 class PreviewHeightCalculator: NSObject {
     
-    static let standardCellHeight : CGFloat = 200.0
-    static let compressedCellHeight : CGFloat = 160.0
-    static let videoViewHeight : CGFloat = 160.0
+    static let standardCellHeight: CGFloat = 200.0
+    static let compressedCellHeight: CGFloat = 160.0
+    static let videoViewHeight: CGFloat = 160.0
     
     static func heightForImage(_ image: UIImage?) -> CGFloat {
-        var height : CGFloat = 0.0
+        var height: CGFloat = 0.0
         if let image = image, image.size.height < standardCellHeight {
             height = image.size.height
         } else {

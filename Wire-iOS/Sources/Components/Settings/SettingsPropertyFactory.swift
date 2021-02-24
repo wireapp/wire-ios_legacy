@@ -26,12 +26,12 @@ import WireSyncEngine
 import WireCommonComponents
 
 protocol TrackingInterface {
-    var disableCrashSharing : Bool { get set }
-    var disableAnalyticsSharing : Bool { get set }
+    var disableCrashSharing: Bool { get set }
+    var disableAnalyticsSharing: Bool { get set }
 }
 
 protocol AVSMediaManagerInterface {
-    var intensityLevel : AVSIntensityLevel { get set }
+    var intensityLevel: AVSIntensityLevel { get set }
     var isMicrophoneMuted: Bool { get set }
 }
 
@@ -69,18 +69,18 @@ final class SettingsPropertyFactory {
     weak var delegate: SettingsPropertyFactoryDelegate?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: SettingKey] = [
-        SettingsPropertyName.disableMarkdown                : .disableMarkdown,
-        SettingsPropertyName.chatHeadsDisabled              : .chatHeadsDisabled,
-        SettingsPropertyName.messageSoundName               : .messageSoundName,
-        SettingsPropertyName.callSoundName                  : .callSoundName,
-        SettingsPropertyName.pingSoundName                  : .pingSoundName,
-        SettingsPropertyName.disableSendButton              : .sendButtonDisabled,
-        SettingsPropertyName.mapsOpeningOption              : .mapsOpeningRawValue,
-        SettingsPropertyName.browserOpeningOption           : .browserOpeningRawValue,
-        SettingsPropertyName.tweetOpeningOption             : .twitterOpeningRawValue,
-        SettingsPropertyName.callingProtocolStrategy        : .callingProtocolStrategy,
-        SettingsPropertyName.enableBatchCollections         : .enableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
+        SettingsPropertyName.disableMarkdown: .disableMarkdown,
+        SettingsPropertyName.chatHeadsDisabled: .chatHeadsDisabled,
+        SettingsPropertyName.messageSoundName: .messageSoundName,
+        SettingsPropertyName.callSoundName: .callSoundName,
+        SettingsPropertyName.pingSoundName: .pingSoundName,
+        SettingsPropertyName.disableSendButton: .sendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption: .mapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption: .browserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption: .twitterOpeningRawValue,
+        SettingsPropertyName.callingProtocolStrategy: .callingProtocolStrategy,
+        SettingsPropertyName.enableBatchCollections: .enableBatchCollections,
+        SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate,
     ]
     
     convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
@@ -158,10 +158,10 @@ final class SettingsPropertyFactory {
             return getOnlyProperty(propertyName: propertyName, getAction: getAction)
 
         case .accentColor:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue(self.selfUser?.accentColorValue.rawValue ?? ZMAccentColor.undefined.rawValue)
             }
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
                     self.userSession?.enqueue({
@@ -174,13 +174,13 @@ final class SettingsPropertyFactory {
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 
                 let settingsColorScheme: SettingsColorScheme = SettingsColorScheme(from: self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue))
                 
                 return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
                     if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
@@ -200,7 +200,7 @@ final class SettingsPropertyFactory {
                                          getAction: getAction,
                                          setAction: setAction)
         case .soundAlerts:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
                     return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
                 }
@@ -208,7 +208,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(0)
                 }
             }
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
@@ -225,7 +225,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
         case .disableAnalyticsSharing:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableAnalyticsSharing)
                 }
@@ -233,7 +233,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
@@ -245,7 +245,7 @@ final class SettingsPropertyFactory {
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .disableCrashSharing:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableCrashSharing)
                 }
@@ -253,7 +253,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
@@ -267,11 +267,11 @@ final class SettingsPropertyFactory {
 
         case .receiveNewsAndOffers:
 
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return self.marketingConsent
             }
 
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                 case .number(let number):
                     self.userSession?.perform {
@@ -294,7 +294,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
 
         case .notificationContentVisible:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let value = self.userSession?.isNotificationContentHidden {
                     return SettingsPropertyValue.number(value: NSNumber(value: value))
                 } else {
@@ -302,7 +302,7 @@ final class SettingsPropertyFactory {
                 }
             }
             
-            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .number(let number):
                         self.userSession?.perform {

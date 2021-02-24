@@ -272,7 +272,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         if let index = self.effects.firstIndex(where: {
             $0 == self.selectedAudioEffect
         }) {
-            let indexPath = IndexPath(item:index, section:0)
+            let indexPath = IndexPath(item: index, section: 0)
             self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
     }
@@ -329,7 +329,7 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
     }
 }
 
-extension AudioEffectsPickerViewController : AudioPlayerControllerDelegate {
+extension AudioEffectsPickerViewController: AudioPlayerControllerDelegate {
     
     func audioPlayerControllerDidFinishPlaying() {
         setState(.time, animated: true)
@@ -337,16 +337,16 @@ extension AudioEffectsPickerViewController : AudioPlayerControllerDelegate {
     
 }
 
-private protocol AudioPlayerControllerDelegate : class {
+private protocol AudioPlayerControllerDelegate: class {
     
     func audioPlayerControllerDidFinishPlaying()
     
 }
 
-private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelegate {
+private class AudioPlayerController: NSObject, MediaPlayer, AVAudioPlayerDelegate {
     
-    let player : AVAudioPlayer
-    weak var delegate : AudioPlayerControllerDelegate?
+    let player: AVAudioPlayer
+    weak var delegate: AudioPlayerControllerDelegate?
     weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared.mediaPlaybackManager
     
     init(contentOf URL: URL) throws {

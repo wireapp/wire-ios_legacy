@@ -176,7 +176,7 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
     
 }
 
-extension FolderPickerViewController : FolderCreationControllerDelegate {
+extension FolderPickerViewController: FolderCreationControllerDelegate {
     
     func folderController(_ controller: FolderCreationController, didCreateFolder folder: LabelType) {
         pickFolder(folder)

@@ -25,6 +25,6 @@ struct Stream: Equatable {
     let participantName: String?
     let microphoneState: MicrophoneState?
     let videoState: VideoState?
-    let isParticipantActiveSpeaker: Bool
+    let activeSpeakerState: ActiveSpeakerState
 
 }

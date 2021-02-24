@@ -98,7 +98,7 @@ extension UIApplication {
     
     private class func wr_warnAboutPhotoLibraryRestricted() {
         let alert = UIAlertController.alertWithOKButton(
-            title:"library.alert.permission_warning.title".localized,
+            title: "library.alert.permission_warning.title".localized,
             message: "library.alert.permission_warning.restrictions.explaination".localized
         )
         

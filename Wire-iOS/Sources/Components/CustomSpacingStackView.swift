@@ -25,11 +25,11 @@ final class CustomSpacingStackView: UIView {
     /**
      This initializer must be used if you intend to call wr_addCustomSpacing.
      */
-    init(customSpacedArrangedSubviews subviews : [UIView]) {
+    init(customSpacedArrangedSubviews subviews: [UIView]) {
         if #available(iOS 11, *) {
             stackView = UIStackView(arrangedSubviews: subviews)
         } else {
-            var subviewsWithSpacers : [UIView] = []
+            var subviewsWithSpacers: [UIView] = []
 
             subviews.forEach { view in
                 subviewsWithSpacers.append(view)
@@ -104,11 +104,11 @@ final class CustomSpacingStackView: UIView {
     
 }
 
-final class SpacingView : UIView {
+final class SpacingView: UIView {
     
-    var size : CGFloat
+    var size: CGFloat
     
-    public init(_ size : CGFloat) {
+    public init(_ size: CGFloat) {
         self.size = size
         
         super.init(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size)))

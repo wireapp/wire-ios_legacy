@@ -152,7 +152,7 @@ extension CallQualityController: WireCallCenterCallStateObserver {
 
 // MARK: - User Input
 
-extension CallQualityController : CallQualityViewControllerDelegate {
+extension CallQualityController: CallQualityViewControllerDelegate {
 
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
         router?.dismissCallQualitySurvey(completion: { [weak self] in

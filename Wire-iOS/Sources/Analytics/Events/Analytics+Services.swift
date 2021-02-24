@@ -55,7 +55,7 @@ struct ServiceAddedEvent: Event {
         return "integration.added_service"
     }
     
-    var attributes: [AnyHashable : Any]? {
+    var attributes: [AnyHashable: Any]? {
         return [
             Keys.serviceID: serviceIdentifier,
             Keys.conversationSize: conversationSize,
@@ -80,7 +80,7 @@ struct ServiceRemovedEvent: Event {
         return "integration.removed_service"
     }
     
-    var attributes: [AnyHashable : Any]? {
+    var attributes: [AnyHashable: Any]? {
         return [Keys.serviceID: serviceIdentifier]
     }
 }

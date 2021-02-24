@@ -21,20 +21,20 @@ import WireCanvas
 import Cartography
 import WireCommonComponents
 
-protocol CanvasViewControllerDelegate : class {
-    func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
+protocol CanvasViewControllerDelegate: class {
+    func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage)
 }
 
-enum CanvasViewControllerEditMode : UInt {
+enum CanvasViewControllerEditMode: UInt {
     case draw
     case emoji
 }
 
 final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
-    weak var delegate : CanvasViewControllerDelegate?
+    weak var delegate: CanvasViewControllerDelegate?
     var canvas = Canvas()
-    var toolbar : SketchToolbar!
+    var toolbar: SketchToolbar!
     let drawButton = IconButton()
     let emojiButton = IconButton()
     let sendButton = IconButton.sendButton()
@@ -43,7 +43,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
     var isEmojiKeyboardInTransition = false
-    var sketchImage : UIImage? = nil {
+    var sketchImage: UIImage? = nil {
         didSet {
             if let image = sketchImage {
                 canvas.referenceImage = image
@@ -167,10 +167,10 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
                                               UIColor(red: 0.381, green: 0.192, blue: 0.006, alpha: 1),
                                               UIColor(red: 0.894, green: 0.735, blue: 0.274, alpha: 1),
                                               UIColor(red: 0.905, green: 0.317, blue: 0.466, alpha: 1),
-                                              UIColor(red: 0.58,  green: 0.088, blue: 0.318, alpha: 1),
-                                              UIColor(red: 0.431, green: 0.65,  blue: 0.749, alpha: 1),
-                                              UIColor(red: 0.6,   green: 0.588, blue: 0.278, alpha: 1),
-                                              UIColor(red: 0.44,  green: 0.44,  blue: 0.44,  alpha: 1)]
+                                              UIColor(red: 0.58, green: 0.088, blue: 0.318, alpha: 1),
+                                              UIColor(red: 0.431, green: 0.65, blue: 0.749, alpha: 1),
+                                              UIColor(red: 0.6, green: 0.588, blue: 0.278, alpha: 1),
+                                              UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1)]
         
         colorPickerController.view.addSubview(separatorLine)
         colorPickerController.delegate = self
@@ -267,7 +267,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 }
 
-extension CanvasViewController : CanvasDelegate {
+extension CanvasViewController: CanvasDelegate {
     
     func canvasDidChange(_ canvas: Canvas) {
         sendButton.isEnabled = canvas.hasChanges
@@ -277,7 +277,7 @@ extension CanvasViewController : CanvasDelegate {
     
 }
 
-extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
+extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
     
     func showEmojiKeyboard(animated: Bool) {
         guard !isEmojiKeyboardInTransition else { return }
@@ -359,7 +359,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     }
 }
 
-extension CanvasViewController : UIImagePickerControllerDelegate {
+extension CanvasViewController: UIImagePickerControllerDelegate {
     
     @objc func pickImage() {
         let imagePickerController = UIImagePickerController()
@@ -367,7 +367,7 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
         defer {
             picker.dismiss(animated: true, completion: nil)
@@ -389,7 +389,7 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
     
 }
 
-extension CanvasViewController : SketchColorPickerControllerDelegate {
+extension CanvasViewController: SketchColorPickerControllerDelegate {
     
     func sketchColorPickerController(_ controller: SketchColorPickerController, changedSelectedColor color: UIColor) {
         canvas.brush = Brush(size: Float(controller.brushWidth(for: color)), color: color)

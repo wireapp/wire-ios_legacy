@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Du har ringet";
 "content.system.ephemeral_time_remaining" = "%@ har forladt";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Dig";
-"content.system.this_device" = "denne enhed";
 
 "content.system.call.called" = "%@ har ringet";
 "content.system.call.called-you" = "%@ har ringet";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "en ny enhed";
-"content.system.started_using" = "er begyndt at bruge";
 "content.system.is_verified" = "Alle fingeraftryk er bekræftet";
 
 "content.system.new_users" = "Ny bruger tilsluttet.";
 "content.system.verify_devices" = "Verificer enheder";
 
-"content.system.unverified" = "%@ har ubekræftet en af %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "dine enheder";
-"content.system.other_devices" = "%@'s enheder";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Du har ikke brugt denne enhed i et stykke tid. Nogle meddelelser vises måske ikke.";
 "content.system.missing_messages.subtitle_start" = "I mellemtiden,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Video paused";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
 "appLockModule.message.touchID" = "Åben Wire med Touch ID eller adgangskode";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "Åben";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

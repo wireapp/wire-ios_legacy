@@ -48,7 +48,7 @@ fileprivate extension VoiceChannel {
                     .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState,
-                                     isActiveSpeaker: $0.isActiveSpeaker)
+                                     activeSpeakerState: $0.activeSpeakerState)
                 })
 
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -170,11 +170,11 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     // This property has to be computed in order to return the correct call duration
     var state: CallStatusViewState {
         switch voiceChannelSnapshot.state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
+        case .incoming(_, shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_, shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }
@@ -273,7 +273,7 @@ fileprivate extension VoiceChannel {
             && isActiveSpeakersTabEnabled
     }
     
-    private var isActiveSpeakersTabEnabled: Bool { true }
+    private var isActiveSpeakersTabEnabled: Bool { false }
 }
 
 extension VoiceChannel {

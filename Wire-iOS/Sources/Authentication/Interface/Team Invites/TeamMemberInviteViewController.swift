@@ -137,7 +137,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         footerTextFieldView.isLoading = true
         
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
-            self?.handle(inviteResult: result, from:  .manualInput)
+            self?.handle(inviteResult: result, from: .manualInput)
         }
     }
     

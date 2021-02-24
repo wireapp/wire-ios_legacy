@@ -34,10 +34,10 @@ final class GiphyConfirmationViewController: UIViewController {
     var acceptButton = Button(style: .full)
     var cancelButton = Button(style: .empty)
     var buttonContainer = UIView()
-    var delegate : GiphyConfirmationViewControllerDelegate?
-    let searchResultController : ZiphySearchResultsController?
-    let ziph : Ziph?
-    var imageData : Data?
+    var delegate: GiphyConfirmationViewControllerDelegate?
+    let searchResultController: ZiphySearchResultsController?
+    let ziph: Ziph?
+    var imageData: Data?
     
     
     /// init method with optional arguments for remove dependency for testing

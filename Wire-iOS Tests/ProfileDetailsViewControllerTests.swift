@@ -34,7 +34,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         defaultRichProfile = [
             UserRichProfileField(type: "Title", value: "Chief Design Officer"),
-            UserRichProfileField(type: "Entity",  value: "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA")
+            UserRichProfileField(type: "Entity", value: "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA")
         ]
     }
     

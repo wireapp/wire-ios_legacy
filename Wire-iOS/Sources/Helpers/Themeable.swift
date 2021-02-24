@@ -31,7 +31,7 @@ import UIKit
 protocol Themeable {
     
     /// Color scheme variant which should be applied to the view
-    var colorSchemeVariant : ColorSchemeVariant { get set }
+    var colorSchemeVariant: ColorSchemeVariant { get set }
     
     /// Applies a color scheme to a view
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant)
