@@ -54,7 +54,7 @@ final class BadgeUserImageView: UserImageView {
     override convenience init(frame: CGRect) {
         self.init(size: .small)
     }
-    
+
     override init(size: UserImageView.Size = .small) {
         super.init(size: size)
         configureSubviews()

@@ -32,7 +32,7 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     var createResult: Result<String>? = nil
     var isCodeEnabled = true
     var areGuestOrServicePresent = true
-    
+
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
         self.setAllowGuests = setAllowGuests
@@ -42,15 +42,15 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
         setAllowGuests?(allowGuests, completion)
     }
-    
+
     func createConversationLink(completion: @escaping (Result<String>) -> Void) {
         createResult.apply(completion)
     }
-    
+
     func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
         linkResult.apply(completion)
     }
-    
+
     func deleteLink(completion: @escaping (VoidResult) -> Void) {
         completion(deleteResult)
     }
@@ -92,45 +92,45 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
-        
+
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        
-        
+
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithLink() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithLink_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithLink_Copying() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
@@ -138,11 +138,11 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         viewModel.copyInProgress = true
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithLink_DarkTheme_Copying() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
@@ -150,129 +150,129 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         viewModel.copyInProgress = true
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithoutLink() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersAllowGuests_WithoutLink_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersItsTitle() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
-        
+
+
         // Then
         verify(matching: sut.wrapInNavigationController())
     }
-    
+
     func testThatItRendersNotTeamOnly() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesWhenItReceivesAChange() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
-        
+
+
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
         config.allowGuestsChangedHandler?(true)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesWhenItReceivesAChange_Loading() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        
-        
+
+
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
         config.allowGuestsChangedHandler?(true)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersNotTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        
+
         // Then
         verify(matching: sut)
     }
-    
+
     func testThatItRendersLoading() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         let navigationController = sut.wrapInNavigationController()
-        
+
         // When
         viewModel.setAllowGuests(true)
-        
+
         // Then
         verify(matching: navigationController)
     }
-    
+
     func testThatItRendersLoading_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         let navigationController = sut.wrapInNavigationController()
-        
+
         // When
         viewModel.setAllowGuests(true)
-        
+
         // Then
         verify(matching: navigationController)
     }
-    
+
     func testThatItRendersRemoveGuestsConfirmationAlert() {
         // When & Then
         let sut = UIAlertController.confirmRemovingGuests { _ in }
         verify(matching: sut)
     }
-    
+
     func testThatItRendersRevokeLinkConfirmationAlert() {
         // When & Then
         let sut = UIAlertController.confirmRevokingLink { _ in }

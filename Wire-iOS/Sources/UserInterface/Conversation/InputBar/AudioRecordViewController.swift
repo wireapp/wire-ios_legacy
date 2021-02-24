@@ -60,24 +60,24 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
     var recordingDotViewHidden: [NSLayoutConstraint] = []
     public let recorder: AudioRecorderType
     weak public var delegate: AudioRecordViewControllerDelegate?
-    
+
     var recordingState: AudioRecordState = .recording {
         didSet { updateRecordingState(recordingState) }
     }
-    
+
     fileprivate let localizationBasePath = "conversation.input_bar.audio_message"
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(audioRecorder: AudioRecorderType? = nil) {
         let maxAudioLength = ZMUserSession.shared()?.maxAudioLength
         let maxUploadSize = ZMUserSession.shared()?.maxUploadFileSize
         self.recorder = audioRecorder ?? AudioRecorder(format: .wav, maxRecordingDuration: maxAudioLength, maxFileSize: maxUploadSize)
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         configureViews()
         configureAudioRecorder()
         createConstraints()
@@ -88,46 +88,46 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
-    
+
     deinit {
         stopAndDeleteRecordingIfNeeded()
         accentColorChangeHandler = nil
     }
-    
+
     func beginRecording() {
         self.recorder.startRecording { (success) in
             let feedbackGenerator = UINotificationFeedbackGenerator()
             feedbackGenerator.prepare()
             feedbackGenerator.notificationOccurred(.success)
             AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
-            
+
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
         }
     }
-    
+
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
         guard recorder.state != .initializing else {
             recorder.stopRecording()
             self.delegate?.audioRecordViewControllerDidCancel(self)
             return
         }
-        
+
         let location = sender.location(in: buttonOverlay)
         let upperThird = location.y < buttonOverlay.frame.height / 3
         let shouldSend = upperThird && sender.state == .ended
-        
+
         guard recorder.stopRecording() else {
             return zmLog.warn("Stopped recording but did not get file URL")
         }
-        
+
         if shouldSend {
             sendAudio()
         }
-        
+
         setOverlayState(.default, animated: true)
         setRecordingState(.finishedRecording, animated: true)
     }
-    
+
     func updateWithChangedRecognizer(_ sender: UIGestureRecognizer) {
         let height = buttonOverlay.frame.height
         let (topOffset, mixRange) = (height / 4, height / 2)
@@ -136,42 +136,42 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         setOverlayState(.expanded(offset.clamp(0, upper: 1)), animated: false)
     }
-    
+
     private func configureViews() {
         accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
             if let color = color {
                 self.audioPreviewView.color = color
             }
         }
-        
+
         topContainerView.backgroundColor = UIColor.from(scheme: .background)
         bottomContainerView.backgroundColor = UIColor.from(scheme: .background)
-        
+
         topSeparator.backgroundColor = UIColor.from(scheme: .separator)
         rightSeparator.backgroundColor = UIColor.from(scheme: .separator)
-        
+
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(topContainerTapped))
         topContainerView.addGestureRecognizer(tapRecognizer)
-        
+
         topContainerView.addSubview(topTooltipLabel)
         [bottomContainerView, topContainerView, buttonOverlay].forEach(view.addSubview)
         [topSeparator, rightSeparator, audioPreviewView, timeLabel, cancelButton, recordingDotView].forEach(bottomContainerView.addSubview)
-        
+
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
         timeLabel.font = FontSpec(.small, .none).font!
         timeLabel.textColor = UIColor.from(scheme: .textForeground)
-        
+
         topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized(uppercased: true)
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor.from(scheme: .textDimmed)
-        
+
         cancelButton.setIcon(.cross, size: .tiny, for: [])
         cancelButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
 
-        
+
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {
                 return
@@ -179,7 +179,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             switch buttonType {
             case .send: self.sendAudio()
             case .play:
-               
+
                 self.recorder.playRecording()
             case .stop: self.recorder.stopPlaying()
             }
@@ -262,59 +262,59 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             guard let `self` = self else { return }
             self.updateTimeLabel(time)
         }
-        
+
         recorder.recordEndedCallback = { [weak self] result in
             guard let `self` = self else { return }
             self.recordingState = .finishedRecording
-            
+
             guard let error = result.error as? RecordingError,
                 let alert = self.recorder.alertForRecording(error: error) else { return }
-            
+
             self.present(alert, animated: true, completion: .none)
         }
-        
+
         recorder.playingStateCallback = { [weak self] state in
             guard let `self` = self else { return }
             self.buttonOverlay.playingState = state
         }
-        
+
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
             self.audioPreviewView.updateWithLevel(level)
         }
     }
-    
+
     @objc func topContainerTapped(_ sender: UITapGestureRecognizer) {
         delegate?.audioRecordViewControllerDidCancel(self)
     }
-    
+
     private func setRecordingState(_ state: AudioRecordState, animated: Bool) {
         updateRecordingState(state)
-        
+
         if animated {
             UIView.animate(withDuration: 0.2, animations: {
                 self.view.layoutIfNeeded()
-            }) 
+            })
         }
     }
-    
+
     private func updateRecordingState(_ state: AudioRecordState) {
-        
+
         let visible = visibleViewsForState(state)
         let allViews = Set(view.subviews.flatMap { $0.subviews }) // Well, 2 levels 'all'
         let hidden = allViews.subtracting(visible)
-        
+
         visible.forEach { $0.isHidden = false }
         hidden.forEach { $0.isHidden = true }
-        
+
         buttonOverlay.recordingState = state
         let finished = state == .finishedRecording
-        
+
         self.recordingDotView.animating = !finished
-        
+
         let pathComponent = finished ? "tooltip.tap_send" : "tooltip.pull_send"
         topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
-        
+
         if recordingState == .recording {
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
             NSLayoutConstraint.activate(recordingDotViewVisible)
@@ -324,29 +324,29 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             NSLayoutConstraint.activate(recordingDotViewHidden)
         }
     }
-    
+
     func updateTimeLabel(_ durationInSeconds: TimeInterval) {
         let duration = Int(floor(durationInSeconds))
         let (seconds, minutes) = (duration % 60, duration / 60)
         timeLabel.text = String(format: "%d:%02d", minutes, seconds)
         timeLabel.accessibilityValue = timeLabel.text
     }
-    
+
     func visibleViewsForState(_ state: AudioRecordState) -> [UIView] {
         var visibleViews = [bottomContainerView, topContainerView, buttonOverlay, topSeparator, timeLabel, audioPreviewView, topTooltipLabel]
-        
+
         switch state {
         case .finishedRecording:
             visibleViews.append(cancelButton)
         case .recording:
             visibleViews.append(recordingDotView)
         }
-        
+
         if traitCollection.userInterfaceIdiom == .pad { visibleViews.append(rightSeparator) }
-        
+
         return visibleViews
     }
-    
+
     func setOverlayState(_ state: AudioButtonOverlayState, animated: Bool) {
         let animations = { self.buttonOverlay.setOverlayState(state) }
 
@@ -364,43 +364,43 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             animations()
         }
     }
-    
-    @objc func cancelButtonPressed(_ sender: IconButton) {        
+
+    @objc func cancelButtonPressed(_ sender: IconButton) {
         recorder.stopPlaying()
         stopAndDeleteRecordingIfNeeded()
         delegate?.audioRecordViewControllerDidCancel(self)
         updateTimeLabel(0)
     }
-    
+
     func stopAndDeleteRecordingIfNeeded() {
         recorder.stopRecording()
         recorder.deleteRecording()
     }
-    
+
     func sendAudio() {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
-        
-        
+
+
         let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
         effectPath.deleteFileAtPath()
         // To apply noize reduction filter
         AVSAudioEffectType.none.apply(url.path, outPath: effectPath) {
             url.path.deleteFileAtPath()
-            
+
             let filename = String.filenameForSelfUser().appendingPathExtension("m4a")!
             let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
             convertedPath.deleteFileAtPath()
-            
+
             AVAsset.convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
                 effectPath.deleteFileAtPath()
-                
+
                 if success {
                     self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, filter: .none)
                 }
             }
         }
-        
+
     }
 
 }

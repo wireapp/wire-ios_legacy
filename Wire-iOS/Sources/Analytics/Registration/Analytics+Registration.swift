@@ -23,19 +23,19 @@ extension Analytics {
     func tagRegistrationSucceded(context: String) {
         self.tagEvent("registration.succeeded", attributes: ["context": context])
     }
-    
+
     func tagOpenedTeamCreation(context: String) {
         self.tagEvent("start.opened_team_registration", attributes: ["context": context])
     }
-        
+
     enum InviteResult {
         case none
         case invited(invitesCount: Int)
     }
-    
+
     func tagTeamFinishedInviteStep(with result: InviteResult) {
         let attributes: [String: Any]
-        
+
         switch(result) {
         case .none:
             attributes = ["invited": false,
@@ -44,7 +44,7 @@ extension Analytics {
             attributes = ["invited": true,
                           "invites:": invitesCount]
         }
-        
+
         tagEvent("team.finished_invite_step", attributes: attributes)
     }
 }

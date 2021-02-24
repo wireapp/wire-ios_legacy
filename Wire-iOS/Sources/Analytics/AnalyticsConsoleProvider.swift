@@ -22,7 +22,7 @@ import WireDataModel
 
 fileprivate let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider: NSObject {
-    
+
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false
 
@@ -38,20 +38,20 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         get {
             return optedOut
         }
-        
+
         set {
             zmLog.info("Setting Opted out: \(newValue)")
             optedOut = newValue
         }
     }
-    
+
     /// no-op
     var selfUser: UserType? {
         get {
             //no-op
             return nil
         }
-        
+
         set {
             //no-op
         }
@@ -63,15 +63,15 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
             zmLog.info(string)
         }
     }
-    
+
     func tagEvent(_ event: String, attributes: [String: Any] = [:]) {
-        
+
         let printableAttributes = attributes
-        
+
         var loggingDict = [String: Any]()
-        
+
         loggingDict["event"] = event
-        
+
         if !printableAttributes.isEmpty {
             var localAttributes = [String: String]()
             printableAttributes.map({ (key, value) -> (String, String) in
@@ -81,10 +81,10 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
             })
             loggingDict["attributes"] = localAttributes
         }
-        
+
         print(loggingData: loggingDict)
     }
-    
+
     func setSuperProperty(_ name: String, value: Any?) {
         print(loggingData: ["superProperty_\(name)": value ?? "nil"])
     }

@@ -48,7 +48,7 @@ extension ScreenCurtain {
         }
 
         // MARK: - Life cycle
-        
+
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpView()
@@ -69,7 +69,7 @@ extension ScreenCurtain {
                 shieldView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         }
-        
+
     }
 
 }

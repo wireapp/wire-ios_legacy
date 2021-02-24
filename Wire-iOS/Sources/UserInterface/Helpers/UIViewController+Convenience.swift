@@ -39,7 +39,7 @@ extension UIViewController {
     func addToSelf(_ viewController: UIViewController) {
         add(viewController, to: view)
     }
-    
+
     /// remove a child view controller to self and add its view from the paramenter's view
     ///
     /// - Parameters:
@@ -49,7 +49,7 @@ extension UIViewController {
         viewController?.view.removeFromSuperview()
         viewController?.removeFromParent()
     }
-    
+
     /// Return the first child of class T in the hierarchy of the children of the view controller
     ///
     /// - Parameters:
@@ -61,7 +61,7 @@ extension UIViewController {
                 return result
             }
         }
-        
+
         // Then check next layer down.
         for child in children {
             if let result = child.firstChild(ofType: type) {

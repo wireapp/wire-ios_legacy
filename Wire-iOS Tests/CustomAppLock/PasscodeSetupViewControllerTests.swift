@@ -39,7 +39,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
             return vc
         })
     }
-    
+
     func testForInitState_ifForcedApplock() {
         verifyAllIPhoneSizes(createSut: { size in
             let vc = PasscodeSetupViewController(useCompactLayout: size.height <= CGFloat.iPhone4Inch.height,
@@ -55,7 +55,7 @@ final class PasscodeSetupViewControllerTests: XCTestCase {
                                           callback: nil)
         verify(matching: sut)
     }
-    
+
     func testForInitStateInDarkTheme_ifForcedApplock() {
         sut = PasscodeSetupViewController(variant: .dark, useCompactLayout: false,
                                           context: .forcedForTeam,

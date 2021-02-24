@@ -22,16 +22,16 @@ import SnapshotTesting
 
 class RoundedSegmentedViewTests: XCTestCase {
     var sut: RoundedSegmentedView!
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     private func createView(with items: [String]) -> RoundedSegmentedView {
         let view = RoundedSegmentedView()
         items.forEach {
@@ -40,24 +40,24 @@ class RoundedSegmentedViewTests: XCTestCase {
         view.frame = CGRect(x: 0, y: 0, width: 95, height: 25)
         return view
     }
-    
+
     func testTwoItems_Unselected() {
         // GIVEN / WHEN
         sut = createView(with: ["one", "two"])
-        
+
         // THEN
         verify(matching: sut)
     }
-    
+
     func testTwoItems_FirstSelected() {
         // GIVEN / WHEN
         sut = createView(with: ["one", "two"])
         sut.setSelected(true, forItemAt: 0)
-        
+
         // THEN
         verify(matching: sut)
     }
-    
+
     func testTwoItems_SecondSelected_AfterFirst() {
         // GIVEN / WHEN
         sut = createView(with: ["one", "two"])

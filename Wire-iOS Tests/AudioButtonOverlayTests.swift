@@ -20,10 +20,10 @@
 @testable import Wire
 
 class AudioButtonOverlayTests: ZMSnapshotTestCase {
-    
+
     var sut: AudioButtonOverlay!
     var buttonTapHistory: [AudioButtonOverlay.AudioButtonOverlayButtonType]!
-    
+
     override func setUp() {
         super.setUp()
         buttonTapHistory = []
@@ -36,40 +36,40 @@ class AudioButtonOverlayTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItRendersTheButtonOverlayCorrectInitially_Recording() {
         sut.setOverlayState(.default)
         verify(view: sut)
     }
-    
+
     func testThatItRendersTheButtonOverlayCorrectInitially_FinishedRecording() {
         sut.recordingState = .finishedRecording
         sut.setOverlayState(.default)
         verify(view: sut)
     }
-    
+
     func testThatItRendersTheButtonOverlayCorrectInitially_FinishedRecording_PlayingAudio() {
         sut.recordingState = .finishedRecording
         sut.playingState = .playing
         sut.setOverlayState(.default)
         verify(view: sut)
     }
-        
+
     func testThatItChangesItsSize_Expanded() {
         sut.setOverlayState(.expanded(0))
         verify(view: sut)
     }
-    
+
     func testThatItChangesItsSize_Expanded_Half() {
         sut.setOverlayState(.expanded(0.5))
         verify(view: sut)
     }
-    
+
     func testThatItChangesItsSize_Expanded_Full() {
         sut.setOverlayState(.expanded(1))
         verify(view: sut)
     }
-    
+
     func testThatItCallsTheButtonHandlerWithTheCorrectButtonType() {
         sut.playButton.sendActions(for: .touchUpInside)
         XCTAssertArrayEqual(buttonTapHistory, [AudioButtonOverlay.AudioButtonOverlayButtonType.play])

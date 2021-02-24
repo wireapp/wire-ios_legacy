@@ -26,7 +26,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private let titleLabel = UILabel()
     private let toggle = UISwitch()
     private let subtitleLabel = UILabel()
-    
+
     private var action: ((Bool) -> Void)?
     private var variant: ColorSchemeVariant = .light {
         didSet {
@@ -40,19 +40,19 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private var subtitleTopConstraint: NSLayoutConstraint?
     private var subtitleBottomConstraint: NSLayoutConstraint?
     private let subtitleInsets = UIEdgeInsets(top: 16, left: 16, bottom: 24, right: 16)
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
         styleViews()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupViews() {
         [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
         imageContainer.addSubview(iconImageView)
@@ -63,7 +63,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.font = FontSpec(.normal, .light).font
         accessibilityElements = [titleLabel, toggle]
     }
-    
+
     private func createConstraints() {
         constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
             self.imageContainerWidthConstraint = imageContainer.width == CGFloat.IconCell.IconWidth
@@ -80,25 +80,25 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             topContainer.leading == contentView.leading
             topContainer.trailing == contentView.trailing
             topContainer.height == 56
-            
+
             subtitleLabel.leading == contentView.leading + self.subtitleInsets.leading
             subtitleLabel.trailing == contentView.trailing - self.subtitleInsets.trailing
             self.subtitleTopConstraint = subtitleLabel.top == topContainer.bottom + self.subtitleInsets.top
             self.subtitleBottomConstraint = subtitleLabel.bottom == contentView.bottom - self.subtitleInsets.bottom
         }
     }
-    
+
     private func styleViews() {
         topContainer.backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         subtitleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
         backgroundColor = .clear
     }
-    
+
     @objc private func toggleChanged(_ sender: UISwitch) {
         action?(sender.isOn)
     }
-    
+
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconToggle(title,
                                    subtitle,
@@ -110,7 +110,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
                                    set) = configuration else { preconditionFailure() }
 
         let mainColor = variant.mainColor(color: color)
-        
+
         if let icon = icon {
             iconImageView.setIcon(icon, size: .tiny, color: mainColor)
             imageContainerWidthConstraint?.constant = CGFloat.IconCell.IconWidth
@@ -119,8 +119,8 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             imageContainerWidthConstraint?.constant = 0
             iconImageViewLeadingConstraint?.constant = 0
         }
-        
-        
+
+
         titleLabel.textColor = mainColor
 
         titleLabel.text = title

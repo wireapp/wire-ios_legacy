@@ -83,7 +83,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
-                
+
             case .badge(let value):
                 valueLabel.text = ""
                 badgeLabel.text = "\(value)"
@@ -92,7 +92,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
-                
+
             case .image(let image):
                 valueLabel.text = ""
                 badgeLabel.text = ""
@@ -101,7 +101,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = "image"
                 imagePreview.isAccessibilityElement = true
-                
+
             case .color(let color):
                 valueLabel.text = ""
                 badgeLabel.text = ""
@@ -110,7 +110,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = color
                 imagePreview.accessibilityValue = "color"
                 imagePreview.isAccessibilityElement = true
-                
+
             case .none:
                 valueLabel.text = ""
                 badgeLabel.text = ""
@@ -122,7 +122,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             }
         }
     }
-    
+
     var icon: StyleKitIcon? = nil {
         didSet {
             if let icon = icon {
@@ -134,92 +134,92 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             }
         }
     }
-    
+
     var isFirst: Bool = false {
         didSet {
             topSeparatorLine.isHidden = !isFirst
         }
     }
-    
+
     var titleColor: UIColor = UIColor.white {
         didSet {
             cellNameLabel.textColor = titleColor
         }
     }
-    
+
     var cellColor: UIColor? {
         didSet {
             backgroundColor = cellColor
         }
     }
-    
+
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         updateBackgroundColor()
     }
-    
+
     var descriptor: SettingsCellDescriptorType?
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
         setupAccessibiltyElements()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
         setupAccessibiltyElements()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         preview = .none
     }
-    
+
     func setup() {
         backgroundColor = UIColor.clear
         backgroundView = UIView()
         selectedBackgroundView = UIView()
-        
+
         iconImageView.contentMode = .center
         contentView.addSubview(iconImageView)
-        
+
         constrain(contentView, iconImageView) { contentView, iconImageView in
             iconImageView.leading == contentView.leading + 24
             iconImageView.width == 16
             iconImageView.height == iconImageView.height
             iconImageView.centerY == contentView.centerY
         }
-        
+
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         contentView.addSubview(cellNameLabel)
-        
+
         constrain(contentView, cellNameLabel, iconImageView) { contentView, cellNameLabel, iconImageView in
             cellNameLabelToIconInset = cellNameLabel.leading == iconImageView.trailing + 24
             cellNameLabel.leading == contentView.leading + 16 ~ 750.0
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }
-        
+
         cellNameLabelToIconInset.isActive = false
-        
+
         valueLabel.textColor = UIColor.lightGray
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
-        
+
         contentView.addSubview(valueLabel)
 
         badgeLabel.font = FontSpec(.small, .medium).font
         badgeLabel.textAlignment = .center
         badgeLabel.textColor = UIColor.black
-        
+
         badge.containedView.addSubview(badgeLabel)
-        
+
         badge.backgroundColor = UIColor.white
         badge.isHidden = true
         contentView.addSubview(badge)
-        
+
         let trailingBoundaryView = accessoryView ?? contentView
 
         constrain(contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
@@ -231,42 +231,42 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             badge.height == 20
             badge.width >= 28
         }
-        
+
         constrain(badge, badgeLabel) { badge, badgeLabel in
             badgeLabel.leading == badge.leading + 6
             badgeLabel.trailing == badge.trailing - 6
             badgeLabel.top == badge.top
             badgeLabel.bottom == badge.bottom
         }
-        
+
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.accessibilityIdentifier = "imagePreview"
         contentView.addSubview(imagePreview)
-        
+
         constrain(contentView, imagePreview) { contentView, imagePreview in
             imagePreview.width == imagePreview.height
             imagePreview.height == 24
             imagePreview.trailing == contentView.trailing - 16
             imagePreview.centerY == contentView.centerY
         }
-        
+
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         separatorLine.isAccessibilityElement = false
         addSubview(separatorLine)
-        
+
         constrain(self, separatorLine, cellNameLabel) { selfView, separatorLine, cellNameLabel in
             separatorLine.leading == cellNameLabel.leading
             separatorLine.trailing == selfView.trailing
             separatorLine.bottom == selfView.bottom
             separatorLine.height == .hairline
         }
-        
+
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
-        
+
         constrain(self, topSeparatorLine, cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
             topSeparatorLine.leading == cellNameLabel.leading
             topSeparatorLine.trailing == selfView.trailing
@@ -277,18 +277,18 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
     }
-    
+
     func setupAccessibiltyElements() {
         var currentElements = accessibilityElements ?? []
         currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
         accessibilityElements = currentElements
     }
-    
+
     func updateBackgroundColor() {
         if let _ = cellColor {
             return
         }
-        
+
         if isHighlighted && selectionStyle != .none {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
             badge.backgroundColor = UIColor.white
@@ -316,22 +316,22 @@ final class SettingsButtonCell: SettingsTableCell {
 
 final class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
-    
+
     override func setup() {
         super.setup()
-        
+
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
         let switchView = UISwitch(frame: CGRect.zero)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true
-        
+
         accessibilityElements = [cellNameLabel, switchView]
 
         self.switchView = switchView
     }
-    
+
     @objc
     func onSwitchChanged(_ sender: UIResponder) {
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
@@ -351,9 +351,9 @@ final class SettingsValueCell: SettingsTableCell {
             }
         }
     }
-    
+
     // MARK: - Properties observing
-    
+
     @objc func onPropertyChanged(_ notification: Notification) {
         descriptor?.featureCell(self)
     }
@@ -365,14 +365,14 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     override func setup() {
         super.setup()
         selectionStyle = .none
-        
+
         textInput = TailEditingTextField(frame: CGRect.zero)
         textInput.delegate = self
         textInput.textAlignment = .right
         textInput.textColor = UIColor.lightGray
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         textInput.isAccessibilityElement = true
-        
+
         contentView.addSubview(textInput)
 
         createConstraints()
@@ -396,26 +396,26 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         ])
 
     }
-    
+
     override func setupAccessibiltyElements() {
         super.setupAccessibiltyElements()
-        
+
         var currentElements = accessibilityElements ?? []
         if let textInput = textInput {
             currentElements.append(textInput)
         }
         accessibilityElements = currentElements
     }
-    
+
     @objc
     func onCellSelected(_ sender: AnyObject!) {
         if !textInput.isFirstResponder {
             textInput.becomeFirstResponder()
         }
     }
-    
+
     // MARK: - UITextFieldDelegate
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
             textField.resignFirstResponder()
@@ -425,11 +425,11 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
             return true
         }
     }
-    
+
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return true
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textInput.text {
             descriptor?.select(SettingsPropertyValue.string(value: text))

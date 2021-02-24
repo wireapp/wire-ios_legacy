@@ -22,14 +22,14 @@ import XCTest
 final class EphemeralTimeoutFormatterTests: XCTestCase {
 
     let secondsInYear: TimeInterval = 31536000
-    
+
     var sut: EphemeralTimeoutFormatter!
 
     override func setUp() {
         super.setUp()
         sut = EphemeralTimeoutFormatter()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

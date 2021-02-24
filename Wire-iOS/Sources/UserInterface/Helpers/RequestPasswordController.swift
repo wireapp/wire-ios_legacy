@@ -32,7 +32,7 @@ final class RequestPasswordController {
     var alertController: UIAlertController
 
     typealias InputValidation = (String?) -> Bool
-    
+
     private let callback: Callback
     private let inputValidation: InputValidation?
     private weak var okAction: UIAlertAction?
@@ -52,7 +52,7 @@ final class RequestPasswordController {
         default:
             okTitle = "general.ok".localized
         }
-        
+
         let cancelTitle: String = "general.cancel".localized
         let title: String
         let message: String
@@ -85,7 +85,7 @@ final class RequestPasswordController {
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = placeholder
-            
+
             switch context {
             case .wiping:
                 textField.isSecureTextEntry = false
@@ -96,7 +96,7 @@ final class RequestPasswordController {
                     textField.textContentType = .password
                 }
             }
-            
+
             textField.addTarget(self, action: #selector(RequestPasswordController.passwordTextFieldChanged(_:)), for: .editingChanged)
 
             self.passwordTextField = textField
@@ -124,7 +124,7 @@ final class RequestPasswordController {
     @objc
     func passwordTextFieldChanged(_ textField: UITextField) {
         guard let passwordField = alertController.textFields?[0] else { return }
-        
+
         okAction?.isEnabled = passwordField.text?.isEmpty == false
 
         if let inputValidation = inputValidation {

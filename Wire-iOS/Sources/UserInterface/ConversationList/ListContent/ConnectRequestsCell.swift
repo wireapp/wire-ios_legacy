@@ -26,13 +26,13 @@ protocol SectionListCellType: class {
 extension SectionListCellType {
     var identifier: String {
         let prefix: String
-        
+
         if let sectionName = sectionName {
             prefix = "\(sectionName) - "
         } else {
             prefix = ""
         }
-        
+
         if let cellIdentifier = cellIdentifier {
             return prefix + cellIdentifier
         } else {

@@ -26,7 +26,7 @@ private class MockPulsingIconImageView: PulsingIconImageView {
     override func startPulsing() {
         didStartPulsing = true
     }
-    
+
     var didStopPulsing: Bool = false
     override func stopPulsing() {
         didStopPulsing = true
@@ -38,7 +38,7 @@ private class MockPulsingIconImageStyle: PulsingIconImageStyle, IconImageStyle {
     var shouldPulse: Bool {
         return _shouldPulse
     }
-    
+
     var icon: StyleKitIcon? { return .cake }
     var accessibilitySuffix: String { return "" }
 }
@@ -46,31 +46,31 @@ private class MockPulsingIconImageStyle: PulsingIconImageStyle, IconImageStyle {
 class PulsingIconImageViewTests: XCTestCase {
     private var sut: MockPulsingIconImageView!
     private var style: MockPulsingIconImageStyle!
-    
+
     override func setUp() {
         super.setUp()
         sut = MockPulsingIconImageView(frame: .zero)
         style = MockPulsingIconImageStyle()
     }
-    
+
     func testThatItStopsPulsing_WhenStyleIsUpdated_AndShouldNotPulse() {
         // GIVEN
         style._shouldPulse = false
-        
+
         // WHEN
         sut.set(style: style)
 
         // THEN
         XCTAssertTrue(sut.didStopPulsing)
     }
-    
+
     func testThatItStartsPulsing_WhenStyleIsUpdated_AndShouldPulse() {
         // GIVEN
         style._shouldPulse = true
-        
+
         // WHEN
         sut.set(style: style)
-        
+
         // THEN
         XCTAssertTrue(sut.didStartPulsing)
     }

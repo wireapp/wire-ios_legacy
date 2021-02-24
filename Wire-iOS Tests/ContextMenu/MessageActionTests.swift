@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,11 +21,11 @@ import SnapshotTesting
 import WireCommonComponents
 
 final class MessageActionTests: XCTestCase {
-    
+
     @available(iOS 13.0, *)
     func testForSystemIcons() {
         MessageAction.allCases.forEach() { action in
-            if let image = action.systemIcon() {                
+            if let image = action.systemIcon() {
                 let imageView = UIImageView(image: image)
                 verify(matching: imageView, named: "\(action)")
             }

@@ -20,25 +20,25 @@ import XCTest
 @testable import Wire
 
 class AvailabilityLabelTests: ZMSnapshotTestCase {
-        
+
     // MARK: - List labels
-    
+
     func testThatItRendersCorrectly_List_NoneAvailability() {
         verify(view: createLabelForList(.none))
     }
-    
+
     func testThatItRendersCorrectly_List_AvailableAvailability() {
         verify(view: createLabelForList(.available))
     }
-    
+
     func testThatItRendersCorrectly_List_AwayAvailability() {
         verify(view: createLabelForList(.away))
     }
-    
+
     func testThatItRendersCorrectly_List_BusyAvailability() {
         verify(view: createLabelForList(.busy))
     }
-    
+
     func createLabelForList(_ availability: Availability) -> UILabel {
         guard let user = ZMUser.selfUser() else { return UILabel() }
         user.availability = availability
@@ -49,25 +49,25 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
         label.sizeToFit()
         return label
     }
-    
+
     // MARK: - Participants labels
-    
+
     func testThatItRendersCorrectly_Participants_NoneAvailability() {
         verify(view: createLabelForParticipants(.none))
     }
-    
+
     func testThatItRendersCorrectly_Participants_AvailableAvailability() {
         verify(view: createLabelForParticipants(.available))
     }
-    
+
     func testThatItRendersCorrectly_Participants_AwayAvailability() {
         verify(view: createLabelForParticipants(.away))
     }
-    
+
     func testThatItRendersCorrectly_Participants_BusyAvailability() {
         verify(view: createLabelForParticipants(.busy))
     }
-    
+
     func createLabelForParticipants(_ availability: Availability) -> UILabel {
         guard let user = ZMUser.selfUser() else { return UILabel() }
         user.availability = availability
@@ -78,25 +78,25 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
         label.sizeToFit()
         return label
     }
-    
+
     // MARK: - Placeholder labels
 
     func testThatItRendersCorrectly_Placeholder_NoneAvailability() {
         XCTAssertTrue(createLabelForPlaceholder(.none).frame.size.width == 0.0)
     }
-    
+
     func testThatItRendersCorrectly_Placeholder_AvailableAvailability() {
         verify(view: createLabelForPlaceholder(.available))
     }
-    
+
     func testThatItRendersCorrectly_Placeholder_AwayAvailability() {
         verify(view: createLabelForPlaceholder(.away))
     }
-    
+
     func testThatItRendersCorrectly_Placeholder_BusyAvailability() {
         verify(view: createLabelForPlaceholder(.busy))
 	}
-    
+
     func createLabelForPlaceholder(_ availability: Availability) -> UILabel {
         guard let user = ZMUser.selfUser() else { return UILabel() }
         user.availability = availability

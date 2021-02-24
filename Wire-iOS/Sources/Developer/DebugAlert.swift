@@ -24,37 +24,37 @@ import WireSystem
 
 /// Presents debug alerts
 final class DebugAlert {
-    
+
     private struct Action {
         let text: String
         let type: UIAlertAction.Style
         let action: (() -> Void)?
     }
-    
+
     private static var isShown = false
-    
+
     /// Presents an alert, if in developer mode, otherwise do nothing
     static func showGeneric(message: String) {
         self.show(message: message)
     }
-    
+
     /// Presents an alert to send logs, if in developer mode, otherwise do nothing
     static func showSendLogsMessage(message: String) {
         let action1 = Action(text: "Send to Devs", type: .destructive) {
             DebugLogSender.sendLogsByEmail(message: message)
         }
-        
+
         let action2 = Action(text: "Send to Devs & AVS", type: .destructive) {
             DebugLogSender.sendLogsByEmail(message: message, shareWithAVS: true)
         }
-        
+
         self.show(
             message: message,
             actions: [action1, action2],
             title: "Send debug logs"
         )
     }
-    
+
     /// Presents a debug alert with configurable messages and events.
     /// If not in developer mode, does nothing.
     private static func show(
@@ -67,18 +67,18 @@ final class DebugAlert {
         guard Bundle.developerModeEnabled else { return }
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false), !isShown else { return }
         isShown = true
-        
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
+
         for action in actions {
             let alertAction = UIAlertAction(title: action.text, style: action.type, handler: { _ in
                 isShown = false
                 action.action?()
             })
-            
+
             alert.addAction(alertAction)
         }
-        
+
         if let cancelText = cancelText {
             let cancelAction = UIAlertAction(title: cancelText, style: .cancel) { _ in
                 isShown = false
@@ -88,7 +88,7 @@ final class DebugAlert {
 
         controller.present(alert, animated: true, completion: nil)
     }
-    
+
     static func displayFallbackActivityController(logPaths: [URL],
                                                   email: String,
                                                   from controller: UIViewController,
@@ -104,7 +104,7 @@ final class DebugAlert {
         }))
         controller.present(alert, animated: true, completion: nil)
     }
-    
+
 }
 
 /// Sends debug logs by email
@@ -117,15 +117,15 @@ final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
     static func sendLogsByEmail(message: String, shareWithAVS: Bool = false) {
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
-        
+
         let currentLog = ZMSLog.currentLog
         let previousLog = ZMSLog.previousLog
-        
+
         guard currentLog != nil || previousLog != nil else {
             DebugAlert.showGeneric(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs")
             return
         }
-        
+
         // Prepare subject & body
         let user = SelfUser.provider?.selfUser as? ZMUser
         let userID = user?.remoteIdentifier?.transportString() ?? ""
@@ -133,35 +133,35 @@ final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
         let mail = shareWithAVS ? WireEmail.shared.callingSupportEmail : WireEmail.shared.supportEmail
-        
+
         guard MFMailComposeViewController.canSendMail() else {
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mail, from: controller)
             return
         }
-        
+
         // compose
-        
+
         let alert = DebugLogSender()
-        
+
         let mailVC = MFMailComposeViewController()
         mailVC.setToRecipients([mail])
         mailVC.setSubject("iOS logs from \(userDescription)")
         mailVC.setMessageBody(message, isHTML: false)
-        
+
         if let currentLog = currentLog, let currentPath = ZMSLog.currentLogPath {
             mailVC.addAttachmentData(currentLog, mimeType: "text/plain", fileName: currentPath.lastPathComponent)
         }
         if let previousLog = previousLog, let previousPath = ZMSLog.previousLogPath {
             mailVC.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
         }
-        
+
         mailVC.mailComposeDelegate = alert
         alert.mailViewController = mailVC
-        
+
         self.senderInstance = alert
         controller.present(mailVC, animated: true, completion: nil)
     }
-    
+
     public func mailComposeController(_ controller: MFMailComposeViewController,
                                       didFinishWith result: MFMailComposeResult,
                                       error: Error?) {

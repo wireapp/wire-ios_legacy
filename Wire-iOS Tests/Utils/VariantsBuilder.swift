@@ -24,22 +24,22 @@ struct WritableKeyPathApplicator<Type>: Hashable {
     let keyPath: AnyKeyPath
     init<ValueType>(_ keyPath: WritableKeyPath<Type, ValueType>) {
         self.keyPath = keyPath
-        
+
         applicator = { instance, value in
             var variableInstance = instance
             guard let valueOfType = value as? ValueType else {
                 fatal("Wrong type for \(instance): \(value)")
             }
             variableInstance[keyPath: keyPath] = valueOfType
-            
+
             return variableInstance
         }
     }
-    
+
     func apply(to object: Type, value: Any) -> Type {
         return applicator(object, value)
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(keyPath)
     }
@@ -56,29 +56,29 @@ extension Bool: CaseIterable {
 }
 
 class VariantsBuilder<Type: Copyable> {
-    
+
     let initialValue: Type
-    
+
     init(initialValue: Type) {
         self.initialValue = initialValue
     }
-    
+
     func add<ValueType>(possibleValues values: [ValueType], for keyPath: WritableKeyPath<Type, ValueType>) {
         possibleValuesForKeyPath[WritableKeyPathApplicator(keyPath)] = values
     }
-    
+
     func add<ValueType: CaseIterable>(keyPath: WritableKeyPath<Type, ValueType>) {
         possibleValuesForKeyPath[WritableKeyPathApplicator(keyPath)] = ValueType.allCases as? [Any]
     }
-    
+
     var possibleValuesForKeyPath: [WritableKeyPathApplicator<Type>: [Any]] = [:]
-    
+
     func allVariants() -> [Type] {
         var result = [initialValue]
-        
+
         possibleValuesForKeyPath.forEach { (applicator, values) in
             let currentResults = result
-            
+
             result = currentResults.flatMap { previousResult in
                 return values.map { oneValue in
                     var new = previousResult.copyInstance()
@@ -87,7 +87,7 @@ class VariantsBuilder<Type: Copyable> {
                 }
             }
         }
-        
+
         return result
     }
 }

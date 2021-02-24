@@ -31,9 +31,9 @@ protocol ArchivedListViewControllerDelegate: class {
 // MARK: - ArchivedListViewController
 
 final class ArchivedListViewController: UIViewController {
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
-    
+
     fileprivate var collectionView: UICollectionView!
     fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized(uppercased: true))
     fileprivate let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
@@ -42,16 +42,16 @@ final class ArchivedListViewController: UIViewController {
     fileprivate let layoutCell = ConversationListCell()
     fileprivate var actionController: ConversationActionController?
     fileprivate var startCallController: ConversationCallController?
-    
+
     weak var delegate: ArchivedListViewControllerDelegate?
-    
+
     required init() {
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
         createViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -66,7 +66,7 @@ final class ArchivedListViewController: UIViewController {
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
     func createViews() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
@@ -88,7 +88,7 @@ final class ArchivedListViewController: UIViewController {
             self.delegate?.archivedListViewControllerWantsToDismiss(self)
         }
     }
-    
+
     func createConstraints() {
         constrain(view, archivedNavigationBar, collectionView) { view, navigationBar, collectionView in
             navigationBar.top == view.top + UIScreen.safeArea.top
@@ -107,7 +107,7 @@ final class ArchivedListViewController: UIViewController {
         self.delegate?.archivedListViewControllerWantsToDismiss(self)
         return true
     }
-    
+
 }
 
 // MARK: - CollectionViewDelegate
@@ -117,7 +117,7 @@ extension ArchivedListViewController: UICollectionViewDelegate {
         guard let conversation = viewModel[indexPath.row] else { return }
         delegate?.archivedListViewController(self, didSelectConversation: conversation)
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let showSeparator = scrollView.contentOffset.y >= 16
         guard showSeparator != archivedNavigationBar.showSeparator else { return }
@@ -128,7 +128,7 @@ extension ArchivedListViewController: UICollectionViewDelegate {
 // MARK: - CollectionViewDataSource
 
 extension ArchivedListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! ConversationListCell
         cell.conversation = viewModel[indexPath.row]
@@ -137,19 +137,19 @@ extension ArchivedListViewController: UICollectionViewDataSource, UICollectionVi
         cell.autoresizingMask = .flexibleWidth
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return layoutCell.size(inCollectionViewSize: collectionView.bounds.size)
     }
-    
+
 }
 
 // MARK: - ArchivedListViewModelDelegate
@@ -165,7 +165,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
         // no-op, ConversationListCell extended ZMConversationObserver 
     }
-    
+
 }
 
 // MARK: - ConversationListCellDelegate
@@ -181,7 +181,7 @@ extension ArchivedListViewController: ConversationListCellDelegate {
         startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()
     }
-    
+
     func conversationListCellOverscrolled(_ cell: ConversationListCell) {
         guard let conversation = cell.conversation as? ZMConversation else { return }
 

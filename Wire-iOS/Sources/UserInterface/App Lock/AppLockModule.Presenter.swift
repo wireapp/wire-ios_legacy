@@ -77,7 +77,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
         case .configChangeAcknowledged:
             authenticate()
-            
+
         case .openDeviceSettingsButtonTapped:
             router.performAction(.openDeviceSettings)
         }

@@ -21,14 +21,14 @@ import XCTest
 @testable import Wire
 
 final class TextFieldValidatorTests: XCTestCase {
-    
+
     var sut: TextFieldValidator!
-    
+
     override func setUp() {
         super.setUp()
         sut = TextFieldValidator()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

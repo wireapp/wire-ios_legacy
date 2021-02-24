@@ -27,9 +27,9 @@ protocol AddressBookHelperProtocol: class {
     var isAddressBookAccessUnknown: Bool { get }
     var isAddressBookAccessDisabled: Bool { get }
     var accessStatusDidChangeToGranted: Bool { get }
-    
+
     static var sharedHelper: AddressBookHelperProtocol { get }
-    
+
     func requestPermissions(_ callback: ((Bool)->())?)
     func persistCurrentAccessStatus()
 }
@@ -45,24 +45,24 @@ final class AddressBookHelper: AddressBookHelperProtocol {
     private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
 
     // MARK: - Permissions
-    
+
     var isAddressBookAccessUnknown: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
     }
-    
+
     var isAddressBookAccessGranted: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
-    
+
     var isAddressBookAccessDisabled: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .denied
     }
-    
+
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
     func requestPermissions(_ callback: ((Bool)->())?) {
         CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
-            DispatchQueue.main.async {                
+            DispatchQueue.main.async {
                 self?.persistCurrentAccessStatus()
                 callback?(authorized)
             }

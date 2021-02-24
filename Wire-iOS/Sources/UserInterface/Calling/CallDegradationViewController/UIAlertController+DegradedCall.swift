@@ -21,17 +21,17 @@ import UIKit
 import WireSyncEngine
 
 extension UIAlertController {
-    
+
     static func degradedCall(degradedUser: UserType?, callEnded: Bool = false, confirmationBlock: ((_ continueDegradedCall: Bool) -> Void)? = nil) -> UIAlertController {
-        
+
         // Choose localization prefix
         let prefix = callEnded
             ? "call.degraded.ended.alert"
             : "call.degraded.alert"
-        
+
         // Set message
         var message = "\(prefix).message"
-        
+
         switch degradedUser {
         case .some(let user) where user.isSelfUser:
             message = "\(message).self".localized
@@ -40,24 +40,24 @@ extension UIAlertController {
         default:
             message = "\(message).unknown".localized
         }
-        
+
         // Create controller
         let controller = UIAlertController(title: "\(prefix).title".localized, message: message, preferredStyle: .alert)
-        
+
         // Add actions
         if let confirmationBlock = confirmationBlock {
             controller.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel) { (action) in
                 confirmationBlock(false)
             })
-            
+
             controller.addAction(UIAlertAction(title: "call.degraded.alert.action.continue".localized, style: .default) { (action) in
                 confirmationBlock(true)
             })
         } else {
             controller.addAction(UIAlertAction(title: "general.ok".localized, style: .default))
         }
-        
+
         return controller
     }
-    
+
 }

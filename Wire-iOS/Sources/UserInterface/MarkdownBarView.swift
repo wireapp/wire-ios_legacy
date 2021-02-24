@@ -28,94 +28,94 @@ protocol MarkdownBarViewDelegate: class {
 
 
 final class MarkdownBarView: UIView {
-    
+
     weak var delegate: MarkdownBarViewDelegate?
-    
+
     private let stackView =  UIStackView()
     private let accentColor: UIColor = UIColor.accent()
     private let normalColor = UIColor.from(scheme: .iconNormal)
-    
+
     let headerButton         = PopUpIconButton()
     let boldButton           = IconButton()
     let italicButton         = IconButton()
     let numberListButton     = IconButton()
     let bulletListButton     = IconButton()
     let codeButton           = IconButton()
-    
+
     let buttons: [IconButton]
     var activeModes = [Markdown]()
 
     private var buttonMargin: CGFloat {
         return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
-    
+
     required init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
         super.init(frame: CGRect.zero)
         setupViews()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
-    
+
     private func setupViews() {
-        
+
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: buttonMargin)
         stackView.isLayoutMarginsRelativeArrangement = true
-        
-        
+
+
         headerButton.setIcon(.markdownH1, size: .tiny, for: .normal)
         boldButton.setIcon(.markdownBold, size: .tiny, for: .normal)
         italicButton.setIcon(.markdownItalic, size: .tiny, for: .normal)
         numberListButton.setIcon(.markdownNumberList, size: .tiny, for: .normal)
         bulletListButton.setIcon(.markdownBulletList, size: .tiny, for: .normal)
         codeButton.setIcon(.markdownCode, size: .tiny, for: .normal)
-        
+
         for button in buttons {
             button.setIconColor(normalColor, for: .normal)
             button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }
-        
+
         addSubview(stackView)
-        
+
         constrain(self, stackView) { view, stackView in
             stackView.edges == view.edges
         }
-        
+
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
         headerButton.delegate = self
         headerButton.setupView()
     }
-    
+
     @objc func textViewDidChangeActiveMarkdown(note: Notification) {
         guard let textView = note.object as? MarkdownTextView else { return }
         updateIcons(for: textView.activeMarkdown)
     }
-    
+
     // MARK: Actions
-    
+
     @objc private func buttonTapped(sender: IconButton) {
-        
+
         guard let markdown = markdown(for: sender) else { return }
-        
+
         if sender.iconColor(for: .normal) != normalColor {
             delegate?.markdownBarView(self, didDeselectMarkdown: markdown, with: sender)
         } else {
             delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: sender)
         }
     }
-    
+
     // MARK: - Conversions
-        
+
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
         case headerButton:      return headerButton.icon(for: .normal)?.headerMarkdown ?? .h1
@@ -127,29 +127,29 @@ final class MarkdownBarView: UIView {
         default:                return nil
         }
     }
-    
+
     func updateIcons(for markdown: Markdown) {
         // change header icon if necessary
         if let headerIcon = markdown.headerValue?.headerIcon {
             headerButton.setIcon(headerIcon, size: .tiny, for: .normal)
         }
-        
+
         for button in buttons {
             guard let buttonMarkdown = self.markdown(for: button) else { continue }
             let color = markdown.contains(buttonMarkdown) ? accentColor : normalColor
             button.setIconColor(color, for: .normal)
         }
     }
-    
+
     @objc func resetIcons() {
         buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
     }
 }
 
 extension MarkdownBarView: PopUpIconButtonDelegate {
-    
+
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: StyleKitIcon) {
-        
+
         if button === headerButton {
             let markdown = icon.headerMarkdown ?? .h1
             delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: button)

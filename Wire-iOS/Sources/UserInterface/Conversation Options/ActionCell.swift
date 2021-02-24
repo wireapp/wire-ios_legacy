@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
-    
+
     private let imageContainer = UIView()
     private let iconImageView = UIImageView()
     private let label = UILabel()
@@ -30,11 +30,11 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
@@ -45,7 +45,7 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label].forEach(contentView.addSubview)
     }
-    
+
     private func createConstraints() {
         constrain(contentView, label, imageContainer, iconImageView) { contentView, label, imageContainer, imageView in
             imageContainer.top == contentView.top
@@ -60,7 +60,7 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
             label.height == 56
         }
     }
-    
+
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier

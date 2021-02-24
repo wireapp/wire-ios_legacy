@@ -21,9 +21,9 @@ import XCTest
 @testable import Wire
 
 class ThreeDotsLoadingViewTests: ZMSnapshotTestCase {
-    
+
     var sut: ThreeDotsLoadingView!
-    
+
     override func setUp() {
         super.setUp()
         sut = ThreeDotsLoadingView()
@@ -36,9 +36,9 @@ class ThreeDotsLoadingViewTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-        
+
     func testThreeDotsLoadingView() {
         verify(view: sut)
     }
-    
+
 }

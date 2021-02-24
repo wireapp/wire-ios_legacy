@@ -30,7 +30,7 @@ enum ConversationCellType: Int {
 }
 
 final class DeleteMessageTests: XCTestCase {
-    
+
     var sut: DeleteMessageTests!
 
     override func setUp() {

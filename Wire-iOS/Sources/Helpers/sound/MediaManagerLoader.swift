@@ -51,7 +51,7 @@ extension MediaManagerState {
         switch (self, message) {
         case (.initial, .flowManagerLoaded):
             self = .loaded
-            
+
         default:
             // already loaded
             break
@@ -60,7 +60,7 @@ extension MediaManagerState {
 }
 
 final class MediaManagerLoader: NSObject {
-    
+
     private var flowManagerObserver: AnyObject?
     private var state: MediaManagerState = .initial {
         didSet {
@@ -71,34 +71,34 @@ final class MediaManagerLoader: NSObject {
             }
         }
     }
-    
+
     func send(message: LoadingMessage) {
         self.state.send(message: message)
     }
-    
+
     private func loadMediaManager() {
         AVSMediaManager.sharedInstance()
         configureMediaManager()
     }
-    
+
     private func configureMediaManager() {
         guard let _ = AVSFlowManager.getInstance(),
                 let mediaManager = AVSMediaManager.sharedInstance() else {
             return
         }
-        
+
         mediaManager.configureSounds()
         mediaManager.observeSoundConfigurationChanges()
         mediaManager.isMicrophoneMuted = false
         mediaManager.isSpeakerEnabled = false
     }
-    
+
     override init() {
         super.init()
         flowManagerObserver = NotificationCenter.default.addObserver(forName: FlowManager.AVSFlowManagerCreatedNotification, object: nil, queue: OperationQueue.main, using: { [weak self] _ in
             self?.send(message: .flowManagerLoaded)
         })
-        
+
         if let _ = AVSFlowManager.getInstance() {
             self.send(message: .flowManagerLoaded)
         }

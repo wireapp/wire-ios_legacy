@@ -25,15 +25,15 @@ extension SessionManager {
     static var shared: SessionManager? {
         return AppDelegate.shared.appRootRouter?.sessionManager
     }
-    
+
     static var numberOfAccounts: Int {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
-    
+
     var firstAuthenticatedAccount: Account? {
         return firstAuthenticatedAccount(excludingCredentials: nil)
     }
-    
+
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
             if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
@@ -54,7 +54,7 @@ extension SessionManager {
         let isCallKitEnabled: Bool = !(Settings.shared[.disableCallKit] ?? false)
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
         let isCallKitSupported = !UIDevice.isSimulator
-        
+
         if isCallKitEnabled && isCallKitSupported && hasAudioPermissions {
             self.callNotificationStyle = .callKit
         }

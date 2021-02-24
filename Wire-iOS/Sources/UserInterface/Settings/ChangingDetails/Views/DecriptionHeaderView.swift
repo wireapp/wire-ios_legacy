@@ -20,11 +20,11 @@ import UIKit
 
 class DescriptionHeaderView: UIView {
     let descriptionLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
-        
+
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.backgroundColor = .clear
@@ -41,9 +41,9 @@ class DescriptionHeaderView: UIView {
             descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

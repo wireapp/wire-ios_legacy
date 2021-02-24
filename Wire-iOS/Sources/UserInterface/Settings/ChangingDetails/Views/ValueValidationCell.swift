@@ -64,7 +64,7 @@ class ValueValidationCell: UITableViewCell {
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -(24 + ValidatedTextField.ConfirmButtonWidth)),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
     }
 

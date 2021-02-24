@@ -42,7 +42,7 @@ final class PinnableThumbnailViewController: UIViewController {
     // MARK: - Changing the Previewed Content
 
     fileprivate(set) var thumbnailContentSize = CGSize(width: 100, height: 100)
-    
+
     func removeCurrentThumbnailContentView() {
         contentView?.removeFromSuperview()
         contentView = nil
@@ -74,25 +74,25 @@ final class PinnableThumbnailViewController: UIViewController {
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         thumbnailView.addGestureRecognizer(panGestureRecognizer)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if !hasDoneInitialLayout {
             view.layoutIfNeeded()
             view.backgroundColor = .clear
-            
+
             updateThumbnailAfterLayoutUpdate()
             hasDoneInitialLayout = true
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if !hasEnabledPinningBehavior {
             animator.addBehavior(self.pinningBehavior)
             hasEnabledPinningBehavior = true
@@ -106,7 +106,7 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
         thumbnailView.shape = .rounded(radius: 12)
-        
+
         thumbnailContainerView.layer.shadowRadius = 30
         thumbnailContainerView.layer.shadowOpacity = 0.32
         thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
@@ -128,7 +128,7 @@ final class PinnableThumbnailViewController: UIViewController {
     @objc func orientationDidChange() {
         contentView?.layoutForOrientation()
     }
-    
+
     // MARK: - Size
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -181,7 +181,7 @@ final class PinnableThumbnailViewController: UIViewController {
             view?.layoutIfNeeded()
             contentView?.layoutForOrientation()
         }
-        
+
         if animated {
             UIView.animate(withDuration: 0.2, animations: changesBlock)
         } else {

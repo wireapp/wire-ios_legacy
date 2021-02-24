@@ -50,7 +50,7 @@ final class RecentlyUsedEmojiSection: NSObject, EmojiSection {
         guard backing.count > capacity else { return }
         backing.removeObjects(at: IndexSet(integersIn: capacity..<backing.count))
     }
-    
+
 }
 
 

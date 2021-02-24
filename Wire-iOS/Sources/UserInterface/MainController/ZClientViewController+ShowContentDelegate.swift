@@ -44,7 +44,7 @@ extension ZClientViewController {
         wrapInNavigationControllerAndPresent(viewController: profileViewController)
     }
 
-    
+
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         switch conversation.conversationType {
         case .connection:
@@ -59,10 +59,10 @@ extension ZClientViewController {
             break
         }
     }
-    
+
     public func showConversationList() {
         transitionToList(animated: true, completion: nil)
     }
-    
-    
+
+
 }

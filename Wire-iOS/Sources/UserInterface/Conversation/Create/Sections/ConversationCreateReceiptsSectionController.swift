@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 final class ConversationCreateReceiptsSectionController: ConversationCreateSectionController {
-    
+
     typealias Cell = ConversationCreateReceiptsCell
 
     var toggleAction: ((Bool) -> Void)?

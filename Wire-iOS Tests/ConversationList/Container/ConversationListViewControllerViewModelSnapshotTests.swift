@@ -28,18 +28,18 @@ final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         coreDataFixture = CoreDataFixture()
-        
+
         let account = Account.mockAccount(imageData: Data())
         let selfUser = MockUserType.createSelfUser(name: "Bob")
         sut = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
-        
+
         mockViewController = MockConversationListContainer(viewModel: sut)
-        
+
         sut.viewController = mockViewController
     }
-    
+
     override func tearDown() {
         sut = nil
         mockView = nil
@@ -48,7 +48,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
 
         super.tearDown()
     }
-    
+
     //MARK: - Action menu
     func testForActionMenu() {
         coreDataFixture.teamTest {

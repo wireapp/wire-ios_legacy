@@ -30,9 +30,9 @@ extension ConversationViewController {
             if outgoingConnectionViewController != nil {
                 return
             }
-            
+
             createOutgoingConnectionViewController()
-            
+
             if let outgoingConnectionViewController = outgoingConnectionViewController {
                 outgoingConnectionViewController.willMove(toParent: self)
                 view.addSubview(outgoingConnectionViewController.view)

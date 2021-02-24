@@ -22,46 +22,46 @@ import WireDataModel
 import WireSyncEngine
 
 extension ZMConversation {
-    
+
     var isCallingSupported: Bool {
         return localParticipants.count > 1
     }
-    
+
     var firstCallingParticipantOtherThanSelf: UserType? {
         let participant = voiceChannel?.participants.first { !$0.user.isSelfUser }
         return participant?.user
     }
-    
+
     func startAudioCall() {
         if warnAboutNoInternetConnection() {
             return
         }
-        
+
         joinVoiceChannel(video: false)
     }
-    
+
     func startVideoCall() {
         if warnAboutNoInternetConnection() {
             return
         }
-        
+
         warnAboutSlowConnection { (abortCall) in
             guard !abortCall else { return }
             self.joinVoiceChannel(video: true)
         }
     }
-    
+
     func joinCall() {
         joinVoiceChannel(video: false)
     }
-    
+
     func joinVoiceChannel(video: Bool) {
         guard let userSession = ZMUserSession.shared() else { return }
 
         let onGranted : (_ granted: Bool ) -> Void = { granted in
             if granted {
                 let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
-                
+
                 if joined {
                     Analytics.shared.tagMediaActionCompleted(video ? .videoCall : .audioCall, inConversation: self)
                 }
@@ -69,7 +69,7 @@ extension ZMConversation {
                 self.voiceChannel?.leave(userSession: userSession, completion: nil)
             }
         }
-        
+
         UIApplication.wr_requestOrWarnAboutMicrophoneAccess { granted in
             if video {
                 UIApplication.wr_requestOrWarnAboutVideoAccess { _ in
@@ -81,38 +81,38 @@ extension ZMConversation {
                 onGranted(granted)
             }
         }
-        
+
     }
-    
+
     func warnAboutSlowConnection(handler : @escaping (_ abortCall: Bool) -> Void) {
         if NetworkConditionHelper.shared.qualityType() == .type2G {
             let badConnectionController = UIAlertController(title: "error.call.slow_connection.title".localized, message: "error.call.slow_connection".localized, preferredStyle: .alert)
-            
+
             badConnectionController.addAction(UIAlertAction(title: "error.call.slow_connection.call_anyway".localized, style: .default, handler: { (_) in
                 handler(false)
             }))
-            
+
             badConnectionController.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (_) in
                 handler(true)
             }))
-            
-            
+
+
             ZClientViewController.shared?.present(badConnectionController, animated: true)
         } else {
             handler(false)
         }
     }
-    
+
     func warnAboutNoInternetConnection() -> Bool {
         guard AppDelegate.isOffline else {
             return false
         }
-        
+
         let internetConnectionAlert = UIAlertController.alertWithOKButton(title: "voice.network_error.title".localized,
                                                                           message: "voice.network_error.body".localized)
-        
+
         AppDelegate.shared.window?.rootViewController?.present(internetConnectionAlert, animated: true)
-        
+
         return true
     }
 
@@ -128,7 +128,7 @@ extension ZMConversation {
 
         alertPresenter.present(controller, animated: true)
     }
-    
+
     /// Ends all the active calls, except the conversation's incoming call, if any.
     func endAllCallsExceptIncoming(completion: @escaping () -> ()) {
         guard let sharedSession = ZMUserSession.shared() else { return }

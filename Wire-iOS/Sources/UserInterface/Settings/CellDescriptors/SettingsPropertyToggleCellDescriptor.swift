@@ -39,13 +39,13 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
     var visible: Bool = true
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
-    
+
     init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .none) {
         self.settingsProperty = settingsProperty
         self.inverse = inverse
         self.identifier = identifier
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let toggleCell = cell as? SettingsToggleCell {
@@ -56,20 +56,20 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
             else {
                 boolValue = false
             }
-            
+
             if self.inverse {
                 boolValue = !boolValue
             }
-            
+
             toggleCell.switchView.isOn = boolValue
             toggleCell.switchView.accessibilityLabel = identifier
             toggleCell.switchView.isEnabled = self.settingsProperty.enabled
         }
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
         var valueToSet = false
-        
+
         if let value = value?.value() {
             switch value {
             case let numberValue as NSNumber:
@@ -82,11 +82,11 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
                 fatal("Unknown type: \(type(of: value))")
             }
         }
-        
+
         if self.inverse {
             valueToSet = !valueToSet
         }
-        
+
         do {
             try self.settingsProperty << SettingsPropertyValue(valueToSet)
         }

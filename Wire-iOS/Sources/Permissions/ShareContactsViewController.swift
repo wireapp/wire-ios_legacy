@@ -28,11 +28,11 @@ extension String {
     func withCustomParagraphSpacing() -> NSMutableAttributedString {
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 10
-        
+
         let attributedText = NSMutableAttributedString(string: self,
                                                        attributes: [
                                                         NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        
+
         return attributedText
     }
 }
@@ -42,7 +42,7 @@ extension UILabel {
         let heroLabel = UILabel()
         heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         heroLabel.numberOfLines = 0
-        
+
         return heroLabel
     }
 }
@@ -64,7 +64,7 @@ final class ShareContactsViewController: UIViewController {
     var backgroundBlurDisabled = false
     var notNowButtonHidden = false
     private(set) var showingAddressBookAccessDeniedViewController = false
-    
+
     private let notNowButton: UIButton = {
         let notNowButton = UIButton(type: .custom)
         notNowButton.titleLabel?.font = UIFont.smallLightFont
@@ -72,50 +72,50 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
         notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
-        
+
         return notNowButton
     }()
-    
+
     private let heroLabel: UILabel = {
         let heroLabel = UILabel.createHeroLabel()
         heroLabel.font = UIFont.largeSemiboldFont
         heroLabel.attributedText = ShareContactsViewController.attributedHeroText
-        
+
         return heroLabel
     }()
-    
+
     private let shareContactsButton: Button = {
         let shareContactsButton = Button(style: .full)
         shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
-        
+
         return shareContactsButton
     }()
-    
+
     private let shareContactsContainerView: UIView = UIView()
     private let addressBookAccessDeniedViewController: PermissionDeniedViewController = {
         let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController()
-        
+
         return addressBookAccessDeniedViewController
     }()
-    
+
     private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
-    
+
     private static var attributedHeroText: NSAttributedString {
         let title = "registration.share_contacts.hero.title".localized
         let paragraph = "registration.share_contacts.hero.paragraph".localized
-        
+
         let text = [title, paragraph].joined(separator: "\u{2029}")
-        
+
         let attributedText = text.withCustomParagraphSpacing()
-        
+
         attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
             NSAttributedString.Key.font: UIFont.largeThinFont
             ], range: (text as NSString).range(of: paragraph))
-        
+
         return attributedText
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -186,7 +186,7 @@ final class ShareContactsViewController: UIViewController {
 
         NSLayoutConstraint.activate(constraints)
     }
-    
+
     // MARK: - Actions
 
     @objc
@@ -200,19 +200,19 @@ final class ShareContactsViewController: UIViewController {
             }
         })
     }
-    
+
     @objc
     private func shareContactsLater(_ sender: Any?) {
         delegate?.shareDidSkip(self)
     }
 
     // MARK: - AddressBook Access Denied ViewController
-    
+
     func displayContactsAccessDeniedMessage(animated: Bool) {
         endEditing()
-        
+
         showingAddressBookAccessDeniedViewController = true
-        
+
         if animated {
             UIView.transition(from: shareContactsContainerView,
                               to: addressBookAccessDeniedViewController.view,

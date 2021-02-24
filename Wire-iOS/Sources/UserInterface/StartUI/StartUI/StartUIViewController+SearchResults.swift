@@ -50,32 +50,32 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
                                             section: SearchResultsViewControllerSection) {
-        
+
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
         } else {
             delegate?.startUI(self, didSelect: user)
         }
     }
-    
+
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
-    
+
         guard user.isConnected, !user.isBlocked else {
             return
         }
-        
+
         delegate?.startUI(self, didSelect: user)
     }
-    
+
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
         guard conversation.conversationType == .group || conversation.conversationType == .oneOnOne else { return }
 
         delegate?.startUI(self, didSelect: conversation)
     }
-    
+
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnSeviceUser user: ServiceUser) {
 
@@ -95,10 +95,10 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                 weakSelf.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
-        
+
         navigationController?.pushViewController(detail, animated: true)
     }
-    
+
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
@@ -108,11 +108,11 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             createGuestRoom()
         }
     }
-    
+
     func openCreateGroupController() {
         let controller = ConversationCreationController()
         controller.delegate = self
-        
+
         if self.traitCollection.horizontalSizeClass == .compact {
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
             self.navigationController?.pushViewController(avoiding, animated: true) {
@@ -124,14 +124,14 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             self.present(embeddedNavigationController, animated: true)
         }
     }
-    
+
     func createGuestRoom() {
         guard let userSession = ZMUserSession.shared() else {
             fatal("No user session present")
         }
-        
+
         isLoadingViewVisible = true
-        
+
         userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 
@@ -155,7 +155,7 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
             controller.navigationController?.dismiss(animated: true, completion: completion)
         }
     }
-    
+
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,
                                         participants: UserSet,
@@ -171,7 +171,7 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                        enableReceipts: enableReceipts)
         }
     }
-    
+
 }
 
 extension StartUIViewController: EmptySearchResultsViewDelegate {

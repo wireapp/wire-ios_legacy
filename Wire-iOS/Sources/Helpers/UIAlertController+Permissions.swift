@@ -35,25 +35,25 @@ extension UIAlertController {
             message: "NSMicrophoneUsageDescription".infoPlistLocalized
         )
     }
-    
+
     class var photoLibraryPermissionAlert: UIAlertController {
         return permissionAlert(
             title: "library.alert.permission_warning.title".localized,
             message: "library.alert.permission_warning.not_allowed.explaination".localized
         )
     }
-    
+
     private class func permissionAlert(title: String, message: String, completion: AlertActionHandler? = nil) -> UIAlertController {
-        
+
         let alert = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert
         )
-        
+
         alert.addAction(.actionLater(with: completion))
         alert.addAction(.actionSettings(with: completion))
-        
+
         return alert
     }
 }
@@ -67,7 +67,7 @@ extension UIAlertAction {
                 completion?(action)
         })
     }
-    
+
     class func actionSettings(with completion: AlertActionHandler?) -> UIAlertAction {
         return UIAlertAction(
             title: "general.open_settings".localized,

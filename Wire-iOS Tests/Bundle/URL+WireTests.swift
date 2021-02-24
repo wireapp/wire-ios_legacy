@@ -21,9 +21,9 @@ import WireTransport
 @testable import Wire
 
 final class URL_WireTests: XCTestCase {
-    
+
     var be: BackendEnvironment!
-    
+
     override func setUp() {
         super.setUp()
         let bundle = Bundle.backendBundle
@@ -31,13 +31,13 @@ final class URL_WireTests: XCTestCase {
         EnvironmentType.production.save(in: defaults)
         be = BackendEnvironment(userDefaults: defaults, configurationBundle: bundle)
     }
-    
+
     override func tearDown() {
         be = nil
         super.tearDown()
     }
-    
-    
+
+
     func testThatWebsiteURLsAreLoadedCorrectly() {
         let websiteURL = URL(string: "https://wire.com")!
         XCTAssertEqual(be.websiteURL, websiteURL)
@@ -54,14 +54,14 @@ final class URL_WireTests: XCTestCase {
         XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: true), websiteURL.appendingPathComponent("legal/terms/teams"))
         XCTAssertEqual(URL.wr_termsOfServicesURL(forTeamAccount: false), websiteURL.appendingPathComponent("legal/terms/personal"))
     }
-    
+
     func testThatSupportURLsAreLoadedCorrectly() {
         let supportURL = URL(string: "https://support.wire.com")!
         XCTAssertEqual(WireUrl.shared.support, supportURL)
         XCTAssertEqual(URL.wr_emailAlreadyInUseLearnMore, supportURL.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-"))
         XCTAssertEqual(URL.wr_askSupport, supportURL.appendingPathComponent("hc/requests/new"))
     }
-    
+
     func testThatAccountURLsAreLoadedCorrectly() {
         let accountsURL = URL(string: "https://account.wire.com")!
         XCTAssertEqual(be.accountsURL, accountsURL)

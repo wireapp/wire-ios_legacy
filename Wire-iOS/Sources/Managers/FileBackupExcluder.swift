@@ -25,36 +25,36 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class FileBackupExcluder: BackupExcluder {
-   
+
     private static let filesToExclude: [FileInDirectory] = [
         (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
         (.libraryDirectory, ".")
     ]
-    
+
     init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillEnterForeground(_:)),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: .none)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillResignActive(_:)),
                                                name: UIApplication.willResignActiveNotification,
                                                object: .none)
-        
+
         self.excludeFilesFromBackup()
     }
-    
+
     @objc
     private func applicationWillEnterForeground(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
-    
+
     @objc
     private func applicationWillResignActive(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
-    
+
     private func excludeFilesFromBackup() {
         do {
             try FileBackupExcluder.exclude(filesToExclude: FileBackupExcluder.filesToExclude)

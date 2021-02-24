@@ -24,7 +24,7 @@ protocol PulsingIconImageStyle {
 }
 
 class PulsingIconImageView: IconImageView {
-        
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         NotificationCenter.default.addObserver(
@@ -34,15 +34,15 @@ class PulsingIconImageView: IconImageView {
             object: nil
         )
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func applicationDidBecomeActive() {
         refreshPulsing()
     }
-    
+
     func set(style: (IconImageStyle & PulsingIconImageStyle)? = nil,
              size: StyleKitIcon.Size? = nil,
              color: UIColor? = nil)
@@ -50,7 +50,7 @@ class PulsingIconImageView: IconImageView {
         super.set(style: style, size: size, color: color)
         refreshPulsing()
     }
-    
+
     func startPulsing() {
         alpha = 1
         UIView.animate(
@@ -61,13 +61,13 @@ class PulsingIconImageView: IconImageView {
                 self.alpha = 0.2
         })
     }
-    
+
     func stopPulsing() {
         UIView.animate(withDuration: 0, animations: {
             self.alpha = 1
         })
     }
-    
+
     private func refreshPulsing() {
         guard let style = style as? PulsingIconImageStyle else { return }
         style.shouldPulse ? startPulsing() : stopPulsing()

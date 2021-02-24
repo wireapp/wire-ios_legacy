@@ -24,27 +24,27 @@ extension ConversationInputBarViewController {
     var isInMentionsFlow: Bool {
         return mentionsHandler != nil
     }
-    
+
     var canInsertMention: Bool {
         guard isInMentionsFlow, let mentionsView = mentionsView, mentionsView.users.count > 0 else {
             return false
         }
         return true
     }
-    
+
     func insertBestMatchMention() {
         guard canInsertMention, let mentionsView = mentionsView else {
             fatal("Cannot insert best mention")
         }
-        
+
         if let bestSuggestion = mentionsView.selectedUser {
             insertMention(for: bestSuggestion)
         }
     }
-    
+
     func insertMention(for user: UserType) {
         guard let handler = mentionsHandler else { return }
-        
+
         let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
 
         let (range, attributedText) = handler.replacement(forMention: user, in: text)
@@ -53,7 +53,7 @@ extension ConversationInputBarViewController {
         playInputHapticFeedback()
         dismissMentionsIfNeeded()
     }
-    
+
     func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
@@ -78,7 +78,7 @@ extension ConversationInputBarViewController: UserSearchResultsViewControllerDel
 }
 
 extension ConversationInputBarViewController {
-    
+
     func dismissMentionsIfNeeded() {
         mentionsHandler = nil
         mentionsView?.dismiss()
@@ -101,7 +101,7 @@ extension ConversationInputBarViewController {
 
     func registerForTextFieldSelectionChange() {
         guard !ProcessInfo.processInfo.isRunningTests else { return }
-        
+
         textfieldObserverToken = inputBar.textView.observe(\MarkdownTextView.selectedTextRange, options: [.new]) { [weak self] (textView: MarkdownTextView, change: NSKeyValueObservedChange<UITextRange?>) -> Void in
             let newValue = change.newValue ?? nil
             self?.triggerMentionsIfNeeded(from: textView, with: newValue)

@@ -22,7 +22,7 @@ import SnapshotTesting
 import WireDataModel
 
 final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: ConnectRequestsViewController!
     var mockConnectionRequest: SwiftMockConversation!
 
@@ -40,13 +40,13 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         mockUser.accentColorValue = .brightOrange
         mockUser.handle = "bruno"
         mockConnectionRequest.connectedUserType = mockUser
-        
+
         sut.connectionRequests = [mockConnectionRequest]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockConnectionRequest = nil
@@ -69,7 +69,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
 
         sut.connectionRequests = [secondConnectionRequest, mockConnectionRequest]
         sut.reload(animated: false)
-        
+
         verify(matching: sut)
     }
 }

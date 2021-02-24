@@ -20,16 +20,16 @@ import XCTest
 @testable import Wire
 
 final class CanvasViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: CanvasViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = CanvasViewController()
 
         sut.loadViewIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

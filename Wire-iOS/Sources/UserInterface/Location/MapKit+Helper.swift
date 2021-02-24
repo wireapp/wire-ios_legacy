@@ -21,32 +21,32 @@ import MapKit
 import WireDataModel
 
 extension CLLocationCoordinate2D {
-    
+
     var location: CLLocation {
         return CLLocation(latitude: latitude, longitude: longitude)
     }
-    
+
 }
 
 extension CLPlacemark {
-    
+
     func formattedAddress(_ includeCountry: Bool) -> String? {
         let lines: [String]?
-        
+
         if #available(iOS 11.0, *) {
             lines = [subThoroughfare, thoroughfare, locality, subLocality, administrativeArea, postalCode, country].compactMap { $0 }
-            
+
         } else {
             lines = addressDictionary?["FormattedAddressLines"] as? [String]
         }
-        
+
         return includeCountry ? lines?.joined(separator: ", ") : lines?.dropLast().joined(separator: ", ")
     }
-    
+
 }
 
 extension MKMapView {
-    
+
     var zoomLevel: Int {
         get {
             let float = log2(360 * (Double(frame.height / 256) / region.span.longitudeDelta))
@@ -54,12 +54,12 @@ extension MKMapView {
             guard float.isNormal else { return 16 }
             return Int(float)
         }
-        
+
         set {
             setCenterCoordinate(centerCoordinate, zoomLevel: newValue)
         }
     }
-    
+
     func setCenterCoordinate(_ coordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool = false) {
         guard CLLocationCoordinate2DIsValid(coordinate) else { return }
         let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(zoomLevel: zoomLevel, viewSize: Float(frame.height)))
@@ -83,7 +83,7 @@ extension LocationData {
 }
 
 extension MKMapView {
-    
+
     func locationData(name: String?) -> LocationData {
         return .locationData(
             withLatitude: Float(centerCoordinate.latitude),
@@ -92,15 +92,15 @@ extension MKMapView {
             zoomLevel: Int32(zoomLevel)
         )
     }
-    
+
     func storeLocation() {
         let location: LocationData = locationData(name: nil)
         Settings.shared[.lastUserLocation] = location
     }
-    
+
     func restoreLocation(animated: Bool) {
         guard let location: LocationData = Settings.shared[.lastUserLocation] else { return }
         setCenterCoordinate(location.coordinate, zoomLevel: Int(location.zoomLevel), animated: animated)
     }
-    
+
 }

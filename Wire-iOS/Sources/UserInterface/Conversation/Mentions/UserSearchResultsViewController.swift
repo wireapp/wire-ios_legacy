@@ -79,7 +79,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
             isKeyboardCollapsedFirstCalled = false
         }
     }
-    
+
     weak var delegate: UserSearchResultsViewControllerDelegate?
 
     private var keyboardObserver: KeyboardBlockObserver?
@@ -89,7 +89,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
 
         setupCollectionView()
         setupConstraints()
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame(_:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
@@ -106,16 +106,16 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
             }
         }
     }
-    
+
     private func setupCollectionView() {
         view.isHidden = true
-        
+
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.from(scheme: .barBackground)
-        
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
@@ -125,7 +125,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
 
         view.backgroundColor = UIColor.black.withAlphaComponent(0.32)
         view.addSubview(collectionView)
-        
+
         view.accessibilityIdentifier = "mentions.list.container"
         collectionView.accessibilityIdentifier = "mentions.list.collection"
     }
@@ -138,14 +138,14 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
             collectionViewHeight = collectionView.height == 0
         }
     }
-    
+
     @objc func reloadTable(with results: [UserType]) {
         searchResults = results
         resizeTable()
-        
+
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
-        
+
         scrollToLastItem()
 
         if results.count > 0 {
@@ -154,26 +154,26 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
             dismiss()
         }
     }
-    
+
     private func resizeTable() {
         let viewHeight = self.view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
         collectionViewHeight?.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
     }
-    
+
     private func scrollToLastItem() {
         let firstMatchIndexPath = IndexPath(item: searchResults.count - 1, section: 0)
-        
+
         if collectionView.containsCell(at: firstMatchIndexPath) {
             collectionView.scrollToItem(at: firstMatchIndexPath, at: .bottom, animated: false)
         }
     }
-    
+
     func show() {
         view.isHidden = false
     }
-    
+
     @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
         guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
         resizeTable()
@@ -182,7 +182,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
             self.scrollToLastItem()
         }
     }
-  
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
@@ -246,11 +246,11 @@ extension UserSearchResultsViewController: UserList {
 }
 
 extension UserSearchResultsViewController: UICollectionViewDelegate {
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResults.count
     }
@@ -263,7 +263,7 @@ extension UserSearchResultsViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension UserSearchResultsViewController: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = searchResults[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
@@ -284,7 +284,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
 
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelect(user: searchResults[indexPath.item])
         dismiss()

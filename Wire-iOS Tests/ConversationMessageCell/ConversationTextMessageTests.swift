@@ -23,29 +23,29 @@ import WireLinkPreview
 final class ConversationTextMessageTests: XCTestCase {
 
     var mockOtherUser: MockUserType!
-    
+
     override func setUp() {
         super.setUp()
         UIColor.setAccentOverride(.vividRed)
 
         mockOtherUser = MockUserType.createConnectedUser(name: "Bruno")
     }
-    
+
     override func tearDown() {
         mockOtherUser = nil
-        
+
         super.tearDown()
     }
-    
+
     func testPlainText() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. ")
         message.senderUser = mockOtherUser
-        
+
         // THEN
         verify(message: message)
     }
-    
+
     func testLinkPreview() {
         // GIVEN
         let linkURL = "http://www.example.com"
@@ -60,11 +60,11 @@ final class ConversationTextMessageTests: XCTestCase {
         let message = MockMessageFactory.textMessage(withText: "http://www.example.com")
         message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
-        
+
         // THEN
         verify(message: message)
     }
-    
+
     func testTextWithLinkPreview() {
         // GIVEN
         let linkURL = "http://www.example.com"
@@ -79,11 +79,11 @@ final class ConversationTextMessageTests: XCTestCase {
         let message = MockMessageFactory.textMessage(withText: "What do you think about this http://www.example.com")
         message.senderUser = mockOtherUser
         message.backingTextMessageData.backingLinkPreview = article
-        
+
         // THEN
         verify(message: message)
     }
-    
+
     func testTextWithQuote() {
         // GIVEN
         let conversation = SwiftMockConversation()
@@ -94,11 +94,11 @@ final class ConversationTextMessageTests: XCTestCase {
         message.senderUser = mockOtherUser
         message.backingTextMessageData.hasQuote = true
         message.backingTextMessageData.quoteMessage = quote
-        
+
         // THEN
         verify(message: message)
     }
-    
+
     func testTextWithLinkPreviewAndQuote() {
         // GIVEN
         let linkURL = "http://www.example.com"
@@ -119,11 +119,11 @@ final class ConversationTextMessageTests: XCTestCase {
         message.backingTextMessageData.backingLinkPreview = article
         message.backingTextMessageData.hasQuote = true
         message.backingTextMessageData.quoteMessage = quote
-        
+
         // THEN
         verify(message: message)
     }
-    
+
     func testMediaPreviewAttachment() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "https://www.youtube.com/watch?v=l7aqpSTa234")
@@ -133,7 +133,7 @@ final class ConversationTextMessageTests: XCTestCase {
                            permalink: URL(string: "https://www.youtube.com/watch?v=l7aqpSTa234")!,
                            thumbnails: [], originalRange: NSRange(location: 0, length: 43))
         ]
-        
+
         // THEN
         verify(message: message, waitForTextViewToLoad: true)
     }
@@ -185,7 +185,7 @@ final class ConversationTextMessageTests: XCTestCase {
                            permalink: URL(string: "https://www.youtube.com/watch?v=l7aqpSTa234")!,
                            thumbnails: [], originalRange: NSRange(location: 14, length: 43))
         ]
-        
+
         // THEN
         verify(message: message)
     }

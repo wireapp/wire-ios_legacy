@@ -90,7 +90,7 @@ final class IncomingConnectionView: UIView {
             fallbackName: "",
             addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
-        
+
         usernameLabel.attributedText = viewModel.title
         usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
@@ -114,7 +114,7 @@ final class IncomingConnectionView: UIView {
             usernameLabel.top == selfView.top + 18
             usernameLabel.centerX == selfView.centerX
             usernameLabel.left >= selfView.left
-            
+
             userDetailView.centerX == selfView.centerX
             userDetailView.top == usernameLabel.bottom + 4
             userDetailView.left >= selfView.left

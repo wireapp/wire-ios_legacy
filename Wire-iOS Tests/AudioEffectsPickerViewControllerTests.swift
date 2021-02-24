@@ -21,32 +21,32 @@ import XCTest
 
 final class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
     var sut: AudioEffectsPickerViewController! = .none
-    
-    
+
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     override func setUp() {
         super.setUp()
-        
+
         let path = Bundle(for: type(of: self)).path(forResource: "audio_sample", ofType: "m4a")!
         self.sut = AudioEffectsPickerViewController(recordingPath: path, duration: TimeInterval(10.0))
         self.sut.normalizedLoudness = (0...100).map { Float($0) / 100.0 }
         self.sut.progressView.samples = self.sut.normalizedLoudness
     }
-    
+
     func prepareForSnapshot() -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)
         self.sut.endAppearanceTransition()
-        
+
         let container = UIView()
         container.addSubview(self.sut.view)
         container.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
         container.translatesAutoresizingMaskIntoConstraints = false
         sut.view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             container.heightAnchor.constraint(equalToConstant: 216),
             container.widthAnchor.constraint(equalToConstant: 320),
@@ -55,29 +55,29 @@ final class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
             sut.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             sut.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
         ])
-        
+
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container
     }
-    
+
     func testInitialState() {
         self.verify(view: self.prepareForSnapshot())
     }
-    
+
     func testPlayingProgressState() {
         let preparedView = self.prepareForSnapshot()
-        
+
         self.sut.setState(.playing, animated: false)
         self.verify(view: preparedView)
     }
-    
+
     func testTooltipState() {
         let preparedView = self.prepareForSnapshot()
         self.sut.setState(.tip, animated: false)
         self.verify(view: preparedView)
     }
-    
+
     func testEffectSelectedState() {
         let preparedView = self.prepareForSnapshot()
 

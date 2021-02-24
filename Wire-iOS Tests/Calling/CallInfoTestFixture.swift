@@ -41,7 +41,7 @@ struct CallInfoTestFixture {
     }
 
     // MARK: - OneToOne Audio
-    
+
     private var hashBoxOtherUser: HashBoxUser {
         return HashBox(value: otherUser)
     }
@@ -93,7 +93,7 @@ struct CallInfoTestFixture {
             userEnabledCBR: false
         )
     }
-    
+
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             allowPresentationModeUpdates: false,

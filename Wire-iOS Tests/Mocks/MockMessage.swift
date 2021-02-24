@@ -38,7 +38,7 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
             XCTFail("This property should not be used in tests")
             return nil
         }
-        
+
         set {
             XCTFail("This property should not be used in tests")
         }

@@ -21,19 +21,19 @@ import XCTest
 import Down
 
 final class LinkInteractionTextViewTests: XCTestCase {
-    
+
     var sut: LinkInteractionTextView!
-    
+
     override func setUp() {
         super.setUp()
         sut = LinkInteractionTextView(frame: .zero, textContainer: nil)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItOpensNormalLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
             // GIVEN
@@ -46,7 +46,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
             XCTAssertTrue(shouldOpenURL)
         }
     }
-    
+
     func testThatItDoesNotPreviewNormalLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
             // GIVEN
@@ -59,10 +59,10 @@ final class LinkInteractionTextViewTests: XCTestCase {
             XCTAssertFalse(shouldOpenURL)
         }
     }
-    
+
     // Note: Markdown links should not be opened directly, but only after
     // confirmation from the user.
-    
+
     func testThatItDoesNotOpenMarkdownLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
             // GIVEN
@@ -92,7 +92,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
         // THEN
         XCTAssertFalse(shouldOpenURL)
     }
-    
+
     func testThatItDoesNotPreviewMarkdownLinks() {
         ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
             // GIVEN

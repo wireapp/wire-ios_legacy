@@ -113,7 +113,7 @@ public struct PasswordRuleSet: Decodable {
 
     public func validatePassword(_ password: String) -> PasswordValidationResult {
         var violations: [PasswordValidationResult.Violation] = []
-        
+
         let length = password.count
 
         // Start by checking the length.

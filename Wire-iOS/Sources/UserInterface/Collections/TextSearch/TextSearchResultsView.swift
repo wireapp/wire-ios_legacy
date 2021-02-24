@@ -22,7 +22,7 @@ import Cartography
 final public class TextSearchResultsView: UIView {
     var tableView = UITableView()
     var noResultsView = NoResultsView()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -54,7 +54,7 @@ final public class TextSearchResultsView: UIView {
             noResultsView.center == resultsView.center
         }
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

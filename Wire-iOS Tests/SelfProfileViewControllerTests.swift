@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: SelfProfileViewController!
     var selfUser: MockUserType!
 
@@ -29,7 +29,7 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
         selfUser = nil
         super.tearDown()
     }
-  
+
     func testForAUserWithNoTeam() {
         createSut(userName: "Tarja Turunen", teamMember: false)
         verify(view: sut.view)

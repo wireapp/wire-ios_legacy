@@ -24,18 +24,18 @@ protocol GroupDetailsFooterViewDelegate: class {
 }
 
 final class GroupDetailsFooterView: ConversationDetailFooterView {
-    
+
     weak var delegate: GroupDetailsFooterViewDelegate?
-    
+
     enum Action {
         case more, invite
     }
-    
+
     func update(for conversation: GroupDetailsConversationType) {
         leftButton.isHidden = !SelfUser.current.canAddUser(to: conversation)
         leftButton.isEnabled = conversation.freeParticipantSlots > 0
     }
-    
+
     override func setupButtons() {
         leftIcon = .plus
         leftButton.setTitle("participants.footer.add_title".localized(uppercased: true), for: .normal)
@@ -51,5 +51,5 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
     override func rightButtonTapped(_ sender: IconButton) {
         delegate?.footerView(self, shouldPerformAction: .more)
     }
-    
+
 }

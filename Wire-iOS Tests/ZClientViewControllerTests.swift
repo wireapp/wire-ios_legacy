@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -62,10 +61,10 @@ final class ZClientViewControllerTests: XCTestCase {
         // Given
         let appLock = AppLockModule.MockAppLockController()
         sut._userSession!.appLockController = appLock
-        
+
         // When
         sut.appLockChangeWarningViewControllerDidDismiss()
-        
+
         // Then
         XCTAssertEqual(appLock.methodCalls.deletePasscode.count, 1)
     }

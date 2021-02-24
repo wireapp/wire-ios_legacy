@@ -20,21 +20,21 @@ import Foundation
 import WireDataModel
 
 extension Message {
-    
+
     static var shortTimeFormatter: DateFormatter = {
         var shortTimeFormatter = DateFormatter()
         shortTimeFormatter.dateStyle = .none
         shortTimeFormatter.timeStyle = .short
         return shortTimeFormatter
     }()
-    
+
     static let shortDateFormatter: DateFormatter = {
         var shortDateFormatter = DateFormatter()
         shortDateFormatter.dateStyle = .short
         shortDateFormatter.timeStyle = .none
         return shortDateFormatter
     }()
-    
+
     static let spellOutDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .long
@@ -42,12 +42,12 @@ extension Message {
         longDateFormatter.doesRelativeDateFormatting = true
         return longDateFormatter
     }()
-    
+
     static let shortDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .short
         longDateFormatter.timeStyle = .short
         return longDateFormatter
     }()
-    
+
 }

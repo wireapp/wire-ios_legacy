@@ -273,7 +273,7 @@ final class ConversationListContentController: UICollectionViewController, Popov
                                  contextMenuConfigurationForItemAt indexPath: IndexPath,
                                  point: CGPoint) -> UIContextMenuConfiguration? {
         guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
-                return nil                
+                return nil
         }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {

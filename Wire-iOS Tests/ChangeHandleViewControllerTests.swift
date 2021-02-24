@@ -66,5 +66,5 @@ fileprivate extension UIViewController {
         view.layoutIfNeeded()
         return navigationController.view
     }
-    
+
 }

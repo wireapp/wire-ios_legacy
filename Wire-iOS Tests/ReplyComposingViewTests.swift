@@ -24,7 +24,7 @@ fileprivate class ReplyComposingViewMockDelegate: NSObject, ReplyComposingViewDe
     func composingViewDidCancel(composingView: ReplyComposingView) {
         didCancelCalledCount = didCancelCalledCount + 1
     }
-    
+
     var composingViewWantsToShowMessage: Int = 0
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage) {
         composingViewWantsToShowMessage = composingViewWantsToShowMessage + 1
@@ -38,7 +38,7 @@ final class ReplyComposingViewTests: XCTestCase {
             return ReplyComposingView(message: message)
         }
     }
-    
+
     func testThatItCallsDelegateWhenTapped() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
@@ -51,7 +51,7 @@ final class ReplyComposingViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(delegate.composingViewWantsToShowMessage, 1)
     }
-    
+
     func testThatItCallsDelegateWhenXCalled() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
@@ -64,5 +64,5 @@ final class ReplyComposingViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(delegate.didCancelCalledCount, 1)
     }
-    
+
 }

@@ -37,16 +37,16 @@ final class ProfileViewControllerViewModel: NSObject {
     let conversation: ZMConversation?
     let viewer: UserType
     let context: ProfileViewControllerContext
-    
+
     weak var delegate: ProfileViewControllerDelegate? {
         didSet {
             backButtonTitleDelegate = delegate as? BackButtonTitleDelegate
         }
     }
 
-    
+
     weak var backButtonTitleDelegate: BackButtonTitleDelegate?
-    
+
     private var observerToken: Any?
     weak var viewModelDelegate: ProfileViewControllerViewModelDelegate?
 
@@ -60,7 +60,7 @@ final class ProfileViewControllerViewModel: NSObject {
         self.context = context
 
         super.init()
-        
+
         if let user = user as? ZMUser,
            let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
@@ -70,64 +70,64 @@ final class ProfileViewControllerViewModel: NSObject {
     var hasLegalHoldItem: Bool {
         return user.isUnderLegalHold || conversation?.isUnderLegalHold == true
     }
-    
+
     var shouldShowVerifiedShield: Bool {
         return user.isVerified && context != .deviceList
     }
-    
+
     var hasUserClientListTab: Bool {
         return context != .search &&
             context != .profileViewer
     }
-    
+
     var userSet: UserSet {
         return UserSet(arrayLiteral: user)
     }
-    
+
     var incomingRequestFooterHidden: Bool {
         return !user.isPendingApprovalBySelfUser
     }
-    
+
     var blockTitle: String? {
         return BlockResult.title(for: user)
     }
-    
+
     var allBlockResult: [BlockResult] {
         return BlockResult.all(isBlocked: user.isBlocked)
     }
-    
+
     func cancelConnectionRequest(completion: @escaping Completion) {
         ZMUserSession.shared()?.enqueue({
             self.user.cancelConnectionRequest()
             completion()
         })
     }
-    
+
     func toggleBlocked() {
         user.toggleBlocked()
     }
-    
+
     func openOneToOneConversation() {
         var conversation: ZMConversation? = nil
-        
+
         ZMUserSession.shared()?.enqueue({
             conversation = self.user.oneToOneConversation
         }, completionHandler: {
             guard let conversation = conversation else { return }
-            
+
             self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController,
                                                  wantsToNavigateTo: conversation)
         })
     }
-    
+
     // MARK: - Action Handlers
-    
+
     func archiveConversation() {
         transitionToListAndEnqueue {
             self.conversation?.isArchived.toggle()
         }
     }
-    
+
     func handleBlockAndUnblock() {
         switch context {
         case .search:
@@ -139,7 +139,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
 
     // MARK: - Notifications
-    
+
     func updateMute(enableNotifications: Bool) {
         ZMUserSession.shared()?.enqueue {
             self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
@@ -147,7 +147,7 @@ final class ProfileViewControllerViewModel: NSObject {
             self.viewModelDelegate?.updateFooterViews()
         }
     }
-    
+
     func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
             ZMUserSession.shared()?.perform {
@@ -170,31 +170,31 @@ final class ProfileViewControllerViewModel: NSObject {
 
 
     // MARK: - Helpers
-    
+
     func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true,
                                                        leftViewControllerRevealed: leftViewControllerRevealed) {
                                                         self.enqueueChanges(block)
         }
     }
-    
+
     func enqueueChanges(_ block: @escaping () -> Void) {
         ZMUserSession.shared()?.enqueue(block)
     }
 
     // MARK: - Factories
-    
+
     func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
         //TODO: add addressBookEntry to ZMUser
         return UserNameDetailViewModel(user: user, fallbackName: user.name ?? "", addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName)
     }
-    
+
     var profileActionsFactory: ProfileActionsFactory {
         return ProfileActionsFactory(user: user, viewer: viewer, conversation: conversation, context: context)
     }
-    
+
     // MARK: Connect
-    
+
     func sendConnectionRequest() {
         ZMUserSession.shared()?.enqueue {
             let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
@@ -203,7 +203,7 @@ final class ProfileViewControllerViewModel: NSObject {
             self.viewModelDelegate?.updateFooterViews()
         }
     }
-    
+
     func acceptConnectionRequest() {
         ZMUserSession.shared()?.enqueue {
             self.user.accept()
@@ -211,7 +211,7 @@ final class ProfileViewControllerViewModel: NSObject {
             self.viewModelDelegate?.updateFooterViews()
         }
     }
-    
+
     func ignoreConnectionRequest() {
         ZMUserSession.shared()?.enqueue {
             self.user.ignore()
@@ -226,7 +226,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
         if note.trustLevelChanged {
             viewModelDelegate?.updateShowVerifiedShield()
         }
-        
+
         if note.legalHoldStatusChanged {
             viewModelDelegate?.setupNavigationItems()
         }
@@ -234,7 +234,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
         if note.nameChanged {
             viewModelDelegate?.updateTitleView()
         }
-        
+
         if note.user.isAccountDeleted {
             viewModelDelegate?.updateFooterViews()
         }

@@ -82,7 +82,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         NSLayoutConstraint.activate([
             clientListController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clientListController.view.topAnchor.constraint(equalTo: safeTopAnchor),
-            clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         // Adaptive Constraints
@@ -125,7 +125,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         //no-op
     }
-    
+
     func displayError(_ error: Error) {
         //no-op
     }
