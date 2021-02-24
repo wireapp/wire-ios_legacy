@@ -56,13 +56,17 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     // MARK: - Typing indication
 
     func testTypingIndicationIsShown() {
-        // GIVEN & WHEN
-        /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
-        sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
-        sut.typingIndicatorView.setHidden(false, animated: false)
-
         // THEN
-        verifyInAllPhoneWidths(matching: sut)
+        verifyInAllPhoneWidths(createSut: {
+            // GIVEN & WHEN
+            let sut = ConversationInputBarViewController(conversation: mockConversation)
+
+            /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
+            sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
+            sut.typingIndicatorView.setHidden(false, animated: false)
+            
+            return sut
+        })
     }
 
     // MARK: - Ephemeral indicator button
