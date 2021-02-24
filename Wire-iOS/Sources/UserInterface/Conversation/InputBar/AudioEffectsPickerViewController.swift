@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Cartography
 import WireCommonComponents
 import UIKit
@@ -230,7 +229,6 @@ final class AudioEffectsPickerViewController: UIViewController {
 
         let colorScheme = ColorScheme()
         colorScheme.variant = .dark
-
 
         switch self.state {
         case .tip:

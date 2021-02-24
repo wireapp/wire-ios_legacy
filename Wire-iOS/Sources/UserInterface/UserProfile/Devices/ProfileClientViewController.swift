@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import Cartography
 import UIKit
@@ -401,9 +400,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
 }
 
-
 // MARK: - UserClientObserver
-
 
 extension ProfileClientViewController: UserClientObserver {
 
@@ -424,9 +421,7 @@ extension ProfileClientViewController: UserClientObserver {
 
 }
 
-
 // MARK: - UITextViewDelegate
-
 
 extension ProfileClientViewController: UITextViewDelegate {
 

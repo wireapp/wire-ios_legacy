@@ -37,7 +37,6 @@ final class URL_WireTests: XCTestCase {
         super.tearDown()
     }
 
-
     func testThatWebsiteURLsAreLoadedCorrectly() {
         let websiteURL = URL(string: "https://wire.com")!
         XCTAssertEqual(be.websiteURL, websiteURL)

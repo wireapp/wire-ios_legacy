@@ -74,7 +74,6 @@ final class ConversationViewController: UIViewController {
             break
         }
 
-
         let _participantsController = viewController?.wrapInNavigationController()
 
         return _participantsController
@@ -89,7 +88,6 @@ final class ConversationViewController: UIViewController {
         self.conversation = conversation
         self.visibleMessage = visibleMessage
         self.zClientViewController = zClientViewController
-
 
         contentViewController = ConversationContentViewController(conversation: conversation,
                                                                   message: visibleMessage,
@@ -326,7 +324,6 @@ final class ConversationViewController: UIViewController {
 
         updateRightNavigationItemsButtons()
     }
-
 
     //MARK: - ParticipantsPopover
 

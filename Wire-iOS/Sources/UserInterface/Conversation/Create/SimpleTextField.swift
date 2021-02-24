@@ -63,7 +63,6 @@ final class SimpleTextField: UITextField, Themeable {
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
 
-
     var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     var placeholderInsets: UIEdgeInsets
 

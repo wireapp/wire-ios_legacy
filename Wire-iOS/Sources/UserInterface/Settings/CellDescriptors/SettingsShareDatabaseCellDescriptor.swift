@@ -28,7 +28,6 @@ class DocumentDelegate: NSObject, UIDocumentInteractionControllerDelegate {
 
 }
 
-
 class SettingsShareDatabaseCellDescriptor: SettingsButtonCellDescriptor {
 
     let documentDelegate: DocumentDelegate

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import WireSyncEngine
 import avs
@@ -93,7 +92,6 @@ final class ZClientViewController: UIViewController {
 
         createLegalHoldDisclosureController()
     }
-
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -179,7 +177,6 @@ final class ZClientViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-
 
     override var shouldAutorotate: Bool {
         return presentedViewController?.shouldAutorotate ?? true
@@ -478,7 +475,6 @@ final class ZClientViewController: UIViewController {
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
 
-
         let labelColor: UIColor
         if #available(iOS 13.0, *) {
             labelColor = .label
@@ -511,7 +507,6 @@ final class ZClientViewController: UIViewController {
         }
 
     }
-
 
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
         topOverlayViewController?.willMove(toParent: nil)
@@ -634,7 +629,6 @@ final class ZClientViewController: UIViewController {
         }
 
     }
-
 
     /// Open the user client list screen
     ///

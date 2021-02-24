@@ -33,7 +33,6 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
                    icon: nil,
                    accessoryViewMode: .default)
 
-
     }
 
     private func logout(password: String? = nil) {

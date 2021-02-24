@@ -20,7 +20,6 @@ import Foundation
 import WireCommonComponents
 import UIKit
 
-
 enum MessageAction: CaseIterable {
     case
     digitallySign,
@@ -177,7 +176,6 @@ enum MessageAction: CaseIterable {
 
         return imageName
     }
-
 
     var selector: Selector? {
         switch self {

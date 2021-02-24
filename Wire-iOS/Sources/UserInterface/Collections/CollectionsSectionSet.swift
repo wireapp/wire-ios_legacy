@@ -19,7 +19,6 @@
 import Foundation
 import WireDataModel
 
-
 /// This option set represents the collection sections.
 struct CollectionsSectionSet: OptionSet, Hashable {
     let rawValue: UInt

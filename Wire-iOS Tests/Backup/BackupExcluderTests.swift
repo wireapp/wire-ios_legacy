@@ -76,6 +76,5 @@ final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
             XCTAssert(url.isExcludedFromBackup)
         }
 
-
     }
 }

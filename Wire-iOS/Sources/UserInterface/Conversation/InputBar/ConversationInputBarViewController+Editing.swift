@@ -16,13 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireSyncEngine
 
-
 private let endEditingNotificationName = "ConversationInputBarViewControllerShouldEndEditingNotification"
-
 
 extension ConversationInputBarViewController {
 
@@ -75,7 +72,6 @@ extension ConversationInputBarViewController {
     }
 
 }
-
 
 extension ConversationInputBarViewController: InputBarEditViewDelegate {
 

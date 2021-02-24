@@ -16,12 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 @testable import Wire
 import WireDataModel
 import XCTest
 import MapKit
-
 
 final class LocationDataTests: XCTestCase {
 

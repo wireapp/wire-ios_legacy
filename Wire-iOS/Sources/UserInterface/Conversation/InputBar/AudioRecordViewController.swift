@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 import Foundation
 import MobileCoreServices
 import UIKit
@@ -37,7 +35,6 @@ protocol AudioRecordViewControllerDelegate: class {
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType)
 }
-
 
 enum AudioRecordState {
     case recording, finishedRecording
@@ -171,7 +168,6 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
 
-
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {
                 return
@@ -255,7 +251,6 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         NSLayoutConstraint.activate(constraints)
     }
-
 
     private func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
@@ -380,7 +375,6 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
     func sendAudio() {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
-
 
         let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
         effectPath.deleteFileAtPath()

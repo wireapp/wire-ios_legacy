@@ -18,7 +18,6 @@
 
 import UIKit
 
-
 protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
@@ -69,7 +68,6 @@ final class CallStatusView: UIView {
             updateConfiguration()
         }
     }
-
 
     init(configuration: CallStatusViewInputType) {
         self.configuration = configuration

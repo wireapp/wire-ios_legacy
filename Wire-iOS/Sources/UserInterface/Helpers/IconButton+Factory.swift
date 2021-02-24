@@ -24,7 +24,6 @@ extension IconButton {
     static let width: CGFloat = 64
     static let height: CGFloat = 64
 
-
     static func acceptCall() -> IconButton {
         return .init(
             icon: .phone,

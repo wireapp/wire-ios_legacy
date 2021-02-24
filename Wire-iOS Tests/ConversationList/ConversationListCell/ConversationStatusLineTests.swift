@@ -153,7 +153,6 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "reply test 2")
     }
 
-
     func testStatusMissedCallAndUnreadMessagesAndReplies() {
         // GIVEN
         let sut = self.otherUserConversation!

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireUtilities
@@ -116,7 +115,6 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         return .lightContent
     }
 }
-
 
 extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,

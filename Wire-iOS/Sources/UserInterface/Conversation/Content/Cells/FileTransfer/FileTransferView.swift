@@ -80,8 +80,6 @@ final class FileTransferView: UIView, TransferView {
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
         self.allViews.forEach(self.addSubview)
 
-
-
         self.createConstraints()
 
         var currentElements = self.accessibilityElements ?? []
@@ -198,7 +196,6 @@ final class FileTransferView: UIView, TransferView {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
         }
-
 
         self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
         self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""

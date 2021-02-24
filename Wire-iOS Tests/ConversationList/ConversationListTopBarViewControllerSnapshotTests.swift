@@ -46,7 +46,6 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
         sut.view.backgroundColor = .black
     }
 
-
     // MARK: - legal hold
 
     func testForLegalHoldEnabled() {

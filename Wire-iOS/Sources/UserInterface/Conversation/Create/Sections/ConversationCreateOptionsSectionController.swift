@@ -30,7 +30,6 @@ class ConversationCreateOptionsSectionController: ConversationCreateSectionContr
     }
 }
 
-
 extension ConversationCreateOptionsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

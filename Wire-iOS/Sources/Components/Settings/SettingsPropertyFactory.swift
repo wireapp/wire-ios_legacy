@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
@@ -50,7 +49,6 @@ typealias SettingsSelfUser = ValidatorType & ZMEditableUser & UserType
 enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
-
 
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)

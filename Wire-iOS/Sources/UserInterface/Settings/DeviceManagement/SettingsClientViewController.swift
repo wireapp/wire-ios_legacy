@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 import Cartography
@@ -107,7 +106,6 @@ final class SettingsClientViewController: UIViewController,
         self.view.addSubview(self.topSeparator)
         self.createTableView()
         self.createConstraints()
-
 
         if fromConversation {
             setupFromConversationStyle()
@@ -309,7 +307,6 @@ final class SettingsClientViewController: UIViewController,
                                                     delegate: self,
                                                     credentials: credentials,
                                                     completion: completion)
-
 
             removalObserver?.startRemoval()
 

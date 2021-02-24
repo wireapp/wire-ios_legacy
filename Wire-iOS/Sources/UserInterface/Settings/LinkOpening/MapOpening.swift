@@ -21,7 +21,6 @@ import UIKit
 
 private let log = ZMSLog(tag: "link opening")
 
-
 enum MapsOpeningOption: Int, LinkOpeningOption {
     case apple, google
 
@@ -48,7 +47,6 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
     }
 }
 
-
 extension URL {
 
     func openAsLocation() -> Bool {
@@ -67,9 +65,7 @@ extension URL {
 
 }
 
-
 // MARK: - Private
-
 
 fileprivate extension UIApplication {
 

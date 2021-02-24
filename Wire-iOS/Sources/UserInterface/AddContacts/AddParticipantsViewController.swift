@@ -113,7 +113,6 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate let backButtonDescriptor = BackButtonDescription()
     private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
-
     weak var conversationCreationDelegate: AddParticipantsConversationCreationDelegate?
 
     fileprivate var viewModel: AddParticipantsViewModel {
@@ -171,8 +170,6 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.hasRoundCorners = true
-
-
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
 

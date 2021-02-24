@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
 extension MockUser {
-
 
     /// For mocking filename(suffix:) function of ZMUser
     ///

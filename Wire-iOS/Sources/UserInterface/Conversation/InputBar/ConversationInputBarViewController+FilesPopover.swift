@@ -26,7 +26,6 @@ extension ConversationInputBarViewController: UIDocumentPickerDelegate {
         uploadFiles(at: urls)
     }
 
-
     @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Implement documentPicker:didPickDocumentsAtURLs: instead")
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         uploadItem(at: url)
@@ -103,7 +102,6 @@ extension ConversationInputBarViewController {
                                            title: "content.file.take_video".localized,
                                            tintColor: view.tintColor,
                                            handler: takeVideoHandler))
-
 
         let browseHandler: ((UIAlertAction) -> Void) = { _ in
             let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)

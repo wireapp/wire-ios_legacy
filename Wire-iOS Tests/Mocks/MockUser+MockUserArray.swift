@@ -21,7 +21,6 @@ import Foundation
 
 extension MockUser {
 
-
     /// Get the first MockUser form the mockUsers array and cast to MockUser.
     ///
     /// Notice: actually mockUsers() returns [MockUser], not [ZMUser].

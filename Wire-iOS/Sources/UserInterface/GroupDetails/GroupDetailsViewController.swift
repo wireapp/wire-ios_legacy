@@ -50,7 +50,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         super.init(nibName: nil, bundle: nil)
 
-
         createSubviews()
 
         if let conversation = conversation as? ZMConversation {
@@ -120,17 +119,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
 
-
-
     func computeVisibleSections() -> [CollectionViewSectionController] {
 
         var sections = [CollectionViewSectionController]()
 
-
         let renameGroupSectionController = RenameGroupSectionController(conversation: conversation)
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
-
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
 

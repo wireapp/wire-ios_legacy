@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
@@ -60,7 +59,6 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-
 
     func testForWrappedInNavigationController() {
         verify(view: navigatorController.view)

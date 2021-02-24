@@ -152,7 +152,6 @@ extension ConversationListViewController.ViewModel {
         return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
 
-
     /// show PushPermissionDeniedDialog when necessary
     ///
     /// - Returns: true if PushPermissionDeniedDialog is shown

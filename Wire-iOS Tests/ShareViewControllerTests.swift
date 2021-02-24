@@ -20,9 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-
 final class MockShareViewControllerConversation: SwiftMockConversation {}
-
 
 extension MockShareViewControllerConversation: ShareDestination {
 	var showsGuestIcon: Bool {
@@ -35,7 +33,6 @@ extension MockShareViewControllerConversation: StableRandomParticipantsProvider 
 		return sortedOtherParticipants
 	}
 }
-
 
 final class ShareViewControllerTests: XCTestCase {
     fileprivate var groupConversation: MockShareViewControllerConversation!

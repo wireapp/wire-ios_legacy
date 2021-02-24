@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import Cartography
 import CoreLocation
@@ -107,7 +106,6 @@ class ClientTableViewCell: UITableViewCell {
             }
         }
     }
-
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.wr_editable = true

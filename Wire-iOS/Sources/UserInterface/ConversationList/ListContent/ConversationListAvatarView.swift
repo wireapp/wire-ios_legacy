@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Cartography
 
 /// Source of random values.
@@ -84,7 +83,6 @@ extension ZMConversation {
         return allUsers.shuffled(with: rand)
     }
 }
-
 
 fileprivate enum Mode {
     /// 1-2 participants in conversation:

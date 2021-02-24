@@ -159,7 +159,6 @@ extension CannotDecryptSystemMessageCell {
 
 }
 
-
 class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     static let userClientURL: URL = URL(string: "settings://user-client")!
@@ -380,7 +379,6 @@ private extension ConversationLike {
 }
 
 // MARK: - Descriptions
-
 
 class ConversationParticipantsChangedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ParticipantsConversationSystemMessageCell

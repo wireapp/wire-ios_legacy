@@ -22,7 +22,6 @@ import UIKit
 
 private let log = ZMSLog(tag: "link opening")
 
-
 enum BrowserOpeningOption: Int, LinkOpeningOption {
 
     case safari, chrome, firefox, snowhaze, brave
@@ -89,9 +88,7 @@ extension URL {
 
 }
 
-
 // MARK: - Private
-
 
 fileprivate extension UIApplication {
 
@@ -112,7 +109,6 @@ fileprivate extension UIApplication {
     }
 
 }
-
 
 extension URL {
 

@@ -25,7 +25,6 @@ protocol MediaAsset: AnyObject {
     var isTransparent: Bool { get }
 }
 
-
 extension MediaAsset {
     var imageView: MediaAssetView {
         if isGIF {
@@ -39,7 +38,6 @@ extension MediaAsset {
     }
 
 }
-
 
 protocol MediaAssetView: UIView {
     var mediaAsset: MediaAsset? { get set }
@@ -94,7 +92,6 @@ extension FLAnimatedImage: MediaAsset {
         return false
     }
 }
-
 
 extension UIImageView: MediaAssetView {
 

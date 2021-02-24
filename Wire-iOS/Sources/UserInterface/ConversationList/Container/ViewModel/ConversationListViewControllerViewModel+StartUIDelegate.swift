@@ -50,8 +50,6 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
 
-
-
     /// Create a new conversation or open existing 1-to-1 conversation
     ///
     /// - Parameters:

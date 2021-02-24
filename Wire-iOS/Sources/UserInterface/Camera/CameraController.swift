@@ -277,7 +277,6 @@ final class CameraController {
                 return
             }
 
-
             let imageData = photo.fileDataRepresentation()
 
             handler(PhotoResult(imageData, nil))
@@ -312,7 +311,6 @@ final class CameraController {
     }
 }
 
-
 private extension AVCaptureVideoOrientation {
 
     /// The video orientation matches against first the device orientation,
@@ -325,7 +323,6 @@ private extension AVCaptureVideoOrientation {
         let uiOrientation = self.init(uiOrientation: ui)
         return uiOrientation ?? deviceOrientation ?? .portrait
     }
-
 
     /// convert UIDeviceOrientation to AVCaptureVideoOrientation except face up/down
     ///

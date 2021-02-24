@@ -203,7 +203,6 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
-
     /// Create or delete custom passcode when appLock option did change
     /// If custom passcode is not enabled, no action is taken
     ///

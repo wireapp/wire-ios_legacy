@@ -55,7 +55,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     let emojiKeyboardViewController =  EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
 
-
     override var shouldAutorotate: Bool {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:

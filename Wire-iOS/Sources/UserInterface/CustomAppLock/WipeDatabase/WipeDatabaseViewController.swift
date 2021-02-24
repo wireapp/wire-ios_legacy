@@ -61,7 +61,6 @@ final class WipeDatabaseViewController: UIViewController {
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-
         let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) &&
                                 UIFont.normalRegularFont &&
                                 baseAttributes

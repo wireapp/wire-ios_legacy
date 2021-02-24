@@ -68,7 +68,6 @@ final class ServiceDetailView: UIView {
 
         descriptionTextView.fitInSuperview(exclude: [.top])
 
-
         NSLayoutConstraint.activate([
             descriptionTextView.topAnchor.constraint(equalTo: serviceView.bottomAnchor, constant: 16)])
     }
@@ -98,7 +97,6 @@ final class ServiceView: UIView {
         [logoView, nameLabel, providerLabel].forEach(addSubview)
 
         createConstraints()
-
 
         backgroundColor = .clear
 

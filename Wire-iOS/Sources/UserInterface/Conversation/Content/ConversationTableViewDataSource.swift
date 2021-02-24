@@ -100,7 +100,6 @@ final class ConversationTableViewDataSource: NSObject {
     var previousSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
     var currentSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
 
-
     /// calculate cell sections
     ///
     /// - Parameter forceRecalculate: true if force recreate cell with context check
@@ -449,7 +448,6 @@ extension ConversationTableViewDataSource: ConversationMessageSectionControllerD
     }
 
 }
-
 
 extension ConversationTableViewDataSource {
 

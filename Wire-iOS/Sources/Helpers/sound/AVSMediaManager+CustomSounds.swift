@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import avs
 import WireSystem
@@ -37,7 +36,6 @@ enum MediaManagerSound: String {
     case camera = "camera"
     case someoneLeavesVoiceChannelSound = "talk_later"
 }
-
 
 private let zmLog = ZMSLog(tag: "AVSMediaManager CustomSounds")
 
@@ -77,7 +75,6 @@ extension AVSMediaManager {
 
             AVSMediaManager.MediaManagerSoundConfig = soundConfig
         }
-
 
         // Unregister all previous custom sounds
         let sounds: [MediaManagerSound] = [.firstMessageReceivedSound,

@@ -38,7 +38,6 @@ final class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-
     func testThatItRendersCorrectInitially() {
         verify(view: sut.prepareForSnapshots())
     }

@@ -89,7 +89,6 @@ final class ConversationNotificationOptionsViewController: UIViewController {
     }
 }
 
-
 // MARK: - Table View
 
 extension ConversationNotificationOptionsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -168,7 +167,6 @@ extension ConversationNotificationOptionsViewController: ZMConversationObserver 
         collectionView.reloadData()
     }
 }
-
 
 extension MutedMessageTypes {
 

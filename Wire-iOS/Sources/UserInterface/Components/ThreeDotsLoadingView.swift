@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import Foundation
 import Cartography
@@ -100,7 +99,6 @@ final class ThreeDotsLoadingView: UIView {
         colorShift.duration = 4 * stepDuration
         colorShift.repeatCount = Float.infinity
         colorShift.speed = -1
-
 
         let colorShift1 = colorShift.copy() as! CAKeyframeAnimation
         colorShift1.timeOffset = 0

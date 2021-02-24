@@ -345,7 +345,6 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
 }
 
-
 // MARK: - UICollectionViewDataSource
 
 extension VideoGridViewController: UICollectionViewDataSource {

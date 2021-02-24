@@ -78,7 +78,6 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-
     // MARK : Uploading
 
     func testUploadingCell_fromThisDevice() {
@@ -215,7 +214,6 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         message.isObfuscated = true
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
-
 
         verify(message: message, waitForImagesToLoad: true)
     }

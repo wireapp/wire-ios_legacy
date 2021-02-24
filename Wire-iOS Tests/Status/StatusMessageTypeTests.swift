@@ -18,7 +18,6 @@
 import XCTest
 @testable import Wire
 
-
 func localizeString (stringToLocalize: String, language: String) -> String? {
     guard let path = Bundle.main.path (forResource: language, ofType: "lproj") else { return nil }
 

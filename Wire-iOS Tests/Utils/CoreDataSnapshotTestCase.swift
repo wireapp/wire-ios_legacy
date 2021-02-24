@@ -19,7 +19,6 @@
 import WireTesting
 import XCTest
 
-
 struct SelfProvider: SelfUserProvider {
     let selfUser: UserType & ZMEditableUser
 }
@@ -27,7 +26,6 @@ struct SelfProvider: SelfUserProvider {
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
 class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
-
 
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
@@ -73,7 +71,6 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         team = Team.insertNewObject(in: uiMOC)
         team!.remoteIdentifier = UUID()
-
 
         teamMember = Member.insertNewObject(in: uiMOC)
         teamMember!.user = selfUser
@@ -150,7 +147,6 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         conversation.lastReadServerTimeStamp = Date.distantPast
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
     }
-
 
 //MARK: - mock conversation
 

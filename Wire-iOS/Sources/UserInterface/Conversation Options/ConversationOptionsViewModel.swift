@@ -148,7 +148,6 @@ final class ConversationOptionsViewModel {
         })
     }
 
-
     /// share a conversation link
     ///
     /// - Parameter view: the source view which triggers shareLink action

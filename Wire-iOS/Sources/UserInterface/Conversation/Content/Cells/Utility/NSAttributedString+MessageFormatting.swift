@@ -22,7 +22,6 @@ import WireLinkPreview
 import WireUtilities
 import WireDataModel
 
-
 extension NSAttributedString {
 
     static var paragraphStyle: NSParagraphStyle = {
@@ -220,7 +219,6 @@ extension NSMutableAttributedString {
     }
 
 }
-
 
 fileprivate extension String {
 

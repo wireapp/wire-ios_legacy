@@ -20,7 +20,6 @@ import UIKit
 
 final class EphemeralTimeoutFormatter {
 
-
     /// A formatter to produce a string with day in full style and hour/minute in positional style
     fileprivate class DayFormatter {
 
@@ -39,7 +38,6 @@ final class EphemeralTimeoutFormatter {
             formatter.zeroFormattingBehavior = .dropAll
             return formatter
         }()
-
 
         /// return a string with day in full style and hour/minute in positional style e.g. 27 days 23:43 left
         ///

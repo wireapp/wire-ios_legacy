@@ -52,7 +52,6 @@ final class ConversationListViewModel: NSObject {
                 hasher.combine(identifier)
             }
 
-
             var identifier: SectionIdentifier {
                 switch self {
                 case.folder(label: let label):
@@ -294,13 +293,11 @@ final class ConversationListViewModel: NSObject {
         return !sections[section].items.isEmpty
     }
 
-
     private func kind(of sectionIndex: Int) -> Section.Kind? {
         guard sections.indices.contains(sectionIndex) else { return nil }
 
         return sections[sectionIndex].kind
     }
-
 
     /// Section's canonical name
     ///
@@ -391,7 +388,6 @@ final class ConversationListViewModel: NSObject {
         return item
     }
 
-
     /// Search for next items
     ///
     /// - Parameters:
@@ -431,7 +427,6 @@ final class ConversationListViewModel: NSObject {
 
         return nil
     }
-
 
     /// Search for previous items
     ///
@@ -536,7 +531,6 @@ final class ConversationListViewModel: NSObject {
             }
         }
 
-
         if let sectionNumber = sectionNumber(for: kind) {
 
             ///When the section is collaped, the setData closure of the reload() above is not called and we need to set here to make sure the folder badge calculation is correct
@@ -599,7 +593,6 @@ final class ConversationListViewModel: NSObject {
 
         return state.collapsed.contains(kind.identifier)
     }
-
 
     /// set a collpase state of a section
     ///

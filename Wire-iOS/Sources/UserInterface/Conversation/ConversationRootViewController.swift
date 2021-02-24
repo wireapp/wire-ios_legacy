@@ -43,8 +43,6 @@ final class ConversationRootViewController: UIViewController {
                                                                 visibleMessage: message as? ZMMessage,
                                                                 zClientViewController: clientViewController)
 
-
-
         conversationViewController = conversationController
 
         let navbar = UINavigationBar()

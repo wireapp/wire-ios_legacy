@@ -44,7 +44,6 @@ final class ProfileViewControllerViewModel: NSObject {
         }
     }
 
-
     weak var backButtonTitleDelegate: BackButtonTitleDelegate?
 
     private var observerToken: Any?
@@ -167,7 +166,6 @@ final class ProfileViewControllerViewModel: NSObject {
             }
         }
     }
-
 
     // MARK: - Helpers
 

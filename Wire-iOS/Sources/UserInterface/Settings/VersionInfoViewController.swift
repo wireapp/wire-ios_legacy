@@ -24,13 +24,11 @@ final class VersionInfoViewController: UIViewController {
     private var versionInfoLabel: UILabel!
     private let componentsVersionsFilepath: String
 
-
     init(versionsPlist path: String = Bundle.main.path(forResource: "ComponentsVersions", ofType: "plist")!) {
         componentsVersionsFilepath = path
 
         super.init(nibName: nil, bundle: nil)
     }
-
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -66,7 +64,6 @@ final class VersionInfoViewController: UIViewController {
     private func setupVersionInfo() {
         guard let versionsPlist = NSDictionary(contentsOfFile: componentsVersionsFilepath),
               let carthageInfo = versionsPlist["CarthageBuildInfo"] as? [String: String] else { return }
-
 
         versionInfoLabel = UILabel()
         versionInfoLabel.numberOfLines = 0

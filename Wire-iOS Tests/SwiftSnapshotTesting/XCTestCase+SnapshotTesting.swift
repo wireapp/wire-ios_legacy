@@ -440,7 +440,6 @@ extension XCTestCase {
         controller.dismiss(animated: false, completion: completion)
     }
 
-
     //MARK: - verify a UIViewController with a set of widths. The SUT is created
 
     func verifyInAllPhoneWidths(createSut: () -> UIViewController,
@@ -488,7 +487,6 @@ extension XCTestCase {
         let container = containerView(with: sut.view,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
-
 
         verifyWithWidthInName(matching: container,
                               width: width,

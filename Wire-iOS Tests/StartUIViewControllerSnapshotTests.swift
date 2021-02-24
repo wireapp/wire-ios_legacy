@@ -25,7 +25,6 @@ final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
 
     var accessStatusDidChangeToGranted: Bool = true
 
-
     static var sharedHelper: AddressBookHelperProtocol = MockAddressBookHelper()
 
     func persistCurrentAccessStatus() {
@@ -88,7 +87,6 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             verifyInAllIPhoneSizes(view: sut.view)
         }
     }
-
 
     /// has create group and create guest room rows
     func testForNoContactWhenSelfIsTeamMember() {

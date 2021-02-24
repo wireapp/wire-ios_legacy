@@ -63,7 +63,6 @@ extension UIView {
             CATransaction.commit()
         }
 
-
         if delayTime > 0 {
             delay(delayTime, closure: closure)
         } else {

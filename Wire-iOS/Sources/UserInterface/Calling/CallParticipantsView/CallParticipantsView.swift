@@ -123,7 +123,6 @@ extension CallParticipantsView: UICollectionViewDataSource {
 
 extension UserCell: CallParticipantsCellConfigurationConfigurable {
 
-
     func configure(with configuration: CallParticipantsCellConfiguration,
                    variant: ColorSchemeVariant,
                    selfUser: UserType) {

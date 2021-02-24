@@ -85,7 +85,6 @@ final class AudioMessageView: UIView, TransferView {
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall: Bool
 
-
     init(mediaPlaybackManager: MediaPlaybackManager? = nil) {
         isPausedForIncomingCall = false
         self.mediaPlaybackManager = mediaPlaybackManager

@@ -93,7 +93,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
-
         // Then
         verify(matching: sut)
     }
@@ -103,7 +102,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-
 
         // Then
         verify(matching: sut)
@@ -183,7 +181,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
-
         // Then
         verify(matching: sut.wrapInNavigationController())
     }
@@ -205,7 +202,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
-
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
         config.allowGuestsChangedHandler?(true)
@@ -219,7 +215,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-
 
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true

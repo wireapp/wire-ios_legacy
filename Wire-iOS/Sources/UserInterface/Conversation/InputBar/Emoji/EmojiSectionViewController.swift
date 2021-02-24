@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireCommonComponents
@@ -24,7 +23,6 @@ import WireCommonComponents
 protocol EmojiSectionViewControllerDelegate: class {
     func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType, scrolling: Bool)
 }
-
 
 final class EmojiSectionViewController: UIViewController {
 

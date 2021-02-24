@@ -52,7 +52,6 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 
 }
 
-
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {

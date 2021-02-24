@@ -282,7 +282,6 @@ class MessageToolboxDataSource {
             attributedString.accessibilityLabel = (imageIcon.accessibilityLabel ?? "") + " " + timestampString
             return attributedString
 
-
         default:
             return nil
         }

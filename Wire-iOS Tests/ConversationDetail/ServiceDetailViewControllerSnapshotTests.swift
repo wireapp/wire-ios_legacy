@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 
-
 final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     var sut: ServiceDetailViewController!

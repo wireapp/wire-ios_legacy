@@ -38,7 +38,6 @@ final class GroupConversationCellTests: XCTestCase {
         super.tearDown()
     }
 
-
     private func createOneOnOneConversation() -> MockStableRandomParticipantsConversation{
         otherUser = MockUserType.createDefaultOtherUser()
 

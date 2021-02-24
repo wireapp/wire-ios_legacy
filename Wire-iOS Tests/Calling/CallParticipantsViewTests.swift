@@ -19,7 +19,6 @@
 import Foundation
 @testable import Wire
 
-
 final class CallParticipantsListHelper {
     static func participants(count participantCount: Int,
                              videoState: VideoState? = nil,

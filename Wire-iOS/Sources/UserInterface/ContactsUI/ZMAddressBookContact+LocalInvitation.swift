@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireSyncEngine
 import MessageUI
-
 
 class EmailInvitePresenter: NSObject, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     static let sharedInstance: EmailInvitePresenter = EmailInvitePresenter()
@@ -33,7 +31,6 @@ class EmailInvitePresenter: NSObject, MFMailComposeViewControllerDelegate, MFMes
         controller.dismiss(animated: true, completion: .none)
     }
 }
-
 
 extension ZMAddressBookContact {
 
