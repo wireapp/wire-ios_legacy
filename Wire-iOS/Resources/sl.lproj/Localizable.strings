@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Si klical(-a)";
 "content.system.ephemeral_time_remaining" = "%@ je zapustil(-a) pogovor";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Ti";
-"content.system.this_device" = "ta naprava";
 
 "content.system.call.called" = "%@ je klical(-a)";
 "content.system.call.called-you" = "%@ je klical(-a)";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Spet ste začeli z uporabo %@. Sporočila poslana medtem ne bodo prikazana tukaj.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "nova naprava";
-"content.system.started_using" = "začel(-a) uporabljati";
 "content.system.is_verified" = "Vsi prstni odtisi naprav so preverjeni";
 
 "content.system.new_users" = "Nov(-a) uporabnik(-ca) se je pridružil(-a).";
 "content.system.verify_devices" = "Preveri naprave";
 
-"content.system.unverified" = "%@ odstranil(-a) preveritev ene izmed %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "tvoje naprave";
-"content.system.other_devices" = "naprave od %@";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Te naprave nekaj časa niste uporabljali. Nekatera sporočila se morda tukaj ne bodo pojavila.";
 "content.system.missing_messages.subtitle_start" = "Medtem,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Video paused";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
 "appLockModule.message.touchID" = "Odkleni Wire s Touch ID ali geslom";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "Odkleni";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

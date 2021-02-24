@@ -33,7 +33,7 @@ enum CallParticipantsCellConfiguration: Hashable {
         user: HashBoxUser,
         videoState: VideoState?,
         microphoneState: MicrophoneState?,
-        isActiveSpeaker: Bool
+        activeSpeakerState: ActiveSpeakerState
     )
     case showAll(totalCount: Int)
     
@@ -127,13 +127,16 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
     func configure(with configuration: CallParticipantsCellConfiguration,
                    variant: ColorSchemeVariant,
                    selfUser: UserType) {
-        guard case let .callParticipant(user, videoState, microphoneState, isActiveSpeaker) = configuration else { preconditionFailure() }
+        guard case let .callParticipant(user, videoState, microphoneState, activeSpeakerState) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
         configure(with: user.value, selfUser: selfUser)
         accessoryIconView.isHidden = true
-        microphoneIconView.set(style: MicrophoneIconStyle(state: microphoneState, shouldPulse: isActiveSpeaker))
+        microphoneIconView.set(style: MicrophoneIconStyle(
+            state: microphoneState,
+            shouldPulse: activeSpeakerState.isSpeakingNow)
+        )
         videoIconView.set(style: VideoIconStyle(state: videoState))
     }
     

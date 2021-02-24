@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "您曾打电话";
 "content.system.ephemeral_time_remaining" = "还余%@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "你";
-"content.system.this_device" = "此设备";
 
 "content.system.call.called" = "%@曾打电话";
 "content.system.call.called-you" = "%@曾打电话";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "一个新设备";
-"content.system.started_using" = "开始使用";
 "content.system.is_verified" = "所有的指纹完成验证";
 
 "content.system.new_users" = "新用户加入";
 "content.system.verify_devices" = "验证设备";
 
-"content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "您的设备";
-"content.system.other_devices" = "%@ 的设备";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "你有一段沒有使用此设备, 一些信息可能不会在这里出现";
 "content.system.missing_messages.subtitle_start" = "同时，";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "全部显示 (%@)";
 "call.participants.list.title" = "参与者";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "视频已暂停";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "使用Face ID或密码解锁Wire";
 "appLockModule.message.touchID" = "通过Touch ID或Passcode解锁";
 "appLockModule.message.passcode" = "使用密码解锁Wire";
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
-"appLockModule.button.title" = "解锁";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";
