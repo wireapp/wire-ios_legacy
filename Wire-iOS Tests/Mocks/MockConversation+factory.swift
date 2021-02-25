@@ -29,13 +29,13 @@ extension MockConversation {
     var localParticipants: Set<AnyHashable> {
         return Set(sortedActiveParticipants as! [AnyHashable])
     }
-    
+
     @objc
     var activeParticipants: [AnyHashable] {
         get {
             return sortedActiveParticipants as! [AnyHashable]
         }
-        
+
         set {
             sortedActiveParticipants = newValue
         }

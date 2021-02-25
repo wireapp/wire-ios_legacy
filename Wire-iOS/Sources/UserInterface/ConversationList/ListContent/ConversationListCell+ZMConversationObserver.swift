@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -29,7 +28,6 @@ extension ConversationListCell: ZMConversationObserver {
             change.connectionStateChanged ||
             change.mutedMessageTypesChanged ||
             change.messagesChanged) else { return }
-
 
         updateAppearance()
     }

@@ -62,9 +62,9 @@ extension ZMMessage: Shareable {
     }
 
     func forward(to: [AnyObject]) {
-        
+
         let conversations = to as! [ZMConversation]
-        
+
         if isText {
             let fetchLinkPreview = !Settings.disableLinkPreviews
             ZMUserSession.shared()?.perform {

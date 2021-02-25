@@ -47,7 +47,7 @@ final class GridView: UICollectionView {
         super.init(frame: .zero, collectionViewLayout: layout)
         setUp()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,7 +60,6 @@ final class GridView: UICollectionView {
         isScrollEnabled = false
     }
 }
-
 
 // MARK: - Segment calculation
 
@@ -109,7 +108,7 @@ private extension GridView {
 
         let participantAmount = ParticipantAmount(numberOfItems)
         let splitType = SplitType(layoutDirection, segmentType)
-        
+
         switch (participantAmount, splitType) {
         case (.moreThanTwo, .proportionalSplit):
             return numberOfItems.evenlyCeiled / 2
@@ -141,16 +140,16 @@ extension GridView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
-        
+
         let rows = numberOfItems(in: .row, for: indexPath)
         let columns = numberOfItems(in: .column, for: indexPath)
-        
+
         let width = maxWidth / CGFloat(columns)
         let height = maxHeight / CGFloat(rows)
 
         return CGSize(width: width, height: height)
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -158,7 +157,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
 
         return .zero
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -166,7 +165,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
 
         return .zero
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -174,7 +173,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
 
         return .zero
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

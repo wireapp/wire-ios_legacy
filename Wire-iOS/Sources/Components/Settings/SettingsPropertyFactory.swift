@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
@@ -51,11 +50,10 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
-
 protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
-    
+
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory, newValue: Bool, callback: @escaping  ResultHandler)
 }
 
@@ -67,7 +65,7 @@ final class SettingsPropertyFactory {
     var selfUser: SettingsSelfUser?
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
-    
+
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: SettingKey] = [
         SettingsPropertyName.disableMarkdown: .disableMarkdown,
         SettingsPropertyName.chatHeadsDisabled: .chatHeadsDisabled,
@@ -80,13 +78,13 @@ final class SettingsPropertyFactory {
         SettingsPropertyName.tweetOpeningOption: .twitterOpeningRawValue,
         SettingsPropertyName.callingProtocolStrategy: .callingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections: .enableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate,
+        SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate
     ]
-    
+
     convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
     }
-    
+
     init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
@@ -113,7 +111,7 @@ final class SettingsPropertyFactory {
     }
 
     func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
-        
+
         switch(propertyName) {
         // Profile
         case .profileName:
@@ -171,13 +169,13 @@ final class SettingsPropertyFactory {
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
             }
-            
+
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                
+
                 let settingsColorScheme: SettingsColorScheme = SettingsColorScheme(from: self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue))
-                
+
                 return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
@@ -195,7 +193,7 @@ final class SettingsPropertyFactory {
 
                 NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
             }
-            
+
             return SettingsBlockProperty(propertyName: propertyName,
                                          getAction: getAction,
                                          setAction: setAction)
@@ -223,7 +221,7 @@ final class SettingsPropertyFactory {
                 }
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
-            
+
         case .disableAnalyticsSharing:
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let tracking = self.tracking {
@@ -301,19 +299,19 @@ final class SettingsPropertyFactory {
                     return .none
                 }
             }
-            
+
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .number(let number):
                         self.userSession?.perform {
                             self.userSession?.isNotificationContentHidden = number.boolValue
                         }
-                    
+
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
                 }
             }
-            
+
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
 
         case .disableSendButton:
@@ -351,7 +349,7 @@ final class SettingsPropertyFactory {
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-        
+
         case .callingConstantBitRate:
             return SettingsBlockProperty(
                 propertyName: propertyName,
@@ -363,7 +361,7 @@ final class SettingsPropertyFactory {
                         Settings.shared[.callingConstantBitRate] = enabled.boolValue
                     }
             })
-            
+
         case .disableLinkPreviews:
             return SettingsBlockProperty(
                 propertyName: propertyName,
@@ -418,7 +416,7 @@ final class SettingsPropertyFactory {
                 return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)
             }
         }
-        
+
         fatalError("Cannot create SettingsProperty for \(propertyName)")
     }
 }

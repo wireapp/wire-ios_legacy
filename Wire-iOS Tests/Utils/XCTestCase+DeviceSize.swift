@@ -50,7 +50,7 @@ extension XCTestCase {
             return size.value.width
         }))
     }
-    
+
     var smallestWidth: CGFloat {
         return XCTestCase.phoneScreenSizes.map( { size in
             return size.value.width

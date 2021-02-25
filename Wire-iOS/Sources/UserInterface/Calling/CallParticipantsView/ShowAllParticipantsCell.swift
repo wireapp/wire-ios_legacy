@@ -21,15 +21,15 @@ import UIKit
 import WireDataModel
 
 class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
-    
+
     let participantIconView = UIImageView()
     let titleLabel = UILabel()
     let accessoryIconView = UIImageView()
     var contentStackView: UIStackView!
-    
+
     var sectionName: String?
     var cellIdentifier: String?
-    
+
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
@@ -37,35 +37,35 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
                 : .clear
         }
     }
-    
+
     var variant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     fileprivate func setup() {
         participantIconView.translatesAutoresizingMaskIntoConstraints = false
         participantIconView.contentMode = .scaleAspectFit
         participantIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        
+
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
-        
+
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        
+
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(participantIconView)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
@@ -73,26 +73,26 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
         avatarSpacer.heightAnchor.constraint(equalTo: participantIconView.heightAnchor).isActive = true
         avatarSpacer.centerXAnchor.constraint(equalTo: participantIconView.centerXAnchor).isActive = true
         avatarSpacer.centerYAnchor.constraint(equalTo: participantIconView.centerYAnchor).isActive = true
-        
+
         let iconViewSpacer = UIView()
         iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
         iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        
+
         contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleLabel, iconViewSpacer, accessoryIconView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(contentStackView)
         contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        
+
         configureColors()
     }
-    
+
     private func configureColors() {
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: variant)
         backgroundColor = .clear
@@ -100,14 +100,14 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
-    
+
 }
 
 extension ShowAllParticipantsCell: CallParticipantsCellConfigurationConfigurable {
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant,
                    selfUser: UserType) {
         guard case let .showAll(totalCount: totalCount) = configuration else { preconditionFailure() }
-        
+
         self.variant = variant
         titleLabel.text = "call.participants.show_all".localized(args: String(totalCount))
     }

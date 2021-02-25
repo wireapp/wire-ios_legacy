@@ -42,22 +42,22 @@ extension CallStateMock {
     static var incoming: CallStateMock {
         return CallStateMock(isConnected: false, isTerminating: false, canAccept: true)
     }
-    
+
     static var outgoing: CallStateMock {
         return CallStateMock(isConnected: false, isTerminating: false, canAccept: false)
     }
-    
+
     static var terminating: CallStateMock {
         return CallStateMock(isConnected: false, isTerminating: true, canAccept: false)
     }
-    
+
     static var ongoing: CallStateMock {
         return CallStateMock(isConnected: true, isTerminating: false, canAccept: false)
     }
 }
 
 class CallActionsViewTests: ZMSnapshotTestCase {
-    
+
     fileprivate var sut: CallActionsView!
     fileprivate var widthConstraint: NSLayoutConstraint!
 
@@ -71,18 +71,18 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         widthConstraint = nil
         super.tearDown()
     }
-    
+
     // MARK: - Light Theme
-    
+
     func testCallActionsView_LightTheme_WithSelectedButtons() {
         snapshotBackgroundColor = .white
-        
+
         // Given
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
@@ -96,17 +96,17 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_LightTheme() {
         snapshotBackgroundColor = .white
-        
+
         // Given
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
@@ -120,19 +120,19 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     // MARK: - Dark Theme
 
     func testCallActionsView_DarkTheme_WithSelectedButtons() {
         snapshotBackgroundColor = .black
-        
+
         // Given
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
@@ -146,17 +146,17 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_DarkTheme() {
         snapshotBackgroundColor = .black
-        
+
         // Given
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
@@ -170,16 +170,16 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     // MARK: - Call State: Incoming
-    
+
     func testCallActionsView_StateIncoming_Audio() {
 
         // Given
@@ -195,10 +195,10 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
@@ -217,16 +217,16 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.incoming
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     // MARK: - Call State: Outgoing
-    
+
     func testCallActionsView_StateOutgoing_Audio() {
         // Given
         let input = CallActionsViewInput(
@@ -241,14 +241,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.outgoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOutgoing_Video() {
         // Given
         let input = CallActionsViewInput(
@@ -263,10 +263,10 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.outgoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
@@ -287,14 +287,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOngoing_Audio_Muted() {
         // Given
         let input = CallActionsViewInput(
@@ -309,14 +309,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOngoing_Audio_SpeakerUnavailable() {
         // Given
         let input = CallActionsViewInput(
@@ -331,14 +331,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOngoing_Video() {
         // Given
         let input = CallActionsViewInput(
@@ -353,14 +353,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOngoing_Video_PresentationMode_AllVideoStreams() {
         // Given
         let input = CallActionsViewInput(
@@ -375,14 +375,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateOngoing_Video_PresentationMode_ActiveSpeakers() {
         // Given
         let input = CallActionsViewInput(
@@ -397,16 +397,16 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     // MARK: Call State: - Terminating
-    
+
     func testCallActionsView_StateTerminating_Audio() {
         // Given
         let input = CallActionsViewInput(
@@ -421,14 +421,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.terminating
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     func testCallActionsView_StateTerminating_Video() {
         // Given
         let input = CallActionsViewInput(
@@ -443,14 +443,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             cameraType: .front,
             callState: CallStateMock.terminating
         )
-        
+
         // When
         sut.update(with: input)
-        
+
         // Then
         verify(view: sut)
     }
-    
+
     // MARK: - Permissions
 
     func testCallActionsView_Permissions_NotDetermined() {

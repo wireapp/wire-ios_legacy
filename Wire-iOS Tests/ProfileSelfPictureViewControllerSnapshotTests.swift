@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: ProfileSelfPictureViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = ProfileSelfPictureViewController()
@@ -33,7 +33,7 @@ final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
 
         sut.selfUserImageView.image = image
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

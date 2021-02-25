@@ -20,14 +20,14 @@ import XCTest
 @testable import Wire
 
 final class ReadReceiptViewModelTests: XCTestCase {
-    
+
     var sut: ReadReceiptViewModel!
     var mockMessage: MockMessage!
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         mockMessage = nil
@@ -45,7 +45,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
                                    systemMessageType: type,
                                    sender: mockMessage.senderUser!)
     }
-    
+
     func testThatSelfUserSwitchOffReceiptOption(){
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsDisabled

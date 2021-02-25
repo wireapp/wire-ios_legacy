@@ -38,4 +38,3 @@ extension ConversationInputBarViewController: ZMTypingChangeObserver {
         typingIndicatorView.setHidden(shouldHide, animated: !shouldHide)
     }
 }
-

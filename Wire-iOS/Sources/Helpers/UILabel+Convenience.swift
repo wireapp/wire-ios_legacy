@@ -49,21 +49,21 @@ extension UILabel {
 
         return label
     }
-    
+
     // MARK: - passcode label factory
-    
+
     static func createHintLabel(variant: ColorSchemeVariant) -> UILabel {
         let label = UILabel()
-        
+
         label.font = UIFont.smallRegularFont.withSize(10)
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        
+
         let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
-        
+
         let style = NSMutableParagraphStyle()
         style.firstLineHeadIndent = leadingMargin
         style.headIndent = leadingMargin
-        
+
         label.attributedText = NSAttributedString(string: "passcode.hint_label".localized,
                                                   attributes: [NSAttributedString.Key.paragraphStyle: style])
         return label

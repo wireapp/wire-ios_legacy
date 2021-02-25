@@ -123,7 +123,6 @@ final class AudioRecordViewControllerTests: ZMSnapshotTestCase {
 
 }
 
-
 private extension UIViewController {
     @discardableResult func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)
@@ -133,7 +132,7 @@ private extension UIViewController {
         container.addSubview(view)
         container.translatesAutoresizingMaskIntoConstraints = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 112),
             container.heightAnchor.constraint(equalToConstant: 130),

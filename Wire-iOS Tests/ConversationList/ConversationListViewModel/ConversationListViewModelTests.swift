@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -20,7 +19,6 @@ import XCTest
 @testable import Wire
 import DifferenceKit
 
-
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int) {
         //no-op
@@ -33,7 +31,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
         //no-op
     }
-    
+
     func reload<C>(
         using stagedChangeset: StagedChangeset<C>,
         interrupt: ((Changeset<C>) -> Bool)?,
@@ -41,7 +39,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         ) {
         setData(stagedChangeset.first?.data)
     }
-    
+
     func listViewModelShouldBeReloaded() {
         //no-op
     }
@@ -56,7 +54,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
 }
 
 final class ConversationListViewModelTests: XCTestCase {
-    
+
     var sut: ConversationListViewModel!
     var mockUserSession: MockZMUserSession!
     var mockConversationListViewModelDelegate: MockConversationListViewModelDelegate!
@@ -72,11 +70,11 @@ final class ConversationListViewModelTests: XCTestCase {
         mockBar = MockBar()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
-        
+
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
         sut.delegate = mockConversationListViewModelDelegate
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUserSession = nil
@@ -85,10 +83,10 @@ final class ConversationListViewModelTests: XCTestCase {
 
         super.tearDown()
     }
-    
+
     func removeViewModelState() {
         guard let persistentURL = ConversationListViewModel.persistentURL else { return }
-        
+
         try? FileManager.default.removeItem(at: persistentURL)
     }
 

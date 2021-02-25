@@ -27,7 +27,7 @@ enum MessageToolboxContent: Equatable {
 
     /// Display the list of reactions.
     case reactions(NSAttributedString)
-    
+
     /// Display list of calls
     case callList(NSAttributedString)
 
@@ -78,7 +78,7 @@ class MessageToolboxDataSource {
     }
 
     private static let separator = " " + String.MessageToolbox.middleDot + " "
-    
+
     // MARK: - Initialization
 
     /// Creates a toolbox data source for the given message.
@@ -164,21 +164,21 @@ class MessageToolboxDataSource {
     }
 
     // MARK: - Details Text
-    
+
     /// Create a timestamp list for all calls associated with a call system message
     private func makeCallList() -> NSAttributedString {
         if let childMessages = message.systemMessageData?.childMessages, !childMessages.isEmpty, let timestamp = timestampString(message) {
-            
+
             let childrenTimestamps = childMessages.compactMap {
                 $0 as? ZMConversationMessage
                 }.sorted { left, right in
                     left.serverTimestamp < right.serverTimestamp
                 }.compactMap(timestampString)
-            
+
             let finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
                 return "\(text)\n\(current)"
             }
-            
+
             return finalText && attributes
         } else {
             return timestampString(message) ?? "-" && attributes
@@ -282,7 +282,6 @@ class MessageToolboxDataSource {
             attributedString.accessibilityLabel = (imageIcon.accessibilityLabel ?? "") + " " + timestampString
             return attributedString
 
-
         default:
             return nil
         }
@@ -295,7 +294,7 @@ class MessageToolboxDataSource {
         if let editedTimeString = message.formattedEditedDate() {
             timestampString = String(format: "content.system.edited_message_prefix_timestamp".localized, editedTimeString)
         } else if let dateTimeString = message.formattedReceivedDate() {
-            if let systemMessage = message as? ZMSystemMessage , systemMessage.systemMessageType == .messageDeletedForEveryone {
+            if let systemMessage = message as? ZMSystemMessage, systemMessage.systemMessageType == .messageDeletedForEveryone {
                 timestampString = String(format: "content.system.deleted_message_prefix_timestamp".localized, dateTimeString)
             } else if let durationString = message.systemMessageData?.callDurationString() {
                 timestampString = dateTimeString + MessageToolboxDataSource.separator + durationString

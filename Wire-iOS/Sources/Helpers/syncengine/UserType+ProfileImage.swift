@@ -30,16 +30,16 @@ extension UserType {
                            sizeLimit: Int?,
                            isDesaturated: Bool,
                            completion: @escaping ProfileImageCompletion) {
-        
+
         let imageSize = profileImageSize(with: sizeLimit)
-        
+
         guard let cacheKey = buildCachedImageKey(for: imageSize,
                                                  sizeLimit: sizeLimit,
                                                  isDesaturated: isDesaturated) else {
             completion(nil, false)
             return
         }
-        
+
         guard let cachedImage = cachedImage(imageCache: imageCache,
                                             cacheKey: cacheKey) else {
             downloadProfileImage(for: imageSize)
@@ -51,22 +51,22 @@ extension UserType {
                                           completion: completion)
             return
         }
-        
+
         completion(cachedImage, true)
     }
-    
+
     // MARK: ImageSize Helper
-    
+
     private func profileImageSize(with sizeLimit: Int?) -> ProfileImageSize {
         guard let sizeLimit = sizeLimit else { return .complete }
-        
+
         let screenScale = UIScreen.main.scale
         let previewSizeLimit: CGFloat = 280
         return CGFloat(sizeLimit) * screenScale < previewSizeLimit ? .preview : .complete
     }
-    
+
     // MARK: Cache Image Helper
-    
+
     private func cachedImage(imageCache: ImageCache<UIImage>,
                                  cacheKey: String) -> UIImage? {
         guard let cachedImage = imageCache.cache.object(forKey: cacheKey as NSString) else {
@@ -74,29 +74,29 @@ extension UserType {
         }
         return cachedImage
     }
-    
+
     private func buildCachedImageKey(for imageSize: ProfileImageSize,
                                      sizeLimit: Int?,
                                      isDesaturated: Bool) -> String? {
         guard let baseKey = imageSize == .preview ? smallProfileImageCacheKey : mediumProfileImageCacheKey else {
             return nil
         }
-        
+
         var derivedKey = baseKey
-        
+
         if isDesaturated {
             derivedKey = "\(derivedKey)_desaturated"
         }
-        
+
         if let sizeLimit = sizeLimit {
             derivedKey = "\(derivedKey)_\(sizeLimit)"
         }
-        
+
         return derivedKey
     }
-    
+
     // MARK: Preview Image Helper
-    
+
     private func downloadProfileImage(for imageSize: ProfileImageSize) {
         switch imageSize {
         case .preview:
@@ -105,9 +105,9 @@ extension UserType {
             requestCompleteProfileImage()
         }
     }
-    
+
     // MARK: Dowload Image Helper
-    
+
     private func processDownloadedProfileImage(for imageSize: ProfileImageSize,
                                                sizeLimit: Int?,
                                                isDesaturated: Bool,
@@ -120,24 +120,24 @@ extension UserType {
                     completion(nil, false)
                 }
             }
-            
+
             var image: UIImage?
             if let sizeLimit = sizeLimit {
                 image = UIImage(from: imageData, withMaxSize: CGFloat(sizeLimit) * UIScreen.main.scale)
             } else {
                 image = UIImage(data: imageData)?.decoded
             }
-            
+
             if isDesaturated {
                 image = image?.desaturatedImage(with: CIContext.shared)
             }
-            
+
             if let image = image {
                 imageCache.cache.setObject(image, forKey: cacheKey as NSString)
             }
-            
+
             imageCache.dispatchGroup.enter()
-            
+
             DispatchQueue.main.async {
                 completion(image, false)
                 imageCache.dispatchGroup.leave()

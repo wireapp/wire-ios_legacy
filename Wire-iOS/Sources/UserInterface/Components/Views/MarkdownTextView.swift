@@ -634,7 +634,7 @@ extension DownStyle {
         style.renderOnlyValidLinks = false
         return style
     }()
-    
+
     /// The style used within the conversation message cells.
     static var normal: DownStyle = {
         let style = DownStyle()

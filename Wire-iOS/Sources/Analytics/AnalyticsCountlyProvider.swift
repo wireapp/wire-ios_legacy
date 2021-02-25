@@ -24,12 +24,11 @@ private let zmLog = ZMSLog(tag: "Analytics")
 protocol CountlyInstance {
     func recordEvent(_ key: String, segmentation: [String: String]?)
     func start(with config: CountlyConfig)
-    
+
     static func sharedInstance() -> Self
 }
 
 extension Countly: CountlyInstance {}
-
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
@@ -98,7 +97,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         serverURL: URL
     ) {
         guard !countlyAppKey.isEmpty else { return nil }
-        
+
         self.countlyInstanceType = countlyInstanceType
         self.appKey = countlyAppKey
         self.serverURL = serverURL
@@ -258,7 +257,7 @@ extension AnalyticsCountlyProvider: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
-    
+
     func applicationDidBecomeActive() {
         guard didInitializeCountly else { return }
         beginSession()

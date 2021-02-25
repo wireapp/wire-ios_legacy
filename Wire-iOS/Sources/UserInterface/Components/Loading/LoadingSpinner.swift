@@ -109,7 +109,7 @@ final class SpinnerCapableNavigationController: UINavigationController, SpinnerC
     override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
 }
 
 extension UINavigationController {

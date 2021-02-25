@@ -52,7 +52,6 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 
 }
 
-
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
@@ -66,5 +65,5 @@ fileprivate extension UIViewController {
         view.layoutIfNeeded()
         return navigationController.view
     }
-    
+
 }

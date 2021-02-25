@@ -67,7 +67,7 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
 
     /// The block that presents view controllers when requested.
     let presenter: ViewControllerPresenter
-    
+
     /// UIAlertController currently presented
     var presentedAlertController: UIAlertController? = nil
 
@@ -150,7 +150,7 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
     private func disclosePendingRequestIfPossible(_ request: LegalHoldRequest) {
         // Do not present alert if we already in process of accepting the request
         if case .acceptingRequest = currentState { return }
-        
+
         // If there is a current alert, replace it with the latest disclosure
         currentState = .warningAboutPendingRequest(request)
     }
@@ -188,10 +188,10 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
     private func assignState(_ newValue: DisclosureState) {
         currentState = newValue
     }
-    
+
     private func presentAlertController(for state: DisclosureState) {
         var alertController: UIAlertController? = nil
-        
+
         switch state {
         case .warningAboutDisabled:
             alertController = LegalHoldAlertFactory.makeLegalHoldDeactivatedAlert(for: selfUser, suggestedStateChangeHandler: assignState)
@@ -204,7 +204,7 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
         case .acceptingRequest, .none:
             break
         }
-        
+
         dismissAlertIfNeeded(presentedAlertController) {
             if let alertController = alertController {
                 self.presentedAlertController = alertController

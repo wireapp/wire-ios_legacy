@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class StringWholeRangeTests: XCTestCase {
-    
+
     func testWholeRangeReturnsCorrectLength(){
         // GIVEN
         let string = "@Bill drinks coffee"

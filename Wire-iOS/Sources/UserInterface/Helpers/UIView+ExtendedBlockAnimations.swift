@@ -57,13 +57,12 @@ extension UIView {
             CATransaction.begin()
             CATransaction.setAnimationDuration(duration)
             CATransaction.setAnimationTimingFunction(easing.timingFunction)
-            
+
             UIView.animate(withDuration: duration, animations: animations, completion: completion)
-            
+
             CATransaction.commit()
         }
-        
-        
+
         if delayTime > 0 {
             delay(delayTime, closure: closure)
         } else {
@@ -71,5 +70,3 @@ extension UIView {
         }
     }
 }
-
-

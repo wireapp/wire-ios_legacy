@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import WireSyncEngine
 
 extension GroupDetailsConversation where Self: ZMConversation {
@@ -33,18 +32,18 @@ extension ZMConversation {
     static let legacyGroupVideoParticipantLimit: Int = 4
 
     static let maxParticipants: Int = 500
-    
+
     static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
     }
-    
+
     func addOrShowError(participants: [UserType]) {
         guard let session = ZMUserSession.shared(),
                 session.networkState != .offline else {
             self.showAlertForAdding(for: NetworkError.offline)
             return
         }
-        
+
         addParticipants(participants, userSession: ZMUserSession.shared()!) { result in
             switch result {
             case .failure(let error):
@@ -53,7 +52,7 @@ extension ZMConversation {
             }
         }
     }
-    
+
     func removeOrShowError(participant user: UserType, completion: ((VoidResult)->())? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {
@@ -75,15 +74,15 @@ extension ZMConversation {
             completion?(result)
         }
     }
-    
+
     private func showErrorAlert(message: String) {
         let alertController = UIAlertController(title: "error.conversation.title".localized,
                                                 message: message,
                                                 alertAction: .ok(style: .cancel))
-        
+
         UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
-    
+
     private func showAlertForAdding(for error: Error) {
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
@@ -94,7 +93,7 @@ extension ZMConversation {
             showErrorAlert(message: "error.conversation.cannot_add".localized)
         }
     }
-    
+
     private func showAlertForRemoval(for error: Error) {
         switch error {
         case NetworkError.offline:

@@ -24,39 +24,39 @@ final class FolderPickerControllerSnapshotTests: XCTestCase {
 
     var directory: MockConversationDirectory!
     var mockConversation: MockConversation!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         mockConversation = MockConversation.groupConversation()
         directory = MockConversationDirectory()
         accentColor = .violet
     }
-    
+
     override func tearDown() {
         directory = nil
         mockConversation = nil
         super.tearDown()
     }
-    
+
     func testWithNoExistingFolders() {
         // given
         directory.allFolders = []
-        
+
         // when
         let sut = FolderPickerViewController(conversation: mockConversation.convertToRegularConversation(), directory: directory)
-        
+
         // then
         verify(matching: sut)
     }
-    
+
     func testWithExistingFolders() {
         // given
         directory.allFolders = [MockLabel(name: "Folder A"), MockLabel(name: "Folder B"), MockLabel(name: "Folder C")]
-        
+
         // when
         let sut = FolderPickerViewController(conversation: mockConversation.convertToRegularConversation(), directory: directory)
-        
+
         // then
         verify(matching: sut)
     }

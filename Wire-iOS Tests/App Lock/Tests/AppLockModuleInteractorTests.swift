@@ -21,13 +21,13 @@ import XCTest
 @testable import Wire
 
 final class AppLockModuleInteractorTests: XCTestCase {
-    
+
     private var sut: AppLockModule.Interactor!
     private var presenter: AppLockModule.MockPresenter!
     private var session: AppLockModule.MockSession!
     private var appLock: AppLockModule.MockAppLockController!
     private var authenticationType: AppLockModule.MockAuthenticationTypeDetector!
-    
+
     override func setUp() {
         super.setUp()
         presenter = .init()
@@ -40,7 +40,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         sut = .init(session: session, authenticationType: authenticationType)
         sut.presenter = presenter
     }
-    
+
     override func tearDown() {
         sut = nil
         presenter = nil
@@ -112,7 +112,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
-    
+
     func test_InitiateAuthentication_DoesNotNeedToCreateCustomPasscode_WhenDatabaseIsLocked() {
         // Given
         session.lock = .database
@@ -125,7 +125,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
     }
-    
+
     func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
         // Given
         session.lock = .none
@@ -137,7 +137,6 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
-
 
     // MARK: - Evaluate authentication
 
@@ -200,7 +199,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         let preference = appLock.methodCalls.evaluateAuthentication[0].preference
         XCTAssertEqual(preference, .deviceOnly)
     }
-    
+
     func test_EvaluateAuthentication_Granted() {
         // Given
         session.lock = .database
@@ -209,7 +208,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // When
         sut.executeRequest(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
-        
+
         // Then
         XCTAssertEqual(session.methodCalls.unlockDatabase.count, 1)
         XCTAssertEqual(appLock.methodCalls.open.count, 1)

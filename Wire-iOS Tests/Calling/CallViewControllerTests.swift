@@ -43,10 +43,10 @@ final class CallViewControllerTests: XCTestCase {
     var mockVoiceChannel: MockVoiceChannel!
     var conversation: ZMConversation!
     var sut: CallViewController!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         conversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
         mockVoiceChannel = MockVoiceChannel(conversation: conversation)
         mockVoiceChannel.mockVideoState = VideoState.started
@@ -55,7 +55,7 @@ final class CallViewControllerTests: XCTestCase {
 
         let userClient = MockUserClient()
         userClient.remoteIdentifier = UUID().transportString()
-        
+
         let mockSelfUser = MockUser.mockUsers()[0]
         MockUser.setMockSelf(mockSelfUser)
         MockUser.mockSelf()?.remoteIdentifier = UUID()
@@ -64,35 +64,35 @@ final class CallViewControllerTests: XCTestCase {
 
         sut = createCallViewController(selfUser: MockUser.mockSelf(), mediaManager: ZMMockAVSMediaManager())
     }
-    
+
     override func tearDown() {
         sut = nil
         conversation = nil
         mockVoiceChannel = nil
         super.tearDown()
     }
-    
+
     private func createCallViewController(selfUser: UserType,
                                           mediaManager: ZMMockAVSMediaManager) -> CallViewController {
-    
+
         let proximityManager = ProximityMonitorManager()
         let callController = CallViewController(voiceChannel: mockVoiceChannel, selfUser: selfUser, proximityMonitorManager: proximityManager, mediaManager: mediaManager)
-        
+
         return callController
     }
-    
+
     private func participants(amount: Int) -> [CallParticipant] {
         var participants = [CallParticipant]()
-        
+
         for _ in 0..<amount {
             participants.append(
                 CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
             )
         }
-        
+
         return participants
     }
-    
+
     func testThatVideoGridPresentationMode_IsUpdatedToAllVideoStreams_WhenUnderThreeParticipants() {
         // Given
         mockVoiceChannel.videoGridPresentationMode = .activeSpeakers
@@ -103,18 +103,18 @@ final class CallViewControllerTests: XCTestCase {
         // Then
         XCTAssertEqual(mockVoiceChannel.videoGridPresentationMode, VideoGridPresentationMode.allVideoStreams)
     }
-    
+
     func testThatVideoGridPresentationMode_IsNotUpdated_WhenOverTwoParticipants() {
         // Given
         mockVoiceChannel.videoGridPresentationMode = .activeSpeakers
-        
+
         // When
         sut.callParticipantsDidChange(conversation: conversation, participants: participants(amount: 3))
-        
+
         // Then
         XCTAssertEqual(mockVoiceChannel.videoGridPresentationMode, VideoGridPresentationMode.activeSpeakers)
     }
-    
+
     func testThatItDeallocates() {
         // when & then
         verifyDeallocation { () -> CallViewController in

@@ -185,7 +185,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         }
     }
-    
+
     private func writeToSavedPhotoAlbumIfNecessary(imageData: Data, isFromCamera: Bool) {
         guard isFromCamera,
               SecurityFlags.cameraRoll.isEnabled,

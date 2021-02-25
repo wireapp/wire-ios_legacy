@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireCommonComponents
 import WireSystem
@@ -63,7 +62,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
             }
         }
     }
-    
+
     public var description: String {
         get {
             switch self {
@@ -118,7 +117,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
             }
         }
     }
-    
+
     static let displayedEffects: [AVSAudioEffectType] = [.none,
                                                                 .pitchupInsane,
                                                                 .pitchdownInsane,
@@ -127,16 +126,16 @@ extension AVSAudioEffectType: CustomStringConvertible {
                                                                 .chorusMax,
                                                                 .vocoderMed,
                                                                 .pitchUpDownMax]
-    
+
     static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
-    
+
     func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
         guard !ProcessInfo.processInfo.isRunningTests else {
             return
         }
-        
+
         type(of: self).wr_convertQueue.async {
-            
+
             let result = AVSAudioEffect().applyWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
             zmLog.info("applyEffect \(self) from \(inPath) to \(outPath): \(result)")
             DispatchQueue.main.async {

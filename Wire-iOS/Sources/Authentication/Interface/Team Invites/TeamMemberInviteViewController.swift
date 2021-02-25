@@ -51,7 +51,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
             updateButtonMode()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -63,7 +63,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         footerTextFieldView.becomeFirstResponderIfPossible()
         UIAccessibility.post(notification: .screenChanged, argument: headerView.header)
     }
-    
+
     private func setupViews() {
         view.addSubview(tableView)
         view.backgroundColor = UIColor.Team.background
@@ -74,7 +74,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         updateButtonMode()
         dataSource.configure = { cell, content in cell.content = content }
     }
-    
+
     private func createConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -89,7 +89,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         compactWidthConstraint = tableView.widthAnchor.constraint(equalTo: view.widthAnchor)
         updateMainViewWidthConstraint()
     }
-    
+
     private func setupTableView() {
         tableView.clipsToBounds = false
         tableView.alwaysBounceVertical = false
@@ -99,14 +99,14 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         tableView.rowHeight = 56
         tableView.correctedContentInset = UIEdgeInsets(top: topOffset, left: 0, bottom: bottomOffset, right: 0)
     }
-    
+
     private func setupHeaderView() {
         headerView.updateHeadlineLabelFont(forWidth: view.bounds.width)
         headerView.bottomSpacing = 60
         headerView.size(fittingWidth: tableView.bounds.width)
         tableView.tableHeaderView = headerView
     }
-    
+
     private func setupFooterView() {
         footerTextFieldView.onConfirm = sendInvite
         footerTextFieldView.shouldConfirm = { [weak self] email in
@@ -122,7 +122,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         buttonItem.accessibilityIdentifier = "continue"
         navigationItem.rightBarButtonItem = buttonItem
     }
-    
+
     private func sendInvite(to value: Any) {
         guard let email = value as? String else {
             fatal("Received invalid input. Expecting String, received \(type(of: value))")
@@ -131,27 +131,27 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         if case .unreachable = NetworkStatus.shared.reachability {
             return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized(uppercased: true)
         }
-        
+
         guard let userSession = ZMUserSession.shared() else { return }
         Analytics.shared.tag(TeamInviteEvent.sentInvite(.teamCreation))
         footerTextFieldView.isLoading = true
-        
+
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
             self?.handle(inviteResult: result, from: .manualInput)
         }
     }
-    
+
     private func handle(inviteResult result: InviteResult, from source: InviteSource) {
         switch source {
         case .manualInput: handleManualInputResult(result)
         case .addressBook: handleAddressBookResult(result)
         }
-        
+
         footerTextFieldView.isLoading = false
         buttonMode = dataSource.data.count == 0 ? .skip : .done
         invitationsCount = invitationsCount + 1
     }
-    
+
     private func handleManualInputResult(_ result: InviteResult) {
         switch result {
         case .success:
@@ -162,7 +162,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
             footerTextFieldView.errorButton.isHidden = error != .alreadyRegistered
         }
     }
-    
+
     private func handleAddressBookResult(_ result: InviteResult) {
         dataSource.append(result)
         footerTextFieldView.clearInput()
@@ -180,27 +180,27 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         updateMainViewWidthConstraint()
         setupHeaderView()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateScrollIndicatorInsets()
     }
-    
+
     private func updateScrollIndicatorInsets() {
         tableView.correctedScrollIndicatorInsets.adjust(right: -(view.bounds.width - tableView.bounds.width) / 2)
     }
-    
+
     private func updateMainViewWidthConstraint() {
         compactWidthConstraint?.isActive = traitCollection.horizontalSizeClass == .compact
         regularWidthConstraint?.isActive = traitCollection.horizontalSizeClass != .compact
     }
 
     // MARK: - AuthenticationCoordinatedViewController
-    
+
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         //no-op
     }
-    
+
     func displayError(_ error: Error) {
         //no-op
     }

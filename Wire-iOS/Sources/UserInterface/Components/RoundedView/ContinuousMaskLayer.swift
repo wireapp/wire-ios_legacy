@@ -69,7 +69,7 @@ final class ContinuousMaskLayer: CALayer {
 
     public override init(layer: Any) {
         super.init(layer: layer)
-        
+
         if let otherMaskLayer = layer as? ContinuousMaskLayer {
             self.shape = otherMaskLayer.shape
             self.roundedCorners = otherMaskLayer.roundedCorners

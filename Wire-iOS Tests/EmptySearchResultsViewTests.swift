@@ -26,19 +26,19 @@ struct EmptySearchResultsViewTestState: Copyable {
         self.searchingForServices = instance.searchingForServices
         self.hasFilter = instance.hasFilter
     }
-    
+
     init(colorSchemeVariant: ColorSchemeVariant, isSelfUserAdmin: Bool, searchingForServices: Bool, hasFilter: Bool) {
         self.colorSchemeVariant = colorSchemeVariant
         self.isSelfUserAdmin = isSelfUserAdmin
         self.searchingForServices = searchingForServices
         self.hasFilter = hasFilter
     }
-    
+
     var colorSchemeVariant: ColorSchemeVariant
     var isSelfUserAdmin: Bool
     var searchingForServices: Bool
     var hasFilter: Bool
-    
+
     func createView() -> EmptySearchResultsView {
         let view = EmptySearchResultsView(variant: colorSchemeVariant, isSelfUserAdmin: isSelfUserAdmin)
         view.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
@@ -70,30 +70,30 @@ extension ColorSchemeVariant: CaseIterable {
 }
 
 final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
-    
+
     func testStates() {
         let initialState = EmptySearchResultsViewTestState(colorSchemeVariant: .light,
                                                            isSelfUserAdmin: false,
                                                            searchingForServices: false,
                                                            hasFilter: false)
-        
+
         let builder = VariantsBuilder(initialValue: initialState)
-        
+
         builder.add(keyPath: \EmptySearchResultsViewTestState.colorSchemeVariant)
         builder.add(keyPath: \EmptySearchResultsViewTestState.isSelfUserAdmin)
         builder.add(keyPath: \EmptySearchResultsViewTestState.searchingForServices)
         builder.add(keyPath: \EmptySearchResultsViewTestState.hasFilter)
-        
+
         builder.allVariants().forEach { version in
             let sut = version.createView()
-            
+
             sut.backgroundColor = .lightGray
             sut.bounds.size = sut.systemLayoutSizeFitting(
                 CGSize(width: 375, height: 600),
                 withHorizontalFittingPriority: .required,
                 verticalFittingPriority: .fittingSizeLevel
             )
-            
+
             verify(view: sut, identifier: version.description)
         }
     }

@@ -25,14 +25,14 @@ protocol AuthenticatedRouterProtocol: class {
 }
 
 class AuthenticatedRouter: NSObject {
-    
+
     // MARK: - Private Property
-    
+
     private let builder: AuthenticatedWireFrame
     private let rootViewController: RootViewController
     private let activeCallRouter: ActiveCallRouter
     private weak var _viewController: ZClientViewController?
-    
+
     // MARK: - Public Property
 
     var viewController: UIViewController {
@@ -40,18 +40,18 @@ class AuthenticatedRouter: NSObject {
         _viewController = viewController
         return viewController
     }
-    
+
     // MARK: - Init
-    
+
     init(rootViewController: RootViewController,
          account: Account,
          selfUser: SelfUserType,
          isComingFromRegistration: Bool,
          needToShowDataUsagePermissionDialog: Bool) {
-        
+
         self.rootViewController = rootViewController
         activeCallRouter = ActiveCallRouter(rootviewController: rootViewController)
-        
+
         builder = AuthenticatedWireFrame(account: account,
                                          selfUser: selfUser,
                                          isComingFromRegistration: needToShowDataUsagePermissionDialog,
@@ -64,7 +64,7 @@ extension AuthenticatedRouter: AuthenticatedRouterProtocol {
     func updateActiveCallPresentationState() {
         activeCallRouter.updateActiveCallPresentationState()
     }
-    
+
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         activeCallRouter.minimizeCall(animated: animated, completion: completion)
@@ -77,7 +77,7 @@ struct AuthenticatedWireFrame {
     private var selfUser: SelfUserType
     private var isComingFromRegistration: Bool
     private var needToShowDataUsagePermissionDialog: Bool
-    
+
     init(account: Account,
          selfUser: SelfUserType,
          isComingFromRegistration: Bool,
@@ -87,7 +87,7 @@ struct AuthenticatedWireFrame {
         self.isComingFromRegistration = isComingFromRegistration
         self.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog
     }
-    
+
     func build(router: AuthenticatedRouterProtocol) -> ZClientViewController {
         let viewController = ZClientViewController(account: account, selfUser: selfUser)
         viewController.isComingFromRegistration = isComingFromRegistration

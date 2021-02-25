@@ -34,7 +34,7 @@ enum CellConfiguration {
                     icon: StyleKitIcon,
                     color: UIColor?,
                     action: Action)
-    
+
     ///For toggle without icon, leave icon and color nil
     case iconToggle(title: String,
         subtitle: String,
@@ -55,7 +55,7 @@ enum CellConfiguration {
         case .iconAction: return IconActionCell.self
         }
     }
-    
+
     var action: Action? {
         switch self {
         case .iconToggle,
@@ -66,9 +66,9 @@ enum CellConfiguration {
         case let .iconAction(_, _, _, action: action): return action
         }
     }
-    
+
     // MARK: - Convenience
-    
+
     static var allCellTypes: [UITableViewCell.Type] {
         return [
             IconToggleSubtitleCell.self,
@@ -79,7 +79,7 @@ enum CellConfiguration {
             IconActionCell.self
         ]
     }
-    
+
     static func prepare(_ tableView: UITableView) {
         allCellTypes.forEach {
             tableView.register($0, forCellReuseIdentifier: $0.reuseIdentifier)

@@ -25,7 +25,7 @@ import WireSystem
  */
 
 class ConversationDetailFooterView: UIView {
-    
+
     private let variant: ColorSchemeVariant
     let rightButton = IconButton()
     var leftButton: IconButton
@@ -42,7 +42,7 @@ class ConversationDetailFooterView: UIView {
             }
         }
     }
-    
+
     var rightIcon: StyleKitIcon? {
         get {
             return rightButton.icon(for: .normal)
@@ -54,7 +54,7 @@ class ConversationDetailFooterView: UIView {
             }
         }
     }
-        
+
     init() {
         self.variant = ColorScheme.default.variant
         self.leftButton = IconButton()
@@ -62,11 +62,11 @@ class ConversationDetailFooterView: UIView {
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         let configureButton = { (button: IconButton) in
             self.containerView.addSubview(button)
@@ -89,10 +89,10 @@ class ConversationDetailFooterView: UIView {
 
         backgroundColor = UIColor.from(scheme: .barBackground)
         addSubview(containerView)
-        
+
         setupButtons()
     }
-    
+
     private func createConstraints() {
         leftButton.translatesAutoresizingMaskIntoConstraints = false
         rightButton.translatesAutoresizingMaskIntoConstraints = false
@@ -119,11 +119,11 @@ class ConversationDetailFooterView: UIView {
     }
 
     // MARK: - Events
-    
+
     func setupButtons() {
         fatal("Should be overridden in subclasses")
     }
-    
+
     @objc func leftButtonTapped(_ sender: IconButton) {
         fatal("Should be overridden in subclasses")
     }

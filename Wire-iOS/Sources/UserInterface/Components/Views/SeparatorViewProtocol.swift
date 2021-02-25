@@ -44,7 +44,7 @@ extension SeparatorViewProtocol where Self: ViewWithContentView {
             separatorInsetConstraint,
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.heightAnchor.constraint(equalToConstant: .hairline)
         ])
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 
 extension SettingsCellDescriptorFactory {
     func dataUsagePermissionsGroup(isTeamMember: Bool) -> SettingsCellDescriptorType {
-        
+
         let sendCrashData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCrashSharing), inverse: true)
         let sendCrashDataSection = SettingsSectionDescriptor(cellDescriptors: [sendCrashData], footer: "self.settings.privacy_crash_menu.description.title".localized)
 
@@ -30,7 +30,7 @@ extension SettingsCellDescriptorFactory {
         if isTeamMember {
             let sendAnalyticsData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableAnalyticsSharing), inverse: true)
             let sendAnalyticsDataSection = SettingsSectionDescriptor(cellDescriptors: [sendAnalyticsData], footer: "self.settings.privacy_analytics_menu.description.title".localized)
-            
+
             items.append(sendAnalyticsDataSection)
         }
 

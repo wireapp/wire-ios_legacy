@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 
@@ -28,23 +27,23 @@ final class OverflowSeparatorView: UIView {
         super.init(frame: frame)
         self.applyStyle()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.applyStyle()
     }
-    
+
     private func applyStyle() {
         self.backgroundColor = UIColor.from(scheme: .separator)
         self.alpha = 0
     }
-    
+
     override var intrinsicContentSize: CGSize {
         get {
             return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
         }
     }
-    
+
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         if inverse {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
@@ -56,4 +55,3 @@ final class OverflowSeparatorView: UIView {
         }
     }
 }
-

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -17,7 +16,6 @@
 //
 
 import Foundation
-
 
 extension ConversationListViewController {
     func setState(_ state: ConversationListState,

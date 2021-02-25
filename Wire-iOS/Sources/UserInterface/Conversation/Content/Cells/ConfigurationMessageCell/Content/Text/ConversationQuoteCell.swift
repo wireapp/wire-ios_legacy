@@ -111,7 +111,6 @@ final class ConversationReplyContentView: UIView {
         ])
     }
 
-
     func configure(with object: Configuration) {
         senderComponent.isHidden = !object.showDetails
         timestampLabel.isHidden = !object.showDetails
@@ -259,4 +258,3 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
     }
 
 }
-
