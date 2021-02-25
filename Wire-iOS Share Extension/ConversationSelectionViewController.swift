@@ -46,6 +46,7 @@ final class ConversationSelectionViewController : UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.backgroundColor = UIColor.white
 
         preferredContentSize = UIScreen.main.bounds.size
         definesPresentationContext = true
