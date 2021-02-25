@@ -479,7 +479,7 @@ extension XCTestCase {
                         file: StaticString = #file,
                         testName: String = #function,
                         line: UInt = #line) {
-        
+
         for width in widths {
             verifyInWidth(createSut: createSut,
                           width: width,
@@ -521,7 +521,7 @@ extension XCTestCase {
         let container = containerView(with: sut,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
-        
+
         verifyWithWidthInName(matching: container,
                               width: width,
                               named: name,
