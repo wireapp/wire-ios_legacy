@@ -9134,7 +9134,6 @@
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"EXCLUDED_ARCHS[sdk=*]" = "i386 arm64";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
