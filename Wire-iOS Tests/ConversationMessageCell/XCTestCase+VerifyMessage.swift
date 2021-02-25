@@ -45,11 +45,14 @@ extension XCTestCase {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-
         if allColorSchemes {
             ColorScheme.default.variant = .dark
             verify(createSut: {
-                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+                if !waitForImagesToLoad {
+                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+                }
+
+                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
             },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
@@ -60,7 +63,11 @@ extension XCTestCase {
 
             ColorScheme.default.variant = .light
             verify(createSut: {
-                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+                if !waitForImagesToLoad {
+                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+                }
+
+                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
             },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
@@ -70,7 +77,11 @@ extension XCTestCase {
                    line: line)
         } else {
             verify(createSut: {
-                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+                if !waitForImagesToLoad {
+                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+                }
+
+                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
             },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
