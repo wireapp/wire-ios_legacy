@@ -77,6 +77,9 @@
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
+                  Identifier = "RoundedSegmentedViewTests">
+               </Test>
+               <Test
                   Identifier = "SearchResultLabelTests">
                </Test>
                <Test
@@ -111,6 +114,9 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
+               </Test>
+               <Test
+                  Identifier = "VideoGridViewControllerSnapshotTests">
                </Test>
             </SkippedTests>
          </TestableReference>
