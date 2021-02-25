@@ -191,6 +191,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
+            screenCurtain.delegate = nil
             configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
         case .authenticated(completedRegistration: let completedRegistration):
