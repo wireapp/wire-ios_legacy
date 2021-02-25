@@ -45,15 +45,22 @@ extension XCTestCase {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
+
+        let createSut : () -> UIView = {
+            // prevent cache exist and loading image immediately
+            if !waitForImagesToLoad {
+                MediaAssetCache.defaultImageCache.cache.removeAllObjects()
+            }
+            return self.createUIStackView(message: message,
+                                          context: context,
+                                          waitForImagesToLoad: waitForImagesToLoad,
+                                          waitForTextViewToLoad: waitForTextViewToLoad,
+                                          snapshotBackgroundColor: snapshotBackgroundColor)
+        }
+
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            verify(createSut: {
-                if !waitForImagesToLoad {
-                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
-                }
-
-                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
-            },
+            verify(createSut: createSut,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
                    allWidths: allWidths,
@@ -62,13 +69,7 @@ extension XCTestCase {
                    line: line)
 
             ColorScheme.default.variant = .light
-            verify(createSut: {
-                if !waitForImagesToLoad {
-                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
-                }
-
-                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
-            },
+            verify(createSut: createSut,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
                    allWidths: allWidths,
@@ -76,13 +77,7 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
         } else {
-            verify(createSut: {
-                if !waitForImagesToLoad {
-                    MediaAssetCache.defaultImageCache.cache.removeAllObjects()
-                }
-
-                return createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
-            },
+            verify(createSut: createSut,
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
                    file: file,
