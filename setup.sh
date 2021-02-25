@@ -54,7 +54,7 @@ echo "ℹ️  Downloading AVS library..."
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh -b fix/xcode12-debug-simulator
+./Scripts/download-assets.sh "$@"
 echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
