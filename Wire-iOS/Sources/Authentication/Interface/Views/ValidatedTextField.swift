@@ -138,7 +138,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
          leftInset: CGFloat = 8,
          accessoryTrailingInset: CGFloat = 16,
          cornerRadius: CGFloat? = nil) {
-        
+
         textFieldValidator = TextFieldValidator()
         self.kind = kind
 
@@ -196,12 +196,12 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
             returnKeyType = isNew ? .default : .continue
             if #available(iOS 12, *) {
                 //Hack: disable auto fill passcode
-                textContentType = .oneTimeCode                
+                textContentType = .oneTimeCode
                 passwordRules = textFieldValidator.passwordRules
             } else {
                 textContentType = .init(rawValue: "")
             }
-            
+
         }
     }
 

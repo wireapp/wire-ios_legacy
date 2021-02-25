@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-extension UIEdgeInsets {    
+extension UIEdgeInsets {
     func adjusted(for delta: OrientationDelta) -> UIEdgeInsets {
         let edges = [top, left, bottom, right].shifted(by: delta.edgeInsetsShiftAmount)
         return UIEdgeInsets(top: edges[0], left: edges[1], bottom: edges[2], right: edges[3])

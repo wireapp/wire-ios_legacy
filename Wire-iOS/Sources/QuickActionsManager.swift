@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireSyncEngine
 import UIKit
@@ -30,17 +29,17 @@ extension UIApplicationShortcutItem {
 }
 
 public final class QuickActionsManager: NSObject {
-    
+
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    
+
     // MARK: - Initialization
     public init(sessionManager: SessionManager? = nil) {
         self.sessionManager = sessionManager
         super.init()
         updateQuickActions()
     }
-    
+
     func updateQuickActions() {
         guard Bundle.developerModeEnabled else {
             UIApplication.shared.shortcutItems = []
@@ -49,7 +48,7 @@ public final class QuickActionsManager: NSObject {
 
         UIApplication.shared.shortcutItems = [.markAllAsRead]
     }
-    
+
     @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {
         switch shortcutItem.type {
         case UIApplicationShortcutItem.markAllAsReadType:

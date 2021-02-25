@@ -43,4 +43,3 @@ extension BackButtonDescription: ViewDescriptor {
         buttonTapped?()
     }
 }
-

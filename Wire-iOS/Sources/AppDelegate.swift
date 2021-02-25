@@ -40,7 +40,7 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     // MARK: - Private Property
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
@@ -54,14 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FileBackupExcluderOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
-    
+
     // MARK: - Private Set Property
     private(set) var appRootRouter: AppRootRouter?
     private(set) var launchType: ApplicationLaunchType = .unknown
-    
+
     // MARK: - Public Set Property
     var window: UIWindow?
-    
+
     // Singletons
     var unauthenticatedSession: UnauthenticatedSession? {
         return SessionManager.shared?.unauthenticatedSession
@@ -104,18 +104,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(userSessionDidBecomeAvailable(_:)),
                                                name: Notification.Name.ZMUserSessionDidBecomeAvailable,
                                                object: nil)
-             
+
         self.launchOptions = launchOptions ?? [:]
-        
+
         if UIApplication.shared.isProtectedDataAvailable || ZMPersistentCookieStorage.hasAccessibleAuthenticationCookieData() {
             createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions ?? [:])
         }
-        
+
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
 
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UserDefaults.standard.synchronize()
     }
-        
+
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
@@ -159,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
     }
-    
+
     func application(_ application: UIApplication,
                      performActionFor shortcutItem: UIApplicationShortcutItem,
                      completionHandler: @escaping (Bool) -> Void) {
@@ -185,7 +185,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
-        
+
         return SessionManager.shared?.continueUserActivity(userActivity) ?? false
     }
 
@@ -199,7 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
-        
+
         appRootRouter?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
         }
@@ -207,12 +207,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
-        
+
         appRootRouter?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }
-    
+
     func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         guard appRootRouter == nil else { return }
         createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions)
@@ -225,16 +225,16 @@ private extension AppDelegate {
         createAppRootRouter(launchOptions: launchOptions)
         queueInitializationOperations(launchOptions: launchOptions)
     }
-    
+
     private func createAppRootRouter(launchOptions: LaunchOptions) {
         guard let viewController = window?.rootViewController as? RootViewController else {
             fatalError("rootViewController is not of type RootViewController")
         }
-        
+
         guard let sessionManager = createSessionManager(launchOptions: launchOptions) else {
             fatalError("sessionManager is not created")
         }
-        
+
         let navigator = Navigator(NoBackTitleNavigationController())
         appRootRouter = AppRootRouter(viewController: viewController,
                                       navigator: navigator,
@@ -242,7 +242,7 @@ private extension AppDelegate {
                                       appStateCalculator: appStateCalculator,
                                       deepLinkURL: launchOptions[.url] as? URL)
     }
-    
+
     private func createSessionManager(launchOptions: LaunchOptions) -> SessionManager? {
         guard
             let appVersion = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String,
@@ -252,10 +252,10 @@ private extension AppDelegate {
         else {
             return nil
         }
-        
+
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
         let jailbreakDetector = JailbreakDetector()
-        
+
         let sessionManager = SessionManager(appVersion: appVersion,
                                             mediaManager: mediaManager,
                                             analytics: Analytics.shared,
@@ -266,19 +266,19 @@ private extension AppDelegate {
                                             detector: jailbreakDetector)
         return sessionManager
     }
-    
+
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
         var operations = launchOperations.map {
             BlockOperation(block: $0.execute)
         }
-        
+
         operations.append(BlockOperation {
             self.startAppRouter(launchOptions: launchOptions)
         })
-        
+
         OperationQueue.main.addOperations(operations, waitUntilFinished: false)
     }
-    
+
     private func startAppRouter(launchOptions: LaunchOptions) {
         appRootRouter?.start(launchOptions: launchOptions)
     }

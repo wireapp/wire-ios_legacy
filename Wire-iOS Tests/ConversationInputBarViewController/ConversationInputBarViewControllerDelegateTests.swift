@@ -34,7 +34,7 @@ final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
         coreDataFixture = nil
         mockDelegate = nil
         sut = nil
-        
+
         super.tearDown()
     }
 
@@ -44,7 +44,7 @@ final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
         sut = ConversationInputBarViewController(conversation: conversation)
 
         mockDelegate = MockDelegate()
-        
+
         sut.delegate = mockDelegate
 
         let message = try! conversation.appendText(content: "Boo")

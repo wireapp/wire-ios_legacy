@@ -100,9 +100,9 @@ extension UIView {
 extension UIView {
     static func shieldView() -> UIView {
         let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
-        
+
         let nibView = loadedObjects.first as! UIView
-        
+
         return nibView
     }
 }

@@ -27,7 +27,7 @@ final class LegalHoldAlertFactoryTests: XCTestCase {
         super.setUp()
         user = MockUserType.createSelfUser(name: "Bob the Builder", inTeam: UUID())
     }
-    
+
     override func tearDown() {
         user = nil
         super.tearDown()

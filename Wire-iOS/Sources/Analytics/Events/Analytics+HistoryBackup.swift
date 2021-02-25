@@ -22,7 +22,7 @@ enum BackupEvent: Event {
     case importSucceeded
     case importFailed
     case exportFailed
-    
+
     var name: String {
         switch self {
         case .importSucceeded: return "history.restore_succeeded"
@@ -30,7 +30,7 @@ enum BackupEvent: Event {
         case .exportFailed: return "history.backup_failed"
         }
     }
-    
+
     var attributes: [AnyHashable: Any]? {
         return nil
     }

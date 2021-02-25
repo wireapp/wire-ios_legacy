@@ -28,7 +28,7 @@ extension NSAttributedString {
         let defaultAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
         ]
-        
+
         let attributedMessage = NSAttributedString(string: "\n\(message)\n\n", attributes: defaultAttributes)
         let attributedError = NSAttributedString(string: error, attributes: errorAttributes)
 

@@ -47,13 +47,13 @@ enum PasscodeError: CaseIterable {
 
     private func description(icon: StyleKitIcon, color: UIColor, font: UIFont) -> NSAttributedString {
         let textAttachment = NSTextAttachment.textAttachment(for: icon, with: color, iconSize: StyleKitIcon.Size.CreatePasscode.iconSize, verticalCorrection: -1, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
-        
+
         let attributedString: NSAttributedString = NSAttributedString(string: message) && font
-        
+
         return NSAttributedString(attachment: textAttachment) + attributedString
 
     }
-    
+
     var descriptionWithInvalidIcon: NSAttributedString {
         return description(icon: .circleCross, color: UIColor.CreatePasscode.errorGrey, font: .smallRegularFont)
     }

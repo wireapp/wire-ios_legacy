@@ -42,13 +42,13 @@ final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroun
 }
 
 final class DarkBarItemTransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
-    
+
     override var colorSchemeVariant: ColorSchemeVariant {
         return .light
     }
-    
+
     override func configureBackground() {
         configureTransparentBackground()
     }
-    
+
 }

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -20,7 +19,7 @@ import XCTest
 @testable import Wire
 
 final class UITraitEnvironmentTests: XCTestCase {
-    
+
     var sut: UITraitEnvironment!
     let compactMargins = HorizontalMargins(userInterfaceSizeClass: .compact)
     let regularMargins = HorizontalMargins(userInterfaceSizeClass: .regular)
@@ -28,7 +27,7 @@ final class UITraitEnvironmentTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -63,7 +62,7 @@ final class UITraitEnvironmentTests: XCTestCase {
 
         // WHEN
         let margins = mockView.conversationHorizontalMargins(windowWidth: 1024)
-        
+
         // THEN
         XCTAssertEqual(margins.left, regularMargins.left)
         XCTAssertEqual(margins.right, regularMargins.right)

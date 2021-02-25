@@ -21,7 +21,7 @@ import UIKit
 final class CustomSpacingStackView: UIView {
 
     private var stackView: UIStackView
-    
+
     /**
      This initializer must be used if you intend to call wr_addCustomSpacing.
      */
@@ -40,16 +40,16 @@ final class CustomSpacingStackView: UIView {
         }
 
         super.init(frame: .zero)
-        
+
         addSubview(stackView)
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         stackView = UIStackView()
         super.init(coder: aDecoder)
     }
-    
+
     /**
      Add a custom spacing after a view.
 
@@ -69,19 +69,19 @@ final class CustomSpacingStackView: UIView {
 
         guard let spacerIndex = stackView.subviews.firstIndex(of: view)?.advanced(by: 1),
             let spacer = stackView.subviews[spacerIndex] as? SpacingView else { return }
-        
+
         if view.isHidden || customSpacing < (stackView.spacing * 2) {
             spacer.isHidden = true
         } else {
             spacer.size = customSpacing - stackView.spacing
         }
     }
-    
+
     private func createConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.fitInSuperview()
     }
-    
+
     var alignment: UIStackView.Alignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
@@ -96,37 +96,37 @@ final class CustomSpacingStackView: UIView {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }
-    
+
     var spacing: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
     }
-    
+
 }
 
 final class SpacingView: UIView {
-    
+
     var size: CGFloat
-    
+
     public init(_ size: CGFloat) {
         self.size = size
-        
+
         super.init(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size)))
-        
+
         isAccessibilityElement = false
         accessibilityElementsHidden = true
         setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
         setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: size, height: size)
     }
-    
+
 }
 
 /**

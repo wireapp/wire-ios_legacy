@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireDataModel
 
@@ -38,10 +37,10 @@ extension LocationData {
         guard let latitude = dict[latitudeKey],
             let longitude = dict[longitudeKey],
             let zoomLevel = dict[zoomLevelKey] as? Int else { return nil }
-        
+
         let latitudeFloat: Float
         let longitudeFloat: Float
-        
+
         if let latitudeFloatUnwrap = latitude as? Float,
             let longitudeFloatUnwrap = longitude as? Float {
             latitudeFloat = latitudeFloatUnwrap
@@ -55,8 +54,8 @@ extension LocationData {
         else {
             return nil
         }
-        
+
         return .locationData(withLatitude: latitudeFloat, longitude: longitudeFloat, name: nil, zoomLevel: Int32(zoomLevel))
     }
-    
+
 }

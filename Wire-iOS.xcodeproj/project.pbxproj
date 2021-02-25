@@ -9135,6 +9135,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
@@ -9143,6 +9145,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				SDKROOT = iphoneos;
 				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;

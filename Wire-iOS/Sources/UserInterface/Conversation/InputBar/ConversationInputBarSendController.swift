@@ -31,9 +31,9 @@ final class ConversationInputBarSendController: NSObject {
 
     func sendMessage(withImageData imageData: Data,
                      completion completionHandler: Completion? = nil) {
-        
+
         guard let conversation = conversation as? ZMConversation else { return }
-        
+
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
@@ -47,7 +47,7 @@ final class ConversationInputBarSendController: NSObject {
             Analytics.shared.tagMediaActionCompleted(.photo, inConversation: conversation)
         })
     }
-    
+
     func sendTextMessage(_ text: String,
                          mentions: [Mention],
                          replyingTo message: ZMConversationMessage?) {
@@ -64,15 +64,15 @@ final class ConversationInputBarSendController: NSObject {
             }
         }, completionHandler: {
             Analytics.shared.tagMediaActionCompleted(.text, inConversation: conversation)
-            
+
         })
     }
-    
+
     func sendTextMessage(_ text: String, mentions: [Mention], withImageData data: Data) {
         guard let conversation = conversation as? ZMConversation else { return }
 
         let shouldFetchLinkPreview = !Settings.disableLinkPreviews
-        
+
         ZMUserSession.shared()?.enqueue({
             do {
                 try conversation.appendText(content: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)

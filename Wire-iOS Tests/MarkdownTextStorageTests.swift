@@ -21,19 +21,19 @@ import XCTest
 import Down
 
 final class MarkdownTextStorageTests: XCTestCase {
-    
+
     var sut: MarkdownTextStorage!
-    
+
     override func setUp() {
         super.setUp()
         sut = MarkdownTextStorage()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItCorrectlyAddsMarkdownIDAttributeAfterAutocorrect() {
         // GIVEN
         let correction = "their"
@@ -48,5 +48,5 @@ final class MarkdownTextStorageTests: XCTestCase {
         XCTAssertEqual(.bold, result)
         XCTAssertEqual(wholeRange, effectiveRange)
     }
-    
+
 }

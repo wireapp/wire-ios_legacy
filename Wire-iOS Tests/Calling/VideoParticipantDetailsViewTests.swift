@@ -22,35 +22,35 @@ import XCTest
 @testable import Wire
 
 class VideoParticipantDetailsViewTests: XCTestCase {
-    
+
     var sut: VideoParticipantDetailsView!
-    
+
     override func setUp() {
         super.setUp()
-            
+
         sut = VideoParticipantDetailsView()
         sut.name = "John Doe"
         sut.frame = CGRect(x: 0, y: 0, width: 95, height: 24)
         sut.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testUnmutedState() {
         sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, shouldPulse: false)
 
         verify(matching: sut)
     }
-    
+
     func testMutedState() {
         sut.microphoneIconStyle = MicrophoneIconStyle(state: .muted, shouldPulse: false)
-        
+
         verify(matching: sut)
     }
-    
+
     func testPulsingState() {
         sut.microphoneIconStyle = MicrophoneIconStyle(state: .unmuted, shouldPulse: true)
 

@@ -24,13 +24,13 @@ class LoggingTest: XCTestCase {
     func testThatCurrentLogIsNotEmpty() {
         // given
         ZMSLog.clearLogs()
-        
+
         // when
         ZMSLog.logWithLevel(.error, message: "test", tag: "AVS")
         ZMSLog.sync()
-        
+
         // then
-        
+
         // Assert that some logs have been written to the current log file, which is the file
         // that gets attached to debug reports.
         XCTAssertNotNil(ZMSLog.currentLog)
@@ -38,5 +38,5 @@ class LoggingTest: XCTestCase {
         XCTAssertFalse(ZMSLog.currentLog!.isEmpty)
         XCTAssertFalse(FileManager.default.contents(atPath: ZMSLog.currentLogPath!.path)!.isEmpty)
     }
-        
+
 }

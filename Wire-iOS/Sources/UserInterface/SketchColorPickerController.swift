@@ -153,7 +153,7 @@ final class SketchColorPickerController: UIViewController {
         view.addSubview(colorsCollectionView)
 
         SketchColorCollectionViewCell.register(in: colorsCollectionView)
-        
+
         colorsCollectionView.dataSource = self
         colorsCollectionView.delegate = self
 

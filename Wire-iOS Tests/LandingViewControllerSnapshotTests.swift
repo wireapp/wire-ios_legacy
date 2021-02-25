@@ -21,14 +21,14 @@ import SnapshotTesting
 @testable import Wire
 
 final class LandingViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: LandingViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = LandingViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

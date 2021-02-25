@@ -22,13 +22,13 @@ import XCTest
 final class Data_ImageTypeTests: XCTestCase {
 
     var sut: Data!
-    
+
     override func tearDown() {
         sut = nil
 
         super.tearDown()
     }
-    
+
     func testThatItIdentifiesJPEG() {
         // given
         sut = dataInTestBundleNamed("unsplash_pano.jpg")

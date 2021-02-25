@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -152,7 +151,6 @@ extension ConversationListViewController.ViewModel {
     private var isComingFromRegistration: Bool {
         return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
-
 
     /// show PushPermissionDeniedDialog when necessary
     ///

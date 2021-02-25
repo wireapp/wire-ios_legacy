@@ -36,19 +36,19 @@ final class CallDegradationController: UIViewController {
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil
     var visibleAlertController: UIAlertController? = nil
-    
+
     // Used to delay presentation of the alert controller until
     // the view is ready.
     private var viewIsReady = false
-    
+
     var state: CallDegradationState = .none {
         didSet {
             guard oldValue != state else { return }
-            
+
             updateState()
         }
     }
-        
+
     fileprivate func updateState() {
         switch state {
         case .outgoing(degradedUser: let degradeduser):
@@ -60,12 +60,12 @@ final class CallDegradationController: UIViewController {
         }
         presentAlertIfNeeded()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = false
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewIsReady = true
@@ -78,7 +78,7 @@ final class CallDegradationController: UIViewController {
             let alertViewController = visibleAlertController,
             !alertViewController.isBeingPresented
             else { return }
-        
+
         Log.calling.debug("Presenting alert about degraded call")
         targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
     }

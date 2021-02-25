@@ -84,7 +84,6 @@ class PasswordRuleSetTests: XCTestCase {
         XCTAssertEqual(result, .invalid(violations: [.disallowedCharacter(dalet)]))
     }
 
-
     // MARK: - Codable
 
     func testThatItDecodesFromJSON() throws {
@@ -131,4 +130,3 @@ class PasswordRuleSetTests: XCTestCase {
     }
 
 }
-

@@ -16,16 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireSyncEngine
 
-
 private let endEditingNotificationName = "ConversationInputBarViewControllerShouldEndEditingNotification"
 
-
 extension ConversationInputBarViewController {
-    
+
     func editMessage(_ message: ZMConversationMessage) {
         guard let text = message.textMessageData?.messageText else { return }
         mode = .textInput
@@ -42,12 +39,12 @@ extension ConversationInputBarViewController {
             object: nil
         )
     }
-    
+
     @objc
     func endEditingMessageIfNeeded() {
         guard let message = editingMessage,
               let conversation = conversation as? ZMConversation else { return }
-        
+
         delegate?.conversationInputBarViewControllerDidCancelEditing(message)
         editingMessage = nil
         ZMUserSession.shared()?.enqueue {
@@ -62,7 +59,7 @@ extension ConversationInputBarViewController {
             object: nil
         )
     }
-    
+
     static func endEditingMessage() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: endEditingNotificationName), object: nil)
     }
@@ -76,7 +73,6 @@ extension ConversationInputBarViewController {
 
 }
 
-
 extension ConversationInputBarViewController: InputBarEditViewDelegate {
 
     func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType) {
@@ -87,7 +83,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
             sendText()
         }
     }
-    
+
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
         guard let text = editingMessage?.textMessageData?.messageText else { return }
         inputBar.setInputBarText(text, mentions: editingMessage?.textMessageData?.mentions ?? [])

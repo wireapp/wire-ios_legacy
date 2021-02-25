@@ -25,12 +25,12 @@ enum OrientationDelta: Int, CaseIterable {
     case rotatedLeft
     case upsideDown
     case rotatedRight
-    
+
     static func +(lhs: OrientationDelta, rhs: OrientationDelta) -> OrientationDelta? {
         let value = (lhs.rawValue + rhs.rawValue) % OrientationDelta.allCases.count
         return OrientationDelta(rawValue: value)
     }
-    
+
     init(interfaceOrientation: UIInterfaceOrientation = UIApplication.shared.statusBarOrientation,
          deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation) {
         guard let delta = deviceOrientation.deltaFromPortrait + interfaceOrientation.deltaFromPortrait else {
@@ -71,7 +71,7 @@ enum OrientationAngle {
     case none // 0°
     case right // 90°
     case straight // 180°
-    
+
     var radians: CGFloat {
         switch self {
         case .none:

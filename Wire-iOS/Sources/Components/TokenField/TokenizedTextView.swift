@@ -77,7 +77,7 @@ final class TokenizedTextView: TextView {
         // Find the character that's been tapped on
         var characterIndex: Int = 0
         var fraction: CGFloat = 0
-        
+
         withUnsafePointer(to: &fraction) {
             characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: UnsafeMutablePointer<CGFloat>(mutating: $0))
         }

@@ -33,7 +33,6 @@ extension AppLockModule {
 
 }
 
-
 // MARK: - Handle result
 
 extension AppLockModule.Presenter: AppLockPresenterInteractorInterface {
@@ -77,7 +76,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
         case .configChangeAcknowledged:
             authenticate()
-            
+
         case .openDeviceSettingsButtonTapped:
             router.performAction(.openDeviceSettings)
         }

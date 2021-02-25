@@ -27,7 +27,6 @@ final class StartUIInviteActionBar: UIView {
 
     private let padding: CGFloat = 12
 
-
     init() {
         super.init(frame: .zero)
         backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
@@ -55,7 +54,6 @@ final class StartUIInviteActionBar: UIView {
         }
     }
 
-
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: isHidden ? 0 : 56.0)
     }
@@ -75,7 +73,6 @@ final class StartUIInviteActionBar: UIView {
               let beginOrigin = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.origin.y,
               let endOrigin = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.origin.y
         else { return }
-
 
         let diff: CGFloat = beginOrigin - endOrigin
 

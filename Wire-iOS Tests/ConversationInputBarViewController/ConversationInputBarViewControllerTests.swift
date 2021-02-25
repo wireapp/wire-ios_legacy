@@ -60,7 +60,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
             /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
             sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
             sut.typingIndicatorView.setHidden(false, animated: false)
-            
+
             return sut
         })
     }
@@ -103,11 +103,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 10)
-    
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
             return sut
         })
@@ -118,11 +118,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 300)
-            
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
@@ -134,11 +134,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 7200)
-            
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
@@ -150,11 +150,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 259200)
-            
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
@@ -166,11 +166,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 2419200)
-            
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
@@ -182,11 +182,11 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         verifyInAllPhoneWidths(createSut: {
             // GIVEN
             let sut = ConversationInputBarViewController(conversation: mockConversation)
-            
+
             // WHEN
             sut.mode = .timeoutConfguration
             setMessageDestructionTimeout(timeInterval: 2419200)
-            
+
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
             let shortText = "Lorem ipsum dolor"
             sut.inputBar.textView.text = shortText

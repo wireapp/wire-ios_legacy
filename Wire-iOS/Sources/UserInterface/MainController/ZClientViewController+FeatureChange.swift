@@ -20,34 +20,34 @@ import Foundation
 import WireSyncEngine
 
 extension ZClientViewController: AppLockChangeWarningViewControllerDelegate {
-    
+
     var appLock: AppLockType? {
         return _userSession?.appLockController
     }
-    
+
     var changeWarningViewController: AppLockChangeWarningViewController? {
         guard let appLock = appLock else {
             return nil
         }
-        
+
         return AppLockChangeWarningViewController(isAppLockActive: appLock.isActive)
     }
 
     func appLockChangeWarningViewControllerDidDismiss() {
         try? appLock?.deletePasscode()
     }
-    
+
     func notifyUserOfDisabledAppLockIfNeeded() {
-        guard 
+        guard
             let appLock = appLock,
             appLock.needsToNotifyUser,
             !appLock.isActive,
             let warningVC = changeWarningViewController else {
                 return
         }
-        
+
         warningVC.modalPresentationStyle = .fullScreen
         present(warningVC, animated: false)
     }
-    
+
 }

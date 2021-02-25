@@ -70,10 +70,10 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         let createSut: () -> UIViewController = {
             self.createSUT()
             self.sut.users = [self.selfUser, self.otherUser].searchForMentions(withQuery: "u")
-            
+
             return self.sut
         }
-        
+
         verifyInAllColorSchemes(createSut: createSut)
     }
 

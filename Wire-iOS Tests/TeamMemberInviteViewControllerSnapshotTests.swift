@@ -21,14 +21,14 @@ import XCTest
 import SnapshotTesting
 
 final class TeamMemberInviteViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: TeamMemberInviteViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = TeamMemberInviteViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

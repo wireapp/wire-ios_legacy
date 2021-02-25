@@ -16,18 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 import WireCommonComponents
 @testable import Wire
 
 class AudioProcessingTests: XCTestCase {
-    
+
     func testScalarFromAmplitude() {
         XCTAssertGreaterThan(scalar(0), 0) // We have minimum threshold above 0
         XCTAssertEqual(scalar(Int16.max), 1)
         XCTAssertGreaterThan(scalar(-1), 0)
         XCTAssertGreaterThan(scalar(1), 0)
     }
-    
+
 }

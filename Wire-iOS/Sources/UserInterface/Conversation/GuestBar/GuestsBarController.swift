@@ -32,13 +32,13 @@ final class GuestsBarController: UIViewController {
     private var containerHeightConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
     private var bottomLabelConstraint: NSLayoutConstraint!
-    
+
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
-    
+
     private var _state: State = .hidden
     var shouldIgnoreUpdates: Bool = false
-    
+
     var state: State {
         get {
             return _state
@@ -48,13 +48,13 @@ final class GuestsBarController: UIViewController {
             setState(newValue, animated: false)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .clear
         container.backgroundColor = .lightGraphite
@@ -65,7 +65,7 @@ final class GuestsBarController: UIViewController {
         container.addSubview(label)
         view.addSubview(container)
     }
-    
+
     private func createConstraints() {
         constrain(self.view, container, label) { view, container, label in
             label.leading == view.leading
@@ -74,40 +74,40 @@ final class GuestsBarController: UIViewController {
             view.leading == container.leading
             view.trailing == container.trailing
             container.top == view.top
-            
+
             heightConstraint = view.height == GuestsBarController.expandedHeight
             containerHeightConstraint = container.height == GuestsBarController.expandedHeight
         }
     }
-    
+
     // MARK: - State Changes
-    
+
     func setState(_ state: State, animated: Bool) {
         guard _state != state, isViewLoaded, !shouldIgnoreUpdates else { return }
-        
+
         _state = state
         configureTitle(with: state)
         let collapsed = state == .hidden
-        
+
         let change = {
             if (!collapsed) {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()
             }
-            
+
             self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
             self.bottomLabelConstraint.constant = collapsed ? -GuestsBarController.expandedHeight : -3
             self.label.alpha = collapsed ? 0 : 1
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
         }
-        
+
         let completion: (Bool) -> Void = { _ in
             guard collapsed else { return }
             self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
         }
-        
+
         if animated {
             UIView.animate(easing: collapsed ? .easeOutQuad : .easeInQuad, duration: 0.4, animations: change, completion: completion)
         } else {
@@ -115,7 +115,7 @@ final class GuestsBarController: UIViewController {
             completion(true)
         }
     }
-    
+
     func configureTitle(with state: State) {
         switch state {
         case .hidden:

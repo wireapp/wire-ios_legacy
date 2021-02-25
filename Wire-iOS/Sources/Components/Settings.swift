@@ -114,14 +114,14 @@ class Settings {
             if let value = defaults.value(forKey: index.rawValue) as? [String: Any] {
                 return LocationData.locationData(fromDictionary: value)
             }
-            
+
             return nil
         }
         set {
             defaults.set(newValue?.toDictionary(), forKey: index.rawValue)
         }
     }
-    
+
     var blacklistDownloadInterval: TimeInterval {
         let HOURS_6 = 6 * 60 * 60
         let settingValue = defaults.integer(forKey: SettingKey.blackListDownloadInterval.rawValue)
@@ -131,7 +131,7 @@ class Settings {
     var defaults: UserDefaults {
         return .standard
     }
-    
+
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0

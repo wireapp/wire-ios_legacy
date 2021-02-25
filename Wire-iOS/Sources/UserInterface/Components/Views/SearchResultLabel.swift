@@ -46,45 +46,45 @@ final public class SearchResultLabel: UILabel, Copyable {
             self.updateText()
         }
     }
-    
+
     public override var textColor: UIColor! {
         didSet {
             self.updateText()
         }
     }
-    
+
     public var estimatedMatchesCount: Int = 0
-    
+
     fileprivate var previousLayoutBounds: CGRect = .zero
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.lineBreakMode = .byTruncatingTail
         textColor = .from(scheme: .textForeground)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
         guard !self.bounds.equalTo(self.previousLayoutBounds) else {
             return
         }
-        
+
         self.previousLayoutBounds = self.bounds
-        
+
         self.updateText()
     }
-    
+
     public func configure(with text: String, queries: [String]) {
         guard let font = self.font,
               let color = self.textColor else {
                 self.attributedText = .none
                 return
         }
-        
+
         self.resultText = text
         self.queries = queries
 
@@ -93,13 +93,13 @@ final public class SearchResultLabel: UILabel, Copyable {
 
         let currentRange = text.range(of: queries,
                                       options: [.diacriticInsensitive, .caseInsensitive])
-        
+
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
-            
+
             let highlightedAttributes = [NSAttributedString.Key.font: font,
                                          .backgroundColor: UIColor.accentDarken]
-            
+
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,
                                                                              with: highlightedAttributes,
@@ -118,7 +118,7 @@ final public class SearchResultLabel: UILabel, Copyable {
             self.attributedText = attributedText
         }
     }
-    
+
     private func updateText() {
         guard let text = self.resultText else {
                 self.attributedText = .none
@@ -126,12 +126,12 @@ final public class SearchResultLabel: UILabel, Copyable {
         }
         self.configure(with: text, queries: self.queries)
     }
-    
+
     fileprivate func fits(attributedText: NSAttributedString, fromRange: NSRange) -> Bool {
         let textCutToRange = attributedText.attributedSubstring(from: NSRange(location: 0, length: fromRange.location + fromRange.length))
-        
+
         let labelSize = textCutToRange.layoutSize()
-        
+
         return labelSize.height <= self.bounds.height && labelSize.width <= self.bounds.width
     }
 }

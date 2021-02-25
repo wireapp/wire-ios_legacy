@@ -358,7 +358,7 @@ final class CallInfoConfigurationTests: XCTestCase {
     }
 
     // MARK: - Group Audio
-    
+
     private func createMockGroupConversation() -> ZMConversation {
         return ((MockConversation.groupConversation(selfUser: mockSelfUser,
                                                     otherUser: mockOtherUser) as Any) as! ZMConversation)

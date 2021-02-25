@@ -39,22 +39,22 @@ struct ServiceAddedEvent: Event {
         case startUI = "start_ui"
         case conversationDetails = "conversation_details"
     }
-    
+
     private let conversationSize, servicesSize: Int
     private let serviceIdentifier: String
     private let context: Context
-    
+
     init(service: ServiceUser, conversation: ZMConversation, context: Context) {
         serviceIdentifier = service.serviceIdentifier ?? ""
         conversationSize = conversation.otherNonServiceParticipants.count // Without service users
         servicesSize = conversation.localParticipants.count - conversationSize
         self.context = context
     }
-    
+
     var name: String {
         return "integration.added_service"
     }
-    
+
     var attributes: [AnyHashable: Any]? {
         return [
             Keys.serviceID: serviceIdentifier,
@@ -69,17 +69,17 @@ struct ServiceRemovedEvent: Event {
     struct Keys {
         static let serviceID = "service_id"
     }
-    
+
     private let serviceIdentifier: String
-    
+
     init(service: ServiceUser) {
         serviceIdentifier = service.serviceIdentifier ?? ""
     }
-    
+
     var name: String {
         return "integration.removed_service"
     }
-    
+
     var attributes: [AnyHashable: Any]? {
         return [Keys.serviceID: serviceIdentifier]
     }
