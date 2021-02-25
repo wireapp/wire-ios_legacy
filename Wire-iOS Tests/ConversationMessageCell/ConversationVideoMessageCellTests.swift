@@ -122,7 +122,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.fileURL = nil
 
-        verify(message: message)
+        verify(message: message, waitForImagesToLoad: true)
     }
 
     // MARK : Downloaded
