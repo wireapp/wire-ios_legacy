@@ -48,7 +48,9 @@ extension XCTestCase {
 
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+            verify(createSut: {
+                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+            },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
                    allWidths: allWidths,
@@ -57,7 +59,9 @@ extension XCTestCase {
                    line: line)
 
             ColorScheme.default.variant = .light
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+            verify(createSut: {
+                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+            },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
                    allWidths: allWidths,
@@ -65,7 +69,9 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
         } else {
-            verify(matching: createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor),
+            verify(createSut: {
+                createUIStackView(message: message, context: context, waitForImagesToLoad: waitForImagesToLoad, waitForTextViewToLoad: waitForTextViewToLoad, snapshotBackgroundColor: snapshotBackgroundColor)
+            },
                    snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
                    file: file,
@@ -74,7 +80,7 @@ extension XCTestCase {
         }
     }
 
-    private func verify(matching value: UIView,
+    private func verify(createSut: () -> UIView,
                         snapshotBackgroundColor: UIColor?,
                         named name: String? = nil,
                         allColorSchemes: Bool = false,
@@ -85,14 +91,14 @@ extension XCTestCase {
         let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
 
         if allWidths {
-            verifyInAllPhoneWidths(matching: value,
+            verifyInAllPhoneWidths(createSut: createSut,
                                    snapshotBackgroundColor: backgroundColor,
                                    named: name,
                                    file: file,
                                    testName: testName,
                                    line: line)
         } else {
-            verifyInWidths(matching: value,
+            verifyInWidths(createSut: createSut,
                            widths: [smallestWidth],
                            snapshotBackgroundColor: backgroundColor,
                            named: name,
