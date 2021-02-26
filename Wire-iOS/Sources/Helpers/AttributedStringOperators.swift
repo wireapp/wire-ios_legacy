@@ -24,14 +24,14 @@ import WireDataModel
 // Concats the lhs and rhs and returns a NSAttributedString
 infix operator + : AdditionPrecedence
 
-func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     let result = NSMutableAttributedString()
     result.append(left)
     result.append(right)
     return NSAttributedString(attributedString: result)
 }
 
-func +(left: String, right: NSAttributedString) -> NSAttributedString {
+func + (left: String, right: NSAttributedString) -> NSAttributedString {
     var range: NSRange? = NSMakeRange(0, 0)
     let attributes = right.length > 0 ? right.attributes(at: 0, effectiveRange: &range!) : [:]
 
@@ -42,7 +42,7 @@ func +(left: String, right: NSAttributedString) -> NSAttributedString {
     return NSAttributedString(attributedString: result)
 }
 
-func +(left: NSAttributedString, right: String) -> NSAttributedString {
+func + (left: NSAttributedString, right: String) -> NSAttributedString {
     var range: NSRange? = NSMakeRange(0, 0)
     let attributes = left.length > 0 ? left.attributes(at: left.length - 1, effectiveRange: &range!) : [:]
 
@@ -55,22 +55,22 @@ func +(left: NSAttributedString, right: String) -> NSAttributedString {
 // Concats the lhs and rhs and assigns the result to the lhs
 infix operator += : AssignmentPrecedence
 
-@discardableResult func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
+@discardableResult func += (left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
     left.append(right.attributedString)
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: String) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: String) -> NSAttributedString {
     left = left + right
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     left = left + right
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
     guard let rhs = right else { return left }
     return left += rhs
 }
@@ -78,35 +78,35 @@ infix operator += : AssignmentPrecedence
 // Applies the attributes on the rhs to the string on the lhs
 infix operator && : LogicalConjunctionPrecedence
 
-func &&(left: String, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
+func && (left: String, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)
     return result
 }
 
-func &&(left: String, right: UIFont) -> NSAttributedString {
+func && (left: String, right: UIFont) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: [.font: right])
     return result
 }
 
-func &&(left: NSAttributedString, right: UIFont?) -> NSAttributedString {
+func && (left: NSAttributedString, right: UIFont?) -> NSAttributedString {
     guard let font = right else { return left }
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.font: font], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: String, right: UIColor) -> NSAttributedString {
+func && (left: String, right: UIColor) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: [.foregroundColor: right])
     return result
 }
 
-func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
+func && (left: NSAttributedString, right: UIColor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.foregroundColor: right], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
+func && (left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes(right, range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
@@ -137,13 +137,13 @@ enum ParagraphStyleDescriptor {
     }
 }
 
-func &&(left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
+func && (left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.paragraphStyle: right.style], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: String, right: ParagraphStyleDescriptor) -> NSAttributedString {
+func && (left: String, right: ParagraphStyleDescriptor) -> NSAttributedString {
     return left.attributedString && right
 }
 
