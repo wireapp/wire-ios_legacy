@@ -77,9 +77,6 @@
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
-                  Identifier = "RoundedSegmentedViewTests">
-               </Test>
-               <Test
                   Identifier = "SearchResultLabelTests">
                </Test>
                <Test
