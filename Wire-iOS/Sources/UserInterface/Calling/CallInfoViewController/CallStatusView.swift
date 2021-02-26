@@ -18,7 +18,6 @@
 
 import UIKit
 
-
 protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
@@ -63,14 +62,13 @@ final class CallStatusView: UIView {
     private let subtitleLabel = UILabel()
     private let bitrateLabel = BitRateLabel()
     private let stackView = UIStackView(axis: .vertical)
-    
+
     var configuration: CallStatusViewInputType {
         didSet {
             updateConfiguration()
         }
     }
-    
-    
+
     init(configuration: CallStatusViewInputType) {
         self.configuration = configuration
         super.init(frame: .zero)
@@ -78,12 +76,12 @@ final class CallStatusView: UIView {
         createConstraints()
         updateConfiguration()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         [stackView, bitrateLabel].forEach(addSubview)
         stackView.distribution = .fill
@@ -107,7 +105,7 @@ final class CallStatusView: UIView {
         bitrateLabel.accessibilityIdentifier = "bitrate-indicator"
         bitrateLabel.isHidden = true
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
@@ -119,7 +117,7 @@ final class CallStatusView: UIView {
             bitrateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
@@ -130,7 +128,7 @@ final class CallStatusView: UIView {
             $0.textColor = UIColor.from(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         }
     }
-    
+
 }
 
 // MARK: - Helper
@@ -156,10 +154,10 @@ extension CallStatusViewInputType {
         case .terminating: return "call.status.terminating".localized
         }
     }
-    
+
     var effectiveColorVariant: ColorSchemeVariant {
         guard !isVideoCall else { return .dark }
         return variant
     }
-    
+
 }

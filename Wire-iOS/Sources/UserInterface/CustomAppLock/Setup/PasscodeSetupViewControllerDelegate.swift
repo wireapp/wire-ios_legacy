@@ -21,5 +21,5 @@ protocol PasscodeSetupViewControllerDelegate: class {
 
     func passcodeSetupControllerDidFinish()
     func passcodeSetupControllerWasDismissed()
-    
+
 }

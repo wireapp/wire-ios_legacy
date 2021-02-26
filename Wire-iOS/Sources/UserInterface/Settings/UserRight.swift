@@ -37,7 +37,7 @@ final class UserRight: UserRightInterface {
     static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
         let selfUser = ZMUser.selfUser()
         let usesCompanyLogin = selfUser?.usesCompanyLogin == true
-        
+
         switch permission {
         case .editEmail:
         #if EMAIL_EDITING_DISABLED
@@ -56,9 +56,8 @@ final class UserRight: UserRightInterface {
 			return isProfileEditable
         }
     }
-    
+
     private static var isProfileEditable: Bool {
         return ZMUser.selfUser()?.managedByWire ?? true
     }
 }
-

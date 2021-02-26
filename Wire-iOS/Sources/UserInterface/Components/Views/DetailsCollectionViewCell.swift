@@ -28,7 +28,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     var contentStackView: UIStackView!
     private var leftIconContainer: UIView!
     private var contentLeadingConstraint: NSLayoutConstraint!
-    
+
     /// The leading offset of the content when `icon` is nil.
     var contentLeadingOffset: CGFloat = 24
 
@@ -58,7 +58,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         get { return statusLabel.text }
         set { updateStatus(newValue) }
     }
-    
+
     var disabled: Bool = false {
         didSet {
             updateDisabledState()
@@ -91,7 +91,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         let iconViewSpacer = UIView()
         iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
         iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        
+
         titleStackView = UIStackView(arrangedSubviews: [titleLabel, statusLabel])
         titleStackView.axis = .vertical
         titleStackView.distribution = .equalSpacing
@@ -99,7 +99,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
         contentStackView = UIStackView(arrangedSubviews: [leftIconContainer, titleStackView, iconViewSpacer])
-        contentStackView.axis = .horizontal 
+        contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -157,7 +157,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
             statusLabel.isHidden = true
         }
     }
-    
+
     private func updateDisabledState() {
         titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
     }

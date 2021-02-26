@@ -98,12 +98,12 @@ class TextView: UITextView {
         set {
             super.accessibilityValue = newValue
         }
-        
+
         get {
             return text.isEmpty ? placeholderLabel.accessibilityValue : super.accessibilityValue
         }
     }
-    
+
     override var text: String! {
         didSet {
             showOrHidePlaceholder()

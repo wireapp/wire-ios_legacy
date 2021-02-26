@@ -236,7 +236,6 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: cell)
     }
 
-
     func testThatItRendersEmojiInLargeFont_33() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "🌮🌮🌮")

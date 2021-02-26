@@ -40,7 +40,7 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
         stateController.transition(to: .teamCreation(.setTeamName))
     }
-    
+
     func landingViewControllerDidChooseEnterpriseLogin() {
         executeActions([.startCompanyLogin(code: nil)])
     }

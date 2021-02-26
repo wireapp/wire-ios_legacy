@@ -39,4 +39,3 @@ extension AVPlayerViewController {
         NotificationCenter.default.post(name: .dismissingAVPlayer, object: self)
     }
 }
-

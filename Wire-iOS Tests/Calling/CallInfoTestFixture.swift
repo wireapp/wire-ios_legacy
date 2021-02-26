@@ -41,7 +41,7 @@ struct CallInfoTestFixture {
     }
 
     // MARK: - OneToOne Audio
-    
+
     private var hashBoxOtherUser: HashBoxUser {
         return HashBox(value: otherUser)
     }
@@ -93,7 +93,7 @@ struct CallInfoTestFixture {
             userEnabledCBR: false
         )
     }
-    
+
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             allowPresentationModeUpdates: false,
@@ -532,7 +532,7 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablishedRemoteTurnedVideoOn(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: true,
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
@@ -726,7 +726,7 @@ struct CallInfoTestFixture {
 
     func groupVideoEstablished(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: true,
+            allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: MockCallPermissions.videoAllowedForever,

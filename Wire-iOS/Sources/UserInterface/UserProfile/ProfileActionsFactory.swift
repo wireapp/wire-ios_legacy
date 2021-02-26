@@ -155,7 +155,6 @@ final class ProfileActionsFactory {
             }
         }
 
-
         var actions: [ProfileAction] = []
 
         switch (context, conversation?.conversationType) {

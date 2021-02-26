@@ -26,7 +26,7 @@ final class PasscodeSetupPresenter {
                                                                       .lowercase,
                                                                       .special,
                                                                       .digits]
-    
+
     var isPasscodeValid: Bool {
         switch passcodeValidationResult {
         case .valid:
@@ -104,7 +104,7 @@ extension PasscodeSetupPresenter {
         }
         return passcodeErrors
     }
-    
+
     private func passcodeError(from missingCharacterClasses: Set<PasswordCharacterClass>) -> Set<PasscodeError> {
         var passcodeErrors: Set<PasscodeError> = Set()
         passcodeCharacterClasses.forEach {
@@ -123,7 +123,7 @@ extension PasscodeSetupPresenter {
                 }
             }
         }
-        
+
         return passcodeErrors
     }
 }

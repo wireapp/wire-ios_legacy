@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -123,7 +122,7 @@ extension ConversationListViewController.ViewModel {
                 completion: Completion? = nil) {
         selectedConversation = conversation
 
-        viewController?.setState(.conversationList, animated:animated) { [weak self] in
+        viewController?.setState(.conversationList, animated: animated) { [weak self] in
             self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         }
     }
@@ -152,7 +151,6 @@ extension ConversationListViewController.ViewModel {
     private var isComingFromRegistration: Bool {
         return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
-
 
     /// show PushPermissionDeniedDialog when necessary
     ///

@@ -90,10 +90,10 @@ extension UIImage {
 
     private class func thumbnailOptions(withMaxSize maxSize: CGFloat) -> CFDictionary {
         return [
-            kCGImageSourceCreateThumbnailWithTransform : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageIfAbsent : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageAlways : kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: Float(maxSize))
+            kCGImageSourceCreateThumbnailWithTransform: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageIfAbsent: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageAlways: kCFBooleanTrue,
+            kCGImageSourceThumbnailMaxPixelSize: NSNumber(value: Float(maxSize))
             ] as CFDictionary
     }
 

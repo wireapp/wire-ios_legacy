@@ -23,7 +23,7 @@ enum UserTypeIconStyle: String, IconImageStyle {
     case guest
     case external
     case member
-    
+
     var icon: StyleKitIcon? {
         switch self {
         case .guest:

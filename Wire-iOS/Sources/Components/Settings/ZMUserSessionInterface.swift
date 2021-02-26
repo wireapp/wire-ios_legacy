@@ -21,16 +21,16 @@ import WireSyncEngine
 typealias UserSessionInterface = UserSessionSwiftInterface & UserSessionAppLockInterface
 
 protocol ZMUserSessionInterface: class {
-    
+
     func perform(_ changes: @escaping () -> ())
-    
+
     func enqueue(_ changes: @escaping () -> ())
-    
+
     func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?)
 
-    var isNotificationContentHidden : Bool { get set }
-    
-    var encryptMessagesAtRest : Bool { get }
+    var isNotificationContentHidden: Bool { get set }
+
+    var encryptMessagesAtRest: Bool { get }
 }
 
 // an interface for ZMUserSession's Swift-only functions

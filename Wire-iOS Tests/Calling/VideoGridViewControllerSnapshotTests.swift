@@ -22,7 +22,7 @@ import SnapshotTesting
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
     var shouldShowActiveSpeakerFrame: Bool = true
-    
+
     var floatingVideoStream: VideoStream?
 
     var videoStreams: [VideoStream] = []
@@ -30,31 +30,35 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var videoState: VideoState = .stopped
 
     var networkQuality: NetworkQuality = .normal
-    
+
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
 }
 
 final class VideoGridViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockVideoGridConfiguration!
     var selfVideoStream: VideoStream!
     var stubProvider = VideoStreamStubProvider()
-    
+
     override func setUp() {
         super.setUp()
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockVideoGridConfiguration()
-        
+
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
-        
+
         let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
-        selfVideoStream = stubProvider.videoStream(participantName: "Alice", client: client, active: true)
+        selfVideoStream = stubProvider.videoStream(
+            participantName: "Alice",
+            client: client,
+            activeSpeakerState: .active(audioLevelNow: 100)
+        )
     }
-    
+
     override func tearDown() {
         sut = nil
         mediaManager = nil
@@ -68,33 +72,33 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         sut.isCovered = false
         sut.view.backgroundColor = .black
     }
-    
+
     func testNoActiveSpeakersSpinner() {
         configuration.videoStreams = []
         configuration.presentationMode = .activeSpeakers
-        
+
         createSut()
-        
+
         verify(matching: sut)
     }
-        
+
     func testActiveSpeakersIndicators_OneToOne() {
-        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", active: true)]
+        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100))]
         configuration.floatingVideoStream = selfVideoStream
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
         verify(matching: sut)
     }
-    
+
     func testActiveSpeakersIndicators_Conference() {
         configuration.videoStreams = [
-            stubProvider.videoStream(participantName: "Alice", active: true),
-            stubProvider.videoStream(participantName: "Bob", active: true),
-            stubProvider.videoStream(participantName: "Carol", active: true),
+            stubProvider.videoStream(participantName: "Alice", activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(participantName: "Carol", activeSpeakerState: .active(audioLevelNow: 100))
         ]
         createSut()
-        
+
         verify(matching: sut)
     }
 

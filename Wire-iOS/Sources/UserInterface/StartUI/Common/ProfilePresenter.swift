@@ -93,7 +93,6 @@ final class ProfilePresenter: NSObject, ViewControllerDismisser {
     }
 }
 
-
 private class TransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController,

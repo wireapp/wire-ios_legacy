@@ -23,7 +23,7 @@ class AuthenticationStatusProvider {
     var sharedUserSession: ZMUserSession? {
         return ZMUserSession.shared()
     }
-    
+
     var authenticatedUserWasRegisteredOnThisDevice: Bool {
         return sharedUserSession?.registeredOnThisDevice == true
     }

@@ -26,7 +26,6 @@ final class MockLegalHoldDataSource: NSObject {
 
 extension MockUser: SelfLegalHoldSubject {
 
-
     public var needsToAcknowledgeLegalHoldStatus: Bool {
         return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
     }
@@ -53,7 +52,7 @@ extension MockUser: SelfLegalHoldSubject {
     public func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
         legalHoldDataSource.legalHoldRequest = request
     }
-    
+
     public func legalHoldRequestWasCancelled() {
         legalHoldDataSource.legalHoldRequest = nil
     }

@@ -25,7 +25,7 @@ protocol CallQualityViewControllerDelegate: class {
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
-final class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
+final class CallQualityViewController: UIViewController, UIGestureRecognizerDelegate {
 
     let questionLabelText: String
     let callDuration: Int
@@ -38,12 +38,12 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
     let titleLabel = UILabel()
     let questionLabel = UILabel()
 
-    var callQualityStackView : CustomSpacingStackView!
-    var scoreSelectorView : QualityScoreSelectorView!
+    var callQualityStackView: CustomSpacingStackView!
+    var scoreSelectorView: QualityScoreSelectorView!
     var dismissTapGestureRecognizer: UITapGestureRecognizer!
 
     // MARK: Contraints
-    
+
     private var ipad_centerXConstraint: NSLayoutConstraint!
     private var ipad_centerYConstraint: NSLayoutConstraint!
     private var iphone_leadingConstraint: NSLayoutConstraint!
@@ -55,24 +55,24 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
     private var ipad_paddingRightConstraint: NSLayoutConstraint!
 
     // MARK: Initialization
-    
+
     init(questionLabelText: String, callDuration: Int) {
         self.questionLabelText = questionLabelText
         self.callDuration = callDuration
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
         createConstraints()
         updateLayout(for: traitCollection)
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -179,26 +179,26 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
         ipad_paddingLeftConstraint = callQualityStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44)
         ipad_paddingRightConstraint = callQualityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -44)
     }
-    
+
     // MARK: Dismiss Events
 
     @objc func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
-    
+
     @objc func onTapToDismiss() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return touch.view?.isDescendant(of: contentView) == false
     }
-    
+
     override func accessibilityPerformMagicTap() -> Bool {
         onTapToDismiss()
         return true
     }
-    
+
     // MARK: Adaptive Layout
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -224,18 +224,18 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
 
 }
 
-class CallQualityView : UIStackView {
+class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
     let scoreButton = Button()
     let callback: (Int)->()
     let labelText: String
     let buttonScore: Int
-    
+
     init(labelText: String, buttonScore: Int, callback: @escaping (Int)->()){
         self.callback = callback
         self.buttonScore = buttonScore
         self.labelText = labelText
-        
+
         super.init(frame: .zero)
 
         axis = .vertical
@@ -246,7 +246,7 @@ class CallQualityView : UIStackView {
         scoreLabel.textAlignment = .center
         scoreLabel.textColor = UIColor.CallQuality.score
         scoreLabel.adjustsFontSizeToFitWidth = true
-        
+
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
@@ -259,46 +259,46 @@ class CallQualityView : UIStackView {
         scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .highlighted)
         scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .selected)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
-        
+
         scoreButton.accessibilityLabel = labelText
         constrain(scoreButton){scoreButton in
             scoreButton.width <= 48
             scoreButton.height == scoreButton.width
         }
-        
+
         addArrangedSubview(scoreLabel)
         addArrangedSubview(scoreButton)
     }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func onClick(_ sender: UIButton) {
         callback(buttonScore)
     }
 }
 
-class QualityScoreSelectorView : UIView {
+class QualityScoreSelectorView: UIView {
     private let scoreStackView = UIStackView()
-    
+
     weak var delegate: CallQualityViewControllerDelegate?
-    
+
     public let onScoreSet: ((Int)->())
-    
+
     init(onScoreSet: @escaping (Int)->()) {
         self.onScoreSet = onScoreSet
         super.init(frame: .zero)
-        
+
         scoreStackView.axis = .horizontal
         scoreStackView.distribution = .fillEqually
         scoreStackView.spacing = 12
-        
+
         (1 ... 5)
             .map { (localizedNameForScore($0), $0) }
             .map { CallQualityView(labelText: $0.0, buttonScore: $0.1, callback: onScoreSet) }
             .forEach(scoreStackView.addArrangedSubview)
-        
+
         addSubview(scoreStackView)
         constrain(self, scoreStackView) { selfView, scoreStackView in
             scoreStackView.edges == selfView.edges
@@ -316,11 +316,11 @@ class QualityScoreSelectorView : UIView {
         }
 
     }
-    
+
     func localizedNameForScore(_ score: Int) -> String {
         return NSLocalizedString("calling.quality_survey.answer.\(score)", comment: "")
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -332,7 +332,7 @@ class CallQualityAnimator: NSObject, UIViewControllerTransitioningDelegate {
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
     }
-    
+
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
     }

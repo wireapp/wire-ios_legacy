@@ -111,7 +111,7 @@ class IncomingRequestFooterView: UIView, Themeable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
     }
 

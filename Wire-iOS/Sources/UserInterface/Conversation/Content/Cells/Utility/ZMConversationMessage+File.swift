@@ -28,7 +28,7 @@ extension ZMConversationMessage {
             return false
         }
     }
-    
+
     public func videoCanBeSavedToCameraRoll() -> Bool {
         if self.isFileDownloaded(),
             let fileMessageData = self.fileMessageData,

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 import UIKit
@@ -27,27 +26,27 @@ import WireCommonComponents
 final class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     private let headerView = CollectionCellHeader()
-    
+
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
-        
+
         guard let message = self.message else {
             return
         }
         headerView.message = message
         fileTransferView.configure(for: message, isInitial: changeInfo == .none)
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadView()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.loadView()
     }
-    
+
     func loadView() {
         self.fileTransferView.delegate = self
         self.fileTransferView.layer.cornerRadius = 4
@@ -61,9 +60,9 @@ final class CollectionFileCell: CollectionCell {
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
-            
+
             fileTransferView.top == headerView.bottom + 4
-            
+
             fileTransferView.left == contentView.leftMargin
             fileTransferView.right == contentView.rightMargin
             fileTransferView.bottom == contentView.bottomMargin

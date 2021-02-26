@@ -21,7 +21,7 @@ import SnapshotTesting
 @testable import Wire
 
 final class UserImageViewContainerSnapshotTests: XCTestCase {
-    
+
     var sut: UserImageViewContainer!
     var mockUser: MockUserType!
 
@@ -32,7 +32,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
         mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").imageData
         mockUser.mediumProfileImageCacheKey = "test"
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil

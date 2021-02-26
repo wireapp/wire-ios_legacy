@@ -34,7 +34,7 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
         actionController = ConversationActionController(conversation: conversation,
                                                         target: presentingViewController,
                                                         sourceView: sourceView)
-        
+
         contentViewController = ConversationContentViewController(conversation: conversation, mediaPlaybackManager: nil, session: ZMUserSession.shared()!)
         super.init(nibName: nil, bundle: nil)
     }

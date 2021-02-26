@@ -53,7 +53,7 @@ extension AppLockModule {
         private func setUpObserver() {
             NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         }
-        
+
         @objc
         func applicationWillEnterForeground() {
             presenter.processEvent(.applicationWillEnterForeground)
@@ -99,7 +99,7 @@ extension AppLockModule {
                 return Strings.Message.passcodeUnavailable
             }
         }
-        
+
         var buttonTitle: String {
             switch self {
             case .locked(.unavailable):
@@ -108,7 +108,7 @@ extension AppLockModule {
                 return Strings.UnlockButton.title
             }
         }
-        
+
         var buttonEvent: AppLockModule.Event {
             switch self {
             case .locked(.unavailable):

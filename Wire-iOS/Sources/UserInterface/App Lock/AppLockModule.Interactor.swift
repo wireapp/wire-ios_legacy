@@ -70,10 +70,11 @@ extension AppLockModule {
         }
 
         private var needsToCreateCustomPasscode: Bool {
+            guard passcodePreference != .deviceOnly else { return false }
             guard !appLock.isCustomPasscodeSet else { return false }
             return appLock.requireCustomPasscode || authenticationType.current == .unavailable
         }
-        
+
         private var isAuthenticationNeeded: Bool {
             return passcodePreference != nil
         }
@@ -90,7 +91,7 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
         switch request {
         case .initiateAuthentication where !isAuthenticationNeeded:
             openAppLock()
-            
+
         case .initiateAuthentication where needsToCreateCustomPasscode:
             presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
 

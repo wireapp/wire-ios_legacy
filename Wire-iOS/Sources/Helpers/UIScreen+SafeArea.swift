@@ -19,7 +19,7 @@
 import UIKit
 
 extension UIScreen {
-    
+
     static var safeArea: UIEdgeInsets {
         if #available(iOS 11, *), hasNotch {
             return UIApplication.shared.keyWindow!.safeAreaInsets
@@ -56,7 +56,7 @@ extension UIScreen {
             return false
         }
     }
-    
+
     var isCompact: Bool {
         return bounds.size.height <= 568
     }

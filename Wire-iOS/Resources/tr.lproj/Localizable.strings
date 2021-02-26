@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Siz aradınız";
 "content.system.ephemeral_time_remaining" = "%@ ayrıldı";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Sen";
-"content.system.this_device" = "bu cihaz";
 
 "content.system.call.called" = "%@ aradı";
 "content.system.call.called-you" = "%@ aradı";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "yeni bir cihaz";
-"content.system.started_using" = "kullanmaya başladı";
 "content.system.is_verified" = "Tüm parmak izleri doğrulanmış";
 
 "content.system.new_users" = "Yeni biri katıldı.";
 "content.system.verify_devices" = "Cihazları doğrula";
 
-"content.system.unverified" = "%@, %@dan birini doğrulamadı"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "senin cihazların";
-"content.system.other_devices" = "%@'nin cihazların";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Bu cihazı bir süredir kullanmıyorsunuz. Bazı mesajlar burada görünmeyebilir.";
 "content.system.missing_messages.subtitle_start" = "Bu sırada,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "(%@) Tümünü göster";
 "call.participants.list.title" = "Katılımcılar";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Video duraklatıldı";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Yüz Tanıma veya Şifre ile Wire'ın Kilidini Açın";
 "appLockModule.message.touchID" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
 "appLockModule.message.passcode" = "Şifre ile Wire'ın Kilidini Açın";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.button.title" = "Kilidi aç";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

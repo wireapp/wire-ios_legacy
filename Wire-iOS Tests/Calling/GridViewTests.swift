@@ -115,7 +115,6 @@ class GridViewTests: XCTestCase {
 
 }
 
-
 extension GridViewTests: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {

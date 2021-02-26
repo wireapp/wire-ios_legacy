@@ -146,10 +146,10 @@ final class MessageToolboxView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         clipsToBounds = true
-                
+
         setupViews()
         createConstraints()
-        
+
         tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(MessageToolboxView.onTapContent(_:)))
         tapGestureRecogniser.delegate = self
         addGestureRecognizer(tapGestureRecogniser)
@@ -158,7 +158,7 @@ final class MessageToolboxView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         likeButton.accessibilityIdentifier = "likeButton"
         likeButton.addTarget(self, action: #selector(requestLike), for: .touchUpInside)
@@ -178,7 +178,7 @@ final class MessageToolboxView: UIView {
          countdownLabel].forEach(contentStack.addArrangedSubview)
         [likeButtonContainer, likeButton, contentStack].forEach(addSubview)
     }
-    
+
     private func createConstraints() {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         likeButtonContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -245,7 +245,7 @@ final class MessageToolboxView: UIView {
         if dataSource?.message.nonce != message.nonce {
             dataSource = MessageToolboxDataSource(message: message)
         }
-        
+
         self.forceShowTimestamp = forceShowTimestamp
         reloadContent(animated: animated)
     }
@@ -265,7 +265,7 @@ final class MessageToolboxView: UIView {
         }
 
         switch dataSource.content {
-            
+
         case .callList(let callListString):
             updateContentStack(to: newPosition, animated: animated) {
                 self.detailsLabel.attributedText = callListString
@@ -336,7 +336,7 @@ final class MessageToolboxView: UIView {
 
         guard let message = self.dataSource?.message else { return }
         guard message.isEphemeral, !message.hasBeenDeleted, !message.isObfuscated else { return }
-        
+
         timestampTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.reloadContent(animated: false)
         }

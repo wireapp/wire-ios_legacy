@@ -177,7 +177,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         })
 
         if let userSession = ZMUserSession.shared() {
-            messageObserverToken = MessageChangeInfo.add(observer:self, for: sourceMessage, userSession: userSession)
+            messageObserverToken = MessageChangeInfo.add(observer: self, for: sourceMessage, userSession: userSession)
         }
 
     }

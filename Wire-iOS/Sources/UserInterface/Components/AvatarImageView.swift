@@ -120,7 +120,7 @@ class AvatarImageView: UIControl {
 
     private func configureSubviews() {
         contentMode = .scaleAspectFill
-        
+
         isOpaque = false
         imageView.isOpaque = false
         container.backgroundColor = .yellow
@@ -163,7 +163,7 @@ class AvatarImageView: UIControl {
 
             // initials
             initialsLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            initialsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            initialsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
     }
 

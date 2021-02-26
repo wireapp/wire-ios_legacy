@@ -81,19 +81,19 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 
     func testForOptionsGroupFullTableView() {
         setToLightTheme()
-        
+
         let group = settingsCellDescriptorFactory.optionsGroup
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
-        
+
         // set the width of the VC, to calculate the height on content size
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
         sut.view.layoutIfNeeded()
 
         verify(matching: sut, customSize: CGSize(width: CGSize.iPhoneSize.iPhone4_7.width, height: sut.tableView.contentSize.height))
     }
-    
+
     func testThatApplockIsAvailableInOptionsGroup_WhenIsAvailable() {
         // given
         let appLock = AppLockModule.MockAppLockController()
@@ -103,11 +103,11 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         settingsPropertyFactory = .init(userSession: userSessionMock, selfUser: selfUser)
         settingsCellDescriptorFactory = .init(settingsPropertyFactory: settingsPropertyFactory,
                                               userRightInterfaceType: MockUserRight.self)
-        
+
         // then
         XCTAssertTrue(settingsCellDescriptorFactory.isAppLockAvailable)
     }
-    
+
     func testThatApplockIsNotAvailableInOptionsGroup_WhenIsNotAvailable() {
         // given
         let appLock = AppLockModule.MockAppLockController()
@@ -117,7 +117,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         settingsPropertyFactory = .init(userSession: userSessionMock, selfUser: selfUser)
         settingsCellDescriptorFactory = .init(settingsPropertyFactory: settingsPropertyFactory,
                                               userRightInterfaceType: MockUserRight.self)
-        
+
         // then
         XCTAssertFalse(settingsCellDescriptorFactory.isAppLockAvailable)
     }
@@ -129,18 +129,18 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         let group = SettingsCellDescriptorFactory.darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
         verify(group: group)
     }
-    
+
     private func verify(group: Any,
                         file: StaticString = #file,
                         testName: String = #function,
                         line: UInt = #line) {
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
-        
+
         sut.view.backgroundColor = .black
-        
+
         verify(matching: sut, file: file, testName: testName, line: line)
     }
-    
+
     // MARK: - advanced
     func testForAdvancedGroup() {
         let group = settingsCellDescriptorFactory.advancedGroup

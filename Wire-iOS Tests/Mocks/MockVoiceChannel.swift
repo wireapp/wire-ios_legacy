@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class MockVoiceChannel: NSObject, VoiceChannel {    
+final class MockVoiceChannel: NSObject, VoiceChannel {
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?
@@ -62,11 +62,11 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
     func addMuteStateObserver(_ observer: MuteStateObserver) -> Any {
         return "token"
     }
-    
+
     func addActiveSpeakersObserver(_ observer: ActiveSpeakersObserver) -> Any {
         return "token"
     }
-    
+
     var state: CallState {
         return mockCallState
     }
@@ -82,13 +82,13 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
     var participants: [CallParticipant] {
         return mockParticipants
     }
-    
+
     var requestedCallParticipantsListKind: CallParticipantsListKind?
     func participants(ofKind kind: CallParticipantsListKind, activeSpeakersLimit limit: Int?) -> [CallParticipant] {
         requestedCallParticipantsListKind = kind
         return mockParticipants
     }
-    
+
     var isConstantBitRateAudioActive: Bool {
         return mockIsConstantBitRateAudioActive
     }
@@ -132,7 +132,7 @@ final class MockVoiceChannel: NSObject, VoiceChannel {
             mockMuted = newValue
         }
     }
-    
+
     var mockVideoGridPresentationMode: VideoGridPresentationMode = .allVideoStreams
     var videoGridPresentationMode: VideoGridPresentationMode {
         get {

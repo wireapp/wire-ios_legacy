@@ -58,7 +58,7 @@ final class CallInfoConfigurationTests: XCTestCase {
                                                                        userId: UUID(),
                                                                        clientId: "123",
                                                                        state: state,
-                                                                       isActiveSpeaker: false) })
+                                                                       activeSpeakerState: .inactive) })
     }
 
     // MARK: - OneToOne Audio
@@ -358,7 +358,7 @@ final class CallInfoConfigurationTests: XCTestCase {
     }
 
     // MARK: - Group Audio
-    
+
     private func createMockGroupConversation() -> ZMConversation {
         return ((MockConversation.groupConversation(selfUser: mockSelfUser,
                                                     otherUser: mockOtherUser) as Any) as! ZMConversation)

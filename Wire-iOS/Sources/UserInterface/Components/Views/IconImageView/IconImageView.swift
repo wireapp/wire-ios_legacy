@@ -31,11 +31,11 @@ extension IconImageStyle {
     var accessibilityPrefix: String {
         return "img"
     }
-    
+
     var accessibilityIdentifier: String {
         return "\(accessibilityPrefix).\(accessibilitySuffix)"
     }
-    
+
     var tintColor: UIColor? {
         return nil
     }
@@ -50,15 +50,15 @@ class IconImageView: UIImageView {
         super.init(frame: frame)
         image = UIImage()
     }
-    
+
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var accessibilityIdentifier: String? {
         get {
             return style?.accessibilityIdentifier
@@ -67,7 +67,7 @@ class IconImageView: UIImageView {
             // no-op
         }
     }
-    
+
     func set(style: IconImageStyle? = nil,
              size: StyleKitIcon.Size? = nil,
              color: UIColor? = nil) {
@@ -81,18 +81,18 @@ class IconImageView: UIImageView {
             isHidden = true
             return
         }
-        
+
         isHidden = false
         let color = style.tintColor ?? self.color
         self.setIcon(icon, size: self.size, color: color)
         self.style = style
     }
-    
+
     private func set(size: StyleKitIcon.Size?, color: UIColor?) {
         guard let size = size, let color = color else {
             return
         }
-        
+
         self.size = size
         self.color = color
     }

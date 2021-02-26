@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 
@@ -37,12 +36,12 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
             }
         }
     }
-    
+
     weak var group: SettingsGroupCellDescriptorType?
     let selectAction: (SettingsCellDescriptorType) -> ()
     let visibilityAction: ((SettingsCellDescriptorType) -> (Bool))?
     let isDestructive: Bool
-    
+
     init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> ()) {
         self.title = title
         self.isDestructive = isDestructive
@@ -50,7 +49,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.visibilityAction = .none
         self.identifier = .none
     }
-    
+
     init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
@@ -58,7 +57,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.visibilityAction = visibilityAction
         self.identifier = .none
     }
-    
+
     init(title: String, isDestructive: Bool, identifier: String, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
@@ -66,12 +65,12 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.visibilityAction = visibilityAction
         self.identifier = identifier
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         cell.titleColor = UIColor.white
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
         self.selectAction(self)
     }

@@ -20,11 +20,10 @@ import XCTest
 @testable import Wire
 
 final class ColorSchemeControllerTests: XCTestCase {
-    
+
     var sut: ColorSchemeController!
     var originalColorScheme: Any! = nil
     var originalVariant: ColorSchemeVariant!
-
 
     override func setUp() {
         super.setUp()
@@ -38,7 +37,7 @@ final class ColorSchemeControllerTests: XCTestCase {
             originalVariant = ColorScheme.default.variant
         }
     }
-    
+
     override func tearDown() {
         sut = nil
         UserDefaults.standard.set(originalColorScheme, forKey: SettingKey.colorScheme.rawValue)
@@ -47,7 +46,6 @@ final class ColorSchemeControllerTests: XCTestCase {
         NSAttributedString.invalidateParagraphStyle()
         super.tearDown()
     }
-
 
     func testThatColorSchemeIsUpdatedAfterSettingIsChanged(){
         // GIVEN

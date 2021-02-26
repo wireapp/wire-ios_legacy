@@ -21,19 +21,19 @@ import UIKit
 final class RootViewController: UIViewController {
     // MARK: - SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
-    
+
     // MARK: - PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
-    
+
     // MARK: - Public Property
     var isPresenting: Bool {
         return presentedViewController != nil
     }
-    
+
     // MARK: - Private Property
     private var childViewController: UIViewController?
-    
+
     // MARK: - Status Bar / Supported Orientations
 
     override var shouldAutorotate: Bool {
@@ -47,11 +47,11 @@ final class RootViewController: UIViewController {
     override var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
-    
+
     override var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
-    
+
     func set(childViewController newViewController: UIViewController?,
              animated: Bool = false,
              completion: (() -> Void)? = nil) {
@@ -67,10 +67,10 @@ final class RootViewController: UIViewController {
         } else {
             removeChildViewController(animated: animated, completion: completion)
         }
-        
+
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     private func contain(_ newViewController: UIViewController, completion: (() -> Void)?) {
         UIView.performWithoutAnimation {
             add(newViewController, to: view)
@@ -78,7 +78,7 @@ final class RootViewController: UIViewController {
             completion?()
         }
     }
-    
+
     private func removeChildViewController(animated: Bool, completion: (() -> Void)?) {
         let animationGroup = DispatchGroup()
         if childViewController?.presentedViewController != nil {
@@ -87,36 +87,36 @@ final class RootViewController: UIViewController {
                 animationGroup.leave()
             }
         }
-        
+
         childViewController?.willMove(toParent: nil)
         childViewController?.view.removeFromSuperview()
         childViewController?.removeFromParent()
         childViewController = nil
-        
+
         animationGroup.notify(queue: .main) {
             completion?()
         }
     }
-        
+
     private func transition(from fromViewController: UIViewController,
                             to toViewController: UIViewController,
                             animated: Bool = false,
                             completion: (() -> Void)?) {
         let animationGroup = DispatchGroup()
-        
+
         if fromViewController.presentedViewController != nil {
             animationGroup.enter()
             fromViewController.dismiss(animated: animated) {
                 animationGroup.leave()
             }
         }
-        
+
         fromViewController.willMove(toParent: nil)
         addChild(toViewController)
-        
+
         toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         toViewController.view.frame = fromViewController.view.bounds
-        
+
         animationGroup.enter()
         transition(
             from: fromViewController,
@@ -131,9 +131,9 @@ final class RootViewController: UIViewController {
                 toViewController.didMove(toParent: self)
                 animationGroup.leave()
             })
-        
+
         childViewController = toViewController
-        
+
         animationGroup.notify(queue: .main) {
             completion?()
         }
@@ -143,16 +143,16 @@ final class RootViewController: UIViewController {
 extension RootViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         guard let appRouter = (UIApplication.shared.delegate as? AppDelegate)?.appRootRouter else {
             return
         }
-        
+
         coordinator.animate(alongsideTransition: nil, completion: { _ in
             appRouter.updateOverlayWindowFrame(size: size)
         })
     }
-        
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 

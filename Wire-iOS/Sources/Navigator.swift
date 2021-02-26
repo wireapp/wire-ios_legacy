@@ -141,7 +141,7 @@ public final class NoBackTitleNavigationController: UINavigationController {
         super.setViewControllers(viewControllers, animated: animated)
         viewControllers.forEach(hideBackButton(for:))
     }
-    
+
     private func hideBackButton(for viewController: UIViewController) {
         viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                                           style: .plain,

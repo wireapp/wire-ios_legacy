@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class GroupDetailsReceiptOptionsCellTests: CoreDataSnapshotTestCase {
-    
+
     var sut: GroupDetailsReceiptOptionsCell!
     var conversation: ZMConversation!
 
@@ -29,7 +29,7 @@ final class GroupDetailsReceiptOptionsCellTests: CoreDataSnapshotTestCase {
         sut = GroupDetailsReceiptOptionsCell()
         conversation = self.createGroupConversation()
     }
-    
+
     override func tearDown() {
         sut = nil
         conversation = nil

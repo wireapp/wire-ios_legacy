@@ -70,7 +70,6 @@ class MentionsHandlerTests: XCTestCase {
         XCTAssertEqual(sut.searchString(in: "@bill"), "bill")
     }
 
-
     func testThereIsNoMentionToTheLeftOfAtSymbol() {
         let query = "Hi @bill how are you?"
         let handler = MentionsHandler(text: query, cursorPosition: 3)

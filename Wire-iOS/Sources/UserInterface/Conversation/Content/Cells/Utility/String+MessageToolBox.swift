@@ -23,4 +23,3 @@ extension String {
         static let middleDot: String = "･"
     }
 }
-

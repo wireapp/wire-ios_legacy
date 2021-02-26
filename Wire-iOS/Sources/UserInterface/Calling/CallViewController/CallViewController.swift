@@ -55,7 +55,7 @@ final class CallViewController: UIViewController {
     fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
-    
+
     private static var userEnabledCBR: Bool {
         return Settings.shared[.callingConstantBitRate] == true
     }
@@ -238,7 +238,7 @@ final class CallViewController: UIViewController {
 
     fileprivate func alertVideoUnavailable() {
         guard voiceChannel.videoState == .stopped else { return }
- 
+
         if !callInfoConfiguration.permissions.canAcceptVideoCalls {
             present(UIAlertController.cameraPermissionAlert(), animated: true)
         } else {
@@ -260,7 +260,7 @@ final class CallViewController: UIViewController {
 
         present(alert, animated: true)
     }
-    
+
     fileprivate func toggleVideoState() {
         if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { _ in
@@ -323,7 +323,7 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
 
     private func updateVideoGridPresentationModeIfNeeded(participants: [CallParticipant]) {
         guard participants.filter(\.state.isConnected).count <= 2 else { return }
-            
+
         voiceChannel.videoGridPresentationMode = .allVideoStreams
     }
 }
@@ -493,7 +493,7 @@ extension CallViewController {
 
     func startOverlayTimer() {
         stopOverlayTimer()
-        overlayTimer = .scheduledTimer(withTimeInterval: 4, repeats: false) { [weak self] _ in
+        overlayTimer = .scheduledTimer(withTimeInterval: 8, repeats: false) { [weak self] _ in
             self?.animateOverlay(show: false)
         }
     }
