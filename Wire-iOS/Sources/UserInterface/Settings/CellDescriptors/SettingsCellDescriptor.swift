@@ -48,7 +48,7 @@ protocol SettingsCellDescriptorType: class {
     func featureCell(_: SettingsCellType)
 }
 
-func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> Bool {
+func == (left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> Bool {
     if let leftID = left.identifier,
         let rightID = right.identifier {
             return leftID == rightID
