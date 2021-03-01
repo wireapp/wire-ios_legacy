@@ -80,7 +80,7 @@ class AppStateCalculator {
 
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
-    private(set) var pendingAppState: AppState? = nil
+    private(set) var pendingAppState: AppState?
     private(set) var appState: AppState = .headless {
         willSet {
             previousAppState = appState

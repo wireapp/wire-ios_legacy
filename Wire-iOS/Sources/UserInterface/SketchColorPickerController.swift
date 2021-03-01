@@ -137,7 +137,7 @@ final class SketchColorPickerController: UIViewController {
             return SketchColorPickerDefaultBrushWidth
         }
 
-        var index: Int? = nil
+        var index: Int?
         index = brushWidths.firstIndex(of: currentValue) ?? NSNotFound
 
         let nextIndex = ((index ?? 0) + 1) % count

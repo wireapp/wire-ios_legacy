@@ -34,7 +34,7 @@ class DeveloperOptionsController: UIViewController {
     /// Map from UIButton to the action it should perform.
     var uiButtonToAction: [UIButton: () -> Void] = [:]
 
-    var mailViewController: MFMailComposeViewController? = nil
+    var mailViewController: MFMailComposeViewController?
 }
 
 extension DeveloperOptionsController {

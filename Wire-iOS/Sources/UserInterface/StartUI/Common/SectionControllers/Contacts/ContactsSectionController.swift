@@ -29,7 +29,7 @@ class ContactsSectionController: SearchSectionController {
     }
     var allowsSelection: Bool = false
     weak var delegate: SearchSectionControllerDelegate?
-    weak var collectionView: UICollectionView? = nil
+    weak var collectionView: UICollectionView?
 
     deinit {
         selection?.remove(observer: self)

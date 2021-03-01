@@ -23,7 +23,7 @@ import WireSyncEngine
 
 final class RenameGroupSectionController: NSObject, CollectionViewSectionController {
 
-    fileprivate var validName: String? = nil
+    fileprivate var validName: String?
     fileprivate var conversation: GroupDetailsConversationType
     fileprivate var renameCell: GroupDetailsRenameCell?
     fileprivate var token: AnyObject?

@@ -38,7 +38,7 @@ final class ProximityMonitorManager: NSObject {
         }
     }
 
-    var stateChanged: RaisedToEarHandler? = nil
+    var stateChanged: RaisedToEarHandler?
     var listening: Bool = false
 
     deinit {

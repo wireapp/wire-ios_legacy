@@ -71,11 +71,11 @@ final class ConversationTableViewDataSource: NSObject {
     let tableView: UpsideDownTableView
 
     var firstUnreadMessage: ZMConversationMessage?
-    var selectedMessage: ZMConversationMessage? = nil
-    var editingMessage: ZMConversationMessage? = nil
+    var selectedMessage: ZMConversationMessage?
+    var editingMessage: ZMConversationMessage?
 
-    weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
-    weak var messageActionResponder: MessageActionResponder? = nil
+    weak var conversationCellDelegate: ConversationMessageCellDelegate?
+    weak var messageActionResponder: MessageActionResponder?
 
     var searchQueries: [String] = [] {
         didSet {

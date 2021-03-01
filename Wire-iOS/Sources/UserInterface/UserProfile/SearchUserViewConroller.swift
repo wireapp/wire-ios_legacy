@@ -27,7 +27,7 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
     private var searchDirectory: SearchDirectory!
     private weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
     private let userId: UUID
-    private var pendingSearchTask: SearchTask? = nil
+    private var pendingSearchTask: SearchTask?
 
     /// flag for handleSearchResult. Only allow to display the result once
     private var resultHandled = false

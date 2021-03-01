@@ -60,7 +60,7 @@ final class ConversationViewController: UIViewController {
 
     var participantsController: UIViewController? {
 
-        var viewController: UIViewController? = nil
+        var viewController: UIViewController?
 
         switch conversation.conversationType {
         case .group:

@@ -57,7 +57,7 @@ final class MessageToolboxView: UIView {
     // MARK: - UI Elements
 
     /// The timer for ephemeral messages.
-    private var timestampTimer: Timer? = nil
+    private var timestampTimer: Timer?
 
     private let contentStack: UIStackView = {
         let stack = UIStackView()

@@ -65,7 +65,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
     }
 
-    var tapHandler: TapHandler? = nil
+    var tapHandler: TapHandler?
 
     private var badgeMarginConstraint: NSLayoutConstraint?
     private var badgeWidthConstraint: NSLayoutConstraint?

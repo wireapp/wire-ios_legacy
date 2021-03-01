@@ -110,8 +110,8 @@ final class DebugAlert {
 /// Sends debug logs by email
 final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
 
-    private var mailViewController: MFMailComposeViewController? = nil
-    static private var senderInstance: DebugLogSender? = nil
+    private var mailViewController: MFMailComposeViewController?
+    static private var senderInstance: DebugLogSender?
 
     /// Sends recorded logs by email
     static func sendLogsByEmail(message: String, shareWithAVS: Bool = false) {

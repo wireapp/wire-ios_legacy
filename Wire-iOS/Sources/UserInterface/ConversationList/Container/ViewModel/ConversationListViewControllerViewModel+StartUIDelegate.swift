@@ -60,7 +60,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
 
         viewController?.setState(.conversationList, animated: true) {
-            var oneToOneConversation: ZMConversation? = nil
+            var oneToOneConversation: ZMConversation?
             userSession.enqueue({
                 oneToOneConversation = user.oneToOneConversation
             }, completionHandler: {

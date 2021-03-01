@@ -224,7 +224,7 @@ enum DebugActions {
         guard let userSession = ZMUserSession.shared() else { return }
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
-        var conversations: [ZMConversation]? = nil
+        var conversations: [ZMConversation]?
         userSession.syncManagedObjectContext.performGroupedBlock {
             conversations = try? userSession.syncManagedObjectContext.fetch(NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName()))
             conversations?.forEach({ _ = $0.estimatedUnreadCount })

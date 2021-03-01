@@ -58,7 +58,7 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
     override func generateViewController() -> UIViewController? {
         guard let selfUser = ZMUser.selfUser() else { return nil }
 
-        var viewController: UIViewController? = nil
+        var viewController: UIViewController?
 
         if selfUser.emailAddress == nil || selfUser.usesCompanyLogin {
             let alert = UIAlertController(title: "self.settings.account_details.log_out.alert.title".localized,

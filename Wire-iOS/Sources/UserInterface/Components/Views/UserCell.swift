@@ -50,7 +50,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     fileprivate var avatarSpacerWidthConstraint: NSLayoutConstraint?
 
-    weak var user: UserType? = nil
+    weak var user: UserType?
 
     static let boldFont: UIFont = .smallRegularFont
     static let lightFont: UIFont = .smallLightFont

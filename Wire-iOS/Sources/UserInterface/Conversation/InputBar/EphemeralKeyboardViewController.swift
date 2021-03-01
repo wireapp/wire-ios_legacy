@@ -210,9 +210,9 @@ final class EphemeralKeyboardViewController: UIViewController {
 /// views, which means that the behaviour could break in future iOS updates.
 class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
-    var selectorColor: UIColor? = nil
+    var selectorColor: UIColor?
     var tapRecognizer: UIGestureRecognizer! = nil
-    var didTapViewClosure: (() -> Void)? = nil
+    var didTapViewClosure: (() -> Void)?
 
     init() {
         super.init(frame: .zero)

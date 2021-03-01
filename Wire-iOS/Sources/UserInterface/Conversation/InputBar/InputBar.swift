@@ -144,7 +144,7 @@ final class InputBar: UIView {
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
-    fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
+    fileprivate var rowTopInsetConstraint: NSLayoutConstraint?
 
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()

@@ -32,8 +32,8 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
     private let transferView = AudioMessageView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 

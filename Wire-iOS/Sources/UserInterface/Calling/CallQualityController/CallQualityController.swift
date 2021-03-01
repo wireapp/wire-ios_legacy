@@ -27,7 +27,7 @@ import WireCommonComponents
 
 class CallQualityController: NSObject {
 
-    weak var router: CallQualityRouterProtocol? = nil
+    weak var router: CallQualityRouterProtocol?
 
     fileprivate var answeredCalls: [UUID: Date] = [:]
     fileprivate var token: Any?

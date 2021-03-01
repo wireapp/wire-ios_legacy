@@ -107,7 +107,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
 
     func openOneToOneConversation() {
-        var conversation: ZMConversation? = nil
+        var conversation: ZMConversation?
 
         ZMUserSession.shared()?.enqueue({
             conversation = self.user.oneToOneConversation

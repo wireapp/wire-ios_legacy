@@ -34,7 +34,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
 
     let selectedParticipants: [UserType]
     let conversation: GroupParticipantsDetailConversation
-    var participantsDidChange: (() -> Void)? = nil
+    var participantsDidChange: (() -> Void)?
 
     fileprivate var token: NSObjectProtocol?
 
