@@ -23,7 +23,7 @@ import XCTest
 @testable import Wire
 
 class ToastViewTests: XCTestCase {
-    let message = "When joining a conference call, you are muted by default."
+    let callRelayMessage = "Your calling relay is not reachable. This may affect your call experience."
 
     func createSut(configuration: ToastConfiguration) -> UIView {
         let view = ToastView(configuration: configuration)
@@ -42,7 +42,7 @@ class ToastViewTests: XCTestCase {
 
     func testView_Not_Dismissable() {
         let sut = createSut(configuration: ToastConfiguration(
-            message: message,
+            message: "You are not connected to internet",
             colorScheme: .utilityNeutral,
             variant: .light,
             dismissable: false,
@@ -54,8 +54,8 @@ class ToastViewTests: XCTestCase {
 
     func testView_Dismissable() {
         let sut = createSut(configuration: ToastConfiguration(
-            message: message,
-            colorScheme: .utilityNeutral,
+            message: "Your app has been updated",
+            colorScheme: .utilitySuccess,
             variant: .light,
             dismissable: true,
             moreInfoAction: nil)
@@ -64,11 +64,10 @@ class ToastViewTests: XCTestCase {
         verify(matching: sut)
     }
 
-
     func testView_Dismissable_With_MoreInfoButton() {
         let sut = createSut(configuration: ToastConfiguration(
-            message: message,
-            colorScheme: .utilityNeutral,
+            message: callRelayMessage,
+            colorScheme: .utilityError,
             variant: .light,
             dismissable: true,
             moreInfoAction: {})
@@ -79,8 +78,8 @@ class ToastViewTests: XCTestCase {
 
     func testView_Dismissable_With_MoreInfoButton_DarkVariant() {
         let sut = createSut(configuration: ToastConfiguration(
-            message: message,
-            colorScheme: .utilityNeutral,
+            message: callRelayMessage,
+            colorScheme: .utilityError,
             variant: .dark,
             dismissable: true,
             moreInfoAction: {})

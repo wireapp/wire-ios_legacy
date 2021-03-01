@@ -143,7 +143,7 @@ class ToastView: UIView {
             messageLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
             messageLabel.topAnchor.constraint(equalTo: topView.topAnchor),
             messageLabel.bottomAnchor.constraint(equalTo: topView.bottomAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: 17),
+            messageLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -17),
             closeButton.topAnchor.constraint(equalTo: topView.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
             closeButton.bottomAnchor.constraint(lessThanOrEqualTo: topView.bottomAnchor),
