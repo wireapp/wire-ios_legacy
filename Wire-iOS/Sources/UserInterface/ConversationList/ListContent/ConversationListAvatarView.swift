@@ -38,7 +38,7 @@ final class RandomGeneratorFromData: RandomGenerator {
         let result = source.withUnsafeBytes { (pointer: UnsafePointer<ContentType>) -> ContentType in
             return pointer.advanced(by: currentStep % source.count).pointee
         }
-        step = step + 1
+        step += 1
 
         return result
     }
@@ -137,7 +137,7 @@ final public class ConversationListAvatarView: UIView {
                 $0.showInitials = (self.mode == .one)
                 $0.isCircular = false
                 $0.user = stableRandomParticipants[index]
-                index = index + 1
+                index += 1
             }
             self.setNeedsLayout()
         }
@@ -228,10 +228,10 @@ final public class ConversationListAvatarView: UIView {
             $0.frame = CGRect(x: xPosition, y: yPosition, width: size.width, height: size.height)
             if xPosition + size.width >= containerSize.width {
                 xPosition = 0
-                yPosition = yPosition + size.height + inset
+                yPosition += size.height + inset
             }
             else {
-                xPosition = xPosition + size.width + inset
+                xPosition += size.width + inset
             }
         }
 

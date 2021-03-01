@@ -282,7 +282,7 @@ enum DebugActions {
         repeat {
             let toAppendInThisStep = left < step ? left : step
 
-            left = left - toAppendInThisStep
+            left -= toAppendInThisStep
 
             appendMessages(count: toAppendInThisStep)
         }
@@ -299,7 +299,7 @@ enum DebugActions {
 
             appendMessagesToDatabase(count: thisBatchCount)
 
-            currentCount = currentCount - thisBatchCount
+            currentCount -= thisBatchCount
         }
         while (currentCount > 0)
     }

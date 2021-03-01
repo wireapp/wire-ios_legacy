@@ -46,7 +46,7 @@ extension Collection where Iterator.Element: UserType {
                 .sorted { $0.name < $1.name }
 
             foundUsers = foundUsers.union(matches.map(HashBox.init))
-            results = results + matches
+            results += matches
         }
 
         return results

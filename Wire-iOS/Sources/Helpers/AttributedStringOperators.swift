@@ -61,11 +61,13 @@ infix operator += : AssignmentPrecedence
 }
 
 @discardableResult func += (left: inout NSAttributedString, right: String) -> NSAttributedString {
+    // swiftlint:disable:next shorthand_operator
     left = left + right
     return left
 }
 
 @discardableResult func += (left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+    // swiftlint:disable:next shorthand_operator
     left = left + right
     return left
 }
