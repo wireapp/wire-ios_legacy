@@ -198,7 +198,7 @@ final class ConversationTableViewDataSource: NSObject {
 
     func loadMessages(near message: ZMConversationMessage,
                       forceRecalculate: Bool = false,
-                      completion: ((IndexPath?)->())? = nil) {
+                      completion: ((IndexPath?) -> Void)? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             if message.hasBeenDeleted {
                 completion?(nil)

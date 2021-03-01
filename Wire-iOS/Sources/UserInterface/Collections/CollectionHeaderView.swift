@@ -75,7 +75,7 @@ final class CollectionHeaderView: UICollectionReusableView {
 
     public let iconImageView = UIImageView()
 
-    public var selectionAction: ((CollectionsSectionSet) -> ())? = .none
+    public var selectionAction: ((CollectionsSectionSet) -> Void)? = .none
 
     public required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")

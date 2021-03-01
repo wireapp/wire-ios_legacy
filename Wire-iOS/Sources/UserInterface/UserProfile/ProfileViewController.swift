@@ -271,7 +271,7 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         navigationController?.popViewController(animated: true)
     }
 }

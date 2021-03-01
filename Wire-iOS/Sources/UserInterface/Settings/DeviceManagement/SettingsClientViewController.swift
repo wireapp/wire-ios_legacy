@@ -297,7 +297,7 @@ final class SettingsClientViewController: UIViewController,
         case .removeDevice:
             removalObserver = nil
 
-            let completion: ((Error?)->()) = { error in
+            let completion: ((Error?) -> Void) = { error in
                 if error == nil {
                     self.navigationController?.popViewController(animated: true)
                 }

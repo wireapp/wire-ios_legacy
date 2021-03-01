@@ -210,7 +210,7 @@ extension ConversationStatusMatcher {
 }
 
 final class ContentSizeCategoryUpdater {
-    private let callback: () -> ()
+    private let callback: () -> Void
     private var observer: NSObjectProtocol!
 
     deinit {
@@ -219,7 +219,7 @@ final class ContentSizeCategoryUpdater {
         }
     }
 
-    init(callback: @escaping () -> ()) {
+    init(callback: @escaping () -> Void) {
         self.callback = callback
         callback()
         self.observer = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification,

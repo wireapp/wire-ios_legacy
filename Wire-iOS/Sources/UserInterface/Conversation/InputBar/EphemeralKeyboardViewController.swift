@@ -70,7 +70,7 @@ extension UIAlertController {
     }
 
     static func requestCustomTimeInterval(over controller: UIViewController,
-                                          with completion: @escaping (Result<TimeInterval>)->()) {
+                                          with completion: @escaping (Result<TimeInterval>) -> Void) {
         let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField: UITextField) in
             textField.keyboardType = .decimalPad

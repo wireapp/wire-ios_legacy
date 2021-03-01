@@ -159,7 +159,7 @@ class SettingsUserDefaultsProperty: SettingsProperty {
 }
 
 typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
-typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> ()
+typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> Void
 
 /// Genetic block property
 final class SettingsBlockProperty: SettingsProperty {

@@ -68,7 +68,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     }
 
     let allowsMultipleSelection: Bool
-    var onDismiss: ((ShareViewController, Bool)->())?
+    var onDismiss: ((ShareViewController, Bool) -> Void)?
     var bottomConstraint: NSLayoutConstraint?
 
     init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {

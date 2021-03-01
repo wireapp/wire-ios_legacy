@@ -22,7 +22,7 @@ import WireDataModel
 
 public var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
 
-typealias ProfileImageCompletion = (_ image: UIImage?, _ cacheHit: Bool) -> ()
+typealias ProfileImageCompletion = (_ image: UIImage?, _ cacheHit: Bool) -> Void
 
 extension UserType {
     func fetchProfileImage(session: ZMUserSessionInterface,

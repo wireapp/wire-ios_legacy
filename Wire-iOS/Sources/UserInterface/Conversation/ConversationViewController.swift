@@ -356,7 +356,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             distanceFromBottom = max(0, distanceFromBottom)
         }
 
-        let closure: () -> () = {
+        let closure: () -> Void = {
             self.inputBarBottomMargin?.constant = -distanceFromBottom
             self.view.layoutIfNeeded()
         }

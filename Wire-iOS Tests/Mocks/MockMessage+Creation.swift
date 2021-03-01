@@ -259,7 +259,7 @@ final class MockMessageFactory {
         return message
     }
 
-    class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
+    class func audioMessage(config: ((MockMessage) -> Void)?) -> MockMessage {
         let fileMessage: MockMessage = MockMessageFactory.fileTransferMessage()
         fileMessage.backingFileMessageData.mimeType = "audio/x-m4a"
         fileMessage.backingFileMessageData.filename = "sound.m4a"

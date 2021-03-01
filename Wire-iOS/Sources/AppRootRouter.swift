@@ -122,7 +122,7 @@ public class AppRootRouter: NSObject {
     }
 
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
-                                   completionHandler: ((Bool)->())?) {
+                                   completionHandler: ((Bool) -> Void)?) {
         quickActionsManager.performAction(for: shortcutItem,
                                           completionHandler: completionHandler)
     }

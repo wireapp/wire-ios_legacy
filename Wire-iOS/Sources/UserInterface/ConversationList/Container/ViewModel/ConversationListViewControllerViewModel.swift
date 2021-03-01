@@ -21,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-typealias Completion = () -> ()
+typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
