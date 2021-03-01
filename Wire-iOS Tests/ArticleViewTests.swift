@@ -179,13 +179,15 @@ final class ArticleViewTests: XCTestCase {
     }
 
     func testArticleViewWithPicture() {
-        sut = ArticleView(withImagePlaceholder: true)
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
-        verifyInAllPhoneWidths(matching: sut)
+        verifyInAllPhoneWidths(createSut: {
+            self.sut = ArticleView(withImagePlaceholder: true)
+            self.sut.translatesAutoresizingMaskIntoConstraints = false
+            self.sut.configure(withTextMessageData: self.articleWithPicture(), obfuscated: false)
+            XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
+            
+            return self.sut
+        } as () -> UIView)
     }
 
     func testArticleViewWithPictureStillDownloading() {
