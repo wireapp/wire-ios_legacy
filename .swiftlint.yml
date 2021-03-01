@@ -1,5 +1,4 @@
 disabled_rules:
-    - no_space_in_method_call
     - return_arrow_whitespace
     - comment_spacing
     - vertical_parameter_alignment

@@ -906,7 +906,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     private static func configuration(for systemMessage: ZMSystemMessageData, in conversation: ZMConversation) -> View.Configuration {
 
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
-        let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
+        let clients = systemMessage.clients.compactMap({ $0 as? UserClientType })
         let users = systemMessage.userTypes.lazy
             .compactMap { $0 as? UserType }
             .sorted { $0.name < $1.name }

@@ -185,7 +185,7 @@ final class ArticleViewTests: XCTestCase {
             self.sut.translatesAutoresizingMaskIntoConstraints = false
             self.sut.configure(withTextMessageData: self.articleWithPicture(), obfuscated: false)
             XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-            
+
             return self.sut
         } as () -> UIView)
     }
