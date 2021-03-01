@@ -145,7 +145,7 @@ final class InputBarButtonsView: UIView {
 
         if multilineLayout {
             firstRow = buttons.prefix(customButtonCount) + [expandRowButton]
-            secondRow = Array<UIButton>(buttons.suffix(buttons.count - customButtonCount))
+            secondRow = [UIButton](buttons.suffix(buttons.count - customButtonCount))
             buttonRowHeight.constant = constants.buttonsBarHeight * 2
         } else {
             firstRow = buttons
