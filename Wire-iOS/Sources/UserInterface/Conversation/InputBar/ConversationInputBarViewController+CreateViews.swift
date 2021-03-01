@@ -58,7 +58,7 @@ extension ConversationInputBarViewController {
         mentionButton.accessibilityIdentifier = "mentionButton"
         markdownButton.accessibilityIdentifier = "markdownButton"
 
-        inputBarButtons.forEach() {
+        inputBarButtons.forEach {
             $0.hitAreaPadding = .zero
         }
 

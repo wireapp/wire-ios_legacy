@@ -148,7 +148,7 @@ final class PermissionDeniedViewController: UIViewController {
 
         initialConstraintsCreated = true
 
-        [heroLabel, settingsButton, laterButton].forEach() {
+        [heroLabel, settingsButton, laterButton].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 

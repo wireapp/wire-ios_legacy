@@ -274,7 +274,7 @@ extension ConversationInputBarViewController {
         } else {
             UIApplication.wr_requestVideoAccess({ _ in
                 if SecurityFlags.cameraRoll.isEnabled {
-                    self.executeWithCameraRollPermission() { _ in
+                    self.executeWithCameraRollPermission { _ in
                         self.mode = .camera
                         self.inputBar.textView.becomeFirstResponder()
                     }

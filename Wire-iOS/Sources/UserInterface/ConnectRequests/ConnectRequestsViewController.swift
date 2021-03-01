@@ -118,7 +118,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.acceptBlock = { [weak self] in
             guard self?.connectionRequests.isEmpty == true else { return }
 
-            ZClientViewController.shared?.hideIncomingContactRequests() {
+            ZClientViewController.shared?.hideIncomingContactRequests {
                 if let oneToOneConversation = user?.oneToOneConversation {
                     ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
                 }

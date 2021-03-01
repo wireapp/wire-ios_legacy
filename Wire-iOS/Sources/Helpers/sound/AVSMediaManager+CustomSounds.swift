@@ -83,7 +83,7 @@ extension AVSMediaManager {
                                            .ringingFromThemSound,
                                            .outgoingKnockSound,
                                            .incomingKnockSound]
-        sounds.forEach() {
+        sounds.forEach {
             mediaManager.unregisterMedia(byName: $0.rawValue)
         }
 

@@ -22,7 +22,7 @@ final class ZipFileTests: XCTestCase {
 
     func testThatFileURLsCanBeZipped() {
         // GIVEN
-        let urls = ["not_animated.gif", "0x0.pdf", "sample.pkpass"].map() {
+        let urls = ["not_animated.gif", "0x0.pdf", "sample.pkpass"].map {
             urlForResource(inTestBundleNamed: $0)
         }
 

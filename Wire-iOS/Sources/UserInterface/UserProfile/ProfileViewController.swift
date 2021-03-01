@@ -148,7 +148,7 @@ final class ProfileViewController: UIViewController {
 
         let controller = UIAlertController.cancelConnectionRequest(for: user) { canceled in
             if !canceled {
-                self.viewModel.cancelConnectionRequest() {
+                self.viewModel.cancelConnectionRequest {
                     self.returnToPreviousScreen()
                 }
             }

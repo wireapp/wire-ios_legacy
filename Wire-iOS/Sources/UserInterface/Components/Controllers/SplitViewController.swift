@@ -127,7 +127,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        [leftView, rightView].forEach() {
+        [leftView, rightView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }

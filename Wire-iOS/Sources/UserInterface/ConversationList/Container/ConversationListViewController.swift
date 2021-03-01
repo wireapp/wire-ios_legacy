@@ -237,7 +237,7 @@ final class ConversationListViewController: UIViewController {
         bottomBar,
         noConversationLabel,
         onboardingHint,
-        networkStatusViewController.view].forEach() {
+        networkStatusViewController.view].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 

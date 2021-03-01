@@ -200,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
 
-        appRootRouter?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated {
             ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
         }
     }
@@ -208,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
 
-        appRootRouter?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }
