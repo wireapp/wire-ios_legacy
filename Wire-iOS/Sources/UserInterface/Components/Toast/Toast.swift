@@ -22,7 +22,7 @@ import UIKit
 final class Toast {
     static weak var toastView: ToastView?
     
-    static func show(configuration: ToastConfiguration, completion: ((Bool) -> Void)? = nil) {
+    static func show(with configuration: ToastConfiguration) {
         guard
             toastView == nil,
             let window = UIApplication.shared.topMostVisibleWindow
@@ -38,13 +38,14 @@ final class Toast {
         
         NSLayoutConstraint.activate([
             toast.centerXAnchor.constraint(equalTo: window.centerXAnchor),
-            toast.topAnchor.constraint(equalTo: window.safeTopAnchor, constant: 20),
-            toast.widthAnchor.constraint(equalTo: window.widthAnchor, multiplier: 0.9, constant: 0)
+            toast.topAnchor.constraint(equalTo: window.safeTopAnchor, constant: 7),
+            toast.leadingAnchor.constraint(equalTo: window.safeLeadingAnchor, constant: 8),
+            toast.trailingAnchor.constraint(equalTo: window.safeTrailingAnchor, constant: -8)
         ])
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2) {
             toast.alpha = 1.0
-        }, completion: nil)
+        }
     }
     
     static func hide() {

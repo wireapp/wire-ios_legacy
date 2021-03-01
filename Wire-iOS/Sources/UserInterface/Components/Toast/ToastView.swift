@@ -25,6 +25,7 @@ struct ToastConfiguration {
     let message: String
     let colorScheme: ColorSchemeColor
     let variant: ColorSchemeVariant
+    let dismissable: Bool
     let moreInfoAction: MoreInfoAction?
 }
 
@@ -36,10 +37,15 @@ class ToastView: UIView {
     }
     
     // MARK: - Views
+    private let moreInfoButtonHeight: CGFloat = 28
     
     private let topView = UIView()
     private let bottomView = UIView()
-    private let stackView = UIStackView(axis: .vertical)
+    private let stackView: UIStackView = {
+        let view = UIStackView(axis: .vertical)
+        view.spacing = 12
+        return view
+    }()
     
     private let messageLabel: UILabel = {
         let label = UILabel()
@@ -48,13 +54,13 @@ class ToastView: UIView {
         label.font = FontSpec(.small, .semibold).font
         return label
     }()
-    
+
     private let closeButton: IconButton = {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
         return button
     }()
-        
+
     private let moreInfoButton: UIButton = {
         let button = UIButton()
         button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 24, bottom: 7, right: 24)
@@ -62,7 +68,6 @@ class ToastView: UIView {
             L10n.Localizable.Call.Quality.Indicator.MoreInfo.Button.text.uppercased(),
             for: .normal
         )
-        button.layer.cornerRadius = button.frame.size.height / 2
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         return button
     }()
@@ -85,11 +90,13 @@ class ToastView: UIView {
 
     private func applyConfiguration() {
         guard let config = configuration else { return }
-       
+        let textColor = config.variant.textColor
+
+        backgroundColor = UIColor.from(scheme: config.colorScheme, variant: config.variant)
         messageLabel.text = config.message.uppercased()
         messageLabel.textColor = textColor
-        backgroundColor = UIColor.from(scheme: config.colorScheme, variant: config.variant)
-        closeButton.setIconColor(UIColor.from(scheme: .iconNormal, variant: config.variant), for: .normal)
+        closeButton.setIconColor(textColor, for: .normal)
+        closeButton.isHidden = !config.dismissable
         
         guard config.moreInfoAction != nil else {
             bottomView.isHidden = true
@@ -97,12 +104,14 @@ class ToastView: UIView {
         }
         
         bottomView.isHidden = false
-        moreInfoButton.backgroundColor = moreInfoButtonColor
+        moreInfoButton.backgroundColor = config.variant.moreInfoButtonColor
         moreInfoButton.setTitleColor(textColor, for: .normal)
     }
     
     private func setupViews() {
         layer.cornerRadius = 4
+        moreInfoButton.layer.cornerRadius = moreInfoButtonHeight / 2
+        
         addSubview(stackView)
         bottomView.addSubview(moreInfoButton)
         [messageLabel, closeButton].forEach {
@@ -134,15 +143,16 @@ class ToastView: UIView {
             messageLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
             messageLabel.topAnchor.constraint(equalTo: topView.topAnchor),
             messageLabel.bottomAnchor.constraint(equalTo: topView.bottomAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor),
+            messageLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: 17),
             closeButton.topAnchor.constraint(equalTo: topView.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
             closeButton.bottomAnchor.constraint(lessThanOrEqualTo: topView.bottomAnchor),
             closeButton.widthAnchor.constraint(equalToConstant: 16),
             closeButton.heightAnchor.constraint(equalToConstant: 16),
-            moreInfoButton.heightAnchor.constraint(equalTo: bottomView.heightAnchor),
+            moreInfoButton.heightAnchor.constraint(equalToConstant: moreInfoButtonHeight),
             moreInfoButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
-            moreInfoButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor)
+            moreInfoButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor),
+            bottomView.heightAnchor.constraint(equalTo: moreInfoButton.heightAnchor)
         ])
     }
     
@@ -155,23 +165,25 @@ class ToastView: UIView {
     @objc func moreInfoTapHandler() {
         configuration?.moreInfoAction?()
     }
-    
-    // MARK: - Helpers
-    
-    private var moreInfoButtonColor: UIColor {
-        switch configuration?.variant {
-        case .some(.dark):
+}
+
+// MARK: - Helpers
+
+private extension ColorSchemeVariant {
+    var moreInfoButtonColor: UIColor {
+        switch self {
+        case .dark:
             return UIColor(rgba: (23, 24, 26, 0.12))
-        default:
+        case .light:
             return .whiteAlpha24
         }
     }
-    
-    private var textColor: UIColor {
-        switch configuration?.variant {
-        case .some(.dark):
+
+    var textColor: UIColor {
+        switch self {
+        case .dark:
             return .black
-        default:
+        case .light:
             return .white
         }
     }
