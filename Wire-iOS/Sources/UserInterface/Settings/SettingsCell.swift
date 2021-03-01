@@ -284,7 +284,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        if let _ = cellColor {
+        if cellColor != nil {
             return
         }
 

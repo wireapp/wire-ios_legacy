@@ -58,7 +58,7 @@ extension ConversationListViewController {
     final class ViewModel: NSObject {
         weak var viewController: ConversationListContainerViewModelDelegate? {
             didSet {
-                guard let _ = viewController else { return }
+                guard viewController != nil else { return }
 
                 updateNoConversationVisibility(animated: false)
                 updateArchiveButtonVisibility()

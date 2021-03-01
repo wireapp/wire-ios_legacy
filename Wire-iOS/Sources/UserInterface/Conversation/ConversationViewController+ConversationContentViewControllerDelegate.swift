@@ -53,7 +53,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
     }
 
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerEditing message: ZMConversationMessage) {
-        guard let _ = message.textMessageData?.messageText else { return }
+        guard message.textMessageData?.messageText != nil else { return }
 
         inputBarController.editMessage(message)
     }

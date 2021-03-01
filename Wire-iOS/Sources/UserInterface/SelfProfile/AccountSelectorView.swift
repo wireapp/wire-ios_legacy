@@ -84,7 +84,7 @@ final class AccountSelectorView: UIView {
 
     fileprivate var accounts: [Account]? = nil {
         didSet {
-            guard let _ = ZMUserSession.shared() else {
+            guard ZMUserSession.shared()  != nil else {
                 return
             }
 

@@ -159,7 +159,7 @@ final class ConversationCreationController: UIViewController {
         setupViews()
 
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.currentFirst {
+        if UIResponder.currentFirst != nil {
             nameSection.becomeFirstResponder()
         }
     }

@@ -21,7 +21,7 @@ import WireDataModel
 extension ZMConversationMessage {
     func audioCanBeSaved() -> Bool {
         if let fileMessageData = self.fileMessageData,
-            let _ = fileMessageData.fileURL,
+            fileMessageData.fileURL != nil,
             fileMessageData.isAudio {
             return true
         }

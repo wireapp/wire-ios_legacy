@@ -241,7 +241,7 @@ final class CollectionsViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        guard let _ = self.view.window else {
+        guard self.view.window != nil else {
             return
         }
 

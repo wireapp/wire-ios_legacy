@@ -65,7 +65,7 @@ final class CollectionLinkCell: CollectionCell {
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
 
-        guard let message = self.message, let textMessageData = message.textMessageData, let _ = textMessageData.linkPreview else {
+        guard let message = self.message, let textMessageData = message.textMessageData, textMessageData.linkPreview != nil else {
             return
         }
 

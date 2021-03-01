@@ -10,7 +10,6 @@ disabled_rules:
     - type_name
     - todo
     - unused_closure_parameter
-    - unused_optional_binding
     - large_tuple
     - computed_accessors_order
     - unused_setter_value

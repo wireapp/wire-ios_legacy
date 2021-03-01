@@ -220,7 +220,7 @@ final class ClientListViewController: UIViewController,
     }
 
     fileprivate func convertSection(_ section: Int) -> Int {
-        if let _ = self.selfClient {
+        if self.selfClient != nil {
             return section
         } else {
             return section + 1
@@ -283,7 +283,7 @@ final class ClientListViewController: UIViewController,
     // MARK: - UITableViewDataSource & UITableViewDelegate
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = self.selfClient, self.sortedClients.count > 0 {
+        if self.selfClient != nil, self.sortedClients.count > 0 {
             return 2
         } else {
             return 1
@@ -293,7 +293,7 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.convertSection(section) {
         case 0:
-            if let _ = self.selfClient {
+            if self.selfClient != nil {
                 return 1
             } else {
                 return 0
@@ -308,7 +308,7 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch self.convertSection(section) {
             case 0:
-                if let _ = self.selfClient {
+                if self.selfClient != nil {
                     return NSLocalizedString("registration.devices.current_list_header", comment: "")
                 } else {
                     return nil
