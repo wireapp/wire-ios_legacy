@@ -58,7 +58,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView?.alpha = 0
                 fromView?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            }) { finished in
+            }) { _ in
                 fromView?.transform = .identity
             }
 
@@ -68,7 +68,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 toView?.alpha = 1
                 toView?.transform = .identity
-            }) { finished in
+            }) { _ in
                 transitionContext.completeTransition(true)
             }
         } else {
@@ -81,7 +81,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView?.alpha = 0
                 fromView?.transform = CGAffineTransform(scaleX: 2, y: 2)
-            }) { finished in
+            }) { _ in
                 fromView?.transform = .identity
             }
 
@@ -96,7 +96,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeOutExpo, duration: 0.35, delayTime: 0.3, animations: {
                 toView?.alpha = 1
                 toView?.transform = .identity
-            }) { finished in
+            }) { _ in
                 transitionContext.completeTransition(true)
             }
         }

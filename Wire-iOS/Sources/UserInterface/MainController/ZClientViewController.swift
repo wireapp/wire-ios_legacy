@@ -522,7 +522,7 @@ final class ZClientViewController: UIViewController {
                            duration: 0.5,
                            options: .transitionCrossDissolve,
                            animations: { viewController.view.fitInSuperview() },
-                           completion: { (finished) in
+                           completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController

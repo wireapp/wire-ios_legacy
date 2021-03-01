@@ -370,7 +370,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         guard let item = item else {
             // Deselect all items in the collection view
             let indexPaths = collectionView.indexPathsForSelectedItems
-            (indexPaths as NSArray?)?.enumerateObjects({ obj, idx, stop in
+            (indexPaths as NSArray?)?.enumerateObjects({ obj, _, _ in
                 if let obj = obj as? IndexPath {
                     self.collectionView.deselectItem(at: obj, animated: false)
                 }

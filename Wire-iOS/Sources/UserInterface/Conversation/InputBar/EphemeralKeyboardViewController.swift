@@ -76,7 +76,7 @@ extension UIAlertController {
             textField.keyboardType = .decimalPad
             textField.placeholder = "Time interval in seconds"
         }
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] action in
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] _ in
             guard let input = alertController?.textFields?.first,
                 let inputText = input.text,
                 let selectedTimeInterval = TimeInterval(inputText) else {

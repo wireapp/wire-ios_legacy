@@ -146,9 +146,9 @@ final class PinnableThumbnailViewController: UIViewController {
         let bounds = CGRect(origin: CGPoint.zero, size: safeSize)
         pinningBehavior.updateFields(in: bounds)
 
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             self.updateThumbnailFrame(animated: false, parentSize: safeSize)
-        }, completion: { context in
+        }, completion: { _ in
             self.pinningBehavior.isEnabled = true
         })
     }

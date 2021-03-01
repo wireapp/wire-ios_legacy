@@ -88,7 +88,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
             snapshotView?.center = targetCenter
             snapshotView?.alpha = 0
             snapshotView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) { finished in
+        }) { _ in
             snapshotView?.removeFromSuperview()
             self.inputBarController.bounceCameraIcon()
         }

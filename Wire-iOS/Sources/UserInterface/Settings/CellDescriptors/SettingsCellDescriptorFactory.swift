@@ -133,7 +133,7 @@ class SettingsCellDescriptorFactory {
         let previewPlayer: SoundPreviewPlayer = SoundPreviewPlayer(mediaManager: AVSMediaManager.sharedInstance())
 
         let cells: [SettingsPropertySelectValueCellDescriptor] = items.map { item in
-            let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { cellDescriptor in
+            let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { _ in
 
                 switch settingsProperty.propertyName {
                 case .callSoundName:
@@ -153,7 +153,7 @@ class SettingsCellDescriptorFactory {
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
 
-        let previewGenerator: PreviewGeneratorType = { cellDescriptor in
+        let previewGenerator: PreviewGeneratorType = { _ in
             let value = settingsProperty.value()
 
             if let stringValue = value.value() as? String,

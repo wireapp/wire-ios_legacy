@@ -135,7 +135,7 @@ class MentionsHandlerTests: XCTestCase {
 extension NSAttributedString {
     var allAttachments: [NSTextAttachment] {
         var attachments = [NSTextAttachment]()
-        enumerateAttributes(in: wholeRange, options: []) { (attributes, range, _) in
+        enumerateAttributes(in: wholeRange, options: []) { attributes, _, _ in
             if let attachment = attributes[NSAttributedString.Key.attachment] as? NSTextAttachment {
                 attachments.append(attachment)
             }

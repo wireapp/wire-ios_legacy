@@ -47,7 +47,7 @@ final class AvailabilityTitleViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        availabilityTitleView?.tapHandler = { [weak self] button in
+        availabilityTitleView?.tapHandler = { [weak self] _ in
             self?.presentAvailabilityPicker()
         }
     }

@@ -101,7 +101,7 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
 
-        constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { (selfView, container, description, settings, cameraIcon) in
+        constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { selfView, container, description, _, _ in
             description.leading == container.leading + 16
             description.trailing == container.trailing - 16
             container.centerY == selfView.centerY
@@ -123,7 +123,7 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         containerView.addSubview(settingsButton)
 
-        constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
+        constrain(self, containerView, descriptionLabel, settingsButton) { _, container, description, settings in
             settings.bottom == container.bottom
             settings.top == description.bottom + 24
             settings.height == 44.0
@@ -139,7 +139,7 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         containerView.addSubview(cameraIcon)
 
-        constrain(self, containerView, descriptionLabel, cameraIcon) { (selfView, container, description, cameraIcon) in
+        constrain(self, containerView, descriptionLabel, cameraIcon) { _, container, description, cameraIcon in
             description.bottom == container.bottom
             description.top == cameraIcon.bottom + 16
             cameraIcon.top == container.top

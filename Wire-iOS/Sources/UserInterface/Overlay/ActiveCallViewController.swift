@@ -116,7 +116,7 @@ final class ActiveCallViewController: UIViewController {
                    options: .transitionCrossDissolve,
                    animations: nil,
                    completion:
-            { (finished) in
+            { _ in
                 toViewController.didMove(toParent: self)
                 fromViewController.removeFromParent()
         })

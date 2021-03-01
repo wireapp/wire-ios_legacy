@@ -46,11 +46,11 @@ extension UIAlertController {
 
         // Add actions
         if let confirmationBlock = confirmationBlock {
-            controller.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel) { (action) in
+            controller.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
                 confirmationBlock(false)
             })
 
-            controller.addAction(UIAlertAction(title: "call.degraded.alert.action.continue".localized, style: .default) { (action) in
+            controller.addAction(UIAlertAction(title: "call.degraded.alert.action.continue".localized, style: .default) { _ in
                 confirmationBlock(true)
             })
         } else {

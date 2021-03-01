@@ -96,7 +96,7 @@ final class DebugAlert {
         let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
                                       message: "self.settings.technical_report.no_mail_alert".localized + email,
                                       alertAction: .cancel())
-        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { _ in
             let activity = UIActivityViewController(activityItems: logPaths, applicationActivities: nil)
             activity.configPopover(pointToView: sourceView ?? controller.view)
 

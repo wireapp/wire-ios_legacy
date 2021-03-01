@@ -154,7 +154,7 @@ final class ProfileSelfPictureViewController: UIViewController {
 
             if let asset = PHAsset.fetchAssets(with: options).firstObject {
                 // If asset is found, grab its thumbnail, create a CALayer with its contents,
-                PHImageManager.default().requestImage(for: asset, targetSize: libraryButtonSize.applying(CGAffineTransform(scaleX: view.contentScaleFactor, y: view.contentScaleFactor)), contentMode: .aspectFill, options: nil, resultHandler: { result, info in
+                PHImageManager.default().requestImage(for: asset, targetSize: libraryButtonSize.applying(CGAffineTransform(scaleX: view.contentScaleFactor, y: view.contentScaleFactor)), contentMode: .aspectFill, options: nil, resultHandler: { result, _ in
                     DispatchQueue.main.async(execute: {
                         self.libraryButton.imageView?.contentMode = .scaleAspectFill
                         self.libraryButton.contentVerticalAlignment = .center

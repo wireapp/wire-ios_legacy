@@ -93,7 +93,7 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
     func testThatItExecutesTheTapHandlerOnTitleTap() {
         // given
         var callCount: Int = 0
-        sut.tapHandler = { button in
+        sut.tapHandler = { _ in
             callCount += 1
         }
 
