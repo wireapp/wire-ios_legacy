@@ -62,7 +62,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                     let popover = videoEditor.popoverPresentationController
                     popover?.sourceView = self.parent?.view
 
-                    ///arrow point to camera button.
+                    /// arrow point to camera button.
                     popover?.permittedArrowDirections = .down
 
                     popover?.sourceRect = self.photoButton.popoverSourceRect(from: self)

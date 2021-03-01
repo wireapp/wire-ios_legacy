@@ -38,7 +38,7 @@ final class SettingsClientViewController: UIViewController,
                                           ClientColorVariantProtocol,
                                           SpinnerCapable {
 
-    //MARK: SpinnerCapable
+    // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
@@ -391,7 +391,7 @@ final class SettingsClientViewController: UIViewController,
     }
 }
 
-//MARK: - ClientRemovalObserverDelegate
+// MARK: - ClientRemovalObserverDelegate
 
 extension SettingsClientViewController: ClientRemovalObserverDelegate {
     func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {

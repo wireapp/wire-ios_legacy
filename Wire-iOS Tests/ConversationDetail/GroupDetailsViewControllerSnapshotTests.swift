@@ -96,7 +96,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
 
         sut = GroupDetailsViewController(conversation: mockConversation)
 
-        //THEN
+        // THEN
         verify(matching: sut)
     }
 

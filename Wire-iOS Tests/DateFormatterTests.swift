@@ -106,7 +106,7 @@ final class DateFormatterTests: XCTestCase {
 
         XCTAssert(dateString.hasPrefix(String(month)), "dateString is \(dateString)")
 
-        ///Confirm "day" & "Month" exists in dateString
+        /// Confirm "day" & "Month" exists in dateString
         XCTAssert(dateString.contains("日"))
         XCTAssert(dateString.contains("月"))
     }
@@ -123,7 +123,7 @@ final class DateFormatterTests: XCTestCase {
         return dateString
     }
 
-    //MARK:- wr_formattedDate tests
+    // MARK:- wr_formattedDate tests
 
     func testWr_formattedDateForTwoHourBefore() {
         // GIVEN
@@ -144,7 +144,7 @@ final class DateFormatterTests: XCTestCase {
 
         // THEN
         XCTAssertFalse(dateString.contains("just now"), "dateString is \(dateString)")
-        ///If two hours before is yesterday, dateString looks like "Yesterday at 11:17 PM"
+        /// If two hours before is yesterday, dateString looks like "Yesterday at 11:17 PM"
         XCTAssert(dateString.hasPrefix(String(hour)) ||
             (dateString.replacingOccurrences(of: "Yesterday at ", with: "").hasPrefix(String(hour))
             ), "hour is \(hour), dateString is \(dateString)")

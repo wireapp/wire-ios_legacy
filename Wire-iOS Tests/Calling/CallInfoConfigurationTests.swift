@@ -454,7 +454,7 @@ final class CallInfoConfigurationTests: XCTestCase {
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
 
         // then
-        assertEquals(fixture.groupAudioEstablishedVideoUnavailable(mockUsers: mockUsers), configuration)//canToggleMediaType
+        assertEquals(fixture.groupAudioEstablishedVideoUnavailable(mockUsers: mockUsers), configuration)// canToggleMediaType
     }
 
     func testGroupAudioEstablishedNonTeamUserRemoteTurnedVideoOn() {

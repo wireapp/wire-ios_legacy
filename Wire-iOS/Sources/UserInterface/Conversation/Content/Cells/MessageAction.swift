@@ -38,7 +38,7 @@ enum MessageAction: CaseIterable {
     showInConversation,
     sketchDraw,
     sketchEmoji,
-    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
+    /// Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
     present,
     openQuote,
     resetSession

@@ -106,13 +106,13 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return false
     }
 
-    ///MARK: - header
+    /// MARK: - header
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: emptySectionHeaderHeight)
     }
 
-    ///MARK: - footer
+    /// MARK: - footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 

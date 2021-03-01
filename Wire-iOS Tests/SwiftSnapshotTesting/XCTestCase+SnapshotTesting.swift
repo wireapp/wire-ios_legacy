@@ -440,7 +440,7 @@ extension XCTestCase {
         controller.dismiss(animated: false, completion: completion)
     }
 
-    //MARK: - verify a UIViewController with a set of widths. The SUT is created in the closure instead of reusing
+    // MARK: - verify a UIViewController with a set of widths. The SUT is created in the closure instead of reusing
 
     func verifyInAllPhoneWidths(createSut: () -> UIView,
                                 snapshotBackgroundColor: UIColor? = nil,

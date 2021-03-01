@@ -294,7 +294,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingUndeterminedPermissions, selfUser: mockSelfUser)
 
-        //then
+        // then
         verify(matching: sut)
     }
 
@@ -305,7 +305,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         // when
         sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingDeniedPermissions, selfUser: mockSelfUser)
 
-        //then
+        // then
         verify(matching: sut)
     }
 

@@ -325,7 +325,7 @@ final class ConversationViewController: UIViewController {
         updateRightNavigationItemsButtons()
     }
 
-    //MARK: - ParticipantsPopover
+    // MARK: - ParticipantsPopover
 
     private func hideAndDestroyParticipantsPopover() {
         if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
@@ -334,7 +334,7 @@ final class ConversationViewController: UIViewController {
     }
 }
 
-//MARK: - InvisibleInputAccessoryViewDelegate
+// MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 
@@ -369,7 +369,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     }
 }
 
-//MARK: - ZMConversationObserver
+// MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
     public func conversationDidChange(_ note: ConversationChangeInfo) {
@@ -404,7 +404,7 @@ extension ConversationViewController: ZMConversationObserver {
     }
 }
 
-//MARK: - ZMConversationListObserver
+// MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
@@ -419,7 +419,7 @@ extension ConversationViewController: ZMConversationListObserver {
     }
 }
 
-//MARK: - InputBar
+// MARK: - InputBar
 
 extension ConversationViewController: ConversationInputBarViewControllerDelegate {
     func conversationInputBarViewControllerDidComposeText(text: String,

@@ -109,7 +109,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - unread dot
+    // MARK: - unread dot
 
     func testThatItShowsBasicAccountWithPictureSelected_Team_withUnreadDot() {
         // GIVEN
@@ -165,7 +165,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - smaller icon for conversation list
+    // MARK: - smaller icon for conversation list
     func testThatItShowsBasicAccount_Team_conversationListContext() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)

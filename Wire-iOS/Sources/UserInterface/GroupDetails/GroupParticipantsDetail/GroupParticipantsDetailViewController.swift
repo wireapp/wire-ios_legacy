@@ -205,6 +205,6 @@ extension GroupParticipantsDetailViewController: ProfileViewControllerDelegate {
     }
 
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-            //no-op
+            // no-op
     }
 }

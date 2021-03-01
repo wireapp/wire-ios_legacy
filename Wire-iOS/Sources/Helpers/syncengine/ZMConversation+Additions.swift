@@ -20,7 +20,7 @@ import WireSyncEngine
 
 extension ZMConversation {
 
-    ///TODO: move to DM
+    /// TODO: move to DM
     var firstActiveParticipantOtherThanSelf: ZMUser? {
         guard let selfUser = ZMUser.selfUser() else { return localParticipants.first }
 

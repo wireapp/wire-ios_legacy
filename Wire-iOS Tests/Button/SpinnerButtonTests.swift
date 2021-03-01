@@ -32,46 +32,46 @@ final class SpinnerButtonTests: XCTestCase {
     }
 
     func testForShortTitle() {
-        //GIVEN
+        // GIVEN
         createSut(title: "Yes, I am safe.")
 
-        //WHEN
+        // WHEN
 
-        //THEN
+        // THEN
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
     }
 
     func testForSpinnerOverlapsTitle() {
-        //GIVEN
+        // GIVEN
         createSut(title: "No, I need rescue. I am on the west side.")
 
-        //WHEN
+        // WHEN
         sut.isLoading = true
 
-        //THEN
+        // THEN
         verifyInWidths(matching: sut,
                        widths: Set([300]),
                        snapshotBackgroundColor: UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha))
     }
 
     func testForSpinnerIsHidden() {
-        //GIVEN
+        // GIVEN
         createSut()
 
-        //WHEN
+        // WHEN
 
-        //THEN
+        // THEN
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
     }
 
     func testForSpinnerIsShown() {
-        //GIVEN
+        // GIVEN
 
-        //WHEN
+        // WHEN
 
-        //THEN
+        // THEN
         ColorScheme.default.variant = .dark
         createSut()
         sut.isLoading = true

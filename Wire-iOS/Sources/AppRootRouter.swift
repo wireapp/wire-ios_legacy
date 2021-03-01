@@ -55,7 +55,7 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
 
-    //TO DO: This should be private
+    // TO DO: This should be private
     private(set) var rootViewController: RootViewController
 
     // MARK: - Initialization

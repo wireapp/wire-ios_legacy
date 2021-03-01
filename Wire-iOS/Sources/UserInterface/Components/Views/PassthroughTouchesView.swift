@@ -26,7 +26,7 @@ final class PassthroughTouchesView: UIView {
         }
 
         set {
-            //no-op
+            // no-op
         }
     }
 

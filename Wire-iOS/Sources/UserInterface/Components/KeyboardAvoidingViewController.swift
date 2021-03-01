@@ -21,7 +21,7 @@ import UIKit
 
 class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
 
-    //MARK: SpinnerCapable
+    // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     let viewController: UIViewController
@@ -133,7 +133,7 @@ class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
         if !keyboardFrameInView.origin.y.isInfinite,
             modalPresentationStyle == .formSheet,
             let frame = presentationController?.frameOfPresentedViewInContainerView {
-            bottomOffset += frame.minY ///TODO: no need to add when no keyboard
+            bottomOffset += frame.minY /// TODO: no need to add when no keyboard
         }
 
         guard bottomEdgeConstraint.constant != bottomOffset else { return }

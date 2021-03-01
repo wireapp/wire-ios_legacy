@@ -32,7 +32,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     }
 
     var hasUsernameTakeoverViewController: Bool {
-        //no-op
+        // no-op
         return false
     }
 
@@ -46,7 +46,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {
-        //no-op
+        // no-op
     }
 
     func setState(_ state: ConversationListState, animated: Bool, completion: Completion?) {
@@ -54,34 +54,34 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     }
 
     func showNoContactLabel(animated: Bool) {
-        //no-op
+        // no-op
     }
 
     func hideNoContactLabel(animated: Bool) {
-        //no-op
+        // no-op
     }
 
     func openChangeHandleViewController(with handle: String) {
-        //no-op
+        // no-op
     }
 
     func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping ResultHandler) {
-        //no-op
+        // no-op
     }
 
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-        //no-op
+        // no-op
     }
 
     func removeUsernameTakeover() {
-        //no-op
+        // no-op
     }
 
     func showUsernameTakeover(suggestedHandle: String, name: String) {
-        //no-op
+        // no-op
     }
 
     func showPermissionDeniedViewController() {
-        //no-op
+        // no-op
     }
 }

@@ -89,7 +89,7 @@ final class CoreDataFixture {
     //
     var selfUserProvider: SelfUserProvider!
 
-    ///From ZMSnapshot
+    /// From ZMSnapshot
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
@@ -120,7 +120,7 @@ final class CoreDataFixture {
     var documentsDirectory: URL?
 
     init() {
-        ///From ZMSnapshotTestCase
+        /// From ZMSnapshotTestCase
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
         if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {

@@ -96,7 +96,7 @@ final class ConversationOptionsViewModel {
         state.rows = computeVisibleRows()
     }
 
-    private func computeVisibleRows() -> [CellConfiguration] {///TODO: copy?
+    private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
                 get: { [unowned self] in return self.configuration.allowGuests },
                 set: { [unowned self] in self.setAllowGuests($0) }

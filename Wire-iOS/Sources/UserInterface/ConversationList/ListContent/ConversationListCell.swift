@@ -52,7 +52,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     private var titleBottomMarginConstraint: NSLayoutConstraint?
     private var typingObserverToken: Any?
 
-    //MARK: - SectionListCellType
+    // MARK: - SectionListCellType
     var sectionName: String?
     var cellIdentifier: String?
 
