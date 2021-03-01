@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import AVFoundation
-import WireSyncEngine
 
 extension SessionManager {
     static var shared: SessionManager? {

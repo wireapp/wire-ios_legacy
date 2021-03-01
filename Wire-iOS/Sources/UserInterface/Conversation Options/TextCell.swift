@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import UIKit
 
 final class TextCell: UITableViewCell, CellConfigurationConfigurable {
 
