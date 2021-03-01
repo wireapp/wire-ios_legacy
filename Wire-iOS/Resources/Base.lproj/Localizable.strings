@@ -1626,6 +1626,10 @@
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Database loading failure";
+"databaseloadingfailure.alert.message" = "The database could be loaded.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";

@@ -22,6 +22,7 @@ import UIKit
 enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
+    case databaseFailure
 }
 
 final class BlockerViewController: LaunchImageViewController {
@@ -47,6 +48,8 @@ final class BlockerViewController: LaunchImageViewController {
             showBlacklistMessage()
         case .jailbroken:
             showJailbrokenMessage()
+        case .databaseFailure:
+            showDatabaseFailureMessage()
         }
     }
 
@@ -58,6 +61,10 @@ final class BlockerViewController: LaunchImageViewController {
 
     func showJailbrokenMessage() {
         presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized)
+    }
+    
+    func showDatabaseFailureMessage() {
+        presentAlertWithOKButton(title: "databaseloadingfailure.alert.title".localized, message: "databaseloadingfailure.alert.message".localized)
     }
 
 }

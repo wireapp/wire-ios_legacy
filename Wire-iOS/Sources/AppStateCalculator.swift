@@ -26,10 +26,11 @@ enum AppState: Equatable {
     case unauthenticated(error: NSError?)
     case blacklisted
     case jailbroken
+    case databaseFailure
     case migrating
     case loading(account: Account, from: Account?)
 
-    static func ==(lhs: AppState, rhs: AppState) -> Bool {
+    static func == (lhs: AppState, rhs: AppState) -> Bool {
         switch (lhs, rhs) {
         case (.headless, .headless):
             return true
@@ -42,6 +43,8 @@ enum AppState: Equatable {
         case (blacklisted, blacklisted):
             return true
         case (jailbroken, jailbroken):
+            return true
+        case (databaseFailure, databaseFailure):
             return true
         case (migrating, migrating):
             return true
@@ -149,6 +152,10 @@ extension AppStateCalculator: SessionManagerDelegate {
 
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
+    }
+    
+    func sessionManagerDidFailLoadDatabase() {
+        transition(to: .databaseFailure)
     }
 
     func sessionManagerWillMigrateAccount(userSessionCanBeTornDown: @escaping () -> Void) {
