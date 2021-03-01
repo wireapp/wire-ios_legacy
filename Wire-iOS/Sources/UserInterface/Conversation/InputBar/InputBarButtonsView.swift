@@ -198,9 +198,9 @@ final class InputBarButtonsView: UIView {
             constrain(previous, current) { previous, current in
                 previous.trailing == current.leading
 
-                if (isFirstButton) {
+                if isFirstButton {
                     previous.width == current.width * 0.5 + offset
-                } else if (isLastButton) {
+                } else if isLastButton {
                     current.width == previous.width * 0.5 + offset
                 } else {
                     current.width == previous.width

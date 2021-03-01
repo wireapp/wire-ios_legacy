@@ -340,7 +340,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let `self` = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient
-            if(self.verifiedToggle.isOn) {
+            if self.verifiedToggle.isOn {
                 selfClient?.trustClient(self.userClient)
             } else {
                 selfClient?.ignoreClient(self.userClient)

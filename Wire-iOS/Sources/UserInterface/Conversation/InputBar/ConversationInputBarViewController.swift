@@ -638,7 +638,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
         dismiss(animated: true) {
             let messageText: String
 
-            if (searchTerm == "") {
+            if searchTerm == "" {
                 messageText = String(format: "giphy.conversation.random_message".localized, searchTerm)
             } else {
                 messageText = String(format: "giphy.conversation.message".localized, searchTerm)

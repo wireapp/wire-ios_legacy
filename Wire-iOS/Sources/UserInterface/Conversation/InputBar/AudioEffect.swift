@@ -28,7 +28,7 @@ extension String {
         do {
             try FileManager.default.removeItem(atPath: self)
         }
-        catch (let error) {
+        catch {
             zmLog.error("Cannot delete file: \(self): \(error)")
             return false
         }

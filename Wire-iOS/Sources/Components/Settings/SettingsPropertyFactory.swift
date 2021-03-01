@@ -112,14 +112,14 @@ final class SettingsPropertyFactory {
 
     func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
 
-        switch(propertyName) {
+        switch propertyName {
         // Profile
         case .profileName:
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.string(value: self.selfUser?.name ?? "")
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
-                switch(value) {
+                switch value {
                 case .string(let stringValue):
                     guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
 
@@ -160,7 +160,7 @@ final class SettingsPropertyFactory {
                 return SettingsPropertyValue(self.selfUser?.accentColorValue.rawValue ?? ZMAccentColor.undefined.rawValue)
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
-                switch(value) {
+                switch value {
                 case .number(let number):
                     self.userSession?.enqueue({
                         self.selfUser?.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
@@ -179,7 +179,7 @@ final class SettingsPropertyFactory {
                 return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
-                switch(value) {
+                switch value {
                 case .number(let number):
                     if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
                         self.userDefaults.set(settingsColorScheme.keyValueString,
@@ -207,7 +207,7 @@ final class SettingsPropertyFactory {
                 }
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
-                switch(value) {
+                switch value {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
                         var mediaManager = self.mediaManager {
@@ -233,7 +233,7 @@ final class SettingsPropertyFactory {
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 if var tracking = self.tracking {
-                    switch(value) {
+                    switch value {
                     case .number(let number):
                         tracking.disableAnalyticsSharing = number.boolValue
                     default:
@@ -253,7 +253,7 @@ final class SettingsPropertyFactory {
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 if var tracking = self.tracking {
-                    switch(value) {
+                    switch value {
                     case .number(let number):
                         tracking.disableCrashSharing = number.boolValue
                     default:

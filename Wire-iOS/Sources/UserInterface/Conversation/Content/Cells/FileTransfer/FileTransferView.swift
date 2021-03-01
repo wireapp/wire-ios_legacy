@@ -247,7 +247,7 @@ final class FileTransferView: UIView, TransferView {
             return
         }
 
-        switch(fileMessageData.transferState) {
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != message.fileMessageData!.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)

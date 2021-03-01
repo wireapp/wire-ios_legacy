@@ -84,7 +84,7 @@ final class ThreeDotsLoadingView: UIView {
     }
 
     func updateLoadingAnimation() {
-        if (isHidden) {
+        if isHidden {
             stopProgressAnimation()
         } else {
             startProgressAnimation()

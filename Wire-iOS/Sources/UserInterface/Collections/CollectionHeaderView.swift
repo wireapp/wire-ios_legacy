@@ -28,7 +28,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         didSet {
             let icon: StyleKitIcon
 
-            switch(section) {
+            switch section {
             case CollectionsSectionSet.images:
                 self.titleLabel.text = "collections.section.images.title".localized(uppercased: true)
                 icon = .photo

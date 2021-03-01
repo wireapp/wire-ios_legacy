@@ -21,7 +21,7 @@ import XCTest
 
 class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBarControllerDelegate {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
-        switch (buttonType) {
+        switch buttonType {
         case .archive:
             self.archiveButtonTapCount += 1
         case .startUI:

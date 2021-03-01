@@ -293,7 +293,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
 
         addChild(emojiKeyboardViewController)
 
-        if (animated) {
+        if animated {
             isEmojiKeyboardInTransition = true
 
             let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
@@ -322,7 +322,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
             self.emojiKeyboardViewController.removeFromParent()
         }
 
-        if (animated) {
+        if animated {
 
             isEmojiKeyboardInTransition = true
 

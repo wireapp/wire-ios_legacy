@@ -88,9 +88,8 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
 
         do {
             try self.settingsProperty << SettingsPropertyValue(valueToSet)
-        }
-        catch(let e) {
-            zmLog.error("Cannot set property: \(e)")
+        } catch {
+            zmLog.error("Cannot set property: \(error)")
         }
     }
 }

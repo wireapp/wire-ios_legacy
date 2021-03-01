@@ -174,7 +174,7 @@ final class SettingsClientViewController: UIViewController,
         let selfClient = ZMUserSession.shared()!.selfUserClient
 
         ZMUserSession.shared()?.enqueue({
-            if (sender.isOn) {
+            if sender.isOn {
                 selfClient?.trustClient(self.userClient)
             } else {
                 selfClient?.ignoreClient(self.userClient)
