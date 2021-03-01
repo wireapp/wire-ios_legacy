@@ -131,6 +131,10 @@ enum ColorSchemeColor: Int {
     case errorIndicator
 
     case landingScreen
+    
+    case utilityError
+    case utilityNeutral
+    case utilitySuccess
 
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
         switch self {
@@ -233,6 +237,13 @@ enum ColorSchemeColor: Int {
 
         case .landingScreen:
             return ColorPair(light: .graphiteDark, dark: .white)
+        
+        case .utilityError:
+            return ColorPair(light: UIColor(rgb: 0xE41734), dark: UIColor(rgb: 0xFC7887))
+        case .utilityNeutral:
+            return ColorPair(light: UIColor(rgb: 0x0772DE), dark: UIColor(rgb: 0x26BDFF))
+        case .utilitySuccess:
+            return ColorPair(light: UIColor(rgb: 0x148545), dark: UIColor(rgb: 0x35C763))
         }
     }
 }
