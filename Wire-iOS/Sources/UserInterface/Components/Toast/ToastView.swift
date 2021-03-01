@@ -90,8 +90,8 @@ class ToastView: UIView {
 
     private func applyConfiguration() {
         guard let config = configuration else { return }
-        let textColor = config.variant.textColor
 
+        let textColor = UIColor.from(scheme: .background, variant: config.variant)
         backgroundColor = UIColor.from(scheme: config.colorScheme, variant: config.variant)
         messageLabel.text = config.message.uppercased()
         messageLabel.textColor = textColor
@@ -158,11 +158,13 @@ class ToastView: UIView {
 
     // MARK: - Events
 
-    @objc func closeButtonTapHandler() {
+    @objc
+    private func closeButtonTapHandler() {
         removeFromSuperview()
     }
 
-    @objc func moreInfoTapHandler() {
+    @objc
+    private func moreInfoTapHandler() {
         configuration?.moreInfoAction?()
     }
 }
@@ -173,18 +175,9 @@ private extension ColorSchemeVariant {
     var moreInfoButtonColor: UIColor {
         switch self {
         case .dark:
-            return UIColor(rgba: (23, 24, 26, 0.12))
+            return .backgroundGraphiteAlpha12
         case .light:
             return .whiteAlpha24
-        }
-    }
-
-    var textColor: UIColor {
-        switch self {
-        case .dark:
-            return .black
-        case .light:
-            return .white
         }
     }
 }

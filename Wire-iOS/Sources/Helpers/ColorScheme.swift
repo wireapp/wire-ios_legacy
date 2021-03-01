@@ -46,6 +46,7 @@ extension UIColor {
 
     static var backgroundGraphite: UIColor = UIColor(rgb: (22, 24, 25))
     static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba: (22, 24, 25, 0.4))
+    static var backgroundGraphiteAlpha12: UIColor = UIColor(rgba: (22, 24, 25, 0.12))
 
     static var white97: UIColor = UIColor(white: 0.97, alpha: 1)
     static var white98: UIColor = UIColor(white: 0.98, alpha: 1)
