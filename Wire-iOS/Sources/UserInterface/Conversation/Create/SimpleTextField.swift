@@ -58,7 +58,7 @@ final class SimpleTextField: UITextField, Themeable {
         return text.value
     }
 
-    // MARK:- UI constants
+    // MARK: - UI constants
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!

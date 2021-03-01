@@ -219,7 +219,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         hintImageView.isHidden = true
     }
 
-    // MARK - actions
+    // MARK: - Actions
 
     @objc func toggleDrawTool() {
         if canvas.mode == .edit {

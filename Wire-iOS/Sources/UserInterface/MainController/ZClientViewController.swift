@@ -659,7 +659,7 @@ final class ZClientViewController: UIViewController {
         }
     }
 
-    /// MARK: - select conversation
+    // MARK: - Select conversation
 
     /// Select a conversation and move the focus to the conversation view.
     ///

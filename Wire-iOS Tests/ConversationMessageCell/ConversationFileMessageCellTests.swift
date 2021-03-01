@@ -213,7 +213,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Upload Cancelled
+    // MARK: - Upload Cancelled
 
     func testCancelledUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingCancelled
@@ -222,7 +222,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Obfuscated
+    // MARK: - Obfuscated
 
     func testObfuscatedFileTransferCell() {
         message.isObfuscated = true

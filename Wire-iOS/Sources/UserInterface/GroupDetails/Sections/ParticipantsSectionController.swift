@@ -199,7 +199,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
 
-    /// MARK: - footer
+    // MARK: - Footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 

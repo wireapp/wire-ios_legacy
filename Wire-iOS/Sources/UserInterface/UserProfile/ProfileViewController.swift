@@ -239,7 +239,7 @@ final class ProfileViewController: UIViewController {
         addToSelf(tabsController!)
     }
 
-    // MARK : - constraints
+    // MARK: - Constraints
 
     private func setupConstraints() {
         guard let tabsView = tabsController?.view else { fatal("Tabs view is not created") }

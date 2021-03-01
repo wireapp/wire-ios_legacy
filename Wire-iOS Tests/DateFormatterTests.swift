@@ -123,7 +123,7 @@ final class DateFormatterTests: XCTestCase {
         return dateString
     }
 
-    // MARK:- wr_formattedDate tests
+    // MARK: - wr_formattedDate tests
 
     func testWr_formattedDateForTwoHourBefore() {
         // GIVEN
