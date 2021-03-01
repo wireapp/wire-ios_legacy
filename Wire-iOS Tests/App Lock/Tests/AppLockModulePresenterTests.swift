@@ -109,9 +109,9 @@ final class AppLockModulePresenterTests: XCTestCase {
 
     // MARK: - Process Event
 
-    func test_ViewDidLoad() {
+    func test_ViewDidAppear() {
         // When
-        sut.processEvent(.viewDidLoad)
+        sut.processEvent(.viewDidAppear)
 
         // Then
         XCTAssertEqual(interactor.requests, [.initiateAuthentication])

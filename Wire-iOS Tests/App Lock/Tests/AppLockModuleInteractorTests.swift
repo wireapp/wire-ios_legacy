@@ -27,17 +27,22 @@ final class AppLockModuleInteractorTests: XCTestCase {
     private var session: AppLockModule.MockSession!
     private var appLock: AppLockModule.MockAppLockController!
     private var authenticationType: AppLockModule.MockAuthenticationTypeDetector!
-
+    private var applicationStateProvider: AppLockModule.MockApplicationStateProvider!
+    
     override func setUp() {
         super.setUp()
         presenter = .init()
         session = .init()
         appLock = .init()
         authenticationType = .init()
+        applicationStateProvider = .init()
 
         session.appLockController = appLock
 
-        sut = .init(session: session, authenticationType: authenticationType)
+        sut = .init(session: session,
+                    authenticationType: authenticationType,
+                    applicationStateProvider: applicationStateProvider)
+
         sut.presenter = presenter
     }
 
@@ -47,6 +52,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         session = nil
         appLock = nil
         authenticationType = nil
+        applicationStateProvider = nil
         super.tearDown()
     }
 
@@ -139,6 +145,34 @@ final class AppLockModuleInteractorTests: XCTestCase {
     }
 
     // MARK: - Evaluate authentication
+
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInactive() {
+        // Given
+        applicationStateProvider.applicationState = .inactive
+        authenticationType.current = .faceID
+
+        // When
+        sut.executeRequest(.evaluateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+    }
+
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInBackground() {
+        // Given
+        applicationStateProvider.applicationState = .background
+        authenticationType.current = .faceID
+
+        // When
+        sut.executeRequest(.evaluateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+    }
 
     func test_EvaluateAuthentication_SessionIsAlreadyUnlocked() {
         // Given
