@@ -25,7 +25,7 @@ protocol CollectionsViewControllerDelegate: class {
 }
 
 final class CollectionsViewController: UIViewController {
-    var onDismiss: ((CollectionsViewController)->Void)?
+    var onDismiss: ((CollectionsViewController) -> Void)?
     let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
     var isShowingSearchResults: Bool {

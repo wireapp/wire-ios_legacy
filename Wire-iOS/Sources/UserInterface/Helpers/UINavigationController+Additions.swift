@@ -60,7 +60,7 @@ extension UINavigationController {
     }
 
     @discardableResult open func popToRootViewController(animated: Bool,
-                                                         completion: (()-> Void)?) -> [UIViewController]? {
+                                                         completion: (() -> Void)?) -> [UIViewController]? {
         let controllers = popToRootViewController(animated: true)
         if animated, let coordinator = transitionCoordinator {
             coordinator.animate(alongsideTransition: nil) { _ in

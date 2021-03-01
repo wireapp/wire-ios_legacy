@@ -1,5 +1,4 @@
 disabled_rules:
-    - return_arrow_whitespace
     - comment_spacing
     - vertical_parameter_alignment
     - closing_brace
