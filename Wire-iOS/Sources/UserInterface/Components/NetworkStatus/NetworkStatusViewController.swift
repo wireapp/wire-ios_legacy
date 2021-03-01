@@ -42,9 +42,10 @@ final class NetworkStatusViewController: UIViewController {
     }
 
     let networkStatusView = NetworkStatusView()
+    fileprivate var observersTokens: [Any] = []
     fileprivate var networkStatusObserverToken: Any?
     fileprivate var pendingState: NetworkStatusViewState?
-    var state: NetworkStatusViewState?
+    fileprivate var state: NetworkStatusViewState = .online
     fileprivate var finishedViewWillAppear: Bool = false
 
     fileprivate var device: DeviceProtocol = UIDevice.current
@@ -97,6 +98,8 @@ final class NetworkStatusViewController: UIViewController {
         }
 
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+
+        setupApplicationNotifications()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -153,11 +156,12 @@ final class NetworkStatusViewController: UIViewController {
         pendingState = nil
     }
 
-    func update(state: NetworkStatusViewState) {
-        self.state = state
+    func update(state newState: NetworkStatusViewState) {
+        state = newState
+
         guard shouldShowOnIPad() else { return }
 
-        networkStatusView.update(state: state, animated: true)
+        networkStatusView.update(state: newState, animated: true)
     }
 }
 
@@ -183,7 +187,6 @@ extension NetworkStatusViewController {
 
     @objc func updateStateForIPad() {
         guard device.userInterfaceIdiom == .pad else { return }
-        guard let state = self.state else { return }
 
         switch self.traitCollection.horizontalSizeClass {
         case .regular:
@@ -205,4 +208,19 @@ extension NetworkStatusViewController {
 
         updateStateForIPad()
     }
+}
+
+extension NetworkStatusViewController: ApplicationStateObserving {
+
+    func addObserverToken(_ token: NSObjectProtocol) {
+        observersTokens.append(token)
+    }
+
+    func applicationDidBecomeActive() {
+        // Enqueue the current state because the UI might be out of sync if the
+        // last state update was applied after the app transitioned to the
+        // background, because the view animations would not be applied.
+        enqueue(state: pendingState ?? state)
+    }
+
 }
