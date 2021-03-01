@@ -54,12 +54,12 @@ extension InputBarConversation {
     }
 
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        if timeout.isYears    { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
-        if timeout.isWeeks    { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
-        if timeout.isDays     { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
-        if timeout.isHours    { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
-        if timeout.isMinutes  { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
-        if timeout.isSeconds  { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
+        if timeout.isYears { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
+        if timeout.isWeeks { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
+        if timeout.isDays { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
+        if timeout.isHours { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
+        if timeout.isMinutes { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
+        if timeout.isSeconds { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
         return nil
     }
 }

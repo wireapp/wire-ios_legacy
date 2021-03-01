@@ -41,7 +41,7 @@ class RoundedBadge: UIButton {
         updateCornerRadius()
     }
 
-    func createConstraints(){
+    func createConstraints() {
 
         containedView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +61,7 @@ class RoundedBadge: UIButton {
             ])
     }
 
-    func updateCollapseConstraints(isCollapsed: Bool){
+    func updateCollapseConstraints(isCollapsed: Bool) {
         if isCollapsed {
             widthGreaterThanHeightConstraint.isActive = false
             trailingConstraint.constant = 0

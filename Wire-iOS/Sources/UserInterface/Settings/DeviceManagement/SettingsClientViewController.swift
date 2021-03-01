@@ -206,7 +206,7 @@ final class SettingsClientViewController: UIViewController,
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.shared()?.selfUserClient  {
+            if self.userClient == ZMUserSession.shared()?.selfUserClient {
                 return 1
             }
             else {

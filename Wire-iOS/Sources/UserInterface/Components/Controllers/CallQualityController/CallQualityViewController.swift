@@ -231,7 +231,7 @@ class CallQualityView: UIStackView {
     let labelText: String
     let buttonScore: Int
 
-    init(labelText: String, buttonScore: Int, callback: @escaping (Int) -> Void){
+    init(labelText: String, buttonScore: Int, callback: @escaping (Int) -> Void) {
         self.callback = callback
         self.buttonScore = buttonScore
         self.labelText = labelText
@@ -261,7 +261,7 @@ class CallQualityView: UIStackView {
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
-        constrain(scoreButton){scoreButton in
+        constrain(scoreButton) {scoreButton in
             scoreButton.width <= 48
             scoreButton.height == scoreButton.width
         }

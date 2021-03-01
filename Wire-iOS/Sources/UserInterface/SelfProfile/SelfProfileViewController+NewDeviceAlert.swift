@@ -67,8 +67,7 @@ extension SelfProfileViewController {
             if let cellIdentifier = topCellDescriptor.identifier,
                 let cellGroupDescriptor = topCellDescriptor as? SettingsControllerGeneratorType,
                 let viewController = cellGroupDescriptor.generateViewController(),
-                cellIdentifier == identifier
-            {
+                cellIdentifier == identifier {
                 self.navigationController?.pushViewController(viewController, animated: false)
                 resultViewController = viewController
             }
@@ -79,8 +78,7 @@ extension SelfProfileViewController {
                         let cellGroupDescriptor = cellDescriptor as? SettingsControllerGeneratorType,
                         let topViewController = topCellGroupDescriptor.generateViewController(),
                         let viewController = cellGroupDescriptor.generateViewController(),
-                        cellIdentifier == identifier
-                    {
+                        cellIdentifier == identifier {
                         self.navigationController?.pushViewController(topViewController, animated: false)
                         self.navigationController?.pushViewController(viewController, animated: false)
                         resultViewController = viewController

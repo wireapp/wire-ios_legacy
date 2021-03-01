@@ -41,4 +41,4 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var userEnabledCBR: Bool
 }
 
-extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}
+extension MockCallInfoViewControllerInput: CustomDebugStringConvertible {}

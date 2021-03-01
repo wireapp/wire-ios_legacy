@@ -211,8 +211,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
             attributes: [.font: fingerprintMonospaceFont],
             boldAttributes: [.font: fingerprintBoldMonospaceFont],
-            uppercase: false)
-        {
+            uppercase: false) {
             fullIDLabel.attributedText = attributedFingerprint
             spinner.stopAnimating()
         }

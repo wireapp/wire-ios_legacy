@@ -77,7 +77,7 @@ final class ThreeDotsLoadingView: UIView {
         }
     }
 
-    override var isHidden: Bool{
+    override var isHidden: Bool {
         didSet {
             updateLoadingAnimation()
         }

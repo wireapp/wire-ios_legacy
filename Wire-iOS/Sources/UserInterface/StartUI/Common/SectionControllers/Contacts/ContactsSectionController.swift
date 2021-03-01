@@ -73,7 +73,7 @@ class ContactsSectionController: SearchSectionController {
         let selected = selection?.users.contains(user) ?? false
         cell.isSelected = selected
 
-        if selected  {
+        if selected {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
 

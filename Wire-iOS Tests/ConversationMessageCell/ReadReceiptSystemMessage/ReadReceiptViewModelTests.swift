@@ -46,7 +46,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
                                    sender: mockMessage.senderUser!)
     }
 
-    func testThatSelfUserSwitchOffReceiptOption(){
+    func testThatSelfUserSwitchOffReceiptOption() {
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsDisabled
         createMockMessage(type: type)
@@ -57,7 +57,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         XCTAssertEqual(sut.attributedTitle()?.string, "You turned read receipts off for everyone")
     }
 
-    func testThatOneUserSwitchOffReceiptOption(){
+    func testThatOneUserSwitchOffReceiptOption() {
         // GIVEN
         let type = ZMSystemMessageType.readReceiptsDisabled
         createMockMessage(type: type)
@@ -70,7 +70,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts off for everyone")
     }
 
-    func testThatOneUserSwitchOnReceiptOption(){
+    func testThatOneUserSwitchOnReceiptOption() {
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsEnabled
         createMockMessage(type: type)
@@ -82,7 +82,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         XCTAssertEqual(sut.attributedTitle()?.string, "James Hetfield turned read receipts on for everyone")
     }
 
-    func testThatReceiptOptionOnMessageIsShown(){
+    func testThatReceiptOptionOnMessageIsShown() {
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsOn
         createMockMessage(type: type)

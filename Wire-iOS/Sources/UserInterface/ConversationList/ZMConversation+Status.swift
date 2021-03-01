@@ -654,7 +654,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
            let sender = message.senderUser,
-           !sender.isSelfUser{
+           !sender.isSelfUser {
 
             if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 return "conversation.status.you_were_removed".localized && type(of: self).regularStyle

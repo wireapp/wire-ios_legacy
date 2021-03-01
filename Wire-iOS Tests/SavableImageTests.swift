@@ -82,7 +82,7 @@ final class SavableImageTests: XCTestCase {
         super.tearDown()
     }
 
-    func setupMock(savableImage: SavableImage){
+    func setupMock(savableImage: SavableImage) {
         savableImage.assetChangeRequestType = MockAssetChangeRequest.self
         savableImage.assetCreationRequestType = MockAssetCreationRequest.self
         savableImage.photoLibrary = MockPhotoLibrary()

@@ -36,7 +36,7 @@ final class GroupDetailsReceiptOptionsCellTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testThatSwitchValueIsInitAndThenToggledToOff(){
+    func testThatSwitchValueIsInitAndThenToggledToOff() {
         // GIVEN
         conversation.hasReadReceiptsEnabled = true
         sut.configure(with: conversation)

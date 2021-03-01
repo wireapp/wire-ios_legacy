@@ -86,7 +86,7 @@ final class InputBarButtonsView: UIView {
     }
 
     func createConstraints() {
-        constrain(self, buttonInnerContainer, buttonOuterContainer)  { view, innerContainer, outerContainer in
+        constrain(self, buttonInnerContainer, buttonOuterContainer) { view, innerContainer, outerContainer in
             self.buttonRowTopInset = outerContainer.top == innerContainer.top
             innerContainer.leading == outerContainer.leading
             innerContainer.trailing == outerContainer.trailing

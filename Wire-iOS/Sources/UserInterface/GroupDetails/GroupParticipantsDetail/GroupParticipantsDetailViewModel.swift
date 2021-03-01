@@ -79,7 +79,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
 
-    private func computeParticipantGroups()  {
+    private func computeParticipantGroups() {
         admins = participants.filter({$0.isGroupAdmin(in: conversation)})
         members = participants.filter({!$0.isGroupAdmin(in: conversation)})
     }

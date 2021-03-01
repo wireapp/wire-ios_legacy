@@ -55,12 +55,12 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view, tolerance: 0.1)
     }
 
-    func testTestForLightTheme(){
+    func testTestForLightTheme() {
         ColorScheme.default.variant = .light
         verify()
     }
 
-    func testTestForDarkTheme(){
+    func testTestForDarkTheme() {
         ColorScheme.default.variant = .dark
         verify()
     }

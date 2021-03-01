@@ -225,7 +225,7 @@ final class ConversationOptionsViewModel {
 
         // In case allow guests mode should be deactivated & guest/service in conversation, ask the delegate
         // to confirm this action as all guests will be removed.
-        if !allowGuests && configuration.areGuestOrServicePresent{
+        if !allowGuests && configuration.areGuestOrServicePresent {
             // Make "remove guests and services" warning only appear if guests or services are present
             return delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
                 guard let `self` = self else { return }

@@ -40,7 +40,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNameElementWithALongName(){
+    func testForNameElementWithALongName() {
         let cellDescriptor = settingsCellDescriptorFactory.nameElement()
         sut.descriptor = cellDescriptor
         cellDescriptor.featureCell(sut)
@@ -54,7 +54,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         verify(view: mockTableView)
     }
 
-    func testThatTextFieldIsDisabledWhenEnabledFlagIsFalse(){
+    func testThatTextFieldIsDisabledWhenEnabledFlagIsFalse() {
         // GIVEN
         let cellDescriptor = settingsCellDescriptorFactory.nameElement(enabled: false)
 

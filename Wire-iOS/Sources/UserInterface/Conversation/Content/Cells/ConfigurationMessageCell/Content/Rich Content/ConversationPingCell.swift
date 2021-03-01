@@ -116,7 +116,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
 
         if let conversation = self.configuration?.message?.conversation,
            let lastMessage = conversation.lastMessage,
-           let message = self.configuration?.message, lastMessage.isEqual(message){
+           let message = self.configuration?.message, lastMessage.isEqual(message) {
 
             if message.isKnock {
                 startAnimation()

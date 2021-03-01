@@ -85,7 +85,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 fromView?.transform = .identity
             }
 
-            if let frame = toView?.frame  {
+            if let frame = toView?.frame {
                 toView?.layer.anchorPoint = interactionPoint
                 toView?.frame = frame
             }

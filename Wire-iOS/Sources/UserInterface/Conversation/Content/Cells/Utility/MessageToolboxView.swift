@@ -29,7 +29,7 @@ protocol MessageToolboxViewDelegate: class {
 }
 
 private extension UILabel {
-    static func createSeparatorLabel() -> UILabel{
+    static func createSeparatorLabel() -> UILabel {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)

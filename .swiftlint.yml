@@ -16,7 +16,6 @@ disabled_rules:
     - discarded_notification_center_observer
     - cyclomatic_complexity
     - private_over_fileprivate
-    - opening_brace
     - empty_parentheses_with_trailing_closure
     - empty_enum_arguments
     - switch_case_alignment

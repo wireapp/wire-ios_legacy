@@ -26,8 +26,7 @@ enum DebugActions {
     static func alert(
         _ message: String,
         title: String = "",
-        textToCopy: String? = nil)
-    {
+        textToCopy: String? = nil) {
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if let textToCopy = textToCopy {
@@ -80,8 +79,7 @@ enum DebugActions {
         let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
 
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: predicate.evaluate)
-        {
+            .first(where: predicate.evaluate) {
             let message = ["Found an unread conversation:",
                              "\(convo.displayName)",
                 "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
@@ -104,7 +102,7 @@ enum DebugActions {
         }
 
         var external = External()
-        if let otr = "broken_key".data(using: .utf8)  {
+        if let otr = "broken_key".data(using: .utf8) {
              external.otrKey = otr
         }
         let genericMessage = GenericMessage(content: external)
@@ -241,8 +239,7 @@ enum DebugActions {
 
     static func askNumber(
         title: String,
-        _ callback: @escaping (Int) -> Void)
-    {
+        _ callback: @escaping (Int) -> Void) {
         askString(title: title) {
             if let number = NumberFormatter().number(from: $0) {
                 callback(number.intValue)
@@ -254,8 +251,7 @@ enum DebugActions {
 
     static func askString(
         title: String,
-        _ callback: @escaping (String) -> Void)
-    {
+        _ callback: @escaping (String) -> Void) {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
         let controller = UIAlertController(

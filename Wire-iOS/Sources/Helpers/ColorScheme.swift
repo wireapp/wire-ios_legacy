@@ -137,7 +137,7 @@ enum ColorSchemeColor: Int {
     case utilityNeutral
     case utilitySuccess
 
-    fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
+    fileprivate func colorPair(accentColor: UIColor) -> ColorPair {
         switch self {
         case .textForeground:
             return ColorPair(light: .graphite, dark: .white)

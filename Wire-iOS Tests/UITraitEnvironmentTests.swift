@@ -33,7 +33,7 @@ final class UITraitEnvironmentTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForCompactMargins(){
+    func testForCompactMargins() {
         // GIVEN
         let view = UIView()
 
@@ -44,7 +44,7 @@ final class UITraitEnvironmentTests: XCTestCase {
         XCTAssertEqual(margins.right, compactMargins.right)
     }
 
-    func testForRegularMarginsWithDefaultSimulatorWidth(){
+    func testForRegularMarginsWithDefaultSimulatorWidth() {
         // GIVEN
         let mockView = MockRegularView()
 
@@ -56,7 +56,7 @@ final class UITraitEnvironmentTests: XCTestCase {
         XCTAssertEqual(margins.right, compactMargins.right)
     }
 
-    func testForRegularMarginsWithFullScreenWidth(){
+    func testForRegularMarginsWithFullScreenWidth() {
         // GIVEN
         let mockView = MockRegularView()
 
