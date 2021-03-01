@@ -1,5 +1,4 @@
 disabled_rules:
-    - closing_brace
     - line_length
     - function_body_length
     - type_body_length

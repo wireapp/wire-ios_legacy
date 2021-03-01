@@ -24,7 +24,7 @@ extension ZMConversation {
     var firstActiveParticipantOtherThanSelf: ZMUser? {
         guard let selfUser = ZMUser.selfUser() else { return localParticipants.first }
 
-        return localParticipants.first(where: {$0 != selfUser} )
+        return localParticipants.first(where: {$0 != selfUser})
     }
 
 }
