@@ -21,33 +21,33 @@ import UIKit
 
 final class Toast {
     static weak var toastView: ToastView?
-    
+
     static func show(with configuration: ToastConfiguration) {
         guard
             toastView == nil,
             let window = UIApplication.shared.topMostVisibleWindow
             else { return }
-        
+
         let toast = ToastView(configuration: configuration)
         toastView = toast
-        
+
         toast.translatesAutoresizingMaskIntoConstraints = false
         toast.alpha = 0
-        
+
         window.addSubview(toast)
-        
+
         NSLayoutConstraint.activate([
             toast.centerXAnchor.constraint(equalTo: window.centerXAnchor),
             toast.topAnchor.constraint(equalTo: window.safeTopAnchor, constant: 7),
             toast.leadingAnchor.constraint(equalTo: window.safeLeadingAnchor, constant: 8),
             toast.trailingAnchor.constraint(equalTo: window.safeTrailingAnchor, constant: -8)
         ])
-        
+
         UIView.animate(withDuration: 0.2) {
             toast.alpha = 1.0
         }
     }
-    
+
     static func hide() {
         toastView?.removeFromSuperview()
     }

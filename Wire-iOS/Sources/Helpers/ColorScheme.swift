@@ -131,7 +131,7 @@ enum ColorSchemeColor: Int {
     case errorIndicator
 
     case landingScreen
-    
+
     case utilityError
     case utilityNeutral
     case utilitySuccess
@@ -237,7 +237,7 @@ enum ColorSchemeColor: Int {
 
         case .landingScreen:
             return ColorPair(light: .graphiteDark, dark: .white)
-        
+
         case .utilityError:
             return ColorPair(light: UIColor(rgb: 0xE41734), dark: UIColor(rgb: 0xFC7887))
         case .utilityNeutral:

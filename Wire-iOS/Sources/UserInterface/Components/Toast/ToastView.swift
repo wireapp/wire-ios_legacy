@@ -21,7 +21,7 @@ import UIKit
 
 struct ToastConfiguration {
     typealias MoreInfoAction = () -> Void
-    
+
     let message: String
     let colorScheme: ColorSchemeColor
     let variant: ColorSchemeVariant
@@ -35,10 +35,10 @@ class ToastView: UIView {
             applyConfiguration()
         }
     }
-    
+
     // MARK: - Views
     private let moreInfoButtonHeight: CGFloat = 28
-    
+
     private let topView = UIView()
     private let bottomView = UIView()
     private let stackView: UIStackView = {
@@ -46,7 +46,7 @@ class ToastView: UIView {
         view.spacing = 12
         return view
     }()
-    
+
     private let messageLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -71,7 +71,7 @@ class ToastView: UIView {
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         return button
     }()
-    
+
     // MARK: - Life Cycle
 
     init(configuration: ToastConfiguration) {
@@ -81,11 +81,11 @@ class ToastView: UIView {
         setupConstraints()
         applyConfiguration()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Configuration
 
     private func applyConfiguration() {
@@ -97,21 +97,21 @@ class ToastView: UIView {
         messageLabel.textColor = textColor
         closeButton.setIconColor(textColor, for: .normal)
         closeButton.isHidden = !config.dismissable
-        
+
         guard config.moreInfoAction != nil else {
             bottomView.isHidden = true
             return
         }
-        
+
         bottomView.isHidden = false
         moreInfoButton.backgroundColor = config.variant.moreInfoButtonColor
         moreInfoButton.setTitleColor(textColor, for: .normal)
     }
-    
+
     private func setupViews() {
         layer.cornerRadius = 4
         moreInfoButton.layer.cornerRadius = moreInfoButtonHeight / 2
-        
+
         addSubview(stackView)
         bottomView.addSubview(moreInfoButton)
         [messageLabel, closeButton].forEach {
@@ -120,11 +120,11 @@ class ToastView: UIView {
         [topView, bottomView].forEach {
             stackView.addArrangedSubview($0)
         }
-        
+
         moreInfoButton.addTarget(self, action: #selector(moreInfoTapHandler), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeButtonTapHandler), for: .touchUpInside)
     }
-    
+
     private func setupConstraints() {
         [topView,
          bottomView,
@@ -134,7 +134,7 @@ class ToastView: UIView {
          moreInfoButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
@@ -155,13 +155,13 @@ class ToastView: UIView {
             bottomView.heightAnchor.constraint(equalTo: moreInfoButton.heightAnchor)
         ])
     }
-    
+
     // MARK: - Events
 
     @objc func closeButtonTapHandler() {
         removeFromSuperview()
     }
-    
+
     @objc func moreInfoTapHandler() {
         configuration?.moreInfoAction?()
     }
