@@ -123,11 +123,11 @@ extension XCTestCase {
     }
 
     private func verifyWithWidthInName(matching value: UIView,
-                                 width: CGFloat,
-                                 named name: String? = nil,
-                                 file: StaticString = #file,
-                                 testName: String = #function,
-                                 line: UInt = #line) {
+                                       width: CGFloat,
+                                       named name: String? = nil,
+                                       file: StaticString = #file,
+                                       testName: String = #function,
+                                       line: UInt = #line) {
         let nameWithProperty: String
         if let name = name {
             nameWithProperty = "\(name)-\(width)"
@@ -168,10 +168,10 @@ extension XCTestCase {
 
     // MARK: - verify the snapshots in both dark and light scheme
 
-	func verifyInAllColorSchemes(createSut: () -> UIView,
-								 file: StaticString = #file,
-								 testName: String = #function,
-								 line: UInt = #line) {
+    func verifyInAllColorSchemes(createSut: () -> UIView,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
 		verifyInDarkScheme(createSut: createSut,
 						   name: "DarkTheme",
 						   file: file,
@@ -206,11 +206,11 @@ extension XCTestCase {
                line: line)
     }
 
-	func verifyInDarkScheme(createSut: () -> UIView,
-							name: String? = nil,
-							file: StaticString = #file,
-							testName: String = #function,
-							line: UInt = #line) {
+    func verifyInDarkScheme(createSut: () -> UIView,
+                            name: String? = nil,
+                            file: StaticString = #file,
+                            testName: String = #function,
+                            line: UInt = #line) {
 		ColorScheme.default.variant = .dark
 
 		verify(matching: createSut(),

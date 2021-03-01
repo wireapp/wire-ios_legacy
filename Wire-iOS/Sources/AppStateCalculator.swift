@@ -29,7 +29,7 @@ enum AppState: Equatable {
     case migrating
     case loading(account: Account, from: Account?)
 
-    static func ==(lhs: AppState, rhs: AppState) -> Bool {
+    static func == (lhs: AppState, rhs: AppState) -> Bool {
         switch (lhs, rhs) {
         case (.headless, .headless):
             return true

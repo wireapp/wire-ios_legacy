@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import WireSyncEngine
 
-func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
+func == (lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
     return lhs.isEqual(toConfiguration: rhs)
 }
 

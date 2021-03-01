@@ -45,7 +45,7 @@ struct WritableKeyPathApplicator<Type>: Hashable {
     }
 }
 
-func ==<T>(lhs: WritableKeyPathApplicator<T>, rhs: WritableKeyPathApplicator<T>) -> Bool {
+func == <T>(lhs: WritableKeyPathApplicator<T>, rhs: WritableKeyPathApplicator<T>) -> Bool {
     return lhs.keyPath == rhs.keyPath
 }
 

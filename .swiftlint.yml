@@ -1,5 +1,4 @@
 disabled_rules:
-    - vertical_parameter_alignment
     - closing_brace
     - line_length
     - function_body_length

@@ -314,8 +314,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
     }
 
-    private func performAction(_ action: ProfileAction,
-                       targetView: UIView) {
+    private func performAction(_ action: ProfileAction, targetView: UIView) {
         switch action {
         case .createGroup:
             bringUpConversationCreationFlow()

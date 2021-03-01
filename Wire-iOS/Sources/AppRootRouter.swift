@@ -357,8 +357,7 @@ extension AppRootRouter {
         TrackingManager.shared.disableAnalyticsSharing = false
     }
 
-    private func buildAuthenticatedRouter(account: Account,
-                                           isComingFromRegistration: Bool) -> AuthenticatedRouter? {
+    private func buildAuthenticatedRouter(account: Account, isComingFromRegistration: Bool) -> AuthenticatedRouter? {
 
         let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnauthenticated
                                                     && !SelfUser.current.isTeamMember

@@ -30,8 +30,8 @@ extension MessagePresenter {
     ///   - isPreviewing: is peeking with 3D touch?
     /// - Returns: if isPreviewing, return a ConversationImagesViewController otherwise return a the view wrapped in navigation controller
     func imagesViewController(for message: ZMConversationMessage,
-                                    actionResponder: MessageActionResponder,
-                                    isPreviewing: Bool) -> UIViewController {
+                              actionResponder: MessageActionResponder,
+                              isPreviewing: Bool) -> UIViewController {
 
         guard let conversation = message.conversation else {
             fatal("Message has no conversation.")

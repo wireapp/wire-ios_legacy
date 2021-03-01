@@ -39,9 +39,9 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     }
 
     init(conversation: GroupDetailsConversationType,
-        syncCompleted: Bool,
-        collectionView: UICollectionView,
-        presentingViewController: UIViewController) {
+         syncCompleted: Bool,
+         collectionView: UICollectionView,
+         presentingViewController: UIViewController) {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
         self.presentingViewController = presentingViewController

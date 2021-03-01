@@ -56,10 +56,10 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         NSAttributedString.invalidateParagraphStyle()
     }
 
-	private func verify(message: MockMessage,
-						file: StaticString = #file,
-						testName: String = #function,
-						line: UInt = #line) {
+    private func verify(message: MockMessage,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
 		verifyInAllColorSchemes(createSut: {
 			message.replyPreview()!.prepareForSnapshot()
 		}, file: file, testName: testName, line: line)

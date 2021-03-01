@@ -67,8 +67,7 @@ extension UserType {
 
     // MARK: Cache Image Helper
 
-    private func cachedImage(imageCache: ImageCache<UIImage>,
-                                 cacheKey: String) -> UIImage? {
+    private func cachedImage(imageCache: ImageCache<UIImage>, cacheKey: String) -> UIImage? {
         guard let cachedImage = imageCache.cache.object(forKey: cacheKey as NSString) else {
             return nil
         }

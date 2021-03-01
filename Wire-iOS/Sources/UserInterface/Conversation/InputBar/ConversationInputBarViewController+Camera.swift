@@ -96,9 +96,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
 
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
-                                             didSelectImageData imageData: Data,
-                                             isFromCamera: Bool,
-                                             uti: String?) {
+                                      didSelectImageData imageData: Data,
+                                      isFromCamera: Bool,
+                                      uti: String?) {
         showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
 
@@ -138,8 +138,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
 
     func showConfirmationForImage(_ imageData: Data,
-                                           isFromCamera: Bool,
-                                           uti: String?) {
+                                  isFromCamera: Bool,
+                                  uti: String?) {
         let mediaAsset: MediaAsset
 
         if uti == kUTTypeGIF as String,
