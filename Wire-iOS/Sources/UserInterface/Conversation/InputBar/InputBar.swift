@@ -88,9 +88,9 @@ enum InputBarState: Equatable {
 
     mutating func changeEphemeralState(to newState: EphemeralState) {
         switch self {
-        case .markingDown(_):
+        case .markingDown:
             self = .markingDown(ephemeral: newState)
-        case .writing(_):
+        case .writing:
             self = .writing(ephemeral: newState)
         default:
             return

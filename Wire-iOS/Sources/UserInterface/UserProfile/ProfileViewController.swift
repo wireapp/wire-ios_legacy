@@ -437,7 +437,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
-                case .failure(_):
+                case .failure:
                     break
                 }
             }

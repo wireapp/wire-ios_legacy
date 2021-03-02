@@ -159,7 +159,7 @@ extension FolderCreationController: SimpleTextFieldDelegate {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
 
         switch value {
-        case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
+        case .error: navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
         }
 

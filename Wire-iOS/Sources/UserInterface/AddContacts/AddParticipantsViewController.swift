@@ -72,7 +72,7 @@ extension AddParticipantsViewController.Context {
         case .add(let conversation):
             let freeSpace = conversation.freeParticipantSlots
             message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
-        case .create(_):
+        case .create:
             message = "add_participants.alert.message.new_conversation".localized(args: max)
         }
 

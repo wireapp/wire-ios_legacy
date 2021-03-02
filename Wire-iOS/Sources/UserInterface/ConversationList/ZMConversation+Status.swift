@@ -355,7 +355,7 @@ final class SecurityAlertMatcher: ConversationStatusMatcher {
         }
 
         let textItem = (message as? ConversationCompositeMessage)?.compositeMessageData?.items.first(where: {
-            if case .text(_) = $0 {
+            if case .text = $0 {
                 return true
             }
             return false

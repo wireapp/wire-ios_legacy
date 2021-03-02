@@ -29,14 +29,14 @@ protocol CallTopOverlayControllerDelegate: class {
 extension CallState {
     public func description(callee: String, conversation: String, isGroup: Bool) -> String {
         switch self {
-        case .incoming(_, _, _):
+        case .incoming:
             let toAppend = (isGroup ? conversation + "・" : "")
             return toAppend + "call.status.incoming.user".localized(args: callee)
-        case .outgoing(_):
+        case .outgoing:
             return "call.status.outgoing.user".localized(args: conversation)
-        case .answered(_), .establishedDataChannel:
+        case .answered, .establishedDataChannel:
             return "call.status.connecting".localized
-        case .terminating(_):
+        case .terminating:
             return "call.status.terminating".localized
         default:
             return ""

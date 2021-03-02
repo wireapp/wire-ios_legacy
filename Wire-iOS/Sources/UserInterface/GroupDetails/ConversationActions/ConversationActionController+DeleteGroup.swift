@@ -40,7 +40,7 @@ extension ConversationActionController {
                 switch result {
                 case .success:
                     break
-                case .failure(_):
+                case .failure:
                     let alert = UIAlertController.alertWithOKButton(title: "error.conversation.title".localized,
                                                                     message: "conversation.delete_request_error_dialog.title".localized(args: conversation.displayName))
                     UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)

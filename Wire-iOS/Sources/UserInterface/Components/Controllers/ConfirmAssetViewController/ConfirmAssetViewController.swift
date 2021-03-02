@@ -395,7 +395,7 @@ final class ConfirmAssetViewController: UIViewController {
             }
             }
         // Player View
-        case .video(_):
+        case .video:
             if let playerView = playerViewController?.view {
                 constraints += [
                     playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
