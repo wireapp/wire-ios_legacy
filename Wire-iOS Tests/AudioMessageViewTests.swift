@@ -24,7 +24,7 @@ extension MockMessage: AudioTrack {
     public var title: String? {
         return .none
     }
-    
+
     public var author: String? {
         return .none
     }

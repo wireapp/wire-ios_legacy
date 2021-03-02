@@ -60,7 +60,7 @@ extension ZMAssetClientMessage: AudioTrack {
 
         return fileURL as URL?
     }
-    
+
     var failedToLoad: Bool {
         get {
             return false
