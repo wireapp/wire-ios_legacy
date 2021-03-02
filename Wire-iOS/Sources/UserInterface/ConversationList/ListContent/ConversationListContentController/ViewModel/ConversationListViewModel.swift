@@ -98,13 +98,13 @@ final class ConversationListViewModel: NSObject {
             static func == (lhs: ConversationListViewModel.Section.Kind, rhs: ConversationListViewModel.Section.Kind) -> Bool {
                 switch (lhs, rhs) {
                 case (.conversations, .conversations):
-                    fallthrough
+                    return true
                 case (.contactRequests, .contactRequests):
-                    fallthrough
+                    return true
                 case (.contacts, .contacts):
-                    fallthrough
+                    return true
                 case (.groups, .groups):
-                    fallthrough
+                    return true
                 case (.favorites, .favorites):
                     return true
                 case (.folder(let lhsLabel), .folder(let rhsLabel)):
