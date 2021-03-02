@@ -28,7 +28,6 @@ disabled_rules:
     - multiple_closures_with_trailing_closure
     - nesting
     - function_parameter_count
-    - redundant_void_return
     - xctfail_message
     - compiler_protocol_init
     - reduce_boolean
