@@ -130,7 +130,7 @@ extension ConversationViewController {
         createAndPresentParticipantsPopoverController(with: sourceView.bounds, from: sourceView, contentViewController: viewController)
     }
 
-    //MARK: - Application Events & Notifications
+    // MARK: - Application Events & Notifications
 
     @objc
     func menuDidHide(_ notification: Notification?) {

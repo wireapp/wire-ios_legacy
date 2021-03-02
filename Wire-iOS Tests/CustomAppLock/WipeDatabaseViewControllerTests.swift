@@ -43,13 +43,13 @@ final class WipeDatabaseViewControllerTests: XCTestCase {
     }
 
     func testForConfirmAlert() {
-        //GIVEN
+        // GIVEN
         sut = WipeDatabaseViewController()
 
-        //WHEN
+        // WHEN
         sut.presentConfirmAlert()
 
-        //THEN
+        // THEN
         verify(matching: sut.confirmController!.alertController)
     }
 }

@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-///TODO: move to DM
+/// TODO: move to DM
 fileprivate extension ZMConversation {
     var otherNonServiceParticipants: [UserType] {
         let users = Array(localParticipants)

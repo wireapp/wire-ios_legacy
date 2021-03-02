@@ -18,13 +18,13 @@
 import Foundation
 @testable import Wire
 
-///TODO: rename to MockConversation after objc MockConversation is retired
+/// TODO: rename to MockConversation after objc MockConversation is retired
 class SwiftMockConversation: NSObject, Conversation  {
 	var sortedOtherParticipants: [UserType] = []
 	var sortedServiceUsers: [UserType] = []
 
 	func verifyLegalHoldSubjects() {
-		//no-op
+		// no-op
 	}
 
 	var sortedActiveParticipantsUserTypes: [UserType] = []
@@ -79,7 +79,7 @@ final class MockInputBarConversationType: SwiftMockConversation, InputBarConvers
     var messageDestructionTimeoutValue: TimeInterval = 0
 
     func setIsTyping(_ isTyping: Bool) {
-        //no-op
+        // no-op
     }
 
     var isReadOnly: Bool = false

@@ -92,7 +92,7 @@ final class CallHapticsController {
     }
 }
 
-// MARK - Helper
+// MARK: - Helper
 
 fileprivate extension CallState {
     var isEstablished: Bool {

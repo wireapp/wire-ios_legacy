@@ -81,9 +81,9 @@ final class ConversationViewController: UIViewController {
     }
 
     required init(session: ZMUserSessionInterface,
-                 conversation: ZMConversation,
-                 visibleMessage: ZMMessage?,
-                 zClientViewController: ZClientViewController) {
+                  conversation: ZMConversation,
+                  visibleMessage: ZMMessage?,
+                  zClientViewController: ZClientViewController) {
         self.session = session
         self.conversation = conversation
         self.visibleMessage = visibleMessage
@@ -325,7 +325,7 @@ final class ConversationViewController: UIViewController {
         updateRightNavigationItemsButtons()
     }
 
-    //MARK: - ParticipantsPopover
+    // MARK: - ParticipantsPopover
 
     private func hideAndDestroyParticipantsPopover() {
         if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
@@ -334,7 +334,7 @@ final class ConversationViewController: UIViewController {
     }
 }
 
-//MARK: - InvisibleInputAccessoryViewDelegate
+// MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 
@@ -356,7 +356,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             distanceFromBottom = max(0, distanceFromBottom)
         }
 
-        let closure: () -> () = {
+        let closure: () -> Void = {
             self.inputBarBottomMargin?.constant = -distanceFromBottom
             self.view.layoutIfNeeded()
         }
@@ -369,7 +369,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     }
 }
 
-//MARK: - ZMConversationObserver
+// MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
     public func conversationDidChange(_ note: ConversationChangeInfo) {
@@ -404,7 +404,7 @@ extension ConversationViewController: ZMConversationObserver {
     }
 }
 
-//MARK: - ZMConversationListObserver
+// MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
@@ -419,7 +419,7 @@ extension ConversationViewController: ZMConversationListObserver {
     }
 }
 
-//MARK: - InputBar
+// MARK: - InputBar
 
 extension ConversationViewController: ConversationInputBarViewControllerDelegate {
     func conversationInputBarViewControllerDidComposeText(text: String,

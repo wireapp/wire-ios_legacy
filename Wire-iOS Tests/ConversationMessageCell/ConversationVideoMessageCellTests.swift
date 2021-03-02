@@ -44,7 +44,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK : Uploaded (File not downloaded)
+    // MARK: - Uploaded (File not downloaded)
 
     func testUploadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -78,7 +78,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Uploading
+    // MARK: - Uploading
 
     func testUploadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploading
@@ -105,7 +105,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Downloading
+    // MARK: - Downloading
 
     func testDownloadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -125,7 +125,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Downloaded
+    // MARK: - Downloaded
 
     func testDownloadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -144,7 +144,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Download Failed
+    // MARK: - Download Failed
 
     func testFailedDownloadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -163,7 +163,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Upload Failed
+    // MARK: - Upload Failed
 
     func testFailedUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingFailed
@@ -180,7 +180,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Upload Cancelled
+    // MARK: - Upload Cancelled
 
     func testCancelledUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingCancelled
@@ -197,7 +197,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK: No Duration
+    // MARK: - No Duration
 
     func testDownloadedCell_fromThisDevice_NoDuration() {
         message.backingFileMessageData.transferState = .uploaded
@@ -208,7 +208,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    // MARK : Obfuscated
+    // MARK: - Obfuscated
 
     func testObfuscatedFileTransferCell() {
         message.isObfuscated = true

@@ -27,11 +27,11 @@ protocol PasscodeSetupUserInterface: class {
 
 extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        //no-op
+        // no-op
     }
 
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 }
 

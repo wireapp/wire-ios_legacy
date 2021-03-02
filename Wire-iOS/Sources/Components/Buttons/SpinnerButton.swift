@@ -80,7 +80,7 @@ final class SpinnerButton: Button {
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
     }
 
-    ///custom full style with accent color for disabled state.
+    /// custom full style with accent color for disabled state.
     override func updateFullStyle() {
         setBackgroundImageColor(UIColor.AlarmButton.alarmRed, for: .disabled)
         setBackgroundImageColor(UIColor.AlarmButton.alarmRed, for: .normal)
@@ -92,7 +92,7 @@ final class SpinnerButton: Button {
         setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
     }
 
-    ///custom empty style with accent color for disabled state.
+    /// custom empty style with accent color for disabled state.
     override func updateEmptyStyle() {
         // remember reset background image colors when style is switch
         setBackgroundImageColor(.clear, for: .disabled)

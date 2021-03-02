@@ -454,6 +454,8 @@
 		6328284124A110DC000748D2 /* VideoIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328284024A110DC000748D2 /* VideoIconStyle.swift */; };
 		6328284324A11847000748D2 /* UserTypeIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328284224A11847000748D2 /* UserTypeIconStyle.swift */; };
 		6330FCC2249264C900E40B06 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6330FCC1249264C900E40B06 /* GridView.swift */; };
+		633860FE25E93F150077BC05 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633860FD25E93F140077BC05 /* Toast.swift */; };
+		6338610225ED3DED0077BC05 /* ToastViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338610125ED3DEC0077BC05 /* ToastViewTests.swift */; };
 		6340660925B204B100C0B4BA /* VideoStreamStubProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */; };
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
 		634273EB24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */; };
@@ -476,6 +478,7 @@
 		63AFE23825B6E16B0054B067 /* RoundedSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */; };
 		63B2366F251B634C009EDB02 /* UIAlertController+OutdatedClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */; };
 		63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */; };
+		63B9F5B825E7D7190059020D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5B725E7D7190059020D /* ToastView.swift */; };
 		63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */; };
 		63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */; };
 		63F65EFB2464444B00534A69 /* TimedCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EF92464426200534A69 /* TimedCircularProgressView.swift */; };
@@ -1103,6 +1106,8 @@
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
+		EE329F9525E65AC100861EC6 /* AppLockModule.MockApplicationStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE329F9325E65ABE00861EC6 /* AppLockModule.MockApplicationStateProvider.swift */; };
+		EE329F9725E65D4700861EC6 /* ApplicationStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */; };
 		EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */; };
 		EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */; };
 		EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */; };
@@ -2091,6 +2096,8 @@
 		6328284024A110DC000748D2 /* VideoIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoIconStyle.swift; sourceTree = "<group>"; };
 		6328284224A11847000748D2 /* UserTypeIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeIconStyle.swift; sourceTree = "<group>"; };
 		6330FCC1249264C900E40B06 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		633860FD25E93F140077BC05 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		6338610125ED3DEC0077BC05 /* ToastViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewTests.swift; sourceTree = "<group>"; };
 		6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamStubProvider.swift; sourceTree = "<group>"; };
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
 		634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoParticipantDetailsViewTests.swift; sourceTree = "<group>"; };
@@ -2113,6 +2120,7 @@
 		63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSegmentedView.swift; sourceTree = "<group>"; };
 		63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+OutdatedClient.swift"; sourceTree = "<group>"; };
 		63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveSpeakerState+Helper.swift"; sourceTree = "<group>"; };
+		63B9F5B725E7D7190059020D /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDeltaTests.swift; sourceTree = "<group>"; };
 		63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewController.swift; sourceTree = "<group>"; };
 		63F65EF92464426200534A69 /* TimedCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedCircularProgressView.swift; sourceTree = "<group>"; };
@@ -2866,6 +2874,8 @@
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
+		EE329F9325E65ABE00861EC6 /* AppLockModule.MockApplicationStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockApplicationStateProvider.swift; sourceTree = "<group>"; };
+		EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateProvider.swift; sourceTree = "<group>"; };
 		EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMetadataRefresher.swift; sourceTree = "<group>"; };
 		EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Units.swift"; sourceTree = "<group>"; };
 		EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TeamMetadataRefresherTests.swift; path = "Wire-iOS Tests/TeamMetadataRefresherTests.swift"; sourceTree = SOURCE_ROOT; };
@@ -3394,6 +3404,7 @@
 			children = (
 				1693D9661CEDB26200D1F13C /* UIApplication+Permissions.swift */,
 				064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */,
+				EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */,
 			);
 			path = UIApplication;
 			sourceTree = "<group>";
@@ -4319,6 +4330,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		63B9F5B625E7D7040059020D /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				63B9F5B725E7D7190059020D /* ToastView.swift */,
+				633860FD25E93F140077BC05 /* Toast.swift */,
+			);
+			path = Toast;
+			sourceTree = "<group>";
+		};
 		7C25D7532149118D002E22BF /* Mentions */ = {
 			isa = PBXGroup;
 			children = (
@@ -4473,6 +4493,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				63B9F5B625E7D7040059020D /* Toast */,
 				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
 				87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */,
 				879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */,
@@ -6152,6 +6173,7 @@
 				A9CF740D24891498007A11DC /* Settings+Reset.swift */,
 				542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */,
 				63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */,
+				6338610125ED3DEC0077BC05 /* ToastViewTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6490,6 +6512,7 @@
 				EE7F466125B1CD5B001B3EE4 /* AppLockModule.MockSession.swift */,
 				EE7F466A25B1CE2B001B3EE4 /* AppLockModule.MockAppLockController.swift */,
 				EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */,
+				EE329F9325E65ABE00861EC6 /* AppLockModule.MockApplicationStateProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -7596,6 +7619,7 @@
 				5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */,
 				EF46ECCD231D5B4B00D425DA /* ConversationListViewControllerViewModel+StartUIDelegate.swift in Sources */,
 				5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */,
+				EE329F9725E65D4700861EC6 /* ApplicationStateProvider.swift in Sources */,
 				8750A00F21934F1A00DC8DB6 /* AnimatedListMenuView.swift in Sources */,
 				A92E731C2407F54A007C1FFE /* AttributedStringOperators.swift in Sources */,
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
@@ -7761,6 +7785,7 @@
 				EEF71F6521B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift in Sources */,
 				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
 				EF1EE76F2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift in Sources */,
+				633860FE25E93F150077BC05 /* Toast.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
 				5E769C5C21AEA3CB00785EB7 /* MessageDetailsContentViewController.swift in Sources */,
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
@@ -7811,6 +7836,7 @@
 				546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */,
 				8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
+				63B9F5B825E7D7190059020D /* ToastView.swift in Sources */,
 				16345574200D01180009B5DB /* ConversationListOnboardHint.swift in Sources */,
 				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
 				8787D1841EA74F5B00254D02 /* UserType+Additions.swift in Sources */,
@@ -8720,6 +8746,7 @@
 				540C8AA9255ABD7600AA6992 /* URLActionRouterTests.swift in Sources */,
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
 				A96316A523F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift in Sources */,
+				EE329F9525E65AC100861EC6 /* AppLockModule.MockApplicationStateProvider.swift in Sources */,
 				EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */,
 				5E628028222021970039A8AB /* ProfileFooterViewTests.swift in Sources */,
 				A984AAE924099A9B002CFF2E /* SettingsTests.swift in Sources */,
@@ -8737,6 +8764,7 @@
 				63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */,
 				BF5DF5CA20F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift in Sources */,
 				F1F5E57C216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift in Sources */,
+				6338610225ED3DED0077BC05 /* ToastViewTests.swift in Sources */,
 				EF5741EE2102001A0041AD47 /* MessageTests.swift in Sources */,
 				5EF7BA61221AB89300815625 /* ProfileViewTests.swift in Sources */,
 				87C39A90206BF00A008DA100 /* BackupViewControllerTests.swift in Sources */,

@@ -57,7 +57,7 @@ final class ProfileViewTests: ZMSnapshotTestCase {
         verifyProfile(options: [.hideAvailability])
     }
 
-    // MARK; - Helpers
+    // MARK: - Helpers
 
     func verifyProfile(options: ProfileHeaderViewController.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
         let selfUser = MockUserType.createSelfUser(name: "selfUser", inTeam: UUID())

@@ -68,7 +68,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func processEvent(_ event: AppLockModule.Event) {
         switch event {
-        case .viewDidLoad, .unlockButtonTapped, .applicationWillEnterForeground:
+        case .viewDidAppear, .unlockButtonTapped, .applicationWillEnterForeground:
             interactor.executeRequest(.initiateAuthentication)
 
         case .passcodeSetupCompleted, .customPasscodeVerified:

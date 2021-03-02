@@ -35,7 +35,7 @@ enum CellConfiguration {
                     color: UIColor?,
                     action: Action)
 
-    ///For toggle without icon, leave icon and color nil
+    /// For toggle without icon, leave icon and color nil
     case iconToggle(title: String,
         subtitle: String,
         identifier: String,

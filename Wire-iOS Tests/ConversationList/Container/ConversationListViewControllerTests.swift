@@ -47,7 +47,7 @@ final class ConversationListViewControllerTests: XCTestCase {
 
     }
 
-    //MARK: - View controller
+    // MARK: - View controller
 
     func testForNoConversations() {
         verify(matching: sut)
@@ -60,7 +60,7 @@ final class ConversationListViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - PermissionDeniedViewController
+    // MARK: - PermissionDeniedViewController
     func testForPremissionDeniedViewController() {
         sut.showPermissionDeniedViewController()
 

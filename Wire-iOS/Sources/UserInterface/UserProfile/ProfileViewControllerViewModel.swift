@@ -183,7 +183,7 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Factories
 
     func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        //TODO: add addressBookEntry to ZMUser
+        // TODO: add addressBookEntry to ZMUser
         return UserNameDetailViewModel(user: user, fallbackName: user.name ?? "", addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName)
     }
 

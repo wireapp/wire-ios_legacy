@@ -186,7 +186,7 @@ extension ConversationInputBarViewController {
             }, completion: nil)
     }
 
-    func hideCameraKeyboardViewController(_ completion: @escaping ()->Void) {
+    func hideCameraKeyboardViewController(_ completion: @escaping () -> Void) {
         self.inputBar.textView.resignFirstResponder()
         delay(0.3) {
             self.mode = .textInput

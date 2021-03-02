@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-//TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
+// TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
 protocol UserClientTypeAttributedString {
     func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key: AnyObject], boldAttributes: [NSAttributedString.Key: AnyObject], uppercase: Bool) -> NSAttributedString
 }

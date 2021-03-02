@@ -195,7 +195,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
             autocapitalizationType = .none
             returnKeyType = isNew ? .default : .continue
             if #available(iOS 12, *) {
-                //Hack: disable auto fill passcode
+                // Hack: disable auto fill passcode
                 textContentType = .oneTimeCode
                 passwordRules = textFieldValidator.passwordRules
             } else {

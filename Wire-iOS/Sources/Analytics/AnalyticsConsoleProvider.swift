@@ -48,12 +48,12 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
     /// no-op
     var selfUser: UserType? {
         get {
-            //no-op
+            // no-op
             return nil
         }
 
         set {
-            //no-op
+            // no-op
         }
     }
 

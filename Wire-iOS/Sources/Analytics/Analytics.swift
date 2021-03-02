@@ -88,11 +88,11 @@ final class Analytics: NSObject {
 
 extension Analytics: AnalyticsType {
     func setPersistedAttributes(_ attributes: [String: NSObject]?, for event: String) {
-        //no-op
+        // no-op
     }
 
     func persistedAttributes(for event: String) -> [String: NSObject]? {
-        //no-op
+        // no-op
         return nil
     }
 

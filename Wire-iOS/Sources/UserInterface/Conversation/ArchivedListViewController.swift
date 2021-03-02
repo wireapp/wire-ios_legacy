@@ -154,7 +154,7 @@ extension ArchivedListViewController: UICollectionViewDataSource, UICollectionVi
 // MARK: - ArchivedListViewModelDelegate
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
-    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
+    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> Void) {
         applyChangesClosure()
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()

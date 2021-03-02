@@ -310,7 +310,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.isHidden = timestamp == nil
                 self.detailsLabel.numberOfLines = 1
                 self.statusLabel.attributedText = status
-                //override accessibilityLabel if the attributed string has customized accessibilityLabel
+                // override accessibilityLabel if the attributed string has customized accessibilityLabel
                 if let accessibilityLabel = status?.accessibilityLabel {
                     self.statusLabel.accessibilityLabel = accessibilityLabel
                 }

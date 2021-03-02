@@ -54,7 +54,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
             self.sut = ConversationListBottomBarController()
             self.sut.delegate = self.mockDelegate
 
-            ///SUT has a priority 750 height constraint. fix its height first
+            /// SUT has a priority 750 height constraint. fix its height first
             NSLayoutConstraint.activate([
                 sut.view.heightAnchor.constraint(equalToConstant: 56)
                 ])

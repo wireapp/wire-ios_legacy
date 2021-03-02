@@ -310,7 +310,7 @@ extension CallViewController: ActiveSpeakersObserver {
     }
 }
 
-//MARK: - WireCallCenterCallParticipantObserver
+// MARK: - WireCallCenterCallParticipantObserver
 
 extension CallViewController: WireCallCenterCallParticipantObserver {
 

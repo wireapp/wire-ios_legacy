@@ -77,7 +77,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
     }
 
-    fileprivate func notifyingDelegate(_ action: ()->()) {
+    fileprivate func notifyingDelegate(_ action: () -> Void) {
         let wasFilled = self.isFilled
         let previousText = self.storage
 

@@ -48,9 +48,9 @@ final class CallTopOverlayController: UIViewController {
     private let durationLabel = UILabel()
 
     class TapableAccessibleView: UIView {
-        let onAccessibilityActivate: ()->()
+        let onAccessibilityActivate: () -> Void
 
-        init(onAccessibilityActivate: @escaping ()->()) {
+        init(onAccessibilityActivate: @escaping () -> Void) {
             self.onAccessibilityActivate = onAccessibilityActivate
             super.init(frame: .zero)
         }

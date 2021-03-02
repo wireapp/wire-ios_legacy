@@ -184,7 +184,7 @@ extension NSMutableAttributedString {
 
         let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
 
-        ///reverse the order of replacing, if we start replace from the beginning, the string may be shorten and other ranges may be invalid.
+        /// reverse the order of replacing, if we start replace from the beginning, the string may be shorten and other ranges may be invalid.
         for range in allowedIndexSet.rangeView.sorted(by: {$0.lowerBound > $1.lowerBound}) {
             let convertedRange = NSRange(location: range.lowerBound, length: range.upperBound - range.lowerBound)
             mutableString.resolveEmoticonShortcuts(in: convertedRange)

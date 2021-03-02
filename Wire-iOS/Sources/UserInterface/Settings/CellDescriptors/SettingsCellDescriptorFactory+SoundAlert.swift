@@ -83,7 +83,7 @@ extension SettingsCellDescriptorFactory {
             case .none:
                 return .text("self.settings.sound_menu.no_sounds.title".localized)
             @unknown default:
-                ///TODO: change AVSIntensityLevel to NS_CLOSED_ENUM
+                /// TODO: change AVSIntensityLevel to NS_CLOSED_ENUM
                 return .text("")
             }
         } as PreviewGeneratorType

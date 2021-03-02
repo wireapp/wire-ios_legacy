@@ -105,7 +105,7 @@ final class SettingsPropertyFactory {
     }
 
     private func getOnlyProperty(propertyName: SettingsPropertyName, getAction: @escaping GetAction) -> SettingsBlockProperty {
-        let setAction: SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in }
+        let setAction: SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in }
 
         return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
     }
@@ -118,7 +118,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.string(value: self.selfUser?.name ?? "")
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch(value) {
                 case .string(let stringValue):
                     guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
@@ -159,7 +159,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue(self.selfUser?.accentColorValue.rawValue ?? ZMAccentColor.undefined.rawValue)
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch(value) {
                 case .number(let number):
                     self.userSession?.enqueue({
@@ -178,7 +178,7 @@ final class SettingsPropertyFactory {
 
                 return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch(value) {
                 case .number(let number):
                     if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
@@ -206,7 +206,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(0)
                 }
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch(value) {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
@@ -231,7 +231,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
@@ -251,7 +251,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
@@ -269,7 +269,7 @@ final class SettingsPropertyFactory {
                 return self.marketingConsent
             }
 
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch value {
                 case .number(let number):
                     self.userSession?.perform {
@@ -300,7 +300,7 @@ final class SettingsPropertyFactory {
                 }
             }
 
-            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> Void in
                 switch value {
                     case .number(let number):
                         self.userSession?.perform {

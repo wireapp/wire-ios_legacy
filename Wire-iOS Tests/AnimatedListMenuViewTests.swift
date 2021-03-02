@@ -21,25 +21,25 @@ import XCTest
 final class AnimatedListMenuViewTests: XCTestCase {
 
     func testThatProgressIsClamped() {
-        //GIVEN
+        // GIVEN
         let sut = AnimatedListMenuView()
 
-        //WHEN
+        // WHEN
         sut.progress = 1.3
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.progress, 1)
 
-        //WHEN
+        // WHEN
         sut.progress = -1
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.progress, 0)
 
-        //WHEN
+        // WHEN
         sut.progress = 0.5
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.progress, 0.5)
     }
 }

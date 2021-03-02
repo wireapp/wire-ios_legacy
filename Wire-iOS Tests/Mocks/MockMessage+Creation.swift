@@ -153,8 +153,7 @@ final class MockMessageFactory {
         return message
     }
 
-    class func videoMessage<T: MockMessage>(sender: UserType? = nil,
-                            previewImage: UIImage? = nil) -> T {
+    class func videoMessage<T: MockMessage>(sender: UserType? = nil, previewImage: UIImage? = nil) -> T {
         let message: T = fileTransferMessage(sender: sender)
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
@@ -169,9 +168,9 @@ final class MockMessageFactory {
     }
 
     class func textMessage<T: MockMessage>(withText text: String? = "Just a random text message",
-                           sender: UserType? = nil,
-                           conversation: Conversation? = nil,
-                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> T {
+                                           sender: UserType? = nil,
+                                           conversation: Conversation? = nil,
+                                           includingRichMedia shouldIncludeRichMedia: Bool = false) -> T {
         let message: T = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let textMessageData = MockTextMessageData()
@@ -260,7 +259,7 @@ final class MockMessageFactory {
         return message
     }
 
-    class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
+    class func audioMessage(config: ((MockMessage) -> Void)?) -> MockMessage {
         let fileMessage: MockMessage = MockMessageFactory.fileTransferMessage()
         fileMessage.backingFileMessageData.mimeType = "audio/x-m4a"
         fileMessage.backingFileMessageData.filename = "sound.m4a"

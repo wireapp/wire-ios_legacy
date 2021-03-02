@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 
 /// The main conversation view controller
 final class ConversationContentViewController: UIViewController, PopoverPresenter, SpinnerCapable {
-    //MARK: PopoverPresenter
+    // MARK: PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
     var dismissSpinner: SpinnerCompletion?
@@ -396,6 +396,6 @@ extension ConversationContentViewController: UITableViewDelegate {
 
 extension ConversationContentViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        //no-op
+        // no-op
     }
 }

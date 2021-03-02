@@ -55,7 +55,7 @@ public class AppRootRouter: NSObject {
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
 
-    //TO DO: This should be private
+    // TO DO: This should be private
     private(set) var rootViewController: RootViewController
 
     // MARK: - Initialization
@@ -122,7 +122,7 @@ public class AppRootRouter: NSObject {
     }
 
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
-                                   completionHandler: ((Bool)->())?) {
+                                   completionHandler: ((Bool) -> Void)?) {
         quickActionsManager.performAction(for: shortcutItem,
                                           completionHandler: completionHandler)
     }
@@ -191,6 +191,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
+            screenCurtain.delegate = nil
             configureUnauthenticatedAppearance()
             showUnauthenticatedFlow(error: error, completion: completionBlock)
         case .authenticated(completedRegistration: let completedRegistration):
@@ -356,8 +357,7 @@ extension AppRootRouter {
         TrackingManager.shared.disableAnalyticsSharing = false
     }
 
-    private func buildAuthenticatedRouter(account: Account,
-                                           isComingFromRegistration: Bool) -> AuthenticatedRouter? {
+    private func buildAuthenticatedRouter(account: Account, isComingFromRegistration: Bool) -> AuthenticatedRouter? {
 
         let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnauthenticated
                                                     && !SelfUser.current.isTeamMember

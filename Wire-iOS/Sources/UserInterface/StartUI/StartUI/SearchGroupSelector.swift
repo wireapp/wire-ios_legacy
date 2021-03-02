@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 final class SearchGroupSelector: UIView, TabBarDelegate {
-    var onGroupSelected: ((SearchGroup)->())? = nil
+    var onGroupSelected: ((SearchGroup) -> Void)? = nil
 
     var group: SearchGroup = .people {
         didSet {

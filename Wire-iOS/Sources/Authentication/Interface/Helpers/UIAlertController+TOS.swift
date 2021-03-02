@@ -21,7 +21,7 @@ import SafariServices
 import UIKit
 
 extension UIAlertController {
-    static func requestTOSApproval(over controller: UIViewController, forTeamAccount: Bool, completion: @escaping (_ approved: Bool)->()) {
+    static func requestTOSApproval(over controller: UIViewController, forTeamAccount: Bool, completion: @escaping (_ approved: Bool) -> Void) {
         let alert = UIAlertController(title: "registration.terms_of_use.terms.title".localized,
                                       message: "registration.terms_of_use.terms.message".localized,
                                       preferredStyle: .alert)

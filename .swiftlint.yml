@@ -1,9 +1,4 @@
 disabled_rules:
-    - no_space_in_method_call
-    - return_arrow_whitespace
-    - comment_spacing
-    - vertical_parameter_alignment
-    - closing_brace
     - line_length
     - function_body_length
     - type_body_length
@@ -11,18 +6,14 @@ disabled_rules:
     - generic_type_name
     - force_cast
     - force_try
-    - syntactic_sugar
     - identifier_name
     - type_name
-    - mark
-    - duplicate_imports
     - todo
     - shorthand_operator
     - control_statement
     - unused_closure_parameter
     - redundant_optional_initialization
     - unused_optional_binding
-    - void_return
     - large_tuple
     - computed_accessors_order
     - unused_setter_value

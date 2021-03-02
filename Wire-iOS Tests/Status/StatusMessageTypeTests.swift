@@ -19,10 +19,10 @@ import XCTest
 @testable import Wire
 
 func localizeString (stringToLocalize: String, language: String) -> String? {
-    guard let path = Bundle.main.path (forResource: language, ofType: "lproj") else { return nil }
+    guard let path = Bundle.main.path(forResource: language, ofType: "lproj") else { return nil }
 
-    let languageBundle = Bundle (path: path)
-    return languageBundle! .localizedString (forKey: stringToLocalize, value: "", table: nil)
+    let languageBundle = Bundle(path: path)
+    return languageBundle! .localizedString(forKey: stringToLocalize, value: "", table: nil)
 }
 
 final class StatusMessageTypeTests: XCTestCase {

@@ -272,8 +272,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     /// - Parameters:
     ///   - animated: animation enabled?
     ///   - completion: completion closure
-    private func updateLeftViewController(animated: Bool,
-                                  completion: Completion? = nil) {
+    private func updateLeftViewController(animated: Bool, completion: Completion? = nil) {
         if animated {
             view.layoutIfNeeded()
         }
@@ -386,11 +385,11 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     }
 
     private func transition(from fromViewController: UIViewController?,
-                    to toViewController: UIViewController?,
-                    containerView: UIView,
-                    animator: UIViewControllerAnimatedTransitioning?,
-                    animated: Bool,
-                    completion: Completion? = nil) -> Bool {
+                            to toViewController: UIViewController?,
+                            containerView: UIView,
+                            animator: UIViewControllerAnimatedTransitioning?,
+                            animated: Bool,
+                            completion: Completion? = nil) -> Bool {
         // Return if transition is done or already in progress
         if let toViewController = toViewController, children.contains(toViewController) {
             return false
@@ -468,8 +467,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         return min(size.width * 0.43, CGFloat.SplitView.LeftViewWidth)
     }
 
-    private func updateConstraints(for size: CGSize,
-                           willMoveToEmptyView toEmptyView: Bool = false) {
+    private func updateConstraints(for size: CGSize, willMoveToEmptyView toEmptyView: Bool = false) {
         let isRightViewEmpty: Bool = rightViewController == nil || toEmptyView
 
         switch (layoutSize, isRightViewEmpty) {

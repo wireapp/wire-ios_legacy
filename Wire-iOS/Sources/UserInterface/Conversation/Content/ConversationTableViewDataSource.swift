@@ -198,7 +198,7 @@ final class ConversationTableViewDataSource: NSObject {
 
     func loadMessages(near message: ZMConversationMessage,
                       forceRecalculate: Bool = false,
-                      completion: ((IndexPath?)->())? = nil) {
+                      completion: ((IndexPath?) -> Void)? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             if message.hasBeenDeleted {
                 completion?(nil)
@@ -229,8 +229,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
 
     func loadMessages(offset: Int = 0,
-                             limit: Int = ConversationTableViewDataSource.defaultBatchSize,
-                             forceRecalculate: Bool = false) {
+                      limit: Int = ConversationTableViewDataSource.defaultBatchSize,
+                      forceRecalculate: Bool = false) {
         let fetchRequest = self.fetchRequest()
         fetchRequest.fetchLimit = limit + 5 // We need to fetch a bit more than requested so that there is overlap between messages in different fetches
         fetchRequest.fetchOffset = offset
@@ -472,9 +472,9 @@ extension ConversationTableViewDataSource {
     }
 
     func context(for message: ZMConversationMessage,
-                        at index: Int,
-                        firstUnreadMessage: ZMConversationMessage?,
-                        searchQueries: [String]) -> ConversationMessageContext {
+                 at index: Int,
+                 firstUnreadMessage: ZMConversationMessage?,
+                 searchQueries: [String]) -> ConversationMessageContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
         let previousMessage = messagePrevious(to: message, at: index)
