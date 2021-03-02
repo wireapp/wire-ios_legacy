@@ -348,16 +348,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
     private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
         guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
-
         let index = dataSource.indexOfMessage(message)
-
-        for indexPath in indexPathsForVisibleRows {
-            if indexPath.section == index {
-                return true
-            }
-        }
-
-        return false
+        return indexPathsForVisibleRows.contains { $0.section == index }
     }
 }
 

@@ -245,11 +245,9 @@ final class TokenField: UIView {
         super.layoutSubviews()
 
         var anyTokenUpdated = false
-        for token in tokens {
-            if token.maxTitleWidth == 0 {
-                updateMaxTitleWidth(for: token)
-                anyTokenUpdated = true
-            }
+        for token in tokens where token.maxTitleWidth == 0 {
+            updateMaxTitleWidth(for: token)
+            anyTokenUpdated = true
         }
 
         if anyTokenUpdated {

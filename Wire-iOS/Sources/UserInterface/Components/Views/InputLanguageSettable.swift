@@ -38,10 +38,8 @@ extension TextView: InputLanguageSettable {
                 return super.textInputMode
             }
 
-            for textInputMode: UITextInputMode in UITextInputMode.activeInputModes {
-                if textInputMode.primaryLanguage == language {
-                    return textInputMode
-                }
+            for textInputMode in UITextInputMode.activeInputModes where textInputMode.primaryLanguage == language {
+                return textInputMode
             }
 
             return super.textInputMode

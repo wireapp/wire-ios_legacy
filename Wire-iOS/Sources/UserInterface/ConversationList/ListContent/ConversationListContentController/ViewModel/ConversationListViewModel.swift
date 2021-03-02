@@ -492,10 +492,8 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func sectionNumber(for kind: Section.Kind) -> Int? {
-        for (index, section) in sections.enumerated() {
-            if section.kind == kind {
-                return index
-            }
+        for (index, section) in sections.enumerated() where section.kind == kind {
+            return index
         }
 
         return nil

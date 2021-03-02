@@ -20,7 +20,6 @@ disabled_rules:
     - weak_delegate
     - implicit_getter
     - inclusive_language
-    - for_where
     - orphaned_doc_comment
     - class_delegate_protocol
     - legacy_cggeometry_functions
