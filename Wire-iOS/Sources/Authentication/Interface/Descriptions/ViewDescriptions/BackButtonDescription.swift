@@ -21,7 +21,7 @@ import WireCommonComponents
 import UIKit
 
 final class BackButtonDescription {
-    var buttonTapped: (() -> ())? = nil
+    var buttonTapped: (() -> Void)? = nil
     var accessibilityIdentifier: String? = "backButton"
 }
 

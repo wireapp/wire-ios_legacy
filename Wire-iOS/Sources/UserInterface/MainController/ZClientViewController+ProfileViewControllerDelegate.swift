@@ -26,7 +26,7 @@ extension ZClientViewController: ProfileViewControllerDelegate {
     }
 
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-        //no-op. Profile viewer does not have function to create a group conversation.
+        // no-op. Profile viewer does not have function to create a group conversation.
     }
 
 }

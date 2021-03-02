@@ -21,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-typealias Completion = () -> ()
+typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
@@ -31,8 +31,8 @@ protocol ConversationListContainerViewModelDelegate: class {
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
-                    animated: Bool,
-                    completion: Completion?)
+                  animated: Bool,
+                  completion: Completion?)
 
     func showNoContactLabel(animated: Bool)
     func hideNoContactLabel(animated: Bool)

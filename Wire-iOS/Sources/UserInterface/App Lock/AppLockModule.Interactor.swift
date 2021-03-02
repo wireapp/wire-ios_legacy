@@ -30,6 +30,7 @@ extension AppLockModule {
 
         private let session: Session
         private let authenticationType: AuthenticationTypeProvider
+        private let applicationStateProvider: ApplicationStateProvider
 
         let dispatchGroup = DispatchGroup()
 
@@ -41,9 +42,13 @@ extension AppLockModule {
 
         // MARK: - Life cycle
 
-        init(session: Session, authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector()) {
+        init(session: Session,
+             authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector(),
+             applicationStateProvider: ApplicationStateProvider = UIApplication.shared) {
+
             self.session = session
             self.authenticationType = authenticationType
+            self.applicationStateProvider = applicationStateProvider
         }
 
         // MARK: - Methods
@@ -79,6 +84,10 @@ extension AppLockModule {
             return passcodePreference != nil
         }
 
+        private var applicationState: UIApplication.State {
+            applicationStateProvider.applicationState
+        }
+
     }
 
 }
@@ -99,6 +108,11 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
             presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .evaluateAuthentication:
+            guard applicationState == .active else {
+                handleAuthenticationResult(.denied, context: nil)
+                return
+            }
+
             guard let preference = passcodePreference else {
                 handleAuthenticationResult(.granted, context: nil)
                 return

@@ -59,7 +59,7 @@ final class ConversationCreateNameSectionController: NSObject, CollectionViewSec
         nameCell?.textField.resignFirstResponder()
     }
 
-    //MARK: - collectionView
+    // MARK: - collectionView
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1

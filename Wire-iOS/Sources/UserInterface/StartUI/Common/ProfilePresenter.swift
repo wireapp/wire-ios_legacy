@@ -61,7 +61,7 @@ final class ProfilePresenter: NSObject, ViewControllerDismisser {
     func presentProfileViewController(for user: UserType,
                                       in controller: UIViewController?,
                                       from rect: CGRect,
-                                      onDismiss: @escaping () -> ()) {
+                                      onDismiss: @escaping () -> Void) {
 
         profileOpenedFromPeoplePicker = true
         viewToPresentOn = controller?.view

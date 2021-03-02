@@ -190,7 +190,7 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
 
 extension GroupParticipantsDetailViewController: ViewControllerDismisser {
 
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
 
@@ -205,6 +205,6 @@ extension GroupParticipantsDetailViewController: ProfileViewControllerDelegate {
     }
 
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-            //no-op
+            // no-op
     }
 }

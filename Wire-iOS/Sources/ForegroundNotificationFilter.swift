@@ -29,7 +29,7 @@ final class ForegroundNotificationFilter {
     }
 }
 
-//TO DO: Ask for the logic, not clear when a notification shuld be presented
+// TO DO: Ask for the logic, not clear when a notification shuld be presented
 extension ForegroundNotificationFilter: ForegroundNotificationResponder {
 
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {

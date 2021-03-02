@@ -5,6 +5,11 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
+        # Saving `Carthage bootstrap` running time by reusing the Cathage artifacts.
+        # When the Cathage framworks is not pre-built(e.g. in feature branch), this option can save the time of building.
+        # When cache_carthage = YES, 
+        # copy Carthage folder form ~/tmp/cache/Carthage before running setup.sh and 
+        # copy it back after at the end of this lane
         cache_carthage = options[:cache_carthage]
 
         if !xcode_version.nil? 

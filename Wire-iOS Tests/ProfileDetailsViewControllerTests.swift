@@ -575,7 +575,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
-    func test_Group_SelfUser_SCIM() {///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+    func test_Group_SelfUser_SCIM() {/// FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
@@ -591,7 +591,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         ])
     }
 
-    ///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+    /// FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
     func test_Group_SelfUser_NoSCIM() {
         // GIVEN
         selfUser.availability = .busy

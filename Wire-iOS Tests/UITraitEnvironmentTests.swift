@@ -73,7 +73,7 @@ final class MockRegularView: NSObject, UITraitEnvironment {
     var traitCollection: UITraitCollection = UITraitCollection(horizontalSizeClass: .regular)
 
     func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        ///no-op
+        /// no-op
     }
 
 }

@@ -53,7 +53,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                             }
                 }
             })
-            ///TODO: it's a temporary solution to drag only one image, while we have no design for multiple images
+            /// TODO: it's a temporary solution to drag only one image, while we have no design for multiple images
             break
         }
     }

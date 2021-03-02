@@ -129,7 +129,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
 
     static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
 
-    func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
+    func apply(_ inPath: String, outPath: String, completion: (() -> Void)? = .none) {
         guard !ProcessInfo.processInfo.isRunningTests else {
             return
         }

@@ -30,7 +30,7 @@ final class IncomingConnectionViewController: UIViewController {
 
     let userSession: ZMUserSession?
     let user: UserType
-    var onAction: ((IncomingConnectionAction) -> ())?
+    var onAction: ((IncomingConnectionAction) -> Void)?
 
     init(userSession: ZMUserSession?, user: UserType) {
         self.userSession = userSession

@@ -107,7 +107,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 
@@ -117,7 +117,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 

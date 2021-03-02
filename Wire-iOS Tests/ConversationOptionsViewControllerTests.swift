@@ -65,7 +65,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
 
         let viewModel = ConversationOptionsViewModel(configuration: config)
 
-        ///Show the alert
+        /// Show the alert
         let sut = viewModel.setAllowGuests(false)
 
         // Then
@@ -80,7 +80,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         /// for ConversationOptionsViewModel's delegate
         _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
-        ///Show the alert
+        /// Show the alert
         let sut = viewModel.setAllowGuests(false)!
 
         // Then

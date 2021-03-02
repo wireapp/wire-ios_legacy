@@ -39,8 +39,8 @@ final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
         return true
     }
 
-    func requestPermissions(_ callback: ((Bool) -> ())?) {
-        //no-op
+    func requestPermissions(_ callback: ((Bool) -> Void)?) {
+        // no-op
         callback?(false)
     }
 }

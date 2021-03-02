@@ -84,7 +84,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
 
-    // MARK TableView Delegates
+    // MARK: - TableView Delegates
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

@@ -43,7 +43,7 @@ final class AvailabilityStringBuilder: NSObject {
                 color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
-                guard availability != .none else { //Should use the default placeholder string
+                guard availability != .none else { // Should use the default placeholder string
                     return nil
                 }
                 title = "availability.\(availability.canonicalName)".localized.localizedUppercase

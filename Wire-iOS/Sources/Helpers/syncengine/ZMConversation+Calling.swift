@@ -129,7 +129,7 @@ extension ZMConversation {
     }
 
     /// Ends all the active calls, except the conversation's incoming call, if any.
-    func endAllCallsExceptIncoming(completion: @escaping () -> ()) {
+    func endAllCallsExceptIncoming(completion: @escaping () -> Void) {
         guard let sharedSession = ZMUserSession.shared() else { return }
         sharedSession.callCenter?.activeCallConversations(in: sharedSession)
             .filter { $0.remoteIdentifier != self.remoteIdentifier }

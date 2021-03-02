@@ -29,7 +29,7 @@ class SettingsCellDescriptorFactory {
     let userRightInterfaceType: UserRightInterface.Type
 
     init(settingsPropertyFactory: SettingsPropertyFactory,
-		 userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
+         userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
         self.settingsPropertyFactory = settingsPropertyFactory
         self.userRightInterfaceType = userRightInterfaceType
     }

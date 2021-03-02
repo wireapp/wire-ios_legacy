@@ -160,7 +160,7 @@ final class ConversationInputBarViewController: UIViewController,
         return view
     }()
 
-    //MARK: custom keyboards
+    // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
@@ -168,7 +168,7 @@ final class ConversationInputBarViewController: UIViewController,
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
-    //MARK: text input
+    // MARK: text input
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
@@ -177,7 +177,7 @@ final class ConversationInputBarViewController: UIViewController,
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
 
-    //MARK: feedback
+    // MARK: feedback
     lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -653,7 +653,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
-    ///TODO: check this is still necessary on iOS 13?
+    /// TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
         do {
@@ -663,7 +663,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String

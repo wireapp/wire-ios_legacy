@@ -59,7 +59,7 @@ final class InputBarTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    //MARK: - placeholder
+    // MARK: - placeholder
 
     func testNoText() {
         verifyInAllPhoneWidths(view: sut)
@@ -74,7 +74,7 @@ final class InputBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
     }
 
-    //MARK: - Text inputted
+    // MARK: - Text inputted
 
     func testShortText() {
         sut.textView.text = shortText

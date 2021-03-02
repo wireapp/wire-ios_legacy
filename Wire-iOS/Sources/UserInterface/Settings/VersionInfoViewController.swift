@@ -47,17 +47,17 @@ final class VersionInfoViewController: UIViewController {
         closeButton = IconButton()
         view.addSubview(closeButton)
 
-        //Cosmetics
+        // Cosmetics
         closeButton.setIcon(.cross, size: .small, for: UIControl.State.normal)
         closeButton.setIconColor(UIColor.black, for: UIControl.State.normal)
 
-        //Layout
+        // Layout
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
         closeButton.pinToSuperview(safely: true, anchor: .top, inset: 24)
         closeButton.pinToSuperview(safely: true, anchor: .trailing, inset: 18)
 
-        //Target
+        // Target
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
     }
 

@@ -20,7 +20,7 @@ import UIKit
 
 final class RequestPasswordController {
 
-    typealias Callback = (_ password: String?) -> ()
+    typealias Callback = (_ password: String?) -> Void
 
     enum RequestPasswordContext {
         case removeDevice

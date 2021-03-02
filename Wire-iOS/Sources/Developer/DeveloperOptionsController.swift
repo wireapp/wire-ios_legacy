@@ -29,10 +29,10 @@ class DeveloperOptionsController: UIViewController {
     var tableCells: [UITableViewCell]!
     /// Map from UISwitch to the action it should perform. 
     /// The parameter of the action is whether the switch is on or off
-    var uiSwitchToAction: [UISwitch: (Bool)->()] = [:]
+    var uiSwitchToAction: [UISwitch: (Bool) -> Void] = [:]
 
     /// Map from UIButton to the action it should perform.
-    var uiButtonToAction: [UIButton : ()->()] = [:]
+    var uiButtonToAction: [UIButton: () -> Void] = [:]
 
     var mailViewController: MFMailComposeViewController? = nil
 }
@@ -105,7 +105,7 @@ extension DeveloperOptionsController {
     }
 
     /// Creates a cell to forward logs
-    func createCellWithButton(labelText: String, onTouchDown: @escaping ()->()) -> UITableViewCell {
+    func createCellWithButton(labelText: String, onTouchDown: @escaping () -> Void) -> UITableViewCell {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
@@ -119,7 +119,7 @@ extension DeveloperOptionsController {
     }
 
     /// Creates and sets the layout of a cell with a UISwitch
-    func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool)->() ) -> UITableViewCell {
+    func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool) -> Void ) -> UITableViewCell {
         let toggle = UISwitch()
         toggle.translatesAutoresizingMaskIntoConstraints = false
         toggle.isOn = isOn

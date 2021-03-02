@@ -100,7 +100,7 @@ final class FolderCreationController: UIViewController {
         collectionView.fitInSuperview(safely: true)
 
         collectionViewController.collectionView = collectionView
-        collectionViewController.sections = [nameSection]//, errorSection]
+        collectionViewController.sections = [nameSection]// , errorSection]
 
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         view.addSubview(navBarBackgroundView)

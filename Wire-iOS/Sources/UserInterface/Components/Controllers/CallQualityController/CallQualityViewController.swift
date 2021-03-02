@@ -227,11 +227,11 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
     let scoreButton = Button()
-    let callback: (Int)->()
+    let callback: (Int) -> Void
     let labelText: String
     let buttonScore: Int
 
-    init(labelText: String, buttonScore: Int, callback: @escaping (Int)->()){
+    init(labelText: String, buttonScore: Int, callback: @escaping (Int) -> Void){
         self.callback = callback
         self.buttonScore = buttonScore
         self.labelText = labelText
@@ -284,9 +284,9 @@ class QualityScoreSelectorView: UIView {
 
     weak var delegate: CallQualityViewControllerDelegate?
 
-    public let onScoreSet: ((Int)->())
+    public let onScoreSet: ((Int) -> Void)
 
-    init(onScoreSet: @escaping (Int)->()) {
+    init(onScoreSet: @escaping (Int) -> Void) {
         self.onScoreSet = onScoreSet
         super.init(frame: .zero)
 

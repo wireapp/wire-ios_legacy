@@ -135,7 +135,7 @@ extension SettingsCellDescriptorFactory {
         return alert
     }
 
-    private var presentVersionAction: (SettingsCellDescriptorType) -> () {
+    private var presentVersionAction: (SettingsCellDescriptorType) -> Void {
         return { _ in
             let versionInfoViewController = VersionInfoViewController()
             var superViewController = UIApplication.shared.keyWindow?.rootViewController

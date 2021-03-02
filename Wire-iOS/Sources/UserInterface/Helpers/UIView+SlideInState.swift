@@ -25,7 +25,7 @@ enum SlideDirection: UInt {
 }
 
 extension UIView {
-    func wr_animateSlideTo(_ direction: SlideDirection = .down, newState: ()->()) {
+    func wr_animateSlideTo(_ direction: SlideDirection = .down, newState: () -> Void) {
         guard let superview = self.superview, let screenshot = snapshotView(afterScreenUpdates: false) else {
             return newState()
         }

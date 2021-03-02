@@ -54,94 +54,94 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
     }
 
     func testThatMultipleScreenSharingEventFromDifferentClientsCanBeTagged() {
-        //GIVEN
+        // GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
 
-        //WHEN
+        // WHEN
         sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant(clientId: clientId1, videoState: .screenSharing)])
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 1)
 
-        //WHEN
+        // WHEN
         sut.callParticipantsDidChange(conversation: mockConversation, participants: [callParticipant(clientId: clientId2, videoState: .screenSharing)])
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 2)
     }
 
     func testThatStopStateRemovesAnItemFromScreenSharingInfos() {
-        //GIVEN
+        // GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
 
-        //WHEN
+        // WHEN
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 0)
     }
 
     func testThatMultipleScreenShareEventsCanBeTagged() {
-        //GIVEN
+        // GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
 
-        //WHEN
+        // WHEN
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
-        //start screen sharing again
+        // start screen sharing again
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 1)
 
-        //WHEN
+        // WHEN
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 0)
     }
 
     func testThatMultipleParticipantsScreenShareEventsCanBeTagged() {
-        //GIVEN
+        // GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
 
-        //WHEN
+        // WHEN
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId2, videoState: .screenSharing))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 2)
 
-        //WHEN
+        // WHEN
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 1)
 
-        //WHEN
+        // WHEN
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId2, videoState: .stopped))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 0)
     }
 
     func testThatMultipleScreenShareEventsWouldNotBeTagged() {
-        //GIVEN
+        // GIVEN
         XCTAssert(sut.screenSharingStartTimes.isEmpty)
 
-        //WHEN
+        // WHEN
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
         participantStartScreenSharing(callParticipant: callParticipant(clientId: clientId1, videoState: .screenSharing))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 1)
 
-        //WHEN
+        // WHEN
         participantStoppedVideo(callParticipant: callParticipant(clientId: clientId1, videoState: .stopped))
 
-        //THEN
+        // THEN
         XCTAssertEqual(sut.screenSharingStartTimes.count, 0)
     }
 
@@ -150,7 +150,7 @@ final class AnalyticsCallingTrackerTests: XCTestCase, CoreDataFixtureTestHelper 
     }
 
     private func participantStoppedVideo(callParticipant: CallParticipant) {
-        //insert an mock callInfo
+        // insert an mock callInfo
         let callInfo = CallInfo(connectingDate: Date(), establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: true)
         sut.callInfos[mockConversation.remoteIdentifier!] = callInfo
 

@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 struct Mutator<SUT: Copyable, Variant: Hashable> {
-    typealias Applicator = (SUT, Variant)->(SUT)
+    typealias Applicator = (SUT, Variant) -> (SUT)
     typealias CombinationPair = (combination: Variant, result: SUT)
     let applicator: Applicator
     let combinations: Set<Variant>
@@ -64,7 +64,7 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
         return current
     }
 
-    @discardableResult func testAll(_ test: (CombinationChainPair)->(Bool?)) -> [CombinationChainPair] {
+    @discardableResult func testAll(_ test: (CombinationChainPair) -> (Bool?)) -> [CombinationChainPair] {
         return self.allCombinations().compactMap {
             !(test($0) ?? true) ? $0 : .none
         }

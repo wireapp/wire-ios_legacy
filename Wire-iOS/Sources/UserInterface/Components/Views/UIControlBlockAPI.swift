@@ -25,7 +25,7 @@ protocol Interactable {
 
 extension UIControl: Interactable {}
 
-typealias Callback<T> = (T)->()
+typealias Callback<T> = (T) -> Void
 
 private final class CallbackObject<T: Interactable>: NSObject {
     let callback: Callback<T>

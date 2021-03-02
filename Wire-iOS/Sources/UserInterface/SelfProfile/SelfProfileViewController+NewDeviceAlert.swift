@@ -62,7 +62,7 @@ extension SelfProfileViewController {
     @discardableResult func openControllerForCellWithIdentifier(_ identifier: String) -> UIViewController? {
         var resultViewController: UIViewController? = .none
         // Let's assume for the moment that menu is only 2 levels deep
-        rootGroup?.allCellDescriptors().forEach({ (topCellDescriptor: SettingsCellDescriptorType) -> () in
+        rootGroup?.allCellDescriptors().forEach({ (topCellDescriptor: SettingsCellDescriptorType) -> Void in
 
             if let cellIdentifier = topCellDescriptor.identifier,
                 let cellGroupDescriptor = topCellDescriptor as? SettingsControllerGeneratorType,
@@ -74,7 +74,7 @@ extension SelfProfileViewController {
             }
 
             if let topCellGroupDescriptor = topCellDescriptor as? SettingsInternalGroupCellDescriptorType & SettingsControllerGeneratorType {
-                topCellGroupDescriptor.allCellDescriptors().forEach({ (cellDescriptor: SettingsCellDescriptorType) -> () in
+                topCellGroupDescriptor.allCellDescriptors().forEach({ (cellDescriptor: SettingsCellDescriptorType) -> Void in
                     if let cellIdentifier = cellDescriptor.identifier,
                         let cellGroupDescriptor = cellDescriptor as? SettingsControllerGeneratorType,
                         let topViewController = topCellGroupDescriptor.generateViewController(),

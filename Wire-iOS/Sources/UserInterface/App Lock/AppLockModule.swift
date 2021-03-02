@@ -47,7 +47,7 @@ extension AppLockModule {
 
     enum Event: Equatable {
 
-        case viewDidLoad
+        case viewDidAppear
         case applicationWillEnterForeground
         case unlockButtonTapped
         case openDeviceSettingsButtonTapped

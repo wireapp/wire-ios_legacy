@@ -119,7 +119,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.pausedLabel.alpha = 1
             }
 
-            let completionBlock = { [weak self] (_: Bool) -> () in
+            let completionBlock = { [weak self] (_: Bool) -> Void in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
             }
@@ -139,7 +139,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.pausedLabel.alpha = 0
             }
 
-            let completionBlock =  { [weak self] (_: Bool) -> () in
+            let completionBlock =  { [weak self] (_: Bool) -> Void in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true

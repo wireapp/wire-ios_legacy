@@ -30,7 +30,7 @@ class MulticastDelegate<T: Any>: NSObject {
         delegates.remove(delegate as AnyObject)
     }
 
-    func call(_ function:@escaping (T)->()) {
+    func call(_ function:@escaping (T) -> Void) {
         delegates.allObjects.forEach {
             function($0 as! T)
         }

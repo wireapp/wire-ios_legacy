@@ -61,7 +61,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         // WHEN
         cellDescriptor.featureCell(sut)
 
-        //THEN
+        // THEN
         XCTAssertFalse(sut.textInput.isUserInteractionEnabled)
     }
 }

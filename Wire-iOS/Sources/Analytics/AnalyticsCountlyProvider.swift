@@ -213,7 +213,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
-        //store the event before self user is assigned, send it later when self user is ready.
+        // store the event before self user is assigned, send it later when self user is ready.
         guard selfUser != nil else {
             pendingEvents.append(PendingEvent(event, attributes))
             return
@@ -240,7 +240,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     func setSuperProperty(_ name: String, value: Any?) {
-        //TODO
+        // TODO
     }
 
     func flush(completion: Completion?) {

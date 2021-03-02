@@ -272,9 +272,7 @@ fileprivate extension VoiceChannel {
             && internalIsVideoCall
             && isActiveSpeakersTabEnabled
     }
-
-    private var isActiveSpeakersTabEnabled: Bool { false }
-
+    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {

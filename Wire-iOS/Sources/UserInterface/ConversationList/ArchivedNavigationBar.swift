@@ -39,7 +39,7 @@ final class ArchivedNavigationBar: UIView {
     private let barHeight: CGFloat = 44
     private let statusbarHeight: CGFloat = 20
 
-    var dismissButtonHandler: (()->())? = .none
+    var dismissButtonHandler: (() -> Void)? = .none
 
     var showSeparator: Bool = false {
         didSet {
