@@ -28,12 +28,12 @@ extension UIView {
 }
 
 final class UserConnectionViewTests: XCTestCase {
-    
+
     func sutForUser(_ mockUser: MockUserType = SwiftMockLoader.mockUsers().first!) -> UserConnectionView {
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
-        
+
         let connectionView = UserConnectionView(user: mockUser)
         connectionView.layoutForTest()
 
@@ -44,7 +44,7 @@ final class UserConnectionViewTests: XCTestCase {
         super.setUp()
         accentColor = .violet
     }
-    
+
     func testWithUserName() {
         let sut = sutForUser()
         verify(matching: sut)
@@ -57,5 +57,5 @@ final class UserConnectionViewTests: XCTestCase {
         sut.layoutForTest()
         verify(matching: sut)
     }
-    
+
 }

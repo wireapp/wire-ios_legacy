@@ -21,24 +21,24 @@ import WireDataModel
 import WireCommonComponents
 
 final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
-    
+
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.notificationsoptions"
         title = "group_details.notification_options_cell.title".localized
     }
-    
+
     func configure(with conversation: GroupDetailsConversationType) {
         guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
-        
+
         status = key.localized
     }
-    
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        
+
         icon = StyleKitIcon.alerts.makeImage(size: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }

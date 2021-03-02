@@ -20,34 +20,34 @@ import XCTest
 
 final class URL_StringTests: XCTestCase {
     func testThatURLSchemeIsRemoved() {
-        //GIVEN
+        // GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(sut?.urlWithoutScheme, "www.example.org/abc?1234/")
     }
 
     func testThatURLSchemeAndHostIsRemoved() {
-        //GIVEN
+        // GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(sut?.urlWithoutSchemeAndHost, "/abc?1234/")
     }
 
     func testThatWWWIsRemoved() {
-        //GIVEN
+        // GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(sut?.host?.removingPrefixWWW, "example.org")
     }
 
     func testThatTrailingSlashIsRemoved() {
-        //GIVEN
+        // GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(sut?.absoluteString.removingTrailingForwardSlash, "https://www.example.org/abc?1234")
     }
 }

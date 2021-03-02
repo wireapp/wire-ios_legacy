@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import WireSyncEngine
 
-func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
+func == (lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
     return lhs.isEqual(toConfiguration: rhs)
 }
 
@@ -58,7 +58,7 @@ final class CallInfoConfigurationTests: XCTestCase {
                                                                        userId: UUID(),
                                                                        clientId: "123",
                                                                        state: state,
-                                                                       isActiveSpeaker: false) })
+                                                                       activeSpeakerState: .inactive) })
     }
 
     // MARK: - OneToOne Audio
@@ -358,7 +358,7 @@ final class CallInfoConfigurationTests: XCTestCase {
     }
 
     // MARK: - Group Audio
-    
+
     private func createMockGroupConversation() -> ZMConversation {
         return ((MockConversation.groupConversation(selfUser: mockSelfUser,
                                                     otherUser: mockOtherUser) as Any) as! ZMConversation)
@@ -454,7 +454,7 @@ final class CallInfoConfigurationTests: XCTestCase {
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
 
         // then
-        assertEquals(fixture.groupAudioEstablishedVideoUnavailable(mockUsers: mockUsers), configuration)//canToggleMediaType
+        assertEquals(fixture.groupAudioEstablishedVideoUnavailable(mockUsers: mockUsers), configuration)// canToggleMediaType
     }
 
     func testGroupAudioEstablishedNonTeamUserRemoteTurnedVideoOn() {

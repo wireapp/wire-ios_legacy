@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 final class ToggleView: UIView, Themeable {
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
@@ -31,13 +31,13 @@ final class ToggleView: UIView, Themeable {
     private let toggle = UISwitch()
     private let titleLabel = UILabel()
     private let title: String
-    
+
     var handler: ToggleHandler?
     var isOn: Bool {
         set { toggle.isOn = newValue }
         get { return toggle.isOn }
     }
-    
+
     init(title: String, isOn: Bool, accessibilityIdentifier: String) {
         self.title = title
         super.init(frame: .zero)
@@ -47,7 +47,7 @@ final class ToggleView: UIView, Themeable {
         toggle.isOn = isOn
         toggle.accessibilityIdentifier = accessibilityIdentifier
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,7 +63,7 @@ final class ToggleView: UIView, Themeable {
         backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
     }
-    
+
     private func createConstraints() {
         constrain(self, titleLabel, toggle) { view, titleLabel, toggle in
             titleLabel.centerY == view.centerY
@@ -73,9 +73,9 @@ final class ToggleView: UIView, Themeable {
             view.height == 56
         }
     }
-    
+
     @objc private func toggleValueChanged(_ sender: UISwitch) {
         handler?(sender.isOn)
     }
-    
+
 }

@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class SwitchingAccountRouterTests: XCTestCase {
-    
+
     var sut: TestableSwitichingAccountRouter!
-    
+
     override func setUp() {
         super.setUp()
         sut = TestableSwitichingAccountRouter()
@@ -33,7 +33,7 @@ final class SwitchingAccountRouterTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatAlertIsPresented_WhenConfirmSwitchingAccountIsInvoked() {
         // WHEN
         sut.confirmSwitchingAccount { _ in }
@@ -42,7 +42,6 @@ final class SwitchingAccountRouterTests: XCTestCase {
         XCTAssertTrue(sut.hasBeenAlertPresented)
     }
 }
-
 
 class TestableSwitichingAccountRouter: SwitchingAccountRouter {
     var hasBeenAlertPresented: Bool = false

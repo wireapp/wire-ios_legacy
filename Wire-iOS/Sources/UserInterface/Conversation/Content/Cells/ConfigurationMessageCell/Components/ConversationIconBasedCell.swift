@@ -34,7 +34,7 @@ class ConversationIconBasedCell: UIView {
     private var textLabelTrailingConstraint: NSLayoutConstraint!
     private var textLabelTopConstraint: NSLayoutConstraint!
     private var topContentViewTrailingConstraint: NSLayoutConstraint!
-    
+
     weak var delegate: ConversationMessageCellDelegate? = nil
     weak var message: ZMConversationMessage? = nil
 
@@ -61,7 +61,7 @@ class ConversationIconBasedCell: UIView {
             }
         }
     }
-    
+
     private var trailingTextMargin: CGFloat {
         return -conversationHorizontalMargins.right * 2
     }
@@ -115,7 +115,7 @@ class ConversationIconBasedCell: UIView {
         containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         textLabelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: trailingTextMargin)
         textLabelTopConstraint = textLabel.topAnchor.constraint(equalTo: topContentView.bottomAnchor)
-        
+
         // We want the content view to at least be below the image container
         let contentViewTopConstraint = bottomContentView.topAnchor.constraint(equalTo: imageContainer.bottomAnchor)
         contentViewTopConstraint.priority = .defaultLow
@@ -133,23 +133,23 @@ class ConversationIconBasedCell: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 32),
             imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
-            
+
             // topContentView
             topContentView.topAnchor.constraint(equalTo: topAnchor),
             topContentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
             topContentViewTrailingConstraint,
-            
+
             // textLabel
             textLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             textLabelTopConstraint,
             textLabelTrailingConstraint,
-        
+
             // lineView
             lineView.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 16),
             lineView.heightAnchor.constraint(equalToConstant: .hairline),
             lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
             lineView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
-            
+
             // bottomContentView
             bottomContentView.leadingAnchor.constraint(equalTo: textLabel.leadingAnchor),
             bottomContentView.topAnchor.constraint(greaterThanOrEqualTo: textLabel.bottomAnchor),

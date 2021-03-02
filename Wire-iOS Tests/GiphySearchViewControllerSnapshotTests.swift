@@ -52,7 +52,7 @@ final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
         client = nil
         requester = nil
         resultsController = nil
-        
+
         super.tearDown()
     }
 

@@ -85,4 +85,3 @@ final class ContactsDataSourceTests: XCTestCase {
     }
 
 }
-

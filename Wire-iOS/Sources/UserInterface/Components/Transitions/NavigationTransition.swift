@@ -20,14 +20,14 @@ import UIKit
 
 final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let operation: UINavigationController.Operation
-    
+
     init?(operation: UINavigationController.Operation) {
         guard operation == .push || operation == .pop else { return nil }
         self.operation = operation
-        
+
         super.init()
     }
-    
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.55
     }
@@ -68,7 +68,7 @@ final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitionin
 
         containerView.addSubview(toView)
         containerView.addSubview(fromView)
-        
+
         containerView.layoutIfNeeded()
 
         UIView.animate(easing: .easeOutExpo,

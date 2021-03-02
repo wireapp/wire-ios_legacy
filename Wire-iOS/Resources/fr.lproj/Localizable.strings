@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Vous avez appelé";
 "content.system.ephemeral_time_remaining" = "%@ restantes";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Vous";
-"content.system.this_device" = "cet appareil";
 
 "content.system.call.called" = "%@ a appelé";
 "content.system.call.called-you" = "%@ avez appelé";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Vous avez recommencé à utiliser %@. Les messages envoyés entre-temps n’apparaîtront pas ici.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "un nouvel appareil";
-"content.system.started_using" = "utilise";
 "content.system.is_verified" = "Toutes les empreintes numériques sont vérifiées";
 
 "content.system.new_users" = "Un nouvel utilisateur est arrivé.";
 "content.system.verify_devices" = "Vérifier les appareils";
 
-"content.system.unverified" = "%@ a annulé la vérification d'un %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "de vos appareils";
-"content.system.other_devices" = "des appareils de %@";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Vous n’avez pas utilisé cet appareil depuis un moment. Il est possible que certains messages n’apparaissent pas ici.";
 "content.system.missing_messages.subtitle_start" = "Pendant ce temps,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Afficher tout le monde (%@)";
 "call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Vidéo en pause";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Base de données supprimée";
 "wipe_database_completion.subtitle" = "Vos données et messages ont été supprimés. Vous pouvez maintenant vous reconnecter en tant que nouvel appareil.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
-"appLockModule.message.faceID" = "Déverrouillez Wire avec Face ID ou votre Code";
-"appLockModule.message.touchID" = "Déverrouillez Wire avec Touch ID ou votre Code";
-"appLockModule.message.passcode" = "Déverrouillez Wire avec votre Code";
+"appLockModule.message.faceID" = "Déverrouiller Wire avec Face ID ou votre Code";
+"appLockModule.message.touchID" = "Déverrouiller Wire avec Touch ID ou votre Code";
+"appLockModule.message.passcode" = "Déverrouiller Wire avec le Code d'accès";
 "appLockModule.message.passcodeUnavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
-"appLockModule.button.title" = "Déverrouiller";
+"appLockModule.unlockButton.title" = "Déverrouiller";
+"appLockModule.goToSettingsButton.title" = "Ouvrir les paramètres";

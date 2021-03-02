@@ -21,32 +21,38 @@ import XCTest
 @testable import Wire
 
 final class AppLockModuleInteractorTests: XCTestCase {
-    
+
     private var sut: AppLockModule.Interactor!
     private var presenter: AppLockModule.MockPresenter!
     private var session: AppLockModule.MockSession!
     private var appLock: AppLockModule.MockAppLockController!
     private var authenticationType: AppLockModule.MockAuthenticationTypeDetector!
-    
+    private var applicationStateProvider: AppLockModule.MockApplicationStateProvider!
+
     override func setUp() {
         super.setUp()
         presenter = .init()
         session = .init()
         appLock = .init()
         authenticationType = .init()
+        applicationStateProvider = .init()
 
         session.appLockController = appLock
 
-        sut = .init(session: session, authenticationType: authenticationType)
+        sut = .init(session: session,
+                    authenticationType: authenticationType,
+                    applicationStateProvider: applicationStateProvider)
+
         sut.presenter = presenter
     }
-    
+
     override func tearDown() {
         sut = nil
         presenter = nil
         session = nil
         appLock = nil
         authenticationType = nil
+        applicationStateProvider = nil
         super.tearDown()
     }
 
@@ -113,7 +119,60 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
 
+    func test_InitiateAuthentication_DoesNotNeedToCreateCustomPasscode_WhenDatabaseIsLocked() {
+        // Given
+        session.lock = .database
+        appLock.isCustomPasscodeSet = false
+        authenticationType.current = .unavailable
+
+        // When
+        sut.executeRequest(.initiateAuthentication)
+
+        // Then
+        XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
+    }
+
+    func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
+        // Given
+        session.lock = .none
+
+        // When
+        sut.executeRequest(.initiateAuthentication)
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(appLock.methodCalls.open.count, 1)
+    }
+
     // MARK: - Evaluate authentication
+
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInactive() {
+        // Given
+        applicationStateProvider.applicationState = .inactive
+        authenticationType.current = .faceID
+
+        // When
+        sut.executeRequest(.evaluateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+    }
+
+    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInBackground() {
+        // Given
+        applicationStateProvider.applicationState = .background
+        authenticationType.current = .faceID
+
+        // When
+        sut.executeRequest(.evaluateAuthentication)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+
+        // Then
+        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
+        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+    }
 
     func test_EvaluateAuthentication_SessionIsAlreadyUnlocked() {
         // Given
@@ -174,7 +233,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         let preference = appLock.methodCalls.evaluateAuthentication[0].preference
         XCTAssertEqual(preference, .deviceOnly)
     }
-    
+
     func test_EvaluateAuthentication_Granted() {
         // Given
         session.lock = .database
@@ -183,7 +242,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         // When
         sut.executeRequest(.evaluateAuthentication)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
-        
+
         // Then
         XCTAssertEqual(session.methodCalls.unlockDatabase.count, 1)
         XCTAssertEqual(appLock.methodCalls.open.count, 1)

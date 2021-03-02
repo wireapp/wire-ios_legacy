@@ -22,12 +22,12 @@ import XCTest
 final class DismissalTests: XCTestCase {
 
     var sut: UIViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = UIViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -59,7 +59,7 @@ final class DismissalTests: XCTestCase {
         presentViewController(sut) {
             // WHEN
             self.dismissViewController(self.sut) {
-            
+
                 // THEN
                 XCTAssertFalse(self.sut.canBeDismissed)
                 dismissalExpectation.fulfill()

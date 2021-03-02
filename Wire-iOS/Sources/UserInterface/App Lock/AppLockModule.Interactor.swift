@@ -30,6 +30,7 @@ extension AppLockModule {
 
         private let session: Session
         private let authenticationType: AuthenticationTypeProvider
+        private let applicationStateProvider: ApplicationStateProvider
 
         let dispatchGroup = DispatchGroup()
 
@@ -41,9 +42,13 @@ extension AppLockModule {
 
         // MARK: - Life cycle
 
-        init(session: Session, authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector()) {
+        init(session: Session,
+             authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector(),
+             applicationStateProvider: ApplicationStateProvider = UIApplication.shared) {
+
             self.session = session
             self.authenticationType = authenticationType
+            self.applicationStateProvider = applicationStateProvider
         }
 
         // MARK: - Methods
@@ -70,8 +75,17 @@ extension AppLockModule {
         }
 
         private var needsToCreateCustomPasscode: Bool {
+            guard passcodePreference != .deviceOnly else { return false }
             guard !appLock.isCustomPasscodeSet else { return false }
             return appLock.requireCustomPasscode || authenticationType.current == .unavailable
+        }
+
+        private var isAuthenticationNeeded: Bool {
+            return passcodePreference != nil
+        }
+
+        private var applicationState: UIApplication.State {
+            applicationStateProvider.applicationState
         }
 
     }
@@ -84,6 +98,9 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     func executeRequest(_ request: AppLockModule.Request) {
         switch request {
+        case .initiateAuthentication where !isAuthenticationNeeded:
+            openAppLock()
+
         case .initiateAuthentication where needsToCreateCustomPasscode:
             presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
 
@@ -91,6 +108,11 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
             presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .evaluateAuthentication:
+            guard applicationState == .active else {
+                handleAuthenticationResult(.denied, context: nil)
+                return
+            }
+
             guard let preference = passcodePreference else {
                 handleAuthenticationResult(.granted, context: nil)
                 return

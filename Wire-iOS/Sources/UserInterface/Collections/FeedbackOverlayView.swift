@@ -38,7 +38,7 @@ public final class FeedbackOverlayView: UIView {
         alpha = 0.0
         backgroundColor = .from(scheme: .background)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

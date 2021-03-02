@@ -24,10 +24,10 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
     var coreDataFixture: CoreDataFixture!
 
     var sut: Analytics!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         coreDataFixture = CoreDataFixture()
     }
 
@@ -63,7 +63,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
     func testThatAppOpenIsStoredAndTaggedAfterSelfUserIsSet() {
         coreDataFixture.teamTest {
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
             let countly = MockCountly()
 
@@ -75,28 +75,28 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             sut.tagEvent("app.open")
 
-            //THEN
+            // THEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
             XCTAssertEqual(countly.methodCalls.recordEvent.count, 0)
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
             XCTAssertEqual(countly.methodCalls.start.count, 1)
+            // THEN
 
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             XCTAssertEqual(countly.methodCalls.recordEvent.count, 1)
         }
     }
-    
+
     func testThatCountlyIsNotStartedForNonTeamMember() {
         coreDataFixture.nonTeamTest {
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
             let countly = MockCountly()
 
@@ -108,11 +108,11 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
             XCTAssertEqual(countly.methodCalls.start.count, 0)
+            // THEN
         }
     }
 

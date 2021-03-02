@@ -48,7 +48,7 @@ fileprivate extension VoiceChannel {
                     .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
                                      microphoneState: $0.state.microphoneState,
-                                     isActiveSpeaker: $0.isActiveSpeaker)
+                                     activeSpeakerState: $0.activeSpeakerState)
                 })
 
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -58,14 +58,14 @@ fileprivate extension VoiceChannel {
             }
         }
     }
-    
+
     var internalIsVideoCall: Bool {
         switch state {
         case .established, .terminating: return isAnyParticipantSendingVideo
         default: return isVideoCall
         }
     }
-    
+
     func canToggleMediaType(with permissions: CallPermissionsConfiguration,
                             selfUser: UserType) -> Bool {
         switch state {
@@ -73,12 +73,12 @@ fileprivate extension VoiceChannel {
             return false
         default:
             guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
-            
+
             // The user can only re-enable their video if the conversation allows GVC
             if videoState == .stopped {
                 return canUpgradeToVideo(selfUser: selfUser)
             }
-            
+
             // If the user already enabled video, they should be able to disable it
             return true
         }
@@ -102,7 +102,7 @@ fileprivate extension VoiceChannel {
         guard case .incoming = state else { return .hidden }
         return nil
     }
-    
+
     var disableIdleTimer: Bool {
         switch state {
         case .none: return false
@@ -132,6 +132,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
     let callState: CallStateExtending
+    let videoGridPresentationMode: VideoGridPresentationMode
+    let allowPresentationModeUpdates: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -161,16 +163,18 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
         callState = voiceChannel.state
+        videoGridPresentationMode = voiceChannel.videoGridPresentationMode
+        allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
     }
 
     // This property has to be computed in order to return the correct call duration
     var state: CallStatusViewState {
         switch voiceChannelSnapshot.state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
+        case .incoming(_, shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_, shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }
@@ -199,14 +203,14 @@ extension CallParticipantState {
         guard case .connected = self else { return false }
         return true
     }
-    
+
     var isSendingVideo: Bool {
         switch self {
         case .connected(videoState: let state, _) where state.isSending: return true
         default: return false
         }
     }
-    
+
     var videoState: VideoState? {
         switch self {
         case .connected(videoState: let state, _):
@@ -215,7 +219,7 @@ extension CallParticipantState {
             return nil
         }
     }
-    
+
     var microphoneState: MicrophoneState? {
         switch self {
         case .connected(_, microphoneState: let state):
@@ -227,29 +231,29 @@ extension CallParticipantState {
 }
 
 fileprivate extension VoiceChannel {
-    
+
     func canUpgradeToVideo(selfUser: UserType) -> Bool {
         guard !isConferenceCall else {
             return true
         }
-        
+
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else {
             return true
         }
-        
+
         guard !isLegacyGroupVideoParticipantLimitReached else {
             return false
         }
 
         return selfUser.isTeamMember || isAnyParticipantSendingVideo
     }
-    
+
     var isAnyParticipantSendingVideo: Bool {
         return videoState.isSending                                  // Current user is sending video and can toggle off
             || connectedParticipants.any { $0.state.isSendingVideo } // Other participants are sending video
             || isIncomingVideoCall                                   // This is an incoming video call
     }
-    
+
     func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
             lhs.user.name?.lowercased() < rhs.user.name?.lowercased()
@@ -262,21 +266,28 @@ fileprivate extension VoiceChannel {
         default: return false
         }
     }
+
+    var allowPresentationModeUpdates: Bool {
+        return connectedParticipants.count > 2
+            && internalIsVideoCall
+            && isActiveSpeakersTabEnabled
+    }
+    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants(activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
     }
 
     private var hashboxFirstDegradedUser: HashBoxUser? {
         guard let firstDegradedUser = firstDegradedUser else {
             return nil
         }
-        
+
         return HashBox(value: firstDegradedUser)
     }
-    
+
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):

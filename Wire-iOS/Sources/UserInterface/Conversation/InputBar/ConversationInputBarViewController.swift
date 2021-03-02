@@ -75,7 +75,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
-    
+
     var textfieldObserverToken: Any?
     lazy var audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
 
@@ -96,7 +96,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
         button.setTitleColor(UIColor.accent(), for: .normal)
-        
+
         configureEphemeralKeyboardButton(button)
 
         return button
@@ -104,12 +104,12 @@ final class ConversationInputBarViewController: UIViewController,
 
     lazy var hourglassButton: IconButton = {
         let button = IconButton(style: .default)
-        
+
         button.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
         button.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-        
+
         configureEphemeralKeyboardButton(button)
-        
+
         return button
     }()
 
@@ -125,7 +125,7 @@ final class ConversationInputBarViewController: UIViewController,
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
         tapGestureRecognizer.require(toFail: longPressRecognizer)
         button.addGestureRecognizer(tapGestureRecognizer)
@@ -159,16 +159,16 @@ final class ConversationInputBarViewController: UIViewController,
         view.setHidden(true, animated: false)
         return view
     }()
-    
-    //MARK: custom keyboards
+
+    // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
-    
+
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
-    //MARK: text input
+    // MARK: text input
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
@@ -176,8 +176,8 @@ final class ConversationInputBarViewController: UIViewController,
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
-    
-    //MARK: feedback
+
+    // MARK: feedback
     lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -207,9 +207,9 @@ final class ConversationInputBarViewController: UIViewController,
                         setupClosure: () -> UIViewController) {
                 if inputController == nil ||
                     inputController != viewController {
-                    
+
                     let newViewController: UIViewController
-                    
+
                     if let viewController = viewController {
                         newViewController = viewController
                     } else {
@@ -270,7 +270,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         if !ProcessInfo.processInfo.isRunningTests,
            let conversation = conversation as? ZMConversation {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
             typingObserverToken = conversation.addTypingObserver(self)
         }
 
@@ -324,23 +324,23 @@ final class ConversationInputBarViewController: UIViewController,
             let interaction = UIDropInteraction(delegate: self)
             inputBar.textView.addInteraction(interaction)
         }
-        
+
         setupObservers()
     }
-    
+
     private func setupObservers() {
         guard !ProcessInfo.processInfo.isRunningTests else {
             return
         }
-        
+
         if conversationObserverToken == nil,
            let conversation = conversation as? ZMConversation {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
         }
-        
+
         if let connectedUser = conversation.connectedUserType as? ZMUser,
            let userSession = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, in: userSession)
         }
     }
 
@@ -535,7 +535,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     private func appendKnock() {
         guard let conversation = conversation as? ZMConversation else { return }
-        
+
         notificationFeedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
@@ -653,7 +653,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
-    ///TODO: check this is still necessary on iOS 13?
+    /// TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
         do {
@@ -663,7 +663,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String

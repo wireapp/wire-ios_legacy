@@ -42,9 +42,9 @@ final class MockUserClient: NSObject, UserClientType {
     var verified: Bool = false
 
     var user: ZMUser? = nil
-    
+
     var deviceClass: DeviceClass? = .phone
-    
+
     func isSelfClient() -> Bool {
         return false
     }
@@ -52,7 +52,7 @@ final class MockUserClient: NSObject, UserClientType {
     func resetSession() {
         // No-op
     }
-    
+
     func fetchFingerprintOrPrekeys() {
         // No-op
     }

@@ -76,7 +76,7 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
             let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
                                                        message: "registration.alert.account_exists.message_phone".localized,
                                                        actions: [changePhoneAction, loginAction])
-            
+
             actions.append(.presentAlert(alert))
         }
 

@@ -237,7 +237,7 @@
 "conversation.status.silenced" = "Без звука";
 "conversation.status.poor_connection" = "Плохое подключение";
 "conversation.status.blocked" = "Заблокирован(-а)";
-"conversation.status.incoming_call" = "%@ звонит…";
+"conversation.status.incoming_call" = "%@ вызывает…";
 "conversation.status.incoming_call.unknown" = "Вызов…";
 
 "conversation.status.message.text" = "%@";
@@ -258,7 +258,7 @@
 "conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
 "conversation.status.message.ephemeral.reply" = "Ответил(-а) на ваше сообщение";
 "conversation.status.message.ephemeral.reply.group" = "Кто-то ответил на ваше сообщение";
-"conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
+"conversation.status.message.ephemeral.knock" = "Отправил(-а) пинг";
 "conversation.status.message.ephemeral.knock.group" = "Кто-то отправил пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Вы звонили";
 "content.system.ephemeral_time_remaining" = "осталось %@";
 
+"content.system.self_user_new_client" = "**Вы** начали использовать [новое устройство](%@)";
+"content.system.self_user_new_self_client" = "**Вы** начали использовать [это устройство](%@)";
+
 "content.system.you_started" = "Вы";
-"content.system.this_device" = "это устройство";
 
 "content.system.call.called" = "%@ звонили";
 "content.system.call.called-you" = "%@ звонил(-а)";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Вы снова начали использовать %@. Сообщения, отправленные ранее, не будут отображаться здесь.";
+"content.system.reactivated_device" = "Вы снова начали использовать [это устройство]%@. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
-"content.system.new_device" = "новое устройство";
-"content.system.started_using" = "начал(-а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
 "content.system.new_users" = "Присоединился новый участник.";
 "content.system.verify_devices" = "Верифицируйте устройства";
 
-"content.system.unverified" = "%@ деверифицировали одно из %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "ваши устройства";
-"content.system.other_devices" = "Устройства %@";
+"content.system.unverified_self_devices" = "**Вы** отозвали верификацию одного из [своих устройств](%@)";
+"content.system.unverified_other_devices" = "**Вы** отозвали верификацию одного из [%1$@ устройств](%2$@)";
 
 "content.system.missing_messages.title" = "Вы не использовали это устройство продолжительное время. Некоторые сообщения могут не отображаться.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Показать все (%@)";
 "call.participants.list.title" = "Участники";
+
+"call.overlay.switch_to.speakers" = "СПИКЕРЫ";
+"call.overlay.switch_to.all" = "ВСЕ";
+
+"call.grid.no_active_speakers" = "Нет активных спикеров...";
 
 "call.video.paused" = "Видео приостановлено";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "База данных удалена";
 "wipe_database_completion.subtitle" = "Ваши данные и сообщения были удалены. Теперь вы можете повторно авторизоваться как новое устройство.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
-"appLockModule.message.faceID" = "Разблокировать Wire с помощью Face ID или кода доступа";
-"appLockModule.message.touchID" = "Разблокируйте Wire с помощью Touch ID или кода доступа";
-"appLockModule.message.passcode" = "Разблокировать Wire с помощью кода доступа";
+"appLockModule.message.faceID" = "Разблокировать Wire при помощи Face ID или кода доступа";
+"appLockModule.message.touchID" = "Разблокируйте Wire при помощи Touch ID или кода доступа";
+"appLockModule.message.passcode" = "Разблокировать Wire при помощи кода доступа";
 "appLockModule.message.passcodeUnavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
-"appLockModule.button.title" = "Разблокировать";
+"appLockModule.unlockButton.title" = "Разблокировать";
+"appLockModule.goToSettingsButton.title" = "Перейти в настройки";

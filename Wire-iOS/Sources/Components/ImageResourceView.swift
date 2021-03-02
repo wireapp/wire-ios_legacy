@@ -91,7 +91,7 @@ final class ImageResourceView: FLAnimatedImageView {
         loadingView.accessibilityIdentifier = "loading"
 
         addSubview(loadingView)
-        
+
         [self, loadingView].prepareForLayout()
         NSLayoutConstraint.activate([
             centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),

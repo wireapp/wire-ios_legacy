@@ -55,7 +55,7 @@ final class CallViewController: UIViewController {
     fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
-    
+
     private static var userEnabledCBR: Bool {
         return Settings.shared[.callingConstantBitRate] == true
     }
@@ -238,7 +238,7 @@ final class CallViewController: UIViewController {
 
     fileprivate func alertVideoUnavailable() {
         guard voiceChannel.videoState == .stopped else { return }
- 
+
         if !callInfoConfiguration.permissions.canAcceptVideoCalls {
             present(UIAlertController.cameraPermissionAlert(), animated: true)
         } else {
@@ -260,7 +260,7 @@ final class CallViewController: UIViewController {
 
         present(alert, animated: true)
     }
-    
+
     fileprivate func toggleVideoState() {
         if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { _ in
@@ -310,16 +310,22 @@ extension CallViewController: ActiveSpeakersObserver {
     }
 }
 
-//MARK: - WireCallCenterCallParticipantObserver
+// MARK: - WireCallCenterCallParticipantObserver
 
 extension CallViewController: WireCallCenterCallParticipantObserver {
 
     func callParticipantsDidChange(conversation: ZMConversation,
                                    participants: [CallParticipant]) {
         hapticsController.updateParticipants(participants)
+        updateVideoGridPresentationModeIfNeeded(participants: participants)
         updateConfiguration() // Has to succeed updating the timestamps
     }
 
+    private func updateVideoGridPresentationModeIfNeeded(participants: [CallParticipant]) {
+        guard participants.filter(\.state.isConnected).count <= 2 else { return }
+
+        voiceChannel.videoGridPresentationMode = .allVideoStreams
+    }
 }
 
 extension CallViewController: AVSMediaManagerClientObserver {
@@ -421,6 +427,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .alertVideoUnavailable: alertVideoUnavailable()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
+        case .updateVideoGridPresentationMode(let mode): voiceChannel.videoGridPresentationMode = mode
         }
 
         updateConfiguration()
@@ -486,7 +493,7 @@ extension CallViewController {
 
     func startOverlayTimer() {
         stopOverlayTimer()
-        overlayTimer = .scheduledTimer(withTimeInterval: 4, repeats: false) { [weak self] _ in
+        overlayTimer = .scheduledTimer(withTimeInterval: 8, repeats: false) { [weak self] _ in
             self?.animateOverlay(show: false)
         }
     }

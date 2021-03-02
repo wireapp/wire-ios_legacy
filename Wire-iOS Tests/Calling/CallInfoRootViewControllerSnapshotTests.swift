@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -21,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class CallInfoViewControllerSnapshotTests: XCTestCase {
-    
+
     // MARK: - OneToOne Audio
 
     func testOneToOneIncomingAudioRinging() {

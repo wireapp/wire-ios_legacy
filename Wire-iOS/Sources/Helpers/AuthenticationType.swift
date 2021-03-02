@@ -18,7 +18,6 @@
 
 import LocalAuthentication
 
-
 enum AuthenticationType: CaseIterable {
 
     case faceID, touchID, passcode, unavailable
@@ -59,7 +58,6 @@ struct AuthenticationTypeDetector: AuthenticationTypeProvider {
     }
 
 }
-
 
 protocol AuthenticationTypeProvider {
 

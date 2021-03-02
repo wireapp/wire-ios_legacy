@@ -29,17 +29,17 @@ fileprivate enum Item {
 extension ZMConversation {
     fileprivate var timeoutItems: [Item] {
         var newItems = MessageDestructionTimeoutValue.all.map(Item.supportedValue)
-        
+
         if let timeout = self.messageDestructionTimeout,
             case .synced(let value) = timeout,
             case .custom(_) = value {
             newItems.append(.unsupportedValue(value))
         }
-        
+
         if Bundle.developerModeEnabled {
             newItems.append(.customValue)
         }
-        
+
         return newItems
     }
 }
@@ -53,7 +53,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
     fileprivate var observerToken: Any! = nil
 
     weak var dismisser: ViewControllerDismisser?
-    
+
     private let collectionViewLayout = UICollectionViewFlowLayout()
 
     private lazy var collectionView: UICollectionView = {
@@ -139,7 +139,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         func configure(_ cell: CheckmarkCell, for value: MessageDestructionTimeoutValue, disabled: Bool) {
             cell.title = value.displayString
             cell.disabled = disabled
-            
+
             switch conversation.messageDestructionTimeout {
             case .synced(let currentValue)?:
                 cell.showCheckmark = value == currentValue
@@ -147,7 +147,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
                 cell.showCheckmark = value == 0
             }
         }
-        
+
         switch item {
         case .supportedValue(let value):
             configure(cell, for: value, disabled: false)
@@ -157,16 +157,16 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
             cell.title = "Custom"
             cell.showCheckmark = false
         }
-        
+
         cell.showSeparator = indexPath.row < (items.count - 1)
 
         return cell
     }
-    
+
     private func updateItems() {
         self.items = conversation.timeoutItems
     }
-    
+
     private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
         let item = CancelableItem(delay: 0.4) { [weak self] in
             self?.isLoadingViewVisible = true
@@ -176,7 +176,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
             guard let `self` = self else {
                 return
             }
-            
+
             item.cancel()
             self.isLoadingViewVisible = false
 
@@ -185,7 +185,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
             }
         }
     }
-    
+
     private func handle(error: Error) {
         let controller = UIAlertController.checkYourConnection()
         present(controller, animated: true)
@@ -193,21 +193,21 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
 
     private func requestCustomValue() {
         UIAlertController.requestCustomTimeInterval(over: self) { [weak self] result in
-            
+
             guard let `self` = self else {
                 return
             }
-            
+
             switch result {
             case .success(let value):
                 self.updateTimeout(MessageDestructionTimeoutValue(rawValue: value))
             default:
                 break
             }
-            
+
         }
     }
-    
+
     // MARK: Saving Changes
 
     private func canSelectItem(with value: MessageDestructionTimeoutValue) -> Bool {
@@ -227,7 +227,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let selectedItem = items[indexPath.row]
-        
+
         switch selectedItem {
         case .supportedValue(let value):
             guard canSelectItem(with: value) else {

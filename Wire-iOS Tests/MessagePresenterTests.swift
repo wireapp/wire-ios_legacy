@@ -22,7 +22,7 @@ import PassKit
 import AVKit
 
 final class MessagePresenterTests: XCTestCase {
-    
+
     var sut: MessagePresenter!
     var mediaPlaybackManager: MediaPlaybackManager!
     var originalRootViewConttoller: UIViewController!
@@ -37,7 +37,7 @@ final class MessagePresenterTests: XCTestCase {
             originalRootViewConttoller = UIApplication.shared.keyWindow?.rootViewController
         }
     }
-    
+
     override func tearDown() {
         sut = nil
         mediaPlaybackManager = nil
@@ -73,7 +73,6 @@ final class MessagePresenterTests: XCTestCase {
         // THEN
         XCTAssertNil(sut.videoPlayerObserver)
     }
-
 
     // MARK: - Pass
 

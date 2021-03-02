@@ -21,7 +21,7 @@ import SnapshotTesting
 @testable import Wire
 
 final class VersionInfoViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: VersionInfoViewController!
 
     override func setUp() {
@@ -30,7 +30,7 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
 
         sut = VersionInfoViewController(versionsPlist: path)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

@@ -157,9 +157,9 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation,
                                    participants: [CallParticipant]) {
         // record the start/end screen share timing, and tag the event when the call ends
-        
+
         let selfUser = SelfUser.provider?.selfUser as? ZMUser
-        
+
         // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
         if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
             screenSharingStartTimes[participant.clientId] == nil {
@@ -168,7 +168,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
             let screenSharingDate = screenSharingStartTimes[screenSharedParticipant.clientId],
             let conversationId = conversation.remoteIdentifier,
             let callInfo = callInfos[conversationId] {
-            
+
             // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
             let duration = -screenSharingDate.timeIntervalSinceNow
             analytics.tagEvent(.screenShare(in: conversation, duration: duration, callInfo: callInfo))

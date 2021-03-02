@@ -111,7 +111,7 @@ class Button: ButtonWithLargerHitArea {
         setTitleColor(UIColor.white, for: .normal)
         setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
     }
-    
+
     func updateEmptyStyle() {
         setBackgroundImageColor(nil, for: .normal)
         layer.borderWidth = 1

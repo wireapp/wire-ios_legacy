@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension AppLockModule {
 
@@ -31,7 +32,6 @@ extension AppLockModule {
     }
 
 }
-
 
 // MARK: - Handle result
 
@@ -68,7 +68,7 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
     func processEvent(_ event: AppLockModule.Event) {
         switch event {
-        case .viewDidLoad, .unlockButtonTapped:
+        case .viewDidAppear, .unlockButtonTapped, .applicationWillEnterForeground:
             interactor.executeRequest(.initiateAuthentication)
 
         case .passcodeSetupCompleted, .customPasscodeVerified:
@@ -76,6 +76,9 @@ extension AppLockModule.Presenter: AppLockPresenterViewInterface {
 
         case .configChangeAcknowledged:
             authenticate()
+
+        case .openDeviceSettingsButtonTapped:
+            router.performAction(.openDeviceSettings)
         }
     }
 

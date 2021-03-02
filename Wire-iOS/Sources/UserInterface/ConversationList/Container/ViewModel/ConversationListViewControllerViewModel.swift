@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -22,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-typealias Completion = () -> ()
+typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
@@ -32,8 +31,8 @@ protocol ConversationListContainerViewModelDelegate: class {
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
-                    animated: Bool,
-                    completion: Completion?)
+                  animated: Bool,
+                  completion: Completion?)
 
     func showNoContactLabel(animated: Bool)
     func hideNoContactLabel(animated: Bool)
@@ -123,7 +122,7 @@ extension ConversationListViewController.ViewModel {
                 completion: Completion? = nil) {
         selectedConversation = conversation
 
-        viewController?.setState(.conversationList, animated:animated) { [weak self] in
+        viewController?.setState(.conversationList, animated: animated) { [weak self] in
             self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         }
     }
@@ -152,7 +151,6 @@ extension ConversationListViewController.ViewModel {
     private var isComingFromRegistration: Bool {
         return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
-
 
     /// show PushPermissionDeniedDialog when necessary
     ///

@@ -24,21 +24,21 @@ final class ConversationFileMessageTests: XCTestCase {
 
     var message: MockMessage!
     var mockSelfUser: MockUserType!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         UIColor.setAccentOverride(.vividRed)
-        
+
         mockSelfUser = MockUserType.createDefaultSelfUser()
         message = MockMessageFactory.fileTransferMessage(sender: mockSelfUser)
     }
-    
+
     override func tearDown() {
         message = nil
         mockSelfUser = nil
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
-        
+
         super.tearDown()
     }
 
@@ -213,7 +213,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Upload Cancelled
+    // MARK: - Upload Cancelled
 
     func testCancelledUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingCancelled
@@ -222,7 +222,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Obfuscated
+    // MARK: - Obfuscated
 
     func testObfuscatedFileTransferCell() {
         message.isObfuscated = true

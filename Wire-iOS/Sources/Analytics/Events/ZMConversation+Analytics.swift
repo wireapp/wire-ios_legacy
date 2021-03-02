@@ -50,7 +50,7 @@ extension ZMConversation {
         return ConversationType.type(self)?.analyticsTypeString
     }
 
-    ///TODO: move to DM
+    /// TODO: move to DM
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
         guard self.localParticipants.count == 2,
@@ -62,7 +62,7 @@ extension ZMConversation {
                 otherUser.providerIdentifier != nil
     }
 
-    ///TODO: move to DM
+    /// TODO: move to DM
     /// Whether the conversation includes at least 1 service user.
     var includesServiceUser: Bool {
         let participants = Array(localParticipants)

@@ -19,38 +19,41 @@
 import Foundation
 import UIKit
 import avs
+import WireSyncEngine
 
 final class SelfVideoPreviewView: BaseVideoPreviewView {
-    
+
     var previewView = AVSVideoPreview()
-        
+
     override var stream: Stream {
         didSet {
             guard stream != oldValue else { return }
-            updateCaptureState()
+            updateCaptureState(with: stream.videoState)
         }
     }
-    
+
+    private var videoState: VideoState?
+
     deinit {
         stopCapture()
     }
-    
+
     override func setupViews() {
         super.setupViews()
         previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
         insertSubview(previewView, belowSubview: userDetailsView)
     }
-    
+
     override func createConstraints() {
         super.createConstraints()
         previewView.fitInSuperview()
     }
-    
+
     override func updateUserDetails() {
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState,
-                                                                  shouldPulse: stream.isParticipantActiveSpeaker)
-        
+                                                                  shouldPulse: stream.activeSpeakerState.isSpeakingNow)
+
         guard let name = stream.participantName else {
             return
         }
@@ -59,20 +62,23 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        
+
         if window != nil {
-            updateCaptureState()
+            updateCaptureState(with: stream.videoState)
         }
     }
-    
-    private func updateCaptureState() {
-        stream.videoState == .some(.started) ? startCapture() : stopCapture()
+
+    func updateCaptureState(with newVideoState: VideoState?) {
+        guard newVideoState != self.videoState else { return }
+
+        newVideoState == .some(.started) ? startCapture() : stopCapture()
+        self.videoState = newVideoState
     }
-    
+
     func startCapture() {
         previewView.startVideoCapture()
     }
-    
+
     func stopCapture() {
         previewView.stopVideoCapture()
     }

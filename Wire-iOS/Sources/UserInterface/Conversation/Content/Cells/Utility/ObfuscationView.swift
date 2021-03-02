@@ -46,7 +46,7 @@ final class ObfuscationView: UIImageView {
             accessibilityLabel = "Obfuscated view"
         }
     }
-    
+
     required init(coder: NSCoder) {
         fatal("initWithCoder: not implemented")
     }

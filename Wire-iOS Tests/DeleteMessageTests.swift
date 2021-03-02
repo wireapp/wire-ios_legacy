@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-enum ConversationCellType : Int {
+enum ConversationCellType: Int {
     case text
     case textWithRichMedia
     case image
@@ -30,7 +30,7 @@ enum ConversationCellType : Int {
 }
 
 final class DeleteMessageTests: XCTestCase {
-    
+
     var sut: DeleteMessageTests!
 
     override func setUp() {

@@ -59,7 +59,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             return false
         }
     }
-    
+
     var isReauthenticating: Bool {
         if case .reauthentication? = flowType {
             return true

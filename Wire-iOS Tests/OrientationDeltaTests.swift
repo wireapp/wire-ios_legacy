@@ -23,7 +23,7 @@ import XCTest
 
 class OrientationDeltaTests: XCTestCase {
     var sut: OrientationDelta!
-    
+
     func testDeltaRotatedLeft() {
         // GIVEN / WHEN
         sut = OrientationDelta(interfaceOrientation: .portrait, deviceOrientation: .landscapeLeft)
@@ -33,31 +33,31 @@ class OrientationDeltaTests: XCTestCase {
         XCTAssert(sut.radians == OrientationAngle.right.radians)
         XCTAssert(sut.edgeInsetsShiftAmount == 1)
     }
-    
+
     func testDeltaRotatedRight() {
         // GIVEN / WHEN
         sut = OrientationDelta(interfaceOrientation: .portrait, deviceOrientation: .landscapeRight)
-        
+
         // THEN
         XCTAssert(sut == .rotatedRight)
         XCTAssert(sut.radians == -OrientationAngle.right.radians)
         XCTAssert(sut.edgeInsetsShiftAmount == -1)
     }
-    
+
     func testDeltaUpsideDown() {
         // GIVEN / WHEN
         sut = OrientationDelta(interfaceOrientation: .portrait, deviceOrientation: .portraitUpsideDown)
-        
+
         // THEN
         XCTAssert(sut == .upsideDown)
         XCTAssert(sut.radians == OrientationAngle.straight.radians)
         XCTAssert(sut.edgeInsetsShiftAmount == 2)
     }
-    
+
     func testDeltaEqual() {
         // GIVEN / WHEN
         sut = OrientationDelta(interfaceOrientation: .portrait, deviceOrientation: .portrait)
-        
+
         // THEN
         XCTAssert(sut == .equal)
         XCTAssert(sut.radians == OrientationAngle.none.radians)
