@@ -181,7 +181,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
 
 }
 
-fileprivate struct VoiceChannelSnapshot {
+private struct VoiceChannelSnapshot {
     let callerName: String?
     let state: CallState
     let callStartDate: Date

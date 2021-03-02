@@ -285,12 +285,12 @@ final class ColorScheme: NSObject {
 
 }
 
-fileprivate struct ColorPair {
+private struct ColorPair {
     let light: UIColor
     let dark: UIColor
 }
 
-fileprivate extension ColorPair {
+private extension ColorPair {
     init(both color: UIColor) {
         self.init(light: color, dark: color)
     }

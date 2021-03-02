@@ -20,7 +20,7 @@ import UIKit
 import WireSyncEngine
 import WireUtilities
 
-fileprivate enum Section: Int {
+private enum Section: Int {
     static var count: Int {
         return 2
     }

@@ -20,7 +20,7 @@ import WireDataModel
 import UIKit
 import WireSyncEngine
 
-fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
+private typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
     func startUI(_ startUI: StartUIViewController, didSelect user: UserType) {

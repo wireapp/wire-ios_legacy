@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-fileprivate enum EmptySearchResultsViewState {
+private enum EmptySearchResultsViewState {
     case noUsersOrServices
     case everyoneAdded
     case noServicesEnabled

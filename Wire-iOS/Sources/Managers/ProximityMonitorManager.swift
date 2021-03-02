@@ -22,7 +22,7 @@ import WireDataModel
 import avs
 import WireSyncEngine
 
-fileprivate let zmLog = ZMSLog(tag: "calling")
+private let zmLog = ZMSLog(tag: "calling")
 
 final class ProximityMonitorManager: NSObject {
 

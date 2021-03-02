@@ -84,7 +84,7 @@ extension ZMConversation {
     }
 }
 
-fileprivate enum Mode {
+private enum Mode {
     /// 1-2 participants in conversation:
     /// / AA \
     /// \ AA /

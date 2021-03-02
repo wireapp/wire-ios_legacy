@@ -249,7 +249,7 @@ final class ConversationStatusStyle {
     }
 }
 
-fileprivate let statusStyle = ConversationStatusStyle()
+private let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
     static var regularStyle: [NSAttributedString.Key: AnyObject] {

@@ -20,7 +20,7 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-fileprivate enum Item {
+private enum Item {
     case supportedValue(MessageDestructionTimeoutValue)
     case unsupportedValue(MessageDestructionTimeoutValue)
     case customValue

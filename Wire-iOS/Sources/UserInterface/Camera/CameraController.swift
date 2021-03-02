@@ -20,7 +20,7 @@ import WireSystem
 import UIKit
 import AVFoundation
 
-fileprivate let zmLog = ZMSLog(tag: "UI")
+private let zmLog = ZMSLog(tag: "UI")
 
 final class CameraController {
 

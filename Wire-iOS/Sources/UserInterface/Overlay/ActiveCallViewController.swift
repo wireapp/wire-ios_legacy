@@ -22,7 +22,7 @@ import WireSystem
 import WireDataModel
 import WireSyncEngine
 
-fileprivate let zmLog = ZMSLog(tag: "calling")
+private let zmLog = ZMSLog(tag: "calling")
 
 protocol ActiveCallViewControllerDelegate: class {
     func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
