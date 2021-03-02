@@ -246,11 +246,12 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     }
 
     var text: String? {
-        set {
-            storage = prepare(string: newValue ?? "")
-        }
         get {
             return storage
+        }
+
+        set {
+            storage = prepare(string: newValue ?? "")
         }
     }
 

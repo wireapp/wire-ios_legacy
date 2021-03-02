@@ -236,11 +236,12 @@ extension UserSearchResultsViewController: UserList {
     }
 
     var users: [UserType] {
-        set {
-            reloadTable(with: newValue.reversed())
-        }
         get {
             return searchResults.reversed()
+        }
+
+        set {
+            reloadTable(with: newValue.reversed())
         }
     }
 }

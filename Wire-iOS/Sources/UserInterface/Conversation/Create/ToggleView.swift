@@ -34,8 +34,13 @@ final class ToggleView: UIView, Themeable {
 
     var handler: ToggleHandler?
     var isOn: Bool {
-        set { toggle.isOn = newValue }
-        get { return toggle.isOn }
+        get {
+            return toggle.isOn
+        }
+
+        set {
+            toggle.isOn = newValue
+        }
     }
 
     init(title: String, isOn: Bool, accessibilityIdentifier: String) {

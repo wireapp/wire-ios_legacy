@@ -40,11 +40,12 @@ final class ImageResourceView: FLAnimatedImageView {
 
     var imageSizeLimit: ImageSizeLimit = .deviceOptimized
     var imageResource: ImageResource? {
-        set {
-            setImageResource(newValue)
-        }
         get {
             return imageResourceInternal
+        }
+
+        set {
+            setImageResource(newValue)
         }
     }
 

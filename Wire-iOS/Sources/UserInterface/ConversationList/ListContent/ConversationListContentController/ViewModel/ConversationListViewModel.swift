@@ -179,6 +179,10 @@ final class ConversationListViewModel: NSObject {
     }
 
     var folderEnabled: Bool {
+        get {
+            return state.folderEnabled
+        }
+
         set {
             guard newValue != state.folderEnabled else { return }
 
@@ -187,10 +191,6 @@ final class ConversationListViewModel: NSObject {
             updateAllSections()
             delegate?.listViewModelShouldBeReloaded()
             delegateFolderEnableState(newState: state)
-        }
-
-        get {
-            return state.folderEnabled
         }
     }
 
