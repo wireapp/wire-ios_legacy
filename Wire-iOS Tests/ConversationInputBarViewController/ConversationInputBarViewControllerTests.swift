@@ -57,7 +57,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
             // GIVEN & WHEN
             let sut = ConversationInputBarViewController(conversation: self.mockConversation)
 
-            /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
+            // Directly working with sut.typingIndicatorView to prevent triggering aniamtion
             sut.typingIndicatorView.typingUsers = [MockUserType.createUser(name: "Bruno")]
             sut.typingIndicatorView.setHidden(false, animated: false)
 

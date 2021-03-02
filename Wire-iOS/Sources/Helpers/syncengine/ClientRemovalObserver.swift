@@ -73,7 +73,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     private func endRemoval(result: Error?) {
         completion?(result)
 
-        /// allow password input alert can be show next time
+        // Allow password input alert can be show next time
         passwordIsNecessaryForDelete = false
     }
 

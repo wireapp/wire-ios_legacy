@@ -60,7 +60,7 @@ extension ZMConversation {
             return
         }
 
-        /// if the user is not in this conversation, result = .success
+        // If the user is not in this conversation, result = .success
         self.removeParticipant(user, userSession: ZMUserSession.shared()!) { result in
             switch result {
             case .success:

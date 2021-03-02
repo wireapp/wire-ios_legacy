@@ -350,7 +350,7 @@ final class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
 
-            /// only display invite user cell for team members
+            // Only display invite user cell for team members
             if SelfUser.current.isTeamMember,
                conversation.selfCanAddUsers,
                conversation.isOpenGroup {

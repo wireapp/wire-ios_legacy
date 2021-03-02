@@ -143,7 +143,7 @@ final class UserSearchResultsViewControllerTests: XCTestCase {
         createSUT()
         sut.users = mockSearchResultUsers()
 
-        /// post a mock show keyboard notification
+        // Post a mock show keyboard notification
         NotificationCenter.default.post(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: [
             UIResponder.keyboardFrameBeginUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 0),
             UIResponder.keyboardFrameEndUserInfoKey: CGRect(x: 0, y: 0, width: 0, height: 100),

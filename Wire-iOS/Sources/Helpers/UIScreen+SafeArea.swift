@@ -40,8 +40,8 @@ extension UIScreen {
 
     static var hasNotch: Bool {
         if #available(iOS 12, *) {
-            /// on iOS12 insets.top == 20 on device without notch.
-            /// insets.top == 44 on device with notch.
+            // On iOS12 insets.top == 20 on device without notch.
+            // insets.top == 44 on device with notch.
             guard let window = UIApplication.shared.keyWindow else { return false }
             let insets = window.safeAreaInsets
 

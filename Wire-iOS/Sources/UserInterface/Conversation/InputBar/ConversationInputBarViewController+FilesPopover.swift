@@ -51,7 +51,7 @@ extension ConversationInputBarViewController {
     func createDocUploadActionSheet(sender: IconButton? = nil) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        /// alert actions  for debugging
+        // Alert actions  for debugging
         #if targetEnvironment(simulator)
         let plistHandler: ((UIAlertAction) -> Void) = { _ in
             ZMUserSession.shared()?.enqueue({

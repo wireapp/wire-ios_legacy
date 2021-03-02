@@ -133,7 +133,8 @@ class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
         if !keyboardFrameInView.origin.y.isInfinite,
             modalPresentationStyle == .formSheet,
             let frame = presentationController?.frameOfPresentedViewInContainerView {
-            bottomOffset += frame.minY /// TODO: no need to add when no keyboard
+            // TODO: no need to add when no keyboard
+            bottomOffset += frame.minY
         }
 
         guard bottomEdgeConstraint.constant != bottomOffset else { return }

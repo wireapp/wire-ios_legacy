@@ -34,11 +34,11 @@ final class ColorSchemeTests: XCTestCase {
     }
 
     func testForIsCurrentAccentColor() {
-        /// GIVEN
+        // GIVEN
         sut.accentColor = .black
         let alphaBlack = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
 
-        /// THEN
+        // THEN
         XCTAssertEqual(sut.accentColor, .black)
         XCTAssert(sut.isCurrentAccentColor(.black))
 

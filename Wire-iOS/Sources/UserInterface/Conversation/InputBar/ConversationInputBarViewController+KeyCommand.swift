@@ -35,8 +35,10 @@ extension ConversationInputBarViewController {
         } else if inputBar.textView.text.count == 0 {
             commands.append(UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(upArrowPressed), discoverabilityTitle: "conversation.input_bar.shortcut.edit_last_message".localized))
         } else if let mentionsView = mentionsView as? UIViewController, !mentionsView.view.isHidden {
-            commands.append(UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(upArrowPressedForMention), discoverabilityTitle: "conversation.input_bar.shortcut.choosePreviousMention".localized)) /// TODO: string rsc
-            commands.append(UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(downArrowPressedForMention), discoverabilityTitle: "conversation.input_bar.shortcut.chooseNextMention".localized)) /// TODO: string rsc
+            // TODO: string rsc
+            commands.append(UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(upArrowPressedForMention), discoverabilityTitle: "conversation.input_bar.shortcut.choosePreviousMention".localized))
+            // TODO: string rsc
+            commands.append(UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(downArrowPressedForMention), discoverabilityTitle: "conversation.input_bar.shortcut.chooseNextMention".localized))
 
         }
 
