@@ -237,9 +237,7 @@ enum DebugActions {
         controller.show(alertController, sender: nil)
     }
 
-    static func askNumber(
-        title: String,
-        _ callback: @escaping (Int) -> Void) {
+    static func askNumber(title: String, _ callback: @escaping (Int) -> Void) {
         askString(title: title) {
             if let number = NumberFormatter().number(from: $0) {
                 callback(number.intValue)
@@ -249,9 +247,7 @@ enum DebugActions {
         }
     }
 
-    static func askString(
-        title: String,
-        _ callback: @escaping (String) -> Void) {
+    static func askString(title: String, _ callback: @escaping (String) -> Void) {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
         let controller = UIAlertController(

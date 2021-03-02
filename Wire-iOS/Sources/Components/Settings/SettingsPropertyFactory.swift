@@ -106,7 +106,6 @@ final class SettingsPropertyFactory {
 
     private func getOnlyProperty(propertyName: SettingsPropertyName, getAction: @escaping GetAction) -> SettingsBlockProperty {
         let setAction: SetAction = { _, _ in }
-
         return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
     }
 
@@ -118,6 +117,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 return SettingsPropertyValue.string(value: self.selfUser?.name ?? "")
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
                 case .string(let stringValue):
@@ -159,6 +159,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 return SettingsPropertyValue(self.selfUser?.accentColorValue.rawValue ?? ZMAccentColor.undefined.rawValue)
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
                 case .number(let number):
@@ -178,6 +179,7 @@ final class SettingsPropertyFactory {
 
                 return SettingsPropertyValue(settingsColorScheme.rawValue)
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
                 case .number(let number):
@@ -206,6 +208,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(0)
                 }
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
                 case .number(let intValue):
@@ -231,6 +234,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 if var tracking = self.tracking {
                     switch value {
@@ -251,6 +255,7 @@ final class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
+
             let setAction: SetAction = { [unowned self] _, value in
                 if var tracking = self.tracking {
                     switch value {
