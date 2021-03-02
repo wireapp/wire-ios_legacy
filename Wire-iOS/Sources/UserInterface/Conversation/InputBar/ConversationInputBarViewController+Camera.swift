@@ -175,13 +175,12 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool) -> Void) {
         PHPhotoLibrary.requestAuthorization { status in
             DispatchQueue.main.async {
-            switch status {
-            case .authorized:
-                closure(true)
-            default:
-                closure(false)
-                break
-            }
+                switch status {
+                case .authorized:
+                    closure(true)
+                default:
+                    closure(false)
+                }
             }
         }
     }

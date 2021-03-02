@@ -402,15 +402,16 @@ final class ClientListViewController: UIViewController,
         if !self.detailedView {
             return
         }
+
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 0:
             if let selfClient = self.selfClient {
                 self.openDetailsOfClient(selfClient)
             }
-            break
+
         case 1:
             self.openDetailsOfClient(self.sortedClients[indexPath.row])
-            break
+
         default:
             break
         }

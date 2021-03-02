@@ -15,7 +15,6 @@ disabled_rules:
     - notification_center_detachment
     - discarded_notification_center_observer
     - cyclomatic_complexity
-    - unneeded_break_in_switch
     - closure_parameter_position
     - statement_position
     - weak_delegate

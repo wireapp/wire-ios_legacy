@@ -235,8 +235,6 @@ final class SettingsClientViewController: UIViewController,
                 return cell
             }
 
-            break
-
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
@@ -259,7 +257,7 @@ final class SettingsClientViewController: UIViewController,
                     return cell
                 }
             }
-            break
+
         case .resetSession:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
@@ -268,7 +266,6 @@ final class SettingsClientViewController: UIViewController,
                 return cell
             }
 
-            break
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
@@ -276,8 +273,6 @@ final class SettingsClientViewController: UIViewController,
                 cell.variant = self.variant
                 return cell
             }
-
-            break
         }
 
         return UITableViewCell()
@@ -292,7 +287,6 @@ final class SettingsClientViewController: UIViewController,
         case .resetSession:
             self.userClient.resetSession()
             isLoadingViewVisible = true
-            break
 
         case .removeDevice:
             removalObserver = nil

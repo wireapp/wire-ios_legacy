@@ -180,7 +180,6 @@ final class CallTopOverlayController: UIViewController {
             stopCallDurationTimer()
         default:
             updateLabel()
-            break
         }
     }
 
