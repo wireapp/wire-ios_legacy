@@ -31,7 +31,6 @@ disabled_rules:
     - xctfail_message
     - compiler_protocol_init
     - reduce_boolean
-    - redundant_discardable_let
 
 included:
     - Wire-iOS/Sources

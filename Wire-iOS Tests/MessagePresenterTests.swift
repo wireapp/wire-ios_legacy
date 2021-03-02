@@ -56,7 +56,7 @@ final class MessagePresenterTests: XCTestCase {
         let targetViewController = UIViewController()
         UIApplication.shared.keyWindow?.rootViewController = targetViewController
         sut.targetViewController = targetViewController
-        let _ = targetViewController.view
+        _ = targetViewController.view
 
         // WHEN
         sut.openFileMessage(message, targetView: UIView())
