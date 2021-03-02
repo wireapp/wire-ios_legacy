@@ -1,4 +1,4 @@
- //
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 //
@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-
 
 import UIKit
 import Cartography
@@ -51,12 +50,11 @@ final class AddressBookCorrelationFormatter: NSObject {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
-        
+
         return nil
     }
-    
-}
 
+}
 
 final class UserNameDetailViewModel: NSObject {
 
@@ -114,7 +112,6 @@ final class UserNameDetailViewModel: NSObject {
     }
 }
 
-
 final class UserNameDetailView: UIView {
 
     let subtitleLabel = UILabel()
@@ -125,7 +122,7 @@ final class UserNameDetailView: UIView {
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

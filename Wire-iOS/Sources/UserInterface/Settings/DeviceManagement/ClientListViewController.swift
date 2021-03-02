@@ -146,7 +146,7 @@ final class ClientListViewController: UIViewController,
     }
 
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
-        self.clients = clientsList
+        self.clients = clientsList.filter { !$0.isSelfClient() }
         self.editingList = false
     }
 

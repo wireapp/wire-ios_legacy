@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -33,7 +32,7 @@ protocol ConversationListViewModelDelegate: class {
     func listViewModelShouldBeReloaded()
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool)
-    
+
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int)

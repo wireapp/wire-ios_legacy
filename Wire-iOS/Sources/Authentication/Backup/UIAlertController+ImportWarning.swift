@@ -26,7 +26,7 @@ extension UIAlertController {
             message: "registration.no_history.restore_backup_warning.message".localized,
             alertAction: .cancel()
         )
-        
+
         let proceedAction = UIAlertAction(
             title: "registration.no_history.restore_backup_warning.proceed".localized,
             style: .default,

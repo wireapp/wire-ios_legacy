@@ -38,7 +38,12 @@ extension AppLockModule {
         override func viewDidLoad() {
             super.viewDidLoad()
             setUpViews()
-            presenter.processEvent(.viewDidLoad)
+            setUpObserver()
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            presenter.processEvent(.viewDidAppear)
         }
 
         // MARK: - Methods
@@ -47,10 +52,15 @@ extension AppLockModule {
             view.addSubview(lockView)
             lockView.translatesAutoresizingMaskIntoConstraints = false
             lockView.fitInSuperview()
+        }
 
-            lockView.onReauthRequested = { [weak self] in
-                self?.presenter.processEvent(.unlockButtonTapped)
-            }
+        private func setUpObserver() {
+            NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+
+        @objc
+        func applicationWillEnterForeground() {
+            presenter.processEvent(.applicationWillEnterForeground)
         }
 
     }
@@ -95,9 +105,22 @@ extension AppLockModule {
         }
 
         var buttonTitle: String {
-            return Strings.Button.title
+            switch self {
+            case .locked(.unavailable):
+                return Strings.GoToSettingsButton.title
+            default:
+                return Strings.UnlockButton.title
+            }
         }
 
+        var buttonEvent: AppLockModule.Event {
+            switch self {
+            case .locked(.unavailable):
+                return .openDeviceSettingsButtonTapped
+            default:
+                return .unlockButtonTapped
+            }
+        }
     }
 
 }
@@ -110,6 +133,9 @@ extension AppLockModule.View: AppLockViewPresenterInterface {
         lockView.showReauth = model.showReauth
         lockView.message = model.message
         lockView.buttonTitle = model.buttonTitle
+        lockView.actionRequested = { [weak self] in
+            self?.presenter.processEvent(model.buttonEvent)
+        }
     }
 
 }

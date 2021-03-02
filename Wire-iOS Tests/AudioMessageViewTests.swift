@@ -86,7 +86,7 @@ final class AudioMessageViewTests: XCTestCase {
     override func tearDown() {
         sut = nil
         mediaPlaybackManager = nil
-        
+
         super.tearDown()
     }
 

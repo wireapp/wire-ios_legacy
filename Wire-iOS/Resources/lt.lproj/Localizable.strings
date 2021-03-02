@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Skambinote";
 "content.system.ephemeral_time_remaining" = "Liko %@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Jūs";
-"content.system.this_device" = "šį įrenginį";
 
 "content.system.call.called" = "%@ skambino";
 "content.system.call.called-you" = "%@ skambinote";
@@ -517,18 +519,15 @@
 
 //
 
-"content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "naujas įrenginys";
-"content.system.started_using" = "pradėjo naudoti";
 "content.system.is_verified" = "Visi kontroliniai kodai patvirtinti";
 
 "content.system.new_users" = "Prisijungė naujas vartotojas.";
 "content.system.verify_devices" = "Patvirtinkite įrenginius";
 
-"content.system.unverified" = "%@ panaikinote vieno iš %@ patvirtinimą"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "savo įrenginių";
-"content.system.other_devices" = "%@ įrenginių";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Jūs kurį laiką nenaudojote šio įrenginio. Kai kurios žinutės čia gali neatsirasti.";
 "content.system.missing_messages.subtitle_start" = "Tuo tarpu,";
@@ -675,6 +674,11 @@
 
 "call.participants.show_all" = "Rodyti visus (%@)";
 "call.participants.list.title" = "Dalyviai";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
 
 "call.video.paused" = "Vaizdas pristabdytas";
 
@@ -1843,10 +1847,11 @@
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
-// Mark: - App lock module
+// MARK: - App lock module
 
 "appLockModule.message.faceID" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
 "appLockModule.message.touchID" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
 "appLockModule.message.passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
 "appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
-"appLockModule.button.title" = "Atrakinti";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

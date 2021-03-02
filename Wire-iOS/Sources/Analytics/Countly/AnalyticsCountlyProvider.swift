@@ -189,7 +189,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     func setSuperProperty(_ name: String, value: Any?) {
-        //TODO
+        // TODO
     }
 
     func flush(completion: Completion?) {
@@ -206,7 +206,7 @@ extension AnalyticsCountlyProvider: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
-    
+
     func applicationDidBecomeActive() {
         guard didInitializeCountly else { return }
         beginSession()

@@ -20,13 +20,11 @@ import Foundation
 import WireCommonComponents
 import WireDataModel
 
-
 struct ReadReceiptViewModel {
     let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
     let sender: UserType
-
 
     func image() -> UIImage? {
         return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
@@ -64,7 +62,6 @@ struct ReadReceiptViewModel {
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
             break
         }
-
 
         return updateText
     }

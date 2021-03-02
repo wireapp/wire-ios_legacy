@@ -127,7 +127,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -137,7 +137,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         emailField.text = email
         updateEmailFieldisEnabled()
     }
-    
+
     func updateEmailFieldisEnabled() {
         emailField.isEnabled = !hasPrefilledValue || allowEditingPrefilledValue
     }
@@ -203,7 +203,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
         }
-        
+
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
     }
 
@@ -253,4 +253,3 @@ extension EmailPasswordTextField: TextFieldValidationDelegate {
         }
     }
 }
-

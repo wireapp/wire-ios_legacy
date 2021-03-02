@@ -32,7 +32,7 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
         guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
             return nil
         }
-        
+
         // Check for missing requirements before allowing the user to register.
 
         if unregisteredUser.marketingConsent == nil {

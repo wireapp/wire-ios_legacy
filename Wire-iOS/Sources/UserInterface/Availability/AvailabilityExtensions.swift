@@ -25,7 +25,7 @@ enum AvailabilityLabelStyle: Int {
 }
 
 extension Availability {
-    var canonicalName : String {
+    var canonicalName: String {
         switch self {
             case .none:         return "none"
             case .available:    return "available"
@@ -33,11 +33,11 @@ extension Availability {
             case .busy:         return "busy"
         }
     }
-    
+
     var localizedName: String {
         return "availability.\(canonicalName)".localized
     }
-    
+
     var iconType: StyleKitIcon? {
         switch self {
             case .none:         return nil
@@ -47,4 +47,3 @@ extension Availability {
         }
     }
 }
-

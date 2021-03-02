@@ -35,6 +35,8 @@ extension CallInfoViewControllerInput  {
         isConstantBitRate: \(isConstantBitRate)
         title: \(title)
         callState: \(callState)
+        videoGridPresentationMode: \(videoGridPresentationMode)
+        allowPresentationModeUpdates: \(allowPresentationModeUpdates)
         """
     }
 }

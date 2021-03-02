@@ -62,9 +62,9 @@ extension ZMMessage: Shareable {
     }
 
     func forward(to: [AnyObject]) {
-        
+
         let conversations = to as! [ZMConversation]
-        
+
         if isText {
             let fetchLinkPreview = !Settings.disableLinkPreviews
             ZMUserSession.shared()?.perform {
@@ -127,7 +127,7 @@ extension ZMConversationMessage {
     }
 }
 
-extension ZMConversationList {///TODO mv to DM
+extension ZMConversationList {/// TODO mv to DM
     func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&

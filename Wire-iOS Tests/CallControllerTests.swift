@@ -21,13 +21,13 @@ import XCTest
 @testable import Wire
 
 final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
-    
+
     var coreDataFixture: CoreDataFixture!
     var sut: CallController!
     var router: ActiveCallRouterProtocolMock!
     var conversation: ZMConversation!
     var callConversationProvider: MockCallConversationProvider!
-    
+
     override func setUp() {
         super.setUp()
         coreDataFixture = CoreDataFixture()
@@ -48,117 +48,117 @@ final class CallControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         callConversationProvider = nil
         super.tearDown()
     }
-    
+
     // MARK: - ActiveCall Presentation Tests
     func testThatActiveCallIsPresented_WhenMinimizedCallIsNil() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = conversation
         sut.testHelper_setMinimizedCall(nil)
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.presentActiveCallIsCalled)
     }
-    
+
     func testThatActiveCallIsDismissed_WhenPriorityCallConversationIsNil() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = nil
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.dismissActiveCallIsCalled)
     }
-    
+
     func testThatActiveCallIsMinimized_WhenPriorityCallConversationIsTheCallConversationMinimized() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = conversation
         sut.testHelper_setMinimizedCall(conversation)
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.minimizeCallIsCalled)
     }
-    
+
     // MARK: - CallTopOverlay Presentation Tests
     func testThatCallTopOverlayIsShown_WhenPriorityCallConversationIsNotNil() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = conversation
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.showCallTopOverlayIsCalled)
     }
-    
+
     func testThatCallTopOverlayIsHidden_WhenPriorityCallConversationIsNil() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = nil
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.hideCallTopOverlayIsCalled)
     }
-    
+
     // MARK: - Version Alert Presentation Tests
     func testThatVersionAlertIsPresented_WhenCallStateIsTerminatedAndReasonIsOutdatedClient() {
         // GIVEN
         let callState: CallState = .terminating(reason: .outdatedClient)
         sut.callConversationProvider?.priorityCallConversation = conversation
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertTrue(router.presentUnsupportedVersionAlertIsCalled)
     }
-    
+
     func testThatVersionAlertIsNotPresented_WhenCallStateIsTerminatedAndReasonIsNotOutdatedClient() {
         // GIVEN
         let callState: CallState = .terminating(reason: .canceled)
         sut.callConversationProvider?.priorityCallConversation = conversation
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertFalse(router.presentUnsupportedVersionAlertIsCalled)
     }
-    
+
     func testThatVersionAlertIsNotPresented_WhenCallStateIsNotTerminated() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = conversation
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertFalse(router.presentUnsupportedVersionAlertIsCalled)
     }
-    
+
     // MARK: - Degradation Alert Presentation Tests
     func testThatVersionDegradationAlertIsNotPresented_WhenVoiceChannelHasNotDegradationState() {
         // GIVEN
         let callState: CallState = .established
         sut.callConversationProvider?.priorityCallConversation = conversation
-        
+
         // WHEN
         callController_callCenterDidChange(callState: callState, conversation: conversation)
-        
+
         // THEN
         XCTAssertFalse(router.presentSecurityDegradedAlertIsCalled)
     }
@@ -177,38 +177,38 @@ extension CallControllerTests {
 
 // MARK: - ActiveCallRouterMock
 class ActiveCallRouterProtocolMock: ActiveCallRouterProtocol {
-    
+
     var presentActiveCallIsCalled: Bool = false
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool) {
         presentActiveCallIsCalled = true
     }
-    
+
     var dismissActiveCallIsCalled: Bool = false
     func dismissActiveCall(animated: Bool, completion: Completion?) {
         dismissActiveCallIsCalled = true
         hideCallTopOverlay()
     }
-    
+
     var minimizeCallIsCalled: Bool = false
     func minimizeCall(animated: Bool, completion: (() -> Void)?) {
         minimizeCallIsCalled = true
     }
-    
+
     var showCallTopOverlayIsCalled: Bool = false
     func showCallTopOverlay(for conversation: ZMConversation) {
         showCallTopOverlayIsCalled = true
     }
-    
+
     var hideCallTopOverlayIsCalled: Bool = false
     func hideCallTopOverlay() {
         hideCallTopOverlayIsCalled = true
     }
-    
+
     var presentSecurityDegradedAlertIsCalled: Bool = false
     func presentSecurityDegradedAlert(degradedUser: UserType?) {
         presentSecurityDegradedAlertIsCalled = true
     }
-    
+
     var presentUnsupportedVersionAlertIsCalled: Bool = false
     func presentUnsupportedVersionAlert() {
         presentUnsupportedVersionAlertIsCalled = true

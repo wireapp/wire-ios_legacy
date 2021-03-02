@@ -42,12 +42,12 @@ final class AppLockModuleViewTests: XCTestCase {
 
     // MARK: - Event sending
 
-    func test_ItSendsEvent_WhenViewLoads() {
+    func test_ItSendsEvent_WhenViewAppears() {
         // When
-        sut.loadViewIfNeeded()
+        sut.viewDidAppear(false)
 
         // Then
-        XCTAssertEqual(presenter.events, [.viewDidLoad])
+        XCTAssertEqual(presenter.events, [.viewDidAppear])
     }
 
     func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
@@ -55,10 +55,23 @@ final class AppLockModuleViewTests: XCTestCase {
         sut.loadViewIfNeeded()
 
         // When
-        sut.lockView.onReauthRequested?()
+        sut.refresh(withModel: .locked(.faceID))
+        sut.lockView.actionRequested?()
 
         // Then
-        XCTAssertEqual(presenter.events, [.viewDidLoad, .unlockButtonTapped])
+        XCTAssertEqual(presenter.events, [.unlockButtonTapped])
+    }
+
+    func test_ItSendsEvent_WhenLockViewRequestOpenDeviceSettings() {
+        // Given
+        sut.loadViewIfNeeded()
+
+        // When
+        sut.refresh(withModel: .locked(.unavailable))
+        sut.lockView.actionRequested?()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.openDeviceSettingsButtonTapped])
     }
 
     func test_ItSendsEvent_WhenPasscodeSetupFinishes() {
@@ -83,6 +96,14 @@ final class AppLockModuleViewTests: XCTestCase {
 
         // Then
         XCTAssertEqual(presenter.events, [.configChangeAcknowledged])
+    }
+
+    func test_ItSendsEvent_WhenApplicationWillEnterForeground() {
+        // When
+        sut.applicationWillEnterForeground()
+
+        // Then
+        XCTAssertEqual(presenter.events, [.applicationWillEnterForeground])
     }
 
     // MARK: - View states

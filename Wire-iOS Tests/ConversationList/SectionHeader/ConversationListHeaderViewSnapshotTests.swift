@@ -21,9 +21,9 @@ import XCTest
 @testable import Wire
 
 final class ConversationListHeaderViewSnapshotTests: XCTestCase {
-    
+
     var sut: ConversationListHeaderView!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -33,27 +33,27 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut.backgroundColor = .gray
     }
-    
+
     override func tearDown() {
         sut = nil
-        super.tearDown()        
+        super.tearDown()
     }
-    
+
     func testForExpanded() {
         verify(matching: sut)
     }
 
     func testForCollapsed() {
         sut.collapsed = true
-        
+
         verify(matching: sut)
     }
-    
+
     func testForBadgeNumberHitLimit() {
         sut.folderBadge = 999
         verify(matching: sut)
     }
-    
+
     func testForBadgeNumberEquals10() {
         sut.folderBadge = 10
         verify(matching: sut)

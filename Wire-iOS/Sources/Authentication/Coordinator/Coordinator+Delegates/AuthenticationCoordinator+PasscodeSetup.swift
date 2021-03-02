@@ -19,7 +19,7 @@ import Foundation
 
 extension AuthenticationCoordinator: PasscodeSetupViewControllerDelegate {
     func passcodeSetupControllerWasDismissed() {
-        //no-op
+        // no-op
     }
 
     func passcodeSetupControllerDidFinish() {

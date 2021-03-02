@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 import SnapshotTesting
 
@@ -55,7 +54,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
@@ -63,7 +62,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
@@ -73,7 +72,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccount_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
@@ -81,7 +80,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
@@ -91,7 +90,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
@@ -99,7 +98,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // WHEN && THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
@@ -110,7 +109,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - unread dot
+    // MARK: - unread dot
 
     func testThatItShowsBasicAccountWithPictureSelected_Team_withUnreadDot() {
         // GIVEN
@@ -166,7 +165,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    //MARK: - smaller icon for conversation list
+    // MARK: - smaller icon for conversation list
     func testThatItShowsBasicAccount_Team_conversationListContext() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)

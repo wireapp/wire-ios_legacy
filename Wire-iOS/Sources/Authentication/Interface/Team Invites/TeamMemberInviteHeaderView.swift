@@ -19,7 +19,7 @@
 import UIKit
 
 final class TeamMemberInviteHeaderView: UIView {
-    
+
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
@@ -29,23 +29,23 @@ final class TeamMemberInviteHeaderView: UIView {
     var header: UIView {
         return titleLabel
     }
-    
+
     var bottomSpacing: CGFloat = 0 {
         didSet {
             bottomSpacerViewHeightConstraint?.constant = bottomSpacing
         }
     }
-    
+
     init() {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         subtitleLabel.font = FontSpec(.normal, .regular).font!
         stackView.axis = .vertical
@@ -67,11 +67,11 @@ final class TeamMemberInviteHeaderView: UIView {
         titleLabel.text = "team.invite.header.title".localized
         subtitleLabel.text = "team.invite.header.subtitle".localized
     }
-    
+
     func updateHeadlineLabelFont(forWidth width: CGFloat) {
         titleLabel.font = width > CGFloat.iPhone4Inch.width ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
-    
+
     private func createConstraints() {
         [stackView, bottomSpacerView].prepareForLayout()
         stackView.fitInSuperview()

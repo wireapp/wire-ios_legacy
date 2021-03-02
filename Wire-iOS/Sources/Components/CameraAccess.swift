@@ -27,7 +27,6 @@ enum CameraAccessFeature: Int {
 
 final class CameraAccess: NSObject {
 
-
     /// if there is an on going call, show a alert and return true
     ///
     /// - Parameters:
@@ -39,10 +38,10 @@ final class CameraAccess: NSObject {
             CameraAccess.displayCameraAlertForOngoingCall(at: feature, from: viewController)
             return true
         }
-        
+
         return false
     }
-    
+
     static private func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
         let alert = UIAlertController.alertWithOKButton(title: "conversation.input_bar.ongoing_call_alert.title".localized,
                                             message: feature.message.localized)

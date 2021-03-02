@@ -100,7 +100,7 @@ final class CompanyLoginFlowHandler {
                 if let url = url {
                     self.processURL(url)
                 }
-                
+
                 self.currentAuthenticationSession = nil
             }
 
@@ -111,7 +111,7 @@ final class CompanyLoginFlowHandler {
                 if let url = url {
                     self.processURL(url)
                 }
-                
+
                 self.currentAuthenticationSession = nil
             }
 
@@ -119,7 +119,7 @@ final class CompanyLoginFlowHandler {
             session.start()
         }
     }
-    
+
     private func processURL(_ url: URL) {
         do {
             try SessionManager.shared?.openURL(url)

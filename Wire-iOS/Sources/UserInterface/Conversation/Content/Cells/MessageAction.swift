@@ -20,7 +20,6 @@ import Foundation
 import WireCommonComponents
 import UIKit
 
-
 enum MessageAction: CaseIterable {
     case
     digitallySign,
@@ -39,7 +38,7 @@ enum MessageAction: CaseIterable {
     showInConversation,
     sketchDraw,
     sketchEmoji,
-    ///Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
+    /// Not included in ConversationMessageActionController.allMessageActions, for image viewer/open quote
     present,
     openQuote,
     resetSession
@@ -128,12 +127,12 @@ enum MessageAction: CaseIterable {
             return nil
         }
     }
-    
+
     @available(iOS 13.0, *)
     func systemIcon() -> UIImage? {
         return imageSystemName().flatMap(UIImage.init(systemName:))
     }
-    
+
     @available(iOS 13.0, *)
     private func imageSystemName() -> String? {
         let imageName: String?
@@ -174,10 +173,9 @@ enum MessageAction: CaseIterable {
              .resetSession:
             imageName = nil
         }
-        
+
         return imageName
     }
-
 
     var selector: Selector? {
         switch self {

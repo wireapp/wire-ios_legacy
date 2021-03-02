@@ -27,16 +27,16 @@ protocol PasscodeSetupUserInterface: class {
 
 extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        //no-op
+        // no-op
     }
 
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 }
 
 final class PasscodeSetupViewController: UIViewController {
-    
+
     enum Context {
         case forcedForTeam
         case createPasscode
@@ -51,7 +51,7 @@ final class PasscodeSetupViewController: UIViewController {
             }
         }
     }
-    
+
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
 
     // MARK: AuthenticationCoordinatedViewController
@@ -95,7 +95,7 @@ final class PasscodeSetupViewController: UIViewController {
         case .forcedForTeam:
             label.text = "warning_screen.title_label".localized
         }
-        
+
         label.accessibilityIdentifier = "createPasscodeTitle"
 
         return label
@@ -240,6 +240,7 @@ final class PasscodeSetupViewController: UIViewController {
         presenter.storePasscode(passcode: passcode, callback: callback)
 
         authenticationCoordinator?.passcodeSetupControllerDidFinish()
+        passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidFinish()
         dismiss(animated: true)
     }
 
@@ -262,11 +263,13 @@ final class PasscodeSetupViewController: UIViewController {
         let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
                                                                       context: context,
                                                                       callback: nil)
-        
+
+        passcodeSetupViewController.passcodeSetupViewControllerDelegate = delegate
+
         let keyboardAvoidingViewController = KeyboardAvoidingAuthenticationCoordinatedViewController(viewController: passcodeSetupViewController)
-        
+
         keyboardAvoidingViewController.modalPresentationStyle = .fullScreen
-        
+
         return keyboardAvoidingViewController
     }
 

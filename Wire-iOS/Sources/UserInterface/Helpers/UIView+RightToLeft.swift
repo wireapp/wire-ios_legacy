@@ -35,5 +35,5 @@ extension UIView {
     var isRightToLeft: Bool {
         return UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft
     }
-    
+
 }

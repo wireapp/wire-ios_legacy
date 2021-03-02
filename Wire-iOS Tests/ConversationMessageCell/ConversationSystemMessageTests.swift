@@ -80,17 +80,17 @@ final class ConversationSystemMessageTests: XCTestCase {
 
         verify(message: message)
     }
-    
+
     func testSessionReset_Other() {
         let user = MockUserType.createUser(name: "Bruno")
         let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: user)!
 
         verify(message: message)
     }
-    
+
     func testSessionReset_Self() {
         let message = MockMessageFactory.systemMessage(with: .sessionReset, users: 1, clients: 1, sender: SelfUser.current)!
-         
+
         verify(message: message)
     }
 
@@ -99,14 +99,14 @@ final class ConversationSystemMessageTests: XCTestCase {
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailed_Other() {
         let user = MockUserType.createUser(name: "Bruno")
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: user)!
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailed_NotRecoverable_Other() {
         let user = MockUserType.createUser(name: "Bruno")
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0, sender: user)!
@@ -114,26 +114,26 @@ final class ConversationSystemMessageTests: XCTestCase {
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailedResolved_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0)!
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailedResolved_Other() {
         let user = MockUserType.createUser(name: "Bruno")
         let message = MockMessageFactory.systemMessage(with: .decryptionFailedResolved, users: 0, clients: 0, sender: user)!
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailedIdentifyChanged_Self() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0)!
 
         verify(message: message)
     }
-    
+
     func testDecryptionFailedIdentifyChanged_Other() {
         let user = MockUserType.createUser(name: "Bruno")
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed_RemoteIdentityChanged, users: 0, clients: 0, sender: user)!

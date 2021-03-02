@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 final class ButtonDescription {
-    var buttonTapped: (() -> ())? = nil
+    var buttonTapped: (() -> Void)? = nil
     let title: String
     let accessibilityIdentifier: String
 

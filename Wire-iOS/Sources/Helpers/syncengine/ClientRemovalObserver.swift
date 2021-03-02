@@ -32,7 +32,7 @@ protocol ClientRemovalObserverDelegate: class {
 final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     var userClientToDelete: UserClient
     private weak var delegate: ClientRemovalObserverDelegate?
-    private let completion: ((Error?)->())?
+    private let completion: ((Error?) -> Void)?
     private var credentials: ZMEmailCredentials?
     private lazy var requestPasswordController: RequestPasswordController = {
         return RequestPasswordController(context: .removeDevice,
@@ -54,7 +54,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     init(userClientToDelete: UserClient,
          delegate: ClientRemovalObserverDelegate,
          credentials: ZMEmailCredentials?,
-         completion: ((Error?)->())? = nil) {
+         completion: ((Error?) -> Void)? = nil) {
         self.userClientToDelete = userClientToDelete
         self.delegate = delegate
         self.credentials = credentials

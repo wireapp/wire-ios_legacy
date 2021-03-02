@@ -67,6 +67,7 @@ final class UnlockViewController: UIViewController {
         let label = UILabel()
         
         label.text = "share_extension.unlock.title_label".localized
+        label.accessibilityIdentifier = "unlock_screen.title.enter_passcode"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
 

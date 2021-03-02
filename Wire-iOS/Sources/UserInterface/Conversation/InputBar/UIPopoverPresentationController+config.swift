@@ -27,7 +27,6 @@ protocol PopoverPresenter: class {
     /// The popover's arrow points to this view
     var popoverPointToView: UIView? {get set}
 
-
     /// call this method when the presented popover have to update its frame, e.g. when device roated or keyboard toggled
     func updatePopoverSourceRect()
 }
@@ -40,7 +39,6 @@ extension PopoverPresenter where Self: UIViewController {
         presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
     }
 }
-
 
 extension UIPopoverPresentationController {
 

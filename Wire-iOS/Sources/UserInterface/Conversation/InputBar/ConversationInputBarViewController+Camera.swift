@@ -62,7 +62,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                     let popover = videoEditor.popoverPresentationController
                     popover?.sourceView = self.parent?.view
 
-                    ///arrow point to camera button.
+                    /// arrow point to camera button.
                     popover?.permittedArrowDirections = .down
 
                     popover?.sourceRect = self.photoButton.popoverSourceRect(from: self)
@@ -96,9 +96,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
 
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
-                                             didSelectImageData imageData: Data,
-                                             isFromCamera: Bool,
-                                             uti: String?) {
+                                      didSelectImageData imageData: Data,
+                                      isFromCamera: Bool,
+                                      uti: String?) {
         showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
 
@@ -123,7 +123,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .camera,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 
@@ -133,13 +133,13 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .photoLibrary,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 
     func showConfirmationForImage(_ imageData: Data,
-                                           isFromCamera: Bool,
-                                           uti: String?) {
+                                  isFromCamera: Bool,
+                                  uti: String?) {
         let mediaAsset: MediaAsset
 
         if uti == kUTTypeGIF as String,
@@ -185,7 +185,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         }
     }
-    
+
     private func writeToSavedPhotoAlbumIfNecessary(imageData: Data, isFromCamera: Bool) {
         guard isFromCamera,
               SecurityFlags.cameraRoll.isEnabled,

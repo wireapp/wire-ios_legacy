@@ -427,7 +427,7 @@ final class TokenField: UIView {
         return NSAttributedString(string: collapsedText, attributes: textAttributes)
     }
 
-    ///clean filter text other then NSTextAttachment
+    /// clean filter text other then NSTextAttachment
     func clearFilterText() {
         guard let text = textView.text else { return }
 

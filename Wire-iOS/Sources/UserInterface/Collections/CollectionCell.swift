@@ -38,7 +38,7 @@ class CollectionCell: UICollectionViewCell {
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
     weak var messageChangeDelegate: CollectionCellMessageChangeDelegate?
-    
+
     var message: ZMConversationMessage? = .none {
         didSet {
             self.messageObserverToken = nil
@@ -53,17 +53,17 @@ class CollectionCell: UICollectionViewCell {
             self.updateForMessage(changeInfo: .none)
         }
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadContents()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.loadContents()
     }
-    
+
     public var desiredWidth: CGFloat? = .none
     public var desiredHeight: CGFloat? = .none
 
@@ -71,17 +71,17 @@ class CollectionCell: UICollectionViewCell {
         get {
             let width = self.desiredWidth ?? UIView.noIntrinsicMetric
             let height = self.desiredHeight ?? UIView.noIntrinsicMetric
-            
+
             return CGSize(width: width, height: height)
         }
     }
-    
+
     private var cachedSize: CGSize? = .none
 
     public func flushCachedSize() {
         cachedSize = .none
     }
-    
+
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if let cachedSize = self.cachedSize {
             var newFrame = layoutAttributes.frame
@@ -99,32 +99,32 @@ class CollectionCell: UICollectionViewCell {
             if let desiredHeight = self.desiredHeight {
                 desiredSize.height = desiredHeight
             }
-            
+
             let size = contentView.systemLayoutSizeFitting(desiredSize)
             var newFrame = layoutAttributes.frame
             newFrame.size.width = CGFloat(ceilf(Float(size.width)))
             newFrame.size.height = CGFloat(ceilf(Float(size.height)))
-            
+
             if let desiredWidth = self.desiredWidth {
                 newFrame.size.width = desiredWidth
             }
             if let desiredHeight = self.desiredHeight {
                 newFrame.size.height = desiredHeight
             }
-            
+
             layoutAttributes.frame = newFrame
             self.cachedSize = newFrame.size
         }
-        
+
         return layoutAttributes
     }
-    
+
     func loadContents() {
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.cornerRadius = 4
-        
+
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
-        
+
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
 
         self.contentView.addSubview(secureContentsView)
@@ -142,7 +142,7 @@ class CollectionCell: UICollectionViewCell {
         self.cachedSize = .none
         self.message = .none
     }
-    
+
     @objc func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
         if gestureRecognizer.state == .began {
             self.showMenu()
@@ -174,7 +174,7 @@ class CollectionCell: UICollectionViewCell {
     }
 
     // MARK: - Menu
-    
+
     func menuConfigurationProperties() -> MenuConfigurationProperties? {
         let properties = MenuConfigurationProperties()
         properties.targetRect = self.contentView.bounds
@@ -182,7 +182,7 @@ class CollectionCell: UICollectionViewCell {
 
         return properties
     }
-    
+
     func showMenu() {
         guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
             return
@@ -195,17 +195,17 @@ class CollectionCell: UICollectionViewCell {
 //           show the menu controller.
 
         prepareShowingMenu()
-        
+
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
     }
-    
+
     override var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return actionController?.canPerformAction(action) == true
     }
@@ -213,7 +213,7 @@ class CollectionCell: UICollectionViewCell {
     override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return actionController
     }
-    
+
     // To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
         self.updateMessageVisibility()
@@ -227,7 +227,7 @@ class CollectionCell: UICollectionViewCell {
     func copyDisplayedContent(in pasteboard: UIPasteboard) {
         message?.copy(in: pasteboard)
     }
-    
+
 }
 
 extension CollectionCell: ZMMessageObserver {

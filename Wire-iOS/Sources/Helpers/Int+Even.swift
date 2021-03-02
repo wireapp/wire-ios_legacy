@@ -22,7 +22,7 @@ extension Int {
     var isEven: Bool {
         return self.isMultiple(of: 2)
     }
-    
+
     var evenlyCeiled: Int {
         return isEven ? self : self + 1
     }

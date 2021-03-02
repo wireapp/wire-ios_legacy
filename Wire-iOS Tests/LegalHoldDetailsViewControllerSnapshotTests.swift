@@ -27,7 +27,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         SelfUser.setupMockSelfUser(inTeam: UUID())
         selfUser = (SelfUser.current as! MockUserType)
         selfUser.handle = nil
@@ -44,21 +44,21 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         let conversation = MockGroupDetailsConversation()
         selfUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [selfUser]
-        
+
         let createSut: () -> UIViewController = {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
             return self.sut.wrapInNavigationController()
         }
-        
+
         verifyInAllColorSchemes(createSut: createSut)
     }
-    
+
     func testOtherUserUnderLegalHold() {
         let conversation = MockGroupDetailsConversation()
         let otherUser = SwiftMockLoader.mockUsers().first!
         otherUser.isUnderLegalHold = true
         conversation.sortedActiveParticipantsUserTypes = [otherUser]
-        
+
         let createSut: () -> UIViewController = {
             self.sut = LegalHoldDetailsViewController(conversation: conversation)
             return self.sut.wrapInNavigationController()

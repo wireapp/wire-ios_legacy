@@ -64,7 +64,7 @@ final class DatabaseStatisticsController: UIViewController {
         contentsLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .horizontal)
         contentsLabel.textAlignment = .right
 
-        let stackView = UIStackView(arrangedSubviews:[titleLabel, contentsLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, contentsLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 15
@@ -75,7 +75,7 @@ final class DatabaseStatisticsController: UIViewController {
     func addRow(title: String, contents: String) {
         DispatchQueue.main.async {
             let spinnerIndex = self.stackView.arrangedSubviews.firstIndex(of: self.spinner)!
-            self.stackView.insertArrangedSubview(self.rowWith(title:title, contents: contents), at: spinnerIndex)
+            self.stackView.insertArrangedSubview(self.rowWith(title: title, contents: contents), at: spinnerIndex)
         }
     }
 
@@ -94,10 +94,10 @@ final class DatabaseStatisticsController: UIViewController {
                 }
 
                 let allConversations = ZMConversation.fetchRequest()
-                
+
                 let conversationsCount = try syncMoc.count(for: allConversations)
                 self.addRow(title: "Number of conversations", contents: "\(conversationsCount)")
-                
+
                 allConversations.predicate = NSPredicate(format: "conversationType == %d", ZMConversationType.invalid.rawValue)
                 let invalidConversationsCount = try syncMoc.count(for: allConversations)
                 self.addRow(title: "   Invalid", contents: "\(invalidConversationsCount)")
@@ -105,11 +105,10 @@ final class DatabaseStatisticsController: UIViewController {
                 let users = ZMUser.fetchRequest()
                 let usersCount = try syncMoc.count(for: users)
                 self.addRow(title: "Number of users", contents: "\(usersCount)")
-                
+
                 let messages = ZMMessage.fetchRequest()
                 let messagesCount = try syncMoc.count(for: messages)
                 self.addRow(title: "Number of messages", contents: "\(messagesCount)")
-
 
                 let assetMessages = ZMAssetClientMessage.fetchRequest()
                 let allAssets = try syncMoc.fetch(assetMessages)

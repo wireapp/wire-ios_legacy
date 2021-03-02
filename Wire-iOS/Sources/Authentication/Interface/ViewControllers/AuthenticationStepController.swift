@@ -362,7 +362,7 @@ extension AuthenticationStepController {
     // MARK: - AuthenticationCoordinatedViewController
 
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {

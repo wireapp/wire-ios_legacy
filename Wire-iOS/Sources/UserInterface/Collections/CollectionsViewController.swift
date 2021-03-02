@@ -25,7 +25,7 @@ protocol CollectionsViewControllerDelegate: class {
 }
 
 final class CollectionsViewController: UIViewController {
-    var onDismiss: ((CollectionsViewController)->Void)?
+    var onDismiss: ((CollectionsViewController) -> Void)?
     let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
     var isShowingSearchResults: Bool {
@@ -161,7 +161,7 @@ final class CollectionsViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        ///Prevent content overlaps navi bar
+        /// Prevent content overlaps navi bar
         navigationController?.navigationBar.isTranslucent = false
     }
 

@@ -70,6 +70,8 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: Basic Properties
 
+    var domain: String?
+
     var name: String?
 
     var displayName: String = ""

@@ -46,7 +46,7 @@ final class ImageMessageViewTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItRendersPortraitImage() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.imageMessage(sender: mockSelfUser,
@@ -54,7 +54,7 @@ final class ImageMessageViewTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItRendersLandscapeImage() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.imageMessage(sender: mockSelfUser,
@@ -62,7 +62,7 @@ final class ImageMessageViewTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItShowsLoadingIndicator() {
         // GIVEN & WHEN
         sut.message = MockMessageFactory.pendingImageMessage(sender: mockSelfUser)

@@ -60,7 +60,7 @@ final class ConversationImageMessageTests: XCTestCase {
         createSut(imageName: "unsplash_matterhorn.jpg")
 
         // THEN
-        verify(message: message, waitForImagesToLoad: false)
+        verify(message: message)
     }
 
     func testObfuscatedImage() {
