@@ -33,7 +33,6 @@ disabled_rules:
     - nesting
     - no_fallthrough_only
     - function_parameter_count
-    - redundant_string_enum_value
     - redundant_void_return
     - xctfail_message
     - compiler_protocol_init

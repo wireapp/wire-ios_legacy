@@ -20,27 +20,27 @@ import Foundation
 import UIKit
 
 public enum FontTextStyle: String {
-    case largeTitle  = "largeTitle"
-    case inputText   = "inputText"
+    case largeTitle
+    case inputText
 }
 
 enum FontSize: String {
-    case large  = "large"
-    case normal = "normal"
-    case medium = "medium"
-    case small  = "small"
+    case large
+    case normal
+    case medium
+    case small
 }
 
 public enum FontWeight: String {
-    case ultraLight = "ultraLight"
-    case thin     = "thin"
-    case light    = "light"
-    case regular  = "regular"
-    case medium   = "medium"
-    case semibold = "semibold"
-    case bold     = "bold"
-    case heavy    = "heavy"
-    case black    = "black"
+    case ultraLight
+    case thin
+    case light
+    case regular
+    case medium
+    case semibold
+    case bold
+    case heavy
+    case black
 }
 
 @available(iOSApplicationExtension 8.2, *)
