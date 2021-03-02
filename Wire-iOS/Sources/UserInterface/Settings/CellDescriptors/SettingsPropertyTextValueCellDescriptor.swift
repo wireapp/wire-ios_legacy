@@ -25,9 +25,7 @@ private let zmLog = ZMSLog(tag: "UI")
 class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     var visible: Bool = true
     let identifier: String?

@@ -79,9 +79,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     var documentsDirectory: URL?

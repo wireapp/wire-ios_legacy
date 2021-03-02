@@ -331,13 +331,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     var currentController: FullscreenImageViewController? {
-        get {
-            guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
-                return .none
-            }
-
-            return imageController
+        guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
+            return .none
         }
+
+        return imageController
     }
 
     private func perform(action: MessageAction,

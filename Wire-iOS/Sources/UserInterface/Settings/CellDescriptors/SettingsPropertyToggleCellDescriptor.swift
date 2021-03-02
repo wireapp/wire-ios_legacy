@@ -30,9 +30,7 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
     static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
     let inverse: Bool
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     let identifier: String?
     var visible: Bool = true

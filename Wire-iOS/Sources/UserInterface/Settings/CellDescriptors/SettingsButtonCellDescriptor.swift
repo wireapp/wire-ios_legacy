@@ -27,13 +27,11 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     let title: String
     let identifier: String?
     var visible: Bool {
-        get {
-            if let visibilityAction = self.visibilityAction {
-                return visibilityAction(self)
-            }
-            else {
-                return true
-            }
+        if let visibilityAction = self.visibilityAction {
+            return visibilityAction(self)
+        }
+        else {
+            return true
         }
     }
 

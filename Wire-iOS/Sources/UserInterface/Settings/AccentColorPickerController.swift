@@ -116,9 +116,7 @@ class ColorPickerController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

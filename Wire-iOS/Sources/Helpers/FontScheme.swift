@@ -131,19 +131,17 @@ extension FontSpec {
 
 extension FontSpec: CustomStringConvertible {
     public var description: String {
-        get {
-            var descriptionString = "\(self.size)"
+        var descriptionString = "\(self.size)"
 
-            if let weight = self.weight {
-                descriptionString += "-\(weight)"
-            }
-
-            if let fontTextStyle = self.fontTextStyle {
-                descriptionString += "-\(fontTextStyle.rawValue)"
-            }
-
-            return descriptionString
+        if let weight = self.weight {
+            descriptionString += "-\(weight)"
         }
+
+        if let fontTextStyle = self.fontTextStyle {
+            descriptionString += "-\(fontTextStyle.rawValue)"
+        }
+
+        return descriptionString
     }
 }
 

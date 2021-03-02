@@ -102,9 +102,7 @@ final class CoreDataFixture {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     /// If this is set the accent color will be overriden for the tests
