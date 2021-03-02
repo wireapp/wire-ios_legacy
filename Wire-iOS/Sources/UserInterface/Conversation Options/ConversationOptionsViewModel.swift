@@ -173,8 +173,8 @@ final class ConversationOptionsViewModel {
         configuration.fetchConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-                case .success(let link): self.link = link
-                case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+            case .success(let link): self.link = link
+            case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
 
             item.cancel()

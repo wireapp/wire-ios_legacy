@@ -92,10 +92,10 @@ final class ConfirmAssetViewController: UIViewController {
         super.viewDidLoad()
 
         switch asset {
-            case .image(let mediaAsset):
-                createPreviewPanel(image: mediaAsset)
-            case .video(let url):
-                createVideoPanel(videoURL: url)
+        case .image(let mediaAsset):
+            createPreviewPanel(image: mediaAsset)
+        case .video(let url):
+            createVideoPanel(videoURL: url)
         }
 
         createTopPanel()

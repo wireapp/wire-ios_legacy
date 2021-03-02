@@ -307,27 +307,27 @@ final class ClientListViewController: UIViewController,
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch self.convertSection(section) {
-            case 0:
-                if self.selfClient != nil {
-                    return NSLocalizedString("registration.devices.current_list_header", comment: "")
-                } else {
-                    return nil
-                }
-            case 1:
-                return NSLocalizedString("registration.devices.active_list_header", comment: "")
-            default:
+        case 0:
+            if self.selfClient != nil {
+                return NSLocalizedString("registration.devices.current_list_header", comment: "")
+            } else {
                 return nil
+            }
+        case 1:
+            return NSLocalizedString("registration.devices.active_list_header", comment: "")
+        default:
+            return nil
         }
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch self.convertSection(section) {
-            case 0:
-                return nil
-            case 1:
-                return NSLocalizedString("registration.devices.active_list_subtitle", comment: "")
-            default:
-                return nil
+        case 0:
+            return nil
+        case 1:
+            return NSLocalizedString("registration.devices.active_list_subtitle", comment: "")
+        default:
+            return nil
         }
     }
 

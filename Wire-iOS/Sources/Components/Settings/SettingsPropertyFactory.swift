@@ -307,13 +307,13 @@ final class SettingsPropertyFactory {
 
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
-                    case .number(let number):
-                        self.userSession?.perform {
-                            self.userSession?.isNotificationContentHidden = number.boolValue
-                        }
+                case .number(let number):
+                    self.userSession?.perform {
+                        self.userSession?.isNotificationContentHidden = number.boolValue
+                    }
 
-                    default:
-                        throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
+                default:
+                    throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
                 }
             }
 
