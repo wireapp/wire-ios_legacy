@@ -154,7 +154,7 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: .jailbroken)
     }
     
-    func sessionManagerDidFailLoadDatabase() {
+    func sessionManagerDidFailToLoadDatabase() {
         transition(to: .databaseFailure)
     }
 

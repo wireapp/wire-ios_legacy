@@ -60,10 +60,10 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
 
-    func testThatAppStateChanges_OnDidFailLoadDatabase() {
+    func testThatAppStateChanges_OnDidFailToLoadDatabase() {
         // WHEN
         sut.applicationDidBecomeActive()
-        sut.sessionManagerDidFailLoadDatabase()
+        sut.sessionManagerDidFailToLoadDatabase()
 
         // THEN
         XCTAssertEqual(sut.appState, .databaseFailure)
