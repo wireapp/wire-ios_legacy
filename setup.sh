@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Wire
-# Copyright (C) 2020 Wire Swiss GmbH
+# Copyright (C) 2021 Wire Swiss GmbH
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ CARTHAGE_VERSION=( ${version//./ } )
 version=`xcodebuild -version | head -n 1 | sed "s/Xcode //"`
 XCODE_VERSION=( ${version//./ } )
 
-[[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 29 ]] || die "Carthage should be at least version 0.29"
-[[ ${XCODE_VERSION[0]} -gt 11 || ( ${XCODE_VERSION[0]} -eq 11 && ${XCODE_VERSION[1]} -ge 4 ) ]] || die "Xcode version should be at least 11.4.0. The current version is ${XCODE_VERSION}"
+[[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 36 ]] || die "Carthage should be at least version 0.36"
+[[ ${XCODE_VERSION[0]} -gt 12 || ( ${XCODE_VERSION[0]} -eq 12 && ${XCODE_VERSION[1]} -ge 4 ) ]] || die "Xcode version should be at least 12.4. The current version is ${XCODE_VERSION}. If you have multiple versions of Xcode installed, please run: sudo xcode-select --switch /Applications/Xcode12.app/Contents/Developer"
 
 # SETUP
 
