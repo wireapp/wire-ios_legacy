@@ -24,7 +24,7 @@ extension ZMConversationMessage {
 
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
-        guard 
+        guard
             let selfUser = SelfUser.provider?.selfUser,
             selfUser.phoneNumber != nil,
             selfUser.isTeamMember,
