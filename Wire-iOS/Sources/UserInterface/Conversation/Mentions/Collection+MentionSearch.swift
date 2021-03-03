@@ -28,13 +28,12 @@ extension Collection where Iterator.Element: UserType {
 
         let query = query.lowercased().normalizedForMentionSearch() as String
 
-        let rules: [ ((UserType) -> Bool) ] = [
-            { $0.name?.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false },
-            { $0.nameTokens.first(where: { $0.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false }) != nil },
-            { $0.handle?.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false },
-            { $0.name?.lowercased().normalizedForMentionSearch().contains(query) ?? false },
-            { $0.handle?.lowercased().normalizedForMentionSearch()?.contains(query) ?? false }
-        ]
+        var rules = [(UserType) -> Bool]()
+        rules.append({ $0.name?.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false })
+        rules.append({ $0.nameTokens.first(where: { $0.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false }) != nil })
+        rules.append({ $0.handle?.lowercased().normalizedForMentionSearch()?.hasPrefix(query) ?? false })
+        rules.append({ $0.name?.lowercased().normalizedForMentionSearch().contains(query) ?? false })
+        rules.append({ $0.handle?.lowercased().normalizedForMentionSearch()?.contains(query) ?? false })
 
         var foundUsers = Set<HashBoxUser>()
         var results: [UserType] = []
@@ -46,7 +45,7 @@ extension Collection where Iterator.Element: UserType {
                 .sorted { $0.name < $1.name }
 
             foundUsers = foundUsers.union(matches.map(HashBox.init))
-            results = results + matches
+            results += matches
         }
 
         return results

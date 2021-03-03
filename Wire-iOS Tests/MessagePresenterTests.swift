@@ -47,7 +47,7 @@ final class MessagePresenterTests: XCTestCase {
     }
 
     // MARK: - Video
-    func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile(){
+    func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile() {
         // GIVEN
         let message = MockMessageFactory.videoMessage()
         let fileURL = Bundle(for: MockAudioRecorder.self).url(forResource: "video", withExtension: "mp4")
@@ -76,7 +76,7 @@ final class MessagePresenterTests: XCTestCase {
 
     // MARK: - Pass
 
-    func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){
+    func testThatCreateAddPassesViewControllerReturnsNilForFileMessage() {
         // GIVEN
         let message = MockMessageFactory.fileTransferMessage()
 
@@ -87,7 +87,7 @@ final class MessagePresenterTests: XCTestCase {
         XCTAssertNil(addPassesViewController)
     }
 
-    func testThatCreateAddPassesViewControllerReturnsAViewControllerForPassFileMessage(){
+    func testThatCreateAddPassesViewControllerReturnsAViewControllerForPassFileMessage() {
         // GIVEN
         let message = MockMessageFactory.passFileTransferMessage()
 

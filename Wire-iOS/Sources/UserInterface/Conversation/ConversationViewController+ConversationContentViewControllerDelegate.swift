@@ -53,7 +53,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
     }
 
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerEditing message: ZMConversationMessage) {
-        guard let _ = message.textMessageData?.messageText else { return }
+        guard message.textMessageData?.messageText != nil else { return }
 
         inputBarController.editMessage(message)
     }
@@ -88,7 +88,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
             snapshotView?.center = targetCenter
             snapshotView?.alpha = 0
             snapshotView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) { finished in
+        }) { _ in
             snapshotView?.removeFromSuperview()
             self.inputBarController.bounceCameraIcon()
         }

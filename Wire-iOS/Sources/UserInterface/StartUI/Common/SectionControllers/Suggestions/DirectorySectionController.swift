@@ -25,8 +25,8 @@ final class DirectorySectionController: SearchSectionController {
 
     var suggestions: [ZMSearchUser] = []
     weak var delegate: SearchSectionControllerDelegate?
-    var token: AnyObject? = nil
-    weak var collectionView: UICollectionView? = nil
+    var token: AnyObject?
+    weak var collectionView: UICollectionView?
 
     override var isHidden: Bool {
         return self.suggestions.isEmpty

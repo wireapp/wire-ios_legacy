@@ -32,7 +32,7 @@ jobs:
             chmod +x updateCarfile.swift
             swift updateCarfile.swift ${{ secrets.DISPATCH_SECRET }} ./Cartfile
             ### TODO: fix the issue that latest version not fit the xcode version. (ios-snapshot-testing)
-            # swift updateCarfile.swift ${{ secrets.DISPATCH_SECRET }} ./Cartfile.private
+            swift updateCarfile.swift ${{ secrets.DISPATCH_SECRET }} ./Cartfile.private
             rm updateCarfile.swift
             
             # Carthage update

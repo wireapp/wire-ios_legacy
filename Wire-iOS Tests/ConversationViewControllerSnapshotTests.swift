@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper  {
+final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
 
     var sut: ConversationViewController!
     var mockConversation: ZMConversation!
@@ -51,7 +51,7 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 }

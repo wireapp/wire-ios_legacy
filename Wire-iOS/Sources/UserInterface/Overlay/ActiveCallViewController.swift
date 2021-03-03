@@ -115,8 +115,7 @@ final class ActiveCallViewController: UIViewController {
                    duration: 0.35,
                    options: .transitionCrossDissolve,
                    animations: nil,
-                   completion:
-            { (finished) in
+                   completion: { _ in
                 toViewController.didMove(toParent: self)
                 fromViewController.removeFromParent()
         })
@@ -130,7 +129,7 @@ final class ActiveCallViewController: UIViewController {
 
 extension ActiveCallViewController: WireCallCenterCallStateObserver {
 
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateVisibleVoiceChannelViewController()
     }
 

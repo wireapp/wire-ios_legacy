@@ -25,7 +25,7 @@ extension UIAlertController {
         let alert = UIAlertController(title: "registration.terms_of_use.terms.title".localized,
                                       message: "registration.terms_of_use.terms.message".localized,
                                       preferredStyle: .alert)
-        let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] action in
+        let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] _ in
             let url = URL.wr_termsOfServicesURL(forTeamAccount: forTeamAccount).appendingLocaleParameter
 
             let webViewController: BrowserViewController
@@ -47,12 +47,12 @@ extension UIAlertController {
         }
         alert.addAction(viewAction)
 
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel) { action in
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
             completion(false)
         }
         alert.addAction(cancelAction)
 
-        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .default) { action in
+        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .default) { _ in
             completion(true)
         }
         alert.addAction(acceptAction)

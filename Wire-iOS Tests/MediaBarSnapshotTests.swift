@@ -37,7 +37,7 @@ final class MediaBarSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(view: sut)
     }
 }

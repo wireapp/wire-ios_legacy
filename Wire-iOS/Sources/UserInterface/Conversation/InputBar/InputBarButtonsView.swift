@@ -86,7 +86,7 @@ final class InputBarButtonsView: UIView {
     }
 
     func createConstraints() {
-        constrain(self, buttonInnerContainer, buttonOuterContainer)  { view, innerContainer, outerContainer in
+        constrain(self, buttonInnerContainer, buttonOuterContainer) { view, innerContainer, outerContainer in
             self.buttonRowTopInset = outerContainer.top == innerContainer.top
             innerContainer.leading == outerContainer.leading
             innerContainer.trailing == outerContainer.trailing
@@ -198,9 +198,9 @@ final class InputBarButtonsView: UIView {
             constrain(previous, current) { previous, current in
                 previous.trailing == current.leading
 
-                if (isFirstButton) {
+                if isFirstButton {
                     previous.width == current.width * 0.5 + offset
-                } else if (isLastButton) {
+                } else if isLastButton {
                     current.width == previous.width * 0.5 + offset
                 } else {
                     current.width == previous.width

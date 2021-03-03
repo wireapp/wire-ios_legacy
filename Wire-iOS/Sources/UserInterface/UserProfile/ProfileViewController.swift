@@ -148,7 +148,7 @@ final class ProfileViewController: UIViewController {
 
         let controller = UIAlertController.cancelConnectionRequest(for: user) { canceled in
             if !canceled {
-                self.viewModel.cancelConnectionRequest() {
+                self.viewModel.cancelConnectionRequest {
                     self.returnToPreviousScreen()
                 }
             }
@@ -352,7 +352,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             leftViewControllerRevealed = true
         }
 
-        dismiss(animated: true){ [weak self] in
+        dismiss(animated: true) { [weak self] in
             self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
                 ZClientViewController.shared?.conversationListViewController.topBarViewController.presentSettings()
             }

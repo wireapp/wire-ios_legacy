@@ -38,7 +38,7 @@ final class ProximityMonitorManager: NSObject {
         }
     }
 
-    var stateChanged: RaisedToEarHandler? = nil
+    var stateChanged: RaisedToEarHandler?
     var listening: Bool = false
 
     deinit {
@@ -64,7 +64,7 @@ final class ProximityMonitorManager: NSObject {
         // Only do proximity monitoring on phones
         guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter, !listening else { return }
 
-        let ongoingCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
+        let ongoingCalls = callCenter.nonIdleCalls.filter({ (_, callState: CallState) -> Bool in
             switch callState {
             case .established, .establishedDataChannel, .answered(degraded: false), .outgoing(degraded: false):
                 return true

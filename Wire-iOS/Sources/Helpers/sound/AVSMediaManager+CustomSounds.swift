@@ -40,7 +40,7 @@ enum MediaManagerSound: String {
 private let zmLog = ZMSLog(tag: "AVSMediaManager CustomSounds")
 
 extension AVSMediaManager {
-    static private var MediaManagerSoundConfig: [AnyHashable: Any]? = nil
+    static private var MediaManagerSoundConfig: [AnyHashable: Any]?
 
     func play(sound: MediaManagerSound) {
         playSound(sound.rawValue)
@@ -83,7 +83,7 @@ extension AVSMediaManager {
                                            .ringingFromThemSound,
                                            .outgoingKnockSound,
                                            .incomingKnockSound]
-        sounds.forEach() {
+        sounds.forEach {
             mediaManager.unregisterMedia(byName: $0.rawValue)
         }
 

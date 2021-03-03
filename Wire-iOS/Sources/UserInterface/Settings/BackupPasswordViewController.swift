@@ -173,7 +173,7 @@ extension BackupPasswordViewController: UITextFieldDelegate {
         }
 
         if string.containsCharacters(from: .newlines) {
-            if let _ = password {
+            if password != nil {
                 completeWithCurrentResult()
             }
             return false

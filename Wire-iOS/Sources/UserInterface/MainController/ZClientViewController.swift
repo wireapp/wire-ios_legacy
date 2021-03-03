@@ -300,7 +300,7 @@ final class ZClientViewController: UIViewController {
               focusOnView focus: Bool,
               animated: Bool,
               completion: Completion? = nil) {
-        var conversationRootController: ConversationRootViewController? = nil
+        var conversationRootController: ConversationRootViewController?
         if conversation === currentConversation,
            conversationRootController != nil {
             if let message = message {
@@ -522,7 +522,7 @@ final class ZClientViewController: UIViewController {
                            duration: 0.5,
                            options: .transitionCrossDissolve,
                            animations: { viewController.view.fitInSuperview() },
-                           completion: { (finished) in
+                           completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController

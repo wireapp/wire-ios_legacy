@@ -44,8 +44,7 @@ final class KeyboardBlockObserver: NSObject {
                     endFrameValue.minY >= UIScreen.main.bounds.maxY ||
                     (endFrameValue == beginFrameValue &&
                      beginFrameValue.maxY > UIScreen.main.bounds.maxY &&
-                     beginFrameValue.origin.y == UIScreen.main.bounds.maxY)
-                    {
+                     beginFrameValue.origin.y == UIScreen.main.bounds.maxY) {
                     isKeyboardCollapsed = true
                 } else {
                     isKeyboardCollapsed = beginFrameValue.height > endFrameValue.height && kind == .hide

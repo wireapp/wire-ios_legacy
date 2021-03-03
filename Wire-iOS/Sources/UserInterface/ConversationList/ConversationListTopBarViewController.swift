@@ -365,7 +365,7 @@ final class TopBar: UIView {
         super.init(frame: frame)
         layoutMargins = UIEdgeInsets(top: 0, left: CGFloat.ConversationList.horizontalMargin, bottom: 0, right: CGFloat.ConversationList.horizontalMargin)
         let spacing: CGFloat = 7
-        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach() {
+        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }

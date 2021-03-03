@@ -61,8 +61,8 @@ final class ReplyComposingView: UIView {
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!
-    weak var delegate: ReplyComposingViewDelegate? = nil
-    private var observerToken: Any? = nil
+    weak var delegate: ReplyComposingViewDelegate?
+    private var observerToken: Any?
 
     init(message: ZMConversationMessage) {
         require(message.canBeQuoted)

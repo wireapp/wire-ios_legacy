@@ -28,8 +28,8 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         let indicatorIcon: UIImage?
     }
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 
@@ -108,7 +108,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message
 
-        var icon: UIImage? = nil
+        var icon: UIImage?
         let iconColor = UIColor.from(scheme: .iconNormal)
 
         if message.isDeletion {

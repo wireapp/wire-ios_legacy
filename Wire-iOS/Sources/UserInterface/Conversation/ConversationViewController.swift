@@ -60,7 +60,7 @@ final class ConversationViewController: UIViewController {
 
     var participantsController: UIViewController? {
 
-        var viewController: UIViewController? = nil
+        var viewController: UIViewController?
 
         switch conversation.conversationType {
         case .group:
@@ -218,7 +218,7 @@ final class ConversationViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: nil) { context in
+        coordinator.animate(alongsideTransition: nil) { _ in
             self.updateLeftNavigationBarItems()
         }
 
@@ -311,7 +311,7 @@ final class ConversationViewController: UIViewController {
     }
 
     private func setupNavigatiomItem() {
-        titleView.tapHandler = { [weak self] button in
+        titleView.tapHandler = { [weak self] _ in
             if let superview = self?.titleView.superview,
                 let participantsController = self?.participantsController {
                 self?.presentParticipantsViewController(participantsController, from: superview)
@@ -466,7 +466,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     }
 
     func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage) {
-        contentViewController.scroll(to: message) { cell in
+        contentViewController.scroll(to: message) { _ in
             self.contentViewController.highlight(message)
         }
     }

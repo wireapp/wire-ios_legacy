@@ -431,7 +431,7 @@ extension ZMSnapshotTestCase {
                                 configuration: Configuration? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, isPad in
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, _ in
             configuration?(view)
         }, file: file, line: line)
     }

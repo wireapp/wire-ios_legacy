@@ -25,7 +25,7 @@ class TitleView: UIView {
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
     internal let titleButton = UIButton()
-    var tapHandler: ((UIButton) -> Void)? = nil
+    var tapHandler: ((UIButton) -> Void)?
 
     public init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)

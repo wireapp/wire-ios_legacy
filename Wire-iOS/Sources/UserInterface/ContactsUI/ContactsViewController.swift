@@ -155,7 +155,7 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setEmptyResultsHidden(_ hidden: Bool) {
-        let completion: (Bool) -> Void = { finished in
+        let completion: (Bool) -> Void = { _ in
             self.emptyResultsLabel.isHidden = hidden
             self.tableView.isHidden = !hidden
         }

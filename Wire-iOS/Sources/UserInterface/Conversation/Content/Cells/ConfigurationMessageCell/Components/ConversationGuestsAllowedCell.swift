@@ -56,8 +56,8 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
 
     typealias Configuration = GuestsAllowedCellConfiguration
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     private let stackView = UIStackView()
     private let titleLabel = UILabel()

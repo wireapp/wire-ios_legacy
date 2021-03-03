@@ -32,8 +32,8 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     private let transferView = VideoMessageView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 

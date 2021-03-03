@@ -71,7 +71,7 @@ final class ImageMessageView: UIView {
             self.dotsLoadingView.stopProgressAnimation()
             self.dotsLoadingView.isHidden = true
 
-            if (imageMessageData.isAnimatedGIF) {
+            if imageMessageData.isAnimatedGIF {
                 let image = FLAnimatedImage(animatedGIFData: imageData)
                 self.imageSize = image?.size ?? .zero
                 self.imageView.animatedImage = image

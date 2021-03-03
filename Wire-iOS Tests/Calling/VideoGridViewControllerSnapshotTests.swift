@@ -102,7 +102,7 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForBadNetwork(){
+    func testForBadNetwork() {
         configuration.networkQuality = .poor
         createSut()
         verify(matching: sut)

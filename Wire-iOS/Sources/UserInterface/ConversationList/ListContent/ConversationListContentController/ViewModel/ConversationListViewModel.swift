@@ -488,7 +488,7 @@ final class ConversationListViewModel: NSObject {
                      .conversations]
         }
 
-        return kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
+        return kinds.map { Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
     }
 
     private func sectionNumber(for kind: Section.Kind) -> Int? {

@@ -26,7 +26,7 @@ class EphemeralCountdownView: UIView {
     fileprivate let containerView =  UIView()
     fileprivate var timer: Timer?
 
-    var message: ZMConversationMessage? = nil
+    var message: ZMConversationMessage?
 
     init() {
         super.init(frame: .zero)

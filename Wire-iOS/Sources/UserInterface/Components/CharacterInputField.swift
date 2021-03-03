@@ -264,7 +264,7 @@ extension CharacterInputField: UIKeyInput {
         let shouldInsert = delegate?.shouldAcceptChanges(self) ?? true
         guard shouldInsert else { return }
 
-        if let _ = text.rangeOfCharacter(from: CharacterSet.newlines) {
+        if text.rangeOfCharacter(from: CharacterSet.newlines) != nil {
             self.resignFirstResponder()
             return
         }

@@ -77,7 +77,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         } else {
             let context = ConfirmAssetViewController.Context(asset: .video(url: videoURL),
-                                                             onConfirm: { [unowned self] (editedImage: UIImage?) in
+                                                             onConfirm: { [unowned self] _ in
                                                                             self.dismiss(animated: true)
                                                                             self.uploadFile(at: videoURL)
                                                                             },
@@ -226,7 +226,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
 
         editor.isLoadingViewVisible = true
 
-        self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
+        self.convertVideoAtPath(editedVideoPath) { success, resultPath, _ in
             editor.isLoadingViewVisible = false
 
             guard let path = resultPath, success else {
@@ -272,9 +272,9 @@ extension ConversationInputBarViewController {
                 self.mode = .textInput
             }
         } else {
-            UIApplication.wr_requestVideoAccess({ granted in
+            UIApplication.wr_requestVideoAccess({ _ in
                 if SecurityFlags.cameraRoll.isEnabled {
-                    self.executeWithCameraRollPermission() { success in
+                    self.executeWithCameraRollPermission { _ in
                         self.mode = .camera
                         self.inputBar.textView.becomeFirstResponder()
                     }

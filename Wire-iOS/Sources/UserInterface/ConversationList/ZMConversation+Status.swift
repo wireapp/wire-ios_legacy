@@ -137,7 +137,7 @@ extension StatusMessageType {
             else if textMessage.isQuotingSelf {
                 self = .reply
             }
-            else if let _ = textMessage.linkPreview {
+            else if textMessage.linkPreview != nil {
                 self = .link
             }
             else {
@@ -531,9 +531,9 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
         else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                    if let _ = $0.senderUser,
+                    if $0.senderUser != nil,
                        let type = StatusMessageType(message: $0),
-                       let _ = matchedTypesDescriptions[type] {
+                       matchedTypesDescriptions[type] != nil {
                         return true
                     } else {
                         return false
@@ -590,9 +590,9 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                if let _ = $0.senderUser,
+                if $0.senderUser != nil,
                    let type = StatusMessageType(message: $0),
-                   let _ = matchedTypesDescriptions[type] {
+                   matchedTypesDescriptions[type] != nil {
                     return true
                 }
                 else {
@@ -654,7 +654,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
            let sender = message.senderUser,
-           !sender.isSelfUser{
+           !sender.isSelfUser {
 
             if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 return "conversation.status.you_were_removed".localized && type(of: self).regularStyle

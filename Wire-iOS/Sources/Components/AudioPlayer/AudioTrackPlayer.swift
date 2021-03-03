@@ -229,7 +229,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             return
         }
 
-        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] event in
+        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] _ in
             if self?.avPlayer?.rate > 0 {
                 self?.pause()
                 return .success
@@ -238,7 +238,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             }
         })
 
-        playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] event in
+        playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] _ in
             if self?.audioTrack == nil {
                 return .noSuchContent
             }

@@ -31,7 +31,7 @@ extension ConversationListViewController {
     func closePushPermissionDialogIfNotNeeded() {
         UNUserNotificationCenter.current().checkPushesDisabled({ pushesDisabled in
             if !pushesDisabled,
-                let _ = self.pushPermissionDeniedViewController {
+                self.pushPermissionDeniedViewController != nil {
                 DispatchQueue.main.async {
                     self.closePushPermissionDeniedDialog()
                 }

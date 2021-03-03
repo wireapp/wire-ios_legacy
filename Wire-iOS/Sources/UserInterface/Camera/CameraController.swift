@@ -260,8 +260,7 @@ final class CameraController {
 
         init(settings: AVCapturePhotoSettings,
              handler: @escaping (PhotoResult) -> Void,
-             completion: @escaping () -> Void)
-        {
+             completion: @escaping () -> Void) {
             self.settings = settings
             self.handler = handler
             self.completion = completion
@@ -288,8 +287,7 @@ final class CameraController {
                          previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
                          resolvedSettings: AVCaptureResolvedPhotoSettings,
                          bracketSettings: AVCaptureBracketedStillImageSettings?,
-                         error: Error?)
-        {
+                         error: Error?) {
             if #available(iOS 11, *) { return }
 
             defer { completion() }

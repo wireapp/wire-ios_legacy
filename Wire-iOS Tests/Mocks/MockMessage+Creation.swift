@@ -38,7 +38,7 @@ final class MockMessageFactory {
     class func messageTemplate<T: MockMessage>(sender: UserType? = nil, conversation: Conversation? = nil) -> T {
         let message = T()
 
-        var mockZMConversation: MockConversation? = nil
+        var mockZMConversation: MockConversation?
         if let conversation = conversation {
             message.conversationLike = conversation
         } else {

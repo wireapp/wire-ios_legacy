@@ -37,7 +37,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
     private let boldFingerprintFont: UIFont = .smallSemiboldFont
     private let fingerprintFont: UIFont = .smallFont
 
-    private weak var client: UserClientType? = nil
+    private weak var client: UserClientType?
 
     override func setUp() {
         super.setUp()

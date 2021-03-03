@@ -284,7 +284,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        if let _ = cellColor {
+        if cellColor != nil {
             return
         }
 
@@ -338,7 +338,7 @@ final class SettingsToggleCell: SettingsTableCell {
 }
 
 final class SettingsValueCell: SettingsTableCell {
-    override var descriptor: SettingsCellDescriptorType?{
+    override var descriptor: SettingsCellDescriptorType? {
         willSet {
             if let propertyDescriptor = descriptor as? SettingsPropertyCellDescriptorType {
                 NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: propertyDescriptor.settingsProperty.propertyName.changeNotificationName), object: nil)
@@ -380,7 +380,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    func createConstraints(){
+    func createConstraints() {
         let textInputSpacing = CGFloat(16)
 
         let trailingBoundaryView = accessoryView ?? contentView

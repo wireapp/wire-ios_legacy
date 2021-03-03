@@ -58,7 +58,7 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
     ///   - variant: the color cariant
     ///   - numberOfClients: number of clients other than self device. Default: display 3 cells, to show footer in same screen
     func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
-        var clientsList: [UserClient]? = nil
+        var clientsList: [UserClient]?
 
         for _ in 0 ..< numberOfClients {
             if clientsList == nil {

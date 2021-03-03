@@ -296,7 +296,7 @@ class IconButton: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expanded.forEach() { expandedState in
+        state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
 

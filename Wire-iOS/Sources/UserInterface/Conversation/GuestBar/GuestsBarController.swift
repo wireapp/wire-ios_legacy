@@ -90,7 +90,7 @@ final class GuestsBarController: UIViewController {
         let collapsed = state == .hidden
 
         let change = {
-            if (!collapsed) {
+            if !collapsed {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()

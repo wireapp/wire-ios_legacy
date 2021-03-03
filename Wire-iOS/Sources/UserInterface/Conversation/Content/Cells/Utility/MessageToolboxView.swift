@@ -29,7 +29,7 @@ protocol MessageToolboxViewDelegate: class {
 }
 
 private extension UILabel {
-    static func createSeparatorLabel() -> UILabel{
+    static func createSeparatorLabel() -> UILabel {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
@@ -57,7 +57,7 @@ final class MessageToolboxView: UIView {
     // MARK: - UI Elements
 
     /// The timer for ephemeral messages.
-    private var timestampTimer: Timer? = nil
+    private var timestampTimer: Timer?
 
     private let contentStack: UIStackView = {
         let stack = UIStackView()

@@ -40,7 +40,7 @@ final class EmojiSectionViewController: UIViewController {
         }
     }
 
-    weak var sectionDelegate: EmojiSectionViewControllerDelegate? = nil
+    weak var sectionDelegate: EmojiSectionViewControllerDelegate?
 
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)

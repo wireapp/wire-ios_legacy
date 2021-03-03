@@ -42,7 +42,7 @@ class SwitchingAccountRouter: SwitchingAccountRouterProtocol {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
                                       style: .default,
-                                      handler: { action in
+                                      handler: { _ in
             completion(true)
         }))
         alert.addAction(.cancel {

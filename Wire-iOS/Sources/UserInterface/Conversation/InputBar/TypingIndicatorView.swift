@@ -203,8 +203,8 @@ final class TypingIndicatorView: UIView {
             self.container.alpha = 0
         }
 
-        if (animated) {
-            if (hidden) {
+        if animated {
+            if hidden {
                 collapseLine()
                 UIView.animate(withDuration: 0.15, animations: hideContainer) { _ in
                     completion?()
@@ -223,7 +223,7 @@ final class TypingIndicatorView: UIView {
             }
 
         } else {
-            if (hidden) {
+            if hidden {
                 collapseLine()
                 self.container.alpha = 0
             } else {

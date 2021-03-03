@@ -159,7 +159,7 @@ final class ConversationCreationController: UIViewController {
         setupViews()
 
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.currentFirst {
+        if UIResponder.currentFirst != nil {
             nameSection.becomeFirstResponder()
         }
     }
@@ -174,7 +174,7 @@ final class ConversationCreationController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }

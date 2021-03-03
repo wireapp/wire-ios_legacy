@@ -69,12 +69,12 @@ final class CallTopOverlayController: UIViewController {
     private let muteIcon = UIImageView()
     private var muteIconWidth: NSLayoutConstraint?
     private var tapGestureRecognizer: UITapGestureRecognizer!
-    private weak var callDurationTimer: Timer? = nil
+    private weak var callDurationTimer: Timer?
     private var observerTokens: [Any] = []
     private let callDurationFormatter = DateComponentsFormatter()
 
     let conversation: ZMConversation
-    weak var delegate: CallTopOverlayControllerDelegate? = nil
+    weak var delegate: CallTopOverlayControllerDelegate?
 
     private var callDuration: TimeInterval = 0 {
         didSet {

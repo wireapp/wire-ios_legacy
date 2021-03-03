@@ -79,7 +79,7 @@ final class MediaManagerLoader: NSObject {
     }
 
     private func configureMediaManager() {
-        guard let _ = AVSFlowManager.getInstance(),
+        guard AVSFlowManager.getInstance() != nil,
                 let mediaManager = AVSMediaManager.sharedInstance() else {
             return
         }
@@ -96,7 +96,7 @@ final class MediaManagerLoader: NSObject {
             self?.send(message: .flowManagerLoaded)
         })
 
-        if let _ = AVSFlowManager.getInstance() {
+        if AVSFlowManager.getInstance() != nil {
             self.send(message: .flowManagerLoaded)
         }
     }

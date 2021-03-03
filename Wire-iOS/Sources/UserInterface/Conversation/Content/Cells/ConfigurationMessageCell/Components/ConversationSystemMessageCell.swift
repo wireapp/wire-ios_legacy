@@ -163,7 +163,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
     static let userClientURL: URL = URL(string: "settings://user-client")!
 
-    var linkTarget: LinkTarget? = nil
+    var linkTarget: LinkTarget?
 
     enum LinkTarget {
         case user(UserType)
@@ -503,7 +503,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
-        var updateText: NSAttributedString? = nil
+        var updateText: NSAttributedString?
         let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
         if timeoutValue == .none {

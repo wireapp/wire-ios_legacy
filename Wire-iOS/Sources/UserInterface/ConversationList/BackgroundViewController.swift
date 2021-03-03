@@ -145,7 +145,7 @@ final class BackgroundViewController: UIViewController {
     private func updateForUserImage() {
         dispatchGroup.enter()
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
-            var image: UIImage? = nil
+            var image: UIImage?
             if let imageData = imageData {
                 image = BackgroundViewController.blurredAppBackground(with: imageData)
             }
