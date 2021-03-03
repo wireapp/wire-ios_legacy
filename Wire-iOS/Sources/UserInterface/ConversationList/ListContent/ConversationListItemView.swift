@@ -248,7 +248,7 @@ final class ConversationListItemView: UIView {
             selfUser.isTeamMember,
             let connectedUser = conversation.connectedUserType {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
-            
+
             if connectedUser.availability != .none {
                 statusComponents.append(connectedUser.availability.localizedName)
             }
