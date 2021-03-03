@@ -34,8 +34,8 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
 
         mockConversation = createTeamGroupConversation()
 
-        mockMessage = MockMessageFactory.textMessage(withText: "Message")!
-        mockMessage.sender = selfUser
+        mockMessage = MockMessageFactory.textMessage(withText: "Message")
+        mockMessage.senderUser = MockUserType.createSelfUser(name: "Alice")
         mockMessage.conversation = mockConversation
         mockMessage.deliveryState = .read
         mockMessage.needsReadConfirmation = true
@@ -44,7 +44,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
 
         sut = ConversationContentViewController(conversation: mockConversation, mediaPlaybackManager: nil, session: mockZMUserSession)
 
-        ///Call the setup codes in viewDidLoad
+        // Call the setup codes in viewDidLoad
         sut.loadViewIfNeeded()
     }
 
@@ -64,7 +64,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
         let view = UIView()
 
         // create deletionDialogPresenter
-        let message = MockMessageFactory.textMessage(withText: "test")!
+        let message = MockMessageFactory.textMessage(withText: "test")
         sut.messageAction(actionId: .delete, for: message, view: view)
 
         verify(matching: sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))

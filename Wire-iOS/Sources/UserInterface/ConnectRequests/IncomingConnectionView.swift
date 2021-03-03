@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 import WireSyncEngine
@@ -38,18 +37,18 @@ final class IncomingConnectionView: UIView {
     private let acceptButton = Button(style: .full)
     private let ignoreButton = Button(style: .empty)
 
-    var user: ZMUser {
+    var user: UserType {
         didSet {
             self.setupLabelText()
             self.userImageView.user = self.user
         }
     }
 
-    typealias UserAction = (ZMUser) -> Void
+    typealias UserAction = (UserType) -> Void
     var onAccept: UserAction?
     var onIgnore: UserAction?
 
-    init(user: ZMUser) {
+    init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
 
@@ -88,9 +87,9 @@ final class IncomingConnectionView: UIView {
         let viewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: "",
-            addressBookName: user.addressBookEntry?.cachedName
+            addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
-        
+
         usernameLabel.attributedText = viewModel.title
         usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
@@ -114,7 +113,7 @@ final class IncomingConnectionView: UIView {
             usernameLabel.top == selfView.top + 18
             usernameLabel.centerX == selfView.centerX
             usernameLabel.left >= selfView.left
-            
+
             userDetailView.centerX == selfView.centerX
             userDetailView.top == usernameLabel.bottom + 4
             userDetailView.left >= selfView.left

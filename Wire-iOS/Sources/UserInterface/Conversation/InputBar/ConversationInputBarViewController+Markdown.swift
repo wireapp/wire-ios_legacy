@@ -16,19 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 
 extension ConversationInputBarViewController {
-    
+
     func configureMarkdownButton() {
-        
+
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, size: .tiny, for: .normal)
         markdownButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
     }
-    
+
     func updateMarkdownButton() {
         let color: UIColor
         markdownButton.isHidden = inputBar.isEditing
@@ -38,11 +37,11 @@ extension ConversationInputBarViewController {
         } else {
             color = UIColor.from(scheme: .iconNormal)
         }
-        
+
         markdownButton.setIconColor(color, for: .normal)
         markdownButton.isEnabled = !inputBar.isEditing
     }
-    
+
     @objc
     private func markdownButtonTapped(_ sender: IconButton) {
 
@@ -52,7 +51,7 @@ extension ConversationInputBarViewController {
         } else {
             inputBar.setInputBarState(.writing(ephemeral: ephemeralState), animated: true)
         }
-        
+
         updateMarkdownButton()
         updateRightAccessoryView()
     }

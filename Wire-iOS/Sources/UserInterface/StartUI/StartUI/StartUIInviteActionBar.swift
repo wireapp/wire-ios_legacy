@@ -25,8 +25,7 @@ final class StartUIInviteActionBar: UIView {
 
     private(set) var inviteButton: Button!
 
-    private let padding:CGFloat = 12
-
+    private let padding: CGFloat = 12
 
     init() {
         super.init(frame: .zero)
@@ -55,7 +54,6 @@ final class StartUIInviteActionBar: UIView {
         }
     }
 
-
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: isHidden ? 0 : 56.0)
     }
@@ -76,10 +74,9 @@ final class StartUIInviteActionBar: UIView {
               let endOrigin = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.origin.y
         else { return }
 
-
         let diff: CGFloat = beginOrigin - endOrigin
 
-        UIView.animate(withKeyboardNotification: notification, in: self, animations: { [weak self] keyboardFrameInView in
+        UIView.animate(withKeyboardNotification: notification, in: self, animations: { [weak self] _ in
             guard let weakSelf = self else { return }
 
             weakSelf.bottomEdgeConstraint.constant = -weakSelf.padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)

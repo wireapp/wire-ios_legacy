@@ -26,13 +26,25 @@ protocol AVSIdentifierProvider {
 }
 
 extension AVSVideoView: AVSIdentifierProvider {
-    
+
     var stream: Stream {
         return Stream(
             streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
             participantName: nil,
             microphoneState: .unmuted,
-            videoState: .none)
+            videoState: .none,
+            activeSpeakerState: .inactive
+        )
+    }
+}
+
+private extension Stream {
+    var isParticipantUnmutedAndSpeakingNow: Bool {
+        return activeSpeakerState.isSpeakingNow && microphoneState == .unmuted
+    }
+
+    var isParticipantUnmutedAndActive: Bool {
+        return activeSpeakerState != .inactive && microphoneState == .unmuted
     }
 }
 
@@ -41,95 +53,112 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
-            updateFillMode()
+            updateActiveSpeakerFrame()
         }
     }
-    
+
+    var shouldShowActiveSpeakerFrame: Bool {
+        didSet {
+            updateActiveSpeakerFrame()
+        }
+    }
+
+    /// indicates wether or not the view is shown in full in the grid
+    var isMaximized: Bool = false {
+        didSet {
+            updateActiveSpeakerFrame()
+        }
+    }
+
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
     private var isCovered: Bool
-    
+
     private var adjustedInsets: UIEdgeInsets {
         safeAreaInsetsOrFallback.adjusted(for: delta)
     }
-    
+
     private var userDetailsAlpha: CGFloat {
         isCovered ? 0 : 1
     }
-    
+
     let userDetailsView = VideoParticipantDetailsView()
-    
-    init(stream: Stream, isCovered: Bool) {
+
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
         self.stream = stream
         self.isCovered = isCovered
-        
+        self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+
         super.init(frame: .zero)
 
         setupViews()
         createConstraints()
         updateUserDetails()
-        
+        updateActiveSpeakerFrame()
+
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
+
     // MARK: - Setup
     func updateUserDetails() {
         userDetailsView.name = stream.participantName
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
     }
-    
-    func updateFillMode() {
-        // no-op
-    }
-    
+
     func setupViews() {
+        layer.borderColor = UIColor.accent().cgColor
+        layer.borderWidth = 0
         backgroundColor = .graphite
         userDetailsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userDetailsView)
         userDetailsView.alpha = 0.0
     }
-    
+
     func createConstraints() {
         detailsConstraints = UserDetailsConstraints(
             view: userDetailsView,
             superview: self,
             safeAreaInsets: adjustedInsets
         )
-       
+
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
+    // MARK: - Active Speaker Frame
+
+    private func updateActiveSpeakerFrame() {
+        let showFrame = shouldShowActiveSpeakerFrame
+            && stream.isParticipantUnmutedAndSpeakingNow
+            && !isMaximized
+        layer.borderWidth = showFrame ? 1 : 0
+    }
+
     // MARK: - Orientation & Layout
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         detailsConstraints?.updateEdges(with: adjustedInsets)
     }
-    
+
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
-                deviceOrientation: UIDeviceOrientation)
-    {
+                deviceOrientation: UIDeviceOrientation) {
         guard let superview = superview else { return }
-        
+
         delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
                                  deviceOrientation: deviceOrientation)
-        
+
         transform = CGAffineTransform(rotationAngle: delta.radians)
         frame = superview.bounds
-        
+
         layoutSubviews()
     }
-        
+
     // MARK: - Visibility
     @objc private func updateUserDetailsVisibility(_ notification: Notification?) {
         guard let isCovered = notification?.userInfo?[VideoGridViewController.isCoveredKey] as? Bool else {
@@ -144,6 +173,17 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
                 self.userDetailsView.alpha = self.userDetailsAlpha
         })
     }
+
+    // MARK: - Accessibility for automation
+    override var accessibilityIdentifier: String? {
+        get {
+            let name = stream.participantName ?? ""
+            let maximizationState = isMaximized ? "maximized" : "minimized"
+            let activityState = stream.isParticipantUnmutedAndActive ? "active" : "inactive"
+            return "VideoView.\(name).\(maximizationState).\(activityState)"
+        }
+        set {}
+    }
 }
 
 // MARK: - User Details Constraints
@@ -151,9 +191,9 @@ private struct UserDetailsConstraints {
     private let bottom: NSLayoutConstraint
     private let leading: NSLayoutConstraint
     private let trailing: NSLayoutConstraint
-    
+
     private let margin: CGFloat = 8
-    
+
     init(view: UIView, superview: UIView, safeAreaInsets insets: UIEdgeInsets) {
         bottom = view.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
         leading = view.leadingAnchor.constraint(equalTo: superview.leadingAnchor)
@@ -161,7 +201,7 @@ private struct UserDetailsConstraints {
         updateEdges(with: insets)
         NSLayoutConstraint.activate([bottom, leading, trailing])
     }
-    
+
     func updateEdges(with insets: UIEdgeInsets) {
         leading.constant = margin + insets.left
         trailing.constant = -(margin + insets.right)

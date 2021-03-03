@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -21,7 +20,7 @@ import UIKit
 
 extension UIViewControllerTransitioningDelegate where Self: UIViewController {
     func show(_ viewController: UIViewController,
-              animated: Bool, completion: (() -> ())?) {
+              animated: Bool, completion: (() -> Void)?) {
         viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .currentContext
 

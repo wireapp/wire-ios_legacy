@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1140"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -53,6 +53,9 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -60,6 +63,15 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testUploadedCell_fromOtherUser()">
+               </Test>
+               <Test
+                  Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -156,7 +168,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-DisableHockeyUpdates 1"
+            argument = "-DisableAppCenterUpdates 1"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
@@ -164,11 +176,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-UseConferenceCalling 1"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-UseHockey 1"
+            argument = "--use-app-center=0"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

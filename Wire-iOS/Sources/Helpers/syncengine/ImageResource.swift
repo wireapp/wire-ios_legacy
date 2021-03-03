@@ -36,49 +36,49 @@ extension ZMConversationMessage {
 }
 
 extension ZMTextMessageData {
-    
+
     var linkPreviewImage: ImageResource {
         return LinkPreviewImageResourceAdaptor(textMessageData: self)
     }
-    
+
 }
 
 extension ZMFileMessageData {
-    
+
     var thumbnailImage: PreviewableImageResource {
         return FileMessageImageResourceAdaptor(fileMesssageData: self)
     }
-    
+
 }
 
 extension ZMImageMessageData {
-    
+
     var image: PreviewableImageResource {
         return ImageMessageImageResourceAdaptor(imageMessageData: self)
     }
-    
+
 }
 
 struct LinkPreviewImageResourceAdaptor: ImageResource {
-    
+
     let textMessageData: ZMTextMessageData
-    
+
     var cacheIdentifier: String? {
         return textMessageData.linkPreviewImageCacheKey?.appending("-link")
     }
-    
+
     var isAnimatedGIF: Bool {
         return false
     }
-    
+
     func requestImageDownload() {
         textMessageData.requestLinkPreviewImageDownload()
     }
-    
+
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
         textMessageData.fetchLinkPreviewImageData(with: queue, completionHandler: completionHandler)
     }
-    
+
 }
 
 struct LinkAttachmentImageResourceAdaptor: ImageResource {
@@ -130,9 +130,9 @@ struct LinkAttachmentImageResourceAdaptor: ImageResource {
 }
 
 struct FileMessageImageResourceAdaptor: PreviewableImageResource {
-    
+
     let fileMesssageData: ZMFileMessageData
-    
+
     var cacheIdentifier: String? {
         return fileMesssageData.imagePreviewDataIdentifier?.appending("-file")
     }
@@ -144,29 +144,29 @@ struct FileMessageImageResourceAdaptor: PreviewableImageResource {
     var contentSize: CGSize {
         return CGSize(width: 250, height: 140)
     }
-    
+
     var isAnimatedGIF: Bool {
         return false
     }
-    
+
     func requestImageDownload() {
         fileMesssageData.requestImagePreviewDownload()
     }
-    
+
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
         fileMesssageData.fetchImagePreviewData(queue: queue, completionHandler: completionHandler)
     }
-    
+
 }
 
 struct ImageMessageImageResourceAdaptor: PreviewableImageResource {
-    
+
     let imageMessageData: ZMImageMessageData
-    
+
     var cacheIdentifier: String? {
         return imageMessageData.imageDataIdentifier?.appending("-image")
     }
-    
+
     var isAnimatedGIF: Bool {
         return imageMessageData.isAnimatedGIF
     }
@@ -178,25 +178,25 @@ struct ImageMessageImageResourceAdaptor: PreviewableImageResource {
     var contentSize: CGSize {
         return imageMessageData.originalSize
     }
-    
+
     func requestImageDownload() {
         imageMessageData.requestFileDownload()
     }
-    
+
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
         imageMessageData.fetchImageData(with: queue, completionHandler: completionHandler)
     }
-    
+
 }
 
 protocol ImageResource {
-    
+
     var cacheIdentifier: String? { get }
     var isAnimatedGIF: Bool { get }
 
     func requestImageDownload()
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (_ imageData: Data?) -> Void)
-    
+
 }
 
 protocol PreviewableImageResource: ImageResource {
@@ -212,7 +212,7 @@ enum ImageSizeLimit {
 }
 
 extension ImageSizeLimit {
-    
+
     var cacheKeyExtension: String {
         switch self {
         case .none:
@@ -228,48 +228,48 @@ extension ImageSizeLimit {
 }
 
 extension ImageResource {
-    
+
     /// Fetch image data and calls the completion handler when it is available on the main queue.
     func fetchImage(cache: ImageCache<AnyObject> = MediaAssetCache.defaultImageCache,
                     sizeLimit: ImageSizeLimit = .deviceOptimized,
                     completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
-        
+
         guard let cacheIdentifier = self.cacheIdentifier else {
             return completion(nil, false)
         }
-        
+
         let isAnimatedGIF = self.isAnimatedGIF
         var sizeLimit = sizeLimit
-        
+
         if isAnimatedGIF {
             // animated GIFs can't be resized
             sizeLimit = .none
         }
-        
+
         let cacheKey = "\(cacheIdentifier)_\(sizeLimit.cacheKeyExtension)" as NSString
-        
+
         if let image = cache.cache.object(forKey: cacheKey) as? MediaAsset {
             return completion(image, true)
         }
-        
+
         ZMUserSession.shared()?.enqueue {
             self.requestImageDownload()
         }
-        
+
         cache.dispatchGroup.enter()
-        
+
         fetchImageData(queue: cache.processingQueue) { (imageData) in
             var image: MediaAsset?
-            
+
             defer {
                 DispatchQueue.main.async {
                     completion(image, false)
                     cache.dispatchGroup.leave()
                 }
             }
-            
+
             guard let imageData = imageData else { return }
-            
+
             if isAnimatedGIF {
                 image = FLAnimatedImage(animatedGIFData: imageData)
             } else {
@@ -284,11 +284,11 @@ extension ImageResource {
                     image = UIImage(from: imageData, withShorterSideLength: limit)
                 }
             }
-            
+
             if let image = image {
                 cache.cache.setObject(image, forKey: cacheKey)
             }
         }
     }
-    
+
 }

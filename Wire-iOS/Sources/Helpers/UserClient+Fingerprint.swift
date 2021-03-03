@@ -16,23 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 import WireDataModel
 
-//TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
+// TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
 protocol UserClientTypeAttributedString {
-    func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool) -> NSAttributedString
+    func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key: AnyObject], boldAttributes: [NSAttributedString.Key: AnyObject], uppercase: Bool) -> NSAttributedString
 }
 
 private let UserClientIdentifierMinimumLength = 16
 
 extension Sequence where Element: UserClientType {
-    
+
     func sortedByRelevance() -> [UserClientType] {
         return sorted { (lhs, rhs) -> Bool in
-            
+
             if lhs.deviceClass == .legalHold {
                 return true
             } else if rhs.deviceClass == .legalHold {
@@ -42,42 +41,42 @@ extension Sequence where Element: UserClientType {
             }
         }
     }
-    
+
 }
 
 extension UserClientType {
-    
-    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key : AnyObject], boldAttributes: [NSAttributedString.Key : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+
+    public func attributedRemoteIdentifier(_ attributes: [NSAttributedString.Key: AnyObject], boldAttributes: [NSAttributedString.Key: AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
         let identifier = uppercase ? displayIdentifier.localizedUppercase : displayIdentifier
         let attributedRemoteIdentifier = identifier.fingerprintStringWithSpaces.fingerprintString(attributes: attributes, boldAttributes: boldAttributes)
-        
+
         identifierString.append(attributedRemoteIdentifier)
-        
+
         return NSAttributedString(attributedString: identifierString)
     }
-    
+
     /// This should be used when showing the identifier in the UI
     /// We manually add a padding if there was a leading zero
-    
+
     public var displayIdentifier: String {
         guard let remoteIdentifier = self.remoteIdentifier else {
             return ""
         }
-        
+
         var paddedIdentifier = remoteIdentifier
-        
+
         while paddedIdentifier.count < UserClientIdentifierMinimumLength {
             paddedIdentifier = "0" + paddedIdentifier
         }
-        
+
         return paddedIdentifier
     }
 }
 
 extension DeviceType {
-    
+
     var localizedDescription: String {
         switch self {
         case .permanent:
@@ -90,11 +89,11 @@ extension DeviceType {
             return "device.type.unknown".localized
         }
     }
-    
+
 }
 
 extension DeviceClass {
-    
+
     var localizedDescription: String {
         switch self {
         case .phone:
@@ -109,5 +108,5 @@ extension DeviceClass {
             return "device.class.unknown".localized
         }
     }
-    
+
 }

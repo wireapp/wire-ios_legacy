@@ -18,72 +18,81 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 protocol CallParticipantsViewControllerDelegate: class {
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController)
 }
 
 final class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
-    
+
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?
     weak var delegate: CallParticipantsViewControllerDelegate?
-    
+    private let selfUser: UserType
+
     var participants: CallParticipantsList {
         didSet {
             updateRows()
         }
     }
-    
+
     fileprivate var collectionView: CallParticipantsView!
     let allowsScrolling: Bool
-    
+
     var variant: ColorSchemeVariant = .light {
         didSet {
             updateAppearance()
         }
     }
-    
-    init(participants: CallParticipantsList, allowsScrolling: Bool) {
+
+    init(participants: CallParticipantsList,
+         allowsScrolling: Bool,
+         selfUser: UserType) {
         self.participants = participants
         self.allowsScrolling = allowsScrolling
+        self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
     }
-    
-    convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput) {
-        self.init(participants: configuration.accessoryType.participants, allowsScrolling: true)
+
+    convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput,
+                     selfUser: UserType = ZMUser.selfUser()) {
+        self.init(participants: configuration.accessoryType.participants,
+                  allowsScrolling: true,
+                  selfUser: selfUser)
         variant = configuration.effectiveColorVariant
         view.backgroundColor = configuration.overlayBackgroundColor
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         view = PassthroughTouchesView()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
         updateAppearance()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         topConstraint?.constant = navigationController?.navigationBar.frame.maxY ?? 0
     }
-    
+
     private func setupViews() {
         title = "call.participants.list.title".localized(uppercased: true)
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
-        
-        let collectionView = CallParticipantsView(frame: .zero, collectionViewLayout: collectionViewLayout)
+
+        let collectionView = CallParticipantsView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = allowsScrolling
         collectionView.delegate = self
@@ -91,7 +100,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         view.addSubview(collectionView)
         CallParticipantsCellConfiguration.prepare(collectionView)
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -103,11 +112,11 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         let widthConstraint = collectionView.widthAnchor.constraint(equalToConstant: 414)
         widthConstraint.priority = UILayoutPriority.defaultHigh
         widthConstraint.isActive = true
-        
+
         topConstraint = collectionView.topAnchor.constraint(equalTo: view.topAnchor)
         topConstraint?.isActive = true
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateRows()
@@ -119,36 +128,36 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
 
     func computeVisibleRows() -> CallParticipantsList {
         guard !allowsScrolling else { return participants }
-        
+
         let visibleRows = Int(collectionView.bounds.height / cellHeight)
         guard visibleRows > 0 else { return [] }
-        
+
         if participants.count > visibleRows {
             return participants[0..<(visibleRows - 1)] + [.showAll(totalCount: participants.count)]
         } else {
             return participants
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: cellHeight)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
         return true
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
         return true
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.callParticipantsViewControllerDidSelectShowMore(viewController: self)
     }
-    
+
     private func updateAppearance() {
         collectionView?.colorSchemeVariant = variant
     }

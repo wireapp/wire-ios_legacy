@@ -46,12 +46,12 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         sut.passwordTextField?.text = "12345678"
         sut.passwordTextFieldChanged(sut.passwordTextField!)
 
-        verify(matching:sut.alertController)
+        verify(matching: sut.alertController)
     }
 
     func testForRemoveDeviceContext() {
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
 
-        verify(matching:sut.alertController)
+        verify(matching: sut.alertController)
     }
 }

@@ -200,7 +200,7 @@
 "folder.creation.name.placeholder" = "Folder name";
 
 "folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.empty.hint" = "انشئ مجلدا جديدا بالضغط على زر +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -223,7 +223,7 @@
 "list.section.groups" = "المجموعات";
 "list.section.contacts" = "أشخاص";
 "list.section.requests" = "Requests";
-"list.section.favorites" = "Favorites";
+"list.section.favorites" = "المفضلة";
 
 "conversation.voiceover.verified" = "موثّق";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -324,7 +324,7 @@
 "conversation.create.options.title" = "خيارات المحادثة";
 "conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
 "conversation.create.guests.title" = "اسمح بالضيوف";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.guests.subtitle" = "إتاحة هذه المحادثة للخدمات والأشخاص خارج فريقك.";
 "conversation.create.receipts.title" = "إشعار بالقراءة";
 "conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
@@ -420,7 +420,7 @@
 "content.system.other_removed_you" = "قام %@ بإزالتك";
 "content.system.you_removed_other" = "قمت بإزالة %@";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "الخدمات لديها وصول لمحتوى هذه المحادثة";
 
 // Link attachment messages
 
@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "اتّصلت أنت";
 "content.system.ephemeral_time_remaining" = "غادر %@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "أنت";
-"content.system.this_device" = "هذا الجهاز";
 
 "content.system.call.called" = "اتصل %@";
 "content.system.call.called-you" = "اتصل %@";
@@ -517,33 +519,32 @@
 
 //
 
-"content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "جهاز جديد";
-"content.system.started_using" = "بدأت استخدام";
 "content.system.is_verified" = "تم التّحقق من رمز التشفير";
 
 "content.system.new_users" = "انضمّ مستخدم جديد.";
 "content.system.verify_devices" = "التحقق من الأجهزة";
 
-"content.system.unverified" = "%@ أزال واحدً من %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "أجهزتك";
-"content.system.other_devices" = "أجهزة %@";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "لم تستخدم هذا الجهاز لمدة. بعض الرسائل لن تظهر هُنَا.";
 "content.system.missing_messages.subtitle_start" = "في هذه الأثناء،";
 
-"content.system.cannot_decrypt" = "لم يتم تلقي رسالة من %@.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "أنت";
-"content.system.cannot_decrypt.why_part" = "لماذا؟";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "تغيّرت هوية جهاز %@. رسالة غير مُستلمة.";
-"content.system.cannot_decrypt.identity.you_part" = "الخاص بك";
-"content.system.cannot_decrypt.identity.otherUser_part" = "خاص بـ%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "معرفة المزيد";
-"content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "تعذر عرض هذه الرسالة. ربما تستخدم إصدارًا قديمًا من Wire.";
 
@@ -582,7 +583,7 @@
 "content.message.reply.original_timestamp.date" = "Original message from %@";
 "content.message.reply.original_timestamp.time" = "Original message from %@";
 "content.message.reply.broken_message" = "لا يمكنك رؤية هذه الرسالة.";
-"content.message.reply.edited_message" = "Edited";
+"content.message.reply.edited_message" = "تم تعديله";
 
 "content.message.open_link_alert.title" = "فتح الرابط";
 "content.message.open_link_alert.message" = "سيأخذك هذا إلى\n%@";
@@ -674,6 +675,11 @@
 "call.participants.show_all" = "Show All (%@)";
 "call.participants.list.title" = "المشاركون";
 
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
 "call.video.paused" = "تم إيقاف الفيديو مؤقتاً";
 
 "call.video.too_many.alert.title" = "Too many people for Video";
@@ -684,6 +690,11 @@
 "call.degraded.alert.message.user" = "%@ بدأ باستخدام جهاز جديد.";
 "call.degraded.alert.message.unknown" = "بدأ شخص ما باستخدام جهاز جديد.";
 "call.degraded.alert.action.continue" = "الاتصال على أي حال";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "This will end your other call.";
 
@@ -727,7 +738,7 @@
 "participants.section.services" = "خدمات (%d)";
 "participants.section.settings" = "الخيارات";
 "participants.footer.add_title" = "إضافة مشاركين";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "لا يوجد مشرفين.";
 "participants.section.members.footer" = "لا يوجد اعضاء.";
 
@@ -741,7 +752,7 @@
 "meta.menu.unarchive" = "إلغاء الأرشفة";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
-"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.move_to_folder" = "انقله إلى…";
 "meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "كتم الصوت";
 "meta.menu.silence.unmute" = "إلغاء كتم الصوت";
@@ -754,7 +765,7 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "مسح المحتوى؟";
 "meta.menu.delete_content.dialog_message" = "هذا سيمسح تاريخ المحادثة على كل أجهزتك.";
 "meta.menu.delete_content.leave_as_well_message" = "غادر المحادثة أيضا";
 "meta.menu.delete_content.button_cancel" = "إلغاء";
@@ -816,8 +827,8 @@
 "profile.connection_request_dialog.button_connect" = "تواصل";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_dialog.title" = "حذف محادثة المجموعة؟";
+"conversation.delete_request_dialog.message" = "هذا سوف يحذف المجموعة وكامل المحتوى لكل المشاركين على جميع الأجهزة. ليس هناك خيار لاستعادة المحتوى. سيتم إشعار المشاركين جميعهم.";
 "conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
@@ -832,8 +843,8 @@
 "profile.unblock_button_title" = "إلغاء الحظر…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "إضافة إلى المفضلة";
+"profile.unfavorite_button_title" = "إزالة من المفضلة";
 
 "profile.block_button_title_action" = "حظر \n";
 "profile.unblock_button_title_action" = "إلغاء حظر";
@@ -843,7 +854,7 @@
 "profile.create_conversation_button_title" = "إنشاء مجموعة";
 "profile.open_conversation_button_title" = "افتح المحادثة";
 
-"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_enabled_memo.header" = "لقد فعّلتَ إيصالات القراءة";
 "profile.read_receipts_disabled_memo.header" = "لقد عطّلتَ إيصالات القراءة";
 "profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
 
@@ -1026,8 +1037,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
-"self.settings.privacy_analytics.title" = "أرسل بيانات كمجهول";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "تلقي النشرة الإخبارية";
 "self.settings.receiveNews_and_offers.description.title" = "تحصّل على الأخبار و تحديثات منتجات Wire عبر البريد الإلكتروني.";
@@ -1160,14 +1177,8 @@
 
 "self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "كلمة مرور خاطئة. الرجاء حاول مرة أخرى.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
-
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
 "self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط";
 "self.settings.privacy_security.disable_link_previews.footer" = "قد تظهر المعاينات للروابط من الأشخاص الآخرين.";
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "سيؤدي هذا إلى محو محتوى جميع المحادثات الخاصة بك بشكل دائم.";
 
 "self.settings.advanced.title" = "متقدم";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "اكتشاف الأخطاء وإصلاحها";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
@@ -1323,11 +1331,11 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "اسمح بالضيوف";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
+"guest_room.allow_guests.subtitle" = "إتاحة هذه المحادثة للخدمات والأشخاص خارج فريقك.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "إزالة";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
-"guest_room.revoke_link.action" = "Revoke Link";
+"guest_room.revoke_link.action" = "إلغاء الرابط";
 
 "guest_room.error.generic.title" = "حدث خطأ";
 "guest_room.error.generic.message" = "Check your connection and try again";
@@ -1406,10 +1414,10 @@
 // SSO – Company Login
 "login.sso.alert.title" = "Enterprise Login";
 "login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
-"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.message.sso_only" = "فضلًا أدخل رمزك لتسجيل الدخول الأحادي:";
 "login.sso.alert.action" = "تسجيل الدخول";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "رمز SSO";
 
 "login.sso.start_error_title" = "Cannot Start Enterprise Login";
 "login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
@@ -1434,7 +1442,7 @@
 "registration.no_history.restore_backup.completed" = "اكتملت";
 
 // Password Import Alert
-"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.title" = "هذه النسخة الاحتياطية محمية بكلمة سرية.";
 "registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
 "registration.no_history.restore_backup.password.placeholder" = "كلمة المرور";
 "registration.no_history.restore_backup.password_error.title" = "Wrong Password";
@@ -1674,11 +1682,11 @@
 "availability.busy" = "مشغول";
 
 "availability.reminder.away.title" = "أنت الآن غائب";
-"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.away.message" = "ستظهر كغائب للأشخاص الآخرين. لن تتلق إشعارات عن أي مكالمات واردة أو رسائل.";
 "availability.reminder.busy.title" = "أنت الآن مشغول";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "ستظهر كمشغول للأشخاص الآخرين. سوف تتلقى إشعارات فقط للردود، عند الإشارة إليك، أو مكالمات المحادثات غير المكتومة.";
 "availability.reminder.available.title" = "أنت الآن متوفر";
-"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.available.message" = "ستظهر كمتاح للآخرين. سوف تتلقى إشعارات للمكالمات الواردة وللرسائل وفقًا إعدادات الإشعارات في كل محادثة.";
 "availability.reminder.none.title" = "لم تقم بتحديد الحالة";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "لا تظهر هذه المعلومة مرة أخرى";
@@ -1715,10 +1723,10 @@
 
 // Deep Link
 "url_action.invalid_user.title" = "لم يتمكّن Wire مِن العثور على هذا الشخص.";
-"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+"url_action.invalid_user.message" = "ربما ليست لديك صلاحية مع هذا الحساب أو أنه لم يعد موجودًا.";
 
 "url_action.invalid_conversation.title" = "لا يمكن لواير فتح هذه المحادثة.";
-"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+"url_action.invalid_conversation.message" = "ربما ليست لديك صلاحية مع هذا الحساب أو أن الشخص ربما ليس على واير.";
 
 "url_action.authorization_required.title" = "Authorization required.";
 "url_action.authorization_required.message" = "You need to log in to view this content.";
@@ -1735,9 +1743,9 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "No one has liked this message yet.";
-"message_details.empty_read_receipts" = "No one has read this message yet.";
-"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.empty_likes" = "لم يُعجب أحد بهذه الرسالة بعد.";
+"message_details.empty_read_receipts" = "لم يقرأ أحد هذه الرسالة بعد.";
+"message_details.read_receipts_disabled" = "إيصالات القراءة لم تكن فعالة عندما أُرسلت هذه الرسالة.";
 "message_details.combined_title" = "Message Details";
 "message_details.likes_title" = "Liked";
 "message_details.receipts_title" = "Read";
@@ -1777,8 +1785,8 @@
 "legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
-"account_deleted_session_expired_alert.title" = "Your session expired";
-"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+"account_deleted_session_expired_alert.title" = "انتهت مدة صلاحية جلستك";
+"account_deleted_session_expired_alert.message" = "إما أن التطبيق لم يتواصل مع الخادم لمدة طويلة، أو أن جلستك قد تم إبطالها عن بعد.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
@@ -1789,13 +1797,13 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "رمز المرور";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation
@@ -1811,6 +1819,12 @@
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "Wrong passcode";
 "unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
@@ -1832,3 +1846,12 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

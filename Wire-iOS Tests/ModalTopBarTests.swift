@@ -16,13 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 @testable import Wire
 
 class ModalTopBarTests: ZMSnapshotTestCase {
-    
+
     var sut: ModalTopBar! = nil
-    
+
     override func setUp() {
         super.setUp()
         sut = ModalTopBar()
@@ -32,12 +31,12 @@ class ModalTopBarTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItRendersCorrectly_ShortTitle() {
         sut.configure(title: "Tim Cook", subtitle: nil, topAnchor: sut.topAnchor)
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
     func testThatItRendersCorrectly_LongTitle() {
         sut.configure(title: "Adrian Hardacre, Amelia Henderson & Dylan Parsons",
                       subtitle: nil,

@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper  {
+final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
 
     var sut: ConversationViewController!
     var mockConversation: ZMConversation!
@@ -33,7 +33,7 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         coreDataFixture = CoreDataFixture()
         mockConversation = createTeamGroupConversation()
         mockZMUserSession = MockZMUserSession()
-    
+
         let mockAccount = Account(userName: "mock user", userIdentifier: UUID())
         let selfUser = MockUserType.createSelfUser(name: "Bob")
         let zClientViewController = ZClientViewController(account: mockAccount, selfUser: selfUser)
@@ -43,15 +43,15 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
                                          visibleMessage: nil,
                                          zClientViewController: zClientViewController)
     }
-    
+
     override func tearDown() {
         sut = nil
         coreDataFixture = nil
-        
+
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 }
@@ -59,24 +59,24 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
 // MARK: - Disable / Enable search in conversations
 
 extension ConversationViewControllerSnapshotTests {
-    
+
     func testThatTheSearchButtonIsDisabledIfMessagesAreEncryptedInTheDataBase() {
         // given
-        
+
         // when
         mockZMUserSession.encryptMessagesAtRest = true
-        
+
         // then
-        XCTAssertFalse(sut.collectionsBarButtonItem.isEnabled)
+        XCTAssertFalse(sut.shouldShowCollectionsButton)
     }
-    
+
     func testThatTheSearchButtonIsEnabledIfMessagesAreNotEncryptedInTheDataBase() {
         // given
-        
+
         // when
         mockZMUserSession.encryptMessagesAtRest = false
-        
+
         // then
-        XCTAssertTrue(sut.collectionsBarButtonItem.isEnabled)
+        XCTAssertTrue(sut.shouldShowCollectionsButton)
     }
 }

@@ -22,7 +22,7 @@ import XCTest
 class LocationSendViewControllerTests: ZMSnapshotTestCase {
 
     var sut: LocationSendViewController! = nil
-    
+
     override func setUp() {
         super.setUp()
         sut = LocationSendViewController()
@@ -32,22 +32,22 @@ class LocationSendViewControllerTests: ZMSnapshotTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatItRendersSendControllerCorrectly_ShortAddress() {
         sut.address = "Hackescher Markt"
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersSendControllerCorrectly_MediumAddress() {
         sut.address = "Hackescher Markt, 10178 Berlin"
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersSendControllerCorrectly_LongAddress() {
         sut.address = "Hackescher Markt, Rosenthaler Straße 41, 10178 Berlin"
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot())
     }
-    
+
 }
 
 private extension UIViewController {

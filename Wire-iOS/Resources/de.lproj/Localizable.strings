@@ -221,7 +221,7 @@
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "list.section.groups" = "Gruppen";
-"list.section.contacts" = "Kontakte";
+"list.section.contacts" = "Personen";
 "list.section.requests" = "Anfragen";
 "list.section.favorites" = "Favoriten";
 
@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Sie haben angerufen";
 "content.system.ephemeral_time_remaining" = "%@ verbleibend";
 
+"content.system.self_user_new_client" = "**Sie** haben begonnen, [ein neues Gerät](%@) zu nutzen";
+"content.system.self_user_new_self_client" = "**Sie** haben begonnen, [dieses Gerät](%@) zu nutzen";
+
 "content.system.you_started" = "Sie";
-"content.system.this_device" = "dieses Gerät";
 
 "content.system.call.called" = "%@ hat angerufen";
 "content.system.call.called-you" = "%@ haben angerufen";
@@ -517,33 +519,32 @@
 
 //
 
-"content.system.reactivated_device" = "Sie haben %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
+"content.system.reactivated_device" = "Sie haben begonnen, [dieses Gerät](%@) wieder zu nutzen. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
-"content.system.new_device" = "ein neues Gerät";
-"content.system.started_using" = "benutzt";
 "content.system.is_verified" = "Alle Fingerabdrücke sind überprüft";
 
 "content.system.new_users" = "Teilnehmer hinzugefügt.";
 "content.system.verify_devices" = "Überprüfe Geräte";
 
-"content.system.unverified" = "%@ haben die Überprüfung für ein Gerät von %@ widerrufen"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "Ihre Geräte";
-"content.system.other_devices" = "%@s Geräte";
+"content.system.unverified_self_devices" = "**Sie** haben eines [Ihrer Geräte](%@) nicht überprüft";
+"content.system.unverified_other_devices" = "**Sie** haben eines von [%1$@s Geräten](%2$@) nicht überprüft";
 
 "content.system.missing_messages.title" = "Sie haben Wire eine Weile nicht benutzt. Einige ältere Nachrichten könnten nicht angezeigt werden.";
 "content.system.missing_messages.subtitle_start" = "In der Zwischenzeit";
 
-"content.system.cannot_decrypt" = "Eine Nachricht von %@ wurde nicht empfangen.";
+"content.system.cannot_decrypt.self" = "Eine Nachricht von **Ihnen** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.other" = "Eine Nachricht von **%@** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.reset_session" = "Entschlüsselung künftiger Nachrichten";
+"content.system.cannot_decrypt.error_details" = "(Behobener Fehler: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "Ihnen";
-"content.system.cannot_decrypt.why_part" = "Warum?";
+"content.system.cannot_decrypt_resolved.self" = "Sie können jetzt Nachrichten von sich selbst entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **müssen Sie sie erneut senden.**";
+"content.system.cannot_decrypt_resolved.other" = "Sie können jetzt künftige Nachrichten von **%1$@**entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **bitten Sie %1$@, sie erneut zu senden.**";
 
-"content.system.cannot_decrypt.identity" = "%@ Geräte-Identität hat sich geändert. Nachricht kann nicht entschlüsselt werden.";
-"content.system.cannot_decrypt.identity.you_part" = "Ihre";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@s"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Mehr erfahren";
-"content.system.cannot_decrypt.otherDevice_part" = "(Gerät %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Ihre** Geräte-Identität hat sich geändert. Unzustellbare Nachricht.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** Geräte-Identität hat sich geändert. Unzustellbare Nachricht."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = " **%@ konnte einige Ihrer Nachrichten nicht entschlüsseln, hat das Problem aber gelöst**. Dies betraf alle Unterhaltungen, die Sie gemeinsam nutzen.";
+"content.system.session_reset.self" = " **Sie konnten einige Ihrer Nachrichten nicht entschlüsseln, haben das Problem aber gelöst**. Dies betraf alle Unterhaltungen.";
 
 "content.system.unknown_message.body" = "Diese Meldung konnte nicht angezeigt werden. Möglicherweise verwenden Sie eine ältere Version von Wire.";
 
@@ -630,8 +631,8 @@
 "voice.network_error.title" = "Keine Internetverbindung";
 "voice.status.cbr" = "Konstante Bitrate";
 "voice.network_error.body" = "Sie brauchen eine Internetverbindung, um anzurufen. Überprüfen Sie die Verbindung und versuchen Sie es erneut.";
-"voice.degradation.new_self_device" = "Sie haben ein neues Gerät hinzugefügt.";
-"voice.degradation.new_user_device" = "%@ hat ein neues Gerät hinzugefügt.";
+"voice.degradation.new_self_device" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"voice.degradation.new_user_device" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
 "voice.degradation_outgoing.prompt" = "Möchten Sie noch anrufen?";
 "voice.degradation_incoming.prompt" = "Möchten Sie den Anruf noch annehmen?";
 "voice.accept_button.title" = "Annehmen";
@@ -674,16 +675,26 @@
 "call.participants.show_all" = "Alle anzeigen (%@)";
 "call.participants.list.title" = "Teilnehmer";
 
+"call.overlay.switch_to.speakers" = "SPRECHER";
+"call.overlay.switch_to.all" = "ALLE";
+
+"call.grid.no_active_speakers" = "Keine aktiven Sprecher...";
+
 "call.video.paused" = "Video wurde angehalten";
 
 "call.video.too_many.alert.title" = "Zu viele Teilnehmer";
 "call.video.too_many.alert.message" = "Videoanrufe funktionieren nur in Gruppen von 4 oder weniger Personen.";
 
 "call.degraded.alert.title" = "Neues Gerät";
-"call.degraded.alert.message.self" = "Sie haben ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.user" = "%@ hat ein neues Gerät hinzugefügt.";
-"call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
+"call.degraded.alert.message.self" = "Sie haben begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.user" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"call.degraded.alert.message.unknown" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
+
+"call.degraded.ended.alert.title" = "Anruf beendet";
+"call.degraded.ended.alert.message.self" = "Der Anruf wurde unterbrochen, weil Sie begonnen haben, ein neues Gerät zu nutzen.";
+"call.degraded.ended.alert.message.user" = "Der Anruf wurde unterbrochen, weil %@ kein verifizierter Kontakt mehr ist.";
+"call.degraded.ended.alert.message.unknown" = "Der Anruf wurde unterbrochen, weil jemand nicht mehr als verifizierter Kontakt gilt.";
 
 "call.alert.ongoing.alert_title" = "Dies wird den anderen Anruf beenden.";
 
@@ -727,7 +738,7 @@
 "participants.section.services" = "Dienste (%d)";
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und Ihnen.";
+"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Gruppenunterhaltung teilnehmen.";
 "participants.section.admins.footer" = "Es gibt keine Admins.";
 "participants.section.members.footer" = "Es gibt keine Mitglieder.";
 
@@ -777,9 +788,9 @@
 "meta.leave_conversation_button_leave_and_delete" = "Verlassen und Verlauf löschen";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
-"meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
-"meta.degraded.degradation_reason_message.someone" = "Jemand verwendet ein neues Gerät.";
+"meta.degraded.degradation_reason_message.singular" = "%@ hat begonnen, ein neues Gerät zu nutzen.";
+"meta.degraded.degradation_reason_message.plural" = "%@ hat begonnen, neue Geräte zu nutzen.";
+"meta.degraded.degradation_reason_message.someone" = "Jemand hat begonnen, ein neues Gerät zu nutzen.";
 "meta.degraded.dialog_message" = "Möchten Sie die Nachricht noch senden?";
 "meta.degraded.verify_devices_button" = "Geräte überprüfen…";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
@@ -999,7 +1010,7 @@
 "self.settings.enable_read_receipts.title" = "Lesebestätigungen senden";
 "self.settings.privacy_section_group.subtitle" = "Wenn diese Option deaktiviert ist, sieht man keine Lesebestätigungen von anderen.\nDies gilt nicht für Gruppen.";
 
-"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+"self.settings.encrypt_messages_at_rest.title" = "Ablageverschlüsselung für Nachrichten";
 
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
@@ -1026,8 +1037,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
+
+// Crash
+"self.settings.privacy_crash.title" = "Anonyme Fehlerberichte senden";
+"self.settings.privacy_crash_menu.description.title" = "Senden Sie anonyme Fehlerberichte und grundlegende Daten wie Versionsnummer und Betriebssystem, damit Wire Probleme in der App identifizieren und lösen kann.";
+
+// Analytics
 "self.settings.privacy_analytics.title" = "Anonyme Nutzungsdaten senden";
-"self.settings.privacy_analytics_menu.description.title" = "Anonymisierte Nutzungs- und Fehlerberichte schicken, um Wire zu verbessern.";
+"self.settings.privacy_analytics_menu.description.title" = "Anhand der Nutzungsdaten kann Wire verstehen, wie die App genutzt wird und wie sie verbessert werden kann. Die Daten sind anonym und umfassen nicht den Inhalt Ihrer Kommunikation (wie Nachrichten, Dateien oder Anrufe).";
 
 "self.settings.receiveNews_and_offers.title" = "Newsletter abonnieren";
 "self.settings.receiveNews_and_offers.description.title" = "Neuigkeiten und Informationen zu Produktaktualisierungen von Wire per E-Mail erhalten.";
@@ -1163,12 +1180,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Falsches Passwort. Bitte erneut versuchen.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Falsches Passwort. Falls das Passwort kürzlich geändert wurde, bitte eine Verbindung zum Internet herstellen und erneut versuchen.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Kennwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Kennwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
-"self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
 "self.settings.privacy_security.disable_link_previews.footer" = "Vorschauen für Links von anderen Personen können weiterhin angezeigt werden.";
 
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Dies löscht dauerhaft den Inhalt all Ihrer Unterhaltungen.";
 
 "self.settings.advanced.title" = "Erweitert";
-"self.settings.advanced.conference_calling.title" = "Telefonkonferenzen";
-"self.settings.advanced.conference_calling.subtitle" = "Hiermit aktivieren Sie Audio- und Videokonferenzen. Dies ermöglicht eine höhere Teilnehmerzahl.\n\n";
-"self.settings.advanced.conference_calling.toggle" = "Beta-Programm";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht";
 "self.settings.advanced.debugging_tools.title" = "Tools zur Fehlerbehebung";
@@ -1793,9 +1801,9 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Passwort erstellen";
-"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie dieses Kennwort vergessen ";
-"create_passcode.info_label.highlighted" = "kann es nicht wiederhergestellt werden.";
+"create_passcode.title_label" = "Kennwort erstellen";
+"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie es vergessen, **kann es nicht wiederhergestellt werden.**";
+"create_passcode.info_label_forced_applock" = "Erstellen Sie einen Kennwort, um Wire zu entsperren. Merken Sie es sich, da **es nicht wiederhergestellt werden kann**.";
 "create_passcode.create_button.title" = "Kennwort erstellen";
 
 // Custom app lock - create passcode validation
@@ -1811,6 +1819,12 @@
 "unlock.wipe_button" = "Zugang als neues Gerät";
 "unlock.error_label" = "Falsches Kennwort";
 "unlock.submit_button.title" = "entsperren";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "Es gab eine Änderung bei Wire";
+"warning_screen.main_info.forced_applock" = "Ihre Organisation muss Ihre App sperren, wenn Wire nicht verwendet wird, um die Sicherheit des Teams zu gewährleisten.";
+"warning_screen.info_label.forced_applock" = "Entsperren Sie Wire beim nächsten Mal genauso wie Ihr Telefon.";
+"warning_screen.info_label.non_forced_applock" = "Ihre Organisation braucht keine App-Sperre mehr. Ab jetzt können Sie problemlos auf Wire zugreifen.";
 
 // Wipe database
 
@@ -1832,3 +1846,12 @@
 
 "wipe_database_completion.title" = "Daten gelöscht";
 "wipe_database_completion.subtitle" = "Ihre Daten und Nachrichten wurden gelöscht. Sie können sich nun wieder anmelden.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Wire mit Face ID oder Kennwort entsperren";
+"appLockModule.message.touchID" = "Wire mit Touch ID oder Kennwort entsperren";
+"appLockModule.message.passcode" = "Wire mit Kennwort entsperren";
+"appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, Kennwort in den Geräteeinstellungen aktivieren";
+"appLockModule.unlockButton.title" = "Entsperren";
+"appLockModule.goToSettingsButton.title" = "Einstellungen öffnen";

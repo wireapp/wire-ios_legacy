@@ -61,7 +61,7 @@ final class ShapeView: LayerHostView<CAShapeLayer> {
 protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
-    var onTap: ((Account?) -> ())? { get set }
+    var onTap: ((Account?) -> Void)? { get set }
     func update()
     var account: Account { get }
 
@@ -141,7 +141,7 @@ class BaseAccountView: UIView {
         self.layoutSubviews()
     }
 
-    var onTap: ((Account?) -> ())? = .none
+    var onTap: ((Account?) -> Void)? = .none
 
     var accessibilityState: String {
         var result = "conversation_list.header.self_team.accessibility_value.\(selected ? "active" : "inactive")".localized

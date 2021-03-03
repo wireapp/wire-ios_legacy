@@ -16,45 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import WireSyncEngine
+
+extension GroupDetailsConversation where Self: ZMConversation {
+    var freeParticipantSlots: Int {
+        return ZMConversation.maxParticipants - localParticipants.count
+    }
+}
 
 extension ZMConversation {
     private enum NetworkError: Error {
         case offline
     }
 
-    static var useConferenceCalling: Bool {
-        return Settings.shared[.conferenceCalling] == true
-    }
-    
-    static var maxVideoCallParticipants: Int {
-        return useConferenceCalling ? maxParticipants : legacyGroupVideoParticipantLimit
-    }
-
     static let legacyGroupVideoParticipantLimit: Int = 4
 
     static let maxParticipants: Int = 500
-    
+
     static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
     }
-    
-    static var maxVideoCallParticipantsExcludingSelf: Int {
-        return maxVideoCallParticipants - 1
-    }
-    
-    var freeParticipantSlots: Int {
-        return type(of: self).maxParticipants - localParticipants.count
-    }
-    
+
     func addOrShowError(participants: [UserType]) {
         guard let session = ZMUserSession.shared(),
                 session.networkState != .offline else {
             self.showAlertForAdding(for: NetworkError.offline)
             return
         }
-        
+
         addParticipants(participants, userSession: ZMUserSession.shared()!) { result in
             switch result {
             case .failure(let error):
@@ -63,20 +52,20 @@ extension ZMConversation {
             }
         }
     }
-    
-    func removeOrShowError(participant user: UserType, completion: ((VoidResult)->())? = nil) {
+
+    func removeOrShowError(participant user: UserType, completion: ((VoidResult) -> Void)? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {
             self.showAlertForRemoval(for: NetworkError.offline)
             return
         }
 
-        /// if the user is not in this conversation, result = .success
+        // If the user is not in this conversation, result = .success
         self.removeParticipant(user, userSession: ZMUserSession.shared()!) { result in
             switch result {
             case .success:
                 if let serviceUser = user as? ServiceUser, user.isServiceUser {
-                    Analytics.shared().tagDidRemoveService(serviceUser)
+                    Analytics.shared.tagDidRemoveService(serviceUser)
                 }
             case .failure(let error):
                 self.showAlertForRemoval(for: error)
@@ -85,15 +74,15 @@ extension ZMConversation {
             completion?(result)
         }
     }
-    
+
     private func showErrorAlert(message: String) {
         let alertController = UIAlertController(title: "error.conversation.title".localized,
                                                 message: message,
                                                 alertAction: .ok(style: .cancel))
-        
+
         UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
-    
+
     private func showAlertForAdding(for error: Error) {
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
@@ -104,7 +93,7 @@ extension ZMConversation {
             showErrorAlert(message: "error.conversation.cannot_add".localized)
         }
     }
-    
+
     private func showAlertForRemoval(for error: Error) {
         switch error {
         case NetworkError.offline:

@@ -65,6 +65,10 @@ extension CGFloat {
         static let spinnerBackgroundAlpha: CGFloat = 0.93
     }
 
+    enum MessageCell {
+        static var paragraphSpacing: CGFloat = 8
+    }
+
     enum IconCell {
         static let IconWidth: CGFloat = 64
         static let IconSpacing: CGFloat = 16
@@ -109,4 +113,5 @@ extension CGFloat {
     enum TeamAccountView {
         static let imageInset: CGFloat = 2
     }
+
 }

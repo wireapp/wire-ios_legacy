@@ -19,14 +19,16 @@ import Foundation
 import UIKit
 import WireDataModel
 
+typealias ConversationListItemViewConversation = ConversationAvatarViewConversation & ConversationStatusProvider & ConnectedUserProvider
+
 extension Notification.Name {
     static let conversationListItemDidScroll = Notification.Name("ConversationListItemDidScroll")
 }
 
 final class ConversationListItemView: UIView {
     // Please use `updateForConversation:` to set conversation.
-    private var conversation: ZMConversation?
-    
+    private var conversation: ConversationAvatarViewConversation?
+
     var titleText: NSAttributedString? {
         didSet {
             titleField.attributedText = titleText
@@ -192,19 +194,19 @@ final class ConversationListItemView: UIView {
     @objc
     private func mediaPlayerStateChanged(_ notification: Notification?) {
         DispatchQueue.main.async(execute: {
-            if self.conversation != nil &&
-                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == self.conversation {
-                self.update(for: self.conversation)
+            if let conversation = self.conversation as? ZMConversation,
+                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversationLike === conversation {
+                self.update(for: conversation)
             }
         })
     }
 
-
-    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
-        self.titleText = title
-        self.subtitleAttributedText = subtitle
+    func configure(with title: NSAttributedString?,
+                   subtitle: NSAttributedString?) {
+        titleText = title
+        subtitleAttributedText = subtitle
     }
-    
+
     /// configure without a conversation, i.e. when displaying a pending user
     ///
     /// - Parameters:
@@ -216,36 +218,36 @@ final class ConversationListItemView: UIView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-        
+
         labelsStack.accessibilityLabel = title?.string
     }
-    
-    func update(for conversation: ZMConversation?) {
+
+    func update(for conversation: ConversationListCellConversation?) {
         self.conversation = conversation
-        
+
         guard let conversation = conversation else {
             self.configure(with: nil, subtitle: nil)
             return
         }
-        
+
         let status = conversation.status
-        
+
         // Configure the subtitle
         var statusComponents: [String] = []
         let subtitle = status.description(for: conversation)
         let subtitleString = subtitle.string
-        
+
         if !subtitleString.isEmpty {
             statusComponents.append(subtitleString)
         }
-        
+
         // Configure the title and status
         let title: NSAttributedString?
-        
+
         if SelfUser.current.isTeamMember,
-           let connectedUser = conversation.connectedUser {
+           let connectedUser = conversation.connectedUserType {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
-            
+
             if connectedUser.availability != .none {
                 statusComponents.append(connectedUser.availability.localizedName)
             }
@@ -254,29 +256,29 @@ final class ConversationListItemView: UIView {
             title = conversation.displayName.attributedString
             labelsStack.accessibilityLabel = conversation.displayName
         }
-        
+
         // Configure the avatar
         avatarView.configure(context: .conversation(conversation: conversation))
-        
+
         // Configure the accessory
         let statusIcon: ConversationStatusIcon?
         if let player = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
-            message.conversation == conversation {
+            message.conversationLike === conversation {
             statusIcon = .playingMedia
         } else {
             statusIcon = status.icon(for: conversation)
         }
-        self.rightAccessory.icon = statusIcon
-        
+        rightAccessory.icon = statusIcon
+
         if let statusIconAccessibilityValue = rightAccessory.accessibilityValue {
             statusComponents.append(statusIconAccessibilityValue)
         }
-        
-        if conversation.localParticipants.first?.isPendingApproval == true {
+
+        if (conversation as? ZMConversation)?.localParticipants.first?.isPendingApproval == true {
             statusComponents.append("pending approval")
         }
-        
+
         labelsStack.accessibilityValue = FormattedText.list(from: statusComponents)
         configure(with: title, subtitle: status.description(for: conversation))
     }

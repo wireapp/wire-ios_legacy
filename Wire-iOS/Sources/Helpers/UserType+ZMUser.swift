@@ -23,4 +23,3 @@ extension UserType {
         return teamRole == .partner
     }
 }
-

@@ -70,7 +70,6 @@ class MentionsHandlerTests: XCTestCase {
         XCTAssertEqual(sut.searchString(in: "@bill"), "bill")
     }
 
-
     func testThereIsNoMentionToTheLeftOfAtSymbol() {
         let query = "Hi @bill how are you?"
         let handler = MentionsHandler(text: query, cursorPosition: 3)
@@ -136,7 +135,7 @@ class MentionsHandlerTests: XCTestCase {
 extension NSAttributedString {
     var allAttachments: [NSTextAttachment] {
         var attachments = [NSTextAttachment]()
-        enumerateAttributes(in: wholeRange, options: []) { (attributes, range, _) in
+        enumerateAttributes(in: wholeRange, options: []) { attributes, _, _ in
             if let attachment = attributes[NSAttributedString.Key.attachment] as? NSTextAttachment {
                 attachments.append(attachment)
             }

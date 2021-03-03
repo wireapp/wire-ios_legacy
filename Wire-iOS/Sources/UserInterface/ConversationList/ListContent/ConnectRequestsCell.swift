@@ -26,13 +26,13 @@ protocol SectionListCellType: class {
 extension SectionListCellType {
     var identifier: String {
         let prefix: String
-        
+
         if let sectionName = sectionName {
             prefix = "\(sectionName) - "
         } else {
             prefix = ""
         }
-        
+
         if let cellIdentifier = cellIdentifier {
             return prefix + cellIdentifier
         } else {
@@ -41,7 +41,7 @@ extension SectionListCellType {
     }
 }
 
-final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
+final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
     var sectionName: String?
     var cellIdentifier: String?
 
@@ -81,7 +81,6 @@ final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
         }
     }
 
-
     override func updateConstraints() {
         if !hasCreatedInitialConstraints {
             hasCreatedInitialConstraints = true
@@ -113,18 +112,16 @@ final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
         }
     }
 
-
     private
     func updateAppearance() {
         guard let userSession = ZMUserSession.shared() else { return }
-
 
         let connectionRequests = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
 
         let newCount: Int = connectionRequests.count
 
         if newCount != currentConnectionRequestsCount {
-            let connectionUsers = connectionRequests.map{ conversation in
+            let connectionUsers = connectionRequests.map { conversation in
                 if let conversation = conversation as? ZMConversation {
                     return conversation.connection?.to
                 } else {

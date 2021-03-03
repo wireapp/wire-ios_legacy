@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import avs
+import WireSyncEngine
 
 final class VideoPreviewView: BaseVideoPreviewView {
 
@@ -29,10 +30,20 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var shouldFill: Bool = true {
+    override var isMaximized: Bool {
         didSet {
             updateFillMode()
         }
+    }
+
+    override var stream: Stream {
+        didSet {
+            updateVideoKind()
+        }
+    }
+
+    var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
     }
 
     private var previewView: AVSVideoView?
@@ -45,17 +56,22 @@ final class VideoPreviewView: BaseVideoPreviewView {
         variant: .dark
     )
     private var snapshotView: UIView?
-    
+
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool) {
-        super.init(stream: stream, isCovered: isCovered)
+    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+        super.init(
+            stream: stream,
+            isCovered: isCovered,
+            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
+        )
         updateState()
+        updateVideoKind()
     }
-    
+
     // MARK: - Setup
     override func setupViews() {
         super.setupViews()
-        
+
         [blurView, pausedLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             insertSubview($0, belowSubview: userDetailsView)
@@ -71,13 +87,22 @@ final class VideoPreviewView: BaseVideoPreviewView {
     }
 
     // MARK: - Fill mode
-    private var isScreenSharing: Bool {
-        return stream.videoState == .screenSharing
+
+    private var videoKind: VideoKind = .none {
+        didSet {
+            guard oldValue != videoKind else { return }
+            updateFillMode()
+        }
     }
 
-    override func updateFillMode() {
+    private func updateVideoKind() {
+        videoKind = VideoKind(videoState: stream.videoState)
+    }
+
+    private func updateFillMode() {
         guard let previewView = previewView else { return }
-        previewView.shouldFill = shouldFill && !isScreenSharing
+
+        previewView.shouldFill = shouldFill
     }
 
     // MARK: - Paused state update
@@ -93,12 +118,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.blurView.effect = UIBlurEffect(style: .dark)
                 self?.pausedLabel.alpha = 1
             }
-            
-            let completionBlock = { [weak self] (_: Bool) -> () in
+
+            let completionBlock = { [weak self] (_: Bool) -> Void in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
             }
-            
+
             if animated {
                 UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
             }
@@ -113,14 +138,14 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.snapshotView?.alpha = 0
                 self?.pausedLabel.alpha = 0
             }
-            
-            let completionBlock =  { [weak self] (_: Bool) -> () in
+
+            let completionBlock: (Bool) -> Void = { [weak self] _ in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
             }
-            
+
             if animated {
                 UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
             }
@@ -130,7 +155,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
             }
         }
     }
-    
+
     private func createPreviewView() {
         let preview = AVSVideoView()
         preview.backgroundColor = .clear
@@ -143,16 +168,41 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
-        preview.shouldFill = shouldFill && !isScreenSharing
-        
+        preview.shouldFill = shouldFill
+
         previewView = preview
     }
-    
+
     private func createSnapshotView() {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
         insertSubview(snapshotView, belowSubview: blurView)
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
         snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
+    }
+}
+
+private enum VideoKind {
+    case camera
+    case screenshare
+    case none
+
+    init(videoState: VideoState?) {
+        guard let state = videoState else {
+            self = .none
+            return
+        }
+        switch state {
+        case .stopped, .paused:
+            self = .none
+        case .started, .badConnection:
+            self = .camera
+        case .screenSharing:
+            self = .screenshare
+        }
+    }
+
+    var shouldFill: Bool {
+        return self == .camera
     }
 }

@@ -19,9 +19,8 @@
 import WireShareEngine
 import WireCommonComponents
 import MobileCoreServices
-import WireDataModel
 
-enum AttachmentType:Int, CaseIterable {
+enum AttachmentType: Int, CaseIterable {
     static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
@@ -32,77 +31,6 @@ enum AttachmentType:Int, CaseIterable {
     case rawFile
     case url
     case fileUrl
-}
-
-final class ExtensionActivity {
-
-    static private var openedEventName = "share_extension_opened"
-    static private var sentEventName = "share_extension_sent"
-    static private var cancelledEventName = "share_extension_cancelled"
-
-    private var verifiedConversation = false
-    private var conversationDidDegrade = false
-
-    private var numberOfImages: Int {
-        return attachments[.image]?.count ?? 0
-    }
-
-    private var hasVideo: Bool {
-        return attachments.keys.contains(.video)
-    }
-
-    private var hasFile: Bool {
-        return attachments.keys.contains(.rawFile)
-    }
-
-    public var hasText = false
-
-    let attachments: [AttachmentType: [NSItemProvider]]
-
-    public var conversation: Conversation? = nil {
-        didSet {
-            verifiedConversation = conversation?.securityLevel == .secure
-        }
-    }
-
-    init(attachments: [AttachmentType: [NSItemProvider]]?) {
-        self.attachments = attachments ?? [:]
-    }
-
-    func markConversationDidDegrade() {
-        conversationDidDegrade = true
-    }
-
-    func openedEvent() -> StorableTrackingEvent {
-        return StorableTrackingEvent(
-            name: ExtensionActivity.openedEventName,
-            attributes: [:]
-        )
-    }
-
-    func cancelledEvent() -> StorableTrackingEvent {
-        return StorableTrackingEvent(
-            name: ExtensionActivity.cancelledEventName,
-            attributes: [:]
-        )
-    }
-
-    func sentEvent(completion: @escaping (StorableTrackingEvent) -> Void) {
-        let event = StorableTrackingEvent(
-            name: ExtensionActivity.sentEventName,
-            attributes: [
-                "verified_conversation": self.verifiedConversation,
-                "number_of_images": self.numberOfImages,
-                "video": self.hasVideo,
-                "file": self.hasFile,
-                "text": self.hasText,
-                "conversation_did_degrade": self.conversationDidDegrade
-            ]
-        )
-
-        completion(event)
-    }
-
 }
 
 extension NSItemProvider {
@@ -133,7 +61,7 @@ extension NSItemProvider {
     }
 
     var hasURL: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1 
+        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1
     }
 
     var hasFileURL: Bool {
@@ -144,7 +72,7 @@ extension NSItemProvider {
         guard let uti = registeredTypeIdentifiers.first else { return false }
         return UTTypeConformsTo(uti as CFString, kUTTypeMovie)
     }
-    
+
     var hasWalletPass: Bool {
         return hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
     }

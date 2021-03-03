@@ -184,7 +184,7 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
     }
 
-    ///TODO
+    /// TODO
     func testThatSetLeftViewControllerUnrevealedWithoutAnimationHidesLeftView() {
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: true, animated: false)

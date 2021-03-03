@@ -38,17 +38,17 @@ extension UIViewController {
 
         let controller = UIAlertController.remove(participant) { [weak self] remove in
             guard let `self` = self, remove else { return }
-            
+
             conversation.removeOrShowError(participant: participant) { result in
                 switch result {
                 case .success:
                     dismisser?.dismiss(viewController: self, completion: nil)
-                case .failure(_):
+                case .failure:
                     break
                 }
             }
         }
-        
+
         present(controller, animated: true)
         AVSMediaManager.sharedInstance().mediaManagerPlayAlert()
     }

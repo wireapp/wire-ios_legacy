@@ -60,6 +60,14 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         }
     }
 
+    var isReauthenticating: Bool {
+        if case .reauthentication? = flowType {
+            return true
+        } else {
+            return false
+        }
+    }
+
     private var emailFieldValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     convenience init(flowType: FlowType) {
@@ -88,7 +96,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let contentStack = UIStackView()
 
     let emailPasswordInputField = EmailPasswordTextField()
-    let emailInputField = AccessoryTextField(kind: .email)
+    let emailInputField = ValidatedTextField(kind: .email)
     let phoneInputView = PhoneNumberInputView()
 
     let tabBar: TabBar = {
@@ -126,8 +134,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         // Phone Number View
         phoneInputView.delegate = self
         phoneInputView.tintColor = .black
+        phoneInputView.allowEditingPrefilledValue = !isReauthenticating
 
         // Email Password Input View
+        emailPasswordInputField.allowEditingPrefilledValue = !isReauthenticating
         emailPasswordInputField.delegate = self
 
         // Email input view
@@ -256,7 +266,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         valueSubmitted(emailInputField.input)
     }
 
-    @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
+    @objc private func emailTextInputDidChange(sender: ValidatedTextField) {
         sender.validateInput()
     }
 

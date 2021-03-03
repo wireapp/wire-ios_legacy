@@ -19,28 +19,26 @@
 import Foundation
 import WireUtilities
 
-private enum ExtensionSettingsKey: String {
+private enum ExtensionSettingsKey: String, CaseIterable {
 
-    case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
-    case disableLinkPreviews = "disableLinkPreviews"
-
-    static var all: [ExtensionSettingsKey] {
-        return [
-            .disableLinkPreviews,
-            .disableCrashAndAnalyticsSharing
-        ]
-    }
+    case disableCrashSharing
+    case disableAnalyticsSharing
+    case disableLinkPreviews
 
     private var defaultValue: Any? {
         switch self {
         // Always disable analytics by default.
-        case .disableCrashAndAnalyticsSharing: return true
-        case .disableLinkPreviews: return false
+        case .disableCrashSharing:
+            return true
+        case .disableAnalyticsSharing:
+            return false
+        case .disableLinkPreviews:
+            return false
         }
     }
 
     static var defaultValueDictionary: [String: Any] {
-        return all.reduce([:]) { result, current in
+        return allCases.reduce([:]) { result, current in
             var mutableResult = result
             mutableResult[current.rawValue] = current.defaultValue
             return mutableResult
@@ -66,7 +64,7 @@ public class ExtensionSettings: NSObject {
     }
 
     public func reset() {
-        ExtensionSettingsKey.all.forEach {
+        ExtensionSettingsKey.allCases.forEach {
             defaults.removeObject(forKey: $0.rawValue)
         }
 
@@ -74,12 +72,21 @@ public class ExtensionSettings: NSObject {
         defaults.synchronize()
     }
 
-    public var disableCrashAndAnalyticsSharing: Bool {
+    public var disableAnalyticsSharing: Bool {
         get {
-            return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
+            return defaults.bool(forKey: ExtensionSettingsKey.disableAnalyticsSharing.rawValue)
         }
         set {
-            defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableAnalyticsSharing.rawValue)
+        }
+    }
+    
+    public var disableCrashSharing: Bool {
+        get {
+            return defaults.bool(forKey: ExtensionSettingsKey.disableCrashSharing.rawValue)
+        }
+        set {
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashSharing.rawValue)
         }
     }
     

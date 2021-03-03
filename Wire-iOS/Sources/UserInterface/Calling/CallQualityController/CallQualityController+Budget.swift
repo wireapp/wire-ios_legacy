@@ -42,9 +42,9 @@ extension CallQualityController {
         let lastSurveyTimestamp = UserDefaults.standard.double(forKey: UserDefaultLastCallSurveyDate)
         let lastSurveyDate = Date(timeIntervalSinceReferenceDate: lastSurveyTimestamp)
         let nextPossibleDate = lastSurveyDate.addingTimeInterval(muteInterval)
-                
+
         // Allow the survey if the mute period is finished
         return (date >= nextPossibleDate)
     }
-    
+
 }

@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 import WireDataModel
@@ -35,7 +34,7 @@ extension ZMUser {
 
 extension SettingsCellDescriptorFactory {
 
-    func accountGroup() -> SettingsCellDescriptorType {
+    func accountGroup(isTeamMember: Bool) -> SettingsCellDescriptorType {
         var sections: [SettingsSectionDescriptorType] = [infoSection()]
 
         if userRightInterfaceType.selfUserIsPermitted(to: .editAccentColor) &&
@@ -50,17 +49,17 @@ extension SettingsCellDescriptorFactory {
         }
 
         #if !DATA_COLLECTION_DISABLED
-            sections.append(personalInformationSection())
+        sections.append(personalInformationSection(isTeamMember: isTeamMember))
         #endif
-        
+
         if SecurityFlags.backup.isEnabled {
             sections.append(conversationsSection())
         }
-        
+
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             sections.append(actionsSection())
         }
-        
+
         sections.append(signOutSection())
 
         return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .personalProfile)
@@ -72,13 +71,13 @@ extension SettingsCellDescriptorFactory {
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
                            handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
-        
+
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
             if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true),
-               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)){
+               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }
-            
+
             cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
         return SettingsSectionDescriptor(
@@ -104,7 +103,7 @@ extension SettingsCellDescriptorFactory {
             footer: "WARNING: this feature is experimental and may lead to data loss. Use at your own risk."
         )
     }
-    
+
     func privacySection() -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(
             cellDescriptors: [readReceiptsEnabledElement()],
@@ -113,9 +112,9 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
-    func personalInformationSection() -> SettingsSectionDescriptorType {
+    func personalInformationSection(isTeamMember: Bool) -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(
-            cellDescriptors: [dateUsagePermissionsElement()],
+            cellDescriptors: [dateUsagePermissionsElement(isTeamMember: isTeamMember)],
             header: "self.settings.account_personal_information_group.title".localized
         )
     }
@@ -132,7 +131,7 @@ extension SettingsCellDescriptorFactory {
         if let selfUser = self.settingsPropertyFactory.selfUser, !selfUser.isTeamMember {
             cellDescriptors.append(deleteAccountButtonElement())
         }
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details.actions.title".localized,
@@ -151,7 +150,6 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
-
 
     func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
         return textValueCellDescriptor(propertyName: .profileName, enabled: enabled)
@@ -261,17 +259,15 @@ extension SettingsCellDescriptorFactory {
             previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) }
         )
     }
-    
+
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {
-        
-        
-        
+
         return SettingsPropertyToggleCellDescriptor(settingsProperty:
             self.settingsPropertyFactory.property(.readReceiptsEnabled),
                                                     inverse: false,
                                                     identifier: "ReadReceiptsSwitch")
     }
-    
+
     func encryptMessagesAtRestElement() -> SettingsCellDescriptorType {
         return SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.encryptMessagesAtRest))
     }
@@ -303,13 +299,13 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
-    func dateUsagePermissionsElement() -> SettingsCellDescriptorType {
-        return dataUsagePermissionsGroup()
+    func dateUsagePermissionsElement(isTeamMember: Bool) -> SettingsCellDescriptorType {
+        return dataUsagePermissionsGroup(isTeamMember: isTeamMember)
     }
 
     func resetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
-        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { 
+        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: {
             return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
         }, previewGenerator: .none)
     }

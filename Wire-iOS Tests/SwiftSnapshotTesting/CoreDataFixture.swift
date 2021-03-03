@@ -47,7 +47,7 @@ extension ZMConversation {
 
         let role = Role(context: moc)
         role.name = ZMConversation.defaultAdminRoleName
-        conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
+        conversation.addParticipantsAndUpdateConversationState(users: [selfUser], role: role)
 
         return conversation
     }
@@ -56,7 +56,7 @@ extension ZMConversation {
                                         otherUser: ZMUser,
                                         selfUser: ZMUser) -> ZMConversation {
         let conversation = createGroupConversationOnlyAdmin(moc: moc, selfUser: selfUser)
-        conversation.add(participants:otherUser)
+        conversation.add(participants: otherUser)
         return conversation
     }
 
@@ -75,7 +75,7 @@ extension ZMConversation {
 /// of mock objects.
 final class CoreDataFixture {
 
-    var selfUserInTeam: Bool = false
+    private var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
@@ -89,7 +89,7 @@ final class CoreDataFixture {
     //
     var selfUserProvider: SelfUserProvider!
 
-    ///From ZMSnapshot
+    /// From ZMSnapshot
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
@@ -102,31 +102,30 @@ final class CoreDataFixture {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     /// If this is set the accent color will be overriden for the tests
     var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(newValue)
-        }
         get {
             return UIColor.accentOverrideColor!
+        }
+
+        set {
+            UIColor.setAccentOverride(newValue)
         }
     }
 
     var documentsDirectory: URL?
 
     init() {
-        ///From ZMSnapshotTestCase
+        /// From ZMSnapshotTestCase
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
         if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
             XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
         }
-        AppRootViewController.configureAppearance()
+        AppRootRouter.configureAppearance()
         UIView.setAnimationsEnabled(false)
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
@@ -166,6 +165,7 @@ final class CoreDataFixture {
     }
 
     deinit {
+        SelfUser.provider = nil
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil

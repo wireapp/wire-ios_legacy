@@ -65,7 +65,6 @@ enum SettingKey: String, CaseIterable {
     case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
     case callingConstantBitRate = "CallingConstantBitRate"
     case disableLinkPreviews = "DisableLinkPreviews"
-    case conferenceCalling = "ConferenceCalling"
 }
 
 /// Model object for locally stored (not in SE or AVS) user app settings
@@ -91,8 +90,6 @@ class Settings {
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate where !SecurityFlags.forceConstantBitRateCalls.isEnabled:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
-            case .conferenceCalling where newValue is Bool:
-                SessionManager.shared?.useConferenceCalling = newValue as! Bool
             default:
                 break
             }
@@ -102,7 +99,7 @@ class Settings {
     subscript<E: RawRepresentable>(index: SettingKey) -> E? {
         get {
             if let value: E.RawValue = defaults.value(forKey: index.rawValue) as? E.RawValue {
-                return E(rawValue:value)
+                return E(rawValue: value)
             }
 
             return nil
@@ -114,17 +111,17 @@ class Settings {
 
     subscript(index: SettingKey) -> LocationData? {
         get {
-            if let value = defaults.value(forKey: index.rawValue) as? [String : Any] {
+            if let value = defaults.value(forKey: index.rawValue) as? [String: Any] {
                 return LocationData.locationData(fromDictionary: value)
             }
-            
+
             return nil
         }
         set {
             defaults.set(newValue?.toDictionary(), forKey: index.rawValue)
         }
     }
-    
+
     var blacklistDownloadInterval: TimeInterval {
         let HOURS_6 = 6 * 60 * 60
         let settingValue = defaults.integer(forKey: SettingKey.blackListDownloadInterval.rawValue)
@@ -134,7 +131,7 @@ class Settings {
     var defaults: UserDefaults {
         return .standard
     }
-    
+
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0

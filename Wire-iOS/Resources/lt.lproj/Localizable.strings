@@ -193,7 +193,7 @@
 
 // Folders
 
-"folder.creation.name.title" = "Kurti naują aplanką";
+"folder.creation.name.title" = "Sukurti naują aplanką";
 "folder.creation.name.button.create" = "Kurti";
 "folder.creation.name.header" = "Perkelti susirašinėjimą „%@“ į naują aplanką.";
 "folder.creation.name.footer" = "Iki 64 simbolių";
@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "Skambinote";
 "content.system.ephemeral_time_remaining" = "Liko %@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Jūs";
-"content.system.this_device" = "šį įrenginį";
 
 "content.system.call.called" = "%@ skambino";
 "content.system.call.called-you" = "%@ skambinote";
@@ -517,33 +519,32 @@
 
 //
 
-"content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "naujas įrenginys";
-"content.system.started_using" = "pradėjo naudoti";
 "content.system.is_verified" = "Visi kontroliniai kodai patvirtinti";
 
 "content.system.new_users" = "Prisijungė naujas vartotojas.";
 "content.system.verify_devices" = "Patvirtinkite įrenginius";
 
-"content.system.unverified" = "%@ panaikinote vieno iš %@ patvirtinimą"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "savo įrenginių";
-"content.system.other_devices" = "%@ įrenginių";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Jūs kurį laiką nenaudojote šio įrenginio. Kai kurios žinutės čia gali neatsirasti.";
 "content.system.missing_messages.subtitle_start" = "Tuo tarpu,";
 
-"content.system.cannot_decrypt" = "Žinutė, kurią parašė %@ nebuvo gauta.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "jūs";
-"content.system.cannot_decrypt.why_part" = "Kodėl?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "Pasikeitė %@ įrenginio tapatybė. Žinutė nenusiųsta.";
-"content.system.cannot_decrypt.identity.you_part" = "Jūsų";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Sužinokite daugiau";
-"content.system.cannot_decrypt.otherDevice_part" = "(įrenginys %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Žinutės negalima parodyti. Gali būti, kad naudojate senesnę „Wire“ versiją.";
 
@@ -674,6 +675,11 @@
 "call.participants.show_all" = "Rodyti visus (%@)";
 "call.participants.list.title" = "Dalyviai";
 
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
 "call.video.paused" = "Vaizdas pristabdytas";
 
 "call.video.too_many.alert.title" = "Per daug žmonių, norint bendrauti vaizdu";
@@ -684,6 +690,11 @@
 "call.degraded.alert.message.user" = "%@ pradėjo naudotis nauju įrenginiu.";
 "call.degraded.alert.message.unknown" = "Kažkas pradėjo naudotis nauju įrenginiu.";
 "call.degraded.alert.action.continue" = "Vis tiek skambinti";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "Tai baigs kitą jūsų skambutį.";
 
@@ -727,7 +738,7 @@
 "participants.section.services" = "Paslaugos (%d)";
 "participants.section.settings" = "Parinktys";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių. Bendrauti vaizdu gali iki %2$d žmonių ir jumis.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "Administratorių nėra.";
 "participants.section.members.footer" = "Narių nėra.";
 
@@ -754,7 +765,7 @@
 "meta.menu.open_self_profile" = "Atverti profilį";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Valyti turinį?";
+"meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
 "meta.menu.delete_content.dialog_message" = "Tai išvalys bendravimo praeitį visuose jūsų įrenginiuose.";
 "meta.menu.delete_content.leave_as_well_message" = "Taip pat išeiti iš pokalbio";
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
@@ -816,7 +827,7 @@
 "profile.connection_request_dialog.button_connect" = "Užmegzti kontaktą";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Ištrinti grupės susirašinėjimą?";
+"conversation.delete_request_dialog.title" = "Ištrinti grupės pokalbį?";
 "conversation.delete_request_dialog.message" = "Grupė ir visas turinys visiems dalyviams iš visų įrenginių bus ištrinti. Nėra galimybės atkurti turinio. Visiems dalyviams bus pranešta.";
 "conversation.delete_request_error_dialog.title" = "Trinant grupę „%@“ įvyko klaida. Bandykite dar kartą.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Ištrinti grupę";
@@ -1026,8 +1037,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Naudojimo ir gedimo ataskaitos";
-"self.settings.privacy_analytics.title" = "Siųsti nuasmenintą informaciją";
-"self.settings.privacy_analytics_menu.description.title" = "Pagerinkite „Wire“ siųsdami anoniminę naudojimosi ir trikčių ataskaitą.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Gaukite naujienlaiškį";
 "self.settings.receiveNews_and_offers.description.title" = "Gaukite naujienas ir produktų pakeitimo informaciją iš „Wire“ el. paštu.";
@@ -1163,12 +1180,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Neteisingas slaptažodis. Bandykite dar kartą.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Neteisingas slaptažodis. Jei slaptažodį neseniai pasikeitėte, prisijunkite prie interneto ir bandykite dar kartą.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
-"self.settings.privacy_security.lock_cancelled.action" = "Atrakinti";
-
 "self.settings.privacy_security.disable_link_previews.title" = "Rodyti svetainių vaizdą";
 "self.settings.privacy_security.disable_link_previews.footer" = "Kitų žmonių siunčiamų nuorodų peržiūros vis dar gali būti rodomos.";
 
@@ -1178,9 +1189,6 @@
 "self.settings.privacy.clear_history.subtitle" = "Tai negrįžtamai ištrins visą susirašinėjimų praeitį.";
 
 "self.settings.advanced.title" = "Papildomi";
-"self.settings.advanced.conference_calling.title" = "Konferenciniai skambučiai";
-"self.settings.advanced.conference_calling.subtitle" = "Kai pasirinkimas aktyvus, garso ir vaizdo konferencijos įgalintos, ir daugiau žmonių gali dalyvauti. ";
-"self.settings.advanced.conference_calling.toggle" = "Bandymo programa";
 "self.settings.advanced.troubleshooting.title" = "Nesklandumų sprendimas";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Derinimo ataskaita";
 "self.settings.advanced.debugging_tools.title" = "Derinimo įrankiai";
@@ -1789,13 +1797,13 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "„Passcode“";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
 "create_passcode.create_button.title" = "create passcode";
 
 // Custom app lock - create passcode validation
@@ -1811,6 +1819,12 @@
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "Wrong passcode";
 "unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
@@ -1832,3 +1846,12 @@
 
 "wipe_database_completion.title" = "Database deleted";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
+"appLockModule.message.touchID" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
+"appLockModule.message.passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
+"appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

@@ -469,8 +469,10 @@
 "content.system.you_wanted_to_talk" = "您曾打電話";
 "content.system.ephemeral_time_remaining" = "餘下%@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "您";
-"content.system.this_device" = "這個設備";
 
 "content.system.call.called" = "%@曾打電話";
 "content.system.call.called-you" = "%@曾打電話";
@@ -517,33 +519,32 @@
 
 //
 
-"content.system.reactivated_device" = "您重新使用%@，在沒有使用期間的訊息不會顯示出來。";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "新的設備";
-"content.system.started_using" = "開始使用";
 "content.system.is_verified" = "所有的指紋已完成驗證";
 
 "content.system.new_users" = "新使用者加入。";
 "content.system.verify_devices" = "驗證設備";
 
-"content.system.unverified" = "%@ 取消了 %@ 的某個設備驗證"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "您的設備";
-"content.system.other_devices" = "%@的設備";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "您已有一段時間沒有使用此設備，可能不會顯示部分訊息。";
 "content.system.missing_messages.subtitle_start" = "同時，";
 
-"content.system.cannot_decrypt" = "從 %@ 的訊息未被接收。";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "您";
-"content.system.cannot_decrypt.why_part" = "為甚麼？";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ 的設備識別已更改。信息無法送達。";
-"content.system.cannot_decrypt.identity.you_part" = "您的";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "瞭解更多";
-"content.system.cannot_decrypt.otherDevice_part" = "(設備 %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "無法顯示此消息。可能因為您使用舊版本的Wire。";
 
@@ -674,6 +675,11 @@
 "call.participants.show_all" = "全部顯示 (%@)";
 "call.participants.list.title" = "參與者";
 
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
 "call.video.paused" = "影像已暫停";
 
 "call.video.too_many.alert.title" = "已超過視像通話限定人數";
@@ -684,6 +690,11 @@
 "call.degraded.alert.message.user" = "%@開始使用新的設備。";
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
+
+"call.degraded.ended.alert.title" = "通話結束";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "這將結束你的其他通話。";
 
@@ -727,7 +738,7 @@
 "participants.section.services" = "服務 (%d)";
 "participants.section.settings" = "選項";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "最多%1$d參與者可以加入群組對話。視像通話可用以你與另外%2$d人。";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "沒有管理員";
 "participants.section.members.footer" = "沒有成員";
 
@@ -1026,8 +1037,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用資料和崩潰報告";
-"self.settings.privacy_analytics.title" = "寄送匿名資料";
-"self.settings.privacy_analytics_menu.description.title" = "發送匿名使用紀錄和崩潰報告以改善Wire。";
+
+// Crash
+"self.settings.privacy_crash.title" = "傳送匿名錯誤資料";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "傳送匿名使用資料";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "接收新聞";
 "self.settings.receiveNews_and_offers.description.title" = "接收Wire的新聞和產品更新電子郵件。";
@@ -1163,12 +1180,6 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "密碼錯誤，請再試一次。";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "密碼錯誤，如果您最近更改過密碼，連接到網路並重試。";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "要解鎖Wire，請在設置中選擇打開密碼";
-"self.settings.privacy_security.lock_cancelled.action" = "解鎖";
-
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
 "self.settings.privacy_security.disable_link_previews.footer" = "其他人的連結預覽可能會顯示出來";
 
@@ -1178,15 +1189,12 @@
 "self.settings.privacy.clear_history.subtitle" = "這將永久移除您的所有對話內容。";
 
 "self.settings.advanced.title" = "進階";
-"self.settings.advanced.conference_calling.title" = "電話會議";
-"self.settings.advanced.conference_calling.subtitle" = "啟用此選項後，將啟用音頻和視頻電話會議，從而允許更多的參與者。";
-"self.settings.advanced.conference_calling.toggle" = "測試計畫";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
 "self.settings.advanced.debugging_tools.title" = "除錯工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一個未讀對話";
 "self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
-"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "輸入除錯指令";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助於Wire診斷通話問題，並改善整個應用體驗。";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
@@ -1259,8 +1267,8 @@
 "landing.header" = "Wire。加入您的帳戶。";
 "landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
 "landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
-"landing.create_account.title" = "Create a Wire personal account";
-"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.title" = "建立新Wire個人帳戶";
+"landing.create_account.infotitle" = "與朋友和家人聊天？";
 "landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
 "landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
@@ -1789,32 +1797,38 @@
 
 // Custom app lock
 
-"passcode.hint_label" = "Passcode";
+"passcode.hint_label" = "密碼鎖";
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode ";
-"create_passcode.info_label.highlighted" = "it can not be recovered.";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.title_label" = "建立密碼鎖";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "建立密碼鎖";
 
 // Custom app lock - create passcode validation
-"create_passcode.validation.too_short" = "At least eight characters long";
-"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
-"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
-"create_passcode.validation.no_number" = "A number";
-"create_passcode.validation.no_special_char" = "A special character";
+"create_passcode.validation.too_short" = "至少八個字符長";
+"create_passcode.validation.no_lowercase_char" = "一個小寫字母";
+"create_passcode.validation.no_uppercase_char" = "一個大寫字符";
+"create_passcode.validation.no_number" = "一個數字";
+"create_passcode.validation.no_special_char" = "一個特殊字元";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.textfield.placeholder" = "輸入您的通行密碼";
 "unlock.title_label" = "Enter passcode to unlock Wire";
-"unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
-"unlock.submit_button.title" = "unlock";
+"unlock.wipe_button" = "重設為新設備使用";
+"unlock.error_label" = "錯誤的解鎖密碼";
+"unlock.submit_button.title" = "解除鎖定";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
+"wipe_database.title_label" = "重設為新設備使用";
 "wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
@@ -1822,13 +1836,22 @@
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.description" = "確認刪除資料庫";
 "wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
-"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.placeholder" = "輸入「Delete」";
 "wipe_database.alert.confirm" = "刪除";
 "wipe_database.alert.confirm_input" = "刪除";
 
 // Wipe database completion
 
-"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.title" = "數據庫已刪除";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "請使用Face ID或密碼解鎖Wire";
+"appLockModule.message.touchID" = "請使用Touch ID或密碼解鎖Wire";
+"appLockModule.message.passcode" = "用密碼解鎖Wire";
+"appLockModule.message.passcodeUnavailable" = "要解鎖Wire，請在設置中選擇打開密碼";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -26,7 +25,7 @@ extension ConversationListViewController.ViewModel: ArchivedListViewControllerDe
 
     func archivedListViewController(_ controller: ArchivedListViewController,
                                     didSelectConversation conversation: ZMConversation) {
-        viewController?.setState(.conversationList, animated: true, completion:{
+        viewController?.setState(.conversationList, animated: true, completion: {
             self.viewController?.selectOnListContentController(conversation, scrollTo: nil, focusOnView: true, animated: true, completion: nil)
         })
     }

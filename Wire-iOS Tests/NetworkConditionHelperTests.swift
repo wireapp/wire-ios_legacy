@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -21,14 +20,14 @@ import XCTest
 import CoreTelephony
 
 final class NetworkConditionHelperTests: XCTestCase {
-    
+
     var sut: NetworkConditionHelper!
-    
+
     override func setUp() {
         super.setUp()
         sut = NetworkConditionHelper()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

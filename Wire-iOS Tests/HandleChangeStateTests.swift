@@ -20,76 +20,76 @@ import XCTest
 @testable import Wire
 
 class HandleChangeStateTests: XCTestCase {
-    
+
     // MARK: Validation Fail Tests
-    
+
     func testFunctionThatHandleIsTooShort() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testUser",
                                                   newHandle: "testUser",
                                                   availability: .unknown)
-        
+
         // THEN
         XCTAssertThrowsError(try handleChangeState.validate("t")) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.tooShort)
         }
     }
-    
+
     func testFunctionThatHandleIsTooLong() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
                                                   newHandle: "testuser",
                                                   availability: .unknown)
-        
+
         // THEN
         XCTAssertThrowsError(try handleChangeState.validate("testusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestuser1")) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.tooLong)
         }
     }
-    
+
     func testFunctionThatHandleIsSameAsPrevious() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
                                                   newHandle: "testuser",
                                                   availability: .unknown)
-        
+
         // THEN
         XCTAssertThrowsError(try handleChangeState.validate("testuser")) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.sameAsPrevious)
         }
     }
-    
+
     func testFunctionThatHandleIsInvalidCharacterForUpperCaseChar() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
                                                   newHandle: "testuser",
                                                   availability: .unknown)
-        
+
         // THEN
         XCTAssertThrowsError(try handleChangeState.validate("TestUser")) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.invalidCharacter)
         }
     }
-    
+
     func testFunctionThatHandleIsInvalidCharacter() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
                                                   newHandle: "testuser",
                                                   availability: .unknown)
-        
+
         // THEN
         XCTAssertThrowsError(try handleChangeState.validate("testuser:testuser")) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.invalidCharacter)
         }
     }
-    
+
     // MARK: Validation Success Tests
-    
+
     func testFunctionThatDoNotHandleForUnderscoreChar() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
@@ -98,7 +98,7 @@ class HandleChangeStateTests: XCTestCase {
         // THEN
         XCTAssertNoThrow(try handleChangeState.validate("testuser_testuser"))
     }
-    
+
     func testFunctionThatDoNotHandleForDotChar() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",
@@ -107,7 +107,7 @@ class HandleChangeStateTests: XCTestCase {
         // THEN
         XCTAssertNoThrow(try handleChangeState.validate("testuser.testuser"))
     }
-    
+
     func testFunctionThatDoNotHandleForDashChar() {
         // GIVEN & WHEN
         let handleChangeState = HandleChangeState(currentHandle: "testuser",

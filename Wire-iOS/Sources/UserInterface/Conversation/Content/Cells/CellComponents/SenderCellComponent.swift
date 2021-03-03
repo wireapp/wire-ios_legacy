@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
@@ -26,7 +25,7 @@ private enum TextKind {
     case userName(accent: UIColor)
     case botName
     case botSuffix
-    
+
     var color: UIColor {
         switch self {
         case let .userName(accent: accent):
@@ -37,7 +36,7 @@ private enum TextKind {
             return .from(scheme: .textDimmed)
         }
     }
-    
+
     var font: UIFont {
         switch self {
         case .userName, .botName:
@@ -48,28 +47,27 @@ private enum TextKind {
     }
 }
 
-class SenderCellComponent: UIView {
-    
+final class SenderCellComponent: UIView {
+
     let avatarSpacer = UIView()
     let avatar = UserImageView()
     let authorLabel = UILabel()
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
-    var observerToken: Any? = nil
-    var conversation: ZMConversation? = nil
-    
+    var observerToken: Any?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setUp()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         setUp()
     }
-    
+
     func setUp() {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.font = .normalLightFont
@@ -82,25 +80,24 @@ class SenderCellComponent: UIView {
         avatar.translatesAutoresizingMaskIntoConstraints = false
         avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnAvatar)))
 
-        
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
-        
+
         stackView = UIStackView(arrangedSubviews: [avatarSpacer, authorLabel])
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         addSubview(stackView)
-        
+
         createConstraints()
     }
-    
+
     func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
-        
+
         NSLayoutConstraint.activate([
             avatarSpacerWidthConstraint,
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
@@ -109,24 +106,24 @@ class SenderCellComponent: UIView {
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
             ])
     }
-    
-    func configure(with user: UserType, conversation: ZMConversation?) {
-        self.conversation = conversation
-        self.avatar.user = user
-        
-        configureNameLabel(for: user, conversation: conversation)
-        
-        if let userSession = ZMUserSession.shared() {
+
+    func configure(with user: UserType) {
+        avatar.user = user
+
+        configureNameLabel(for: user)
+
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
     }
-    
-    func configureNameLabel(for user: UserType, conversation: ZMConversation?) {
+
+    private func configureNameLabel(for user: UserType) {
         let fullName =  user.name ?? ""
-        
+
         var attributedString: NSAttributedString
         if user.isServiceUser {
             let attachment = NSTextAttachment()
@@ -141,15 +138,15 @@ class SenderCellComponent: UIView {
             let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
             attributedString = attributedName(for: .userName(accent: accentColor), string: fullName)
         }
-        
+
         authorLabel.attributedText = attributedString
     }
-    
+
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
+        return NSAttributedString(string: string, attributes: [.foregroundColor: kind.color, .font: kind.font])
     }
 
-    //MARK: - tap gesture of avatar
+    // MARK: - tap gesture of avatar
 
     @objc func tappedOnAvatar() {
         guard let user = avatar.user else { return }
@@ -157,17 +154,16 @@ class SenderCellComponent: UIView {
         SessionManager.shared?.showUserProfile(user: user)
     }
 
-    
 }
 
 extension SenderCellComponent: ZMUserObserver {
-    
+
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.nameChanged || changeInfo.accentColorValueChanged else {
             return
         }
-        
-        configureNameLabel(for: changeInfo.user, conversation: conversation)
+
+        configureNameLabel(for: changeInfo.user)
     }
-    
+
 }

@@ -20,64 +20,64 @@ import Foundation
 import UIKit
 
 public enum FontTextStyle: String {
-    case largeTitle  = "largeTitle"
-    case inputText   = "inputText"
+    case largeTitle
+    case inputText
 }
 
 enum FontSize: String {
-    case large  = "large"
-    case normal = "normal"
-    case medium = "medium"
-    case small  = "small"
+    case large
+    case normal
+    case medium
+    case small
 }
 
 public enum FontWeight: String {
-    case ultraLight = "ultraLight"
-    case thin     = "thin"
-    case light    = "light"
-    case regular  = "regular"
-    case medium   = "medium"
-    case semibold = "semibold"
-    case bold     = "bold"
-    case heavy    = "heavy"
-    case black    = "black"
+    case ultraLight
+    case thin
+    case light
+    case regular
+    case medium
+    case semibold
+    case bold
+    case heavy
+    case black
 }
 
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
     static let weightMapping: [FontWeight: UIFont.Weight] = [
         .ultraLight: UIFont.Weight.ultraLight,
-        .thin:       UIFont.Weight.thin,
-        .light:      UIFont.Weight.light,
-        .regular:    UIFont.Weight.regular,
-        .medium:     UIFont.Weight.medium,
-        .semibold:   UIFont.Weight.semibold,
-        .bold:       UIFont.Weight.bold,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .thin: UIFont.Weight.thin,
+        .light: UIFont.Weight.light,
+        .regular: UIFont.Weight.regular,
+        .medium: UIFont.Weight.medium,
+        .semibold: UIFont.Weight.semibold,
+        .bold: UIFont.Weight.bold,
+        .heavy: UIFont.Weight.heavy,
+        .black: UIFont.Weight.black
     ]
-    
+
     /// Weight mapping used when the bold text accessibility setting is
     /// enabled. Light weight fonts won't render bold, so we use regular
     /// weights instead.
     static let accessibilityWeightMapping: [FontWeight: UIFont.Weight] = [
         .ultraLight: UIFont.Weight.regular,
-        .thin:       UIFont.Weight.regular,
-        .light:      UIFont.Weight.regular,
-        .regular:    UIFont.Weight.regular,
-        .medium:     UIFont.Weight.medium,
-        .semibold:   UIFont.Weight.semibold,
-        .bold:       UIFont.Weight.bold,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .thin: UIFont.Weight.regular,
+        .light: UIFont.Weight.regular,
+        .regular: UIFont.Weight.regular,
+        .medium: UIFont.Weight.medium,
+        .semibold: UIFont.Weight.semibold,
+        .bold: UIFont.Weight.bold,
+        .heavy: UIFont.Weight.heavy,
+        .black: UIFont.Weight.black
     ]
-    
+
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
         let boldTextEnabled = accessibilityBoldText ?? UIAccessibility.isBoldTextEnabled
         let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
         return mapping[self]!
     }
-    
+
     public init(weight: UIFont.Weight) {
         self = (type(of: self).weightMapping.filter {
             $0.value == weight
@@ -99,7 +99,6 @@ public struct FontSpec: Hashable {
     let size: FontSize
     public let weight: FontWeight?
     public let fontTextStyle: FontTextStyle?
-
 
     /// init method of FontSpec
     ///
@@ -132,19 +131,17 @@ extension FontSpec {
 
 extension FontSpec: CustomStringConvertible {
     public var description: String {
-        get {
-            var descriptionString = "\(self.size)"
+        var descriptionString = "\(self.size)"
 
-            if let weight = self.weight {
-                descriptionString += "-\(weight)"
-            }
-
-            if let fontTextStyle = self.fontTextStyle {
-                descriptionString += "-\(fontTextStyle.rawValue)"
-            }
-
-            return descriptionString
+        if let weight = self.weight {
+            descriptionString += "-\(weight)"
         }
+
+        if let fontTextStyle = self.fontTextStyle {
+            descriptionString += "-\(fontTextStyle.rawValue)"
+        }
+
+        return descriptionString
     }
 }
 
@@ -154,10 +151,10 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
 
 final class FontScheme {
     public typealias FontMapping = [FontSpec: UIFont]
-    
+
     public var fontMapping: FontMapping = [:]
-    
-    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec : UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
+
+    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec: UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
         let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
         for fontWeight in allFontWeights {
             for fontSizeTuple in allFontSizes {
@@ -171,19 +168,17 @@ final class FontScheme {
     public static func defaultFontMapping(with contentSizeCategory: UIContentSizeCategory) -> FontMapping {
         var mapping: FontMapping = [:]
 
-
         // The ratio is following 11:12:16:24, same as default case
-        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
+        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 40),
                                                                                 (fontSize: .normal, point: 26),
                                                                                 (fontSize: .medium, point: 20),
-                                                                                (fontSize: .small,  point: 18)]
+                                                                                (fontSize: .small, point: 18)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
 
-
-        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 21),
+        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: 21),
                                                                                (fontSize: .normal, point: 14),
                                                                                (fontSize: .medium, point: 11),
-                                                                               (fontSize: .small,  point: 10)]
+                                                                               (fontSize: .small, point: 10)]
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
@@ -218,15 +213,15 @@ final class FontScheme {
 
         return mapping
     }
-    
+
     convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
-    
+
     public init(fontMapping: FontMapping) {
         self.fontMapping = fontMapping
     }
-    
+
     public func font(for fontType: FontSpec) -> UIFont? {
         return self.fontMapping[fontType]
     }

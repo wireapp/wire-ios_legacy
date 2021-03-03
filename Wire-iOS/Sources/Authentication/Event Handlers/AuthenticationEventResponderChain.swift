@@ -27,7 +27,7 @@ import WireDataModel
 protocol AuthenticationEventResponderChainDelegate: class {
 
     /// The object providing authentication status info.
-    var statusProvider: AuthenticationStatusProvider? { get }
+    var statusProvider: AuthenticationStatusProvider { get }
 
     /// The object providing the current authentication state.
     var stateController: AuthenticationStateController { get }

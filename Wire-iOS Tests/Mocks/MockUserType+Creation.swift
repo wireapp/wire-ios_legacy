@@ -20,6 +20,15 @@ import Foundation
 
 extension MockUserType {
 
+    /// Create a connected Mock user with name selfUser and vividRed accent color
+    /// - Returns: a mock user
+    class func createDefaultSelfUser() -> MockUserType {
+        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.accentColorValue = .vividRed
+
+        return mockSelfUser
+    }
+
     /// Creates a self-user with the specified name and team membership.
     ///
     /// - Parameters:
@@ -60,9 +69,11 @@ extension MockUserType {
     ///
     /// - Returns: A standard mock user object with default values.
 
-    class func createUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
+    class func createUser(name: String,
+                          inTeam teamID: UUID? = nil) -> MockUserType {
         let user = MockUserType()
         user.name = name
+        user.handle = name.lowercased()
         user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.teamIdentifier = teamID
@@ -70,4 +81,15 @@ extension MockUserType {
         return user
     }
 
+    /// Create a connected Mock user with name Bruno and orange accent color
+    /// - Returns: a mock user
+    class func createDefaultOtherUser() -> MockUserType {
+        let user = MockUserType.createUser(name: "Bruno")
+        user.handle = "bruno"
+        user.initials = "B"
+        user.accentColorValue = .brightOrange
+        user.isConnected = true
+
+        return user
+    }
 }
