@@ -48,7 +48,8 @@ final class Analytics: NSObject {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
         callingTracker = AnalyticsCallingTracker(analytics: self)
-        selfUser = SelfUser.current
+        selfUser = SelfUser.provider?.selfUser
+
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
     }
 
@@ -87,11 +88,11 @@ final class Analytics: NSObject {
 
 extension Analytics: AnalyticsType {
     func setPersistedAttributes(_ attributes: [String: NSObject]?, for event: String) {
-        //no-op
+        // no-op
     }
 
     func persistedAttributes(for event: String) -> [String: NSObject]? {
-        //no-op
+        // no-op
         return nil
     }
 

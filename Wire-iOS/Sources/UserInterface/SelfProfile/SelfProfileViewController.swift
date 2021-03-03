@@ -31,8 +31,8 @@ final class SelfProfileViewController: UIViewController {
     let selfUser: SettingsSelfUser
 
     var userRightInterfaceType: UserRightInterface.Type = UserRight.self
-    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
-    var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
+    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory?
+    var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)?
 
     // MARK: - Views
 
@@ -46,7 +46,7 @@ final class SelfProfileViewController: UIViewController {
 
     // MARK: - Configuration
 
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 
@@ -68,14 +68,14 @@ final class SelfProfileViewController: UIViewController {
 
     init(selfUser: SettingsSelfUser,
          userRightInterfaceType: UserRightInterface.Type = UserRight.self,
-         userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
-        
+         userSession: UserSessionInterface? = ZMUserSession.shared()) {
+
         self.selfUser = selfUser
 
         // Create the settings hierarchy
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: userSession, selfUser: selfUser)
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
-		let rootGroup = settingsCellDescriptorFactory.rootGroup()
+        let rootGroup = settingsCellDescriptorFactory.rootGroup(isTeamMember: selfUser.isTeamMember)
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
         profileHeaderViewController = ProfileHeaderViewController(user: selfUser, viewer: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
 
@@ -105,7 +105,7 @@ final class SelfProfileViewController: UIViewController {
 
         profileHeaderViewController.colorSchemeVariant = .dark
         profileHeaderViewController.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
-        
+
         addChild(profileHeaderViewController)
         profileContainerView.addSubview(profileHeaderViewController.view)
         view.addSubview(profileContainerView)
@@ -125,7 +125,7 @@ final class SelfProfileViewController: UIViewController {
         configureAccountTitle()
         createConstraints()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -141,7 +141,7 @@ final class SelfProfileViewController: UIViewController {
             title = "self.account".localized(uppercased: true)
         }
     }
-    
+
     private func createConstraints() {
         profileHeaderViewController.view.translatesAutoresizingMaskIntoConstraints = false
         profileContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -168,7 +168,7 @@ final class SelfProfileViewController: UIViewController {
             settingsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             settingsController.view.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor),
             settingsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+            settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor)
         ])
     }
 
@@ -203,7 +203,6 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         topViewController?.isLoadingViewVisible = false
     }
 
-    
     /// Create or delete custom passcode when appLock option did change
     /// If custom passcode is not enabled, no action is taken
     ///
@@ -214,42 +213,49 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func appLockOptionDidChange(_ settingsPropertyFactory: SettingsPropertyFactory,
                                 newValue: Bool,
                                 callback: @escaping ResultHandler) {
-        guard AppLock.rules.useCustomCodeInsteadOfAccountPassword else {
+        // There is an additional check for the simulator because there's no way to disable the device passcode on the simulator. We need it for testing.
+        guard AuthenticationType.current == .unavailable || (UIDevice.isSimulator && AuthenticationType.current == .passcode) else {
             callback(newValue)
             return
         }
-        
+
         guard newValue else {
-            Keychain.deletePasscode()
+            try? settingsPropertyFactory.userSession?.appLockController.deletePasscode()
             callback(newValue)
-            
             return
         }
-        
+
         self.callback = callback
-        let passcodeSetupViewController = PasscodeSetupViewController(callback: callback, variant: .dark)
+        let passcodeSetupViewController = PasscodeSetupViewController(variant: .dark,
+                                                                      context: .createPasscode,
+                                                                      callback: callback)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
-        
+
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
-        
+
         let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
-        
+
         let closeItem = passcodeSetupViewController.closeItem
 
         keyboardAvoidingViewController.navigationItem.leftBarButtonItem = closeItem
-                    
+
         wrappedViewController.presentationController?.delegate = passcodeSetupViewController
-        
-        UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            wrappedViewController.modalPresentationStyle = .popover
+            present(wrappedViewController, animated: true)
+        } else {
+            UIApplication.shared.topmostViewController()?.present(wrappedViewController, animated: true)
+        }
     }
 }
 
 extension SelfProfileViewController: PasscodeSetupViewControllerDelegate {
-    func passcodeSetupControllerDidFinish(_ viewController: PasscodeSetupViewController) {
-        //no-op
+    func passcodeSetupControllerDidFinish() {
+        // no-op
     }
-    
-    func passcodeSetupControllerWasDismissed(_ viewController: PasscodeSetupViewController) {
+
+    func passcodeSetupControllerWasDismissed() {
         // refresh options applock switch
         (topViewController as? SettingsTableViewController)?.refreshData()
     }

@@ -76,7 +76,7 @@ final class LocationSelectionViewController: UIViewController {
         if !userLocationAuthorized { mapView.restoreLocation(animated: true) }
         locationManager.requestWhenInUseAuthorization()
         updateUserLocation()
-        
+
         endEditing()
     }
 

@@ -22,9 +22,9 @@ import WireDataModel
 
 class CustomMessageView: UIView {
     public var isSelected: Bool = false
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     public var messageLabel = WebLinkTextView()
     var messageText: String? {
@@ -51,7 +51,7 @@ class CustomMessageView: UIView {
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             messageLabel.topAnchor.constraint(equalTo: topAnchor),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
         messageLabel.font = FontSpec(.small, .light).font

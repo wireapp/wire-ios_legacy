@@ -96,22 +96,22 @@ final class CompanyLoginFlowHandler {
     @available(iOS 11, *)
     private func openSafariAuthenticationSession(at url: URL) {
         if #available(iOS 12, *) {
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
+            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
                 if let url = url {
                     self.processURL(url)
                 }
-                
+
                 self.currentAuthenticationSession = nil
             }
 
             currentAuthenticationSession = session
             session.start()
         } else {
-            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
+            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
                 if let url = url {
                     self.processURL(url)
                 }
-                
+
                 self.currentAuthenticationSession = nil
             }
 
@@ -119,7 +119,7 @@ final class CompanyLoginFlowHandler {
             session.start()
         }
     }
-    
+
     private func processURL(_ url: URL) {
         do {
             try SessionManager.shared?.openURL(url)

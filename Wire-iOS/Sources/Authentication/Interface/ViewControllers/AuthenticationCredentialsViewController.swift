@@ -59,7 +59,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             return false
         }
     }
-    
+
     var isReauthenticating: Bool {
         if case .reauthentication? = flowType {
             return true
@@ -96,7 +96,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let contentStack = UIStackView()
 
     let emailPasswordInputField = EmailPasswordTextField()
-    let emailInputField = AccessoryTextField(kind: .email)
+    let emailInputField = ValidatedTextField(kind: .email)
     let phoneInputView = PhoneNumberInputView()
 
     let tabBar: TabBar = {
@@ -266,7 +266,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         valueSubmitted(emailInputField.input)
     }
 
-    @objc private func emailTextInputDidChange(sender: AccessoryTextField) {
+    @objc private func emailTextInputDidChange(sender: ValidatedTextField) {
         sender.validateInput()
     }
 

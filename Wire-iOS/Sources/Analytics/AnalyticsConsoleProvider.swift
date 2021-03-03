@@ -20,9 +20,9 @@ import Foundation
 import WireSystem
 import WireDataModel
 
-fileprivate let tag = "<ANALYTICS>:"
-final class AnalyticsConsoleProvider : NSObject {
-    
+private let tag = "<ANALYTICS>:"
+final class AnalyticsConsoleProvider: NSObject {
+
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false
 
@@ -34,26 +34,26 @@ final class AnalyticsConsoleProvider : NSObject {
 }
 
 extension AnalyticsConsoleProvider: AnalyticsProvider {
-    var isOptedOut : Bool {
+    var isOptedOut: Bool {
         get {
             return optedOut
         }
-        
+
         set {
             zmLog.info("Setting Opted out: \(newValue)")
             optedOut = newValue
         }
     }
-    
+
     /// no-op
     var selfUser: UserType? {
         get {
-            //no-op
+            // no-op
             return nil
         }
-        
+
         set {
-            //no-op
+            // no-op
         }
     }
 
@@ -63,17 +63,17 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
             zmLog.info(string)
         }
     }
-    
-    func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
-        
+
+    func tagEvent(_ event: String, attributes: [String: Any] = [:]) {
+
         let printableAttributes = attributes
-        
-        var loggingDict = [String : Any]()
-        
+
+        var loggingDict = [String: Any]()
+
         loggingDict["event"] = event
-        
+
         if !printableAttributes.isEmpty {
-            var localAttributes = [String : String]()
+            var localAttributes = [String: String]()
             printableAttributes.map({ (key, value) -> (String, String) in
                 return (key, (value as AnyObject).description!)
             }).forEach({ (key, value) in
@@ -81,16 +81,15 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
             })
             loggingDict["attributes"] = localAttributes
         }
-        
+
         print(loggingData: loggingDict)
     }
-    
+
     func setSuperProperty(_ name: String, value: Any?) {
-        print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
+        print(loggingData: ["superProperty_\(name)": value ?? "nil"])
     }
 
     func flush(completion: Completion?) {
         completion?()
     }
 }
-

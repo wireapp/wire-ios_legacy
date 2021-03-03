@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -29,20 +28,20 @@ protocol InvisibleInputAccessoryViewDelegate: class {
 final class InvisibleInputAccessoryView: UIView {
     weak var delegate: InvisibleInputAccessoryViewDelegate?
     private var frameObserver: NSKeyValueObservation?
-    
+
     var overriddenIntrinsicContentSize: CGSize = .zero {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
-    
+
     override public var intrinsicContentSize: CGSize {
         return overriddenIntrinsicContentSize
     }
-    
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        
+
         if window != nil {
             frameObserver = superview!.observe(
                 \UIView.center,
@@ -54,7 +53,7 @@ final class InvisibleInputAccessoryView: UIView {
             frameObserver = nil
         }
     }
-    
+
     private func superviewFrameChanged() {
         delegate?.invisibleInputAccessoryView(self, superviewFrameChanged: superview?.frame)
     }

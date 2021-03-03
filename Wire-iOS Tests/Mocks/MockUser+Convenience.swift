@@ -34,7 +34,7 @@ extension MockUser {
      * - returns: A configured mock user object to use as a self-user.
      * - note: The accent color of a self user is red by default.
      */
-    
+
     static func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUser {
         let user = MockUser()
         user.name = name
@@ -71,5 +71,5 @@ extension MockUser {
         user.remoteIdentifier = UUID()
         return user
     }
-    
+
 }

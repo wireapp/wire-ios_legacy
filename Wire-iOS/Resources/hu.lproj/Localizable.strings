@@ -1,0 +1,1857 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// General strings
+
+
+"general.ok" = "OK";
+"general.next" = "Tovább";
+"general.cancel" = "Mégse";
+"general.close" = "Bezárás";
+"general.back" = "Vissza";
+"general.open_settings" = "Wire Beállításainak Megnyitása";
+"general.edit" = "Szerkesztés";
+"general.done" = "Kész";
+"general.confirm" = "OK";
+"general.later" = "Később";
+"general.skip" = "Nem most";
+"general.accept" = "Elfogadás";
+"general.decline" = "Nem, köszönöm";
+"general.failure" = "Valami nem stimmel";
+"general.failure.try_again" = "Kérjük, próbáld meg újra.";
+"general.service" = "Szolgáltatás";
+"general.off" = "Kikapcsolva";
+"general.on" = "Be";
+"general.loading" = "Betöltés…";
+"general.paste" = "Beillesztés";
+
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Vendégszoba";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Te)";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Keresés név vagy felhasználónév alapján";
+"peoplepicker.header.top_people" = "Top Partnerek";
+"peoplepicker.button.create_conversation" = "Csoport létrehozása";
+"peoplepicker.button.add_to_conversation" = "Résztvevők hozzáadása csoporthoz";
+"peoplepicker.header.conversations" = "Csoportok";
+"peoplepicker.header.team_conversations" = "%@ Csoportjai";
+"peoplepicker.header.send_invitation" = "Meghívás";
+"peoplepicker.header.contacts" = "Névjegyek";
+"peoplepicker.header.contacts_personal" = "Személyes Névjegyzék";
+"peoplepicker.header.directory" = "Kapcsolatfelvétel";
+
+"peoplepicker.group.title.singular" = "Résztvevők hozzáadása";
+"peoplepicker.group.title.plural" = "Résztvevők hozzáadása (%d)";
+"peoplepicker.group.skip" = "Kihagyás";
+"peoplepicker.group.done" = "Kész";
+"peoplepicker.group.create" = "Létrehozás";
+
+"peoplepicker.header.people" = "Partner";
+"peoplepicker.header.services" = "Szolgáltatások";
+"peoplepicker.services.open_conversation.item" = "Beszélgetés megnyitása";
+"peoplepicker.services.add_service.button" = "Új szolgáltatás";
+"peoplepicker.services.add_service.error.title" = "A szolgáltatást nem lehet hozzá adni";
+"peoplepicker.services.add_service.error.default" = "A szolgáltatás jelenleg nem elérhető";
+"peoplepicker.services.add_service.error.full" = "A beszélgetés megtelt";
+
+"peoplepicker.title.create_conversation" = "Csoport létrehozása";
+"peoplepicker.title.add_to_conversation" = "Résztvevők hozzáadása";
+
+"peoplepicker.no_contacts_title" = "Nincsenek Partnerek.";
+
+"peoplepicker.no_matching_results_title" = "Nincs találat.";
+"peoplepicker.no_matching_results_message" = "Adj meg egy teljes e-mail címet.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Meghívó küldése";
+"peoplepicker.no_matching_results.action.share_contacts" = "Névjegyek megosztása";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "Kérjük, add meg a valós e-mail címedet";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Nincs találat.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Szolgáltatások kezelése";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Adj meg egy teljes e-mail címet vagy";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "névjegyek megosztása";
+
+"peoplepicker.share_contacts.no_results.title" = "Partnerek keresése név vagy e-mail cím alapján";
+
+"peoplepicker.send_invitation.dialog.title" = "Meghívó elküldve";
+"peoplepicker.send_invitation.dialog.message" = "2 hétig használható. Küld újat, ha lejárt.";
+"peoplepicker.send_invitation.dialog.ok" = "OK";
+
+"peoplepicker.invite_more_people" = "Több partner meghívása";
+"peoplepicker.invite_team_members" = "Hívj meg másokat a csapatba";
+"peoplepicker.quick-action.open-conversation" = "Megnyitás";
+"peoplepicker.quick-action.create-conversation" = "Csoport létrehozása";
+"peoplepicker.quick-action.create-guest-room" = "Vendégszoba létrehozása";
+"peoplepicker.quick-action.admin-services" = "Szolgáltatások kezelése";
+
+"add_participants.all_contacts_added" = "Mindenki itt van.";
+
+"add_participants.alert.title" = "Telt ház";
+"add_participants.alert.message.new_conversation" = "Legfeljebb %d ember csatlakozhat egy beszélgetéshez.";
+"add_participants.alert.message.existing_conversation" = "Legfeljebb %1$d ember csatlakozhat egy beszélgetéshez. Még %2$d partner számára van hely.";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Keresés név szerint";
+"contacts_ui.invite_others" = "Mások meghívása";
+"contacts_ui.name_in_contacts" = "A Névjegyzékedben: %@";
+"contacts_ui.connection_request" = "Kapcsolatfelvételi kérés";
+"contacts_ui.action_button.invite" = "Meghívás";
+"contacts_ui.action_button.open" = "Megnyitás";
+"contacts_ui.invite_sheet.cancel_button_title" = "Mégsem";
+"contacts_ui.notification.invitation_sent" = "Meghívó elküldve";
+"contacts_ui.notification.invitation_failed" = "A meghívó küldése sikertelen";
+"contacts_ui.title" = "Partnerek meghívása";
+
+"conversation_list.empty.all_archived.message" = "Minden archiválva";
+"conversation_list.empty.no_contacts.message" = "Beszélgetés indítása vagy\nhozz létre egy csoportot.";
+
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Csatlakozás";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Koppints az aktiváláshoz.";
+"conversation_list.header.self_team.accessibility_value.active" = "Most aktív.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Új üzenetek érkeztek.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.data_usage_permission_alert.title" = "Segíts nekünk jobbá tenni a Wire-t";
+"conversation_list.data_usage_permission_alert.message" = "Segíts jobbá tenni termékeinket és szolgáltatásainkat azzal, hogy névtelen használati és hibajelentéseket küldesz. Ezeket az információkat semmi másra nem használjuk.";
+"conversation_list.data_usage_permission_alert.disagree" = "Nem";
+"conversation_list.data_usage_permission_alert.agree" = "Elfogadás";
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "Szerepel a Névjegyzékedben is";
+
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Beszélgetés megnyitása";
+"conversation_list.voiceover.status.pending_connection" = "függőben";
+"conversation_list.voiceover.status.active_call" = "aktív hívás";
+"conversation_list.voiceover.status.missed_call" = "nem fogadott hívás";
+"conversation_list.voiceover.status.pause_media" = "média szüneteltetése";
+"conversation_list.voiceover.status.play_media" = "média lejátszása";
+"conversation_list.voiceover.status.silenced" = "lenémítva";
+"conversation_list.voiceover.status.typing" = "gépelés";
+"conversation_list.voiceover.status.ping" = "kopogás";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "válasz";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "legutóbbi beszélgetések";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "mappa";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archiválva";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "archivált beszélgetések listája";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "névjegyek";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "partnerek keresése a Wire-ön";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "üzenet írása";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "üzenet írása és mentése későbbre";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "fotó készítése és gyors küldése";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+
+// Archived List
+"archived_list.title" = "archívum";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "A beszélgetések itt kezdődnek";
+"tool_tip.contacts.message" = "Indíts egy beszélgetést. Hívj, üzenj és ossz meg dolgokat privátban vagy csoportokban.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Ismerőse %@";
+"peoplepicker.suggested.knows_two" = "Ismerőse %@ és %@";
+"peoplepicker.hide_search_result" = "Elrejtés";
+"peoplepicker.hide_search_result_progress" = "Elrejtés…";
+
+"send_invitation.subject" = "Csatlakozz hozzám a Wire-ön";
+"send_invitation.text" = "Fent vagyok a Wire-ön. Keress rá erre: %@ vagy nyisd meg a get.wire.com weboldalt";
+"send_invitation_no_email.text" = "Fent vagyok a Wire-ön. Látogass el a get.wire.com weboldalra és lépj kapcsolatba velem.";
+
+// Folders
+
+"folder.creation.name.title" = "Új mappa létrehozása";
+"folder.creation.name.button.create" = "Létrehozás";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 karakter";
+"folder.creation.name.placeholder" = "Mappa megnevezése";
+
+"folder.picker.title" = "Áthelyezés";
+"folder.picker.empty.hint" = "Hozz létre új mappát a + gomb megnyomásával";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "megosztott egy képet";
+"notifications.pinged" = "kopogott";
+"notifications.sent_file" = "megosztott egy fájlt";
+"notifications.sent_location" = "megosztott egy helyszínt";
+"notifications.sent_video" = "megosztott egy videót";
+"notifications.sent_audio" = "megosztott egy hangot";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ ebben a beszélgetésben";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.title" = "Beszélgetések";
+"list.archived_conversations" = "ARCHÍVUM";
+"list.archived_conversations_close" = "Archívum bezárása";
+
+"list.section.groups" = "Csoportok";
+"list.section.contacts" = "Partner";
+"list.section.requests" = "Kérelmek";
+"list.section.favorites" = "Kedvencek";
+
+"conversation.voiceover.verified" = "ellenőrizve";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "aktív";
+"conversation.voiceover.value.disabled" = "tiltva";
+
+"conversation.status.secutity_alert.default" = "New security alert";
+
+"conversation.status.typing" = "Üzenet írása…";
+"conversation.status.typing.group" = "%@: üzenet írása…";
+"conversation.status.silenced" = "Némítva";
+"conversation.status.poor_connection" = "Rossz a kapcsolat";
+"conversation.status.blocked" = "Letiltva";
+"conversation.status.incoming_call" = "%@ hív…";
+"conversation.status.incoming_call.unknown" = "Valaki hív…";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Megosztott egy linket";
+"conversation.status.message.image" = "Megosztott egy képet";
+"conversation.status.message.location" = "Megosztott egy helyet";
+"conversation.status.message.audio" = "Megosztott egy hangüzenetet";
+"conversation.status.message.video" = "Megosztott egy videót";
+"conversation.status.message.file" = "Megosztott egy fájlt";
+"conversation.status.message.knock" = "Kopogott";
+"conversation.status.message.missedcall" = "Nem fogadott hívás";
+"conversation.status.message.missedcall.groups" = "Nem fogadott hívás tőle: %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
+"conversation.status.message.ephemeral" = "Üzenetet küldött";
+"conversation.status.message.ephemeral.group" = "Valaki egy üzenetet küldött";
+"conversation.status.message.ephemeral.mention" = "Megemlített téged";
+"conversation.status.message.ephemeral.mention.group" = "Valaki megemlített téged";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Valaki válaszolt az üzenetedre";
+"conversation.status.message.ephemeral.knock" = "Kopogott";
+"conversation.status.message.ephemeral.knock.group" = "Valaki kopogott";
+
+"conversation.status.unsent" = "⚠ El nem küldött üzenet";
+"conversation.status.you" = "Te";
+"conversation.status.someone" = "Valaki";
+"conversation.status.you_was_added" = "%@ hozzáadott téged";
+"conversation.status.you_were_removed" = "El lettél távolítva";
+"conversation.status.you_left" = "Kiléptél";
+"conversation.status.started_conversation" = "%@ beszélgetést indítottál";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Beszélgetés";
+"compose.message.title" = "Üzenet";
+
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Terjeszd az igét!";
+"conversation.invite_more_people.description" = "Adj új partnereket ehhez a beszélgetéshez";
+"conversation.invite_more_people.explanation_url" = "https://support.wire.com";
+"conversation.invite_more_people.button_title" = "Partnerek hozzáadása";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Üres csoportos beszélgetés";
+
+"conversation.input_bar.verified" = "Ellenőrizve";
+"conversation.input_bar.placeholder" = "Üzenet írása...";
+"conversation.input_bar.placeholder_ephemeral" = "Időzített üzenet";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Húzd fel a küldéshez";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Koppints a küldéshez";
+"conversation.input_bar.audio_message.too_long.title" = "Felvétel leállítva";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
+"conversation.input_bar.audio_message.send" = "Küldés";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "A hangüzenet felvételéhez először koppints,\n, aztán már száguld is az üzenet, mint egy %@";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Válassz egyet a fenti szűrőkből";
+
+"conversation.call.many_participants_confirmation.title" = "Hívás indítása";
+"conversation.call.many_participants_confirmation.message" = "%d partnert fogsz felhívni";
+"conversation.call.many_participants_confirmation.call" = "Hívás";
+
+"conversation.connection_view.in_address_book" = "Névjegyzékben";
+
+"conversation.input_bar.shortcut.send" = "Üzenet küldése";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.edit_last_message" = "Utolsó üzenet szerkesztése";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Mégsem";
+
+"conversation.input_bar.message_too_long.title" = "Az üzenet túl hosszú";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
+"conversation.create.group_name.title" = "Csoport létrehozása";
+"conversation.create.group_name.placeholder" = "Csoportnév";
+"conversation.create.guidance.empty" = "Legalább 1 karakter";
+"conversation.create.guidance.toolong" = "Túl sok karakter";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Vendégek engedélyezése";
+"conversation.create.guests.subtitle" = "Megnyitja a beszélgetést a csapatodon kívüli partnerek számára is.";
+"conversation.create.receipts.title" = "Olvasási visszaigazolás";
+"conversation.create.receipts.subtitle" = "Amikor ez be van kapcsolva, az emberek láthatják, mikor olvasták el a beszélgetés üzeneteit.";
+
+"conversation.input_bar.ongoing_call_alert.title" = "Folyamatban lévő hívás";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Hívás közben nem rögzíthetsz hangüzenetet.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Hívás közben nem rögzíthetsz videót.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Hívás közben nem készíthetsz fényképet.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
+
+"conversation.guests_present" = "Vendégek is vannak itt";
+"conversation.services_present" = "A szolgáltatók aktívak";
+"conversation.guests_services_present" = "A vendégek és a szolgáltatók jelen vannak";
+"conversation.action.search" = "Keresés";
+
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Kép";
+"conversation.input_bar.message_preview.location" = "Helyszín";
+"conversation.input_bar.message_preview.video" = "Videó";
+"conversation.input_bar.message_preview.audio" = "Hangüzenet";
+"conversation.input_bar.message_preview.file" = "Fájl";
+"conversation.input_bar.close_reply" = "Visszavonás";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Válasz az üzenetre: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Képüzenet";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Helymeghatározó üzenet";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Videó üzenet";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Hangüzenet";
+"conversation.input_bar.message_preview.accessibility.file_message" = "Fájl üzenet (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Ismeretlen üzenet";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ tőle %@";
+
+"image_confirmer.confirm" = "OK";
+"image_confirmer.cancel" = "Mégsem";
+"image.add_sketch" = "Vázlat hozzáadása";
+"image.add_emoji" = "Add an emoji";
+"image.edit_image" = "Kép szerkesztése";
+
+// Camera access
+"camera_access.denied" = "Wire needs access to the camera";
+"video_call.camera_access.denied" = "A Wire nem fér hozzá a kamerához";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Engedélyezd a Wire Beállításainál";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Beállítások";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire engedélyt kér a kamerád és képeidhez."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire engedélyt kér a képeidhez.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire engedélyt kér a kamerádhoz.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Nem férhetsz hozzá a kamerádhoz még videóhívásban vagy.";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "AE/AF Zár";
+
+// Location
+"location.send_button.title" = "Küldés";
+"location.unauthorized_alert.title" = "Helymeghatározó Szolgáltatások engedélyezése";
+"location.unauthorized_alert.message" = "Hely küldéséhez kapcsold be Helymeghatározó Szolgáltatásokat és engedélyezd, hogy a Wire hozzáférjen a pozíciódhoz.";
+"location.unauthorized_alert.cancel" = "Mégsem";
+"location.unauthorized_alert.settings" = "Beállítások";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ Twitteren";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Kikapcsolva";
+"input.ephemeral.title" = "Add meg, hogy mennyi idő után tűnjön el az üzenet";
+
+// System messages
+"content.system.you_nominative" = "te";
+"content.system.you_dative" = "neked";
+"content.system.and_you_dative" = "és te";
+"content.system.you_accusative" = "téged";
+
+"content.system.continued_conversation" = "Beszélgetés indítása vele: %@";
+"content.system.started_conversation.truncated_people" = "és %@";
+"content.system.started_conversation.truncated_people.others" = "%@ mások";
+"content.system.started_conversation.complete_team" = "csoporttagok";
+"content.system.started_conversation.complete_team.guests" = "csoporttagok és %@ vendégek";
+
+"content.system.other_started_conversation" = "%@ beszélgetést indított vele: %@";
+"content.system.you_started_conversation" = "Beszélgetést kezdeményeztél %@ nevű partnereddel";
+
+"content.system.you_added_participant" = "Hozzáadtad %@-t a beszélgetéshez";
+"content.system.other_added_participant" = "%@ hozzáadta %@-t a beszélgetéshez";
+"content.system.other_added_you" = "%@ hozzáadott téged a beszélgetéshez";
+
+"content.system.participants_you" = "Te";
+"content.system.participants_1_other" = "%@ és %@";
+"content.system.other_left" = "%@ kilépett a beszélgetésből";
+"content.system.you_left" = "Kiléptél";
+"content.system.other_removed_other" = "%@ eltávolította %@-t a beszélgetésből";
+"content.system.other_removed_you" = "%@ eltávolított téged a beszélgetésből";
+"content.system.you_removed_other" = "Eltávolítottad %@-t a beszélgetésből";
+
+"content.system.services.warning" = "A szolgálatok hozzáférhetnek a beszélgetés tartalmához";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube videó előnézet";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud zene előnézet";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud lejátszási lista előnézet";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.other.started" = "%@ beszélgetést indított vele: %@";
+"content.system.conversation.other.added" = "%@ hozzáadta %@-t a beszélgetéshez";
+"content.system.conversation.other.removed" = "%@ eltávolította %@-t a beszélgetésből";
+"content.system.conversation.other.left" = "%@ kilépett a beszélgetésből";
+
+"content.system.conversation.you.started" = "%@ beszélgetést indított vele: %@";
+"content.system.conversation.you.added" = "%@ hozzáadtad %@-t a beszélgetéshez";
+"content.system.conversation.you.removed" = "%@ eltávolítottad %@-t a beszélgetésből";
+"content.system.conversation.you.left" = "%@ kiléptél a beszélgetésből";
+"content.system.conversation.team.member-leave" = "%@ el lett távolítva a csapatból.";
+"content.system.conversation.guest.joined" = "%@ csatlakozott";
+
+"content.system.conversation.invite.title" = "Csapatodon kívüli emberek is csatlakozhatnak ehhez a beszélgetéshez.";
+"content.system.conversation.invite.button" = "Partner meghívása";
+
+"content.system.other_renamed_conv_to_nothing" = "%@ eltávolította a beszélgetés nevét";
+"content.system.you_renamed_conv_to_nothing" = "Eltávolítottad a beszélgetés nevét";
+"content.system.pending_message_timestamp" = "Küldés…";
+"content.system.message_sent_timestamp" = "Elküldve";
+"content.system.message_delivered_timestamp" = "Kézbesítve";
+"content.system.message_read_timestamp" = "Látta";
+"content.system.failedtosend_message_timestamp" = "A küldés sikertelen.";
+"content.system.failedtosend_message_timestamp_resend" = "Újraküldés";
+"content.system.failedtosend_message_timestamp_delete" = "Törlés";
+"content.system.like_tooltip" = "Ha tetszik, koppints";
+"content.system.deleted_message_prefix_timestamp" = "Törölve: %@";
+"content.system.edited_message_prefix_timestamp" = "Szerkesztve ekkor: %@";
+"content.system.connecting_to" = "Csatlakozás vele: %@.\nIndíts egy beszélgetést";
+"content.system.connected_to" = "Csatlakozva vele: %@\nIndíts egy beszélgetést";
+"content.system.other_wanted_to_talk" = "%@ hívást indított";
+"content.system.you_wanted_to_talk" = "Hívást indítottál";
+"content.system.ephemeral_time_remaining" = "%@ kiléptél a beszélgetésből";
+
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
+"content.system.you_started" = "Te";
+
+"content.system.call.called" = "%@ hívást indítottál";
+"content.system.call.called-you" = "%@ hívást indított";
+"content.system.call.called.you" = "Te";
+
+"content.system.call.missed-call" = "Nem fogadott hívás";
+"content.system.call.missed-call-you" = "Nem fogadott hívás";
+
+"content.system.call.missed-call.groups" = "Nem fogadott hívás tőle: %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Te";
+
+"content.system.renamed_conv.title" = "%@ átnevezte a beszélgetést";
+"content.system.renamed_conv.title-you" = "%@ átnevezted a beszélgetést";
+"content.system.renamed_conv.title.you" = "Te";
+
+"content.system.conversation.with_name.title" = "%@ beszélgetést indított";
+"content.system.conversation.with_name.title-you" = "%@ beszélgetést indított";
+
+"content.system.conversation.with_name.participants" = "vele";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Tértivevények bekapcsolva";
+
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "További információ";
+
+//
+
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+
+"content.system.is_verified" = "Minden ujjlenyomat ellenőrizve";
+
+"content.system.new_users" = "Új felhasználó csatlakozott.";
+"content.system.verify_devices" = "Eszközök ellenőrzése";
+
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+
+"content.system.missing_messages.title" = "Ezt a készüléket már nem használtad egy ideje, ezért nem biztos, hogy minden üzenet megjelenik itt.";
+"content.system.missing_messages.subtitle_start" = "Meanwhile,";
+
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+
+"content.file.uploading" = "Feltöltés…";
+"content.file.downloading" = "Letöltés…";
+"content.file.upload_failed" = "Feltöltés sikertelen";
+"content.file.upload_cancelled" = "Feltöltés megszakítva";
+"content.file.upload_video" = "Videók";
+"content.file.take_video" = "Videó rögzítése";
+"content.file.browse" = "Browse";
+
+"content.file.save_video" = "Mentés";
+"content.file.save_audio" = "Mentés";
+"content.image.save_image" = "Mentés";
+
+"content.message.delete" = "Törlés";
+"content.message.save" = "Mentés";
+"content.message.resend" = "Újraküldés";
+
+"content.message.delete_ellipsis" = "Törlés…";
+
+"content.message.like" = "Tetszik";
+"content.message.unlike" = "Nem tetszik";
+"content.message.forward" = "Megosztás";
+"content.message.go_to_conversation" = "Mutasd a beszélgetésben";
+"content.message.forward.to" = "Keresés…";
+"content.message.open" = "Megnyitás";
+"content.message.sign" = "Sign";
+"content.message.copy" = "Másolás";
+"content.message.download" = "Letöltés";
+"content.message.details" = "Részletek";
+
+// Reply
+"content.message.reply" = "Válasz";
+"content.message.original_label" = "Eredeti üzenet";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "Ezt az üzenetet nem látod.";
+"content.message.reply.edited_message" = "Edited";
+
+"content.message.open_link_alert.title" = "Látogasd meg a linket";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Megnyitás";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
+
+"content.reactions_list.likers" = "Tetszett neki(k)";
+
+"content.file.too_big" = "Maximum %@ méretű fájlokat küldhetsz";
+// Someone pinged
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
+
+// Current user pinged
+"content.ping.text.you" = "Te";
+
+// Inline Player
+"content.player.unable_to_play" = "NEM SIKERÜLT LEJÁTSZANI A SZÁMOT";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Csatlakozás: %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
+"missive.connection_request.default_message" = "Szia %@!\nLépj velem kapcsolatba a Wire-ön.\n%@";
+
+"connection_request_pending_title" = "Connection Request";
+"connection_request.send_button_title" = "Csatlakozás";
+"inbox.connection_request.connect_button_title" = "Csatlakozás";
+"inbox.connection_request.ignore_button_title" = "Figyelmen kívül hagyás";
+
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.joining" = "%@\nCsatlakozás";
+"voice.status.leaving" = "%@\nCall ended";
+"voice.status.video_not_available" = "Videó kikapcsolva";
+"voice.status.low_connection" = "Rossz kapcsolat";
+"voice.network_error.title" = "Nincs internetkapcsolat";
+"voice.status.cbr" = "Állandó Bitsebesség (CBR)";
+"voice.network_error.body" = "A híváshoz internetkapcsolat szükséges. Próbáld újra, ha már online vagy.";
+"voice.degradation.new_self_device" = "Elkezdtél használni egy új eszközt.";
+"voice.degradation.new_user_device" = "%@ elkezdett használni egy új eszközt.";
+"voice.degradation_outgoing.prompt" = "Biztos, hogy még mindig kezdeményezni szeretnéd a hívást?";
+"voice.degradation_incoming.prompt" = "Biztos, hogy még mindig fogadni szeretnéd a hívást?";
+"voice.accept_button.title" = "Elfogadás";
+"voice.decline_button.title" = "Elutasítás";
+"voice.hang_up_button.title" = "Hívás befejezése";
+"voice.mute_button.title" = "Némítás";
+"voice.video_button.title" = "Videó";
+"voice.flip_video_button.title" = "Flip";
+"voice.speaker_button.title" = "Hangszóró";
+"voice.cancel_button.title" = "Mégsem";
+"voice.call_button.title" = "Hívás";
+"voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Később";
+
+"voice.alert.call_in_progress.title" = "Hívás folyamatban";
+"voice.alert.call_in_progress.message" = "Egyszerre csak egy aktív hívásod levet";
+"voice.alert.call_in_progress.confirm" = "OK";
+
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
+
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+
+"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "Folyamatban lévő hívás";
+
+// Voice New
+
+"call.status.connecting" = "Csatlakozás…";
+"call.status.incoming.user" = "%@ hív…";
+"call.status.incoming" = "Hívás…";
+"call.status.outgoing" = "Kicsengés…";
+"call.status.outgoing.user" = "Calling %@…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "Állandó Bitsebesség (CBR)";
+"call.status.variable_bitrate" = "Variable Bit Rate";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
+"call.video.paused" = "Videó szüneteltetve";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Videóhívások 4 vagy kevesebb emberrel lehetségesek.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "Elkezdtél használni egy új eszközt.";
+"call.degraded.alert.message.user" = "%@ elkezdett használni egy új eszközt.";
+"call.degraded.alert.message.unknown" = "Valaki elkezdett használni egy új eszközt.";
+"call.degraded.alert.action.continue" = "Hívás mindenképpen";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
+"call.alert.ongoing.alert_title" = "This will end your other call.";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.button" = "Hívás mindenképpen";
+"call.alert.ongoing.join.button" = "Join anyway";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Némítás";
+"call.actions.label.toggle_mute_off" = "Némítás feloldása";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Hívás fogadása";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "Hívás befejezése";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Csatlakozás a híváshoz";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Hozzáadás";
+"participants.avatar.guest.title" = "Vendég";
+
+"participants.title" = "Részletek";
+"participants.all.title" = "Partner";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Beállítások";
+"participants.footer.add_title" = "Résztvevők hozzáadása";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.admins.footer" = "Nincsenek rendszergazdák.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
+
+// Meta Menu
+"meta.menu.accessibility_more_options_button" = "További műveletek";
+"meta.menu.rename" = "Átnevezés";
+"meta.menu.leave" = "Kilépés a csoportból…";
+"meta.menu.archive" = "Archiválás";
+"meta.menu.unarchive" = "Archiválás visszavonása";
+"meta.menu.delete" = "Csoport törlése…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Áthelyezés ide…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.silence.mute" = "Némítás";
+"meta.menu.silence.unmute" = "Némítás feloldása";
+"meta.menu.cancel" = "Mégsem";
+"meta.menu.cancel_connection_request" = "Kérelem visszavonása";
+"meta.menu.mark_unread" = "Olvasatlannak jelölés";
+"meta.menu.mark_read" = "Megjelölés olvasottként";
+"shortcut.mark_all_as_read.title" = "Összes Megjelölése Olvasottként";
+"meta.menu.configure_notifications" = "Értesítések…";
+"meta.menu.open_self_profile" = "Profil megnyitása";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Törlöd a tartalmat?";
+"meta.menu.delete_content.dialog_message" = "Ezzel törlöd a beszélgetés előzményét az összes eszközödről.";
+"meta.menu.delete_content.leave_as_well_message" = "Kilépés a beszélgetésből is";
+"meta.menu.delete_content.button_cancel" = "Mégsem";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Minden";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_nothing" = "Semmi";
+"meta.menu.configure_notification.button_cancel" = "Mégsem";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Kilépsz a beszélgetésből?";
+"meta.leave_conversation_dialog_message" = "A résztvevők értesítést fognak kapni és a beszélgetést eltávolítjuk a listádból.";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation_button_cancel" = "Mégsem";
+"meta.leave_conversation_button_leave" = "Kilépés";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ elkezdett használni egy új eszközt.";
+"meta.degraded.degradation_reason_message.plural" = "%@ elkezdett használni új eszközöket.";
+"meta.degraded.degradation_reason_message.someone" = "Valaki elkezdett használni egy új eszközt.";
+"meta.degraded.dialog_message" = "Biztos, hogy még mindig el szeretnéd küldeni az üzenetedet?";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.cancel_sending_button" = "Mégsem";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Eltávolítod?";
+"profile.remove_dialog_message" = "%@ ezután nem fog tudni üzenetet küldeni és fogadni ebben a beszélgetésben.";
+"profile.remove_dialog_button_cancel" = "Mégsem";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+
+// Block dialog
+"profile.block_dialog.title" = "Letiltod?";
+"profile.block_dialog.message" = "%@ nem tud majd kapcsolatba lépni veled, sem meghívni téged csoportos beszélgetésekbe.";
+"profile.block_dialog.button_cancel" = "Mégsem";
+"profile.block_dialog.button_block" = "Tiltás";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Ezt a műveletet nem lehet visszavonni.";
+"message.delete_dialog.action.cancel" = "Mégsem";
+"message.delete_dialog.action.hide" = "Törlés nálam";
+"message.delete_dialog.action.delete" = "Törlés mindenkinél";
+
+// Edit message
+"message.menu.edit.title" = "Szerkesztés";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Elfogadod?";
+"profile.connection_request_dialog.message" = "Ezzel csatlakozol és beszélgetést indítasz %@ partnerrel.";
+"profile.connection_request_dialog.button_cancel" = "Figyelmen kívül hagyás";
+"profile.connection_request_dialog.button_connect" = "Csatlakozás";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Törlöd a csoportos beszélgetést?";
+"conversation.delete_request_dialog.message" = "Ezzel törlöd a csoportot és az összes résztvevő összes tartalmát az összes eszközről. Nincs lehetőség a tartalom visszaállítására. Minden résztvevőt értesítünk.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Csoport törlése";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Kérelem visszavonása?";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.button_no" = "Nem";
+"profile.cancel_connection_request_dialog.button_yes" = "Igen";
+
+// Unblock button
+"profile.block_button_title" = "Letilt…";
+"profile.unblock_button_title" = "Tiltás feloldása";
+
+// Favorite button
+"profile.favorite_button_title" = "Hozzáadás a kedvencekhez";
+"profile.unfavorite_button_title" = "Eltávolítás kedvencekből";
+
+"profile.block_button_title_action" = "Tiltás";
+"profile.unblock_button_title_action" = "Tiltás feloldása";
+
+"profile.cancel_connection_button_title" = "KÉRELEM VISSZAVONÁSA";
+"profile.connection_request_state.blocked" = "LETILTVA";
+"profile.create_conversation_button_title" = "Csoport létrehozása";
+"profile.open_conversation_button_title" = "Beszélgetés megnyitása";
+
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
+"profile.extended_metadata.header" = "Információ";
+
+// User Details
+"profile.details.title" = "Részletek";
+"profile.details.guest" = "Vendég";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
+
+"profile_view.accessibility.handle" = "Felhasználónév";
+"profile_view.accessibility.name" = "Megjelenített név";
+"profile_view.accessibility.team_name" = "Csapat neve";
+
+// Device list
+"profile.devices.title" = "Eszközök";
+"profile.devices.fingerprint_message_unencrypted" = "%@ a Wire egy régebbi verzióját használja. Eszközei nem jeleníthetőek meg itt.";
+"profile.devices.fingerprint_message.title" = "A Wire minden eszköznek egyedi ujjlenyomatot ad. Hasonlítsd össze őket a %@ partnerrel és ellenőrizze a beszélgetést.";
+"profile.devices.fingerprint_message.link" = "Miért ellenőrizd a beszélgetéseket?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Ellenőrizd, hogy ez egyezik-e %@ eszközén látható ujjlenyomattal.";
+"profile.devices.detail.verify_message.link" = "Hogyan csináljam?";
+"profile.devices.detail.show_my_device.title" = "Eszköz ujjlenyomatának megjelenítése";
+"profile.devices.detail.reset_session.title" = "Visszaállítás";
+"device.verified" = "Ellenőrizve";
+"device.not_verified" = "Nincs Ellenőrizve";
+
+"device.class.legalhold" = "Legal Hold";
+"device.class.desktop" = "Asztal";
+"device.class.tablet" = "Táblagép";
+"device.class.phone" = "Telefon";
+"device.class.unknown" = "Ismeretlen";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Ismeretlen";
+
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Vendég opciók";
+"group_details.guest_options_cell.enabled" = "Be";
+"group_details.guest_options_cell.disabled" = "Kikapcsolva";
+"group_details.timeout_options_cell.title" = "Időzített üzenetek";
+"group_details.notification_options_cell.title" = "Értesítések";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Olvasási visszaigazolás";
+"group_details.receipt_options_cell.description" = "Amikor ez be van kapcsolva, az emberek láthatják, mikor olvasták el a beszélgetés üzeneteit.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Beállítások";
+"self.profile" = "Profil";
+"self.account" = "Fiók";
+"self.help_center" = "Ügyfélszolgálat";
+"self.help_center.support_website" = "Wire Ügyfélszolgálat weboldala";
+"self.help_center.contact_support" = "Kapcsolatfelvétel az ügyfélszolgálattal";
+"self.about" = "Névjegy";
+"self.sign_out" = "Kijelentkezés";
+"self.report_abuse" = "Visszaélés jelentése";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Profil és beállítások megnyitása";
+"self.new-device.voiceover.label" = "Profil, új eszközök hozzáadva";
+
+"self.add_phone_number" = "Telefonszám hozzáadása";
+"self.add_email_password" = "E-mail cím és jelszó hozzáadása";
+
+"self.accessibility.profile_photo_image" = "Profilkép";
+"self.accessibility.profile_photo_edit_button" = "Profilkép megváltoztatása";
+
+// About screen
+"about.tos.title" = "Felhasználási feltételek";
+"about.privacy.title" = "Adatvédelmi Nyilatkozat";
+"about.license.title" = "Licenc információ";
+"about.website.title" = "Wire Weboldala";
+"about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Részletek";
+"about.license.open_project_button" = "Projekt oldal megtekintése";
+"about.license.license_header" = "Köszönetnyilvánítások";
+
+// Self new devices
+"self.new_device_alert.title" = "Fiókod legutóbbi használata:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
+"self.new_device_alert.manage_devices" = "Eszközök kezelése";
+"self.new_device_alert.trust_devices" = "OK";
+
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Engedélyezted az olvasási visszaigazolást";
+"self.read_receipts_disabled.title" = "Letiltottad az olvasási visszaigazolást";
+"self.read_receipts_description.title" = "Ezt a beállítást a fiókbeállításokban módosíthatod.";
+
+// Settings - top level
+"self.settings.create_team.title" = "Csapat létrehozása";
+"self.settings.manage_team.title" = "Csapat kezelése";
+"self.settings.add_team_or_account.title" = "Fiók hozzáadása";
+"self.settings.add_account.title" = "Fiók hozzáadása";
+
+"self.settings.add_account.error.title" = "Három fiók aktív";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
+
+// Settings - Account details
+"self.settings.account_section" = "Fiók";
+
+"self.settings.account_details_group.info.title" = "Alapadatok";
+"self.settings.account_details_group.personal.title" = "Személyes";
+
+"self.settings.account_section.name.title" = "Név";
+"self.settings.account_section.email.title" = "E-mail";
+"self.settings.account_section.phone.title" = "Telefon";
+"self.settings.account_section.handle.title" = "Felhasználónév";
+"self.settings.account_section.add_handle.title" = "Felhasználónév hozzáadása";
+
+"self.settings.account_details_group.info.footer" = "Más emberek ezek alapján tudnak megtalálni.";
+"self.settings.account_details_group.personal.footer" = "Ez az információ nem látható.";
+
+"self.settings.account_details.remove_device.title" = "Eszköz eltávolítása";
+"self.settings.account_details.key_fingerprint.title" = "Eszközazonosító ujjlenyomat";
+"self.settings.account_details.remove_device.message" = "Az eszköz eltávolításához add meg a jelszavad";
+"self.settings.account_details.remove_device.password" = "Jelszó";
+"self.settings.account_details.remove_device.password.error" = "Hibás jelszó";
+
+"self.settings.account_appearance_group.title" = "Megjelenés";
+
+"self.settings.privacy_section_group.title" = "Adatvédelem";
+"self.settings.enable_read_receipts.title" = "Olvasási visszaigazolás küldése";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
+"self.settings.account_picture_group.picture" = "Kép";
+"self.settings.account_picture_group.color" = "Szín";
+
+"self.settings.account_personal_information_group.title" = "Személyes információk";
+
+"self.settings.account_picture_group.theme" = "Theme";
+
+"self.settings.device_details.fingerprint.subtitle" = "A Wire-ben minden eszköz egyedi ujjlenyomattal rendelkezik. Összehasonlítással ellenőrizd az eszközöket és a beszélgetéseket.";
+"self.settings.device_details.reset_session.subtitle" = "Ha az ujjlenyomatok nem egyeznek, állítsd vissza a munkamenet, így mindkét oldalon új titkosítási kulcsok jönnek létre.";
+"self.settings.device_details.remove_device.subtitle" = "Távolítsd el ezt az eszközt, ha már nem használod. Ezzel együtt azonnal ki is jelentkezel erről az eszközről.";
+"self.settings.device_details.reset_session.success" = "A munkamenet alaphelyzetbe állítva";
+
+"self.settings.account_details.actions.title" = "Műveletek";
+
+"self.settings.account_details.delete_account.title" = "Fiók törlése";
+
+"self.settings.account_details.delete_account.alert.title" = "Fiók törlése";
+"self.settings.account_details.delete_account.alert.message" = "Küldünk egy e-mailt vagy SMS-t. Fiókod végleges törléséhez nyisd meg a kapott linket.";
+
+"self.settings.account_details.log_out.alert.title" = "Kijelentkezés";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.password" = "Jelszó";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Használati Adatok és Hibajelentések";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Anonimizált használati adatok küldése";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+
+"self.settings.receiveNews_and_offers.title" = "Feliratkozás a Hírlevélre";
+"self.settings.receiveNews_and_offers.description.title" = "Hírek és termékinformációk fogadása e-mailben a Wire-től.";
+
+
+
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Felhasználónév";
+"self.settings.account_section.handle.change.save" = "Mentés";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Már foglalt";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Nem sikerült beállítani a felhasználónevet";
+"self.settings.account_section.handle.change.failure_alert.message" = "Nem sikerült a felhasználónév beállítása. Kérjük, próbáld meg újra.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "E-mail";
+"self.settings.account_section.email.change.save" = "Mentés";
+
+"self.settings.account_section.email.change.verify.title" = "E-mail cím megerősítése";
+"self.settings.account_section.email.change.verify.description" = "Ellenőrizd bejövő e-mailjeidet és kövesd az utasításokat.";
+"self.settings.account_section.email.change.verify.resend" = "Újraküldés ide: %@";
+
+"self.settings.account_section.email.change.resend.title" = "E-mail újraküldése";
+"self.settings.account_section.email.change.resend.message" = "A visszaigazoló e-mailt elküldtük ide: %@. Ellenőrizd bejövő e-mailjeidet és kövesd az utasításokat.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Mentés";
+"self.settings.account_section.phone_number.change.remove" = "Telefonszám Eltávolítása";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Telefonszám Eltávolítása";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Mentés";
+"self.settings.account_section.phone_number.change.verify.title" = "Ellenőrzés";
+"self.settings.account_section.phone_number.change.verify.description" = "Írd be az ellenőrző kódot, amit a %@ telefonszámra küldtünk.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Kód beírása";
+"self.settings.account_section.phone_number.change.verify.resend" = "Kód újraküldése";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Nem kaptál kódot?\n30 másodperc múlva új kódot kérhetsz.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kód újraküldve";
+"self.settings.account_section.phone_number.change.resend.message" = "Az ellenőrző kódot újraküldtük ide: %@.";
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Értesítések";
+"self.settings.notifications.push_notification.toogle" = "Üzenetek Előnézete";
+"self.settings.notifications.push_notification.footer" = "A feladó neve és az üzenet is megjelenik a záróképernyőn és az Értesítési Központban.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Üzenet Értesítések";
+"self.settings.notifications.chat_alerts.footer" = "Új üzenetek más beszélgetésekben.";
+
+"self.settings.sound_menu.sounds.title" = "Hangjelzés";
+"self.settings.sound_menu.ringtone.title" = "Hívás csengőhangja";
+"self.settings.sound_menu.message.title" = "Üzenetek értesítési hangja";
+"self.settings.sound_menu.ping.title" = "Kopogás hangja";
+"self.settings.sound_menu.ringtones.title" = "Csengőhangok";
+"self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Nincs hangjelzés";
+
+"self.settings.callkit.title" = "Hívások";
+"self.settings.callkit.caption" = "Megosztás az iOS-sel";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.vbr.title" = "Változó bitsebességű (VBR) hangkódolás";
+"self.settings.vbr.description" = "A Változó Bitsebességű Kódolással (VBR) a hanghívások kevesebb adatot használnak és jobban működnek lassú internet esetén. Kapcsold ki, ha Állandó Bitsebességű Kódolást (CBR) szeretne használni.";
+
+"self.settings.sound_menu.sounds.wire_call" = "Wire Hívás";
+"self.settings.sound_menu.sounds.wire_message" = "Wire Üzenet";
+"self.settings.sound_menu.sounds.wire_ping" = "Wire Kopogás";
+
+// By popular demand
+"self.settings.popular_demand.title" = "Közkívánatra";
+"self.settings.popular_demand.send_button.title" = "Küldés Gomb";
+"self.settings.popular_demand.send_button.footer" = "A return billentyűvel ne küldje el az üzenetet.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
+
+// Open in
+"self.settings.external_apps.header" = "Megnyitás a következővel:";
+
+"self.settings.link_options.twitter.title" = "Tweet-ek";
+"self.settings.link_options.maps.title" = "Helyek";
+"self.settings.link_options.browser.title" = "Böngésző";
+
+"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Térképek";
+"open_link.maps.option.google" = "Google Térkép";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Értesítések";
+"self.settings.sound_menu.no_sounds.title" = "Soha";
+"self.settings.sound_menu.all_sounds.title" = "Minden üzenet";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
+
+// Developer options
+"self.settings.developer_options.title" = "Fejlesztői Lehetőségek";
+"self.settings.apns_logging.title" = "APNS naplózás";
+
+// Privacy (visibility) options
+"self.settings.options_menu.title" = "Beállítások";
+
+"self.settings.privacy_contacts_section.title" = "Névjegyek";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Névjegyzék Beállításainak megnyitása";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Névjegyeid megosztása megkönnyíti, hogy kapcsolatba lépj másokkal. Az összes információt anonimizáljuk és nem osztjuk meg senki mással. Engedélyezz hozzáférést a Beállítások > Adatvédelem > Névjegyzék menüpontban.";
+
+"self.settings.privacy_security.lock_app" = "Lezárás Jelkóddal";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
+
+"self.settings.privacy_security.lock_app.description" = "Wire Feloldása";
+"self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Hibás jelszó. Kérjük, próbáld meg újra.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.footer" = "A más partnerektől kapott hivatkozások előnézete továbbra is látható lesz.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Eszközök";
+
+"self.settings.privacy.clear_history.title" = "Előzmények Törlése";
+"self.settings.privacy.clear_history.subtitle" = "Ezzel véglegesen törlöd összes beszélgetésed előzményeit.";
+
+"self.settings.advanced.title" = "Haladó beállítások";
+"self.settings.advanced.troubleshooting.title" = "Hibaelhárítás";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.reset_push_token.title" = "Push Értesítési Tokenek visszaállítása";
+"self.settings.advanced.reset_push_token.subtitle" = "Ha problémákat tapasztalsz a Push Értesítésekkel, akkor a Wire Ügyfélszolgálat megkérhet, hogy állítsd alaphelyzetbe ezt a tokent.";
+"self.settings.advanced.reset_push_token_alert.title" = "Push Token visszaállítva alaphelyzetbe";
+"self.settings.advanced.reset_push_token_alert.message" = "Az Értesítések pár másodpercen belül helyre lesznek állítva.";
+"self.settings.advanced.version_technical_details.title" = "Verzió Műszaki Részletei";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Adatokhasználati Engedélyek";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Műszaki Jelentés";
+"self.settings.technical_report.send_report" = "Jelentés küldése az Ügyfélszolgálatnak";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.include_log" = "Részletes napló csatolása";
+"self.settings.technical_report.privacy_warning" = "A Részletes napló személyes adatokat is tartalmazhat";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Jelszó visszaállítása";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Partnerek meghívása";
+
+// History backup
+
+"self.settings.conversations.title" = "Előzmények";
+"self.settings.history_backup.title" = "Beszélgetések Mentése";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.action" = "Mentés Most";
+"self.settings.history_backup.error.title" = "Hiba";
+
+"self.settings.history_backup.set_email.title" = "E-mail és jelszó beállítása.";
+"self.settings.history_backup.set_email.message" = "A beszélgetési előzmények mentéséhez szükséged lesz egy e-mail címre és jelszóra. Ezt a Beállítások menü Fiók oldalán tudod megadni.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Mégsem";
+"self.settings.history_backup.password.next" = "Tovább";
+"self.settings.history_backup.password.placeholder" = "Jelszó";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Nincs Internetkapcsolat";
+"system_status_bar.no_internet.explanation" = "Úgy tűnik, hogy probléma van az internetkapcsolatoddal. Kérjük, győződj meg róla, hogy működik.";
+"system_status_bar.poor_connectivity.title" = "Lassú az internet, most nem tudsz hívásban részt venni";
+"system_status_bar.poor_connectivity.explanation" = "Nem tudjuk garantálni a hang minőségét. Csatlakozz Wi-Fi hálózathoz vagy próbáld megváltoztatni a helyzetedet.";
+
+// View user profile and options menu & text field validation
+"name.placeholder" = "Teljes neved";
+"name.guidance.tooshort" = "Legalább 2 karakter";
+"name.guidance.toolong" = "Túl sok karakter";
+
+"email.placeholder" = "E-mail";
+"email.guidance.invalid" = "Érvénytelen e-mail cím";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Túl sok karakter";
+
+"password.placeholder" = "Jelszó";
+"password.guidance.toolong" = "Túl sok karakter";
+
+"phone.guidance.invalid" = "Érvénytelen telefonszám";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Túl sok karakter";
+
+// Landing screen
+
+"landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_team.title" = "Pro";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.login.hints" = "Már van fiókod?";
+"landing.login.button.title" = "Bejelentkezés";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Bejelentkezés SSO-n keresztül";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Mutass többet";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
+// Create team
+
+"team.name.headline" = "Nevezd el a csapatod";
+"team.name.subheadline" = "Később bármikor módosíthatod.";
+"team.name.textfield.placeholder" = "csapat neve";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "Mi a Wire Csapatoknak?";
+
+"team.email.headline" = "Fiókod";
+"team.email.subheadline" = "Add meg a munkahelyi e-mail címed.";
+"team.email.textfield.placeholder" = "Your company email";
+"team.email.button.learn_more" = "További információ";
+
+"team.activation_code.headline" = "Leveled érkezett";
+"team.phone_activation_code.headline" = "Hitelesítés";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.button.resend" = "Kód újraküldése";
+"team.activation_code.button.change_email" = "E-mail cím módosítása";
+"team.activation_code.button.change_phone" = "Telefonszám módosítása";
+
+"team.full_name.headline" = "Neved";
+"team.full_name.textfield.placeholder" = "Teljes név";
+"team.full_name.textfield.accessibility" = "Állítsd be a teljes neved";
+
+"team.password.headline" = "Jelszó megadása";
+
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Alakítsd ki a csapatod";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.learn_more.title" = "További információ";
+"team.invite.top_bar.skip" = "Kihagyás";
+"team.invite.top_bar.done" = "Kész";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Hoppá... valami hiba történt, kérjük, próbáld meg újra!";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "Ez az e-mail cím már meg lett hívva";
+"team.invite.error.too_many_invitations" = "Elérte a maximálisan kiküldhető meghívók számát";
+"team.invite.error.no_internet" = "Nincs internet kapcsolat";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Vendégek engedélyezése";
+"guest_room.allow_guests.subtitle" = "Megnyitja a beszélgetést a csapatodon kívüli partnerek számára is.";
+"guest_room.remove_guests.message" = "A jelenlegi vendég el lesz távolítva a beszélgetésből. Új vendégek sem csatlakozhatnak.";
+"guest_room.remove_guests.action" = "Eltávolít";
+"guest_room.revoke_link.message" = "Új vendégek nem tudnak ezzel a hivatkozással csatlakozni. A már meglévő vendégeknek továbbra is megmarad a hozzáférése.";
+"guest_room.revoke_link.action" = "Hivatkozás Visszavonása";
+
+"guest_room.error.generic.title" = "Valami nem stimmel";
+"guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Hívj meg másokat egy hivatkozással";
+"guest_room.link.header.subtitle" = "Bárki, akinek megvan ez a hivatkozás, csatlakozhat a beszélgetéshez 24 órán belül, akkor is, ha egyébként nincsenek a Wire-ön.";
+
+"guest_room.link.button.title" = "Hivatkozás Létrehozása";
+
+"guest_room.actions.copy_link" = "Hivatkozás Másolása";
+"guest_room.actions.copied_link" = "Hivatkozás Másolva!";
+"guest_room.actions.share_link" = "Hivatkozás Megosztása";
+"guest_room.actions.revoke_link" = "Hivatkozás Eltávolítása…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Registration
+
+"registration.launch_back_button.label" = "Vissza";
+
+"registration.title" = "Regisztráció";
+"registration.close_email_invitation_button.email_title" = "Másik e-mail cím használata";
+"registration.close_email_invitation_button.phone_title" = "Telefonos regisztráció";
+"registration.close_phone_invitation_button.email_title" = "E-mailes regisztráció";
+"registration.close_phone_invitation_button.phone_title" = "Más telefonszám használata";
+
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "E-mail";
+
+"registration.enter_phone_number.title" = "Telefonszám módosítása";
+"registration.enter_phone_number.placeholder" = "Telefonszám";
+
+"registration.verify_phone_number.instructions" = "Írd be az ellenőrző kódot, amit a %@ telefonszámra küldtünk";
+"registration.verify_phone_number.resend" = "Újraküldés";
+"registration.verify_phone_number.resend_placeholder" = "Nem kaptál kódot?\n%.0f másodperc múlva új kódot kérhetsz";
+
+"registration.verify_email.instructions" = "Küldtünk egy e-mailt ide: %@.\n E-mail címed megerősítéséhez kövesd a levélben lévő linket.";
+"registration.verify_email.resend.instructions" = "Nem kaptad meg az üzenetet?";
+"registration.verify_email.resend.button_title" = "Újraküldés";
+
+"registration.no_history.hero" = "Első alkalommal használod a Wire-t ezen az eszközön.";
+"registration.no_history.subtitle" = "Adatvédelmi okokból a beszélgetés előzményei nem jelennek meg.";
+"registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Visszaállítás biztonsági másolatból";
+
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Bejelentkezés";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Előzmények visszaállítása";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Mentés fájl Választása";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Újra próbál";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Valami nem stimmel";
+"registration.no_history.restore_backup_failed.message" = "Az előzmények visszaállítása nem sikerült.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "A mentés nem kompatibilis";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Az előzményeket nem lehet másik felhasználói fiókból visszaállítani.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "A mentés nem kompatibilis";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Ez a mentés egy újabb vagy elavultabb Wire verzióval készült és nem lehet itt visszaállítani.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Vállalati bejelentkezés";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.action" = "Bejelentkezés";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO Kód";
+
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+
+"login.sso.error.offline.alert.message" = "Kérjük, ellenőrizze az internetkapcsolatát, majd próbálkozzon újra.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Kérlek, adj meg egy érvényes SSO hozzáférési kódot";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Kérlek, adj meg egy érvényes e-mailt vagy SSO hozzáférési kódot";
+"login.sso.error.alert.domain_not_registered.message" = "Ez az e-mail nem használható vállalati bejelentkezéshez. Kérlek, írd be az SSO kódot a folytatáshoz.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Kérjük, próbáld meg később.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Visszaállítás…";
+"registration.no_history.restore_backup.completed" = "Befejezett";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Jelszó";
+"registration.no_history.restore_backup.password_error.title" = "Helytelen jelszó";
+
+"registration.no_history.logged_out.hero" = "Már használtad a Wire-t ezen az eszközön.";
+"registration.no_history.logged_out.subtitle" = "Az elküldött üzenetek nem fognak megjelenni.";
+"registration.no_history.logged_out.got_it" = "OK";
+
+"registration.enter_name.title" = "Név Szerkesztése";
+"registration.enter_name.hero" = "Hogy szólíthatunk?";
+"registration.enter_name.placeholder" = "Teljes neve";
+
+"registration.terms_of_use.title" = "Köszöntünk a Wire-ön.";
+"registration.terms_of_use.terms" = "A folytatással elfogadod a Wire Használati Feltételeit.";
+"registration.terms_of_use.terms.link" = "Felhasználási feltételek";
+"registration.terms_of_use.agree" = "Elfogadom";
+
+"registration.terms_of_use.terms.title" = "Felhasználási feltételek";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "Nézet";
+"registration.terms_of_use.accept" = "Elfogadás";
+
+"registration.email_flow.title" = "Regisztráció e-mail címmel";
+"registration.email_flow.email_step.title" = "Adatok Szerkesztése";
+
+"registration.country_select.title" = "Ország";
+
+"registration.share_contacts.hero.title" = "Keress ismerősöket a Wire-ön";
+"registration.share_contacts.hero.paragraph" = "A névjegyeid importálásával könnyebben kapcsolatba léphetsz másokkal. Minden információt anonimizálunk, és semmit nem osszuk meg senki mással.";
+"registration.share_contacts.find_friends_button.title" = "Névjegyek megosztása";
+"registration.share_contacts.skip_button.title" = "Most nem";
+
+"registration.address_book_access_denied.hero.title" = "A Wire nem fér hozzá a névjegyeidhez.";
+"registration.address_book_access_denied.hero.paragraph1" = "Segítünk megtalálni ismerőseidet, ha megosztod névjegyeidet a Wire-rel.";
+"registration.address_book_access_denied.hero.paragraph2" = "A hozzáférés engedélyezéséhez koppints a Beállításokra és kapcsold be a Névjegyzéket.";
+"registration.address_book_access_denied.settings_button.title" = "Beállítások";
+"registration.address_book_access_denied.maybe_later_button.title" = "Talán később";
+
+"registration.push_access_denied.hero.title" = "Ne maradj le egy hívásról vagy üzenetről se.";
+"registration.push_access_denied.hero.paragraph1" = "Engedélyezd az Értesítéseket a Beállításokban.";
+"registration.push_access_denied.settings_button.title" = "Beállítások megnyitása";
+"registration.push_access_denied.maybe_later_button.title" = "Talán később";
+
+"registration.personal.title" = "Fiók létrehozása";
+"registration.signin.title" = "Bejelentkezés";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.subtitle" = "Ahhoz, hogy használni tudd a Wire-t ezen az eszközön, először távolítsd el azt valamelyik másikról.";
+"registration.signin.too_many_devices.manage_button.title" = "Eszközök kezelése";
+"registration.signin.too_many_devices.sign_out_button.title" = "Kijelentkezés";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
+"registration.devices.title" = "Eszközök";
+"registration.devices.active_list_header" = "Aktív";
+"registration.devices.current_list_header" = "Ez az eszköz";
+"registration.devices.active_list_subtitle" = "Ha a fenti eszközök közül valamelyik nem ismerős, akkor töröld azt és változtass jelszót.";
+"registration.devices.activated" = "Activated %@";
+"registration.devices.id" = "Eszközazonosító (ID):";
+
+"signin.use_email.label" = "Belépés e-mail címmel";
+"signin.use_phone.label" = "Login with Phone";
+"signin.forgot_password" = "Elfelejtetted a jelszavad?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Bejelentkezés";
+"signin.company_idp.button.title" = "For Companies";
+
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
+"registration.phone_country" = "Ország";
+"registration.phone_code" = "Országhívó-kód";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Telefonszám ellenőrzése";
+"registration.phone.verify_field.label" = "Verification Code";
+
+"registration.add_phone_number.hero.title" = "Telefonszám hozzáadása";
+"registration.add_phone_number.hero.paragraph" = "Segít, hogy olyan embereket találjunk, akit ismerhetsz. Soha nem osztjuk meg senkivel.";
+"registration.add_phone_number.skip_button.title" = "Most nem";
+
+"registration.add_email_password.hero.title" = "Add hozzá e-mail címed és jelszavad";
+"registration.add_email_password.hero.paragraph" = "Lehetővé teszi, hogy egyszerre több eszközön is használhasd a Wire-t.";
+
+"registration.email_invitation.title" = "Meghívó";
+"registration.email_invitation.hero.title" = "Szia %@!";
+"registration.email_invitation.hero.paragraph" = "Válassz egy jelszót a fiók létrehozásához.";
+
+"registration.phone_invitation.title" = "Meghívó";
+"registration.phone_invitation.hero.title" = "Szia %@!";
+"registration.phone_invitation.hero.paragraph" = "Már csak egy lépés van hátra a fiók létrehozásához.";
+
+"registration.confirm" = "Regisztráció";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
+
+"error.name_and_email" = "Kérjük, add meg teljes neved és a valós e-mail címedet";
+"error.full_name" = "Kérjük, add meg teljes neved";
+"error.email" = "Kérjük, add meg a valós e-mail címedet";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
+"error.email.invalid" = "Kérjük, add meg a valós e-mail címedet";
+"error.phone.invalid" = "Kérjük, valós telefonszámot adj meg";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.subtitle" = "Igényeljen egyedei nevet a Wire-ön.";
+"registration.select_handle.takeover.subtitle_link" = "További információ";
+
+"registration.select_handle.takeover.choose_own" = "Válassz sajátot";
+"registration.select_handle.takeover.keep_suggested" = "Megtartom ezt";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Hoppá... valami hiba történt, kérjük, próbáld meg újra!";
+"error.user.needs_credentials" = "Kérjük, ellenőrizd az adataidat, majd próbáld meg újra.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.invalid_credentials" = "Kérjük, ellenőrizd az adataidat, majd próbáld meg újra.";
+"error.user.account_pending_activation" = "Ennek a fióknak az aktiválása folyamatban van. Kérjük, ellenőrizd a beírt adatokat.";
+"error.user.network_error" = "Úgy tűnik, probléma van a hálózattal. Kérjük, próbálkozz később.";
+"error.user.email_is_taken" = "A megadott e-mail cím már regisztrálva van. Kérjük, próbáld meg újra.";
+"error.user.phone_is_taken" = "A megadott telefonszám már regisztrált. Kérjük, próbáld meg újra.";
+"error.user.phone_code_invalid" = "Kérjük, adj meg egy érvényes kódot";
+"error.user.phone_code_too_many" = "Már elküldtük neked a kódot SMS-ben. Ha új kódot szeretnél kérni, koppints az Újraküldés gombra 10 perc elteltével.";
+"error.user.registration_unknown_error" = "Hoppá... valami hiba történt. Kérjük, próbáld újra!";
+"error.user.device_deleted_remotely" = "Ki lettél jelentkeztetve egy másik eszközről.";
+"error.user.last_identity_cant_be_deleted" = "Vagy e-mail cím vagy telefonszám szükséges.";
+"error.user.account_suspended" = "Ezzel az azonosítóval már nem lehet bejelentkezni.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Nem sikerült a jelszó frissítése.";
+
+"error.group_call.too_many_members_in_conversation.title" = "Túl sok ember egy híváshoz";
+"error.group_call.too_many_members_in_conversation" = "Csoportos hívás maximum %d emberrel lehetséges.";
+"error.group_call.too_many_participants_in_the_call.title" = "A hívás megtelt";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.call.gsm_ongoing.title" = "Mobilhívás";
+"error.call.gsm_ongoing" = "Kérjük, tedd le a mobilhívást a Wire hívás előtt.";
+"error.call.general.title" = "Hiba a hívással";
+"error.call.general" = "Kérjük, a hívást pár perc múlva próbáld meg újra.";
+"error.call.slow_connection.title" = "Lassú kapcsolat";
+"error.call.slow_connection" = "Előfordulhat, hogy problémákat tapasztalsz a hívás közben";
+"error.call.slow_connection.call_anyway" = "Hívás mindenképpen";
+
+"error.invite.no_email_provider" = "Kérjük, állítsd be levelezőprogramod, ha e-mail meghívókat szeretnél küldeni";
+"error.invite.no_messaging_provider" = "Kérjük, állítsd be az SMS-t a telefonodon, ha SMS meghívókat szeretnél küldeni";
+
+"error.conversation.title" = "Hiba";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "A beszélgetés megtelt";
+"error.conversation.offline" = "Úgy tűnik, hogy probléma van az internetkapcsolatoddal. Kérjük, győződj meg róla, hogy működik.";
+
+"sketchpad.initial_hint" = "Az ecsetméret változtatásához koppints a színre";
+
+"migration.please_wait_message" = "Egy pillanat";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ csatlakozott a Wire-höz";
+"push.notification.new_message" = "Új üzenet";
+
+
+//Force Update
+"force.update.title" = "Frissítés szükséges";
+"force.update.message" = "Kimaradsz pár új funkcióból.\nSzerezd be a legújabb Wire verziót az App Store-ban.";
+"force.update.ok_button" = "Irány az App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Third Party
+"giphy.conversation.message" = "%@ · Forrás: giphy.com";
+"giphy.conversation.random_message" = "Forrás: Giphy.com";
+"giphy.error.no_more_results" = "nincs több GIF";
+"giphy.error.no_result" = "GIF nem található";
+
+"giphy.confirm" = "küldés";
+"giphy.cancel" = "mégsem";
+"giphy.search_placeholder" = "Giphy Keresés";
+
+"invite_banner.title" = "Hívd meg barátaidat a Wire-re!";
+"invite_banner.message" = "Élvezd a hívásokat, üzeneteket, vázlatokat, GIF-eket és még sok mást privátban és csoportokban.";
+"invite_banner.invite_button_title" = "Több partner meghívása";
+
+// Collections
+"collections.section.images.title" = "Képek";
+"collections.section.files.title" = "Fájlok";
+"collections.section.videos.title" = "Videók";
+"collections.section.links.title" = "Hivatkozások";
+"collections.section.all.button" = "Mind a(z) %d mutatása →";
+"collections.section.no_items" = "A Gyűjtemény üres";
+"collections.image_viewer.copied.title" = "Kép a vágólapra másolva";
+
+"collections.search.field.placeholder" = "Szöveges üzenetek keresése";
+"collections.search.no_items" = "Nincs találat";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Üzenetek";
+"compose.drafts.empty.title" = "Nincs üzenet";
+"compose.drafts.empty.subtitle" = "Új üzenethez koppints a + jelre";
+"compose.drafts.compose.title" = "Üzenet írása";
+"compose.drafts.compose.subject.placeholder" = "Koppints a tárgy beállításához";
+
+"compose.drafts.compose.delete.confirm.title" = "Törlés megerősítése";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.action.title" = "Törlés";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Mentés vázlatként";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Mentés";
+"compose.drafts.compose.dismiss.delete.action.title" = "Törlés";
+
+"availability.message.cancel" = "Mégsem";
+"availability.message.set_status" = "Állapot beállítása";
+"availability.accessibility_label.change_status" = "Állapot Módosítása";
+"availability.accessibility_label.status" = "Állapot";
+
+"availability.none" = "Nincs hangjelzés";
+"availability.available" = "Elérhető";
+"availability.away" = "Nem Elérhető";
+"availability.busy" = "Elfoglalt";
+
+"availability.reminder.away.title" = "Beállítottad a távol van állapotot";
+"availability.reminder.away.message" = "Másoknak távol van állapotban fogsz megjelenni. A bejövő hívásokról vagy üzenetekről nem fogsz értesítést kapni.";
+"availability.reminder.busy.title" = "Beállítottad elfoglalt állapotra";
+"availability.reminder.busy.message" = "Másoknak elfoglaltként fogsz megjelenni. Csak a némítás nélküli beszélgetésekben küldött értesítésekről kapsz értesítést: a válaszokról és a hívásokról.";
+"availability.reminder.available.title" = "Beállítottad a távol van állapotot";
+"availability.reminder.available.message" = "Mások számára elérhetőként jelensz meg. Az értesítések beállításnak megfelelően értesítéseket kapsz a bejövő hívásokról és az üzenetekről.";
+"availability.reminder.none.title" = "Nincs állapot megadva";
+"availability.reminder.none.message" = "Az egyes beszélgetésekben az Értesítések beállításnak megfelelően értesítéseket kapsz a bejövő hívásokról és az üzenetekről.";
+"availability.reminder.action.dont_remind_me" = "Ne jelenítse meg újra ezeket az információkat";
+"availability.reminder.action.ok" = "OK";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Rossz";
+"calling.quality_survey.answer.2" = "Gyenge";
+"calling.quality_survey.answer.3" = "Megfelelő";
+"calling.quality_survey.answer.4" = "Jó";
+"calling.quality_survey.answer.5" = "Kiválló";
+"calling.quality_survey.skip_button_title" = "Kihagyás";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Megerősítés";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Csatlakozás a szerverhez";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "Lehet, hogy nincs engedélyed ehhez a fiókhoz, vagy már nem létezik.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Érvénytelen hivatkozás.";
+"url_action.invalid_link.message" = "The link you opened is not valid.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Szeretnél híreket és termékinformációkat kapni e-mailben a Wire-től?";
+"news_offers.consent.message" = "Bármikor leiratkozhatsz.";
+"news_offers.consent.button.privacy_policy.title" = "Adatvédelmi Nyilatkozat";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Még senkinek nem tetszett ez az üzenet.";
+"message_details.empty_read_receipts" = "Még senki nem olvasta el az üzenetet.";
+"message_details.read_receipts_disabled" = "Az olvasási visszaigazolás nem voltak bekapcsolva, amikor ezt az üzenetet elküldték.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Szerkesztve ekkor: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Felhasználónév";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "A jövőbeli üzeneteket nem rögzítjük.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "A megerősítéshez add meg jelszavadat.";
+"legalhold_request.alert.error_wrong_password" = "Helytelen jelszó";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "További információ";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "nincs kiválasztva";
+"button_message_cell.state.selected" = "kiválasztva";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Jelszó";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Törlés";
+"wipe_database.alert.confirm_input" = "Törlés";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

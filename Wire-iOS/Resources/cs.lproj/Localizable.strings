@@ -1,0 +1,1857 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// General strings
+
+
+"general.ok" = "OK";
+"general.next" = "Další";
+"general.cancel" = "Zrušit";
+"general.close" = "Zavřít";
+"general.back" = "Zpět";
+"general.open_settings" = "Otevřít nastavení";
+"general.edit" = "Upravit";
+"general.done" = "Hotovo";
+"general.confirm" = "OK";
+"general.later" = "Později";
+"general.skip" = "Nyní ne";
+"general.accept" = "Přijmout";
+"general.decline" = "Ne, děkuji";
+"general.failure" = "Něco se pokazilo";
+"general.failure.try_again" = "Zkuste to prosím znovu.";
+"general.service" = "Služba";
+"general.off" = "Vypnout";
+"general.on" = "Zapnuto";
+"general.loading" = "Načítání…";
+"general.paste" = "Vložit";
+
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Místnost pro hosty";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Vy)";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Hledat podle jména nebo emailu";
+"peoplepicker.header.top_people" = "Nejaktivnější kontakty";
+"peoplepicker.button.create_conversation" = "Vytvořit skupinu";
+"peoplepicker.button.add_to_conversation" = "Přidat účastníky do skupiny";
+"peoplepicker.header.conversations" = "Skupiny";
+"peoplepicker.header.team_conversations" = "%@ skupiny";
+"peoplepicker.header.send_invitation" = "Pozvat";
+"peoplepicker.header.contacts" = "Kontakty";
+"peoplepicker.header.contacts_personal" = "Osobní kontakty";
+"peoplepicker.header.directory" = "Připojit";
+
+"peoplepicker.group.title.singular" = "Přidat účastníky";
+"peoplepicker.group.title.plural" = "Přidat účastníky (%d)";
+"peoplepicker.group.skip" = "Přeskočit";
+"peoplepicker.group.done" = "Hotovo";
+"peoplepicker.group.create" = "Vytvořit";
+
+"peoplepicker.header.people" = "Kontakty";
+"peoplepicker.header.services" = "Služby";
+"peoplepicker.services.open_conversation.item" = "Otevřít konverzaci";
+"peoplepicker.services.add_service.button" = "Přidat službu";
+"peoplepicker.services.add_service.error.title" = "Služba nemůže být přidána";
+"peoplepicker.services.add_service.error.default" = "Služba je v tuto chvíli nedostupná";
+"peoplepicker.services.add_service.error.full" = "Konverzace je plná";
+
+"peoplepicker.title.create_conversation" = "Vytvořit skupinu";
+"peoplepicker.title.add_to_conversation" = "Přidat účastníky";
+
+"peoplepicker.no_contacts_title" = "Žádné kontakty.";
+
+"peoplepicker.no_matching_results_title" = "Žádné výsledky.";
+"peoplepicker.no_matching_results_message" = "Zadejte platnou emailovou adresu.";
+"peoplepicker.no_search_results" = "Žádné odpovídající výsledky. Zkuste jiné jméno.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Odeslat pozvánku";
+"peoplepicker.no_matching_results.action.share_contacts" = "Sdílet kontakty";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "Zadejte prosím platnou emailovou adresu";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Žádné výsledky.";
+"peoplepicker.no_matching_results_services_title" = "Služby pomáhají zlepšit váš workflow. Pro jejich zprovoznění kontaktujte svého administrátora.";
+"peoplepicker.no_matching_results_services_admin_title" = "Služby jsou pomůcky, které mohou zlepšit vaši workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Spravovat služby";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Zadejte platnou emailovou adresu nebo";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "sdílet kontakty";
+
+"peoplepicker.share_contacts.no_results.title" = "Najít lidi podle jména nebo emailové adresy";
+
+"peoplepicker.send_invitation.dialog.title" = "Pozvánka odeslána";
+"peoplepicker.send_invitation.dialog.message" = "Může být použito na 2 týdny. Zašlete novou, pokud její platnost vyprší.";
+"peoplepicker.send_invitation.dialog.ok" = "OK";
+
+"peoplepicker.invite_more_people" = "Pozvat další osoby";
+"peoplepicker.invite_team_members" = "Pozvat do týmu další členy";
+"peoplepicker.quick-action.open-conversation" = "Otevřít";
+"peoplepicker.quick-action.create-conversation" = "Vytvořit skupinu";
+"peoplepicker.quick-action.create-guest-room" = "Založit místnost pro hosty";
+"peoplepicker.quick-action.admin-services" = "Spravovat služby";
+
+"add_participants.all_contacts_added" = "Všichni jsou zde.";
+
+"add_participants.alert.title" = "Přeplněné kupé";
+"add_participants.alert.message.new_conversation" = "Až %d lidí se může připojit do konverzace.";
+"add_participants.alert.message.existing_conversation" = "Až %1$d se může připojit do konverzace. Nyní je zde místo pouze pro %2$d další.";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Hledat podle jména";
+"contacts_ui.invite_others" = "Pozvat ostatní";
+"contacts_ui.name_in_contacts" = "%@ v kontaktech";
+"contacts_ui.connection_request" = "Zažádáno o připojení";
+"contacts_ui.action_button.invite" = "Pozvat";
+"contacts_ui.action_button.open" = "Otevřít";
+"contacts_ui.invite_sheet.cancel_button_title" = "Zrušit";
+"contacts_ui.notification.invitation_sent" = "Pozvánka odeslána";
+"contacts_ui.notification.invitation_failed" = "Nepodařilo se odeslat pozvánku";
+"contacts_ui.title" = "Pozvat další";
+
+"conversation_list.empty.all_archived.message" = "Vše archivováno";
+"conversation_list.empty.no_contacts.message" = "Zahájit konverzaci nebo vytvořit skupinu.";
+
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Vstoupit";
+"conversation_list.header.self_team.accessibility_value" = "%@ účet.";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Pro aktivaci klepněte.";
+"conversation_list.header.self_team.accessibility_value.active" = "Právě teď aktivní.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Má nové zprávy.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.data_usage_permission_alert.title" = "Pomozte nám Wire vylepšit";
+"conversation_list.data_usage_permission_alert.message" = "Souhlasím s tím, že Wire může vytvářet a používat anonymní uživatelská a chybová hlášení pro zlepšení aplikace Wire. Tento souhlas mohu kdykoliv odvolat.";
+"conversation_list.data_usage_permission_alert.disagree" = "Ne";
+"conversation_list.data_usage_permission_alert.agree" = "Přijmout";
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "je v kontaktech";
+
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Otevřít konverzaci";
+"conversation_list.voiceover.status.pending_connection" = "čekající";
+"conversation_list.voiceover.status.active_call" = "aktivní hovor";
+"conversation_list.voiceover.status.missed_call" = "zmeškaný hovor";
+"conversation_list.voiceover.status.pause_media" = "pozastavit multimédia";
+"conversation_list.voiceover.status.play_media" = "přehrát multimédia";
+"conversation_list.voiceover.status.silenced" = "ztišeno";
+"conversation_list.voiceover.status.typing" = "psaní";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "jste zmíněn";
+"conversation_list.voiceover.status.reply" = "odpovědět";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "aktuální";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "seznam posledních konverzací";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "složky";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "seznam konverzací organizovaných ve složkách";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archivováno";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "seznam archivovaných konverzací";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "vyhledávání osob na Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "vytvořit";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "vytvořit koncept a uložit na poději";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "fotoaparát";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "pořídit obrázek a rychle ho odeslat";
+"conversation_list.voiceover.unread_messages.hint" = "Máte nepřečtené zprávy.";
+
+// Archived List
+"archived_list.title" = "archivovat";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "Konverzace začněte zde";
+"tool_tip.contacts.message" = "Zahájit konverzaci. Volat, posílat zprávy a sdílet soukromě nebo se skupinami.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Zná %@";
+"peoplepicker.suggested.knows_two" = "Zná %@ a %@";
+"peoplepicker.hide_search_result" = "Skrýt";
+"peoplepicker.hide_search_result_progress" = "Schovávání…";
+
+"send_invitation.subject" = "Spojte se se mnou na Wire";
+"send_invitation.text" = "Jsem na Wire, hledejte %@ nebo navštivte get.wire.com";
+"send_invitation_no_email.text" = "Jsem k zastižení na síti Wire. K navázání kontaktu navštivte https://get.wire.com.";
+
+// Folders
+
+"folder.creation.name.title" = "Vytvořit novou složku";
+"folder.creation.name.button.create" = "Vytvořit";
+"folder.creation.name.header" = "Přesunout konverzaci \"%@\" do nové složky.";
+"folder.creation.name.footer" = "Maximálně 64 znaků";
+"folder.creation.name.placeholder" = "Název složky";
+
+"folder.picker.title" = "Přesunout do";
+"folder.picker.empty.hint" = "Vytvořit novou složku stisknutím tlačítka +";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "sdílel(a) obrázek";
+"notifications.pinged" = "pingnut";
+"notifications.sent_file" = "sdílel(a) soubor";
+"notifications.sent_location" = "sdílel(a) polohu";
+"notifications.sent_video" = "sdílel(a) video";
+"notifications.sent_audio" = "sdílel(a) zvuk";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ v této konverzaci";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.title" = "Konverzace";
+"list.archived_conversations" = "ARCHIV";
+"list.archived_conversations_close" = "Zavřít archiv";
+
+"list.section.groups" = "Skupiny";
+"list.section.contacts" = "Kontakty";
+"list.section.requests" = "Žádosti";
+"list.section.favorites" = "Oblíbené";
+
+"conversation.voiceover.verified" = "ověřeno";
+"conversation.voiceover.legalhold" = "právní držení";
+"conversation.voiceover.value.active" = "aktivní";
+"conversation.voiceover.value.disabled" = "vypnuto";
+
+"conversation.status.secutity_alert.default" = "New security alert";
+
+"conversation.status.typing" = "Píše zprávu…";
+"conversation.status.typing.group" = "%@: píše zprávu…";
+"conversation.status.silenced" = "Ztišeno";
+"conversation.status.poor_connection" = "Špatné připojení";
+"conversation.status.blocked" = "Blokováno";
+"conversation.status.incoming_call" = "%@ volá…";
+"conversation.status.incoming_call.unknown" = "Někdo volá…";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Sdílel(a) odkaz";
+"conversation.status.message.image" = "Sdílel(a) obrázek";
+"conversation.status.message.location" = "Sdílel(a) polohu";
+"conversation.status.message.audio" = "Sdílel(a) zvukovou zprávu";
+"conversation.status.message.video" = "Sdílel(a) video";
+"conversation.status.message.file" = "Sdílel(a) soubor";
+"conversation.status.message.knock" = "Pingnut";
+"conversation.status.message.missedcall" = "Zmeškaný hovor";
+"conversation.status.message.missedcall.groups" = "Zmeškaný hovor od %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
+"conversation.status.message.ephemeral" = "Vám poslal zprávu";
+"conversation.status.message.ephemeral.group" = "Někdo odeslal zprávu";
+"conversation.status.message.ephemeral.mention" = "Zmínil vás";
+"conversation.status.message.ephemeral.mention.group" = "Někdo vás zmínil";
+"conversation.status.message.ephemeral.reply" = "Odpověděl na vaši zprávu";
+"conversation.status.message.ephemeral.reply.group" = "Někdo odpověděl na vaši zprávu";
+"conversation.status.message.ephemeral.knock" = "Pingnut";
+"conversation.status.message.ephemeral.knock.group" = "Někdo pingnul";
+
+"conversation.status.unsent" = "⚠️ Neodeslaná zpráva";
+"conversation.status.you" = "Vy";
+"conversation.status.someone" = "Někdo";
+"conversation.status.you_was_added" = "%@ vás přidal";
+"conversation.status.you_were_removed" = "Byl(a) jste odebrán(a)";
+"conversation.status.you_left" = "Opustil jsi";
+"conversation.status.started_conversation" = "%@ zahájil(a) konverzaci";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Konverzace";
+"compose.message.title" = "Zpráva";
+
+"conversation_details.open_button.accessibility_hint" = "Dvojitým poklepáním zobrazíte podrobnosti konverzace.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Propagujte nás!";
+"conversation.invite_more_people.description" = "Přidat lidi do této konverzace";
+"conversation.invite_more_people.explanation_url" = "https://support.Wire.com";
+"conversation.invite_more_people.button_title" = "Přidat kontakty";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Prázdná konverzace";
+
+"conversation.input_bar.verified" = "Ověreno";
+"conversation.input_bar.placeholder" = "Napsat zprávu";
+"conversation.input_bar.placeholder_ephemeral" = "Časované zprávy";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Tahem nahoru odeslat";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Klepnutím odeslat";
+"conversation.input_bar.audio_message.too_long.title" = "Nahrávání zastaveno";
+"conversation.input_bar.audio_message.too_long.message" = "Zvukové zprávy jsou omezeny na %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "Velikost zvukové zprávy je omezena na %@.";
+
+"conversation.input_bar.audio_message.send" = "Odeslat";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Klepnutím spustíte záznam\n Poté jej můžete %@";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Vyberte filtr výše";
+
+"conversation.call.many_participants_confirmation.title" = "Zahájit hovor";
+"conversation.call.many_participants_confirmation.message" = "Toto zavolá %d lidem";
+"conversation.call.many_participants_confirmation.call" = "Hovor";
+
+"conversation.connection_view.in_address_book" = "je v kontaktech";
+
+"conversation.input_bar.shortcut.send" = "Odeslat zprávu";
+"conversation.input_bar.shortcut.newline" = "Vložit lomítko";
+"conversation.input_bar.shortcut.edit_last_message" = "Upravit poslední zprávu";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Zrušit";
+
+"conversation.input_bar.message_too_long.title" = "Zpráva je příliš dlouhá";
+"conversation.input_bar.message_too_long.message" = "Můžete posílat zprávy až do %d znaků.";
+
+"conversation.create.group_name.title" = "Vytvořit skupinu";
+"conversation.create.group_name.placeholder" = "Název skupiny";
+"conversation.create.guidance.empty" = "Alespoň jeden znak";
+"conversation.create.guidance.toolong" = "Příliš mnoho znaků";
+"conversation.create.options.title" = "Možnosti konverzace";
+"conversation.create.options.subtitle" = "Hosté a služby: %@, Potvrzení o přečtení: %@";
+"conversation.create.guests.title" = "Povolit hosty a služby";
+"conversation.create.guests.subtitle" = "Otevřete tuto konverzaci službám a lidem mimo váš tým.";
+"conversation.create.receipts.title" = "Potvrzení o přečtení";
+"conversation.create.receipts.subtitle" = "Pokud je tato možnost zapnuta, mohou lidé zjistit, kdy byly jejich zprávy přečteny.";
+
+"conversation.input_bar.ongoing_call_alert.title" = "Probíhající hovor";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Nemůžete nahrávat zvukovou zprávu během hovoru.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Nemůžete nahrávat video během hovoru.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Nemůžete fotit během hovoru.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
+
+"conversation.guests_present" = "Guests are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
+"conversation.action.search" = "Hledat";
+
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Poloha";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
+"image_confirmer.confirm" = "OK";
+"image_confirmer.cancel" = "Zrušit";
+"image.add_sketch" = "Přidat skicu";
+"image.add_emoji" = "Add an emoji";
+"image.edit_image" = "Upravit obrázek";
+
+// Camera access
+"camera_access.denied" = "Wire needs access to the camera";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Povolte v nastavení Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Nastavení";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "AE zamknuto";
+
+// Location
+"location.send_button.title" = "Odeslat";
+"location.unauthorized_alert.title" = "Povolit služby zjišťování polohy";
+"location.unauthorized_alert.message" = "Chcete-li odesílat informace o vaší poloze, povolte služby polohy a přístup Wire k vaší poloze.";
+"location.unauthorized_alert.cancel" = "Zrušit";
+"location.unauthorized_alert.settings" = "Nastavení";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ na Twitteru";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Vypnout";
+"input.ephemeral.title" = "Nastavit dobu, za kterou zpráva zmizí";
+
+// System messages
+"content.system.you_nominative" = "jste";
+"content.system.you_dative" = "jste";
+"content.system.and_you_dative" = "and you";
+"content.system.you_accusative" = "jste";
+
+"content.system.continued_conversation" = "Zahájit konverzaci s %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+
+"content.system.other_started_conversation" = "%@ zahájil(a) konverzaci s %@";
+"content.system.you_started_conversation" = "Zahájil(a) jste konverzaci s %@";
+
+"content.system.you_added_participant" = "Přidali jste %@";
+"content.system.other_added_participant" = "%@ přidán %@";
+"content.system.other_added_you" = "%@ vás přidal";
+
+"content.system.participants_you" = "Vy";
+"content.system.participants_1_other" = "%@ a %@";
+"content.system.other_left" = "%@ opustil(a) konverzaci";
+"content.system.you_left" = "Opustil jsi";
+"content.system.other_removed_other" = "%@ odebrán %@";
+"content.system.other_removed_you" = "%@ vás odebral";
+"content.system.you_removed_other" = "Odebral(a) jste %@";
+
+"content.system.services.warning" = "Služby mají přístup k obsahu této konverzace";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.other.started" = "%@ zahájil(a) konverzaci s %@";
+"content.system.conversation.other.added" = "%@ přidal %@";
+"content.system.conversation.other.removed" = "%@ odebrán %@";
+"content.system.conversation.other.left" = "%@ opustil(a) konverzaci";
+
+"content.system.conversation.you.started" = "%@ zahájil(a) konverzaci s %@";
+"content.system.conversation.you.added" = "%@ přidán %@";
+"content.system.conversation.you.removed" = "%@ odebrán %@";
+"content.system.conversation.you.left" = "%@ opustil(a) konverzaci";
+"content.system.conversation.team.member-leave" = "Uživatel %@ byl odstraněn z týmu.";
+"content.system.conversation.guest.joined" = "%@ joined";
+
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Pozvat další";
+
+"content.system.other_renamed_conv_to_nothing" = "%@ odstranil(a) název konverzace";
+"content.system.you_renamed_conv_to_nothing" = "Odstranil(a) jste název konverzace";
+"content.system.pending_message_timestamp" = "Odesílá se…";
+"content.system.message_sent_timestamp" = "Odesláno";
+"content.system.message_delivered_timestamp" = "Doručeno";
+"content.system.message_read_timestamp" = "Seen";
+"content.system.failedtosend_message_timestamp" = "Odeslání se nezdařilo";
+"content.system.failedtosend_message_timestamp_resend" = "Odeslat znovu";
+"content.system.failedtosend_message_timestamp_delete" = "Smazat";
+"content.system.like_tooltip" = "Ťuknutím pochválit";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.connecting_to" = "Připojování k %@. Zahájit konverzaci";
+"content.system.connected_to" = "Připojeno k %@. Zahájit konverzaci";
+"content.system.other_wanted_to_talk" = "%@ volal(a)";
+"content.system.you_wanted_to_talk" = "Volal jste";
+"content.system.ephemeral_time_remaining" = "%@ opustil(a) konverzaci";
+
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
+"content.system.you_started" = "Vy";
+
+"content.system.call.called" = "%@ volal(a)";
+"content.system.call.called-you" = "%@ volal(a)";
+"content.system.call.called.you" = "Vy";
+
+"content.system.call.missed-call" = "Zmeškaný hovor";
+"content.system.call.missed-call-you" = "Zmeškaný hovor";
+
+"content.system.call.missed-call.groups" = "Zmeškaný hovor od %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Vy";
+
+"content.system.renamed_conv.title" = "%@ přejmenoval(a) konverzaci";
+"content.system.renamed_conv.title-you" = "%@ přejmenoval(a) konverzaci";
+"content.system.renamed_conv.title.you" = "Vy";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with";
+
+"content.system.message_timer_changes" = "%@ nastavil(a) časovač zpráv na %@";
+"content.system.message_timer_changes-you" = "%@ nastavil(a) časovač zpráv na %@";
+
+"content.system.message_timer_off" = "%@ vypnul(a) časovač zpráv";
+"content.system.message_timer_off-you" = "%@ vypnul(a) časovač zpráv";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Čtení doručenek je zapnuto";
+
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Dozvědět se více";
+
+//
+
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+
+"content.system.is_verified" = "Všechny identifikátory jsou ověřeny";
+
+"content.system.new_users" = "Nový uživatel připojen.";
+"content.system.verify_devices" = " ověřit zařízení";
+
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+
+"content.system.missing_messages.title" = "Toto zařízení jste nějakou dobu nepoužíval(a). Některé zprávy se nemusí zobrazit.";
+"content.system.missing_messages.subtitle_start" = "Mezitím,";
+
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+
+"content.file.uploading" = "Nahrávání…";
+"content.file.downloading" = "Stahování…";
+"content.file.upload_failed" = "Odeslání selhalo";
+"content.file.upload_cancelled" = "Odesílání zrušeno";
+"content.file.upload_video" = "Videa";
+"content.file.take_video" = "Nahrát video";
+"content.file.browse" = "Procházet";
+
+"content.file.save_video" = "Uložit";
+"content.file.save_audio" = "Uložit";
+"content.image.save_image" = "Uložit";
+
+"content.message.delete" = "Smazat";
+"content.message.save" = "Uložit";
+"content.message.resend" = "Odeslat znovu";
+
+"content.message.delete_ellipsis" = "Vymazat…";
+
+"content.message.like" = "Líbí";
+"content.message.unlike" = "Nelíbí";
+"content.message.forward" = "Sdílet";
+"content.message.go_to_conversation" = "Zobrazit";
+"content.message.forward.to" = "Hledat…";
+"content.message.open" = "Otevřít";
+"content.message.sign" = "Sign";
+"content.message.copy" = "Kopírovat";
+"content.message.download" = "Stáhnout";
+"content.message.details" = "Podrobnosti";
+
+// Reply
+"content.message.reply" = "Odpovědět";
+"content.message.original_label" = "Původní zpráva";
+"content.message.reply.original_timestamp.date" = "Původní zpráva od %@";
+"content.message.reply.original_timestamp.time" = "Původní zpráva od %@";
+"content.message.reply.broken_message" = "Tuto zprávu nelze zobrazit.";
+"content.message.reply.edited_message" = "Upraveno";
+
+"content.message.open_link_alert.title" = "Navštívit odkaz";
+"content.message.open_link_alert.message" = "Toto vás zavede do %@";
+"content.message.open_link_alert.open" = "Otevřít";
+
+"content.message.audio_message.accessibility" = "Přehrát zvukovou zprávu";
+
+"content.reactions_list.likers" = "Toto se líbí";
+
+"content.file.too_big" = "Můžete posílat soubory až do velikosti %@";
+// Someone pinged
+"content.ping.text" = "%@ pingl(a)";
+"content.ping.text-you" = "%@ pingl(a)";
+
+// Current user pinged
+"content.ping.text.you" = "Vy";
+
+// Inline Player
+"content.player.unable_to_play" = "NELZE PŘEHRÁT SKLADBU";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Připojit k %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
+"missive.connection_request.default_message" = "Ahoj %@, pojďme se spojit přes Wire %@";
+
+"connection_request_pending_title" = "Žádost o připojení";
+"connection_request.send_button_title" = "Připojit";
+"inbox.connection_request.connect_button_title" = "Připojit";
+"inbox.connection_request.ignore_button_title" = "Ignorovat";
+
+// Save image errors
+"library.alert.permission_warning.title" = "Wire potřebuje přístup k vašim fotografiím";
+"library.alert.permission_warning.restrictions.explaination" = "Wire nemá přístup k vaší knihovně z důvodu omezení v nastavení.";
+"library.alert.permission_warning.not_allowed.explaination" = "Jděte do Nastavení a povolte aplikaci Wire přístup k vašim fotografiím.";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@ volá";
+"voice.status.group_call.incoming" = "%@ vyzvání";
+"voice.status.one_to_one.outgoing" = "%@ vyzvání";
+"voice.status.joining" = "%@ Připojování";
+"voice.status.leaving" = "%@ ukončil(a) hovor";
+"voice.status.video_not_available" = "Video vypnuto";
+"voice.status.low_connection" = "Špatné spojení";
+"voice.network_error.title" = "Nejste připojeni k internetu";
+"voice.status.cbr" = "Konstantní přenosová rychlost";
+"voice.network_error.body" = "Pro uskutečnení hovoru musíte být online. Zkontrolujte připojení a zkuste to znovu.";
+"voice.degradation.new_self_device" = "Začali jste používat nové zařízení.";
+"voice.degradation.new_user_device" = "%@ začal(a) používat nové zařízení.";
+"voice.degradation_outgoing.prompt" = "Chcete přesto volat?";
+"voice.degradation_incoming.prompt" = "Chcete přesto přijmout hovor?";
+"voice.accept_button.title" = "Přijmout";
+"voice.decline_button.title" = "Zamítnout";
+"voice.hang_up_button.title" = "Zavěsit";
+"voice.mute_button.title" = "Ztlumit";
+"voice.video_button.title" = "Video";
+"voice.flip_video_button.title" = "Překlopení";
+"voice.speaker_button.title" = "Reproduktor";
+"voice.cancel_button.title" = "Zrušit";
+"voice.call_button.title" = "Hovor";
+"voice.end_call_button.title" = "Ukončit hovor";
+"voice.call_error.unsupported_version.title" = "Prosím aktualizujte aplikaci";
+"voice.call_error.unsupported_version.message" = "Obdržel jste hovor, které není podporován touto verzí aplikace Wire.\nZískejte nejnovější verzi v App Storu.";
+"voice.call_error.unsupported_version.dismiss" = "Později";
+
+"voice.alert.call_in_progress.title" = "Hovor probíhá";
+"voice.alert.call_in_progress.message" = "Můžete mít aktivní pouze jeden hovor současně";
+"voice.alert.call_in_progress.confirm" = "OK";
+
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
+
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+
+"voice.top_overlay.tap_to_return" = "Klepnutím se vrátíte k hovoru";
+"voice.top_overlay.accessibility_title" = "Probíhající hovor";
+
+// Voice New
+
+"call.status.connecting" = "Připojuji…";
+"call.status.incoming.user" = "%@ volá…";
+"call.status.incoming" = "Volá…";
+"call.status.outgoing" = "Zvoní…";
+"call.status.outgoing.user" = "Volá %@…";
+"call.status.reconnecting" = "Opětovné připojení…";
+"call.status.terminating" = "Ukončování hovoru…";
+"call.status.constant_bitrate" = "Konstantní přenosová rychlost";
+"call.status.variable_bitrate" = "Variable Bit Rate";
+
+"call.participants.show_all" = "Zobrazit všechny (%@)";
+"call.participants.list.title" = "Účastníci";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
+"call.video.paused" = "Video pozastaveno";
+
+"call.video.too_many.alert.title" = "Příliš mnoho lidí pro videohovor";
+"call.video.too_many.alert.message" = "Videohovory fungují pouze ve skupině po čtyřech a méně.";
+
+"call.degraded.alert.title" = "Nové zařízení";
+"call.degraded.alert.message.self" = "Začali jste používat nové zařízení.";
+"call.degraded.alert.message.user" = "%@ začal(a) používat nové zařízení.";
+"call.degraded.alert.message.unknown" = "Někdo začal používat nové zařízení.";
+"call.degraded.alert.action.continue" = "Přesto zavolat";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
+"call.alert.ongoing.alert_title" = "Tímto ukončíte váš druhý hovor.";
+
+"call.alert.ongoing.start.message" = "Hovor je aktivní v jiné konverzaci.\nVolání zde ukončí druhý hovor.";
+"call.alert.ongoing.join.message" = "Hovor je aktivní v jiné konverzaci.\nPřijmutím tohoto hovoru ukončíte ten první.";
+"call.alert.ongoing.start.button" = "Přesto zavolat";
+"call.alert.ongoing.join.button" = "Přesto se přidat";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Příchozí hovor od %@";
+"call.actions.label.toggle_mute_on" = "Ztlumit";
+"call.actions.label.toggle_mute_off" = "Zapnout zvuk";
+"call.actions.label.flip_camera" = "Překlopení fotoaparátu";
+"call.actions.label.toggle_speaker_on" = "Zapnutý reproduktor";
+"call.actions.label.toggle_speaker_off" = "Vypnutý reproduktor";
+"call.actions.label.accept_call" = "Přijmout volání";
+"call.actions.label.reject_call" = "Odmítnout hovor";
+"call.actions.label.terminate_call" = "Ukončit hovor";
+"call.actions.label.toggle_video_on" = "Zapnout fotoaparát";
+"call.actions.label.toggle_video_off" = "Vypnout fotoaparát";
+"call.actions.label.switch_to_back_camera" = "Přepnout na zadní kameru";
+"call.actions.label.switch_to_front_camera" = "Přepnout na přední kameru";
+"call.actions.label.minimize_call" = "Minimalizovat hovor";
+"call.actions.label.make_audio_call" = "Zahájit hovor";
+"call.actions.label.make_video_call" = "Zahájit videohovor";
+"call.actions.label.join_call" = "Připojte se k hovoru";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Přidat";
+"participants.avatar.guest.title" = "Host";
+
+"participants.title" = "Podrobnosti";
+"participants.all.title" = "Kontakty";
+"participants.section.participants" = "Lidé (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Nastavení";
+"participants.footer.add_title" = "Přidat účastníky";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
+
+// Meta Menu
+"meta.menu.accessibility_more_options_button" = "Další akce";
+"meta.menu.rename" = "Přejmenovat";
+"meta.menu.leave" = "Leave Group…";
+"meta.menu.archive" = "Archivovat";
+"meta.menu.unarchive" = "Obnovit";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.silence.mute" = "Ztlumit";
+"meta.menu.silence.unmute" = "Zapnout zvuk";
+"meta.menu.cancel" = "Zrušit";
+"meta.menu.cancel_connection_request" = "Zrušit žádost";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Upozornění…";
+"meta.menu.open_self_profile" = "Open Profile";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Vymazat obsah?";
+"meta.menu.delete_content.dialog_message" = "Toto vymaže historii konverzací na všech vašich zařízeních.";
+"meta.menu.delete_content.leave_as_well_message" = "Také opustit konverzaci";
+"meta.menu.delete_content.button_cancel" = "Zrušit";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Upozornit mě na:";
+"meta.menu.configure_notification.button_everything" = "Vše";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Zmínění a odpovědi";
+"meta.menu.configure_notification.button_nothing" = "Nic";
+"meta.menu.configure_notification.button_cancel" = "Zrušit";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Opustit konverzaci?";
+"meta.leave_conversation_dialog_message" = "The participants will be notified and the conversation will be removed from your list.";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation_button_cancel" = "Zrušit";
+"meta.leave_conversation_button_leave" = "Odejít";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ začal(a) používat nové zařízení.";
+"meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
+"meta.degraded.degradation_reason_message.someone" = "Někdo začal používat nové zařízení.";
+"meta.degraded.dialog_message" = "Chcete přesto odeslat svou zprávu?";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.cancel_sending_button" = "Zrušit";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Odstranit?";
+"profile.remove_dialog_message" = "%@ won’t be able to send or receive messages in this conversation.";
+"profile.remove_dialog_button_cancel" = "Zrušit";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+
+// Block dialog
+"profile.block_dialog.title" = "Blokovat?";
+"profile.block_dialog.message" = "%@ won’t be able to contact you or add you to group conversations.";
+"profile.block_dialog.button_cancel" = "Zrušit";
+"profile.block_dialog.button_block" = "Blokovat";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Tuto operaci nelze vrátit.";
+"message.delete_dialog.action.cancel" = "Zrušit";
+"message.delete_dialog.action.hide" = "Odstranit pro mě";
+"message.delete_dialog.action.delete" = "Odstranit pro všechny";
+
+// Edit message
+"message.menu.edit.title" = "Upravit";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Přijmout?";
+"profile.connection_request_dialog.message" = "This will connect you and open the conversation with %@.";
+"profile.connection_request_dialog.button_cancel" = "Ignorovat";
+"profile.connection_request_dialog.button_connect" = "Připojit";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Zrušit požadavek?";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.button_no" = "Ne";
+"profile.cancel_connection_request_dialog.button_yes" = "Ano";
+
+// Unblock button
+"profile.block_button_title" = "Zablokovat…";
+"profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
+
+"profile.block_button_title_action" = "Blokovat";
+"profile.unblock_button_title_action" = "Odblokovat";
+
+"profile.cancel_connection_button_title" = "ZRUŠIT POŽADAVEK";
+"profile.connection_request_state.blocked" = "BLOKOVÁN(A)";
+"profile.create_conversation_button_title" = "Vytvořit skupinu";
+"profile.open_conversation_button_title" = "Otevřít konverzaci";
+
+"profile.read_receipts_enabled_memo.header" = "POVOLIL JSTE POTVRZENÍ O PŘEČTENÍ";
+"profile.read_receipts_disabled_memo.header" = "ZAKÁZAL JSTE POTVRZENÍ O PŘEČTENÍ";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
+"profile.extended_metadata.header" = "Information";
+
+// User Details
+"profile.details.title" = "Podrobnosti";
+"profile.details.guest" = "Host";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
+
+"profile_view.accessibility.handle" = "Uživatelské jméno";
+"profile_view.accessibility.name" = "Zobrazované jméno";
+"profile_view.accessibility.team_name" = "Název týmu";
+
+// Device list
+"profile.devices.title" = "Přístroje";
+"profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.link" = "Proč mám ověřovat konverzaci?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Verify that this matches the fingerprint shown on %@’s device.";
+"profile.devices.detail.verify_message.link" = "Jak to mám udělat?";
+"profile.devices.detail.show_my_device.title" = "Zorazit identifikátor mého přístroje";
+"profile.devices.detail.reset_session.title" = "Resetovat sezení";
+"device.verified" = "Ověreno";
+"device.not_verified" = "Neověřeno";
+
+"device.class.legalhold" = "Zákonné držení";
+"device.class.desktop" = "Počítač";
+"device.class.tablet" = "Tablet";
+"device.class.phone" = "Telefon";
+"device.class.unknown" = "Neznámé";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Zákonné držení";
+"device.type.unknown" = "Neznámé";
+
+// Bot
+"participants.services.remove_integration.button" = "odstranění integrace";
+
+// Group details
+"group_details.guest_options_cell.title" = "Hosté a služby";
+"group_details.guest_options_cell.enabled" = "Zapnuto";
+"group_details.guest_options_cell.disabled" = "Vypnout";
+"group_details.timeout_options_cell.title" = "Časované zprávy";
+"group_details.notification_options_cell.title" = "Upozornění";
+"group_details.notification_options_cell.description" = "Můžete být upozorněni na vše (včetně volání a videohovorů) nebo pouze pokud vás někdo zmíní nebo odpoví na jednu z vašich zpráv.";
+"group_details.receipt_options_cell.title" = "Potvrzení o přečtení";
+"group_details.receipt_options_cell.description" = "Pokud je tato možnost zapnuta, mohou lidé zjistit, kdy byly jejich zprávy přečteny.";
+
+"group_details.conversation_admins_header.title" = "Správci skupiny";
+"group_details.conversation_members_header.title" = "Členové skupiny";
+
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Zákonné držení";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Nastavení";
+"self.profile" = "Profil";
+"self.account" = "Účet";
+"self.help_center" = "Podpora";
+"self.help_center.support_website" = "Webové stránky podpory";
+"self.help_center.contact_support" = "Kontaktovat podporu";
+"self.about" = "O aplikaci";
+"self.sign_out" = "Odhlásit";
+"self.report_abuse" = "Nahlásit zneužití";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Otevřít profil a nastavení";
+"self.new-device.voiceover.label" = "Profil, nová zařízení přídána";
+
+"self.add_phone_number" = "Přidat telefonní číslo";
+"self.add_email_password" = "Přidat emailovou adresu a heslo";
+
+"self.accessibility.profile_photo_image" = "Profilový obrázek";
+"self.accessibility.profile_photo_edit_button" = "Změnit profilový obrázek";
+
+// About screen
+"about.tos.title" = "Podmínky používání";
+"about.privacy.title" = "Zásady ochrany osobních údajů";
+"about.license.title" = "Informace o licenci";
+"about.website.title" = "Webové stránky Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Podrobnosti";
+"about.license.open_project_button" = "Zobrazit stránky projektu";
+"about.license.license_header" = "Poděkování";
+
+// Self new devices
+"self.new_device_alert.title" = "Váš účet byl naposledy použit:";
+"self.new_device_alert.message" = "\n%@\n\nPokud nepoznáváte zařízení výše, odstraňte ho a změňte své heslo.";
+"self.new_device_alert.message_plural" = "\n%@\n\nPokud nepoznáváte zařízení výše, odstraňte ho a změňte své heslo.";
+"self.new_device_alert.manage_devices" = "Spravovat přístroje";
+"self.new_device_alert.trust_devices" = "OK";
+
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "Zapnuli jste čtení doručenek";
+"self.read_receipts_disabled.title" = "Vypnuli jste čtení doručenek";
+"self.read_receipts_description.title" = "Toto nastavení můžete změnit v nastavení vašeho účtu.";
+
+// Settings - top level
+"self.settings.create_team.title" = "Vytvořit tým";
+"self.settings.manage_team.title" = "Správa týmu";
+"self.settings.add_team_or_account.title" = "Přidat účet";
+"self.settings.add_account.title" = "Přidat účet";
+
+"self.settings.add_account.error.title" = "Aktivní tři účty";
+"self.settings.add_account.error.message" = "Můžete být přihlášení pouze ve třech účtech současně. Pro přihlášení dalšího se musíte z jednoho odhlásit.";
+
+"self.settings.switch_account.message" = "V tomto účtu je aktivní hovor.\nPřepnutím na jiný účet zavěsíte aktuální hovor.";
+"self.settings.switch_account.action" = "Přesto přepnout";
+
+// Settings - Account details
+"self.settings.account_section" = "Účet";
+
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Osobní";
+
+"self.settings.account_section.name.title" = "Jméno";
+"self.settings.account_section.email.title" = "Email";
+"self.settings.account_section.phone.title" = "Telefon";
+"self.settings.account_section.handle.title" = "Uživatelské jméno";
+"self.settings.account_section.add_handle.title" = "Přidat uživatelské jméno";
+
+"self.settings.account_details_group.info.footer" = "Lidé vás mohou najít pod těmito detaily.";
+"self.settings.account_details_group.personal.footer" = "Tato informace se nezobrazí.";
+
+"self.settings.account_details.remove_device.title" = "Odebrat zařízení";
+"self.settings.account_details.key_fingerprint.title" = "Otisk prstu";
+"self.settings.account_details.remove_device.message" = "Pro odstranění přístroje je vyžadováno heslo";
+"self.settings.account_details.remove_device.password" = "Heslo";
+"self.settings.account_details.remove_device.password.error" = "Špatné heslo";
+
+"self.settings.account_appearance_group.title" = "Vzhled";
+
+"self.settings.privacy_section_group.title" = "Soukromí";
+"self.settings.enable_read_receipts.title" = "Zasílat potvrzení o přečtení";
+"self.settings.privacy_section_group.subtitle" = "Při vypnutí nebudete moci vidět potvrzení o přečtení od ostatních uživatelů.\n\nToto nastavení se nevztahuje na skupinové konverzace.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
+"self.settings.account_picture_group.picture" = "Obrázek";
+"self.settings.account_picture_group.color" = "Barva";
+
+"self.settings.account_personal_information_group.title" = "Osobní údaje";
+
+"self.settings.account_picture_group.theme" = "Theme";
+
+"self.settings.device_details.fingerprint.subtitle" = "Aplikace Wire přiděluje každému přístroji unikátní identifikátor. Jejich porovnáním ověříte své přístroje a konverzace.";
+"self.settings.device_details.reset_session.subtitle" = "Pokud se identifikátory neshodují, resetujte své sezení pro vygenerování nových klíčů na obou stranách.";
+"self.settings.device_details.remove_device.subtitle" = "Jestliže jste přestali používat toto zařízení, odeberte jej. Poté z něj budete okamžitě odhlášeni.";
+"self.settings.device_details.reset_session.success" = "Sezení bylo zresetováno";
+
+"self.settings.account_details.actions.title" = "Akce";
+
+"self.settings.account_details.delete_account.title" = "Smazat účet";
+
+"self.settings.account_details.delete_account.alert.title" = "Smazat účet";
+"self.settings.account_details.delete_account.alert.message" = "Obdržíte od nás zprávu přes email nebo SMS. Pro trvalé smazání svého účtu otevřete zaslaný odkaz.";
+
+"self.settings.account_details.log_out.alert.title" = "Odhlásit se";
+"self.settings.account_details.log_out.alert.message" = "Historie zpráv bude smazána z tohoto zařízení.";
+"self.settings.account_details.log_out.alert.password" = "Heslo";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Použití a zprávy o pádech";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+
+"self.settings.receiveNews_and_offers.title" = "Přijímat novinky";
+"self.settings.receiveNews_and_offers.description.title" = "Odebírat novinky a aktualizace produktů od společnosti Wire prostřednictvím e-mailu.";
+
+
+
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Uživatelské jméno";
+"self.settings.account_section.handle.change.save" = "Uložit";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Již uděleno";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Nelze nastavit uživatelské jméno";
+"self.settings.account_section.handle.change.failure_alert.message" = "Došlo k chybě při vytváření uživatelského jména. Opakujte akci.";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Uložit";
+
+"self.settings.account_section.email.change.verify.title" = "Ověřit e-mail";
+"self.settings.account_section.email.change.verify.description" = "Zkontrolujte doručenou poštu a postupujte dle instrukcí.";
+"self.settings.account_section.email.change.verify.resend" = "Znovu poslat na %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email znovu odeslán";
+"self.settings.account_section.email.change.resend.message" = "Potvrzovací email byl odeslán na adresu %@. Zkontrolujte si doručenou poštu a pokračujte dle pokynů.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telefon";
+"self.settings.account_section.phone_number.change.save" = "Uložit";
+"self.settings.account_section.phone_number.change.remove" = "Odstranit telefonní číslo";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Odstranit telefonní číslo";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Uložit";
+"self.settings.account_section.phone_number.change.verify.title" = "Ověřit";
+"self.settings.account_section.phone_number.change.verify.description" = "Zadejte ověřovací kód, který jsme poslali na adresu: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Zadejte kód";
+"self.settings.account_section.phone_number.change.verify.resend" = "Znovu odeslat kód";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Žádný kód se nezobrazuje?\nMůžete požádat o nový každých 30 vteřin.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kód znovu odeslán";
+"self.settings.account_section.phone_number.change.resend.message" = "Ověřovací kód byl znovu odeslán na %@.";
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Upozornění";
+"self.settings.notifications.push_notification.toogle" = "Náhled zprávy";
+"self.settings.notifications.push_notification.footer" = "Jméno a zpráva odesílatele na zamykací obrazovce v Centru notifikací.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Spravovat bannery";
+"self.settings.notifications.chat_alerts.footer" = "Nové zprávy v jiných konverzacích.";
+
+"self.settings.sound_menu.sounds.title" = "Zvuky";
+"self.settings.sound_menu.ringtone.title" = "Vyzvánění";
+"self.settings.sound_menu.message.title" = "Zvuk zprávy";
+"self.settings.sound_menu.ping.title" = "Odezva";
+"self.settings.sound_menu.ringtones.title" = "Vyzvánění";
+"self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Žádné";
+
+"self.settings.callkit.title" = "Hovory";
+"self.settings.callkit.caption" = "Sdílet s";
+"self.settings.callkit.description" = "Zobrazit Wire hovory na zamykací obrazovce a v historii hovorů v iOS. Pokud je povolený iCloud, tak bude historie hovorů sdílena v rámci Apple.";
+
+"self.settings.vbr.title" = "Proměnlivý datový tok (VBR)";
+"self.settings.vbr.description" = "Toto umožňuje využít pro hlasové hovory méně dat a funguje lépe v pomalejších sítích. Vypněte pro použití konstantního datového toku.";
+
+"self.settings.sound_menu.sounds.wire_call" = "Wire hovor";
+"self.settings.sound_menu.sounds.wire_message" = "Wire zpráva";
+"self.settings.sound_menu.sounds.wire_ping" = "Wire ping";
+
+// By popular demand
+"self.settings.popular_demand.title" = "Podle popularity poptávky";
+"self.settings.popular_demand.send_button.title" = "Tlačítko Odeslat";
+"self.settings.popular_demand.send_button.footer" = "Zakáže odesílání zpráv prostřednictvím tlačítka enter.";
+"self.settings.popular_demand.dark_mode.footer" = "Přepnutí mezi tmavým a světlým motivem.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
+
+// Open in
+"self.settings.external_apps.header" = "Otevřít v aplikaci";
+
+"self.settings.link_options.twitter.title" = "Tweet";
+"self.settings.link_options.maps.title" = "Umístění";
+"self.settings.link_options.browser.title" = "Internetový prohlížeč";
+
+"open_link.twitter.option.default" = "Prohlížeč / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Mapy";
+"open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Některé odkazy budou vždy otevřeny v aplikaci Apple Mapy.";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Zvuková upozornění";
+"self.settings.sound_menu.no_sounds.title" = "Žádné";
+"self.settings.sound_menu.all_sounds.title" = "Vše";
+"self.settings.sound_menu.mute_while_talking.title" = "První zpráva a pingy";
+
+// Developer options
+"self.settings.developer_options.title" = "Možnosti pro vývojáře";
+"self.settings.apns_logging.title" = "APNS protokolování";
+
+// Privacy (visibility) options
+"self.settings.options_menu.title" = "Nastavení";
+
+"self.settings.privacy_contacts_section.title" = "Kontakty";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Nastavení kontaktů";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Toto vám pomůže spojit se s ostatními. Všechny informace jsou anonymní a nesdílíme je s nikým jiným. Povolení přístupu přes Nastavení > Soukromí > Kontakty.";
+
+"self.settings.privacy_security.lock_app" = "Zamknout pomocí kódu";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Zamknout Wire po %@ na pozadí.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Odemkněte pomocí Touch ID nebo zadejte Vaše heslo.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Odemkněte pomocí Face ID nebo zadejte Vaše heslo.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Odemkněte zadáním Vašeho hesla.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
+
+"self.settings.privacy_security.lock_app.description" = "Odemknout Wire";
+"self.settings.privacy_security.lock_password.description.unlock" = "Odemkněte pomocí hesla.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Neplatné heslo. Zkuste to prosím znovu.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Špatné heslo. Pokud jste nedávno změnili své heslo, připojte se k internetu a zkuste to znovu.";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Vytvořit náhledy odkazů";
+"self.settings.privacy_security.disable_link_previews.footer" = "Náhledy mohou být zobrazeny i pro odkazy od jiných lidí.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Přístroje";
+
+"self.settings.privacy.clear_history.title" = "Vymazat historii";
+"self.settings.privacy.clear_history.subtitle" = "Toto trvale vymaže obsah všech vaších konverzací.";
+
+"self.settings.advanced.title" = "Pokročilé";
+"self.settings.advanced.troubleshooting.title" = "Poradce při potížích";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Zpráva o chybách";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Tato informace pomůže podpoře Wire diagnostikovat problémy s voláním a vylepšovat fungování aplikace.";
+"self.settings.advanced.reset_push_token.title" = "Reset Token Push notifikací";
+"self.settings.advanced.reset_push_token.subtitle" = "Pokud máte potíže s push notifikacemi, podpora Wire vás může požádat o obnovení tohoto tokenu.";
+"self.settings.advanced.reset_push_token_alert.title" = "Token byl obnoven";
+"self.settings.advanced.reset_push_token_alert.message" = "Notifikace budou obnoveny během několika vteřin.";
+"self.settings.advanced.version_technical_details.title" = "Technické podrobnosti o verzi";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Oprávnění k používání dat";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Technická zpráva";
+"self.settings.technical_report.send_report" = "Odeslat zprávu do Wire";
+"self.settings.technical_report.mail.subject" = "Zpráva o chybách Wire";
+"self.settings.technical_report.include_log" = "Zahrnout podrobný protokol";
+"self.settings.technical_report.privacy_warning" = "Podrobné protokoly mohou obsahovat osobní údaje";
+"self.settings.technical_report.no_mail_alert" = "Nebyl nalezen žádný emailový klient. Klepněte na \"OK\" a ručně zašlete protokoly na adresu: ";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Resetovat heslo";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Pozvat další";
+
+// History backup
+
+"self.settings.conversations.title" = "Historie";
+"self.settings.history_backup.title" = "Zálohovat konverzace";
+"self.settings.history_backup.description" = "Vytvořením zálohy zachováte historii konverzací. Můžete jí použít k obnovení historie, pokud ztratíte zařízení nebo přejdete na jiné. \n\nPro ochranu zálohy zvolte silné heslo.";
+"self.settings.history_backup.action" = "Zálohovat nyní";
+"self.settings.history_backup.error.title" = "Chyba";
+
+"self.settings.history_backup.set_email.title" = "Nastavte e-mail a heslo.";
+"self.settings.history_backup.set_email.message" = "Pro zálohování historie konverzace potřebujete e-mail a heslo. Můžete tak učinit v Nastavení účtu.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Nastavit heslo";
+"self.settings.history_backup.password.cancel" = "Zrušit";
+"self.settings.history_backup.password.next" = "Další";
+"self.settings.history_backup.password.placeholder" = "Heslo";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Nejste připojeni k internetu";
+"system_status_bar.no_internet.explanation" = "Zdá se, že je zde problém s vaším připojením k internetu. Prosím ujistěte se, že je funguje.";
+"system_status_bar.poor_connectivity.title" = "Pomalý Internet, momentálně nelze volat";
+"system_status_bar.poor_connectivity.explanation" = "Nemůžeme zaručit kvalitu hlasu. Připojte se k Wi-Fi nebo zkuste změnit svoji polohu.";
+
+// View user profile and options menu & text field validation
+"name.placeholder" = "Celé jméno";
+"name.guidance.tooshort" = "Alespoň 2 znaky";
+"name.guidance.toolong" = "Příliš mnoho znaků";
+
+"email.placeholder" = "Email";
+"email.guidance.invalid" = "Neplatná emailová adresa";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Příliš mnoho znaků";
+
+"password.placeholder" = "Heslo";
+"password.guidance.toolong" = "Příliš mnoho znaků";
+
+"phone.guidance.invalid" = "Neplatné telefonní číslo";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Příliš mnoho znaků";
+
+// Landing screen
+
+"landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_team.title" = "Profi";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.login.hints" = "Máte již účet?";
+"landing.login.button.title" = "Přihlásit se";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
+// Create team
+
+"team.name.headline" = "Pojmenujte svůj tým";
+"team.name.subheadline" = "Název můžete později kdykoliv změnit.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
+
+"team.email.headline" = "Váš účet";
+"team.email.subheadline" = "Zadejte váš pracovní e-mail.";
+"team.email.textfield.placeholder" = "Your company email";
+"team.email.button.learn_more" = "Dozvědět se více";
+
+"team.activation_code.headline" = "You’ve got mail";
+"team.phone_activation_code.headline" = "Verification";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Změnit email";
+"team.activation_code.button.change_phone" = "Změnit telefonní číslo";
+
+"team.full_name.headline" = "Vaše jméno";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Nastavte heslo";
+
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Vytvořte svůj tým";
+"team.invite.header.subtitle" = "Váš Wire tým je připraven. Nyní do něj pozvěte své kolegy.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.learn_more.title" = "Dozvědět se více";
+"team.invite.top_bar.skip" = "Přeskočit";
+"team.invite.top_bar.done" = "Hotovo";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Něco se pokazilo. Zkuste prosím znovu";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "Tento e-mail již byl pozván";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "Nejste připojeni k internetu";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Povolit hosty a služby";
+"guest_room.allow_guests.subtitle" = "Otevřete tuto konverzaci službám a lidem mimo váš tým.";
+"guest_room.remove_guests.message" = "Současní hosté a služby budou odstraněny z konverzace. Noví hosté a služby nebudou povoleny.";
+"guest_room.remove_guests.action" = "Odstranit";
+"guest_room.revoke_link.message" = "Noví hosté se tímto odkazem nebudou moci připojit do konverzace. Nynějším hostům přístup zůstane.";
+"guest_room.revoke_link.action" = "Zrušit odkaz";
+
+"guest_room.error.generic.title" = "Něco se pokazilo";
+"guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+
+"guest_room.link.button.title" = "Vytvořit odkaz";
+
+"guest_room.actions.copy_link" = "Kopírovat odkaz";
+"guest_room.actions.copied_link" = "Odkaz zkopírován!";
+"guest_room.actions.share_link" = "Sdílet odkaz";
+"guest_room.actions.revoke_link" = "Zrušit odkaz…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Registration
+
+"registration.launch_back_button.label" = "Zpět";
+
+"registration.title" = "Registrace";
+"registration.close_email_invitation_button.email_title" = "Použít jiný e-mail";
+"registration.close_email_invitation_button.phone_title" = "Registrovat pomocí telefonu";
+"registration.close_phone_invitation_button.email_title" = "Registrovat pomocí emailu";
+"registration.close_phone_invitation_button.phone_title" = "Použít jiný telefon";
+
+"registration.register_by_phone" = "Telefon";
+"registration.register_by_email" = "Email";
+
+"registration.enter_phone_number.title" = "Upravit telefonní číslo";
+"registration.enter_phone_number.placeholder" = "Telefonní číslo";
+
+"registration.verify_phone_number.instructions" = "Enter the verification code we sent to %@";
+"registration.verify_phone_number.resend" = "Odeslat znovu";
+"registration.verify_phone_number.resend_placeholder" = "No code showing up?\nYou can request a new one in %.0f seconds";
+
+"registration.verify_email.instructions" = "We sent an email to %@.\n Follow the link to verify your address.";
+"registration.verify_email.resend.instructions" = "Nedostal(a) zprávu?";
+"registration.verify_email.resend.button_title" = "Znovu odeslat";
+
+"registration.no_history.hero" = "Toto je poprvé kdy používáte Wire na tomto přístroji.";
+"registration.no_history.subtitle" = "Z důvodů ochrany soukromí se zde nezobrazí historie vaší konverzace.";
+"registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Přihlásit se";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Historie obnovení";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Zvolte soubor zálohy";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Zkusit znovu";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Něco se pokazilo";
+"registration.no_history.restore_backup_failed.message" = "Vaše historie nemohla být obnovena.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Nekompatibilní záloha";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Nelze obnovit historii z jiného účtu.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Nekompatibilní záloha";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Tato záloha byla vytvořeno novější nebo zastaralou verzí Wire a nelze ji obnovit.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.action" = "Přihlásit se";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+
+"login.sso.error.offline.alert.message" = "Zkontrolujte své připojení k Internetu a zkuste znovu.";
+"login.sso.error.alert.message" = "Pro více podrobnosti prosím kontaktujte svého správce serveru (chyba %@).";
+
+"login.sso.error.alert.invalid_code.message" = "Ověřte prosím přístupový kód SSO vaší společnosti a zkuste to znovu.";
+"login.sso.error.alert.invalid_status.message" = "Zkuste to prosím později (chyba %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Zkuste to prosím později.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Obnovuji…";
+"registration.no_history.restore_backup.completed" = "Dokončeno";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Tato záloha je chráněna heslem.";
+"registration.no_history.restore_backup.password.message" = "Pro obnovení této zálohy je vyžadováno heslo.";
+"registration.no_history.restore_backup.password.placeholder" = "Heslo";
+"registration.no_history.restore_backup.password_error.title" = "Špatné heslo";
+
+"registration.no_history.logged_out.hero" = "Již jste dříve použili Wire na tomto zařízení.";
+"registration.no_history.logged_out.subtitle" = "Zprávy odeslané v mezičase se zde nezobrazí.";
+"registration.no_history.logged_out.got_it" = "OK";
+
+"registration.enter_name.title" = "Upravit Jméno";
+"registration.enter_name.hero" = "Jak vám máme říkat?";
+"registration.enter_name.placeholder" = "Celé jméno";
+
+"registration.terms_of_use.title" = "Vítejte na Wire.";
+"registration.terms_of_use.terms" = "Pokračováním souhlasíte s podmínkami používání.";
+"registration.terms_of_use.terms.link" = "Podmínky používání";
+"registration.terms_of_use.agree" = "Souhlasím";
+
+"registration.terms_of_use.terms.title" = "Podmínky používání";
+"registration.terms_of_use.terms.message" = "Pro pokračování prosím přijměte podmínky používání.";
+"registration.terms_of_use.terms.view" = "Zobrazení";
+"registration.terms_of_use.accept" = "Přijmout";
+
+"registration.email_flow.title" = "Registrovat pomocí emailu";
+"registration.email_flow.email_step.title" = "Upravit Detaily";
+
+"registration.country_select.title" = "Země";
+
+"registration.share_contacts.hero.title" = "Najít lidi na Wire";
+"registration.share_contacts.hero.paragraph" = "Vaše údaje o kontaktech používáme k propojení s ostatními uživateli. Všechny informace anonymizujeme a nesdílíme je s nikým dalším.";
+"registration.share_contacts.find_friends_button.title" = "Sdílet kontakty";
+"registration.share_contacts.skip_button.title" = "Nyní ne";
+
+"registration.address_book_access_denied.hero.title" = "Wire nemá přístup k vašim kontaktům.";
+"registration.address_book_access_denied.hero.paragraph1" = "Pokud s aplikací sdílíte své kontakty, Wire vám pomůže najít vaše přátele.";
+"registration.address_book_access_denied.hero.paragraph2" = "Klepnutím v Nastavení a zapnutím Kontaktů povolíte přístup.";
+"registration.address_book_access_denied.settings_button.title" = "Nastavení";
+"registration.address_book_access_denied.maybe_later_button.title" = "Možná později";
+
+"registration.push_access_denied.hero.title" = "Nikdy nezmeškáte hovor nebo zprávu.";
+"registration.push_access_denied.hero.paragraph1" = "Povolte oznámení v nastavení.";
+"registration.push_access_denied.settings_button.title" = "Přejít do nastavení";
+"registration.push_access_denied.maybe_later_button.title" = "Možná později";
+
+"registration.personal.title" = "Vytvořit účet";
+"registration.signin.title" = "Přihlásit se";
+"registration.signin.too_many_devices.title" = "Příliš mnoho zařízení";
+"registration.signin.too_many_devices.subtitle" = "Odeberte jeden ze svých přístrojů abyste mohli začít používat Wire na tomto zařízení.";
+"registration.signin.too_many_devices.manage_button.title" = "Spravovat přístroje";
+"registration.signin.too_many_devices.sign_out_button.title" = "Odhlásit se";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Odebrat zařízení";
+
+"registration.signin.alert.password_needed.title" = "Je vyžadováno heslo";
+"registration.signin.alert.password_needed.message" = "Pro přihlášení zadejte prosím své heslo.";
+
+"registration.devices.title" = "Přístroje";
+"registration.devices.active_list_header" = "Aktivní";
+"registration.devices.current_list_header" = "Aktuální";
+"registration.devices.active_list_subtitle" = "Pokud nepoznáváte přístroj výše, odstraňte ho a změňte své heslo.";
+"registration.devices.activated" = "Aktivováno %@";
+"registration.devices.id" = "ID:";
+
+"signin.use_email.label" = "Přihlášení pomocí emailu";
+"signin.use_phone.label" = "Přihlášení pomocí mobilu";
+"signin.forgot_password" = "Zapomenuté heslo?";
+"signin.use_one_password.label" = "Přihlášení pomocí 1Passowrd";
+"signin.use_one_password.hint" = "Dvojitým poklepáním vyplníte své heslo pomocí 1Password";
+"signin.confirm" = "Přihlásit se";
+"signin.company_idp.button.title" = "Pro firmy";
+
+"signin_logout.subheadline" = "Vaše relace vypršela. Pro pokračování se prosím přihlaste.";
+"signin_logout.email.subheadline" = "Vaše relace vypršela. Pro pokračování zadejte svoji emailovou adresu a heslo.";
+"signin_logout.phone.subheadline" = "Vaše relace vypršela. Pro pokračování zadejte svoje telefonní číslo.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
+
+"signin.email.missing_password.subtitle" = "Pro pokračování zadejte svoji emailovou adresu.";
+"signin.phone.missing_password.subtitle" = "Pro pokračování zadejte svoje telefonní číslo.";
+
+"registration.phone_country" = "Země";
+"registration.phone_code" = "Kód země";
+"registration.phone_country.hint" = "Dvojitým poklepáním vyberte jinou zemi.";
+"registration.phone_code.hint" = "Dvojitým poklepáním vyberte jiný kód země.";
+"registration.phone.verify.label" = "Ověřit telefonní číslo";
+"registration.phone.verify_field.label" = "Ověřovací kód";
+
+"registration.add_phone_number.hero.title" = "Přidat telefonní číslo";
+"registration.add_phone_number.hero.paragraph" = "Toto nám pomůže najít lidi, které možná znáte. Nikdy tyto informace nesdílíme.";
+"registration.add_phone_number.skip_button.title" = "Nyní ne";
+
+"registration.add_email_password.hero.title" = "Zadejte svůj email a heslo";
+"registration.add_email_password.hero.paragraph" = "To umožňuje používat Wire na více zařízeních.";
+
+"registration.email_invitation.title" = "Pozvánka";
+"registration.email_invitation.hero.title" = "Vítejte, %@";
+"registration.email_invitation.hero.paragraph" = "Zvolte heslo pro založení účtu.";
+
+"registration.phone_invitation.title" = "Pozvánka";
+"registration.phone_invitation.hero.title" = "Vítejte, %@";
+"registration.phone_invitation.hero.paragraph" = "Jste jeden krok od vytvoření účtu.";
+
+"registration.confirm" = "Registrace";
+"registration.phone.country_code.hint" = "Dvojitým poklepáním použijete telefonní číslo z této země.";
+
+"error.name_and_email" = "Zadejte prosím své celé jméno a platnou emailovou adresu";
+"error.full_name" = "Prosím, zadejte celé své jméno";
+"error.email" = "Zadejte prosím platnou emailovou adresu";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
+"error.email.invalid" = "Zadejte prosím platnou emailovou adresu";
+"error.phone.invalid" = "Uveďte prosím platné telefonní číslo";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.subtitle" = "Vytvořte si vaše jedinečné jméno na Wire.";
+"registration.select_handle.takeover.subtitle_link" = "Dozvědět se více";
+
+"registration.select_handle.takeover.choose_own" = "Vyberte vaše";
+"registration.select_handle.takeover.keep_suggested" = "Ponechat tento";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Něco se pokazilo. Zkuste prosím znovu";
+"error.user.needs_credentials" = "Zkontrolujte své údaje a zkuste znovu.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.invalid_credentials" = "Zkontrolujte své údaje a zkuste znovu.";
+"error.user.account_pending_activation" = "Účet, na který se zkoušíte přihlásit, čeká na aktivaci. Zkontrolujte prosím své údaje.";
+"error.user.network_error" = "Zdá se, že došlo k problému s připojením. Prosím zkuste to znovu později.";
+"error.user.email_is_taken" = "Emailová adresa kterou jste zadali je již zaregistrována. Zkusím prosím znovu.";
+"error.user.phone_is_taken" = "Telefonní číslo, které jste zadali je již zaregistrován. Zkusím prosím znovu.";
+"error.user.phone_code_invalid" = "Tento kód je neplatný";
+"error.user.phone_code_too_many" = "Již jsme vám poslali kód prostřednictvím SMS. Pro získání nového klepněte po 10 minutách na tlačítko znovu odeslat.";
+"error.user.registration_unknown_error" = "Něco se pokazilo. Zkuste prosím znovu.";
+"error.user.device_deleted_remotely" = "Byl(a) jste odhlášen(a) z jiného zařízení.";
+"error.user.last_identity_cant_be_deleted" = "Je třeba zadat e-mailovou adresu nebo telefonní číslo.";
+"error.user.account_suspended" = "Pro tento účet již není povoleno se přihlásit.";
+"error.user.account_limit_reached" = "Nelze přidat více než 3 účty.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Aktualizace hesla se nezdařila.";
+
+"error.group_call.too_many_members_in_conversation.title" = "Příliš mnoho lidí pro volání";
+"error.group_call.too_many_members_in_conversation" = "Volání funguje v konverzaci s až %d lidmi.";
+"error.group_call.too_many_participants_in_the_call.title" = "Hovor je plný";
+"error.group_call.too_many_participants_in_the_call" = "Je zde místo pouze pro %d uživatelů.";
+"error.call.gsm_ongoing.title" = "Mobilní volání";
+"error.call.gsm_ongoing" = "Prosím zrušte mobilní volání před voláním přes Wire.";
+"error.call.general.title" = "Chyba volání";
+"error.call.general" = "Prosím pokuste se zavolat znovu za několik minut.";
+"error.call.slow_connection.title" = "Špatné spojení";
+"error.call.slow_connection" = "Během hovoru se mohou vyskytnout potíže";
+"error.call.slow_connection.call_anyway" = "Přesto zavolat";
+
+"error.invite.no_email_provider" = "Pro možnost odesílání pozvánek pomocí e-mailu prosím nakonfigurujte svého e-mailového klienta";
+"error.invite.no_messaging_provider" = "Pro možnost odesílání pozvánek pomocí SMS prosím nakonfigurujte svého SMS klienta";
+
+"error.conversation.title" = "Chyba";
+"error.conversation.cannot_add" = "Přidání uživatele se nezdařilo";
+"error.conversation.cannot_remove" = "Odebrání uživatele se nezdařilo";
+"error.conversation.too_many_members" = "Konverzace je plná";
+"error.conversation.offline" = "Zdá se, že je zde problém s vaším připojením k internetu. Prosím ujistěte se, že je funguje.";
+
+"sketchpad.initial_hint" = "Klepnutím na tlačítko barvy můžete měnit velikost stopy";
+
+"migration.please_wait_message" = "Okamžik prosím";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ se připojil k Wire";
+"push.notification.new_message" = "Nová zpráva";
+
+
+//Force Update
+"force.update.title" = "Je nutná aktualizace";
+"force.update.message" = "Přicházíte o nové funkce. Získejte v App Store nejnovější verzi Wire.";
+"force.update.ok_button" = "Přejít do App Storu";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Detekován jailbreak";
+"jailbrokendevice.alert.message" = "Z bezpečnostních důvodů nelze aplikaci Wire použít na tomto zařízení. Všechna existující data byla smazána.";
+
+// Third Party
+"giphy.conversation.message" = "%@ · přes giphy.com";
+"giphy.conversation.random_message" = "přes giphy.com";
+"giphy.error.no_more_results" = "žádné další Gify";
+"giphy.error.no_result" = "žádný Gif nenalezen";
+
+"giphy.confirm" = "odeslat";
+"giphy.cancel" = "zrušit";
+"giphy.search_placeholder" = "Hledat Giphy";
+
+"invite_banner.title" = "Přiveďte své přátele do aplikace Wire!";
+"invite_banner.message" = "Vychutnejte si hovory, zprávy, náčrtky, obrázky ve formátu GIF a více v soukromí nebo se skupinami.";
+"invite_banner.invite_button_title" = "Pozvat další osoby";
+
+// Collections
+"collections.section.images.title" = "Obrázky";
+"collections.section.files.title" = "Soubory";
+"collections.section.videos.title" = "Videa";
+"collections.section.links.title" = "Odkazy";
+"collections.section.all.button" = "Zobrazit všechny %d →";
+"collections.section.no_items" = "Žádné položky ve sbírce";
+"collections.image_viewer.copied.title" = "Obrázek zkopírován";
+
+"collections.search.field.placeholder" = "Prohledat zprávy";
+"collections.search.no_items" = "Žádné výsledky";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Zprávy";
+"compose.drafts.empty.title" = "Žádné zprávy";
+"compose.drafts.empty.subtitle" = "Klepněte + pro novou";
+"compose.drafts.compose.title" = "Napsat zprávu";
+"compose.drafts.compose.subject.placeholder" = "Klepnutím nastavit předmět";
+
+"compose.drafts.compose.delete.confirm.title" = "Potvrdit smazání";
+"compose.drafts.compose.delete.confirm.message" = "Touto akcí trvale odstraníte tento koncept a nelze to vrátit zpět.";
+"compose.drafts.compose.delete.confirm.action.title" = "Smazat";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Uložit jako koncept";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Uložit";
+"compose.drafts.compose.dismiss.delete.action.title" = "Smazat";
+
+"availability.message.cancel" = "Zrušit";
+"availability.message.set_status" = "Set a status";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
+
+"availability.none" = "Žádné";
+"availability.available" = "Dostupný";
+"availability.away" = "Nepřítomný";
+"availability.busy" = "Zaneprázdněný";
+
+"availability.reminder.away.title" = "Stav: nepřítomný";
+"availability.reminder.away.message" = "Ostatním se budete jevit jako nepřítomní. Neobdržíte upozornění o příchozích hovorech a zprávách.";
+"availability.reminder.busy.title" = "Stav: zaneprázdněn";
+"availability.reminder.busy.message" = "Ostatním se budete jevit jako zaneprázdnění. Obdržíte upozornění na zmínky, odpovědi a hovory pouze z konverzací, které nejsou ztlumeny.";
+"availability.reminder.available.title" = "Stav: dostupný";
+"availability.reminder.available.message" = "Ostatním se budete jevit jako dostupní. Obdržíte upozornění na příchozí hovory a zprávy dle nastavení upozornění v dané konverzaci.";
+"availability.reminder.none.title" = "Stav nestanoven";
+"availability.reminder.none.message" = "Obdržíte upozornění na příchozí hovory a zprávy podle nastavení upozornění v jednotlivých konverzacích.";
+"availability.reminder.action.dont_remind_me" = "Tuto zprávu znovu nezobrazovat";
+"availability.reminder.action.ok" = "OK";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Přeskočit";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Připojit k serveru";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "Server neodpovídá";
+"url_action.switch_backend.error.invalid_backend" = "Zkontrolujte prosím své internetové připojení, ověřte odkaz a zkuste to znovu.";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire nemůže nalézt tento kontakt.";
+"url_action.invalid_user.message" = "Na tomto účtu nemáte oprávnění, nebo už účet neexistuje.";
+
+"url_action.invalid_conversation.title" = "Wire nemůže otevřít tuto konverzaci.";
+"url_action.invalid_conversation.message" = "Na tomto účtu nemáte oprávnění, nebo daný kontakt nepoužívá Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Neplatný odkaz.";
+"url_action.invalid_link.message" = "Odkaz, který jste otevřeli, není platný.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Přejete si odebírat novinky a aktualizace produktů Wire prostřednictvím e-mailu?";
+"news_offers.consent.message" = "Můžete se odhlásit kdykoliv.";
+"news_offers.consent.button.privacy_policy.title" = "Zásady ochrany osobních údajů";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "Nikdo zatím neoznačil, že se mu tato zpráva líbí.";
+"message_details.empty_read_receipts" = "Tuto zprávu si ještě nikdo nepřečetl.";
+"message_details.read_receipts_disabled" = "Když byla tato zpráva odeslána, nebyla zapnuta potvrzení o přečtení.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Edited: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Uživatelské jméno";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Špatné heslo";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Dozvědět se více";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Přístupový kód";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Smazat";
+"wipe_database.alert.confirm_input" = "Smazat";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

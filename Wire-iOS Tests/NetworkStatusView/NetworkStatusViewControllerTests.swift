@@ -218,4 +218,3 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
         XCTAssertNil(sut)
     }
 }
-

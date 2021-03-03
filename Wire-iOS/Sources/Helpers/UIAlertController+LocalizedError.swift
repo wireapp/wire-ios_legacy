@@ -20,13 +20,13 @@ import Foundation
 import UIKit
 
 extension UIAlertController {
-    
+
     convenience init(_ error: LocalizedError, preferredStyle: UIAlertController.Style) {
-        
+
         let title = error.localizedDescription
         let message = error.failureReason
-        
+
         self.init(title: title, message: message, preferredStyle: preferredStyle)
     }
-    
+
 }

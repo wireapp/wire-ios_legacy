@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireCommonComponents
 import WireDataModel
 
@@ -24,7 +23,7 @@ enum UserTypeIconStyle: String, IconImageStyle {
     case guest
     case external
     case member
-    
+
     var icon: StyleKitIcon? {
         switch self {
         case .guest:
@@ -42,13 +41,15 @@ enum UserTypeIconStyle: String, IconImageStyle {
 }
 
 extension UserTypeIconStyle {
-    init(conversation: ZMConversation?, user: UserType) {
+    init(conversation: GroupDetailsConversationType?,
+         user: UserType,
+         selfUser: UserType) {
         if user.isExternalPartner {
             self = .external
         } else if let conversation = conversation {
             self = !user.isGuest(in: conversation) || user.isSelfUser ? .member : .guest
         } else {
-            self = !ZMUser.selfUser().isTeamMember
+            self = !selfUser.isTeamMember
                 || user.isTeamMember
                 || user.isServiceUser
                 ? .member

@@ -22,27 +22,27 @@ import XCTest
 @testable import Wire
 
 final class MockPhotoPermissionsController: PhotoPermissionsController {
-    
+
     private var camera = false
     private var library = false
-    
+
     init(camera: Bool, library: Bool) {
         self.camera = camera
         self.library = library
     }
-    
+
     var isCameraAuthorized: Bool {
         return camera
     }
-    
+
     var isPhotoLibraryAuthorized: Bool {
         return library
     }
-    
+
     var areCameraOrPhotoLibraryAuthorized: Bool {
         return camera || library
     }
-    
+
     var areCameraAndPhotoLibraryAuthorized: Bool {
         return camera && library
     }

@@ -31,7 +31,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut, prefixed)
     }
-    
+
     func testThatItPrefixesShortString() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world", attributes: [:])
@@ -40,7 +40,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(String.ellipsis + sut, prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromZero() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world, Hello world, Hello world", attributes: [:])
@@ -49,7 +49,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(String.ellipsis + sut, prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromFirstWord() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world, Hello world, Hello world", attributes: [:])
@@ -58,7 +58,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(NSAttributedString(string: String.ellipsis + "world, Hello world, Hello world", attributes: [:]), prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromSecondWord() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world, Hello world, Hello world", attributes: [:])
@@ -67,7 +67,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(NSAttributedString(string: String.ellipsis + "world, Hello world, Hello world", attributes: [:]), prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromThirdWord() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world, Hello world, Hello world", attributes: [:])
@@ -76,7 +76,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(NSAttributedString(string: String.ellipsis + "Hello world, Hello world", attributes: [:]), prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromThirdWordNewline() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world,\nHello world, Hello world", attributes: [:])
@@ -85,7 +85,7 @@ final class NSAttributedStringHighlightTests: XCTestCase {
         // THEN
         XCTAssertEqual(NSAttributedString(string: String.ellipsis + "Hello world, Hello world", attributes: [:]), prefixed)
     }
-    
+
     func testThatItCutsAndPrefixesLongStringFromTheEnd() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "Hello world,\n Hello world, Hello world", attributes: [:])
@@ -106,7 +106,7 @@ final class StringAllRangesOfStringTests: XCTestCase {
         // THEN
         XCTAssertTrue(result.isEmpty)
     }
-    
+
     func testThatItIgnoresZeroQueries() {
         // GIVEN
         let sut = "test"
@@ -115,7 +115,7 @@ final class StringAllRangesOfStringTests: XCTestCase {
         // THEN
         XCTAssertTrue(result.isEmpty)
     }
-    
+
     func testThatItIgnoresOneEmptyQuery() {
         // GIVEN
         let sut = "test"
@@ -124,19 +124,19 @@ final class StringAllRangesOfStringTests: XCTestCase {
         // THEN
         XCTAssertTrue(result.isEmpty)
     }
-    
+
     func testThatItFindsOneQueryOnce() {
         // GIVEN
         let sut = "the test string"
         // WHEN
         let result = sut.allRanges(of: ["test"])
         // THEN
-        
+
         XCTAssertEqual(result.keys.count, 1)
         XCTAssertEqual(result.keys.first, "test")
         XCTAssertEqual(result["test"]!, [NSRange(location: 4, length: 4)])
     }
-    
+
     func testThatItFindsOneQueryMultiple() {
         // GIVEN
         let sut = "the test string test"
@@ -147,7 +147,7 @@ final class StringAllRangesOfStringTests: XCTestCase {
         XCTAssertEqual(result.keys.first, "test")
         XCTAssertEqual(result["test"]!, [NSRange(location: 4, length: 4), NSRange(location: 16, length: 4)])
     }
-    
+
     func testThatItFindsManyQueriesOnce() {
         // GIVEN
         let sut = "the test string"
@@ -172,7 +172,7 @@ final class StringRangeOfStringTests: XCTestCase {
         // THEN
         XCTAssertEqual(result, .none)
     }
-    
+
     func testThatRangeOfStringsIgnoresEmptyStringOneQuery() {
         // GIVEN
         let string = ""
@@ -181,7 +181,7 @@ final class StringRangeOfStringTests: XCTestCase {
         // THEN
         XCTAssertEqual(result, .none)
     }
-    
+
     func testThatRangeOfStringsFindsOneStringOneQuery() {
         // GIVEN
         let string = "the android is not home alone"
@@ -190,7 +190,7 @@ final class StringRangeOfStringTests: XCTestCase {
         // THEN
         XCTAssertEqual(result, string.range(of: "home"))
     }
-    
+
     func testThatRangeOfStringsFindsFirstStringsTwoQuery() {
         // GIVEN
         let string = "the android is not home alone"
@@ -199,7 +199,7 @@ final class StringRangeOfStringTests: XCTestCase {
         // THEN
         XCTAssertEqual(result, string.range(of: "home"))
     }
-    
+
     func testThatRangeOfStringsFindsSecondStringTwoQuery() {
         // GIVEN
         let string = "the android is not home alone"

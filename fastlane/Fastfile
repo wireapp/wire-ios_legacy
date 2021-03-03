@@ -5,6 +5,12 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
+        # Saving `Carthage bootstrap` running time by reusing the Cathage artifacts.
+        # When the Cathage framworks is not pre-built(e.g. in feature branch), this option can save the time of building.
+        # When cache_carthage = YES, 
+        # copy Carthage folder form ~/tmp/cache/Carthage before running setup.sh and 
+        # copy it back after at the end of this lane
+        cache_carthage = options[:cache_carthage]
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -36,9 +42,19 @@ platform :ios do
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
+
+            if cache_carthage == "Yes"
+                sh "cd .. && cp -R ~/tmp/cache/Carthage ./Carthage || echo ⚠️ Carthage cache not exist, skip copying"
+            end
+
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
+
+            if cache_carthage == "Yes"
+                sh "rm -rf ~/tmp/cache/Carthage"
+                sh "cd .. && cp -R ./Carthage ~/tmp/cache/Carthage"
+            end
         end
     end
 
@@ -70,7 +86,7 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "13.4.1"
+        ios_version = "14.4"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
@@ -195,12 +211,23 @@ platform :ios do
     desc "Upload to S3 (Automation builds)"
     lane :upload_s3 do |options|
         build = Build.new(options: options)
+        s3_subfolder = options[:s3_subfolder]
+
+        if s3_subfolder.nil? 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/"
+            sh "echo upload to s3 default folder "
+        else 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/#{s3_subfolder}/"
+            sh "echo upload to s3 subfolder: #{s3_subfolder}"
+        end
+
+
 
         if build.appstore_build
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
         end
         
-        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
     end
 
 

@@ -22,31 +22,37 @@ extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }
 
+// MARK: - URLActionRouterDelegete
+protocol URLActionRouterDelegete: class {
+    func urlActionRouterWillShowCompanyLoginError()
+}
+
+// MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
     func openDeepLink(needsAuthentication: Bool)
     func open(url: URL) -> Bool
 }
 
+// MARK: - URLActionRouter
 class URLActionRouter: URLActionRouterProtocol {
-    
+
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    
+    weak var delegate: URLActionRouterDelegete?
+
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private let authenticationCoordinator: AuthenticationCoordinator?
     private var url: URL?
-    
+
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                authenticationCoordinator: AuthenticationCoordinator? = nil,
                 sessionManager: SessionManager? = nil,
                 url: URL? = nil) {
         self.rootViewController = viewController
-        self.authenticationCoordinator = authenticationCoordinator
+        self.sessionManager = sessionManager
         self.url = url
     }
-    
+
     // MARK: - Public Implementation
     @discardableResult
     func open(url: URL) -> Bool {
@@ -54,8 +60,8 @@ class URLActionRouter: URLActionRouterProtocol {
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
-                authenticationCoordinator?.cancelCompanyLogin()
-                
+                delegate?.urlActionRouterWillShowCompanyLoginError()
+
                 UIApplication.shared.topmostViewController()?.dismissIfNeeded(animated: true, completion: {
                     UIApplication.shared.topmostViewController()?.showAlert(for: error)
                 })
@@ -67,7 +73,7 @@ class URLActionRouter: URLActionRouterProtocol {
             return false
         }
     }
-    
+
     func openDeepLink(needsAuthentication: Bool = false) {
         do {
             guard let deeplink = url else { return }
@@ -79,7 +85,7 @@ class URLActionRouter: URLActionRouterProtocol {
             print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
         }
     }
-    
+
     // MARK: - Private Implementation
     private func resetDeepLinkURL() {
         url = nil
@@ -88,18 +94,17 @@ class URLActionRouter: URLActionRouterProtocol {
 
 // MARK: - PresentationDelegate
 extension URLActionRouter: PresentationDelegate {
-    
+
     // MARK: - Public Implementation
     func failedToPerformAction(_ action: URLAction, error: Error) {
         presentLocalizedErrorAlert(error)
     }
-    
+
     func completedURLAction(_ action: URLAction) {
-        if case URLAction.companyLoginSuccess = action {
-            notifyCompanyLoginCompletion()
-        }
+        guard case URLAction.companyLoginSuccess = action else { return }
+        notifyCompanyLoginCompletion()
     }
-    
+
     func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
         switch action {
         case .connectBot:
@@ -111,7 +116,7 @@ extension URLActionRouter: PresentationDelegate {
             decisionHandler(true)
         }
     }
-    
+
     func showConnectionRequest(userId: UUID) {
         guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
             return
@@ -132,58 +137,58 @@ extension URLActionRouter: PresentationDelegate {
         }
         zClientViewController.showConversation(conversation, at: message)
     }
-    
+
     func showConversationList() {
         guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
             return
         }
         zClientViewController.showConversationList()
     }
-    
+
     // MARK: - Private Implementation
     private func notifyCompanyLoginCompletion() {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
-    
+
     private func presentConnectBotAlert(with decisionHandler: @escaping (Bool) -> Void) {
         let alert = UIAlertController(title: "url_action.title".localized,
                                       message: "url_action.connect_to_bot.message".localized,
                                       preferredStyle: .alert)
-        
+
         let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
                                         style: .default) { _ in
                                             decisionHandler(true)
         }
-        
+
         alert.addAction(agreeAction)
-        
+
         let cancelAction = UIAlertAction(title: "general.cancel".localized,
                                          style: .cancel) { _ in
                                             decisionHandler(false)
         }
-        
+
         alert.addAction(cancelAction)
-        
+
         rootViewController.present(alert, animated: true, completion: nil)
     }
-    
+
     private func presentCustomBackendAlert(with configurationURL: URL) {
         let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
                                       message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                       preferredStyle: .alert)
-        
+
         let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { [weak self] _ in
             self?.rootViewController.isLoadingViewVisible = true
             self?.switchBackend(with: configurationURL)
         }
         alert.addAction(agreeAction)
-        
+
         let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
         alert.addAction(cancelAction)
-        
+
         rootViewController.present(alert, animated: true, completion: nil)
     }
-    
+
     private func switchBackend(with configurationURL: URL) {
         sessionManager?.switchBackend(configuration: configurationURL) { [weak self] result in
             self?.rootViewController.isLoadingViewVisible = false
@@ -195,7 +200,7 @@ extension URLActionRouter: PresentationDelegate {
             }
         }
     }
-    
+
     private func presentLocalizedErrorAlert(_ error: Error) {
         guard let error = error as? LocalizedError else {
             return

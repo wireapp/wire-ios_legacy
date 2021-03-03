@@ -41,11 +41,12 @@ final class ImageResourceView: FLAnimatedImageView {
 
     var imageSizeLimit: ImageSizeLimit = .deviceOptimized
     var imageResource: ImageResource? {
-        set {
-            setImageResource(newValue)
-        }
         get {
             return imageResourceInternal
+        }
+
+        set {
+            setImageResource(newValue)
         }
     }
 
@@ -92,7 +93,7 @@ final class ImageResourceView: FLAnimatedImageView {
         loadingView.accessibilityIdentifier = "loading"
 
         addSubview(loadingView)
-        
+
         [self, loadingView].prepareForLayout()
         NSLayoutConstraint.activate([
             centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),

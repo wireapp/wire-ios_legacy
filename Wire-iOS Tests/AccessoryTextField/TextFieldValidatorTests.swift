@@ -16,29 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
 final class TextFieldValidatorTests: XCTestCase {
-    
+
     var sut: TextFieldValidator!
-    
+
     override func setUp() {
         super.setUp()
         sut = TextFieldValidator()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-
-    func testOneCharacterNameIsNotAccepted(){
+    func testOneCharacterNameIsNotAccepted() {
         // GIVEN
         let text = "a"
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -48,10 +46,10 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted(){
+    func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted() {
         // GIVEN
         let text = " a "
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -61,10 +59,10 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testNameWithTenSpaceIsNotAccepted(){
+    func testNameWithTenSpaceIsNotAccepted() {
         // GIVEN
         let text = String(repeating: " ", count: 10)
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
 
         // WHEN
@@ -74,10 +72,10 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testTwoCharacterNameIsAccepted(){
+    func testTwoCharacterNameIsAccepted() {
         // GIVEN
         let text = "aa"
-        let type: AccessoryTextField.Kind = .name(isTeam: false)
+        let type: ValidatedTextField.Kind = .name(isTeam: false)
         let expectedError: TextFieldValidator.ValidationError? = .none
 
         // WHEN

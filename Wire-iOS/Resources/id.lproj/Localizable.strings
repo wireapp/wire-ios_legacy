@@ -1,0 +1,1857 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// General strings
+
+
+"general.ok" = "OK";
+"general.next" = "Berikutnya";
+"general.cancel" = "Batal";
+"general.close" = "Tutup";
+"general.back" = "Kembali";
+"general.open_settings" = "Buka Pengaturan Kawat";
+"general.edit" = "Ubah";
+"general.done" = "Selesai";
+"general.confirm" = "OK";
+"general.later" = "Nanti";
+"general.skip" = "Tidak Sekarang";
+"general.accept" = "Terima";
+"general.decline" = "Tidak, terima kasih";
+"general.failure" = "Terjadi kesalahan";
+"general.failure.try_again" = "Silakan coba lagi.";
+"general.service" = "Service";
+"general.off" = "Nonaktif";
+"general.on" = "On";
+"general.loading" = "Memuat ...";
+"general.paste" = "Tempel";
+
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Guest room";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// People picker/start UI
+"peoplepicker.search_placeholder" = "Cari dengan nama atau nama pengguna";
+"peoplepicker.header.top_people" = "Orang Top";
+"peoplepicker.button.create_conversation" = "Buat grup";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.header.conversations" = "Grup";
+"peoplepicker.header.team_conversations" = "%@ Grup";
+"peoplepicker.header.send_invitation" = "Undang";
+"peoplepicker.header.contacts" = "Kontak";
+"peoplepicker.header.contacts_personal" = "Kontak Pribadi";
+"peoplepicker.header.directory" = "Hubungkan";
+
+"peoplepicker.group.title.singular" = "Add Participants";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Selesai";
+"peoplepicker.group.create" = "Buat";
+
+"peoplepicker.header.people" = "Orang";
+"peoplepicker.header.services" = "Layanan";
+"peoplepicker.services.open_conversation.item" = "Buka Percakapan";
+"peoplepicker.services.add_service.button" = "Tambah layanan";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
+
+"peoplepicker.title.create_conversation" = "Buat grup";
+"peoplepicker.title.add_to_conversation" = "Tambahkan peserta";
+
+"peoplepicker.no_contacts_title" = "Tidak ada kontak";
+
+"peoplepicker.no_matching_results_title" = "Tidak ada hasil.";
+"peoplepicker.no_matching_results_message" = "Masukkan alamat email lengkap.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
+
+"peoplepicker.no_matching_results.action.send_invite" = "Kirim undangan";
+"peoplepicker.no_matching_results.action.share_contacts" = "Bagikan kontak";
+
+"peoplepicker.no_matching_results_provide_valid_email" = "silakan isi alamat email";
+"peoplepicker.no_matching_results_after_address_book_upload_title" = "Tidak ada hasil.";
+"peoplepicker.no_matching_results_services_title" = "Layanan adalah pembantu yang dapat meningkatkan alur kerja Anda. Untuk mengaktifkannya, tanyakan kepada administrator anda.";
+"peoplepicker.no_matching_results_services_admin_title" = "Layanan adalah pembantu yang dapat meningkatkan alur kerja anda.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+"peoplepicker.no_matching_results_after_address_book_upload_message" = "Masukkan alamat email lengkap atau";
+/*  */
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "berbagi kontak";
+
+"peoplepicker.share_contacts.no_results.title" = "Temukan orang dengan nama atau alamat email";
+
+"peoplepicker.send_invitation.dialog.title" = "Undangan terkirim";
+"peoplepicker.send_invitation.dialog.message" = "Ini bisa digunakan selama 2 minggu. Kirim yang baru jika kadaluarsa.";
+"peoplepicker.send_invitation.dialog.ok" = "OK";
+
+"peoplepicker.invite_more_people" = "Undang lebih banyak orang";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
+"peoplepicker.quick-action.open-conversation" = "Buka";
+"peoplepicker.quick-action.create-conversation" = "Buat grup";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
+
+"add_participants.all_contacts_added" = "Everyone’s here.";
+
+"add_participants.alert.title" = "Penuh";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+
+// Contacts UI
+"contacts_ui.search_placeholder" = "Cari berdasarkan nama";
+"contacts_ui.invite_others" = "Undang orang lain";
+"contacts_ui.name_in_contacts" = "%@ di Kontak";
+"contacts_ui.connection_request" = "Diminta untuk terhubung";
+"contacts_ui.action_button.invite" = "Undang";
+"contacts_ui.action_button.open" = "Buka";
+"contacts_ui.invite_sheet.cancel_button_title" = "Batal";
+"contacts_ui.notification.invitation_sent" = "Undangan terkirim";
+"contacts_ui.notification.invitation_failed" = "Gagal mengirim undangan";
+"contacts_ui.title" = "Undang orang";
+
+"conversation_list.empty.all_archived.message" = "Semua terarsipkan";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
+
+
+// Conversation List Indicator
+"conversation_list.right_accessory.join_button.title" = "Gabung";
+"conversation_list.header.self_team.accessibility_value" = "%@ account";
+"conversation_list.header.self_team.accessibility_value.inactive" = "Ketuk untuk mengaktifkan.";
+"conversation_list.header.self_team.accessibility_value.active" = "Aktif sekarang.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Punya pesan baru.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Tidak";
+"conversation_list.data_usage_permission_alert.agree" = "Terima";
+
+// Profile Header View
+"conversation.connection_view.in_address_book" = "di Kontak";
+
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Buka Percakapan";
+"conversation_list.voiceover.status.pending_connection" = "tertunda";
+"conversation_list.voiceover.status.active_call" = "panggilan aktif";
+"conversation_list.voiceover.status.missed_call" = "panggilan tidak terjawab";
+"conversation_list.voiceover.status.pause_media" = "jeda media";
+"conversation_list.voiceover.status.play_media" = "media bermain";
+"conversation_list.voiceover.status.silenced" = "dibungkam";
+"conversation_list.voiceover.status.typing" = "mengetik";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "arsip";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "daftar percakapan yang diarsipkan";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontak";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "cari orang di Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "menyusun";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "tulis pesan dan simpan untuk nanti";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "ambil gambar dan kirim dengan cepat";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+
+// Archived List
+"archived_list.title" = "arsip";
+
+// Add contact tool tip
+"tool_tip.contacts.title" = "Percakapan dimulai di sini";
+"tool_tip.contacts.message" = "Mulai percakapan . Panggil, pesan dan bagikan secara pribadi atau dengan kelompok.";
+
+// "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
+"peoplepicker.suggested.knows_one" = "Tahu %@";
+"peoplepicker.suggested.knows_two" = "Tahu %@ dan %@";
+"peoplepicker.hide_search_result" = "Menyembunyikan";
+"peoplepicker.hide_search_result_progress" = "Menyembunyikan ...";
+
+"send_invitation.subject" = "Terhubung dengan saya di Wire";
+"send_invitation.text" = "Saya di Wire , cari %@ atau kunjungi get. kawat com";
+"send_invitation_no_email.text" = "Aku di Wire . Kunjungi get. kawat .com untuk terhubung dengan saya";
+
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Buat";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++x
+// In-app notifications (chat heads)
+"notifications.shared_a_photo" = "membagikan gambar";
+"notifications.pinged" = "diping";
+"notifications.sent_file" = "membagikan berkas";
+"notifications.sent_location" = "membagikan lokasi";
+"notifications.sent_video" = "membagikan video";
+"notifications.sent_audio" = "berbagi audio";
+"notifications.in_conversation" = "%@ - %@";
+"notifications.this_conversation" = "%@ dalam percakapan ini";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// List (labels) - Needs to be revised with updated guidance
+"list.title" = "Percakapan";
+"list.archived_conversations" = "ARSIPKAN";
+"list.archived_conversations_close" = "Tutup arsip";
+
+"list.section.groups" = "Grup";
+"list.section.contacts" = "Orang";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
+
+"conversation.voiceover.verified" = "diverifikasi";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
+
+"conversation.status.secutity_alert.default" = "New security alert";
+
+"conversation.status.typing" = "Mengetik pesan ...";
+"conversation.status.typing.group" = "%@ : mengetik pesan ...";
+"conversation.status.silenced" = "Meredam";
+"conversation.status.poor_connection" = "Poor connection";
+"conversation.status.blocked" = "Diblokir";
+"conversation.status.incoming_call" = "%@ is calling…";
+"conversation.status.incoming_call.unknown" = "Someone is calling…";
+
+"conversation.status.message.text" = "%@";
+"conversation.status.message.link" = "Berbagi tautan";
+"conversation.status.message.image" = "Membagikan gambar";
+"conversation.status.message.location" = "Membagikan lokasi";
+"conversation.status.message.audio" = "Membagikan pesan suara";
+"conversation.status.message.video" = "Membagikan video";
+"conversation.status.message.file" = "Membagikan berkas";
+"conversation.status.message.knock" = "Ping";
+"conversation.status.message.missedcall" = "Panggilan tidak terjawab";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.reply" = "%@";
+"conversation.status.message.ephemeral" = "Mengirimkan pesan untuk Anda";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.reply" = "Replied to your message";
+"conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
+"conversation.status.message.ephemeral.knock" = "Ping";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+
+"conversation.status.unsent" = "⚠️ Pesan tidak terkirim";
+"conversation.status.you" = "Kamu";
+"conversation.status.someone" = "Seseorang";
+"conversation.status.you_was_added" = "%@ menambahkan Anda";
+"conversation.status.you_were_removed" = "Kamu telah dihapus";
+"conversation.status.you_left" = "Anda meninggalkan";
+"conversation.status.started_conversation" = "%@ memulai percakapan";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Compose Entry Point
+
+"compose.contact.title" = "Percakapan";
+"compose.message.title" = "Pesan";
+
+"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Conversation
+"conversation.invite_more_people.title" = "Sebarkan berita!";
+"conversation.invite_more_people.description" = "Tambah orang ke percakapan ini";
+"conversation.invite_more_people.explanation_url" = "https://support.wire.com";
+"conversation.invite_more_people.button_title" = "Tambahkan orang";
+
+// Conversation names
+"conversation.displayname.emptygroup" = "Percakapan kelompok kosong";
+
+"conversation.input_bar.verified" = "Terverifikasi";
+"conversation.input_bar.placeholder" = "Mengetik pesan";
+"conversation.input_bar.placeholder_ephemeral" = "Pesan berjangka waktu";
+
+"conversation.input_bar.audio_message.tooltip.pull_send" = "Gesek ke atas untuk mengirim";
+"conversation.input_bar.audio_message.tooltip.tap_send" = "Ketuk untuk mengirim";
+"conversation.input_bar.audio_message.too_long.title" = "Merekam Berhenti";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
+"conversation.input_bar.audio_message.send" = "Kirim";
+
+"conversation.input_bar.audio_message.keyboard.record_tip" = "Ketuk untuk merekam Anda dapat   %@   itu setelah itu";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "Pilih filter di atas";
+
+"conversation.call.many_participants_confirmation.title" = "Mulai telepon";
+"conversation.call.many_participants_confirmation.message" = "Ini akan memanggil %d  orang";
+"conversation.call.many_participants_confirmation.call" = "Panggil";
+
+"conversation.connection_view.in_address_book" = "di Kontak";
+
+"conversation.input_bar.shortcut.send" = "Mengirim pesan";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Pesan Terakhir";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Batal";
+
+"conversation.input_bar.message_too_long.title" = "Pesan terlalu panjang";
+"conversation.input_bar.message_too_long.message" = "Anda dapat mengirim pesan hingga %d karakter.";
+
+"conversation.create.group_name.title" = "Buat grup";
+"conversation.create.group_name.placeholder" = "Nama grup";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Terlalu banyak karakter";
+"conversation.create.options.title" = "Conversation options";
+"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests and services";
+"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.receipts.title" = "Read receipts";
+"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
+
+"conversation.input_bar.ongoing_call_alert.title" = "Panggilan berlangsung";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
+
+"conversation.guests_present" = "Guests are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
+"conversation.action.search" = "Pencarian";
+
+// Reply message preview
+"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.location" = "Lokasi";
+"conversation.input_bar.message_preview.video" = "Video";
+"conversation.input_bar.message_preview.audio" = "Audio Message";
+"conversation.input_bar.message_preview.file" = "File";
+"conversation.input_bar.close_reply" = "Cancel reply";
+
+"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
+"conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
+"conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
+"conversation.input_bar.message_preview.accessibility.audio_message" = "Audio message";
+"conversation.input_bar.message_preview.accessibility.file_message" = "File message (%@)";
+"conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
+"conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
+
+"image_confirmer.confirm" = "OK";
+"image_confirmer.cancel" = "Batal";
+"image.add_sketch" = "Tambah sketsa";
+"image.add_emoji" = "Add an emoji";
+"image.edit_image" = "Edit gambar";
+
+// Camera access
+"camera_access.denied" = "Wire needs access to the camera";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
+"camera_access.denied.instruction" = "";
+"camera_access.denied.open_settings" = "Aktifkan di Wire Settings";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Pengaturan";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+
+// Camera Controls
+"camera_controls.aeaf_lock" = "Kunci AE / AF";
+
+// Location
+"location.send_button.title" = "Kirim";
+"location.unauthorized_alert.title" = "Aktifkan servis lokasi";
+"location.unauthorized_alert.message" = "Untuk mengirim lokasi Anda , aktifkan Layanan Lokasi dan memungkinkan Kawat mengakses lokasi Anda .";
+"location.unauthorized_alert.cancel" = "Batal";
+"location.unauthorized_alert.settings" = "Pengaturan";
+
+// Twitter
+"twitter_status.on_twitter" = "%@ di Twitter";
+
+// Ephemeral message
+"input.ephemeral.timeout.none" = "Nonaktif";
+"input.ephemeral.title" = "Tetapkan waktu agar pesan hilang";
+
+// System messages
+"content.system.you_nominative" = "Anda";
+"content.system.you_dative" = "Anda";
+"content.system.and_you_dative" = "and you";
+"content.system.you_accusative" = "Anda";
+
+"content.system.continued_conversation" = "Mulai percakapan dengan %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+
+"content.system.other_started_conversation" = "%@ memulai percakapan dengan %@";
+"content.system.you_started_conversation" = "Anda memulai percakapan dengan %@";
+
+"content.system.you_added_participant" = "Anda menambahkan %@";
+"content.system.other_added_participant" = "%@ ditambahkan %@";
+"content.system.other_added_you" = "%@ menambahkan Anda";
+
+"content.system.participants_you" = "Kamu";
+"content.system.participants_1_other" = "%@ dan %@";
+"content.system.other_left" = "%@ kiri";
+"content.system.you_left" = "Anda meninggalkan";
+"content.system.other_removed_other" = "%@ dihapus %@";
+"content.system.other_removed_you" = "%@ menghapusmu";
+"content.system.you_removed_other" = "Anda menghapus %@";
+
+"content.system.services.warning" = "Services have access to the content of this conversation";
+
+// Link attachment messages
+
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
+"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
+"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+
+// New conversation participants added / removed / started system message
+
+"content.system.conversation.other.started" = "%@ memulai percakapan dengan %@";
+"content.system.conversation.other.added" = "%@ ditambahkan %@";
+"content.system.conversation.other.removed" = "%@ dihapus %@";
+"content.system.conversation.other.left" = "%@ kiri";
+
+"content.system.conversation.you.started" = "%@ memulai percakapan dengan %@";
+"content.system.conversation.you.added" = "%@ ditambahkan %@";
+"content.system.conversation.you.removed" = "%@ dihapus %@";
+"content.system.conversation.you.left" = "%@ kiri";
+"content.system.conversation.team.member-leave" = "%@ telah dihapus dari tim.";
+"content.system.conversation.guest.joined" = "%@ joined";
+
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Undang orang";
+
+"content.system.other_renamed_conv_to_nothing" = "%@ menghapus nama percakapan";
+"content.system.you_renamed_conv_to_nothing" = "Anda menghapus nama percakapan";
+"content.system.pending_message_timestamp" = "Mengirim…";
+"content.system.message_sent_timestamp" = "Dikirim";
+"content.system.message_delivered_timestamp" = "Terkirim";
+"content.system.message_read_timestamp" = "Seen";
+"content.system.failedtosend_message_timestamp" = "Pengiriman gagal.";
+"content.system.failedtosend_message_timestamp_resend" = "Kirim lagi";
+"content.system.failedtosend_message_timestamp_delete" = "Hapus";
+"content.system.like_tooltip" = "Ketuk untuk menyukai pesan";
+"content.system.deleted_message_prefix_timestamp" = "Dihapus: %@";
+"content.system.edited_message_prefix_timestamp" = "Diedit: %@";
+"content.system.connecting_to" = "Menghubungkan ke %@ . Mulai percakapan";
+"content.system.connected_to" = "Terhubung ke %@ \nMemulai percakapan";
+"content.system.other_wanted_to_talk" = "%@ dipanggil";
+"content.system.you_wanted_to_talk" = "Anda menelepon";
+"content.system.ephemeral_time_remaining" = "%@ kiri";
+
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
+"content.system.you_started" = "Kamu";
+
+"content.system.call.called" = "%@ dipanggil";
+"content.system.call.called-you" = "%@ dipanggil";
+"content.system.call.called.you" = "Kamu";
+
+"content.system.call.missed-call" = "Panggilan tidak terjawab";
+"content.system.call.missed-call-you" = "Panggilan tidak terjawab";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Kamu";
+
+"content.system.renamed_conv.title" = "%@ mengganti nama percakapan";
+"content.system.renamed_conv.title-you" = "%@ mengganti nama percakapan";
+"content.system.renamed_conv.title.you" = "Kamu";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off-you" = "%@ turned off the message timer";
+
+// read receipt
+
+"content.system.message_read_receipt_on" = "%@ turned read receipts on for everyone";
+"content.system.message_read_receipt_on-you" = "%@ turned read receipts on for everyone";
+
+"content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
+"content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
+
+"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "Pelajari lebih lanjut";
+
+//
+
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+
+"content.system.is_verified" = "Semua sidik jari terverifikasi";
+
+"content.system.new_users" = "Pengguna baru bergabung";
+"content.system.verify_devices" = " verifikasi perangkat";
+
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+
+"content.system.missing_messages.title" = "Anda belum pernah menggunakan perangkat ini untuk sementara waktu. Beberapa pesan mungkin tidak muncul di sini.";
+"content.system.missing_messages.subtitle_start" = "Sementara itu,";
+
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
+
+"content.file.uploading" = "Mengunggah…";
+"content.file.downloading" = "Mengunduh…";
+"content.file.upload_failed" = "Gagal mengunggah";
+"content.file.upload_cancelled" = "mengunggah dibatalkan";
+"content.file.upload_video" = "Video";
+"content.file.take_video" = "Merekam video";
+"content.file.browse" = "Browse";
+
+"content.file.save_video" = "Simpan";
+"content.file.save_audio" = "Simpan";
+"content.image.save_image" = "Simpan";
+
+"content.message.delete" = "Hapus";
+"content.message.save" = "Simpan";
+"content.message.resend" = "Kirim lagi";
+
+"content.message.delete_ellipsis" = "Delete…";
+
+"content.message.like" = "Suka";
+"content.message.unlike" = "Tidak Suka";
+"content.message.forward" = "Bagikan";
+"content.message.go_to_conversation" = "Mengungkapkan";
+"content.message.forward.to" = "Cari ...";
+"content.message.open" = "Buka";
+"content.message.sign" = "Sign";
+"content.message.copy" = "Salin";
+"content.message.download" = "Unduh";
+"content.message.details" = "Detil";
+
+// Reply
+"content.message.reply" = "Balas";
+"content.message.original_label" = "Original message";
+"content.message.reply.original_timestamp.date" = "Original message from %@";
+"content.message.reply.original_timestamp.time" = "Original message from %@";
+"content.message.reply.broken_message" = "You cannot see this message.";
+"content.message.reply.edited_message" = "Edited";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Buka";
+
+"content.message.audio_message.accessibility" = "Play the audio message";
+
+"content.reactions_list.likers" = "Disukai oleh";
+
+"content.file.too_big" = "Anda dapat mengirim file ke %@";
+// Someone pinged
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
+
+// Current user pinged
+"content.ping.text.you" = "Kamu";
+
+// Inline Player
+"content.player.unable_to_play" = "TIDAK BISA BERMAIN TRACK";
+
+// Connecting (NEW IMPLEMENTATION, REVIEW LATER)
+"connection_request.title" = "Sambungkan ke %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
+"missive.connection_request.default_message" = "Hai %@ , ayo terhubung di Wire .\n%@";
+
+"connection_request_pending_title" = "Connection Request";
+"connection_request.send_button_title" = "Hubungkan";
+"inbox.connection_request.connect_button_title" = "Hubungkan";
+"inbox.connection_request.ignore_button_title" = "Abaikan";
+
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
+// Voice
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.joining" = "%@ \nMenghubungkan";
+"voice.status.leaving" = "%@\nCall ended";
+"voice.status.video_not_available" = "Video dimatikan";
+"voice.status.low_connection" = "Koneksi buruk";
+"voice.network_error.title" = "Tidak Ada Koneksi Internet";
+"voice.status.cbr" = "Tingkat Bit Konstan";
+"voice.network_error.body" = "Anda harus online untuk memanggil. Cek koneksi Anda dan coba lagi.";
+"voice.degradation.new_self_device" = "Anda mulai menggunakan perangkat baru.";
+"voice.degradation.new_user_device" = "%@ mulai menggunakan perangkat baru.";
+"voice.degradation_outgoing.prompt" = "Apakah Anda masih ingin menelepon?";
+"voice.degradation_incoming.prompt" = "Apakah Anda masih ingin menerima telepon itu?";
+"voice.accept_button.title" = "Terima";
+"voice.decline_button.title" = "Tolak";
+"voice.hang_up_button.title" = "Tutup";
+"voice.mute_button.title" = "Diamkan";
+"voice.video_button.title" = "Video";
+"voice.flip_video_button.title" = "Flip";
+"voice.speaker_button.title" = "Pembicara";
+"voice.cancel_button.title" = "Batal";
+"voice.call_button.title" = "Panggil";
+"voice.end_call_button.title" = "End Call";
+"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.dismiss" = "Nanti";
+
+"voice.alert.call_in_progress.title" = "Panggilan sedang berlangsung";
+"voice.alert.call_in_progress.message" = "Anda hanya dapat memiliki satu panggilan aktif sekaligus";
+"voice.alert.call_in_progress.confirm" = "OK";
+
+"voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
+
+"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+
+"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "Panggilan berlangsung";
+
+// Voice New
+
+"call.status.connecting" = "Menghubungkan…";
+"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming" = "Memanggil…";
+"call.status.outgoing" = "Berdering…";
+"call.status.outgoing.user" = "Calling %@…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "Tingkat Bit Konstan";
+"call.status.variable_bitrate" = "Variable Bit Rate";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
+
+"call.grid.no_active_speakers" = "No active speakers...";
+
+"call.video.paused" = "Video paused";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "Anda mulai menggunakan perangkat baru.";
+"call.degraded.alert.message.user" = "%@ mulai menggunakan perangkat baru.";
+"call.degraded.alert.message.unknown" = "Seseorang mulai menggunakan perangkat baru.";
+"call.degraded.alert.action.continue" = "Panggil saja";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
+
+"call.alert.ongoing.alert_title" = "This will end your other call.";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.button" = "Panggil saja";
+"call.alert.ongoing.join.button" = "Join anyway";
+
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Diamkan";
+"call.actions.label.toggle_mute_off" = "Bersuara";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Menerima panggilan";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "Akhiri panggilan";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Gabung dalam panggilan";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Profile and Participants
+
+"participants.add_people_button_title" = "Tambahkan";
+"participants.avatar.guest.title" = "Tamu";
+
+"participants.title" = "Detil";
+"participants.all.title" = "Orang";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Pilihan";
+"participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
+
+// Meta Menu
+"meta.menu.accessibility_more_options_button" = "Tindakan lanjutan";
+"meta.menu.rename" = "Ganti nama";
+"meta.menu.leave" = "Leave Group…";
+"meta.menu.archive" = "Arsip";
+"meta.menu.unarchive" = "Batalkan arsip";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.silence.mute" = "Diamkan";
+"meta.menu.silence.unmute" = "Bersuara";
+"meta.menu.cancel" = "Batal";
+"meta.menu.cancel_connection_request" = "Batalkan permintaan";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Notifications…";
+"meta.menu.open_self_profile" = "Open Profile";
+
+// Delete conversation
+"meta.menu.delete_content.dialog_title" = "Hapus konten?";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.leave_as_well_message" = "Juga keluar dari percakapan";
+"meta.menu.delete_content.button_cancel" = "Batal";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions_and_replies" = "Mentions and Replies";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Batal";
+
+// Leave conversation
+"meta.leave_conversation_dialog_title" = "Tinggalkan percakapan ?";
+"meta.leave_conversation_dialog_message" = "Peserta akan diberitahu dan percakapan akan dihapus dari daftar Anda.";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation_button_cancel" = "Batal";
+"meta.leave_conversation_button_leave" = "Keluar";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+
+// Conversation Degraded (security level lowered)
+"meta.degraded.degradation_reason_message.singular" = "%@ mulai menggunakan perangkat baru.";
+"meta.degraded.degradation_reason_message.plural" = "%@ mulai menggunakan perangkat baru.";
+"meta.degraded.degradation_reason_message.someone" = "Seseorang mulai menggunakan perangkat baru.";
+"meta.degraded.dialog_message" = "Apakah Anda masih ingin mengirim pesan Anda?";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.cancel_sending_button" = "Batal";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+
+// Remove from conversation dialogue
+"profile.remove_dialog_title" = "Hapus?";
+"profile.remove_dialog_message" = "%@ tidak akan dapat mengirim atau menerima pesan dalam percakapan ini .";
+"profile.remove_dialog_button_cancel" = "Batal";
+"profile.remove_dialog_button_remove" = "Remove From Group…";
+"profile.remove_dialog_button_remove_confirm" = "Remove From Group";
+
+// Block dialog
+"profile.block_dialog.title" = "Blokir?";
+"profile.block_dialog.message" = "%@ tidak dapat menghubungi Anda atau menambahkan Anda ke percakapan grup.";
+"profile.block_dialog.button_cancel" = "Batal";
+"profile.block_dialog.button_block" = "Blokir";
+
+// Delete message dialog
+"message.delete_dialog.message" = "Ini tidak dapat dibatalkan.";
+"message.delete_dialog.action.cancel" = "Batal";
+"message.delete_dialog.action.hide" = "Hapus untuk saya";
+"message.delete_dialog.action.delete" = "Hapus untuk semua orang";
+
+// Edit message
+"message.menu.edit.title" = "Ubah";
+
+// Accept connection request
+"profile.connection_request_dialog.title" = "Terima?";
+"profile.connection_request_dialog.message" = "Ini akan menghubungkan Anda dan membuka percakapan dengan %@ .";
+"profile.connection_request_dialog.button_cancel" = "Abaikan";
+"profile.connection_request_dialog.button_connect" = "Hubungkan";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
+// Cancel connection request
+"profile.cancel_connection_request_dialog.title" = "Batalkan permintaan?";
+"profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
+"profile.cancel_connection_request_dialog.button_no" = "Tidak";
+"profile.cancel_connection_request_dialog.button_yes" = "Ya";
+
+// Unblock button
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
+
+"profile.block_button_title_action" = "Blokir";
+"profile.unblock_button_title_action" = "Buka blokir";
+
+"profile.cancel_connection_button_title" = "BATALKAN PERMINTAAN";
+"profile.connection_request_state.blocked" = "DIPERLUKAN";
+"profile.create_conversation_button_title" = "Buat grup";
+"profile.open_conversation_button_title" = "Buka Percakapan";
+
+"profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
+"profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
+"profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
+"profile.extended_metadata.header" = "Information";
+
+// User Details
+"profile.details.title" = "Detil";
+"profile.details.guest" = "Tamu";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
+
+"profile_view.accessibility.handle" = "Username";
+"profile_view.accessibility.name" = "Nama tampilan";
+"profile_view.accessibility.team_name" = "Nama tim";
+
+// Device list
+"profile.devices.title" = "Perangkat";
+"profile.devices.fingerprint_message_unencrypted" = "%@ menggunakan versi lama dari Wire . Tidak ada perangkat yang ditampilkan di sini.";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.link" = "Mengapa memverifikasi percakapan?";
+
+// Device detail
+"profile.devices.detail.verify_message" = "Verifikasi bahwa ini cocok dengan sidik jari yang ditampilkan pada perangkat %@ .";
+"profile.devices.detail.verify_message.link" = "Bagaimana saya melakukan itu?";
+"profile.devices.detail.show_my_device.title" = "Tampilkan sidik jari perangkat saya";
+"profile.devices.detail.reset_session.title" = "Setel ulang Sesi";
+"device.verified" = "Terverifikasi";
+"device.not_verified" = "Tidak diverifikasi";
+
+"device.class.legalhold" = "Legal Hold";
+"device.class.desktop" = "Desktop";
+"device.class.tablet" = "Tablet";
+"device.class.phone" = "Telepon";
+"device.class.unknown" = "Tidak diketahui";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Tidak diketahui";
+
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "Nonaktif";
+"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Notifikasi";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
+"group_details.receipt_options_cell.title" = "Read receipts";
+"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Self profile
+// Options menu contents
+
+"self.settings" = "Pengaturan";
+"self.profile" = "Profil";
+"self.account" = "Akun";
+"self.help_center" = "Bantuan";
+"self.help_center.support_website" = "Situs Bantuan Wire";
+"self.help_center.contact_support" = "Hubungi Bantuan";
+"self.about" = "Tentang";
+"self.sign_out" = "Keluar";
+"self.report_abuse" = "Laporkan Penyalahgunaan";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Buka profil dan pengaturan";
+"self.new-device.voiceover.label" = "Profil, perangkat baru ditambahkan";
+
+"self.add_phone_number" = "Tambah nomor telepon";
+"self.add_email_password" = "Tambahkan alamat email dan sandi";
+
+"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+
+// About screen
+"about.tos.title" = "Aturan Penggunaan";
+"about.privacy.title" = "Kebijakan Privasi";
+"about.license.title" = "Informasi Lisensi";
+"about.website.title" = "Situs Wire";
+"about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Detil";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
+// Self new devices
+"self.new_device_alert.title" = "Akun Anda digunakan di:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
+"self.new_device_alert.manage_devices" = "Kelola perangkat";
+"self.new_device_alert.trust_devices" = "OK";
+
+// Settings changed alert
+
+"self.read_receipts_enabled.title" = "You have enabled read receipts";
+"self.read_receipts_disabled.title" = "You have disabled read receipts";
+"self.read_receipts_description.title" = "You can change this option in your account settings.";
+
+// Settings - top level
+"self.settings.create_team.title" = "Buat tim";
+"self.settings.manage_team.title" = "Kelola Tim";
+"self.settings.add_team_or_account.title" = "Menambahkan akun";
+"self.settings.add_account.title" = "Tambahkan akun";
+
+"self.settings.add_account.error.title" = "Tiga akun aktif";
+"self.settings.add_account.error.message" = "Anda hanya bisa masuk dengan tiga akun sekaligus. Keluar dari satu untuk menambahkan yang lain.";
+
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
+
+// Settings - Account details
+"self.settings.account_section" = "Akun";
+
+"self.settings.account_details_group.info.title" = "Info";
+"self.settings.account_details_group.personal.title" = "Pribadi";
+
+"self.settings.account_section.name.title" = "Nama";
+"self.settings.account_section.email.title" = "Email";
+"self.settings.account_section.phone.title" = "Telepon";
+"self.settings.account_section.handle.title" = "Username";
+"self.settings.account_section.add_handle.title" = "Tambah username";
+
+"self.settings.account_details_group.info.footer" = "Orang-orang dapat menemukan Anda dengan detil ini.";
+"self.settings.account_details_group.personal.footer" = "Informasi ini tidak terlihat.";
+
+"self.settings.account_details.remove_device.title" = "Hapus Perangkat";
+"self.settings.account_details.key_fingerprint.title" = "Kunci Sidik Jari";
+"self.settings.account_details.remove_device.message" = "Kata sandi Anda diharuskan untuk menghapus perangkat";
+"self.settings.account_details.remove_device.password" = "Kata sandi";
+"self.settings.account_details.remove_device.password.error" = "Sandi salah";
+
+"self.settings.account_appearance_group.title" = "Tampilan";
+
+"self.settings.privacy_section_group.title" = "Privasi";
+"self.settings.enable_read_receipts.title" = "Send Read Receipts";
+"self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
+
+"self.settings.account_picture_group.picture" = "Gambar";
+"self.settings.account_picture_group.color" = "Warna";
+
+"self.settings.account_personal_information_group.title" = "Personal Information";
+
+"self.settings.account_picture_group.theme" = "Theme";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire memberikan setiap perangkat sidik jari yang unik. Bandingkan dan verifikasi perangkat dan percakapan Anda.";
+"self.settings.device_details.reset_session.subtitle" = "Jika sidik jari tidak cocok, ulangi sesi untuk membuat enkripsi batu di kedua sisi.";
+"self.settings.device_details.remove_device.subtitle" = "Hapus perangkat ini jika Anda telah berhenti menggunakannya. Anda akan langsung keluar dari perangkat ini.";
+"self.settings.device_details.reset_session.success" = "Sesi telah diulang";
+
+"self.settings.account_details.actions.title" = "Tindakan";
+
+"self.settings.account_details.delete_account.title" = "Hapus Akun";
+
+"self.settings.account_details.delete_account.alert.title" = "Hapus Akun";
+"self.settings.account_details.delete_account.alert.message" = "Kami akan mengirimkan pesan melalui email atau SMS. Ikuti tautan untuk menghapus akun Anda secara permanen.";
+
+"self.settings.account_details.log_out.alert.title" = "Keluar";
+"self.settings.account_details.log_out.alert.message" = "Riwayat pesan Anda akan dihapus pada perangkat ini.";
+"self.settings.account_details.log_out.alert.password" = "Kata sandi";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Laporan penggunaan dan kerusakan";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
+
+"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
+
+
+
+// Change Username
+
+"self.settings.account_section.handle.change.title" = "Username";
+"self.settings.account_section.handle.change.save" = "Simpan";
+"self.settings.account_section.handle.change.footer" = "At least 2 characters. a—z, 0—9, and  '.', '-', '_'  only.";
+"self.settings.account_section.handle.change.footer.unavailable" = "Telah diambil";
+
+"self.settings.account_section.handle.change.failure_alert.title" = "Tidak dapat mengatur nama pengguna";
+"self.settings.account_section.handle.change.failure_alert.message" = "Terjadi kesalahan saat menyetel nama pengguna Anda. Silahkan coba lagi";
+
+// Change Email
+
+"self.settings.account_section.email.change.title" = "Email";
+"self.settings.account_section.email.change.save" = "Simpan";
+
+"self.settings.account_section.email.change.verify.title" = "Verifikasi email";
+"self.settings.account_section.email.change.verify.description" = "Periksa kotak masuk email Anda dan ikuti petunjuk.";
+"self.settings.account_section.email.change.verify.resend" = "Kirim ulang ke %@";
+
+"self.settings.account_section.email.change.resend.title" = "Email membenci";
+"self.settings.account_section.email.change.resend.message" = "Email konfirmasi dibenci ke %@ . Periksa kotak masuk email Anda dan ikuti instruksinya.";
+
+// Change Phone Number
+
+"self.settings.account_section.phone_number.change.title" = "Telepon";
+"self.settings.account_section.phone_number.change.save" = "Simpan";
+"self.settings.account_section.phone_number.change.remove" = "Hapus nomor telepon";
+
+"self.settings.account_section.phone_number.change.remove.action" = "Hapus nomor telepon";
+
+"self.settings.account_section.phone_number.change.verify.save" = "Simpan";
+"self.settings.account_section.phone_number.change.verify.title" = "Memeriksa";
+"self.settings.account_section.phone_number.change.verify.description" = "Masukkan kode verifikasi yang kami kirim ke: %@.";
+
+"self.settings.account_section.phone_number.change.verify.code_placeholder" = "Memasukkan kode";
+"self.settings.account_section.phone_number.change.verify.resend" = "Kirim ulang kode";
+"self.settings.account_section.phone_number.change.verify.resend_description" = "Tidak ada kode yang muncul? Anda bisa meminta yang baru setiap 30 detik.";
+
+"self.settings.account_section.phone_number.change.resend.title" = "Kode membenci";
+"self.settings.account_section.phone_number.change.resend.message" = "Kode verifikasi dibenci ke %@ .";
+
+// Chat alerts
+"self.settings.notifications.push_notification.title" = "Notifikasi";
+"self.settings.notifications.push_notification.toogle" = "Pratinjau Pesan";
+"self.settings.notifications.push_notification.footer" = "Nama dan pesan pengirim di layar kunci dan di Pusat Pemberitahuan.";
+
+"self.settings.notifications.chat_alerts.toggle" = "Spanduk Pesan";
+"self.settings.notifications.chat_alerts.footer" = "Pesan baru dalam percakapan lain.";
+
+"self.settings.sound_menu.sounds.title" = "Suara";
+"self.settings.sound_menu.ringtone.title" = "Nada dering";
+"self.settings.sound_menu.message.title" = "Nada Teks";
+"self.settings.sound_menu.ping.title" = "Ping";
+"self.settings.sound_menu.ringtones.title" = "Nada dering";
+"self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Tidak ada";
+
+"self.settings.callkit.title" = "Panggilan";
+"self.settings.callkit.caption" = "Berbagi dengan iOS";
+"self.settings.callkit.description" = "Tampilkan Kawat panggilan di layar kunci dan dalam riwayat panggilan iOS. Jika iCloud diaktifkan, riwayat panggilan dibagikan dengan Apple.";
+
+"self.settings.vbr.title" = "Variabel Bit Rate Encoding";
+"self.settings.vbr.description" = "Hal ini membuat panggilan audio menggunakan lebih sedikit data dan bekerja lebih baik pada jaringan yang lebih lambat. Matikan untuk menggunakan Constant Bitrate Encoding.";
+
+"self.settings.sound_menu.sounds.wire_call" = "Kawat panggilan";
+"self.settings.sound_menu.sounds.wire_message" = "Pesan kawat";
+"self.settings.sound_menu.sounds.wire_ping" = "Kawat Ping";
+
+// By popular demand
+"self.settings.popular_demand.title" = "Dengan permintaan populer";
+"self.settings.popular_demand.send_button.title" = "Kirim Tombol";
+"self.settings.popular_demand.send_button.footer" = "Nonaktifkan untuk mengirim melalui tombol kembali.";
+"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+
+// dark theme
+"dark_theme.option.dark" = "Dark";
+"dark_theme.option.light" = "Light";
+"dark_theme.option.system" = "Sync with system settings";
+
+// Open in
+"self.settings.external_apps.header" = "Buka dengan";
+
+"self.settings.link_options.twitter.title" = "Tweet";
+"self.settings.link_options.maps.title" = "Lokasi";
+"self.settings.link_options.browser.title" = "Browser";
+
+"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.tweetbot" = "Tweetbot";
+"open_link.twitter.option.twitterrific" = "Twitterrific";
+
+"open_link.maps.option.apple" = "Maps";
+"open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+
+"open_link.browser.option.safari" = "Safari";
+"open_link.browser.option.chrome" = "Chrome";
+"open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
+
+// Sound alerts (TO BE UPDPATED)
+"self.settings.sound_menu.title" = "Suara Peringatan";
+"self.settings.sound_menu.no_sounds.title" = "Tidak ada";
+"self.settings.sound_menu.all_sounds.title" = "Semua";
+"self.settings.sound_menu.mute_while_talking.title" = "Pesan pertama dan ping";
+
+// Developer options
+"self.settings.developer_options.title" = "Opsi Pengembang";
+"self.settings.apns_logging.title" = "APNS Logging";
+
+// Privacy (visibility) options
+"self.settings.options_menu.title" = "Pilihan";
+
+"self.settings.privacy_contacts_section.title" = "Kontak";
+"self.settings.privacy_contacts_menu.settings_button.title" = "Buka Pengaturan Kontak";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Ini membantu Anda terhubung dengan orang lain. Kami menganonimkan semua informasi dan tidak membagikannya dengan orang lain. Izinkan akses melalui Setelan> Privasi> Kontak.";
+
+"self.settings.privacy_security.lock_app" = "Kunci Dengan Kode Pos";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
+
+"self.settings.privacy_security.lock_app.description" = "Buka Kawat";
+"self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Sandi salah. silakan coba lagi.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Buat Pratinjau Tautan";
+"self.settings.privacy_security.disable_link_previews.footer" = "Pratinjau masih dapat ditampilkan untuk tautan dari orang lain.";
+
+"self.settings.privacy_analytics_menu.devices.title" = "Perangkat";
+
+"self.settings.privacy.clear_history.title" = "Hapus Riwayat";
+"self.settings.privacy.clear_history.subtitle" = "Ini akan menghapus konten percakapan Anda secara permanen.";
+
+"self.settings.advanced.title" = "Lanjutan";
+"self.settings.advanced.troubleshooting.title" = "Penyelesaian masalah";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
+"self.settings.advanced.reset_push_token.subtitle" = "Jika Anda mengalami masalah dengan notifikasi push, Dukungan Kawat mungkin meminta Anda menyetel ulang token ini.";
+"self.settings.advanced.reset_push_token_alert.title" = "Push token telah diatur ulang";
+"self.settings.advanced.reset_push_token_alert.message" = "Pemberitahuan akan dipulihkan dalam beberapa detik.";
+"self.settings.advanced.version_technical_details.title" = "Detail Teknis Versi";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
+
+// Technical Report
+"self.settings.technical_report_section.title" = "Laporan teknikal";
+"self.settings.technical_report.send_report" = "Kirim laporan ke Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.include_log" = "Sertakan log terperinci";
+"self.settings.technical_report.privacy_warning" = "Log terperinci bisa berisi data pribadi";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+
+// Password reset
+"self.settings.password_reset_menu.title" = "Buat ulang sandi";
+
+// Invite from Settings
+"self.settings.invite_friends.title" = "Undang orang";
+
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Kesalahan";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Batal";
+"self.settings.history_backup.password.next" = "Berikutnya";
+"self.settings.history_backup.password.placeholder" = "Kata sandi";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// System status
+"system_status_bar.no_internet.title" = "Tidak ada internet";
+"system_status_bar.no_internet.explanation" = "Sepertinya ada masalah dengan koneksi internet Anda. Pastikan itu berhasil";
+"system_status_bar.poor_connectivity.title" = "Internet lambat, tidak bisa menelepon sekarang";
+"system_status_bar.poor_connectivity.explanation" = "Kami tidak dapat menjamin kualitas suara. Sambungkan ke Wi-Fi atau coba ubah lokasi Anda .";
+
+// View user profile and options menu & text field validation
+"name.placeholder" = "Nama lengkap Anda";
+"name.guidance.tooshort" = "Minimal 2 karakter";
+"name.guidance.toolong" = "Terlalu banyak karakter";
+
+"email.placeholder" = "Email";
+"email.guidance.invalid" = "Alamat email tidak valid";
+"email.guidance.tooshort" = "Email terlalu pendek";
+"email.guidance.toolong" = "Terlalu banyak karakter";
+
+"password.placeholder" = "Kata sandi";
+"password.guidance.toolong" = "Terlalu banyak karakter";
+
+"phone.guidance.invalid" = "Nomor telepon tidak valid";
+"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.toolong" = "Terlalu banyak karakter";
+
+// Landing screen
+
+"landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
+"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.create_team.title" = "Pro";
+"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.login.hints" = "Sudah punya akun ?";
+"landing.login.button.title" = "Masuk";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
+
+"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+
+// Create team
+
+"team.name.headline" = "Namai tim Anda";
+"team.name.subheadline" = "Anda selalu bisa mengubahnya nanti.";
+"team.name.textfield.placeholder" = "nama tim";
+"team.name.textfield.accessibility" = "Tetapkan nama tim";
+"team.name.whatiswireforteams" = "What is Wire Pro?";
+
+"team.email.headline" = "Akun Anda";
+"team.email.subheadline" = "Masukkan alamat email kantor Anda.";
+"team.email.textfield.placeholder" = "Email perusahaan anda";
+"team.email.button.learn_more" = "Belajarlah lagi";
+
+"team.activation_code.headline" = "Anda punya surat";
+"team.phone_activation_code.headline" = "Verification";
+"team.activation_code.subheadline" = "Masukkan kode verifikasi yang kami kirim ke %@ .";
+"team.activation_code.button.resend" = "Kirim ulang kode";
+"team.activation_code.button.change_email" = "Ubah Email";
+"team.activation_code.button.change_phone" = "Ubah nomor telepon";
+
+"team.full_name.headline" = "Namamu";
+"team.full_name.textfield.placeholder" = "Nama lengkap";
+"team.full_name.textfield.accessibility" = "Tetapkan nama lengkap";
+
+"team.password.headline" = "Setel kata sandi";
+
+"verification.code_label" = "Six-digit code. Text field.";
+"verification.code_hint" = "Double tap to enter the code.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Bangun tim Anda";
+"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
+"team.invite.textfield.placeholder" = "Colleague's email";
+"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.learn_more.title" = "Pelajari lebih lanjut";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Selesai";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Ada yang tidak beres, coba lagi";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "Alamat e-mail ini telah diundang";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "Tidak Ada Koneksi Internet";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Hapus";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Terjadi kesalahan";
+"guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Registration
+
+"registration.launch_back_button.label" = "Kembali";
+
+"registration.title" = "Pendaftaran";
+"registration.close_email_invitation_button.email_title" = "Gunakan email lain";
+"registration.close_email_invitation_button.phone_title" = "Mendaftar melalui telepon";
+"registration.close_phone_invitation_button.email_title" = "Daftar melalui email";
+"registration.close_phone_invitation_button.phone_title" = "Gunakan telepon lain";
+
+"registration.register_by_phone" = "Telepon";
+"registration.register_by_email" = "Email";
+
+"registration.enter_phone_number.title" = "Edit nomor telepon";
+"registration.enter_phone_number.placeholder" = "Nomor telepon";
+
+"registration.verify_phone_number.instructions" = "Masukkan kode verifikasi yang kami kirim ke %@";
+"registration.verify_phone_number.resend" = "Kirim lagi";
+"registration.verify_phone_number.resend_placeholder" = "Tidak ada kode yang muncul? Anda dapat meminta yang baru dalam %.0f detik";
+
+"registration.verify_email.instructions" = "Kami mengirim email ke %@ .\n Ikuti link untuk memverifikasi alamat Anda.";
+"registration.verify_email.resend.instructions" = "Tidak mendapat pesan?";
+"registration.verify_email.resend.button_title" = "Kirim ulang";
+
+"registration.no_history.hero" = "Ini pertama kalinya Anda menggunakan Wire pada perangkat ini.";
+"registration.no_history.subtitle" = "Untuk alasan privasi, riwayat percakapan Anda tidak muncul di sini.";
+"registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+"registration.alert.account_exists.title" = "Account Exists";
+"registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
+"registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
+"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_signin_action" = "Masuk";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Coba lagi";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Terjadi kesalahan";
+"registration.no_history.restore_backup_failed.message" = "Riwayat anda tidak dapat dipulihkan.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Cadangan tidak kompatibel";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Anda tidak dapat memulihkan riwayat dari akun yang berbeda.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Cadangan tidak kompatibel";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.action" = "Masuk";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+
+"login.sso.error.offline.alert.message" = "Silakan cek koneksi internet Anda dan coba lagi.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Harap masukan akses kode SSO yang valid";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Harap masukan email atau akses kode SSO yang valid";
+"login.sso.error.alert.domain_not_registered.message" = "Email ini tidak dapat digunakan untuk login enterprise. Silahkan masukan kode SSO untuk melanjutkan.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Silakan coba lagi nanti.";
+"login.sso.backend_switch.title" = "Redirecting...";
+"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
+
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Kata sandi";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
+
+"registration.no_history.logged_out.hero" = "Anda telah menggunakan Kawat pada perangkat ini sebelumnya.";
+"registration.no_history.logged_out.subtitle" = "Pesan yang dikirim sementara itu tidak akan muncul.";
+"registration.no_history.logged_out.got_it" = "OK";
+
+"registration.enter_name.title" = "Edit nama";
+"registration.enter_name.hero" = "Apakah kami harus memanggil Anda?";
+"registration.enter_name.placeholder" = "Nama lengkap Anda";
+
+"registration.terms_of_use.title" = "Selamat Datang di Wire .";
+"registration.terms_of_use.terms" = "Dengan melanjutkan Anda setuju dengan Ketentuan Penggunaan Kawat .";
+"registration.terms_of_use.terms.link" = "Aturan Penggunaan";
+"registration.terms_of_use.agree" = "saya setuju";
+
+"registration.terms_of_use.terms.title" = "Aturan Penggunaan";
+"registration.terms_of_use.terms.message" = "Harap setujui Ketentuan Penggunaan untuk melanjutkan.";
+"registration.terms_of_use.terms.view" = "Lihat";
+"registration.terms_of_use.accept" = "Terima";
+
+"registration.email_flow.title" = "Daftar melalui Email";
+"registration.email_flow.email_step.title" = "Edit Rincian";
+
+"registration.country_select.title" = "Negara";
+
+"registration.share_contacts.hero.title" = "Temukan orang di Wire";
+"registration.share_contacts.hero.paragraph" = "Bagikan kontak Anda sehingga kami dapat menghubungkan Anda dengan orang lain. Kami menganonimkan semua informasi dan tidak membagikannya dengan orang lain.";
+"registration.share_contacts.find_friends_button.title" = "Bagikan kontak";
+"registration.share_contacts.skip_button.title" = "Tidak sekarang";
+
+"registration.address_book_access_denied.hero.title" = "Kawat tidak memiliki akses ke kontak Anda.";
+"registration.address_book_access_denied.hero.paragraph1" = "Kawat membantu menemukan teman Anda jika Anda berbagi kontak Anda.";
+"registration.address_book_access_denied.hero.paragraph2" = "Untuk mengaktifkan akses ketuk Settings dan aktifkan Contacts.";
+"registration.address_book_access_denied.settings_button.title" = "Pengaturan";
+"registration.address_book_access_denied.maybe_later_button.title" = "Mungkin nanti";
+
+"registration.push_access_denied.hero.title" = "Jangan pernah melewatkan panggilan atau pesan.";
+"registration.push_access_denied.hero.paragraph1" = "Aktifkan Notifikasi di Setelan.";
+"registration.push_access_denied.settings_button.title" = "Pergi ke pengaturan";
+"registration.push_access_denied.maybe_later_button.title" = "Mungkin nanti";
+
+"registration.personal.title" = "Buat akun";
+"registration.signin.title" = "Masuk";
+"registration.signin.too_many_devices.title" = "Too Many Devices";
+"registration.signin.too_many_devices.subtitle" = "Hapus salah satu perangkat Anda untuk mulai menggunakan Wire pada perangkat ini.";
+"registration.signin.too_many_devices.manage_button.title" = "Kelola perangkat";
+"registration.signin.too_many_devices.sign_out_button.title" = "Keluar";
+
+"registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
+"registration.devices.title" = "Perangkat";
+"registration.devices.active_list_header" = "Aktif";
+"registration.devices.current_list_header" = "Saat ini";
+"registration.devices.active_list_subtitle" = "Jika Anda tidak mengenali perangkat di atas, hapus dan ganti kata sandi Anda.";
+"registration.devices.activated" = "Activated %@";
+"registration.devices.id" = "ID:";
+
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
+"signin.forgot_password" = "Lupa kata sandi?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Masuk";
+"signin.company_idp.button.title" = "For Companies";
+
+"signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
+"signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
+"signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
+
+"signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
+"signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
+
+"registration.phone_country" = "Negara";
+"registration.phone_code" = "Kode Negara";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verifikasi nomor telepon";
+"registration.phone.verify_field.label" = "Verification Code";
+
+"registration.add_phone_number.hero.title" = "Tambah nomor telepon";
+"registration.add_phone_number.hero.paragraph" = "Ini membantu kita menemukan orang yang mungkin Anda kenal. Kami tidak pernah membaginya.";
+"registration.add_phone_number.skip_button.title" = "Tidak sekarang";
+
+"registration.add_email_password.hero.title" = "Add your email and password";
+"registration.add_email_password.hero.paragraph" = "Ini memungkinkan Anda menggunakan Wire di beberapa perangkat.";
+
+"registration.email_invitation.title" = "Undangan";
+"registration.email_invitation.hero.title" = "Halo, %@";
+"registration.email_invitation.hero.paragraph" = "Pilih sandi untuk membuat akun Anda.";
+
+"registration.phone_invitation.title" = "Undangan";
+"registration.phone_invitation.hero.title" = "Halo, %@";
+"registration.phone_invitation.hero.paragraph" = "Satu langkah lagi untuk membuat akun Anda.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
+
+"error.name_and_email" = "Harap masukkan nama lengkap dan alamat email yang valid";
+"error.full_name" = "Silahkan masukkan nama lengkap anda";
+"error.email" = "silakan isi alamat email";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
+"error.email.invalid" = "silakan isi alamat email";
+"error.phone.invalid" = "Silakan masukkan nomor telepon yang valid";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Username takeover screen
+"registration.select_handle.takeover.subtitle" = "Klaim nama unik Anda di Wire .";
+"registration.select_handle.takeover.subtitle_link" = "Pelajari lebih lanjut";
+
+"registration.select_handle.takeover.choose_own" = "Pilih milikmu";
+"registration.select_handle.takeover.keep_suggested" = "Jaga yang satu ini";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ZMUserSessionErrorCode mapping. Used during registration and profile edit
+"error.user.unkown_error" = "Ada yang tidak beres, coba lagi";
+"error.user.needs_credentials" = "Silakan verifikasi data Anda dan coba lagi.";
+"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.invalid_credentials" = "Silakan verifikasi data Anda dan coba lagi.";
+"error.user.account_pending_activation" = "Akun yang Anda coba akses adalah aktivasi yang tertunda. Harap verifikasi data Anda.";
+"error.user.network_error" = "Sepertinya ada masalah dengan jaringan Anda. Silakan coba lagi nanti.";
+"error.user.email_is_taken" = "Alamat email yang Anda berikan telah terdaftar. Silahkan coba lagi";
+"error.user.phone_is_taken" = "Nomor telepon yang Anda berikan telah terdaftar. Silakan coba lagi.";
+"error.user.phone_code_invalid" = "Harap masukkan kode yang valid";
+"error.user.phone_code_too_many" = "Kami telah mengirimi Anda kode melalui SMS. Ketuk Kirim Ulang setelah 10 menit untuk mendapatkan yang baru.";
+"error.user.registration_unknown_error" = "Ada yang salah. Silahkan coba lagi";
+"error.user.device_deleted_remotely" = "Anda telah keluar dari perangkat lain.";
+"error.user.last_identity_cant_be_deleted" = "Salah satu alamat email atau nomor telepon diperlukan.";
+"error.user.account_suspended" = "Ini akun tidak lagi berwenang untuk login.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
+"error.updating_password" = "Tidak dapat memperbarui kata sandi Anda";
+
+"error.group_call.too_many_members_in_conversation.title" = "Terlalu banyak orang untuk dimanggil";
+"error.group_call.too_many_members_in_conversation" = "Panggilan bekerja dalam percakapan dengan maksimal %d  orang .";
+"error.group_call.too_many_participants_in_the_call.title" = "Panggilan sudah penuh";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.call.gsm_ongoing.title" = "Panggilan seluler";
+"error.call.gsm_ongoing" = "Batalkan panggilan seluler sebelum menghubungi Wire .";
+"error.call.general.title" = "Kesalahan panggilan";
+"error.call.general" = "Silakan coba panggil lagi dalam beberapa menit.";
+"error.call.slow_connection.title" = "Koneksi lambat";
+"error.call.slow_connection" = "Anda mungkin mengalami masalah selama panggilan";
+"error.call.slow_connection.call_anyway" = "Panggil saja";
+
+"error.invite.no_email_provider" = "Konfigurasikan klien email Anda agar bisa mengirim undangan melalui email";
+"error.invite.no_messaging_provider" = "Silahkan konfigurasikan SMS anda agar bisa mengirim undangan via SMS";
+
+"error.conversation.title" = "Kesalahan";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
+"error.conversation.offline" = "Sepertinya ada masalah dengan koneksi internet Anda. Pastikan itu berhasil";
+
+"sketchpad.initial_hint" = "Sentuh warna untuk mengubah ukuran kuas";
+
+"migration.please_wait_message" = "Tolong tunggu sebentar";
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Those are used by the backend to localize APNS
+"push.notification.new_user" = "%@ bergabung dengan Wire";
+"push.notification.new_message" = "Pesan baru";
+
+
+//Force Update
+"force.update.title" = "Update diperlukan";
+"force.update.message" = "Anda kehilangan fitur baru. Dapatkan versi terbaru Wire di App Store.";
+"force.update.ok_button" = "Buka App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Third Party
+"giphy.conversation.message" = "%@ · Via giphy.com";
+"giphy.conversation.random_message" = "melalui giphy.com";
+"giphy.error.no_more_results" = "tidak ada lagi gifs";
+"giphy.error.no_result" = "tidak ditemukan gif";
+
+"giphy.confirm" = "Kirim";
+"giphy.cancel" = "membatalkan";
+"giphy.search_placeholder" = "Cari Giphy";
+
+"invite_banner.title" = "Bawa temanmu ke Wire !";
+"invite_banner.message" = "Nikmati panggilan, pesan, sketsa, GIF dan lainnya secara pribadi atau dengan kelompok.";
+"invite_banner.invite_button_title" = "Undang lebih banyak orang";
+
+// Collections
+"collections.section.images.title" = "Foto-foto";
+"collections.section.files.title" = "File";
+"collections.section.videos.title" = "Video";
+"collections.section.links.title" = "Tautan";
+"collections.section.all.button" = "Tampilkan semua %d→";
+"collections.section.no_items" = "Tidak ada barang dalam koleksi";
+"collections.image_viewer.copied.title" = "Gambar disalin";
+
+"collections.search.field.placeholder" = "Cari pesan teks";
+"collections.search.no_items" = "Tidak ada hasil";
+
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message composing / drafts
+
+"compose.drafts.title" = "Pesan";
+"compose.drafts.empty.title" = "Tidak ada pesan";
+"compose.drafts.empty.subtitle" = "Ketuk + untuk menulis satu";
+"compose.drafts.compose.title" = "Mengetik pesan";
+"compose.drafts.compose.subject.placeholder" = "Ketuk untuk mengatur subjek";
+
+"compose.drafts.compose.delete.confirm.title" = "Konfirmasi penghapusan";
+"compose.drafts.compose.delete.confirm.message" = "Tindakan ini akan menghapus draf ini secara permanen dan tidak dapat dibatalkan.";
+"compose.drafts.compose.delete.confirm.action.title" = "Hapus";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Simpan sebagai konsep";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Simpan";
+"compose.drafts.compose.dismiss.delete.action.title" = "Hapus";
+
+"availability.message.cancel" = "Batal";
+"availability.message.set_status" = "Tetapkan status";
+"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.status" = "Status";
+
+"availability.none" = "Tidak ada";
+"availability.available" = "Tersedia";
+"availability.away" = "Jauh";
+"availability.busy" = "Sibuk";
+
+"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.ok" = "OK";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Skip";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Memastikan";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+
+"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+
+"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
+"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+
+
+// Deep Link
+"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+
+"url_action.invalid_conversation.title" = "Wire can't open this conversation.";
+"url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
+
+"url_action.authorization_required.title" = "Authorization required.";
+"url_action.authorization_required.message" = "You need to log in to view this content.";
+
+"url_action.invalid_link.title" = "Invalid link.";
+"url_action.invalid_link.message" = "The link you opened is not valid.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Apakah anda ingin menerima berita dan produk dari Wire melalui e-mail?";
+"news_offers.consent.message" = "Anda dapat berhenti berlangganan kapan saja.";
+"news_offers.consent.button.privacy_policy.title" = "Kebijakan Privasi";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Message Details
+"message_details.empty_likes" = "No one has liked this message yet.";
+"message_details.empty_read_receipts" = "No one has read this message yet.";
+"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.combined_title" = "Message Details";
+"message_details.likes_title" = "Liked";
+"message_details.receipts_title" = "Read";
+"message_details.tabs.seen" = "Read (%d)";
+"message_details.tabs.likes" = "Liked (%d)";
+"message_details.subtitle_send_date" = "Sent: %@";
+"message_details.subtitle_edit_date" = "Diedit: %@";
+"message_details.subtitle_label_voiceOver" = "Message Details";
+"message_details.user_handle_subtitle_label" = "Username";
+"message_details.user_read_timestamp_subtitle_label" = "Read at";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Password Rules
+"registration.password.rules.no_requirements" = "Use %@.";
+"registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Masukkan kata sandi anda untuk konfirmasi.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "Belajarlah lagi";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Passcode";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Hapus";
+"wipe_database.alert.confirm_input" = "Hapus";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.goToSettingsButton.title" = "Go to settings";

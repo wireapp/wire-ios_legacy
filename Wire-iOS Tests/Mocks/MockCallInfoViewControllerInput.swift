@@ -20,6 +20,8 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+    var allowPresentationModeUpdates: Bool
+    var videoGridPresentationMode: VideoGridPresentationMode
     var videoPlaceholderState: CallVideoPlaceholderState
     var permissions: CallPermissionsConfiguration
     var degradationState: CallDegradationState
@@ -39,4 +41,4 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var userEnabledCBR: Bool
 }
 
-extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}
+extension MockCallInfoViewControllerInput: CustomDebugStringConvertible {}

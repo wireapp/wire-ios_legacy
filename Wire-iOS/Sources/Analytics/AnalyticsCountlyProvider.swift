@@ -22,14 +22,13 @@ import WireSyncEngine
 private let zmLog = ZMSLog(tag: "Analytics")
 
 protocol CountlyInstance {
-    func recordEvent(_ key: String, segmentation: [String : String]?)
+    func recordEvent(_ key: String, segmentation: [String: String]?)
     func start(with config: CountlyConfig)
-    
+
     static func sharedInstance() -> Self
 }
 
 extension Countly: CountlyInstance {}
-
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
@@ -98,7 +97,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         serverURL: URL
     ) {
         guard !countlyAppKey.isEmpty else { return nil }
-        
+
         self.countlyInstanceType = countlyInstanceType
         self.appKey = countlyAppKey
         self.serverURL = serverURL
@@ -214,7 +213,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
     func tagEvent(_ event: String,
                   attributes: [String: Any]) {
-        //store the event before self user is assigned, send it later when self user is ready.
+        // store the event before self user is assigned, send it later when self user is ready.
         guard selfUser != nil else {
             pendingEvents.append(PendingEvent(event, attributes))
             return
@@ -241,7 +240,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
     }
 
     func setSuperProperty(_ name: String, value: Any?) {
-        //TODO
+        // TODO
     }
 
     func flush(completion: Completion?) {
@@ -258,7 +257,7 @@ extension AnalyticsCountlyProvider: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
-    
+
     func applicationDidBecomeActive() {
         guard didInitializeCountly else { return }
         beginSession()
@@ -268,11 +267,6 @@ extension AnalyticsCountlyProvider: ApplicationStateObserving {
         guard isRecording else { return }
         endSession()
     }
-
-    func applicationWillEnterForeground() {
-        // No op
-    }
-
 }
 
 // MARK: - Helpers

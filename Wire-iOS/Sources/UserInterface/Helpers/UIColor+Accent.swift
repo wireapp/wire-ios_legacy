@@ -23,10 +23,8 @@ import WireSyncEngine
 private var ZM_UNUSED = "UI"
 private var overridenAccentColor: ZMAccentColor = .undefined
 
-
 extension UIColor {
-    
-    
+
     /// Set accent color on self user to this index.
     ///
     /// - Parameter accentColor: the accent color
@@ -35,7 +33,7 @@ extension UIColor {
             SelfUser.provider?.selfUser.accentColorValue = accentColor
         }
     }
-    
+
     class func indexedAccentColor() -> ZMAccentColor {
         // priority 1: overriden color
         if overridenAccentColor != .undefined {
@@ -49,12 +47,11 @@ extension UIColor {
             // priority 3: default color
             return .strongBlue
         }
-        
+
         // priority 2: color from self user
         return activeUserSession.selfUser.accentColorValue
     }
-    
-    
+
     /// Set override accent color. Can set to ZMAccentColorUndefined to remove override.
     ///
     /// - Parameter overrideColor: the override color
@@ -62,7 +59,7 @@ extension UIColor {
         if overridenAccentColor == overrideColor {
             return
         }
-        
+
         overridenAccentColor = overrideColor
     }
 

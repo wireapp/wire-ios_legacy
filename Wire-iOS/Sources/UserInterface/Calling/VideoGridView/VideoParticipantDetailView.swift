@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,46 +27,46 @@ final class VideoParticipantDetailsView: UIView {
         color: .textForeground,
         variant: .dark
     )
-    
+
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    private let microphoneIconView = IconImageView()
-    
+    private let microphoneIconView = PulsingIconImageView()
+
     var name: String? {
         didSet {
             nameLabel.text = name
         }
     }
-    
+
     var microphoneIconStyle: MicrophoneIconStyle = .hidden {
         didSet {
             microphoneIconView.set(style: microphoneIconStyle)
         }
     }
-    
+
     init() {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupViews() {
         layer.cornerRadius = 12
         blurView.layer.cornerRadius = 12
-        
+
         microphoneIconView.set(size: .tiny, color: .white)
-        
+
         [blurView, microphoneIconView, nameLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.clipsToBounds = true
             addSubview($0)
         }
     }
-    
+
     func createConstraints() {
         NSLayoutConstraint.activate([
             blurView.trailingAnchor.constraint(equalTo: trailingAnchor),

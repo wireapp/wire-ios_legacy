@@ -79,9 +79,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     var documentsDirectory: URL?
@@ -185,7 +183,7 @@ extension ZMSnapshotTestCase {
                                                             defaultImageDiffDirectory: (IMAGE_DIFF_DIR))
 
         if errorDescription.count > 0 {
-            XCTFail("\(errorDescription)", file:file, line:line)
+            XCTFail("\(errorDescription)", file: file, line: line)
         } else {
             XCTAssert(true)
         }
@@ -301,7 +299,7 @@ extension ZMSnapshotTestCase {
         let identifier = finalIdentifier(deviceName: "\(Int(width))", identifier: identifier)
 
         snapshotVerify(view: container,
-                       identifier:identifier,
+                       identifier: identifier,
                        tolerance: tolerance,
                        file: file,
                        line: line)
@@ -431,7 +429,7 @@ extension ZMSnapshotTestCase {
                                 configuration: Configuration? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, isPad in
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, _ in
             configuration?(view)
         }, file: file, line: line)
     }
@@ -450,20 +448,6 @@ extension ZMSnapshotTestCase {
                            line: line)
     }
 
-}
-
-extension ZMSnapshotTestCase {
-
-    func verifyAlertController(_ controller: UIAlertController,
-                               file: StaticString = #file,
-                               line: UInt = #line) {
-        /// ZClient VC changes alert tint color with init. Reset the tint color here
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = controller.view.tintColor
-
-        presentViewController(controller, file: file, line: line)
-        verify(view: controller.view, file: file, line: line)
-        dismissViewController(controller, file: file, line: line)
-    }
 }
 
 // MARK: - test with different color schemes

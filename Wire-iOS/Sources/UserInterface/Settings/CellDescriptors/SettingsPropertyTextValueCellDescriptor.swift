@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireUtilities
 import UIKit
@@ -26,20 +25,18 @@ private let zmLog = ZMSLog(tag: "UI")
 class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     var visible: Bool = true
     let identifier: String?
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
-    
+
     init(settingsProperty: SettingsProperty, identifier: String? = .none) {
         self.settingsProperty = settingsProperty
         self.identifier = identifier
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = title
         guard let textCell = cell as? SettingsTextCell else { return }
@@ -47,7 +44,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         if let stringValue = settingsProperty.rawValue() as? String {
             textCell.textInput.text = stringValue
         }
-        
+
         if settingsProperty.enabled {
             textCell.textInput.isUserInteractionEnabled = true
             textCell.textInput.accessibilityTraits.remove(.staticText)
@@ -57,13 +54,13 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
             textCell.textInput.accessibilityTraits.insert(.staticText)
             textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
         }
-        
+
         textCell.textInput.isAccessibilityElement = true
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
         if let stringValue = value?.value() as? String {
-            
+
             do {
                 try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
             }
@@ -72,9 +69,9 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                 // specific error message for name string is too short
                 if error.domain == ZMObjectValidationErrorDomain &&
                     error.code == ZMManagedObjectValidationErrorCode.tooShort.rawValue {
-                    
+
                     let alert = UIAlertController.alertWithOKButton(message: "name.guidance.tooshort".localized)
-                    
+
                     UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)
 
                 } else {

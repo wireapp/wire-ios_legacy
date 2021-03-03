@@ -24,10 +24,10 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
     var coreDataFixture: CoreDataFixture!
 
     var sut: Analytics!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         coreDataFixture = CoreDataFixture()
     }
 
@@ -35,7 +35,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
         sut = nil
         coreDataFixture = nil
         MockCountly.reset()
-        
+
         super.tearDown()
     }
 
@@ -65,7 +65,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
     func testThatAppOpenIsStoredAndTaggedAfterSelfUserIsSet() {
         coreDataFixture.teamTest {
 
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
                 countlyInstanceType: MockCountly.self,
@@ -75,28 +75,28 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             sut.tagEvent("app.open")
 
-            //THEN
+            // THEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
             XCTAssertEqual(MockCountly.recordEventCount, 0)
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
+            // THEN
             XCTAssertEqual(MockCountly.startCount, 1)
 
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             XCTAssertEqual(MockCountly.recordEventCount, 1)
         }
     }
-    
+
     func testThatCountlyIsNotStartedForNonTeamMember() {
         coreDataFixture.nonTeamTest {
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
 
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
@@ -107,10 +107,10 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
+            // THEN
             XCTAssertEqual(MockCountly.startCount, 0)
         }
     }
@@ -122,7 +122,7 @@ final class MockCountly: CountlyInstance {
     static var startCount = 0
 
     static let shared = MockCountly()
-    
+
     static func reset() {
         recordEventCount = 0
         startCount = 0
@@ -131,11 +131,11 @@ final class MockCountly: CountlyInstance {
     static func sharedInstance() -> Self {
         return shared as! Self
     }
-    
+
     func recordEvent(_ key: String, segmentation: [String: String]?) {
         MockCountly.recordEventCount += 1
     }
-    
+
     func start(with config: CountlyConfig) {
         MockCountly.startCount += 1
     }

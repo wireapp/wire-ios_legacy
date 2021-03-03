@@ -30,10 +30,20 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
-    var shouldFill: Bool = true {
+    override var isMaximized: Bool {
         didSet {
             updateFillMode()
         }
+    }
+
+    override var stream: Stream {
+        didSet {
+            updateVideoKind()
+        }
+    }
+
+    var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
     }
 
     private var previewView: AVSVideoView?
@@ -46,17 +56,22 @@ final class VideoPreviewView: BaseVideoPreviewView {
         variant: .dark
     )
     private var snapshotView: UIView?
-    
+
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool) {
-        super.init(stream: stream, isCovered: isCovered)
+    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+        super.init(
+            stream: stream,
+            isCovered: isCovered,
+            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
+        )
         updateState()
+        updateVideoKind()
     }
-    
+
     // MARK: - Setup
     override func setupViews() {
         super.setupViews()
-        
+
         [blurView, pausedLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             insertSubview($0, belowSubview: userDetailsView)
@@ -71,19 +86,17 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
-    override func streamDidChange() {
-        super.streamDidChange()
-        videoKind = VideoKind(videoState: stream.videoState)
-    }
-    
     // MARK: - Fill mode
 
     private var videoKind: VideoKind = .none {
         didSet {
             guard oldValue != videoKind else { return }
-            shouldFill = videoKind.shouldFill
             updateFillMode()
         }
+    }
+
+    private func updateVideoKind() {
+        videoKind = VideoKind(videoState: stream.videoState)
     }
 
     private func updateFillMode() {
@@ -105,12 +118,12 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.blurView.effect = UIBlurEffect(style: .dark)
                 self?.pausedLabel.alpha = 1
             }
-            
-            let completionBlock = { [weak self] (_: Bool) -> () in
+
+            let completionBlock = { [weak self] (_: Bool) -> Void in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
             }
-            
+
             if animated {
                 UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
             }
@@ -125,14 +138,14 @@ final class VideoPreviewView: BaseVideoPreviewView {
                 self?.snapshotView?.alpha = 0
                 self?.pausedLabel.alpha = 0
             }
-            
-            let completionBlock =  { [weak self] (_: Bool) -> () in
+
+            let completionBlock: (Bool) -> Void = { [weak self] _ in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
             }
-            
+
             if animated {
                 UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
             }
@@ -142,7 +155,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
             }
         }
     }
-    
+
     private func createPreviewView() {
         let preview = AVSVideoView()
         preview.backgroundColor = .clear
@@ -155,11 +168,11 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview(preview, belowSubview: userDetailsView)
         }
         preview.fitInSuperview()
-        preview.shouldFill = videoKind.shouldFill
-        
+        preview.shouldFill = shouldFill
+
         previewView = preview
     }
-    
+
     private func createSnapshotView() {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
         insertSubview(snapshotView, belowSubview: blurView)
@@ -173,7 +186,7 @@ private enum VideoKind {
     case camera
     case screenshare
     case none
-    
+
     init(videoState: VideoState?) {
         guard let state = videoState else {
             self = .none
@@ -188,7 +201,7 @@ private enum VideoKind {
             self = .screenshare
         }
     }
-    
+
     var shouldFill: Bool {
         return self == .camera
     }

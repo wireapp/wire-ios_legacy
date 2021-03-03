@@ -24,9 +24,9 @@ extension ConversationInputBarViewController {
 
     @discardableResult
     func createEphemeralKeyboardViewController() -> EphemeralKeyboardViewController {
-        let ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
+        let ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation as? ZMConversation)
         ephemeralKeyboardViewController.delegate = self
-        
+
         self.ephemeralKeyboardViewController = ephemeralKeyboardViewController
         return ephemeralKeyboardViewController
     }
@@ -50,10 +50,10 @@ extension ConversationInputBarViewController {
             dismissEphemeralController()
         }
     }
-    
+
     private func presentEphemeralController() {
         let shouldShowPopover = traitCollection.horizontalSizeClass == .regular
-        
+
         if shouldShowPopover {
             presentEphemeralControllerAsPopover()
         } else {
@@ -62,10 +62,10 @@ extension ConversationInputBarViewController {
             inputBar.textView.becomeFirstResponder()
         }
     }
-    
+
     private func dismissEphemeralController() {
         let isPopoverPresented = ephemeralKeyboardViewController?.modalPresentationStyle == .popover
-        
+
         if isPopoverPresented {
             ephemeralKeyboardViewController?.dismiss(animated: true, completion: nil)
             ephemeralKeyboardViewController = nil
@@ -114,11 +114,13 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
     }
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         inputBar.setInputBarState(.writing(ephemeral: timeout != 0 ? .message : .none), animated: true)
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueue {
-            self.conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
+            conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
             self.updateRightAccessoryView()
         }
     }
@@ -141,7 +143,7 @@ extension ConversationInputBarViewController {
 
     func updateInputBar() {
         inputBar.changeEphemeralState(to: ephemeralState)
-        
+
         if conversation.hasSyncedMessageDestructionTimeout {
             dismissEphemeralController()
         }

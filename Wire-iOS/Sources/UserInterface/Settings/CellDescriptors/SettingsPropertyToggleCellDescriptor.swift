@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 import WireSystem
@@ -31,21 +30,19 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
     static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
     let inverse: Bool
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     let identifier: String?
     var visible: Bool = true
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
-    
+
     init(settingsProperty: SettingsProperty, inverse: Bool = false, identifier: String? = .none) {
         self.settingsProperty = settingsProperty
         self.inverse = inverse
         self.identifier = identifier
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         if let toggleCell = cell as? SettingsToggleCell {
@@ -56,20 +53,20 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
             else {
                 boolValue = false
             }
-            
+
             if self.inverse {
                 boolValue = !boolValue
             }
-            
+
             toggleCell.switchView.isOn = boolValue
             toggleCell.switchView.accessibilityLabel = identifier
             toggleCell.switchView.isEnabled = self.settingsProperty.enabled
         }
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
         var valueToSet = false
-        
+
         if let value = value?.value() {
             switch value {
             case let numberValue as NSNumber:
@@ -82,16 +79,15 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
                 fatal("Unknown type: \(type(of: value))")
             }
         }
-        
+
         if self.inverse {
             valueToSet = !valueToSet
         }
-        
+
         do {
             try self.settingsProperty << SettingsPropertyValue(valueToSet)
-        }
-        catch(let e) {
-            zmLog.error("Cannot set property: \(e)")
+        } catch {
+            zmLog.error("Cannot set property: \(error)")
         }
     }
 }

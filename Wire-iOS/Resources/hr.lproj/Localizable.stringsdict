@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>self.new_device_alert.title_prefix.devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@device_count@</string>
+      <key>device_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>lu</string>
+        <key>one</key>
+        <string>uređaj</string>
+        <key>few</key>
+        <string>%lu uređaja</string>
+        <key>other</key>
+        <string>%lu uređaja</string>
+      </dict>
+    </dict>
+    <key>participants.people.count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lu_number_of_people@</string>
+      <key>lu_number_of_people</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>lu</string>
+        <key>one</key>
+        <string>Jedna osoba</string>
+        <key>few</key>
+        <string>%lu osobe</string>
+        <key>other</key>
+        <string>%lu osoba</string>
+      </dict>
+    </dict>
+    <key>content.system.missing_messages.subtitle_added</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%@ %#@lu_number_of_users@</string>
+      <key>lu_number_of_users</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>lu</string>
+        <key>one</key>
+        <string>je dodan</string>
+        <key>few</key>
+        <string>su dodana</string>
+        <key>other</key>
+        <string>su dodana</string>
+      </dict>
+    </dict>
+    <key>content.system.missing_messages.subtitle_removed</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%@ %#@lu_number_of_users@</string>
+      <key>lu_number_of_users</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>lu</string>
+        <key>one</key>
+        <string>je uklonjen</string>
+        <key>few</key>
+        <string>je uklonjena</string>
+        <key>other</key>
+        <string>je uklonjeno</string>
+      </dict>
+    </dict>
+    <key>list.connect_request.people_waiting</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_people@ čeka</string>
+      <key>d_number_of_people</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Jedna osoba</string>
+        <key>few</key>
+        <string>%d osobe</string>
+        <key>other</key>
+        <string>%d osoba</string>
+      </dict>
+    </dict>
+    <key>content.system.participants_n_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%@ %#@and_number_of_others@</string>
+      <key>and_number_of_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>i još jedna</string>
+        <key>few</key>
+        <string>i još %d</string>
+        <key>other</key>
+        <string>i još %d</string>
+      </dict>
+    </dict>
+    <key>peoplepicker.suggested.knows_more</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Zna %@ i %#@d_number_of_others@</string>
+      <key>d_number_of_others</key>
+      <dict>
+        <key>one</key>
+        <string>%d drugo</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>few</key>
+        <string>%d drugih</string>
+        <key>other</key>
+        <string>%d drugih</string>
+      </dict>
+    </dict>
+    <key>content.system.people_started_using</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%@%#@d_number_of_others@ počeli koristiti %#@d_new_devices@</string>
+      <key>d_number_of_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string> i %d drugo</string>
+        <key>few</key>
+        <string> i %d drugih</string>
+        <key>other</key>
+        <string> i %d drugih</string>
+      </dict>
+      <key>d_new_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>novi uređaj</string>
+        <key>few</key>
+        <string>novi uređaji</string>
+        <key>other</key>
+        <string>novi uređaji</string>
+      </dict>
+    </dict>
+    <key>content.system.new_devices</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_new_devices@</string>
+      <key>d_new_devices</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>novi uređaj</string>
+        <key>few</key>
+        <string>novi uređaji</string>
+        <key>other</key>
+        <string>novi uređaji</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.generic_message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 poruka</string>
+        <key>few</key>
+        <string>%d poruke</string>
+        <key>other</key>
+        <string>%d poruka</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.mention</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 spominjanje</string>
+        <key>few</key>
+        <string>%d spominjanja</string>
+        <key>other</key>
+        <string>%d spominjanja</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.reply</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 odgovor</string>
+        <key>few</key>
+        <string>%d odgovora</string>
+        <key>other</key>
+        <string>%d odgovora</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.knock</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 ping</string>
+        <key>few</key>
+        <string>%d pinga</string>
+        <key>other</key>
+        <string>%d pingova</string>
+      </dict>
+    </dict>
+    <key>conversation.silenced.status.message.missedcall</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@d_number_of_new@</string>
+      <key>d_number_of_new</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 propušten poziv</string>
+        <key>few</key>
+        <string>%d propuštena poziva</string>
+        <key>other</key>
+        <string>%d propuštenih poziva</string>
+      </dict>
+    </dict>
+    <key>content.system.call.missed-call</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call@</string>
+      <key>missed_call</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Propušten poziv</string>
+        <key>few</key>
+        <string>Propušteni pozivi</string>
+        <key>other</key>
+        <string>Propušteni pozivi</string>
+      </dict>
+    </dict>
+    <key>content.system.call.missed-call.groups</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Propušten poziv od %2$@</string>
+        <key>few</key>
+        <string>Propušteni pozivi od %2$@</string>
+        <key>other</key>
+        <string>Propušteni pozivi od %2$@</string>
+      </dict>
+    </dict>
+    <key>content.system.call.missed-call.groups-you</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Propušten poziv od %2$@</string>
+        <key>few</key>
+        <string>Propušteni pozivi od %2$@</string>
+        <key>other</key>
+        <string>Propušteni pozivi od %2$@</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.min_length</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>at least %#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>one character</string>
+        <key>few</key>
+        <string>%d characters</string>
+        <key>other</key>
+        <string>%d characters</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.lowercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>one lowercase letter</string>
+        <key>few</key>
+        <string>%d lowercase letters</string>
+        <key>other</key>
+        <string>%d lowercase letters</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.uppercase</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>one</key>
+        <string>one capital letter</string>
+        <key>few</key>
+        <string>%d capital letters</string>
+        <key>other</key>
+        <string>%d capital letters</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.number</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>a number</string>
+        <key>few</key>
+        <string>%d numbers</string>
+        <key>other</key>
+        <string>%d numbers</string>
+      </dict>
+    </dict>
+    <key>registration.password.rules.special</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@character_count@</string>
+      <key>character_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>a special character</string>
+        <key>few</key>
+        <string>%d special characters</string>
+        <key>other</key>
+        <string>%d special characters</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

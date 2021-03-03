@@ -31,6 +31,10 @@ protocol ApplicationStateObserving: ObserverTokenStore {
 }
 
 extension ApplicationStateObserving {
+    func applicationDidBecomeActive() {}
+    func applicationDidEnterBackground() {}
+    func applicationWillEnterForeground() {}
+
     func setupApplicationNotifications() {
         addObserverToken(NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                                 object: nil,
@@ -38,7 +42,7 @@ extension ApplicationStateObserving {
             guard let observer = self else { return }
             observer.applicationDidEnterBackground()
         })
-        
+
         addObserverToken(NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                                 object: nil,
                                                                 queue: nil) { [weak self] _ in

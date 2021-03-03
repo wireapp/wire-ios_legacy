@@ -23,7 +23,8 @@ final class UnlockViewControllerTests: XCTestCase {
     var sut: UnlockViewController!
 
     override func setUp() {
-        sut = UnlockViewController()
+        let selfUser = MockUserType.createSelfUser(name: "Bobby McFerrin")
+        sut = UnlockViewController(selfUser: selfUser)
     }
 
     override func tearDown() {
@@ -31,8 +32,8 @@ final class UnlockViewControllerTests: XCTestCase {
     }
 
     private func fillPasscode() {
-        sut.accessoryTextField.text = "Passcode"
-        sut.validationUpdated(sender: sut.accessoryTextField, error: nil)
+        sut.validatedTextField.text = "Passcode"
+        sut.validationUpdated(sender: sut.validatedTextField, error: nil)
     }
 
     func testForInitState() {

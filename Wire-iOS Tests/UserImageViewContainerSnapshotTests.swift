@@ -21,7 +21,7 @@ import SnapshotTesting
 @testable import Wire
 
 final class UserImageViewContainerSnapshotTests: XCTestCase {
-    
+
     var sut: UserImageViewContainer!
     var mockUser: MockUserType!
 
@@ -32,7 +32,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
         mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").imageData
         mockUser.mediumProfileImageCacheKey = "test"
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil
@@ -47,13 +47,13 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
         sut.user = mockUser
     }
 
-    func testForNoUserImageWithoutSession(){
+    func testForNoUserImageWithoutSession() {
         setupSut(userSession: nil)
 
         verify(matching: sut)
     }
 
-    func testForWithUserImage(){
+    func testForWithUserImage() {
         setupSut(userSession: MockZMUserSession())
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))

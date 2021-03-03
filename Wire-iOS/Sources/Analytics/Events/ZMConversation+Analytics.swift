@@ -50,7 +50,7 @@ extension ZMConversation {
         return ConversationType.type(self)?.analyticsTypeString
     }
 
-    ///TODO: move to DM
+    /// TODO: move to DM
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
         guard self.localParticipants.count == 2,
@@ -62,25 +62,11 @@ extension ZMConversation {
                 otherUser.providerIdentifier != nil
     }
 
-    ///TODO: move to DM
+    /// TODO: move to DM
     /// Whether the conversation includes at least 1 service user.
     var includesServiceUser: Bool {
         let participants = Array(localParticipants)
         return participants.any { $0.isServiceUser }
-    }
-
-    static let userNameSorter: (UserType, UserType) -> Bool = { user0, user1 in
-        user0.name < user1.name
-    }
-
-    ///TODO: move to DM
-    var sortedServiceUsers: [UserType] {
-        return localParticipants.filter { $0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
-    }
-
-    ///TODO: move to DM
-    var sortedOtherParticipants: [UserType] {
-        return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
     var attributesForConversation: [String: Any] {
@@ -104,7 +90,7 @@ extension ZMConversation {
     }
 
     var hasSyncedTimeout: Bool {
-        if case .synced(_)? = messageDestructionTimeout {
+        if case .synced? = messageDestructionTimeout {
             return true
         } else {
             return false

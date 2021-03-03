@@ -27,13 +27,13 @@ extension String {
 }
 
 extension NSString {
-    
+
     var uppercasedWithCurrentLocale: String {
         return uppercased(with: NSLocale.current)
     }
-    
+
     var lowercasedWithCurrentLocale: String {
         return lowercased(with: NSLocale.current)
     }
-    
+
 }

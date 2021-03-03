@@ -111,7 +111,6 @@ final class ConversationReplyContentView: UIView {
         ])
     }
 
-
     func configure(with object: Configuration) {
         senderComponent.isHidden = !object.showDetails
         timestampLabel.isHidden = !object.showDetails
@@ -124,7 +123,7 @@ final class ConversationReplyContentView: UIView {
         switch object.content {
         case .text(let attributedContent):
             let mutableAttributedContent = NSMutableAttributedString(attributedString: attributedContent)
-            /// trim the string to first four lines to prevent last line narrower spacing issue
+            // Trim the string to first four lines to prevent last line narrower spacing issue
             mutableAttributedContent.paragraphTailTruncated()
             contentTextView.attributedText = mutableAttributedContent.trimmedToNumberOfLines(numberOfLinesLimit: numberOfLinesLimit)
             contentTextView.isHidden = false
@@ -259,4 +258,3 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
     }
 
 }
-

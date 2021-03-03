@@ -52,11 +52,11 @@ final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
         client = nil
         requester = nil
         resultsController = nil
-        
+
         super.tearDown()
     }
 
-    func testEmptySearchScreenWithKeyword(){
+    func testEmptySearchScreenWithKeyword() {
         verify(view: mockNavigationController.view)
     }
 }

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -17,7 +16,6 @@
 //
 
 import Foundation
-
 
 extension ConversationListViewController {
     func setState(_ state: ConversationListState,
@@ -52,7 +50,7 @@ extension ConversationListViewController {
     }
 
     func selectInboxAndFocusOnView(focus: Bool) {
-        setState(.conversationList, animated:false)
+        setState(.conversationList, animated: false)
         listContentController.selectInboxAndFocus(onView: focus)
     }
 

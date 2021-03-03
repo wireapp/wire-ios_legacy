@@ -22,11 +22,11 @@ import XCTest
 
 final class FontSchemeTests: XCTestCase {
 
-    fileprivate func insertFontSizeItems(_ points: [FontSize : CGFloat], _ multiplier: CGFloat, _ fixedFontNames: inout [FontSpec : String], _ fontTextStyle: FontTextStyle) {
-        let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: round(points[FontSize.large]! * multiplier)),
+    fileprivate func insertFontSizeItems(_ points: [FontSize: CGFloat], _ multiplier: CGFloat, _ fixedFontNames: inout [FontSpec: String], _ fontTextStyle: FontTextStyle) {
+        let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large, point: round(points[FontSize.large]! * multiplier)),
                                                                          (fontSize: .normal, point: round(points[FontSize.normal]! * multiplier)),
                                                                          (fontSize: .medium, point: round(points[FontSize.medium]! * multiplier)),
-                                                                         (fontSize: .small,  point: round(points[FontSize.small]! * multiplier))]
+                                                                         (fontSize: .small, point: round(points[FontSize.small]! * multiplier))]
 
         let allFontWeightTuples: [(fontWeight: FontWeight?, name: String)] = [(fontWeight: .ultraLight, name: "Ultralight"),
                                                                               (fontWeight: .thin, name: "Thin"),
@@ -37,9 +37,8 @@ final class FontSchemeTests: XCTestCase {
                                                                               (fontWeight: .bold, name: "Bold"),
                                                                               (fontWeight: .heavy, name: "Heavy"),
                                                                               (fontWeight: .black, name: "Black"),
-                                                                              (fontWeight: .none, name: "Light"),
+                                                                              (fontWeight: .none, name: "Light")
                                                                               ]
-
 
         for fontWeightTuple in allFontWeightTuples {
             for fontSizeTuple in allFontSizeTuples {
@@ -48,9 +47,9 @@ final class FontSchemeTests: XCTestCase {
         }
     }
 
-    fileprivate func insertInputTextFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
+    fileprivate func insertInputTextFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec: String]) {
         let fontTextStyle: FontTextStyle = .inputText
-        let points: [FontSize : CGFloat] = [FontSize.large: 21,
+        let points: [FontSize: CGFloat] = [FontSize.large: 21,
                                             FontSize.normal: 14,
                                             FontSize.medium: 11,
                                             FontSize.small: 10]
@@ -58,22 +57,22 @@ final class FontSchemeTests: XCTestCase {
         insertFontSizeItems(points, multiplier, &fixedFontNames, fontTextStyle)
     }
 
-    fileprivate func insertLargeTitleFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
+    fileprivate func insertLargeTitleFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec: String]) {
         let fontTextStyle: FontTextStyle = .largeTitle
-        let points: [FontSize : CGFloat] = [FontSize.large: 40,
+        let points: [FontSize: CGFloat] = [FontSize.large: 40,
                                             FontSize.normal: 26,
                                             FontSize.medium: 20,
                                             FontSize.small: 18]
 
         insertFontSizeItems(points, multiplier, &fixedFontNames, fontTextStyle)
     }
-    
+
     func testThatItReturnsRegularWeightForLightFontsWhenAccessibilityBoldTextEnabled() {
         // GIVEN
         XCTAssertEqual(UIFont.Weight.ultraLight, FontWeight.ultraLight.fontWeight(accessibilityBoldText: false))
         XCTAssertEqual(UIFont.Weight.thin, FontWeight.thin.fontWeight(accessibilityBoldText: false))
         XCTAssertEqual(UIFont.Weight.light, FontWeight.light.fontWeight(accessibilityBoldText: false))
-        
+
         // THEN
         XCTAssertEqual(UIFont.Weight.regular, FontWeight.ultraLight.fontWeight(accessibilityBoldText: true))
         XCTAssertEqual(UIFont.Weight.regular, FontWeight.thin.fontWeight(accessibilityBoldText: true))

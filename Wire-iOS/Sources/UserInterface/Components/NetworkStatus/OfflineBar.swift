@@ -41,7 +41,7 @@ final class OfflineBar: UIView {
         offlineLabel = UILabel()
 
         super.init(frame: frame)
-        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
+        backgroundColor = UIColor(rgb: 0xFEBF02, alpha: 1)
 
         layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         layer.masksToBounds = true

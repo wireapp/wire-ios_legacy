@@ -40,7 +40,7 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
     }
 
     func testForEveryOneIsHere() {
-        let newValues = ConversationCreationValues(name: "", participants: [], allowGuests: true)
+        let newValues = ConversationCreationValues(name: "", participants: [], allowGuests: true, selfUser: selfUser)
 
         sut = AddParticipantsViewController(context: .create(newValues), variant: .light)
         verify(matching: sut)

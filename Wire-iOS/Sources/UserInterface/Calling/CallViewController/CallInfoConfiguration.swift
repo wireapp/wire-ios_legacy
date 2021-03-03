@@ -25,53 +25,60 @@ fileprivate extension VoiceChannel {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
-        
+
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return (initiator as? ZMUser).map { .avatar($0) } ?? .none
+            return initiator.map { .avatar(HashBox(value: $0)) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
             if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value: remoteParticipant))
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
+        case .unknown,
+             .none,
+             .terminating,
+             .mediaStopped,
+             .established,
+             .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants().map {
-                    .callParticipant(user: $0.user,
+                    .callParticipant(user: HashBox(value: $0.user),
                                      videoState: $0.state.videoState,
-                                     microphoneState: $0.state.microphoneState)
+                                     microphoneState: $0.state.microphoneState,
+                                     activeSpeakerState: $0.activeSpeakerState)
                 })
-               
+
             } else if let remoteParticipant = conversation?.connectedUser {
-                return .avatar(remoteParticipant)
+                return .avatar(HashBox(value: remoteParticipant))
             } else {
                 return .none
             }
         }
     }
-    
+
     var internalIsVideoCall: Bool {
         switch state {
         case .established, .terminating: return isAnyParticipantSendingVideo
         default: return isVideoCall
         }
     }
-    
-    func canToggleMediaType(with permissions: CallPermissionsConfiguration) -> Bool {
+
+    func canToggleMediaType(with permissions: CallPermissionsConfiguration,
+                            selfUser: UserType) -> Bool {
         switch state {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
         default:
             guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
-            
+
             // The user can only re-enable their video if the conversation allows GVC
             if videoState == .stopped {
-                return canUpgradeToVideo
+                return canUpgradeToVideo(selfUser: selfUser)
             }
-            
+
             // If the user already enabled video, they should be able to disable it
             return true
         }
@@ -95,7 +102,7 @@ fileprivate extension VoiceChannel {
         guard case .incoming = state else { return .hidden }
         return nil
     }
-    
+
     var disableIdleTimer: Bool {
         switch state {
         case .none: return false
@@ -105,7 +112,8 @@ fileprivate extension VoiceChannel {
 
 }
 
-struct CallInfoConfiguration: CallInfoViewControllerInput  {
+struct CallInfoConfiguration: CallInfoViewControllerInput {
+    fileprivate static let maxActiveSpeakers: Int = 4
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
@@ -124,6 +132,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
     let callState: CallStateExtending
+    let videoGridPresentationMode: VideoGridPresentationMode
+    let allowPresentationModeUpdates: Bool
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -133,8 +143,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
-        userEnabledCBR: Bool
-        ) {
+        userEnabledCBR: Bool,
+        selfUser: UserType) {
         self.permissions = permissions
         self.cameraType = cameraType
         self.mediaManager = mediaManager
@@ -143,7 +153,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType()
         isMuted = mediaManager.isMicrophoneMuted
-        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
+        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
@@ -153,23 +163,25 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
         callState = voiceChannel.state
+        videoGridPresentationMode = voiceChannel.videoGridPresentationMode
+        allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
     }
 
     // This property has to be computed in order to return the correct call duration
     var state: CallStatusViewState {
         switch voiceChannelSnapshot.state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
+        case .incoming(_, shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_, shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }
 
 }
 
-fileprivate struct VoiceChannelSnapshot {
+private struct VoiceChannelSnapshot {
     let callerName: String?
     let state: CallState
     let callStartDate: Date
@@ -191,14 +203,14 @@ extension CallParticipantState {
         guard case .connected = self else { return false }
         return true
     }
-    
+
     var isSendingVideo: Bool {
         switch self {
         case .connected(videoState: let state, _) where state.isSending: return true
         default: return false
         }
     }
-    
+
     var videoState: VideoState? {
         switch self {
         case .connected(videoState: let state, _):
@@ -207,7 +219,7 @@ extension CallParticipantState {
             return nil
         }
     }
-    
+
     var microphoneState: MicrophoneState? {
         switch self {
         case .connected(_, microphoneState: let state):
@@ -219,29 +231,29 @@ extension CallParticipantState {
 }
 
 fileprivate extension VoiceChannel {
-    
-    var canUpgradeToVideo: Bool {
+
+    func canUpgradeToVideo(selfUser: UserType) -> Bool {
         guard !isConferenceCall else {
             return true
         }
-        
+
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else {
             return true
         }
-        
+
         guard !isLegacyGroupVideoParticipantLimitReached else {
             return false
         }
 
-        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+        return selfUser.isTeamMember || isAnyParticipantSendingVideo
     }
-    
+
     var isAnyParticipantSendingVideo: Bool {
         return videoState.isSending                                  // Current user is sending video and can toggle off
             || connectedParticipants.any { $0.state.isSendingVideo } // Other participants are sending video
             || isIncomingVideoCall                                   // This is an incoming video call
     }
-    
+
     func sortedConnectedParticipants() -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
             lhs.user.name?.lowercased() < rhs.user.name?.lowercased()
@@ -254,19 +266,34 @@ fileprivate extension VoiceChannel {
         default: return false
         }
     }
+
+    var allowPresentationModeUpdates: Bool {
+        return connectedParticipants.count > 2
+            && internalIsVideoCall
+            && isActiveSpeakersTabEnabled
+    }
+    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {
     var connectedParticipants: [CallParticipant] {
-        return participants.filter { $0.state.isConnected }
+        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+    }
+
+    private var hashboxFirstDegradedUser: HashBoxUser? {
+        guard let firstDegradedUser = firstDegradedUser else {
+            return nil
+        }
+
+        return HashBox(value: firstDegradedUser)
     }
 
     var degradationState: CallDegradationState {
         switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: firstDegradedUser)
+            return .incoming(degradedUser: hashboxFirstDegradedUser)
         case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: firstDegradedUser)
+            return .outgoing(degradedUser: hashboxFirstDegradedUser)
         default:
             return .none
         }

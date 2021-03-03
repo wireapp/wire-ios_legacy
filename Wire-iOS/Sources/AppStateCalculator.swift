@@ -21,12 +21,36 @@ import WireSyncEngine
 
 enum AppState: Equatable {
     case headless
-    case authenticated(completedRegistration: Bool, isDatabaseLocked: Bool)
-    case unauthenticated(error : NSError?)
+    case locked
+    case authenticated(completedRegistration: Bool)
+    case unauthenticated(error: NSError?)
     case blacklisted
     case jailbroken
     case migrating
     case loading(account: Account, from: Account?)
+
+    static func == (lhs: AppState, rhs: AppState) -> Bool {
+        switch (lhs, rhs) {
+        case (.headless, .headless):
+            return true
+        case (.locked, .locked):
+            return true
+        case (.authenticated, .authenticated):
+            return true
+        case let (.unauthenticated(error1), .unauthenticated(error2)):
+            return error1 == error2
+        case (blacklisted, blacklisted):
+            return true
+        case (jailbroken, jailbroken):
+            return true
+        case (migrating, migrating):
+            return true
+        case let (loading(accountTo1, accountFrom1), loading(accountTo2, accountFrom2)):
+            return accountTo1 == accountTo2 && accountFrom1 == accountFrom2
+        default:
+            return false
+        }
+    }
 }
 
 protocol AppStateCalculatorDelegate: class {
@@ -36,33 +60,37 @@ protocol AppStateCalculatorDelegate: class {
 }
 
 class AppStateCalculator {
-    
+
     init() {
         setupApplicationNotifications()
     }
-    
+
     deinit {
         removeObserverToken()
     }
-    
+
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
-    
+    var wasUnauthenticated: Bool {
+        guard case .unauthenticated = previousAppState else {
+            return false
+        }
+        return true
+    }
+
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
-    private(set) var pendingAppState: AppState? = nil
+    private(set) var pendingAppState: AppState?
     private(set) var appState: AppState = .headless {
         willSet {
             previousAppState = appState
         }
     }
-    
+
     // MARK: - Private Property
-    private var loadingAccount: Account?
-    private var isDatabaseLocked: Bool = false
     private var observerTokens: [NSObjectProtocol] = []
     private var hasEnteredForeground: Bool = false
-    
+
     // MARK: - Private Implementation
     private func transition(to appState: AppState,
                             completion: (() -> Void)? = nil) {
@@ -71,12 +99,12 @@ class AppStateCalculator {
             completion?()
             return
         }
-        
+
         guard self.appState != appState else {
             completion?()
             return
         }
-        
+
         self.appState = appState
         self.pendingAppState = nil
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
@@ -91,19 +119,15 @@ extension AppStateCalculator: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
     }
-    
+
     func removeObserverToken() {
         observerTokens.removeAll()
     }
-    
+
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
         transition(to: pendingAppState ?? appState)
     }
-    
-    func applicationDidEnterBackground() { }
-    
-    func applicationWillEnterForeground() { }
 }
 
 // MARK: - SessionManagerDelegate
@@ -114,63 +138,54 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
     }
-    
-    func sessionManagerDidFailToLogin(account: Account?,
-                                      from selectedAccount: Account?,
-                                      error: Error) {
-        var authenticationError: NSError?
-        // We only care about the error if it concerns the selected account, or the loading account.
-        if account != nil && (selectedAccount == account || loadingAccount == account) {
-            authenticationError = error as NSError
-        }
-        // When the account is nil, we care about the error if there are some accounts in accountManager
-        else if account == nil && selectedAccount != nil {
-            authenticationError = error as NSError
-        }
 
-        loadingAccount = nil
-        transition(to: .unauthenticated(error: authenticationError))
+    func sessionManagerDidFailToLogin(error: Error?) {
+        transition(to: .unauthenticated(error: error as NSError?))
     }
-        
+
     func sessionManagerDidBlacklistCurrentVersion() {
         transition(to: .blacklisted)
     }
-    
+
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
     }
-        
-    func sessionManagerWillMigrateAccount() {
-        transition(to: .migrating)
+
+    func sessionManagerWillMigrateAccount(userSessionCanBeTornDown: @escaping () -> Void) {
+        transition(to: .migrating, completion: userSessionCanBeTornDown)
     }
-    
+
     func sessionManagerWillOpenAccount(_ account: Account,
                                        from selectedAccount: Account?,
                                        userSessionCanBeTornDown: @escaping () -> Void) {
-        loadingAccount = account
         let appState: AppState = .loading(account: account,
                                           from: selectedAccount)
         transition(to: appState,
                    completion: userSessionCanBeTornDown)
     }
-    
-    func sessionManagerDidReportDatabaseLockChange(isLocked: Bool) {
-        loadingAccount = nil
-        isDatabaseLocked = isLocked
-        let appState: AppState = .authenticated(completedRegistration: false,
-                                                isDatabaseLocked: isLocked)
-        transition(to: appState)
+
+    func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) {
+        // No op
     }
-    
-    func sessionManagerDidChangeActiveUserSession(userSession: ZMUserSession) { }
+
+    func sessionManagerDidReportLockChange(forSession session: UserSessionAppLockInterface) {
+        if session.isLocked {
+            transition(to: .locked)
+        } else {
+            transition(to: .authenticated(completedRegistration: false))
+        }
+    }
 }
 
 // MARK: - AuthenticationCoordinatorDelegate
 extension AppStateCalculator: AuthenticationCoordinatorDelegate {
     func userAuthenticationDidComplete(addedAccount: Bool) {
-        let appState: AppState = .authenticated(completedRegistration: addedAccount,
-                                                isDatabaseLocked: isDatabaseLocked)
-        transition(to: appState)
+        // TODO: [John] Avoid singleton.
+        if ZMUserSession.shared()?.isLocked == true {
+            transition(to: .locked)
+        } else {
+            transition(to: .authenticated(completedRegistration: addedAccount))
+        }
     }
 }
 
@@ -179,10 +194,5 @@ extension AppStateCalculator {
     public func testHelper_setAppState(_ appState: AppState) {
         self.appState = appState
         transition(to: appState)
-    }
-    
-    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
-    public func testHelper_setLoadingAccount(_ loadingAccount: Account) {
-        self.loadingAccount = loadingAccount
     }
 }

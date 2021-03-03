@@ -25,19 +25,19 @@ protocol ConversationMessageCellMenuPresenter: class {
 }
 
 extension UITableViewCell {
-    
+
     @objc func willDisplayCell() {
         // to be overriden in subclasses
     }
-    
+
     @objc func didEndDisplayingCell() {
         // to be overriden in subclasses
     }
-    
+
 }
 
 class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescription>: UITableViewCell, SelectableView, HighlightableView, ConversationMessageCellMenuPresenter {
-    
+
     var cellView: C.View
     var ephemeralCountdownView: EphemeralCountdownView
 
@@ -48,13 +48,13 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             singleTapGesture.isEnabled = cellDescription?.supportsActions == true
         }
     }
-    
+
     var topMargin: Float = 0 {
         didSet {
             top.constant = CGFloat(topMargin)
         }
     }
-    
+
     var isFullWidth: Bool = false {
         didSet {
             configureConstraints(fullWidth: isFullWidth)
@@ -98,14 +98,14 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
         self.ephemeralCountdownView = EphemeralCountdownView()
         self.ephemeralCountdownView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         self.focusStyle = .custom
         self.selectionStyle = .none
         self.backgroundColor = .clear
         self.isOpaque = false
-        
+
         contentView.addSubview(cellView)
         contentView.addSubview(ephemeralCountdownView)
 
@@ -115,7 +115,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         bottom = cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         bottom.priority = UILayoutPriority(999)
         ephemeralTop = ephemeralCountdownView.topAnchor.constraint(equalTo: cellView.topAnchor)
-        
+
         NSLayoutConstraint.activate([
             ephemeralCountdownView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             ephemeralCountdownView.trailingAnchor.constraint(equalTo: cellView.leadingAnchor),
@@ -128,21 +128,21 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress))
         contentView.addGestureRecognizer(longPressGesture)
-        
+
         doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         contentView.addGestureRecognizer(doubleTapGesture)
-        
+
         singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(onSingleTap))
         cellView.addGestureRecognizer(singleTapGesture)
         singleTapGesture.require(toFail: doubleTapGesture)
         singleTapGesture.delegate = self
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure(with object: C.View.Configuration, fullWidth: Bool, topMargin: Float) {
         cellView.configure(with: object, animated: false)
         self.isFullWidth = fullWidth
@@ -166,7 +166,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         UIView.animate(withDuration: 0.35, animations: {
             self.cellView.isSelected = selected
             self.layoutIfNeeded()
@@ -216,9 +216,9 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         menu.setTargetRect(selectionRect, in: selectionView)
         menu.setMenuVisible(true, animated: true)
     }
-    
+
     // MARK: - Single Tap Action
-    
+
     @objc private func onSingleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized && cellDescription?.supportsActions == true {
             cellDescription?.actionController?.performSingleTapAction()
@@ -277,19 +277,19 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     var highlightContainer: UIView {
         return self
     }
-    
+
     override func willDisplayCell() {
         cellDescription?.willDisplayCell()
         cellView.willDisplay()
         ephemeralCountdownView.startCountDown()
     }
-    
+
     override func didEndDisplayingCell() {
         cellDescription?.didEndDisplayingCell()
         cellView.didEndDisplaying()
         ephemeralCountdownView.stopCountDown()
     }
-    
+
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard gestureRecognizer == singleTapGesture else { return super.gestureRecognizerShouldBegin(gestureRecognizer) }
 
@@ -317,5 +317,5 @@ extension UITableView {
 
         return cell
     }
-    
+
 }

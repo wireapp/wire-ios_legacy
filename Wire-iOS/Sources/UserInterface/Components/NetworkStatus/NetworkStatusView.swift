@@ -81,11 +81,12 @@ class NetworkStatusView: UIView {
     fileprivate var application: ApplicationProtocol = UIApplication.shared
 
     var state: NetworkStatusViewState {
-        set {
-            update(state: newValue, animated: false)
-        }
         get {
             return _state
+        }
+
+        set {
+            update(state: newValue, animated: false)
         }
     }
 

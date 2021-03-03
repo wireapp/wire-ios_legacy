@@ -23,7 +23,7 @@ extension UIStackView {
         self.init(frame: .zero)
         self.axis = axis
     }
-    
+
     var visibleSubviews: [UIView] {
         return subviews.filter { !$0.isHidden }
     }
@@ -36,7 +36,7 @@ extension UIStackView {
         stackView.alignment = .fill
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        
+
         return stackView
     }
 }

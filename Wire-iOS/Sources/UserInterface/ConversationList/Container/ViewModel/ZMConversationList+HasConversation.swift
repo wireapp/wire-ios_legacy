@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -28,7 +27,7 @@ extension ZMConversationList {
     }
 }
 
-///TODO: move to DM
+/// TODO: move to DM
 extension ZMConversationList: ConversationListHelperType {
     static var hasArchivedConversations: Bool {
         guard let session = ZMUserSession.shared() else { return false }
@@ -37,7 +36,7 @@ extension ZMConversationList: ConversationListHelperType {
     }
 }
 
-///TODO: retire this static helper, refactor as  ZMUserSession's property
+/// TODO: retire this static helper, refactor as  ZMUserSession's property
 protocol ConversationListHelperType {
     static var hasArchivedConversations: Bool { get }
 }

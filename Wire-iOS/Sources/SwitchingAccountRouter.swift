@@ -29,20 +29,20 @@ class SwitchingAccountRouter: SwitchingAccountRouterProtocol {
     func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
         presentSwitchAccountAlert(completion: completion)
     }
-    
+
     // MARK: - SwitchingAccountAlertPresenter
     @objc
     internal func presentSwitchAccountAlert(completion: @escaping (Bool) -> Void) {
         guard let topmostController = UIApplication.shared.topmostViewController() else {
             return completion(false)
         }
-        
+
         let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
                                       message: "self.settings.switch_account.message".localized,
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
                                       style: .default,
-                                      handler: { action in
+                                      handler: { _ in
             completion(true)
         }))
         alert.addAction(.cancel {
