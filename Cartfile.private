@@ -1,3 +1,3 @@
-github "wireapp/ios-snapshot-test-case" "4.0.0-xcode_11_4_1"
-github "wireapp/wire-ios-testing" ~> 22.0
-github "wireapp/swift-snapshot-testing" "1.8.2"
+github "wireapp/ios-snapshot-test-case" "4.0.0-xcode_12_4"
+github "wireapp/wire-ios-testing" ~> 23.0.0
+github "wireapp/swift-snapshot-testing" "1.8.2_Xcode12.4"
