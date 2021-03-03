@@ -514,7 +514,6 @@
 		7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */; };
 		7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */; };
 		7C72F03D200E0D03001231D3 /* PhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */; };
-		7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7C88BB8F235DE3F50075BCC5 /* (null) in Headers */ = {isa = PBXBuildFile; };
 		7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */; };
 		7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */; };
@@ -7157,7 +7156,7 @@
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Zeta Project Germany GmbH";
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
@@ -8956,7 +8955,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */,
-				7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
 				F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */,
@@ -9165,6 +9163,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				ONLY_ACTIVE_ARCH = YES;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -9172,6 +9172,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -9179,6 +9180,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -9186,6 +9189,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ONLY_ACTIVE_ARCH = NO;
 			};
 			name = Release;
 		};
@@ -9194,6 +9199,7 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -9202,6 +9208,7 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
@@ -9211,6 +9218,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -9221,6 +9229,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEVELOPMENT_TEAM = "";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};
