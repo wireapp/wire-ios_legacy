@@ -88,7 +88,8 @@ class ParticipantsCellViewModel {
     }
 
     var showInviteButton: Bool {
-        guard case .started = action, let conversation = message.conversation else { return false }
+        guard case .started = action,
+              let conversation = message.conversationLike as? (ConversationLike & CanManageAccessProvider) else { return false }
         return conversation.canManageAccess && conversation.allowGuests
     }
 
