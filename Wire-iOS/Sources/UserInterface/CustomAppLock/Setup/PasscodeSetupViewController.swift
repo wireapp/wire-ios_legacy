@@ -239,7 +239,6 @@ final class PasscodeSetupViewController: UIViewController {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
 
-        authenticationCoordinator?.passcodeSetupControllerDidFinish()
         passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidFinish()
         dismiss(animated: true)
     }
