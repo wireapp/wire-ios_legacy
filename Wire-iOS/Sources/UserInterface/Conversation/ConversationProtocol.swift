@@ -31,6 +31,11 @@ protocol ConnectedUserProvider {
     var connectedUserType: UserType? { get }
 }
 
+// MARK: - ZMConversation extension from data model
+protocol AreServicesPresentProvider {
+    var areServicesPresent: Bool { get }
+}
+
 // MARK: - ZMConversation extension from sync engine
 protocol TypingStatusProvider {
     var typingUsers: [UserType] { get }
