@@ -29,7 +29,7 @@ protocol AddressBookHelperProtocol: class {
 
     static var sharedHelper: AddressBookHelperProtocol { get }
 
-    func requestPermissions(_ callback: ((Bool)->())?)
+    func requestPermissions(_ callback: ((Bool) -> Void)?)
     func persistCurrentAccessStatus()
 }
 
@@ -59,7 +59,7 @@ final class AddressBookHelper: AddressBookHelperProtocol {
 
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
-    func requestPermissions(_ callback: ((Bool)->())?) {
+    func requestPermissions(_ callback: ((Bool) -> Void)?) {
         CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
             DispatchQueue.main.async {
                 self?.persistCurrentAccessStatus()

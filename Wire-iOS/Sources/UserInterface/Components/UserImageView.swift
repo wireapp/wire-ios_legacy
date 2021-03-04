@@ -208,7 +208,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
-        if size == .big{
+        if size == .big {
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
                 updateUserImage()
             }

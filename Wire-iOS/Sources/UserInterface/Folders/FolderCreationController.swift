@@ -73,7 +73,7 @@ final class FolderCreationController: UIViewController {
         setupViews()
 
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.currentFirst {
+        if UIResponder.currentFirst != nil {
             nameSection.becomeFirstResponder()
         }
     }
@@ -100,7 +100,7 @@ final class FolderCreationController: UIViewController {
         collectionView.fitInSuperview(safely: true)
 
         collectionViewController.collectionView = collectionView
-        collectionViewController.sections = [nameSection]//, errorSection]
+        collectionViewController.sections = [nameSection]// , errorSection]
 
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         view.addSubview(navBarBackgroundView)
@@ -159,7 +159,7 @@ extension FolderCreationController: SimpleTextFieldDelegate {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
 
         switch value {
-        case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
+        case .error: navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
         }
 

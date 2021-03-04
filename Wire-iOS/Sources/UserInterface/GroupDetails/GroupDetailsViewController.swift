@@ -110,7 +110,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
@@ -260,7 +260,7 @@ extension GroupDetailsViewController {
 }
 
 extension GroupDetailsViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
 }
@@ -273,7 +273,7 @@ extension GroupDetailsViewController: ProfileViewControllerDelegate {
     }
 
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-        //no-op
+        // no-op
     }
 }
 

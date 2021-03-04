@@ -21,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-typealias Completion = () -> ()
+typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
@@ -31,8 +31,8 @@ protocol ConversationListContainerViewModelDelegate: class {
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
-                    animated: Bool,
-                    completion: Completion?)
+                  animated: Bool,
+                  completion: Completion?)
 
     func showNoContactLabel(animated: Bool)
     func hideNoContactLabel(animated: Bool)
@@ -58,7 +58,7 @@ extension ConversationListViewController {
     final class ViewModel: NSObject {
         weak var viewController: ConversationListContainerViewModelDelegate? {
             didSet {
-                guard let _ = viewController else { return }
+                guard viewController != nil else { return }
 
                 updateNoConversationVisibility(animated: false)
                 updateArchiveButtonVisibility()
@@ -93,7 +93,7 @@ extension ConversationListViewController {
 
 extension ConversationListViewController.ViewModel {
     func setupObservers() {
-        if let userSession = ZMUserSession.shared(){
+        if let userSession = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession) as Any
             initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }

@@ -122,7 +122,7 @@ final public class WaveformProgressView: UIView {
     public func setProgress(_ progress: Float, animated: Bool) {
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
 
-        if (animated) {
+        if animated {
             let animation = CABasicAnimation(keyPath: "path")
             animation.fromValue = maskShape.path
             animation.toValue = path

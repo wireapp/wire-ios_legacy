@@ -23,8 +23,8 @@ protocol TokenizedTextViewDelegate: class {
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
 }
 
-//! Custom UITextView subclass to be used in TokenField.
-//! Shouldn't be used anywhere else.
+// ! Custom UITextView subclass to be used in TokenField.
+// ! Shouldn't be used anywhere else.
 // TODO: as a inner class of TokenField
 
 final class TokenizedTextView: TextView {

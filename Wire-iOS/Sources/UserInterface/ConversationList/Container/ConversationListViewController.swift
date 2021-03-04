@@ -175,7 +175,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
             self.listContentController.reload()
@@ -237,7 +237,7 @@ final class ConversationListViewController: UIViewController {
         bottomBar,
         noConversationLabel,
         onboardingHint,
-        networkStatusViewController.view].forEach() {
+        networkStatusViewController.view].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 

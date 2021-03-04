@@ -96,7 +96,7 @@ final class DebugAlert {
         let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
                                       message: "self.settings.technical_report.no_mail_alert".localized + email,
                                       alertAction: .cancel())
-        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { _ in
             let activity = UIActivityViewController(activityItems: logPaths, applicationActivities: nil)
             activity.configPopover(pointToView: sourceView ?? controller.view)
 
@@ -110,8 +110,8 @@ final class DebugAlert {
 /// Sends debug logs by email
 final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
 
-    private var mailViewController: MFMailComposeViewController? = nil
-    static private var senderInstance: DebugLogSender? = nil
+    private var mailViewController: MFMailComposeViewController?
+    static private var senderInstance: DebugLogSender?
 
     /// Sends recorded logs by email
     static func sendLogsByEmail(message: String, shareWithAVS: Bool = false) {

@@ -32,8 +32,13 @@ final class DotView: UIView {
     }
 
     var showIndicator: Bool {
-        set { self.isHidden = !newValue }
-        get { return !self.isHidden }
+        get {
+            return !self.isHidden
+        }
+
+        set {
+            self.isHidden = !newValue
+        }
     }
 
     init(user: ZMUser? = nil) {

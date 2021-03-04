@@ -79,7 +79,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 
@@ -89,7 +89,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 }

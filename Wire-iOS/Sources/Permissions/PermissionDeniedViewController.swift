@@ -148,16 +148,16 @@ final class PermissionDeniedViewController: UIViewController {
 
         initialConstraintsCreated = true
 
-        [heroLabel, settingsButton, laterButton].forEach() {
+        [heroLabel, settingsButton, laterButton].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        var constraints = heroLabel.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map{$0.value}
+        var constraints = heroLabel.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map {$0.value}
 
         constraints += [settingsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 28),
                         settingsButton.heightAnchor.constraint(equalToConstant: 40)]
 
-        constraints += settingsButton.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map{$0.value}
+        constraints += settingsButton.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map {$0.value}
 
         constraints += [laterButton.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 28),
                         laterButton.pinToSuperview(anchor: .bottom, inset: 28, activate: false),

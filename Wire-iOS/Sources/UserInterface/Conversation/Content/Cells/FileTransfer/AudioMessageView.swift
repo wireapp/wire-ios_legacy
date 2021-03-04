@@ -216,7 +216,7 @@ final class AudioMessageView: UIView, TransferView {
 
         var visibleViews = [self.playButton, self.timeLabel]
 
-        if (fileMessageData.normalizedLoudness?.isEmpty == false) {
+        if fileMessageData.normalizedLoudness?.isEmpty == false {
             waveformProgressView.samples = fileMessageData.normalizedLoudness ?? []
             if let accentColor = fileMessage.senderUser?.accentColor {
                 waveformProgressView.barColor = accentColor
@@ -394,7 +394,7 @@ final class AudioMessageView: UIView, TransferView {
 
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
 
-        switch(fileMessageData.transferState) {
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != fileMessageData.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)

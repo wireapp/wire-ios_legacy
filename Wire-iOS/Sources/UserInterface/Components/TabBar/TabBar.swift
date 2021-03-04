@@ -194,7 +194,7 @@ final class TabBar: UIView {
             self?.layoutIfNeeded()
         }
 
-        if (animated) {
+        if animated {
             UIView.transition(
                 with: self,
                 duration: 0.3,

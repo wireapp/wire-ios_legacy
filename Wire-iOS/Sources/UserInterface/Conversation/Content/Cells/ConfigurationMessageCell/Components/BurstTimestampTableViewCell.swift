@@ -58,11 +58,11 @@ final class BurstTimestampSenderMessageCellDescription: ConversationMessageCellD
 final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     private let timestampView = ConversationCellBurstTimestampView()
-    private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil
-    private var timer: Timer? = nil
+    private var configuration: BurstTimestampSenderMessageCellConfiguration?
+    private var timer: Timer?
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

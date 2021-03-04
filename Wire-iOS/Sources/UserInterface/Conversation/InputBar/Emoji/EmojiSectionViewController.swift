@@ -40,7 +40,7 @@ final class EmojiSectionViewController: UIViewController {
         }
     }
 
-    weak var sectionDelegate: EmojiSectionViewControllerDelegate? = nil
+    weak var sectionDelegate: EmojiSectionViewControllerDelegate?
 
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
@@ -106,7 +106,7 @@ final class EmojiSectionViewController: UIViewController {
             fallthrough
         case .changed:
             let location = recognizer.location(in: view)
-            guard let button = sectionButtons.filter ({ $0.frame.contains(location) }).first else { return }
+            guard let button = sectionButtons.filter({ $0.frame.contains(location) }).first else { return }
             guard let type = typesByButton[button] else { return }
             sectionDelegate?.sectionViewController(self, didSelect: type, scrolling: true)
             selectedType = type

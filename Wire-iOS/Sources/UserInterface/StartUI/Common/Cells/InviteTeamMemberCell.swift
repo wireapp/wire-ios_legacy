@@ -85,7 +85,7 @@ class StartUIIconCell: UICollectionViewCell {
 
 }
 
-final class InviteTeamMemberCell: StartUIIconCell  {
+final class InviteTeamMemberCell: StartUIIconCell {
 
     override func setupViews() {
         super.setupViews()
@@ -99,7 +99,7 @@ final class InviteTeamMemberCell: StartUIIconCell  {
 
 }
 
-final class CreateGroupCell: StartUIIconCell  {
+final class CreateGroupCell: StartUIIconCell {
 
     override func setupViews() {
         super.setupViews()
@@ -113,7 +113,7 @@ final class CreateGroupCell: StartUIIconCell  {
 
 }
 
-final class CreateGuestRoomCell: StartUIIconCell  {
+final class CreateGuestRoomCell: StartUIIconCell {
 
     override func setupViews() {
         super.setupViews()
@@ -127,7 +127,7 @@ final class CreateGuestRoomCell: StartUIIconCell  {
 
 }
 
-final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
+final class OpenServicesAdminCell: StartUIIconCell, Themeable {
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }

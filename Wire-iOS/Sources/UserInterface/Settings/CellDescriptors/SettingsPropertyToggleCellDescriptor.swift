@@ -30,9 +30,7 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
     static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
     let inverse: Bool
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     let identifier: String?
     var visible: Bool = true
@@ -88,9 +86,8 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
 
         do {
             try self.settingsProperty << SettingsPropertyValue(valueToSet)
-        }
-        catch(let e) {
-            zmLog.error("Cannot set property: \(e)")
+        } catch {
+            zmLog.error("Cannot set property: \(error)")
         }
     }
 }

@@ -52,8 +52,13 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     var showSeparator: Bool {
-        set { separator.fadeAndHide(!newValue) }
-        get { return !separator.isHidden }
+        get {
+            return !separator.isHidden
+        }
+
+        set {
+            separator.fadeAndHide(!newValue)
+        }
     }
 
     private var allButtons: [IconButton] {

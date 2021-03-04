@@ -163,7 +163,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
     static let userClientURL: URL = URL(string: "settings://user-client")!
 
-    var linkTarget: LinkTarget? = nil
+    var linkTarget: LinkTarget?
 
     enum LinkTarget {
         case user(UserType)
@@ -350,7 +350,7 @@ final class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
 
-            /// only display invite user cell for team members
+            // Only display invite user cell for team members
             if SelfUser.current.isTeamMember,
                conversation.selfCanAddUsers,
                conversation.isOpenGroup {
@@ -503,7 +503,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
-        var updateText: NSAttributedString? = nil
+        var updateText: NSAttributedString?
         let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
         if timeoutValue == .none {
@@ -906,7 +906,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     private static func configuration(for systemMessage: ZMSystemMessageData, in conversation: ZMConversation) -> View.Configuration {
 
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
-        let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
+        let clients = systemMessage.clients.compactMap({ $0 as? UserClientType })
         let users = systemMessage.userTypes.lazy
             .compactMap { $0 as? UserType }
             .sorted { $0.name < $1.name }

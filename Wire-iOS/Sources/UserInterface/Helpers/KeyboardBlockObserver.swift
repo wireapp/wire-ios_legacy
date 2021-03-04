@@ -39,13 +39,12 @@ final class KeyboardBlockObserver: NSObject {
             self.kind = kind
 
             if let beginFrameValue = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                /// key board is collapsed if init height is 0 or its is out of the screen bound
+                // Keyboard is collapsed if init height is 0 or its is out of the screen bound
                 if endFrameValue.height == 0 ||
                     endFrameValue.minY >= UIScreen.main.bounds.maxY ||
                     (endFrameValue == beginFrameValue &&
                      beginFrameValue.maxY > UIScreen.main.bounds.maxY &&
-                     beginFrameValue.origin.y == UIScreen.main.bounds.maxY)
-                    {
+                     beginFrameValue.origin.y == UIScreen.main.bounds.maxY) {
                     isKeyboardCollapsed = true
                 } else {
                     isKeyboardCollapsed = beginFrameValue.height > endFrameValue.height && kind == .hide

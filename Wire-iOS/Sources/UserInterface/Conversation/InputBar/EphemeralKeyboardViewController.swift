@@ -54,12 +54,12 @@ extension InputBarConversation {
     }
 
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        if timeout.isYears    { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
-        if timeout.isWeeks    { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
-        if timeout.isDays     { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
-        if timeout.isHours    { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
-        if timeout.isMinutes  { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
-        if timeout.isSeconds  { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
+        if timeout.isYears { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
+        if timeout.isWeeks { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
+        if timeout.isDays { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
+        if timeout.isHours { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
+        if timeout.isMinutes { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
+        if timeout.isSeconds { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
         return nil
     }
 }
@@ -70,13 +70,13 @@ extension UIAlertController {
     }
 
     static func requestCustomTimeInterval(over controller: UIViewController,
-                                          with completion: @escaping (Result<TimeInterval>)->()) {
+                                          with completion: @escaping (Result<TimeInterval>) -> Void) {
         let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField: UITextField) in
             textField.keyboardType = .decimalPad
             textField.placeholder = "Time interval in seconds"
         }
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] action in
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] _ in
             guard let input = alertController?.textFields?.first,
                 let inputText = input.text,
                 let selectedTimeInterval = TimeInterval(inputText) else {
@@ -210,9 +210,9 @@ final class EphemeralKeyboardViewController: UIViewController {
 /// views, which means that the behaviour could break in future iOS updates.
 class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
-    var selectorColor: UIColor? = nil
+    var selectorColor: UIColor?
     var tapRecognizer: UIGestureRecognizer! = nil
-    var didTapViewClosure: (() -> Void)? = nil
+    var didTapViewClosure: (() -> Void)?
 
     init() {
         super.init(frame: .zero)

@@ -370,7 +370,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         guard let item = item else {
             // Deselect all items in the collection view
             let indexPaths = collectionView.indexPathsForSelectedItems
-            (indexPaths as NSArray?)?.enumerateObjects({ obj, idx, stop in
+            (indexPaths as NSArray?)?.enumerateObjects({ obj, _, _ in
                 if let obj = obj as? IndexPath {
                     self.collectionView.deselectItem(at: obj, animated: false)
                 }
@@ -388,7 +388,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
             selectConversationCompletion = nil
 
             contentDelegate?.conversationList(self, didSelect: conversation, focusOnView: !focusOnNextSelection)
-        } else if (item is ConversationListConnectRequestsItem) {
+        } else if item is ConversationListConnectRequestsItem {
             ZClientViewController.shared?.loadIncomingContactRequestsAndFocus(onView: focusOnNextSelection, animated: true)
         } else {
             assert(false, "Invalid item in conversation list view model!!")

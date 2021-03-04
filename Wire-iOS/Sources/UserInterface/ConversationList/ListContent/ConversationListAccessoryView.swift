@@ -221,7 +221,7 @@ final class ConversationListAccessoryView: UIView {
             self.transparentIconView.isHidden = false
             self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
 
-        case .unreadMessages(_), .mention:
+        case .unreadMessages, .mention:
             self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
             self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 

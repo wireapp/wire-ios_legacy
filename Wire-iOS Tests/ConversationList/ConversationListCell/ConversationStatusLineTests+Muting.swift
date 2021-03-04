@@ -52,7 +52,7 @@ extension ConversationStatusLineTests_Muting {
         XCTAssertEqual(status.string, "Replied to your message")
     }
 
-    ///TODO: move this test to SE
+    /// TODO: move this test to SE
     func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
         // GIVEN
         let sut = self.createGroupConversation()

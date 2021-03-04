@@ -149,7 +149,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
 
         footerTextFieldView.isLoading = false
         buttonMode = dataSource.data.count == 0 ? .skip : .done
-        invitationsCount = invitationsCount + 1
+        invitationsCount += 1
     }
 
     private func handleManualInputResult(_ result: InviteResult) {
@@ -198,10 +198,10 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
     // MARK: - AuthenticationCoordinatedViewController
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        //no-op
+        // no-op
     }
 
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 }

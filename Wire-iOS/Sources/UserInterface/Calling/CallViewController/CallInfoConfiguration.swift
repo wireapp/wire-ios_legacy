@@ -112,7 +112,7 @@ fileprivate extension VoiceChannel {
 
 }
 
-struct CallInfoConfiguration: CallInfoViewControllerInput  {
+struct CallInfoConfiguration: CallInfoViewControllerInput {
     fileprivate static let maxActiveSpeakers: Int = 4
 
     let permissions: CallPermissionsConfiguration
@@ -181,7 +181,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
 
 }
 
-fileprivate struct VoiceChannelSnapshot {
+private struct VoiceChannelSnapshot {
     let callerName: String?
     let state: CallState
     let callStartDate: Date
@@ -272,9 +272,7 @@ fileprivate extension VoiceChannel {
             && internalIsVideoCall
             && isActiveSpeakersTabEnabled
     }
-
-    private var isActiveSpeakersTabEnabled: Bool { false }
-
+    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {

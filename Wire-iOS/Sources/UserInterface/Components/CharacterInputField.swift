@@ -77,7 +77,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
     }
 
-    fileprivate func notifyingDelegate(_ action: ()->()) {
+    fileprivate func notifyingDelegate(_ action: () -> Void) {
         let wasFilled = self.isFilled
         let previousText = self.storage
 
@@ -246,11 +246,12 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     }
 
     var text: String? {
-        set {
-            storage = prepare(string: newValue ?? "")
-        }
         get {
             return storage
+        }
+
+        set {
+            storage = prepare(string: newValue ?? "")
         }
     }
 
@@ -264,7 +265,7 @@ extension CharacterInputField: UIKeyInput {
         let shouldInsert = delegate?.shouldAcceptChanges(self) ?? true
         guard shouldInsert else { return }
 
-        if let _ = text.rangeOfCharacter(from: CharacterSet.newlines) {
+        if text.rangeOfCharacter(from: CharacterSet.newlines) != nil {
             self.resignFirstResponder()
             return
         }

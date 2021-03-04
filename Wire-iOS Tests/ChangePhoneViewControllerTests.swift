@@ -32,7 +32,7 @@ final class ChangePhoneViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForADigitIsAllowed(){
+    func testForADigitIsAllowed() {
         // GIVEN
         // call viewDidLoad
         sut.loadViewIfNeeded()

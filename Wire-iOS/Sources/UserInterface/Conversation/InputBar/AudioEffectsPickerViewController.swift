@@ -155,7 +155,7 @@ final class AudioEffectsPickerViewController: UIViewController {
             subtitleLabel.edges == statusBoxView.edges
         }
 
-        /// Do not load in tests, which may cause exception break point to break when loading audio assets
+        // Do not load in tests, which may cause exception break point to break when loading audio assets
         if !ProcessInfo.processInfo.isRunningTests {
              loadLevels()
         }

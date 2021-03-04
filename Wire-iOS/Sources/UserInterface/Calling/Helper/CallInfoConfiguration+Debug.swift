@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension CallInfoViewControllerInput  {
+extension CallInfoViewControllerInput {
     var debugDescription: String {
         return """
         <\(type(of: self))>

@@ -107,7 +107,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
 
     func openOneToOneConversation() {
-        var conversation: ZMConversation? = nil
+        var conversation: ZMConversation?
 
         ZMUserSession.shared()?.enqueue({
             conversation = self.user.oneToOneConversation
@@ -183,7 +183,7 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Factories
 
     func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        //TODO: add addressBookEntry to ZMUser
+        // TODO: add addressBookEntry to ZMUser
         return UserNameDetailViewModel(user: user, fallbackName: user.name ?? "", addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName)
     }
 

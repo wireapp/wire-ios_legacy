@@ -148,7 +148,7 @@ final class ProfileViewController: UIViewController {
 
         let controller = UIAlertController.cancelConnectionRequest(for: user) { canceled in
             if !canceled {
-                self.viewModel.cancelConnectionRequest() {
+                self.viewModel.cancelConnectionRequest {
                     self.returnToPreviousScreen()
                 }
             }
@@ -208,7 +208,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupProfileDetailsViewController() -> ProfileDetailsViewController {
-        ///TODO: pass the whole view Model/stuct/context
+        /// TODO: pass the whole view Model/stuct/context
         let profileDetailsViewController = ProfileDetailsViewController(user: viewModel.user,
                                                                         viewer: viewModel.viewer,
                                                                         conversation: viewModel.conversation,
@@ -239,7 +239,7 @@ final class ProfileViewController: UIViewController {
         addToSelf(tabsController!)
     }
 
-    // MARK : - constraints
+    // MARK: - Constraints
 
     private func setupConstraints() {
         guard let tabsView = tabsController?.view else { fatal("Tabs view is not created") }
@@ -271,7 +271,7 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         navigationController?.popViewController(animated: true)
     }
 }
@@ -314,8 +314,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
     }
 
-    private func performAction(_ action: ProfileAction,
-                       targetView: UIView) {
+    private func performAction(_ action: ProfileAction, targetView: UIView) {
         switch action {
         case .createGroup:
             bringUpConversationCreationFlow()
@@ -345,7 +344,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
 
     private func openSelfProfile() {
-        ///do not reveal list view for iPad regular mode
+        /// do not reveal list view for iPad regular mode
         let leftViewControllerRevealed: Bool
         if let presentingViewController = presentingViewController {
             leftViewControllerRevealed = !presentingViewController.isIPadRegular(device: UIDevice.current)
@@ -353,7 +352,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             leftViewControllerRevealed = true
         }
 
-        dismiss(animated: true){ [weak self] in
+        dismiss(animated: true) { [weak self] in
             self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
                 ZClientViewController.shared?.conversationListViewController.topBarViewController.presentSettings()
             }
@@ -438,7 +437,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
-                case .failure(_):
+                case .failure:
                     break
                 }
             }

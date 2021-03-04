@@ -195,7 +195,7 @@ class Button: ButtonWithLargerHitArea {
 
     override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
-        state.expanded.forEach() { expandedState in
+        state.expanded.forEach { expandedState in
             if title != nil {
                 originalTitles[expandedState] = title
             } else {
@@ -211,7 +211,7 @@ class Button: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expanded.forEach() { expandedState in
+        state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
             }

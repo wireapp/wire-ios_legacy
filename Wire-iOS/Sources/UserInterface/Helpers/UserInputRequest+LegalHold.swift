@@ -34,7 +34,7 @@ extension UserType where Self: SelfLegalHoldSubject {
         let fingerprintString = EncryptionSessionsDirectory.fingerprint(fromPrekey: request.lastPrekey.key)?.fingerprintString ?? "<fingerprint unavailable>"
         var legalHoldMessage = "legalhold_request.alert.detail".localized(args: fingerprintString)
 
-        var inputConfiguration: UserInputRequest.InputConfiguration? = nil
+        var inputConfiguration: UserInputRequest.InputConfiguration?
 
         if !usesCompanyLogin {
             inputConfiguration = UserInputRequest.InputConfiguration(

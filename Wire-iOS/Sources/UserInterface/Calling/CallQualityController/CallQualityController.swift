@@ -27,7 +27,7 @@ import WireCommonComponents
 
 class CallQualityController: NSObject {
 
-    weak var router: CallQualityRouterProtocol? = nil
+    weak var router: CallQualityRouterProtocol?
 
     fileprivate var answeredCalls: [UUID: Date] = [:]
     fileprivate var token: Any?
@@ -141,7 +141,7 @@ extension CallQualityController: WireCallCenterCallStateObserver {
             handleCallStart(in: conversation)
         case .terminating(let terminationReason):
             handleCallCompletion(in: conversation, reason: terminationReason, eventDate: eventDate)
-        case .incoming(_, _, _):
+        case .incoming:
             /// when call incoming, dismiss CallQuality VC in CallController.presentCall
             break
         default:

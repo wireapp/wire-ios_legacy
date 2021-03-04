@@ -34,7 +34,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
 
     let selectedParticipants: [UserType]
     let conversation: GroupParticipantsDetailConversation
-    var participantsDidChange: (() -> Void)? = nil
+    var participantsDidChange: (() -> Void)?
 
     fileprivate var token: NSObjectProtocol?
 
@@ -79,7 +79,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
 
-    private func computeParticipantGroups()  {
+    private func computeParticipantGroups() {
         admins = participants.filter({$0.isGroupAdmin(in: conversation)})
         members = participants.filter({!$0.isGroupAdmin(in: conversation)})
     }

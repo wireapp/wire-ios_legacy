@@ -74,9 +74,9 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             self.tableView.reloadData()
-        }) { context in
+        }) { _ in
         }
 
         super.viewWillTransition(to: size, with: coordinator)
@@ -118,7 +118,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.acceptBlock = { [weak self] in
             guard self?.connectionRequests.isEmpty == true else { return }
 
-            ZClientViewController.shared?.hideIncomingContactRequests() {
+            ZClientViewController.shared?.hideIncomingContactRequests {
                 if let oneToOneConversation = user?.oneToOneConversation {
                     ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
                 }
@@ -164,6 +164,6 @@ extension ConnectRequestsViewController: ZMConversationListObserver {
 
 extension ConnectRequestsViewController: ZMUserObserver {
     func userDidChange(_ change: UserChangeInfo) {
-        tableView.reloadData() //may need a slightly different approach, like enumerating through table cells of type FirstTimeTableViewCell and setting their bgColor property
+        tableView.reloadData() // may need a slightly different approach, like enumerating through table cells of type FirstTimeTableViewCell and setting their bgColor property
     }
 }

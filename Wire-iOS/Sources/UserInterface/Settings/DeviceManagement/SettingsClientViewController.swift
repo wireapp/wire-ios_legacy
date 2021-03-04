@@ -38,7 +38,7 @@ final class SettingsClientViewController: UIViewController,
                                           ClientColorVariantProtocol,
                                           SpinnerCapable {
 
-    //MARK: SpinnerCapable
+    // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
@@ -174,7 +174,7 @@ final class SettingsClientViewController: UIViewController,
         let selfClient = ZMUserSession.shared()!.selfUserClient
 
         ZMUserSession.shared()?.enqueue({
-            if (sender.isOn) {
+            if sender.isOn {
                 selfClient?.trustClient(self.userClient)
             } else {
                 selfClient?.ignoreClient(self.userClient)
@@ -206,7 +206,7 @@ final class SettingsClientViewController: UIViewController,
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.shared()?.selfUserClient  {
+            if self.userClient == ZMUserSession.shared()?.selfUserClient {
                 return 1
             }
             else {
@@ -235,8 +235,6 @@ final class SettingsClientViewController: UIViewController,
                 return cell
             }
 
-            break
-
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
@@ -259,7 +257,7 @@ final class SettingsClientViewController: UIViewController,
                     return cell
                 }
             }
-            break
+
         case .resetSession:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
@@ -268,7 +266,6 @@ final class SettingsClientViewController: UIViewController,
                 return cell
             }
 
-            break
         case .removeDevice:
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
@@ -276,8 +273,6 @@ final class SettingsClientViewController: UIViewController,
                 cell.variant = self.variant
                 return cell
             }
-
-            break
         }
 
         return UITableViewCell()
@@ -292,12 +287,11 @@ final class SettingsClientViewController: UIViewController,
         case .resetSession:
             self.userClient.resetSession()
             isLoadingViewVisible = true
-            break
 
         case .removeDevice:
             removalObserver = nil
 
-            let completion: ((Error?)->()) = { error in
+            let completion: ((Error?) -> Void) = { error in
                 if error == nil {
                     self.navigationController?.popViewController(animated: true)
                 }
@@ -391,7 +385,7 @@ final class SettingsClientViewController: UIViewController,
     }
 }
 
-//MARK: - ClientRemovalObserverDelegate
+// MARK: - ClientRemovalObserverDelegate
 
 extension SettingsClientViewController: ClientRemovalObserverDelegate {
     func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool) {

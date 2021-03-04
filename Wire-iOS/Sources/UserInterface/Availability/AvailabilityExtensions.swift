@@ -27,10 +27,14 @@ enum AvailabilityLabelStyle: Int {
 extension Availability {
     var canonicalName: String {
         switch self {
-            case .none:         return "none"
-            case .available:    return "available"
-            case .away:         return "away"
-            case .busy:         return "busy"
+        case .none:
+            return "none"
+        case .available:
+            return "available"
+        case .away:
+            return "away"
+        case .busy:
+            return "busy"
         }
     }
 
@@ -40,10 +44,14 @@ extension Availability {
 
     var iconType: StyleKitIcon? {
         switch self {
-            case .none:         return nil
-            case .available:    return .statusAvailable
-            case .away:         return .statusAway
-            case .busy:         return .statusBusy
+        case .none:
+            return nil
+        case .available:
+            return .statusAvailable
+        case .away:
+            return .statusAway
+        case .busy:
+            return .statusBusy
         }
     }
 }

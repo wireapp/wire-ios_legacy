@@ -124,7 +124,7 @@ final class FileTransferView: UIView, TransferView {
             progressView.height == actionButton.height - 2
         }
 
-        constrain(self, self.topLabel, self.bottomLabel, self.loadingView) { messageContentView, topLabel, bottomLabel, loadingView in
+        constrain(self, self.topLabel, self.bottomLabel, self.loadingView) { _, topLabel, bottomLabel, loadingView in
             bottomLabel.top == topLabel.bottom + 2
             bottomLabel.left == topLabel.left
             bottomLabel.right == topLabel.right
@@ -247,7 +247,7 @@ final class FileTransferView: UIView, TransferView {
             return
         }
 
-        switch(fileMessageData.transferState) {
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != message.fileMessageData!.fileURL {
                 self.delegate?.transferView(self, didSelect: .cancel)

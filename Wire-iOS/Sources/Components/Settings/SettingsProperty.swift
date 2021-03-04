@@ -45,7 +45,7 @@ enum SettingsPropertyValue: Equatable {
     }
 
     static func propertyValue(_ object: Any?) -> SettingsPropertyValue {
-        switch(object) {
+        switch object {
         case let number as NSNumber:
             return SettingsPropertyValue.number(value: number)
 
@@ -58,7 +58,7 @@ enum SettingsPropertyValue: Equatable {
     }
 
     func value() -> Any? {
-        switch (self) {
+        switch self {
         case .number(let value):
             return value as AnyObject?
         case .string(let value):
@@ -159,7 +159,7 @@ class SettingsUserDefaultsProperty: SettingsProperty {
 }
 
 typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
-typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> ()
+typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> Void
 
 /// Genetic block property
 final class SettingsBlockProperty: SettingsProperty {

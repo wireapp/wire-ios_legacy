@@ -157,7 +157,7 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(colorSchemeControllerDidApplyChanges(_:)), name: NSNotification.colorSchemeControllerDidApplyColorSchemeChange, object: nil)
 
         if Bundle.developerModeEnabled {
-            //better way of dealing with this?
+            // better way of dealing with this?
             NotificationCenter.default.addObserver(self, selector: #selector(requestLoopNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingRequestLoopNotificationName), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(inconsistentStateNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingInconsistentStateNotificationName), object: nil)
         }
@@ -300,7 +300,7 @@ final class ZClientViewController: UIViewController {
               focusOnView focus: Bool,
               animated: Bool,
               completion: Completion? = nil) {
-        var conversationRootController: ConversationRootViewController? = nil
+        var conversationRootController: ConversationRootViewController?
         if conversation === currentConversation,
            conversationRootController != nil {
             if let message = message {
@@ -522,7 +522,7 @@ final class ZClientViewController: UIViewController {
                            duration: 0.5,
                            options: .transitionCrossDissolve,
                            animations: { viewController.view.fitInSuperview() },
-                           completion: { (finished) in
+                           completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
@@ -659,7 +659,7 @@ final class ZClientViewController: UIViewController {
         }
     }
 
-    ///MARK: - select conversation
+    // MARK: - Select conversation
 
     /// Select a conversation and move the focus to the conversation view.
     ///

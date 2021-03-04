@@ -22,9 +22,9 @@ typealias UserSessionInterface = UserSessionSwiftInterface & UserSessionAppLockI
 
 protocol ZMUserSessionInterface: class {
 
-    func perform(_ changes: @escaping () -> ())
+    func perform(_ changes: @escaping () -> Void)
 
-    func enqueue(_ changes: @escaping () -> ())
+    func enqueue(_ changes: @escaping () -> Void)
 
     func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?)
 

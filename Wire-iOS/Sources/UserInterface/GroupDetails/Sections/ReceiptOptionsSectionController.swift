@@ -39,9 +39,9 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     }
 
     init(conversation: GroupDetailsConversationType,
-        syncCompleted: Bool,
-        collectionView: UICollectionView,
-        presentingViewController: UIViewController) {
+         syncCompleted: Bool,
+         collectionView: UICollectionView,
+         presentingViewController: UIViewController) {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
         self.presentingViewController = presentingViewController
@@ -81,7 +81,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
                 cell.isUserInteractionEnabled = true
 
                 switch result {
-                case .failure(_):
+                case .failure:
                     cell.configure(with: conversation)
                     self?.presentingViewController?.present(UIAlertController.checkYourConnection(), animated: true)
                 default:
@@ -106,13 +106,13 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return false
     }
 
-    ///MARK: - header
+    // MARK: - Header
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: emptySectionHeaderHeight)
     }
 
-    ///MARK: - footer
+    // MARK: - Footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 

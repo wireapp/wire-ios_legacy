@@ -20,7 +20,7 @@ import Foundation
 import WireSystem
 import WireDataModel
 
-fileprivate let tag = "<ANALYTICS>:"
+private let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider: NSObject {
 
     let zmLog = ZMSLog(tag: tag)
@@ -48,12 +48,12 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
     /// no-op
     var selfUser: UserType? {
         get {
-            //no-op
+            // no-op
             return nil
         }
 
         set {
-            //no-op
+            // no-op
         }
     }
 

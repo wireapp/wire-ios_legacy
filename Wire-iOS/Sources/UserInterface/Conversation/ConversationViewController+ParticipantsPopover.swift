@@ -46,7 +46,7 @@ extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension ConversationViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         dismiss(animated: true, completion: completion)
     }
 }

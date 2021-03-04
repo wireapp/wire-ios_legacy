@@ -112,7 +112,7 @@ final class AppCenterOperation: NSObject, LaunchSequenceOperation {
             MSAppCenter.setTrackingEnabled(false)
             return
         }
-        UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") //check
+        UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") // check
 
         guard !TrackingManager.shared.disableCrashSharing else {
             MSAppCenter.setTrackingEnabled(false)

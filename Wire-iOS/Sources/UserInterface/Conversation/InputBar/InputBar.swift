@@ -88,9 +88,9 @@ enum InputBarState: Equatable {
 
     mutating func changeEphemeralState(to newState: EphemeralState) {
         switch self {
-        case .markingDown(_):
+        case .markingDown:
             self = .markingDown(ephemeral: newState)
-        case .writing(_):
+        case .writing:
             self = .writing(ephemeral: newState)
         default:
             return
@@ -144,7 +144,7 @@ final class InputBar: UIView {
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
-    fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
+    fileprivate var rowTopInsetConstraint: NSLayoutConstraint?
 
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
@@ -173,7 +173,7 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil  {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
@@ -302,7 +302,7 @@ final class InputBar: UIView {
             buttonsView.bottom == buttonInnerContainer.bottom
         }
 
-        constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
+        constrain(buttonContainer, buttonInnerContainer) { container, innerContainer in
             container.bottom == container.superview!.bottom
             container.leading == container.superview!.leading
             container.trailing == container.superview!.trailing

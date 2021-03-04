@@ -22,7 +22,7 @@ import WireDataModel
 
 public var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
 
-typealias ProfileImageCompletion = (_ image: UIImage?, _ cacheHit: Bool) -> ()
+typealias ProfileImageCompletion = (_ image: UIImage?, _ cacheHit: Bool) -> Void
 
 extension UserType {
     func fetchProfileImage(session: ZMUserSessionInterface,
@@ -67,8 +67,7 @@ extension UserType {
 
     // MARK: Cache Image Helper
 
-    private func cachedImage(imageCache: ImageCache<UIImage>,
-                                 cacheKey: String) -> UIImage? {
+    private func cachedImage(imageCache: ImageCache<UIImage>, cacheKey: String) -> UIImage? {
         guard let cachedImage = imageCache.cache.object(forKey: cacheKey as NSString) else {
             return nil
         }

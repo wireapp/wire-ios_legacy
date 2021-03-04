@@ -22,7 +22,7 @@ import WireDataModel
 extension ConversationInputBarViewController: ReplyComposingViewDelegate {
 
     func reply(to message: ZMConversationMessage, composingView: ReplyComposingView) {
-        if let _ = replyComposingView {
+        if replyComposingView != nil {
             removeReplyComposingView()
         }
 

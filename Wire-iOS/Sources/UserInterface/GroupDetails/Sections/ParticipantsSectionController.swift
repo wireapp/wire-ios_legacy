@@ -72,10 +72,10 @@ private struct ParticipantsSectionViewModel {
 
     var footerTitle: String {
         switch conversationRole {
-            case .admin:
-                return "participants.section.admins.footer".localized
-            case .member:
-                return "participants.section.members.footer".localized
+        case .admin:
+            return "participants.section.admins.footer".localized
+        case .member:
+            return "participants.section.members.footer".localized
         }
     }
 
@@ -199,7 +199,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
 
-    ///MARK: - footer
+    // MARK: - Footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 

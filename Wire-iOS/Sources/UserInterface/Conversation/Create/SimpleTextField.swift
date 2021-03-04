@@ -58,7 +58,7 @@ final class SimpleTextField: UITextField, Themeable {
         return text.value
     }
 
-    // MARK:- UI constants
+    // MARK: - UI constants
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
@@ -130,13 +130,14 @@ final class SimpleTextField: UITextField, Themeable {
     }
 
     override var placeholder: String? {
+        get {
+            return super.placeholder
+        }
+
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
-        }
-        get {
-            return super.placeholder
         }
     }
 

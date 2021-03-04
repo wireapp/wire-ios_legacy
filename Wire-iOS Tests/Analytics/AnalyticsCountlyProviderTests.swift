@@ -65,7 +65,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
     func testThatAppOpenIsStoredAndTaggedAfterSelfUserIsSet() {
         coreDataFixture.teamTest {
 
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
                 countlyInstanceType: MockCountly.self,
@@ -75,18 +75,18 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
             sut.tagEvent("app.open")
 
-            //THEN
+            // THEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
             XCTAssertEqual(MockCountly.recordEventCount, 0)
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
+            // THEN
             XCTAssertEqual(MockCountly.startCount, 1)
 
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
@@ -96,7 +96,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
     func testThatCountlyIsNotStartedForNonTeamMember() {
         coreDataFixture.nonTeamTest {
-            //GIVEN
+            // GIVEN
             sut = Analytics(optedOut: false)
 
             let analyticsCountlyProvider = AnalyticsCountlyProvider(
@@ -107,10 +107,10 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             sut.provider = analyticsCountlyProvider
 
-            //WHEN
+            // WHEN
             sut.selfUser = coreDataFixture.selfUser
 
-            //THEN
+            // THEN
             XCTAssertEqual(MockCountly.startCount, 0)
         }
     }

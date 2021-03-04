@@ -75,7 +75,7 @@ class AppStateCalculator {
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
     var wasUnauthenticated: Bool {
-        guard case .unauthenticated(_) = previousAppState else {
+        guard case .unauthenticated = previousAppState else {
             return false
         }
         return true
@@ -83,7 +83,7 @@ class AppStateCalculator {
 
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
-    private(set) var pendingAppState: AppState? = nil
+    private(set) var pendingAppState: AppState?
     private(set) var appState: AppState = .headless {
         willSet {
             previousAppState = appState

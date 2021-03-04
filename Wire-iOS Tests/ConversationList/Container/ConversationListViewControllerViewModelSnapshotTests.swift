@@ -49,7 +49,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    //MARK: - Action menu
+    // MARK: - Action menu
     func testForActionMenu() {
         coreDataFixture.teamTest {
             sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)

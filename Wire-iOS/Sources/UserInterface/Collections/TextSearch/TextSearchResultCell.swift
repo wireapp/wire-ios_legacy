@@ -157,7 +157,7 @@ class TextSearchResultCell: UITableViewCell {
     var message: ZMConversationMessage? = .none
     var queries: [String] = []
 
-    override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
         let backgroundColor = UIColor.from(scheme: .contentBackground)

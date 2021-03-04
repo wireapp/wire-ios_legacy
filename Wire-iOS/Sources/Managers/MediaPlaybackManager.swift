@@ -50,20 +50,22 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     var volume: Float = 0
 
     var looping: Bool {
-        set {
-            /// no-op
-        }
         get {
             return false
+        }
+
+        set {
+            /// no-op
         }
     }
 
     var playbackMuted: Bool {
-        set {
-            /// no-op
-        }
         get {
             return false
+        }
+
+        set {
+            /// no-op
         }
     }
 

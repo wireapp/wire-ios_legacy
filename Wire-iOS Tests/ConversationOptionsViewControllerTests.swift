@@ -27,9 +27,9 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
     var title: String
-    var linkResult: Result<String?>? = nil
+    var linkResult: Result<String?>?
     var deleteResult: VoidResult = .success
-    var createResult: Result<String>? = nil
+    var createResult: Result<String>?
     var isCodeEnabled = true
     var areGuestOrServicePresent = true
 
@@ -65,7 +65,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
 
         let viewModel = ConversationOptionsViewModel(configuration: config)
 
-        ///Show the alert
+        /// Show the alert
         let sut = viewModel.setAllowGuests(false)
 
         // Then
@@ -80,7 +80,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         /// for ConversationOptionsViewModel's delegate
         _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
-        ///Show the alert
+        /// Show the alert
         let sut = viewModel.setAllowGuests(false)!
 
         // Then

@@ -160,7 +160,7 @@ final class ConversationInputBarViewController: UIViewController,
         return view
     }()
 
-    //MARK: custom keyboards
+    // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
@@ -168,7 +168,7 @@ final class ConversationInputBarViewController: UIViewController,
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
-    //MARK: text input
+    // MARK: text input
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
@@ -177,7 +177,7 @@ final class ConversationInputBarViewController: UIViewController,
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
 
-    //MARK: feedback
+    // MARK: feedback
     lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -586,7 +586,7 @@ final class ConversationInputBarViewController: UIViewController,
             self.photoButton.transform = CGAffineTransform.identity
         }
 
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { _ in
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
         }
     }
@@ -638,7 +638,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
         dismiss(animated: true) {
             let messageText: String
 
-            if (searchTerm == "") {
+            if searchTerm == "" {
                 messageText = String(format: "giphy.conversation.random_message".localized, searchTerm)
             } else {
                 messageText = String(format: "giphy.conversation.message".localized, searchTerm)
@@ -653,7 +653,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
-    ///TODO: check this is still necessary on iOS 13?
+    /// TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
         do {
@@ -663,7 +663,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String

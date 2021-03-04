@@ -85,7 +85,7 @@ final class ConversationActionController {
         case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
 
-            requestDeleteGroupResult() { result in
+            requestDeleteGroupResult { result in
                 self.handleDeleteGroupResult(result, conversation: conversation, in: userSession)
             }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
@@ -154,8 +154,8 @@ final class ConversationActionController {
     }
 
     private func present(_ controller: UIViewController,
-                 currentContext: PresentationContext?,
-                 target: UIViewController) {
+                         currentContext: PresentationContext?,
+                         target: UIViewController) {
         currentContext.apply {
             prepare(viewController: controller, with: $0)
         }

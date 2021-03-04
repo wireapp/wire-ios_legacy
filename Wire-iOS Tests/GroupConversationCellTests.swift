@@ -38,7 +38,7 @@ final class GroupConversationCellTests: XCTestCase {
         super.tearDown()
     }
 
-    private func createOneOnOneConversation() -> MockStableRandomParticipantsConversation{
+    private func createOneOnOneConversation() -> MockStableRandomParticipantsConversation {
         otherUser = MockUserType.createDefaultOtherUser()
 
         let otherUserConversation = MockStableRandomParticipantsConversation.createOneOnOneConversation(otherUser: otherUser)
@@ -70,32 +70,32 @@ final class GroupConversationCellTests: XCTestCase {
     }
 
     func testOneToOneConversation() {
-        //GIVEN & WHEN
+        // GIVEN & WHEN
         let otherUserConversation = createOneOnOneConversation()
 
-        //THEN
+        // THEN
         verify(conversation: otherUserConversation)
     }
 
     func testGroupConversation() {
-        //GIVEN
+        // GIVEN
         let groupConversation = createGroupConversation()
 
-        //WHEN
+        // WHEN
         groupConversation.displayName = "Anna, Bruno, Claire, Dean"
 
-        //THEN
+        // THEN
         verify(conversation: groupConversation)
     }
 
     func testGroupConversationWithVeryLongName() {
-        //GIVEN
+        // GIVEN
         let groupConversation = createGroupConversation()
 
-        //WHEN
+        // WHEN
         groupConversation.displayName  = "Loooooooooooooooooooooooooong name"
 
-        //THEN
+        // THEN
         verify(conversation: groupConversation)
     }
 

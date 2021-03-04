@@ -147,8 +147,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
 
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
-                deviceOrientation: UIDeviceOrientation)
-    {
+                deviceOrientation: UIDeviceOrientation) {
         guard let superview = superview else { return }
 
         delta = OrientationDelta(interfaceOrientation: interfaceOrientation,

@@ -211,8 +211,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
             attributes: [.font: fingerprintMonospaceFont],
             boldAttributes: [.font: fingerprintBoldMonospaceFont],
-            uppercase: false)
-        {
+            uppercase: false) {
             fullIDLabel.attributedText = attributedFingerprint
             spinner.stopAnimating()
         }
@@ -340,7 +339,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let `self` = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient
-            if(self.verifiedToggle.isOn) {
+            if self.verifiedToggle.isOn {
                 selfClient?.trustClient(self.userClient)
             } else {
                 selfClient?.ignoreClient(self.userClient)

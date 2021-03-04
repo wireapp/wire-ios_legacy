@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-fileprivate class MockCallHapticsGenerator: CallHapticsGeneratorType {
+private class MockCallHapticsGenerator: CallHapticsGeneratorType {
     var triggeredEvents = [CallHapticsEvent]()
 
     func trigger(event: CallHapticsEvent) {
@@ -99,14 +99,14 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
 
         sut.updateParticipants([first])
 
-        //when
+        // when
         generator.reset()
         sut.updateParticipants([
             first,
             second
         ])
 
-        //then
+        // then
         XCTAssertEqual(generator.triggeredEvents, [.join])
     }
 

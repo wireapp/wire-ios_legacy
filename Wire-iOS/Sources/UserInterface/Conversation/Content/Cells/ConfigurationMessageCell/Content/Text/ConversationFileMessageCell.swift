@@ -31,8 +31,8 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
     private let fileTransferView = FileTransferView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .paperclip)
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
 

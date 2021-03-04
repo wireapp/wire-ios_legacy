@@ -25,12 +25,11 @@ final class GradientView: UIView {
     }
 
     public var gradientLayer: CAGradientLayer {
-        get {
-            if let gradientLayer = self.layer as? CAGradientLayer {
-                return gradientLayer
-            }
-            fatalError("gradientLayer is missing: \(self.layer)")
+        if let gradientLayer = self.layer as? CAGradientLayer {
+            return gradientLayer
         }
+
+        fatalError("gradientLayer is missing: \(self.layer)")
     }
 
     func setStartPoint(_ startPoint: CGPoint, endPoint: CGPoint, locations: [CGFloat]) {

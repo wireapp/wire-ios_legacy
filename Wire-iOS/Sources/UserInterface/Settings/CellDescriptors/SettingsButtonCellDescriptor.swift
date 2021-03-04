@@ -27,22 +27,20 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     let title: String
     let identifier: String?
     var visible: Bool {
-        get {
-            if let visibilityAction = self.visibilityAction {
-                return visibilityAction(self)
-            }
-            else {
-                return true
-            }
+        if let visibilityAction = self.visibilityAction {
+            return visibilityAction(self)
+        }
+        else {
+            return true
         }
     }
 
     weak var group: SettingsGroupCellDescriptorType?
-    let selectAction: (SettingsCellDescriptorType) -> ()
+    let selectAction: (SettingsCellDescriptorType) -> Void
     let visibilityAction: ((SettingsCellDescriptorType) -> (Bool))?
     let isDestructive: Bool
 
-    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> ()) {
+    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> Void) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction
@@ -50,7 +48,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.identifier = .none
     }
 
-    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
+    init(title: String, isDestructive: Bool, selectAction: @escaping (SettingsCellDescriptorType) -> Void, visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction
@@ -58,7 +56,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
         self.identifier = .none
     }
 
-    init(title: String, isDestructive: Bool, identifier: String, selectAction: @escaping (SettingsCellDescriptorType) -> (), visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
+    init(title: String, isDestructive: Bool, identifier: String, selectAction: @escaping (SettingsCellDescriptorType) -> Void, visibilityAction: ((SettingsCellDescriptorType) -> (Bool))? = .none) {
         self.title = title
         self.isDestructive = isDestructive
         self.selectAction = selectAction

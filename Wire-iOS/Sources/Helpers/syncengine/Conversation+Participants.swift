@@ -53,14 +53,14 @@ extension ZMConversation {
         }
     }
 
-    func removeOrShowError(participant user: UserType, completion: ((VoidResult)->())? = nil) {
+    func removeOrShowError(participant user: UserType, completion: ((VoidResult) -> Void)? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {
             self.showAlertForRemoval(for: NetworkError.offline)
             return
         }
 
-        /// if the user is not in this conversation, result = .success
+        // If the user is not in this conversation, result = .success
         self.removeParticipant(user, userSession: ZMUserSession.shared()!) { result in
             switch result {
             case .success:

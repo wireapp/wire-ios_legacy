@@ -20,9 +20,9 @@ import UIKit
 import Cartography
  import WireDataModel
 
-fileprivate let smallLightFont = FontSpec(.small, .light).font!
-fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
-fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
+private let smallLightFont = FontSpec(.small, .light).font!
+private let smallBoldFont = FontSpec(.small, .medium).font!
+private let normalBoldFont = FontSpec(.normal, .medium).font!
 
 final class AddressBookCorrelationFormatter: NSObject {
 

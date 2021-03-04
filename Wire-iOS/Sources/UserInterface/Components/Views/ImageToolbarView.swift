@@ -148,7 +148,7 @@ final class ImageToolbarView: UIView {
             let previousButton = buttons[i-1]
             let button = buttons[i]
 
-            constrain(self, button, previousButton) { container, button, previousButton in
+            constrain(self, button, previousButton) { _, button, previousButton in
                 button.left == previousButton.right + spacing * 2
             }
         }

@@ -77,14 +77,14 @@ class LineView: UIView {
 }
 
 final class AccountSelectorView: UIView {
-    weak var delegate: AccountSelectorViewDelegate? = nil
+    weak var delegate: AccountSelectorViewDelegate?
 
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
     fileprivate var accounts: [Account]? = nil {
         didSet {
-            guard let _ = ZMUserSession.shared() else {
+            guard ZMUserSession.shared()  != nil else {
                 return
             }
 

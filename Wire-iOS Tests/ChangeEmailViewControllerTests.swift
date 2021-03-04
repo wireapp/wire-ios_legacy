@@ -21,7 +21,7 @@ import XCTest
 
 final class ChangeEmailViewControllerTests: XCTestCase {
 
-    private func createSut(emailAddress: String?) -> UIViewController{
+    private func createSut(emailAddress: String?) -> UIViewController {
         let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = emailAddress
 

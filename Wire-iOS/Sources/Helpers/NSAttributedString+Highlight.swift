@@ -149,9 +149,9 @@ extension NSAttributedString {
     }
 
     func highlightingAppearances(of query: [String],
-                                       with attributes: [NSAttributedString.Key: Any],
-                                       upToWidth: CGFloat,
-                                       totalMatches: UnsafeMutablePointer<Int>?) -> NSAttributedString {
+                                 with attributes: [NSAttributedString.Key: Any],
+                                 upToWidth: CGFloat,
+                                 totalMatches: UnsafeMutablePointer<Int>?) -> NSAttributedString {
 
         let attributedText = self.mutableCopy() as! NSMutableAttributedString
 

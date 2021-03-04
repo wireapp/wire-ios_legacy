@@ -24,7 +24,7 @@ import WireDataModel
 extension ConversationLike where Self: SwiftConversationLike {
     var canAddGuest: Bool {
         // If not a team conversation: possible to add any contact.
-        guard let _ = teamType else {
+        guard teamType != nil else {
             return true
         }
 
@@ -72,7 +72,7 @@ extension AddParticipantsViewController.Context {
         case .add(let conversation):
             let freeSpace = conversation.freeParticipantSlots
             message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
-        case .create(_):
+        case .create:
             message = "add_participants.alert.message.new_conversation".localized(args: max)
         }
 

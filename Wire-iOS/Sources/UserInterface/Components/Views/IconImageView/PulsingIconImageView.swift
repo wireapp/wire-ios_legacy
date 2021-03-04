@@ -45,8 +45,7 @@ class PulsingIconImageView: IconImageView {
 
     func set(style: (IconImageStyle & PulsingIconImageStyle)? = nil,
              size: StyleKitIcon.Size? = nil,
-             color: UIColor? = nil)
-    {
+             color: UIColor? = nil) {
         super.set(style: style, size: size, color: color)
         refreshPulsing()
     }

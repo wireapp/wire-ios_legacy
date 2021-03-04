@@ -194,7 +194,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
             ])
 
-        constrain(actionButton, buttonSpacer){ actionButton, buttonSpacer in
+        constrain(actionButton, buttonSpacer) { actionButton, buttonSpacer in
             buttonSpacer.top == actionButton.top
             buttonSpacer.bottom == actionButton.bottom
 

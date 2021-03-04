@@ -22,7 +22,7 @@ import WireCommonComponents
 
 private final class MockBackupExcluder: BackupExcluder {}
 
-final class BackupExcluderTests: XCTestCase { ///TODO: test protocol instead
+final class BackupExcluderTests: XCTestCase { /// TODO: test protocol instead
     private var sut: MockBackupExcluder!
     let filename = "test.txt"
 

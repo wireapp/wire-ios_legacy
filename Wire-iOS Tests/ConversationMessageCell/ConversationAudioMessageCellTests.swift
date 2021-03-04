@@ -43,7 +43,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK : Uploaded (File not downloaded)
+    // MARK: - Uploaded (File not downloaded)
 
     func testUploadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -87,7 +87,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Uploading
+    // MARK: - Uploading
 
     func testUploadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploading
@@ -105,7 +105,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Downloading
+    // MARK: - Downloading
 
     func testDownloadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -126,7 +126,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Downloaded
+    // MARK: - Downloaded
 
     func testDownloadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -145,7 +145,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Download Failed
+    // MARK: - Download Failed
 
     func testFailedDownloadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
@@ -164,7 +164,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Upload Failed
+    // MARK: - Upload Failed
 
     func testFailedUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingFailed
@@ -181,7 +181,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Upload Cancelled
+    // MARK: - Upload Cancelled
 
     func testCancelledUploadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploadingCancelled
@@ -198,7 +198,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK: No Duration
+    // MARK: - No Duration
 
     func testDownloadedCell_fromThisDevice_NoDuration() {
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -209,7 +209,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
-    // MARK : Obfuscated
+    // MARK: - Obfuscated
 
     func testObfuscatedFileTransferCell() {
         message.isObfuscated = true

@@ -64,7 +64,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
-    private var observerToken: Any? = nil
+    private var observerToken: Any?
     private let displaySender: Bool
 
     let message: ZMConversationMessage
@@ -206,7 +206,7 @@ final class MessagePreviewView: UIView, Themeable {
 
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
-    private var observerToken: Any? = nil
+    private var observerToken: Any?
     private let displaySender: Bool
 
     let message: ZMConversationMessage

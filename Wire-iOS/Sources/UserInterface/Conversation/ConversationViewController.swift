@@ -60,7 +60,7 @@ final class ConversationViewController: UIViewController {
 
     var participantsController: UIViewController? {
 
-        var viewController: UIViewController? = nil
+        var viewController: UIViewController?
 
         switch conversation.conversationType {
         case .group:
@@ -81,9 +81,9 @@ final class ConversationViewController: UIViewController {
     }
 
     required init(session: ZMUserSessionInterface,
-                 conversation: ZMConversation,
-                 visibleMessage: ZMMessage?,
-                 zClientViewController: ZClientViewController) {
+                  conversation: ZMConversation,
+                  visibleMessage: ZMMessage?,
+                  zClientViewController: ZClientViewController) {
         self.session = session
         self.conversation = conversation
         self.visibleMessage = visibleMessage
@@ -218,7 +218,7 @@ final class ConversationViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: nil) { context in
+        coordinator.animate(alongsideTransition: nil) { _ in
             self.updateLeftNavigationBarItems()
         }
 
@@ -311,7 +311,7 @@ final class ConversationViewController: UIViewController {
     }
 
     private func setupNavigatiomItem() {
-        titleView.tapHandler = { [weak self] button in
+        titleView.tapHandler = { [weak self] _ in
             if let superview = self?.titleView.superview,
                 let participantsController = self?.participantsController {
                 self?.presentParticipantsViewController(participantsController, from: superview)
@@ -325,7 +325,7 @@ final class ConversationViewController: UIViewController {
         updateRightNavigationItemsButtons()
     }
 
-    //MARK: - ParticipantsPopover
+    // MARK: - ParticipantsPopover
 
     private func hideAndDestroyParticipantsPopover() {
         if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
@@ -334,7 +334,7 @@ final class ConversationViewController: UIViewController {
     }
 }
 
-//MARK: - InvisibleInputAccessoryViewDelegate
+// MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 
@@ -356,7 +356,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             distanceFromBottom = max(0, distanceFromBottom)
         }
 
-        let closure: () -> () = {
+        let closure: () -> Void = {
             self.inputBarBottomMargin?.constant = -distanceFromBottom
             self.view.layoutIfNeeded()
         }
@@ -369,7 +369,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     }
 }
 
-//MARK: - ZMConversationObserver
+// MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
     public func conversationDidChange(_ note: ConversationChangeInfo) {
@@ -404,7 +404,7 @@ extension ConversationViewController: ZMConversationObserver {
     }
 }
 
-//MARK: - ZMConversationListObserver
+// MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
@@ -419,7 +419,7 @@ extension ConversationViewController: ZMConversationListObserver {
     }
 }
 
-//MARK: - InputBar
+// MARK: - InputBar
 
 extension ConversationViewController: ConversationInputBarViewControllerDelegate {
     func conversationInputBarViewControllerDidComposeText(text: String,
@@ -466,7 +466,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     }
 
     func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage) {
-        contentViewController.scroll(to: message) { cell in
+        contentViewController.scroll(to: message) { _ in
             self.contentViewController.highlight(message)
         }
     }

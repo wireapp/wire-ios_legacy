@@ -36,7 +36,7 @@ final class VersionInfoViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 }

@@ -53,7 +53,7 @@ final class TeamMemberInviteHeaderView: UIView {
 
         [titleLabel, subtitleLabel, bottomSpacerView].forEach(stackView.addArrangedSubview)
 
-        [titleLabel, subtitleLabel].forEach(){
+        [titleLabel, subtitleLabel].forEach {
             $0.textAlignment = .center
             $0.numberOfLines = 0
             $0.lineBreakMode = .byWordWrapping

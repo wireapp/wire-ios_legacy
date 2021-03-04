@@ -29,14 +29,14 @@ protocol CallTopOverlayControllerDelegate: class {
 extension CallState {
     public func description(callee: String, conversation: String, isGroup: Bool) -> String {
         switch self {
-        case .incoming(_, _, _):
+        case .incoming:
             let toAppend = (isGroup ? conversation + "・" : "")
             return toAppend + "call.status.incoming.user".localized(args: callee)
-        case .outgoing(_):
+        case .outgoing:
             return "call.status.outgoing.user".localized(args: conversation)
-        case .answered(_), .establishedDataChannel:
+        case .answered, .establishedDataChannel:
             return "call.status.connecting".localized
-        case .terminating(_):
+        case .terminating:
             return "call.status.terminating".localized
         default:
             return ""
@@ -48,9 +48,9 @@ final class CallTopOverlayController: UIViewController {
     private let durationLabel = UILabel()
 
     class TapableAccessibleView: UIView {
-        let onAccessibilityActivate: ()->()
+        let onAccessibilityActivate: () -> Void
 
-        init(onAccessibilityActivate: @escaping ()->()) {
+        init(onAccessibilityActivate: @escaping () -> Void) {
             self.onAccessibilityActivate = onAccessibilityActivate
             super.init(frame: .zero)
         }
@@ -69,12 +69,12 @@ final class CallTopOverlayController: UIViewController {
     private let muteIcon = UIImageView()
     private var muteIconWidth: NSLayoutConstraint?
     private var tapGestureRecognizer: UITapGestureRecognizer!
-    private weak var callDurationTimer: Timer? = nil
+    private weak var callDurationTimer: Timer?
     private var observerTokens: [Any] = []
     private let callDurationFormatter = DateComponentsFormatter()
 
     let conversation: ZMConversation
-    weak var delegate: CallTopOverlayControllerDelegate? = nil
+    weak var delegate: CallTopOverlayControllerDelegate?
 
     private var callDuration: TimeInterval = 0 {
         didSet {
@@ -180,7 +180,6 @@ final class CallTopOverlayController: UIViewController {
             stopCallDurationTimer()
         default:
             updateLabel()
-            break
         }
     }
 

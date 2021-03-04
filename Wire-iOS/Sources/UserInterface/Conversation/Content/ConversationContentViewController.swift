@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 
 /// The main conversation view controller
 final class ConversationContentViewController: UIViewController, PopoverPresenter, SpinnerCapable {
-    //MARK: PopoverPresenter
+    // MARK: PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
     var dismissSpinner: SpinnerCompletion?
@@ -348,16 +348,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
     private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
         guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
-
         let index = dataSource.indexOfMessage(message)
-
-        for indexPath in indexPathsForVisibleRows {
-            if indexPath.section == index {
-                return true
-            }
-        }
-
-        return false
+        return indexPathsForVisibleRows.contains { $0.section == index }
     }
 }
 
@@ -396,6 +388,6 @@ extension ConversationContentViewController: UITableViewDelegate {
 
 extension ConversationContentViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        //no-op
+        // no-op
     }
 }

@@ -96,7 +96,7 @@ final class ConversationOptionsViewModel {
         state.rows = computeVisibleRows()
     }
 
-    private func computeVisibleRows() -> [CellConfiguration] {///TODO: copy?
+    private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
                 get: { [unowned self] in return self.configuration.allowGuests },
                 set: { [unowned self] in self.setAllowGuests($0) }
@@ -173,8 +173,8 @@ final class ConversationOptionsViewModel {
         configuration.fetchConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-                case .success(let link): self.link = link
-                case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+            case .success(let link): self.link = link
+            case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
 
             item.cancel()
@@ -225,7 +225,7 @@ final class ConversationOptionsViewModel {
 
         // In case allow guests mode should be deactivated & guest/service in conversation, ask the delegate
         // to confirm this action as all guests will be removed.
-        if !allowGuests && configuration.areGuestOrServicePresent{
+        if !allowGuests && configuration.areGuestOrServicePresent {
             // Make "remove guests and services" warning only appear if guests or services are present
             return delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
                 guard let `self` = self else { return }

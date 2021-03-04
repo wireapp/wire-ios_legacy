@@ -21,8 +21,8 @@ import XCTest
 
 extension XCTestCase {
     public func verifyDeallocation<T: AnyObject>(of instanceGenerator: () -> (T)) {
-        weak var weakInstance: T? = nil
-        var instance: T? = nil
+        weak var weakInstance: T?
+        var instance: T?
 
         autoreleasepool {
             instance = instanceGenerator()

@@ -28,7 +28,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
     private var appLock: AppLockModule.MockAppLockController!
     private var authenticationType: AppLockModule.MockAuthenticationTypeDetector!
     private var applicationStateProvider: AppLockModule.MockApplicationStateProvider!
-    
+
     override func setUp() {
         super.setUp()
         presenter = .init()

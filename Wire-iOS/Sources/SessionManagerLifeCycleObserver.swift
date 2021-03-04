@@ -62,10 +62,8 @@ extension SessionManagerLifeCycleObserver: SessionManagerCreatedSessionObserver,
 
     // MARK: - Private Implementation
     private func setSoundEventListener(for userSession: ZMUserSession) {
-        for (accountId, session) in sessionManager?.backgroundUserSessions ?? [:] {
-            if session == userSession {
-                soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
-            }
+        for (accountId, session) in sessionManager?.backgroundUserSessions ?? [:] where session == userSession {
+            soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
         }
     }
 

@@ -59,10 +59,10 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
 
     private var _collectionViewSelectedIndex: Int? = .none
     private var collectionViewSelectedIndex: Int? {
-        get{
+        get {
             return _collectionViewSelectedIndex
         }
-        set{
+        set {
             if let newValue = newValue {
                 self._collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
             } else {
@@ -236,11 +236,12 @@ extension UserSearchResultsViewController: UserList {
     }
 
     var users: [UserType] {
-        set {
-            reloadTable(with: newValue.reversed())
-        }
         get {
             return searchResults.reversed()
+        }
+
+        set {
+            reloadTable(with: newValue.reversed())
         }
     }
 }

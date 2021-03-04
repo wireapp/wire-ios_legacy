@@ -419,7 +419,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     // MARK: - Button Actions
 
     @objc func recordButtonPressed(_ sender: AnyObject!) {
-        self.recorder.startRecording { success in
+        self.recorder.startRecording { _ in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
             AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()

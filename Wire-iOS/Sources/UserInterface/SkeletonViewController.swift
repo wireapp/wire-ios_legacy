@@ -45,15 +45,16 @@ final class ListSkeletonCellView: UIView {
     var lineConstraint: NSLayoutConstraint?
 
     var lineInset: Float {
-        set {
-            lineConstraint?.constant = -CGFloat(newValue + 16)
-        }
         get {
             if let inset = lineConstraint?.constant {
                 return -(Float)(inset)
             } else {
                 return 0
             }
+        }
+
+        set {
+            lineConstraint?.constant = -CGFloat(newValue + 16)
         }
     }
 
@@ -116,11 +117,12 @@ final class ListSkeletonCell: UITableViewCell {
     }
 
     var lineInset: Float {
-        set {
-            skeletonCellView.lineInset = newValue
-        }
         get {
             return skeletonCellView.lineInset
+        }
+
+        set {
+            skeletonCellView.lineInset = newValue
         }
     }
 

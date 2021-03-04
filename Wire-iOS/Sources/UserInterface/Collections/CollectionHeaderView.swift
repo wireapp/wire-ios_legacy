@@ -28,7 +28,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         didSet {
             let icon: StyleKitIcon
 
-            switch(section) {
+            switch section {
             case CollectionsSectionSet.images:
                 self.titleLabel.text = "collections.section.images.title".localized(uppercased: true)
                 icon = .photo
@@ -75,7 +75,7 @@ final class CollectionHeaderView: UICollectionReusableView {
 
     public let iconImageView = UIImageView()
 
-    public var selectionAction: ((CollectionsSectionSet) -> ())? = .none
+    public var selectionAction: ((CollectionsSectionSet) -> Void)? = .none
 
     public required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
@@ -115,9 +115,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     public var desiredHeight: CGFloat = 0
 
     override public var intrinsicContentSize: CGSize {
-        get {
-            return CGSize(width: self.desiredWidth, height: self.desiredHeight)
-        }
+        return CGSize(width: self.desiredWidth, height: self.desiredHeight)
     }
 
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {

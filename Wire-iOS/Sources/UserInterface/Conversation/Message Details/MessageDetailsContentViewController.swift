@@ -97,7 +97,7 @@ final class MessageDetailsContentViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.collectionView.collectionViewLayout.invalidateLayout()
         })
     }
@@ -288,7 +288,7 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
 }
 
 extension MessageDetailsContentViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         viewController.dismiss(animated: true, completion: nil)
     }
 }
@@ -303,7 +303,7 @@ extension MessageDetailsContentViewController: ProfileViewControllerDelegate {
     }
 
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-        //no-op
+        // no-op
     }
 }
 

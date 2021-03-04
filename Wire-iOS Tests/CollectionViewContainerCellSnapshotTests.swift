@@ -36,7 +36,7 @@ final class CollectionViewContainerCellSnapshotTests: XCTest {
         super.tearDown()
     }
 
-    func testThatCollectionViewHasSameSizeOfTheCell(){
+    func testThatCollectionViewHasSameSizeOfTheCell() {
         XCTAssertEqual(sut.frame, sut.collectionView?.frame)
     }
 }

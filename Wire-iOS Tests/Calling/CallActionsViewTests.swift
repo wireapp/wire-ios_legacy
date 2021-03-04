@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import WireSyncEngine
 
-fileprivate struct CallActionsViewInput: CallActionsViewInputType {
+private struct CallActionsViewInput: CallActionsViewInputType {
     var allowPresentationModeUpdates: Bool
     var videoGridPresentationMode: VideoGridPresentationMode
     var permissions: CallPermissionsConfiguration
