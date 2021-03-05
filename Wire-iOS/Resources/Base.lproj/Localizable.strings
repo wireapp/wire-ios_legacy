@@ -1631,6 +1631,8 @@
 "databaseloadingfailure.alert.message" = "The Wire database could not be loaded because there is not enough memory on your device. Go to the „Settings” section under „Device Storage” and free up memory, then try again.";
 "databaseloadingfailure.alert.settings" = "Device Settings";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "If you continue, all previous Conversation and chat histories will be deleted and can not be acessed from the device";
+"databaseloadingfailure.alert.delete_database.continue" = "Continue";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

@@ -89,11 +89,39 @@ final class BlockerViewController: LaunchImageViewController {
             title: "databaseloadingfailure.alert.delete_database".localized,
             style: .destructive,
             handler: { [weak self] _ in
-                self?.sessionManager?.removeDatabaseFromDisk()
+                self?.dismiss(animated: true, completion: {
+                    self?.showConfirmationDatabaseDeletionAlert()
+                })
             }
         )
 
         databaseFailureAlert.addAction(deleteDatabaseAction)
         present(databaseFailureAlert, animated: true)
+    }
+
+    func showConfirmationDatabaseDeletionAlert() {
+        let deleteDatabaseConfirmationAlert = UIAlertController(
+            title: "databaseloadingfailure.alert.delete_database".localized,
+            message: "databaseloadingfailure.alert.delete_database.message".localized,
+            preferredStyle: .alert
+        )
+
+        let cancelAction = UIAlertAction(
+            title: "general.cancel".localized,
+            style: .cancel,
+            handler: nil)
+
+        deleteDatabaseConfirmationAlert.addAction(cancelAction)
+
+        let continueAction = UIAlertAction(
+            title: "databaseloadingfailure.alert.delete_database.continue".localized,
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.sessionManager?.removeDatabaseFromDisk()
+            }
+        )
+
+        deleteDatabaseConfirmationAlert.addAction(continueAction)
+        present(deleteDatabaseConfirmationAlert, animated: true)
     }
 }
