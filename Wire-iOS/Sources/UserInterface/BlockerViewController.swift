@@ -57,26 +57,28 @@ final class BlockerViewController: LaunchImageViewController {
     }
 
     func showBlacklistMessage() {
-        presentAlertWithOKButton(title: "force.update.title".localized,
-                                 message: "force.update.message".localized) { _ in
+
+        presentAlertWithOKButton(title: L10n.Localizable.Force.Update.title,
+                                 message: L10n.Localizable.Force.Update.message) { _ in
             UIApplication.shared.open(URL.wr_wireAppOnItunes)
         }
     }
 
     func showJailbrokenMessage() {
-        presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized,
-                                 message: "jailbrokendevice.alert.message".localized)
+        presentAlertWithOKButton(title: L10n.Localizable.Jailbrokendevice.Alert.title,
+                                 message: L10n.Localizable.Jailbrokendevice.Alert.message)
     }
 
     func showDatabaseFailureMessage() {
+
         let databaseFailureAlert = UIAlertController(
-            title: "databaseloadingfailure.alert.title".localized,
-            message: "databaseloadingfailure.alert.message".localized,
+            title: L10n.Localizable.Databaseloadingfailure.Alert.title,
+            message: L10n.Localizable.Databaseloadingfailure.Alert.message,
             preferredStyle: .alert
         )
 
         let settingsAction = UIAlertAction(
-            title: "databaseloadingfailure.alert.settings".localized,
+            title: L10n.Localizable.Databaseloadingfailure.Alert.settings,
             style: .default,
             handler: { _ in
                 UIApplication.shared.openSettings()
@@ -86,7 +88,7 @@ final class BlockerViewController: LaunchImageViewController {
         databaseFailureAlert.addAction(settingsAction)
 
         let deleteDatabaseAction = UIAlertAction(
-            title: "databaseloadingfailure.alert.delete_database".localized,
+            title: L10n.Localizable.Databaseloadingfailure.Alert.deleteDatabase,
             style: .destructive,
             handler: { [weak self] _ in
                 self?.dismiss(animated: true, completion: {
@@ -101,20 +103,20 @@ final class BlockerViewController: LaunchImageViewController {
 
     func showConfirmationDatabaseDeletionAlert() {
         let deleteDatabaseConfirmationAlert = UIAlertController(
-            title: "databaseloadingfailure.alert.delete_database".localized,
-            message: "databaseloadingfailure.alert.delete_database.message".localized,
+            title: L10n.Localizable.Databaseloadingfailure.Alert.deleteDatabase,
+            message: L10n.Localizable.Databaseloadingfailure.Alert.DeleteDatabase.message,
             preferredStyle: .alert
         )
 
         let cancelAction = UIAlertAction(
-            title: "general.cancel".localized,
+            title: L10n.Localizable.General.cancel,
             style: .cancel,
             handler: nil)
 
         deleteDatabaseConfirmationAlert.addAction(cancelAction)
 
         let continueAction = UIAlertAction(
-            title: "databaseloadingfailure.alert.delete_database.continue".localized,
+            title: L10n.Localizable.Databaseloadingfailure.Alert.DeleteDatabase.continue,
             style: .destructive,
             handler: { [weak self] _ in
                 self?.sessionManager?.removeDatabaseFromDisk()
