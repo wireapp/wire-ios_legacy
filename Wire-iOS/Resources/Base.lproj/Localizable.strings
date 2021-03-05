@@ -1627,8 +1627,10 @@
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
 // Database Loading Failure alert
-"databaseloadingfailure.alert.title" = "Database loading failure";
-"databaseloadingfailure.alert.message" = "The database could be loaded.";
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The Wire database could not be loaded because there is not enough memory on your device. Go to the „Settings” section under „Device Storage” and free up memory, then try again.";
+"databaseloadingfailure.alert.settings" = "Device Settings";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

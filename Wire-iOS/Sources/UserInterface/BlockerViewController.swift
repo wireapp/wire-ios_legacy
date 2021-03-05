@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 enum BlockerViewControllerContext {
     case blacklist
@@ -28,9 +29,11 @@ enum BlockerViewControllerContext {
 final class BlockerViewController: LaunchImageViewController {
 
     private var context: BlockerViewControllerContext = .blacklist
+    private var sessionManager: SessionManager?
 
-    init(context: BlockerViewControllerContext) {
+    init(context: BlockerViewControllerContext, sessionManager: SessionManager? = nil) {
         self.context = context
+        self.sessionManager = sessionManager
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,17 +57,43 @@ final class BlockerViewController: LaunchImageViewController {
     }
 
     func showBlacklistMessage() {
-        presentAlertWithOKButton(title: "force.update.title".localized, message: "force.update.message".localized) { _ in
+        presentAlertWithOKButton(title: "force.update.title".localized,
+                                 message: "force.update.message".localized) { _ in
             UIApplication.shared.open(URL.wr_wireAppOnItunes)
         }
     }
 
     func showJailbrokenMessage() {
-        presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized)
-    }
-    
-    func showDatabaseFailureMessage() {
-        presentAlertWithOKButton(title: "databaseloadingfailure.alert.title".localized, message: "databaseloadingfailure.alert.message".localized)
+        presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized,
+                                 message: "jailbrokendevice.alert.message".localized)
     }
 
+    func showDatabaseFailureMessage() {
+        let databaseFailureAlert = UIAlertController(
+            title: "databaseloadingfailure.alert.title".localized,
+            message: "databaseloadingfailure.alert.message".localized,
+            preferredStyle: .alert
+        )
+
+        let settingsAction = UIAlertAction(
+            title: "databaseloadingfailure.alert.settings".localized,
+            style: .default,
+            handler: { _ in
+                UIApplication.shared.openSettings()
+            }
+        )
+
+        databaseFailureAlert.addAction(settingsAction)
+
+        let deleteDatabaseAction = UIAlertAction(
+            title: "databaseloadingfailure.alert.delete_database".localized,
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.sessionManager?.removeDatabaseFromDisk()
+            }
+        )
+
+        databaseFailureAlert.addAction(deleteDatabaseAction)
+        present(databaseFailureAlert, animated: true)
+    }
 }

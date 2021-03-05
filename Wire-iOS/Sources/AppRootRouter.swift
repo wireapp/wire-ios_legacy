@@ -265,9 +265,10 @@ extension AppRootRouter {
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }
-    
+
     private func showDatabaseLoadingFailure(completion: @escaping () -> Void) {
-        let blockerViewController = BlockerViewController(context: .databaseFailure)
+        let blockerViewController = BlockerViewController(context: .databaseFailure,
+                                                          sessionManager: sessionManager)
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }
