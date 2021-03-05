@@ -19,10 +19,6 @@
 import XCTest
 @testable import Wire
 
-private final class MockConversation: SwiftMockConversation, AreServicesPresentProvider {
-    var areServicesPresent: Bool = true
-}
-
 final class ConversationSystemMessageTests: XCTestCase {
 
     override func setUp() {
@@ -57,7 +53,7 @@ final class ConversationSystemMessageTests: XCTestCase {
     }
 
     func testAddParticipant_Service() {
-        let mockConversation = MockConversation()
+        let mockConversation = SwiftMockConversation()
         let message = MockMessageFactory.systemMessage(with: .participantsAdded,
                                                        conversation: mockConversation,
                                                        users: 1, clients: 0)!
