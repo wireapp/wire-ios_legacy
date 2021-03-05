@@ -64,7 +64,7 @@ final class ProfileDetailsContentController: NSObject,
     let viewer: UserType
 
     /// The conversation where the profile details will be displayed.
-    let conversation: ZMConversation?
+    let conversation: Conversation?
 
     /// The current group admin status for UI.
     private var isAdminState: Bool
@@ -94,7 +94,7 @@ final class ProfileDetailsContentController: NSObject,
 
     init(user: UserType,
          viewer: UserType,
-         conversation: ZMConversation?) {
+         conversation: Conversation?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation

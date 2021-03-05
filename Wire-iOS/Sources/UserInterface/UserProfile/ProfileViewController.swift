@@ -71,7 +71,7 @@ final class ProfileViewController: UIViewController {
 
     convenience init(user: UserType,
                      viewer: UserType,
-                     conversation: ZMConversation? = nil,
+                     conversation: Conversation? = nil,
                      context: ProfileViewControllerContext? = nil,
                      viewControllerDismisser: ViewControllerDismisser? = nil) {
         let profileViewControllerContext: ProfileViewControllerContext

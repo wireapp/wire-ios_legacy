@@ -32,7 +32,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     let viewer: UserType
 
     /// The conversation where the profile is displayed.
-    let conversation: ZMConversation?
+    let conversation: Conversation?
 
     let context: ProfileViewControllerContext
 
@@ -76,7 +76,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
 
     init(user: UserType,
          viewer: UserType,
-         conversation: ZMConversation?,
+         conversation: Conversation?,
          context: ProfileViewControllerContext) {
 
         var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]

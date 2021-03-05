@@ -57,7 +57,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     }
 
     /// Associated conversation, if displayed in the context of a conversation
-    let conversation: ZMConversation?
+    let conversation: Conversation?
 
     /// The user that is displayed.
     let user: UserType
@@ -122,7 +122,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
 
-    init(user: UserType, viewer: UserType = SelfUser.current, conversation: ZMConversation? = nil, options: Options) {
+    init(user: UserType,
+         viewer: UserType = SelfUser.current,
+         conversation: Conversation? = nil,
+         options: Options) {
         self.user = user
         isAdminRole = conversation.map(self.user.isGroupAdmin) ?? false
         self.viewer = viewer

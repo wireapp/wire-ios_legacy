@@ -97,7 +97,7 @@ final class ProfileActionsFactory {
     let viewer: UserType
 
     /// The conversation that the user wants to perform the actions in.
-    let conversation: ZMConversation?
+    let conversation: Conversation?
 
     /// The context of the Profile VC
     let context: ProfileViewControllerContext
@@ -112,7 +112,10 @@ final class ProfileActionsFactory {
      * perform the actions in.
      */
 
-    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+    init(user: UserType,
+         viewer: UserType,
+         conversation: Conversation?,
+         context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -140,7 +143,7 @@ final class ProfileActionsFactory {
             return [.block(isBlocked: true)]
         }
 
-        var conversation: ZMConversation?
+        var conversation: Conversation?
 
         // If there is no conversation and open profile from a conversation, offer to connect to the user if possible
         if let selfConversation = self.conversation {

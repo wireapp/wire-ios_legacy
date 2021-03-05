@@ -34,7 +34,7 @@ enum ProfileViewControllerContext {
 
 final class ProfileViewControllerViewModel: NSObject {
     let user: UserType
-    let conversation: ZMConversation?
+    var conversation: Conversation?
     let viewer: UserType
     let context: ProfileViewControllerContext
 
@@ -50,7 +50,7 @@ final class ProfileViewControllerViewModel: NSObject {
     weak var viewModelDelegate: ProfileViewControllerViewModelDelegate?
 
     init(user: UserType,
-         conversation: ZMConversation?,
+         conversation: Conversation?,
          viewer: UserType,
          context: ProfileViewControllerContext) {
         self.user = user
