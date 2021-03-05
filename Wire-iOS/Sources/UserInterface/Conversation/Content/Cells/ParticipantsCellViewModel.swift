@@ -94,7 +94,9 @@ class ParticipantsCellViewModel {
     }
 
     private var showServiceUserWarning: Bool {
-        guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversationLike as? AreServicesPresentProvider  else { return false }
+        guard case .added = action,
+              let messageData = message.systemMessageData,
+              let conversation = message.conversationLike as? AreServicesPresentProvider  else { return false }
         guard let users = Array(messageData.userTypes) as? [UserType] else { return false }
 
         let selfAddedToServiceConversation = users.any(\.isSelfUser) && conversation.areServicesPresent
