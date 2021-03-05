@@ -28,7 +28,14 @@ final class ConversationMessageSectionControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        context = ConversationMessageContext(isSameSenderAsPrevious: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false, isLastMessage: false, searchQueries: [], previousMessageIsKnock: false, spacing: 0)
+        context = ConversationMessageContext(isSameSenderAsPrevious: false,
+                                             isTimeIntervalSinceLastMessageSignificant: false,
+                                             isFirstMessageOfTheDay: false,
+                                             isFirstUnreadMessage: false,
+                                             isLastMessage: false,
+                                             searchQueries: [],
+                                             previousMessageIsKnock: false,
+                                             spacing: 0)
     }
 
     override func tearDown() {

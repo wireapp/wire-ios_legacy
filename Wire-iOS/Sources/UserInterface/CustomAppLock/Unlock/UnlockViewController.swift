@@ -259,7 +259,11 @@ final class UnlockViewController: UIViewController {
     }
 
     func showWrongPasscodeMessage() {
-        let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle, with: UIColor.PasscodeUnlock.error, iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize, verticalCorrection: -1, insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
+        let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle,
+                                                             with: UIColor.PasscodeUnlock.error,
+                                                             iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize,
+                                                             verticalCorrection: -1,
+                                                             insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
 
         let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
 

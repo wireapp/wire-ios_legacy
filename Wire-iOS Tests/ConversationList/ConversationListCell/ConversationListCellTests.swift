@@ -32,7 +32,18 @@ private final class MockConversation: MockStableRandomParticipantsConversation, 
     var status: ConversationStatus
 
     required init() {
-        status = ConversationStatus(isGroup: false, hasMessages: false, hasUnsentMessages: false, messagesRequiringAttention: [], messagesRequiringAttentionByType: [:], isTyping: false, mutedMessageTypes: .none, isOngoingCall: false, isBlocked: false, isSelfAnActiveMember: true, hasSelfMention: false, hasSelfReply: false)
+        status = ConversationStatus(isGroup: false,
+                                    hasMessages: false,
+                                    hasUnsentMessages: false,
+                                    messagesRequiringAttention: [],
+                                    messagesRequiringAttentionByType: [:],
+                                    isTyping: false,
+                                    mutedMessageTypes: .none,
+                                    isOngoingCall: false,
+                                    isBlocked: false,
+                                    isSelfAnActiveMember: true,
+                                    hasSelfMention: false,
+                                    hasSelfReply: false)
     }
 
     static func createOneOnOneConversation(otherUser: MockUserType) -> MockConversation {

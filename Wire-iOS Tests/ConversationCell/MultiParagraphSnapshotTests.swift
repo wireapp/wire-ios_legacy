@@ -21,6 +21,7 @@ import XCTest
 
 final class MultiParagraphSnapshotTests: XCTestCase {
     func testThatLineHeightOfListIsConsistent_Chinese() {
+        // swiftlint:disable:next line_length
         let messageText = "1. 子曰：「雍也，可使南面。」仲弓問子桑伯子。子曰：「可也，簡。」仲弓曰：「居敬而行簡，以臨其民，不亦可乎？居簡而行簡，無乃大簡乎？」子曰：「雍之言然。」\n2. 哀公問：「弟子孰爲好學？」孔子對曰：「有顏回者，好學；不遷怒，不貳過，不幸短命死矣！今也則亡，未聞好學者也。」\n3. 子華使於齊，冉子爲其母請粟。子曰：「與之釜。」請益，曰：「與之庾。」冉子與之粟五秉。子曰：「赤之適齊也，乘肥馬，衣輕裘；吾聞之也：君子周急不繼富。」原思爲之宰，與之粟九百，辭。子曰：「毋！以與爾鄰里鄉黨乎！」"
 
         let mockSelfUser = MockUserType.createDefaultSelfUser()

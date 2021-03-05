@@ -70,7 +70,14 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR, selfUser: selfUser)
+
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
+                                                      preferedVideoPlaceholderState: preferedVideoPlaceholderState,
+                                                      permissions: permissionsConfiguration,
+                                                      cameraType: cameraType,
+                                                      mediaManager: mediaManager,
+                                                      userEnabledCBR: CallViewController.userEnabledCBR,
+                                                      selfUser: selfUser)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -217,7 +224,14 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, mediaManager: mediaManager, userEnabledCBR: CallViewController.userEnabledCBR, selfUser: ZMUser.selfUser())
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
+                                                      preferedVideoPlaceholderState: preferedVideoPlaceholderState,
+                                                      permissions: permissions,
+                                                      cameraType: cameraType,
+                                                      mediaManager: mediaManager,
+                                                      userEnabledCBR: CallViewController.userEnabledCBR,
+                                                      selfUser: ZMUser.selfUser())
+
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         videoGridViewController.configuration = videoConfiguration
