@@ -65,6 +65,9 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
+                  Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
+               </Test>
+               <Test
                   Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">
                </Test>
                <Test
