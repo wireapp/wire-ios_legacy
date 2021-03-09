@@ -118,7 +118,11 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
             return view
         } else {
-            guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath) as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
+            let dequeuedView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                                                               withReuseIdentifier: "SectionFooter",
+                                                                               for: indexPath)
+
+            guard let view = dequeuedView as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
             view.titleLabel.text = "group_details.notification_options_cell.description".localized
             return view
         }

@@ -25,16 +25,6 @@ protocol PasscodeSetupUserInterface: class {
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool)
 }
 
-extension PasscodeSetupViewController: AuthenticationCoordinatedViewController {
-    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        // no-op
-    }
-
-    func displayError(_ error: Error) {
-        // no-op
-    }
-}
-
 final class PasscodeSetupViewController: UIViewController {
 
     enum Context {
@@ -53,9 +43,6 @@ final class PasscodeSetupViewController: UIViewController {
     }
 
     weak var passcodeSetupViewControllerDelegate: PasscodeSetupViewControllerDelegate?
-
-    // MARK: AuthenticationCoordinatedViewController
-    weak var authenticationCoordinator: AuthenticationCoordinator?
 
     private lazy var presenter: PasscodeSetupPresenter = {
         return PasscodeSetupPresenter(userInterface: self)
@@ -239,7 +226,6 @@ final class PasscodeSetupViewController: UIViewController {
         guard let passcode = passcodeTextField.text else { return }
         presenter.storePasscode(passcode: passcode, callback: callback)
 
-        authenticationCoordinator?.passcodeSetupControllerDidFinish()
         passcodeSetupViewControllerDelegate?.passcodeSetupControllerDidFinish()
         dismiss(animated: true)
     }

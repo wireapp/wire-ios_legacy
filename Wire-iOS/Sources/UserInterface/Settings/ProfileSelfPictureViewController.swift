@@ -152,9 +152,16 @@ final class ProfileSelfPictureViewController: UIViewController {
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             options.fetchLimit = 1
 
+            // If asset is found, grab its thumbnail and create a CALayer with its contents.
             if let asset = PHAsset.fetchAssets(with: options).firstObject {
-                // If asset is found, grab its thumbnail, create a CALayer with its contents,
-                PHImageManager.default().requestImage(for: asset, targetSize: libraryButtonSize.applying(CGAffineTransform(scaleX: view.contentScaleFactor, y: view.contentScaleFactor)), contentMode: .aspectFill, options: nil, resultHandler: { result, _ in
+                let scaleFactor = view.contentScaleFactor
+                let targetSize = libraryButtonSize.applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
+
+                PHImageManager.default().requestImage(for: asset,
+                                                      targetSize: targetSize,
+                                                      contentMode: .aspectFill,
+                                                      options: nil) { result, _ in
+
                     DispatchQueue.main.async(execute: {
                         self.libraryButton.imageView?.contentMode = .scaleAspectFill
                         self.libraryButton.contentVerticalAlignment = .center
@@ -166,8 +173,7 @@ final class ProfileSelfPictureViewController: UIViewController {
                         self.libraryButton.layer.cornerRadius = 5
                         self.libraryButton.clipsToBounds = true
                     })
-
-                })
+                }
             }
         }
 

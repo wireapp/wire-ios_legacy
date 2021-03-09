@@ -1,5 +1,4 @@
 disabled_rules:
-    - line_length
     - function_body_length
     - type_body_length
     - file_length
@@ -32,3 +31,12 @@ disabled_rules:
 included:
     - Wire-iOS/Sources
     - Wire-iOS Tests/
+
+
+# In order to deal with the huge number of violations, first set
+# very high limits then iteratively reduce the limits and resolve
+# the few violations. Repeat this until we find suitable limits.
+
+line_length:
+    warning: 250
+    error: 250
