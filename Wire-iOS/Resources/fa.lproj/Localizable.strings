@@ -678,7 +678,7 @@
 "call.overlay.switch_to.speakers" = "SPEAKERS";
 "call.overlay.switch_to.all" = "ALL";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "No active video speakers...";
 
 "call.video.paused" = "ویدئو متوقف شد";
 

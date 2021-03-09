@@ -678,7 +678,7 @@
 "call.overlay.switch_to.speakers" = "ДИНАМІКИ";
 "call.overlay.switch_to.all" = "ВСІ";
 
-"call.grid.no_active_speakers" = "Активні динаміки відсутні…";
+"call.grid.no_active_speakers" = "No active video speakers...";
 
 "call.video.paused" = "Відео призупинено";
 

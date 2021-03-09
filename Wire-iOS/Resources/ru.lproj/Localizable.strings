@@ -678,7 +678,7 @@
 "call.overlay.switch_to.speakers" = "СПИКЕРЫ";
 "call.overlay.switch_to.all" = "ВСЕ";
 
-"call.grid.no_active_speakers" = "Нет активных спикеров...";
+"call.grid.no_active_speakers" = "Нет активных видеоспикеров...";
 
 "call.video.paused" = "Видео приостановлено";
 
