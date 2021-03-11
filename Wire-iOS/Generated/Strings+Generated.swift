@@ -1539,16 +1539,16 @@ internal enum L10n {
       internal enum Alert {
         /// Delete Database
         internal static let deleteDatabase = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database")
-        /// The Wire database could not be loaded because there is not enough memory on your device. Go to the „Settings” section under „Device Storage” and free up memory, then try again.
+        /// The database could not be loaded due to insufficient storage. Review your device storage usage and try again.
         internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.message")
-        /// Device Settings
+        /// Go to Settings
         internal static let settings = L10n.tr("Localizable", "databaseloadingfailure.alert.settings")
         /// Not Enough Storage
         internal static let title = L10n.tr("Localizable", "databaseloadingfailure.alert.title")
         internal enum DeleteDatabase {
           /// Continue
           internal static let `continue` = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.continue")
-          /// If you continue, all previous Conversation and chat histories will be deleted and can not be acessed from the device
+          /// By deleting the database, all local data and messages for this account will be permanently deleted.
           internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.message")
         }
       }

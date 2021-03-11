@@ -108,13 +108,6 @@ final class BlockerViewController: LaunchImageViewController {
             preferredStyle: .alert
         )
 
-        let cancelAction = UIAlertAction(
-            title: L10n.Localizable.General.cancel,
-            style: .cancel,
-            handler: nil)
-
-        deleteDatabaseConfirmationAlert.addAction(cancelAction)
-
         let continueAction = UIAlertAction(
             title: L10n.Localizable.Databaseloadingfailure.Alert.DeleteDatabase.continue,
             style: .destructive,
@@ -124,6 +117,13 @@ final class BlockerViewController: LaunchImageViewController {
         )
 
         deleteDatabaseConfirmationAlert.addAction(continueAction)
+
+        let cancelAction = UIAlertAction(
+            title: L10n.Localizable.General.cancel,
+            style: .default,
+            handler: nil)
+
+        deleteDatabaseConfirmationAlert.addAction(cancelAction)
         present(deleteDatabaseConfirmationAlert, animated: true)
     }
 }
