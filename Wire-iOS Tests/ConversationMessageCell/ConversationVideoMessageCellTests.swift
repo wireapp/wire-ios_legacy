@@ -46,7 +46,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Uploaded (File not downloaded)
 
-    func testUploadedCell_fromThisDevice() {
+    func disable_testUploadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
