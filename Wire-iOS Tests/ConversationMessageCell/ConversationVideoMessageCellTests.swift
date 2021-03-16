@@ -146,7 +146,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Download Failed
 
-    func testFailedDownloadCell_fromThisDevice() {
+    func disable_testFailedDownloadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL

@@ -205,7 +205,7 @@ final class ArticleViewTests: XCTestCase {
         verifyInAllPhoneWidths(matching: sut)
     }
 
-    func testArticleViewWithTruncatedURL() {
+    func disable_testArticleViewWithTruncatedURL() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
@@ -238,7 +238,7 @@ final class ArticleViewTests: XCTestCase {
 
     // MARK: - ArticleView images aspect
 
-    func testArticleViewWithImageHavingSmallSize() {
+    func disable_testArticleViewWithImageHavingSmallSize() {
         createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")
     }
 
