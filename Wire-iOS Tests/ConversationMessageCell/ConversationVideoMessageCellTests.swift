@@ -46,7 +46,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Uploaded (File not downloaded)
 
-    func disable_testUploadedCell_fromThisDevice() {
+    func testUploadedCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
@@ -80,7 +80,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Uploading
 
-    func disable_testUploadingCell_fromThisDevice() {
+    func testUploadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -107,7 +107,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Downloading
 
-    func disable_testDownloadingCell_fromThisDevice() {
+    func testDownloadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -135,7 +135,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    func disable_testDownloadedCell_fromOtherUser() {
+    func testDownloadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
@@ -146,7 +146,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Download Failed
 
-    func disable_testFailedDownloadCell_fromThisDevice() {
+    func testFailedDownloadCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .remote
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
