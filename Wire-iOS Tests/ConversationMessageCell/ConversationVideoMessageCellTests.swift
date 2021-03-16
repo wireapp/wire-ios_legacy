@@ -80,7 +80,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Uploading
 
-    func testUploadingCell_fromThisDevice() {
+    func disable_testUploadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
@@ -107,7 +107,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
 
     // MARK: - Downloading
 
-    func testDownloadingCell_fromThisDevice() {
+    func disable_testDownloadingCell_fromThisDevice() {
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloading
         message.backingFileMessageData.progress = 0.75
@@ -135,7 +135,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
-    func testDownloadedCell_fromOtherUser() {
+    func disable_testDownloadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
