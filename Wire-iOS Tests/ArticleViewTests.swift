@@ -242,7 +242,7 @@ final class ArticleViewTests: XCTestCase {
         createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")
     }
 
-    func testArticleViewWithImageHavingSmallHeight() {
+    func disable_testArticleViewWithImageHavingSmallHeight() {
         createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_height.jpg")
     }
 
