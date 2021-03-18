@@ -499,7 +499,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func update(for kind: Section.Kind?) {
+    private func update(for kind: Section.Kind? = nil) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
 
         var newValue: [Section]
@@ -702,7 +702,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
-            update(for: nil)
+            update()
         } else {
             /// TODO: When 2 sections are visible and a conversation belongs to both, the lower section's update
             /// animation is missing since it started after the top section update animation started. To fix this
