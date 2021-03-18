@@ -710,7 +710,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {
-                    self.update(for: kind)
+                    update(for: kind)
                 }
             }
         }
