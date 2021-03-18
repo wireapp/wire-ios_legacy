@@ -705,11 +705,13 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             /// animation is missing since it started after the top section update animation started. To fix this
             /// we should calculate the change set in one batch.
             /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
-            for updatedList in changeInfo.updatedLists {
-                if let kind = self.kind(of: updatedList) {
-                    update(for: kind)
+            DispatchQueue.main.async(execute: {
+                for updatedList in changeInfo.updatedLists {
+                    if let kind = self.kind(of: updatedList) {
+                        self.update(for: kind)
+                    }
                 }
-            }
+            })
         }
     }
 
