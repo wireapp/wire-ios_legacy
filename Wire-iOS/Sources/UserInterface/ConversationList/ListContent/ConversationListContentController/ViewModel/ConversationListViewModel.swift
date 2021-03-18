@@ -371,12 +371,6 @@ final class ConversationListViewModel: NSObject {
         return conversationDirectory.conversations(by: conversationListType).map({ SectionItem(item: $0, kind: kind) })
     }
 
-    private func reload() {
-        updateAllSections()
-        log.debug("RELOAD conversation list")
-        delegate?.listViewModelShouldBeReloaded()
-    }
-
     /// Select the item at an index path
     ///
     /// - Parameter indexPath: indexPath of the item to select
