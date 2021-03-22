@@ -172,6 +172,8 @@ public class AppRootRouter: NSObject {
     ///     - completion: A block executed after the transition has completed.
 
     private func enqueueTransition(to appState: AppState, completion: @escaping () -> Void = {}) {
+        // Perform the wait on a background queue to we don't cause
+        // a deadlock on the main queue.
         appStateTransitionQueue.async { [weak self] in
             guard let `self` = self else { return }
 
