@@ -20,11 +20,6 @@ import UIKit
 import WireSyncEngine
 import avs
 
-extension AppRootRouter {
-    static let appStateDidTransition = Notification.Name(rawValue: "appStateDidTransition")
-    static let appStateKey = "AppState"
-}
-
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
 
@@ -157,6 +152,37 @@ public class AppRootRouter: NSObject {
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
     }
+
+    // MARK: - Transition
+
+    /// A queue on which we disspatch app state transitions.
+
+    private let appStateTransitionQueue = DispatchQueue(label: "AppRootRouter.appStateTransitionQueue")
+
+    /// A group to encapsulate the entire transition to a new app state.
+
+    private let appStateTransitionGroup = DispatchGroup()
+
+    /// Synchronously enqueues a transition to a new app state.
+    ///
+    /// The transition will only begin once a previous transition has completed.
+    ///
+    /// - Parameters:
+    ///     - appState: The new state to transition to.
+    ///     - completion: A block executed after the transition has completed.
+
+    private func enqueueTransition(to appState: AppState, completion: @escaping () -> Void = {}) {
+        appStateTransitionQueue.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.appStateTransitionGroup.wait()
+
+            DispatchQueue.main.async {
+                self.transition(to: appState, completion: completion)
+            }
+        }
+    }
+
 }
 
 // MARK: - AppStateCalculatorDelegate
@@ -164,18 +190,12 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void) {
-        applicationWillTransition(to: appState)
-        transition(to: appState, completion: completion)
-        notifyTransition(for: appState)
-    }
-
-    private func notifyTransition(for appState: AppState) {
-        NotificationCenter.default.post(name: AppRootRouter.appStateDidTransition,
-                                        object: nil,
-                                        userInfo: [AppRootRouter.appStateKey: appState])
+        enqueueTransition(to: appState, completion: completion)
     }
 
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
+        applicationWillTransition(to: appState)
+
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         let completionBlock = { [weak self] in
@@ -240,18 +260,18 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 
     func reload() {
-        transition(to: .headless, completion: { })
-        transition(to: appStateCalculator.appState, completion: { })
+        enqueueTransition(to: .headless)
+        enqueueTransition(to: appStateCalculator.appState)
     }
 }
 
 extension AppRootRouter {
     // MARK: - Navigation Helpers
     private func showInitial(launchOptions: LaunchOptions) {
-        transition(to: .headless, completion: { [weak self] in
+        enqueueTransition(to: .headless) { [weak self] in
             Analytics.shared.tagEvent("app.open")
             self?.sessionManager.start(launchOptions: launchOptions)
-        })
+        }
     }
 
     private func showBlacklisted(completion: @escaping () -> Void) {
@@ -382,6 +402,7 @@ extension AppRootRouter {
 // TO DO: THIS PART MUST BE CLENED UP
 extension AppRootRouter {
     private func applicationWillTransition(to appState: AppState) {
+        appStateTransitionGroup.enter()
         if case .authenticated = appState {
             if AppDelegate.shared.shouldConfigureSelfUserProvider {
                 SelfUser.provider = ZMUserSession.shared()
@@ -402,6 +423,8 @@ extension AppRootRouter {
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
+
+        appStateTransitionGroup.leave()
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
