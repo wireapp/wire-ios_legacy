@@ -234,7 +234,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .locked:
             // TODO: [John] Avoid singleton.
             screenCurtain.delegate = ZMUserSession.shared()
-            showAppLock()
+            showAppLock(completion: completionBlock)
         }
     }
 
@@ -358,9 +358,10 @@ extension AppRootRouter {
                                completion: completion)
     }
 
-    private func showAppLock() {
+    private func showAppLock(completion: @escaping () -> Void) {
         guard let session = ZMUserSession.shared() else { fatalError() }
-        rootViewController.set(childViewController: AppLockModule.build(session: session))
+        rootViewController.set(childViewController: AppLockModule.build(session: session),
+                               completion: completion)
     }
 
     // MARK: - Helpers
