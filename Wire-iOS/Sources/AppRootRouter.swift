@@ -312,6 +312,7 @@ extension AppRootRouter {
                 error?.userSessionErrorCode == .accountDeleted,
             let sessionManager = SessionManager.shared
         else {
+            completion()
             return
         }
 
@@ -324,6 +325,7 @@ extension AppRootRouter {
                                                               statusProvider: AuthenticationStatusProvider())
 
         guard let authenticationCoordinator = authenticationCoordinator else {
+            completion()
             return
         }
 
@@ -333,8 +335,6 @@ extension AppRootRouter {
 
         rootViewController.set(childViewController: navigationController,
                                completion: completion)
-
-        presentAlertForDeletedAccountIfNeeded(error)
     }
 
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
@@ -343,6 +343,7 @@ extension AppRootRouter {
             let authenticatedRouter = buildAuthenticatedRouter(account: selectedAccount,
                                                                isComingFromRegistration: isComingFromRegistration)
         else {
+            completion()
             return
         }
 
@@ -418,7 +419,9 @@ extension AppRootRouter {
     }
 
     private func applicationDidTransition(to appState: AppState) {
-        if case .authenticated = appState {
+        if case .unauthenticated(let error) = appState {
+           presentAlertForDeletedAccountIfNeeded(error)
+        } else if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.openDeepLink(needsAuthentication: true)
 
