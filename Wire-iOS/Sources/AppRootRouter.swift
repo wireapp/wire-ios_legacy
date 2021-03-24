@@ -241,7 +241,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
         switch state {
         case .authenticated:
-            // reset the authentication coordinator when we no longer need it
             authenticationCoordinator = nil
             break
         default:
