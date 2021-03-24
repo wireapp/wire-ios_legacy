@@ -30,7 +30,11 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator: AppStateCalculator
     private var urlActionRouter: URLActionRouter
-    private var deepLinkURL: URL?
+    private var deepLinkURL: URL? {
+        didSet {
+            urlActionRouter.url = deepLinkURL
+        }
+    }
 
     private var authenticationCoordinator: AuthenticationCoordinator?
     private var switchingAccountRouter: SwitchingAccountRouter
@@ -46,6 +50,10 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
+    private var canOpenDeepLink: Bool {
+        return appStateCalculator.isAuthenticated
+            || appStateCalculator.isUnauthenticated
+    }
 
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
@@ -58,15 +66,12 @@ public class AppRootRouter: NSObject {
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
          sessionManager: SessionManager,
-         appStateCalculator: AppStateCalculator,
-         deepLinkURL: URL? = nil) {
+         appStateCalculator: AppStateCalculator) {
         self.rootViewController = viewController
         self.navigator = navigator
         self.sessionManager = sessionManager
         self.appStateCalculator = appStateCalculator
-        self.deepLinkURL = deepLinkURL
-        self.urlActionRouter = URLActionRouter(viewController: viewController,
-                                               url: deepLinkURL)
+        self.urlActionRouter = URLActionRouter(viewController: viewController)
         self.switchingAccountRouter = SwitchingAccountRouter()
         self.quickActionsManager = QuickActionsManager()
         self.foregroundNotificationFilter = ForegroundNotificationFilter()
@@ -97,23 +102,15 @@ public class AppRootRouter: NSObject {
     // MARK: - Public implementation
 
     public func start(launchOptions: LaunchOptions) {
-        guard let deepLinkURL = deepLinkURL else {
-            showInitial(launchOptions: launchOptions)
-            return
-        }
-
-        guard
-            let action = try? URLAction(url: deepLinkURL),
-            action.requiresAuthentication == true
-        else {
-            return
-        }
         showInitial(launchOptions: launchOptions)
     }
 
-    public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
-        guard let url = deepLinkURL else { return false }
-        return urlActionRouter.open(url: url)
+    public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
+        guard canOpenDeepLink else {
+            self.deepLinkURL = deepLinkURL
+            return false
+        }
+        return urlActionRouter.open(url: deepLinkURL)
     }
 
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
@@ -420,10 +417,11 @@ extension AppRootRouter {
 
     private func applicationDidTransition(to appState: AppState) {
         if case .unauthenticated(let error) = appState {
-           presentAlertForDeletedAccountIfNeeded(error)
+            presentAlertForDeletedAccountIfNeeded(error)
+            urlActionRouter.openDeepLink()
         } else if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
-            urlActionRouter.openDeepLink(needsAuthentication: true)
+            urlActionRouter.openDeepLink()
 
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {

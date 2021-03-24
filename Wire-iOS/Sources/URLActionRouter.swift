@@ -29,7 +29,7 @@ protocol URLActionRouterDelegete: class {
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink(needsAuthentication: Bool)
+    func openDeepLink()
     func open(url: URL) -> Bool
 }
 
@@ -38,19 +38,17 @@ class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Public Property
     var sessionManager: SessionManager?
+    var url: URL?
     weak var delegate: URLActionRouterDelegete?
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private var url: URL?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                sessionManager: SessionManager? = nil,
-                url: URL? = nil) {
+                sessionManager: SessionManager? = nil) {
         self.rootViewController = viewController
         self.sessionManager = sessionManager
-        self.url = url
     }
 
     // MARK: - Public Implementation
@@ -74,16 +72,10 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink(needsAuthentication: Bool = false) {
-        do {
-            guard let deeplink = url else { return }
-            guard let action = try URLAction(url: deeplink) else { return }
-            guard action.requiresAuthentication == needsAuthentication else { return }
-            open(url: deeplink)
-            resetDeepLinkURL()
-        } catch {
-            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
-        }
+    func openDeepLink() {
+        guard let deeplink = url else { return }
+        open(url: deeplink)
+        resetDeepLinkURL()
     }
 
     // MARK: - Private Implementation
