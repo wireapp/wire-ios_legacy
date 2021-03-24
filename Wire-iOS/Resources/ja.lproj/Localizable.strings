@@ -1626,6 +1626,14 @@
 "jailbrokendevice.alert.title" = "脱獄/Root化 を検知しました。";
 "jailbrokendevice.alert.message" = "セキュリティ上の理由により、このデバイスではWireを使用できません。既存のWireデータはすべて消去されました。";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "設定に移動する";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+
 // Third Party
 "giphy.conversation.message" = "%@ giphy.comから";
 "giphy.conversation.random_message" = "giphy.comから";
