@@ -1171,6 +1171,7 @@
 		EEE81E9623E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9523E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift */; };
 		EEE81E9823E0815600A1D035 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9723E0815600A1D035 /* ProfilePresenter.swift */; };
 		EEE81E9A23E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9923E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift */; };
+		EEEB8B57260B685300554C39 /* UserRightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8B56260B685300554C39 /* UserRightTests.swift */; };
 		EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */; };
 		EEEED9B223F6EA53008C94CA /* MockUserType+ZMEditableUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEED9B023F6EA4F008C94CA /* MockUserType+ZMEditableUser.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
@@ -2935,6 +2936,7 @@
 		EEE81E9523E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPeopleLineCollectionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		EEE81E9723E0815600A1D035 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		EEE81E9923E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePresenter+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		EEEB8B56260B685300554C39 /* UserRightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRightTests.swift; sourceTree = "<group>"; };
 		EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		EEEED9B023F6EA4F008C94CA /* MockUserType+ZMEditableUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+ZMEditableUser.swift"; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
@@ -6158,6 +6160,7 @@
 				542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */,
 				63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */,
 				6338610125ED3DEC0077BC05 /* ToastViewTests.swift */,
+				EEEB8B56260B685300554C39 /* UserRightTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8736,6 +8739,7 @@
 				162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */,
 				A91833112419275E00CBD0B7 /* TokenSeparatorAttachmentTests.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,
+				EEEB8B57260B685300554C39 /* UserRightTests.swift in Sources */,
 				5E294597219087CA0045ACFA /* ConversationReplyCellTests.swift in Sources */,
 				EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */,
 				BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */,
