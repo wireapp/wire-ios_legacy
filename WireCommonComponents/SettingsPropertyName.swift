@@ -87,6 +87,10 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
+
+    public var notificationName: Notification.Name {
+        return Notification.Name(changeNotificationName)
+    }
     
     public var description: String {
         return self.rawValue;
