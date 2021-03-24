@@ -75,7 +75,7 @@ final class ConversationInputBarButtonState {
                 conversationType: ZMConversationType,
                 mode: ConversationInputBarViewControllerMode,
                 syncedMessageDestructionTimeout: Bool) {
-        
+
         self.textLength = textLength
         self.editing = editing
         self.markingDown = markingDown
