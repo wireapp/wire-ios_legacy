@@ -2257,7 +2257,6 @@
 		874A02531D1D325C00D0D74A /* AudioEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffect.swift; sourceTree = "<group>"; };
 		874A02551D1D329B00D0D74A /* AudioEffectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectCell.swift; sourceTree = "<group>"; };
 		874A17472056D9FA001C6760 /* libcmark.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libcmark.framework; path = Carthage/Build/iOS/libcmark.framework; sourceTree = "<group>"; };
-		874B2C3C1BBA939000396047 /* WireBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WireBridgingHeader.h; path = "Wire-iOS/WireBridgingHeader.h"; sourceTree = SOURCE_ROOT; };
 		874B5DAD1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+AudioMessage.swift"; sourceTree = "<group>"; };
 		874C09391B4A8EF50077393B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		874D0EB01D3E575E003DF418 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -5289,7 +5288,6 @@
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
 				543DF69E252F5A4B001F6EA6 /* Main.storyboard */,
-				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
 				54B27985258113FD0043ED25 /* AuthenticatedRouter.swift */,

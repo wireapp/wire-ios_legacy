@@ -136,7 +136,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         verify(matching: previewView.prepareForSnapshot())
     }
 
-    func testThatItRendersVideoMessagePreview() {
+    func disable_testThatItRendersVideoMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"

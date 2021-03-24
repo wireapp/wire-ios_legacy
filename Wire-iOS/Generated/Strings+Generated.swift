@@ -1535,6 +1535,24 @@ internal enum L10n {
         internal static let system = L10n.tr("Localizable", "dark_theme.option.system")
       }
     }
+    internal enum Databaseloadingfailure {
+      internal enum Alert {
+        /// Delete Database
+        internal static let deleteDatabase = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database")
+        /// The database could not be loaded due to insufficient storage. Review your device storage usage and try again.
+        internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.message")
+        /// Go to Settings
+        internal static let settings = L10n.tr("Localizable", "databaseloadingfailure.alert.settings")
+        /// Not Enough Storage
+        internal static let title = L10n.tr("Localizable", "databaseloadingfailure.alert.title")
+        internal enum DeleteDatabase {
+          /// Continue
+          internal static let `continue` = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.continue")
+          /// By deleting the database, all local data and messages for this account will be permanently deleted.
+          internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.message")
+        }
+      }
+    }
     internal enum Device {
       /// Not Verified
       internal static let notVerified = L10n.tr("Localizable", "device.not_verified")
