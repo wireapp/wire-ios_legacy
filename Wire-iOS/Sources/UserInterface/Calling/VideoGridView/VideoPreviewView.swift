@@ -46,6 +46,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         return isMaximized ? false : videoKind.shouldFill
     }
 
+    private var previewContainer: UIView?
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let pausedLabel = UILabel(
@@ -85,10 +86,33 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
+
     // MARK: - Video scaling
-    override func tranformVideo(withScale scale: CGFloat) {
-        previewView?.transform.scaledBy(x: scale, y: scale)
+
+    @objc
+    func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        guard
+            gestureRecognizer.state == .began
+            || gestureRecognizer.state == .changed
+            || gestureRecognizer.state == .ended
+        else { return }
+
+        guard let view = gestureRecognizer.view else { return }
+
+        let bounds = view.bounds
+        var location = gestureRecognizer.location(in: view)
+
+        location.x -= bounds.midX
+        location.y -= bounds.midY
+
+        let transform = view.transform
+            .translatedBy(x: location.x, y: location.y)
+            .scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale)
+            .translatedBy(x: -location.x, y: -location.y)
+
+        view.transform = transform
+
+        gestureRecognizer.scale = 1
     }
 
     // MARK: - Fill mode
@@ -105,7 +129,13 @@ final class VideoPreviewView: BaseVideoPreviewView {
     }
 
     private func updateFillMode() {
-        guard let previewView = previewView else { return }
+        guard let previewView = previewView, let container = previewContainer else { return }
+
+        // Reset scale if the view was zoomed in
+        guard container.transform.isIdentity else {
+            container.transform = .identity
+            return
+        }
 
         previewView.shouldFill = shouldFill
     }
@@ -166,16 +196,25 @@ final class VideoPreviewView: BaseVideoPreviewView {
         preview.backgroundColor = .clear
         preview.userid = stream.streamId.userId.transportString()
         preview.clientid = stream.streamId.clientId
-        preview.translatesAutoresizingMaskIntoConstraints = false
-        if let snapshotView = snapshotView {
-            insertSubview(preview, belowSubview: snapshotView)
-        } else {
-            insertSubview(preview, belowSubview: userDetailsView)
-        }
-        preview.fitInSuperview()
         preview.shouldFill = shouldFill
-
         previewView = preview
+
+        // Adding the preview into a container allows a smoother scaling
+        let container = UIView()
+        container.addSubview(preview)
+        container.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:))))
+        previewContainer = container
+
+        if let snapshotView = snapshotView {
+            insertSubview(container, belowSubview: snapshotView)
+        } else {
+            insertSubview(container, belowSubview: userDetailsView)
+        }
+
+        [container, preview].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.fitInSuperview()
+        }
     }
 
     private func createSnapshotView() {

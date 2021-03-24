@@ -6227,13 +6227,6 @@
 			path = Emoji/EmojiRessources;
 			sourceTree = "<group>";
 		};
-		BF8C8C6C20D9222700442833 /* CallWindow */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CallWindow;
-			sourceTree = "<group>";
-		};
 		BFAC71FC20A1CDFC002711C4 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -6373,7 +6366,6 @@
 			children = (
 				160D6921212C813700096EAD /* CallController */,
 				160D691E212C78C700096EAD /* CallQualityController */,
-				BF8C8C6C20D9222700442833 /* CallWindow */,
 				5E33F0D120AD637400414EA6 /* Permissions */,
 				16C4BDA120A57DDF00BCDB17 /* CallDegradationViewController */,
 				BFAC71FF20A1CE82002711C4 /* CallViewController */,

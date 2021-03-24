@@ -93,8 +93,24 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     // MARK: - Setup
+//
+//    var minimizeOverlayGesture: UIPanGestureRecognizer? {
+//        var vc: ModalPresentationViewController?
+//        var currentVC: UIViewController = self
+//        while let presentingVC = currentVC.presentingViewController {
+//            if let modalVC = presentingVC as? ModalPresentationViewController {
+//                vc = modalVC
+//                break
+//            }
+//            currentVC = presentingVC
+//        }
+//
+//        return vc?.interactionController.panGestureRecognizer
+//    }
 
     private func setupViews() {
+//        minimizeOverlayGesture?.isEnabled = false
+
         gridView.dataSource = self
         view.addSubview(gridView)
 
@@ -106,7 +122,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     private func createConstraints() {
-        for subView in [gridView, thumbnailViewController.view] {
+        for subView: UIView? in [gridView] {
             subView?.translatesAutoresizingMaskIntoConstraints = false
             subView?.fitInSuperview()
         }

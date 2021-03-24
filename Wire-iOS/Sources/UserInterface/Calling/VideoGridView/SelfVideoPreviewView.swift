@@ -38,12 +38,6 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         stopCapture()
     }
     
-    // MARK: - Video scaling
-    override func tranformVideo(withScale scale: CGFloat) {
-        print("scale: \(scale)")
-        previewView.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
-    
     override func setupViews() {
         super.setupViews()
         previewView.backgroundColor = .clear
