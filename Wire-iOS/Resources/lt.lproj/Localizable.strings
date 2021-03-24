@@ -1626,6 +1626,14 @@
 "jailbrokendevice.alert.title" = "Aptiktas įsilaužimas";
 "jailbrokendevice.alert.message" = "Dėl saugumo „Wire“ negalite naudotis šiame įrenginyje. Esantys „Wire“ duomenys buvo ištrinti.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Eiti į Nustatymus";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+
 // Third Party
 "giphy.conversation.message" = "%@ · iš giphy.com";
 "giphy.conversation.random_message" = "iš giphy.com";

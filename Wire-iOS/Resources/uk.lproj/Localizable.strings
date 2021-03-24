@@ -678,7 +678,7 @@
 "call.overlay.switch_to.speakers" = "ДИНАМІКИ";
 "call.overlay.switch_to.all" = "ВСІ";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "Активні спікери відсутні...";
 
 "call.video.paused" = "Відео призупинено";
 
@@ -1625,6 +1625,14 @@
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
 "jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Недостатньо місця";
+"databaseloadingfailure.alert.message" = "Не вдалося завантажити базу даних через нестачу вільного місця. Перевірте розмір вільного місця на вашому пристрої та спробуйте ще раз.";
+"databaseloadingfailure.alert.settings" = "Перейти до налаштувань";
+"databaseloadingfailure.alert.delete_database" = "Видалити базу даних";
+"databaseloadingfailure.alert.delete_database.message" = "З видаленням бази даних, всі локальні дані та повідомлення для цього акаунту також будуть остаточно видалені.";
+"databaseloadingfailure.alert.delete_database.continue" = "Продовжити";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";

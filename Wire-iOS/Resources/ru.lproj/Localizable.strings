@@ -573,7 +573,7 @@
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
 "content.message.sign" = "Подписать";
-"content.message.copy" = "Копировать";
+"content.message.copy" = "Скопировать";
 "content.message.download" = "Скачать";
 "content.message.details" = "Профиль";
 
@@ -818,7 +818,7 @@
 "message.delete_dialog.action.delete" = "Удалить у всех";
 
 // Edit message
-"message.menu.edit.title" = "Редактировать";
+"message.menu.edit.title" = "Правка";
 
 // Accept connection request
 "profile.connection_request_dialog.title" = "Принять?";
@@ -1625,6 +1625,14 @@
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
 "jailbrokendevice.alert.message" = "С целью обеспечения безопасности Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Недостаточно места";
+"databaseloadingfailure.alert.message" = "База данных не может быть загружена из-за нехватки места на вашем устройстве. Проверьте использование памяти вашего устройства и попробуйте еще раз.";
+"databaseloadingfailure.alert.settings" = "Перейти в настройки";
+"databaseloadingfailure.alert.delete_database" = "Удалить базу данных";
+"databaseloadingfailure.alert.delete_database.message" = "При удалении базы данных все локальные данные и сообщения этого аккаунта будут удалены навсегда.";
+"databaseloadingfailure.alert.delete_database.continue" = "Продолжить";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
