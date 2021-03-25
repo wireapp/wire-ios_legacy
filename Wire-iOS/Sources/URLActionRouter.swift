@@ -73,9 +73,14 @@ class URLActionRouter: URLActionRouterProtocol {
     }
 
     func openDeepLink() {
-        guard let deeplink = url else { return }
-        open(url: deeplink)
-        resetDeepLinkURL()
+        do {
+            guard let deeplink = url else { return }
+            guard let _ = try URLAction(url: deeplink) else { return }
+            open(url: deeplink)
+            resetDeepLinkURL()
+        } catch {
+            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
+        }
     }
 
     // MARK: - Private Implementation

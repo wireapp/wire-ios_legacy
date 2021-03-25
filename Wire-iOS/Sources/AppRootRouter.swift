@@ -31,8 +31,11 @@ public class AppRootRouter: NSObject {
     private var appStateCalculator: AppStateCalculator
     private var urlActionRouter: URLActionRouter
     private var deepLinkURL: URL? {
-        didSet {
-            urlActionRouter.url = deepLinkURL
+        get {
+            return urlActionRouter.url
+        }
+        set {
+            urlActionRouter.url = newValue
         }
     }
 
@@ -50,9 +53,8 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    private var canOpenDeepLink: Bool {
-        return appStateCalculator.isAuthenticated
-            || appStateCalculator.isUnauthenticated
+    private var isReadyToOpenDeepLink: Bool {
+        return appStateCalculator.canProcessDeepLinks
     }
 
     // MARK: - Private Set Property
@@ -106,7 +108,7 @@ public class AppRootRouter: NSObject {
     }
 
     public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
-        guard canOpenDeepLink else {
+        guard isReadyToOpenDeepLink else {
             self.deepLinkURL = deepLinkURL
             return false
         }

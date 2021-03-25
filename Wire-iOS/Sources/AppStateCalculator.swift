@@ -56,6 +56,17 @@ enum AppState: Equatable {
     }
 }
 
+extension AppState {
+    var canProcessDeepLinks: Bool {
+      switch self {
+      case .unauthenticated, .authenticated:
+        return true
+      default:
+        return false
+      }
+    }
+}
+
 protocol AppStateCalculatorDelegate: class {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
@@ -81,20 +92,10 @@ class AppStateCalculator {
         return true
     }
 
-    var isUnauthenticated: Bool {
-        guard case .unauthenticated = appState else {
-            return false
-        }
-        return true
+    var canProcessDeepLinks: Bool {
+        return appState.canProcessDeepLinks
     }
-
-    var isAuthenticated: Bool {
-        guard case .authenticated = appState else {
-            return false
-        }
-        return true
-    }
-
+    
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
     private(set) var pendingAppState: AppState?
