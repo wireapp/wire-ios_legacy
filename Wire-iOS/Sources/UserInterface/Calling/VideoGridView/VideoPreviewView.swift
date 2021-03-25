@@ -112,20 +112,24 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
 
         guard let view = gestureRecognizer.view else { return }
 
-        let bounds = view.bounds
+        // get location of the gesture's centroid
         var location = gestureRecognizer.location(in: view)
 
-        location.x -= bounds.midX
-        location.y -= bounds.midY
+        // offset location relative to center of the view
+        // because transform is done relatively to the view's center
+        location.x -= view.bounds.midX
+        location.y -= view.bounds.midY
 
+        // translate view origin to pinch location, scale, translate view back
         let transform = view.transform
             .translatedBy(x: location.x, y: location.y)
             .scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale)
             .translatedBy(x: -location.x, y: -location.y)
 
+        // apply transform
         view.transform = transform
 
-        // Reset the scale
+        // reset scale
         gestureRecognizer.scale = 1
     }
 
@@ -135,7 +139,10 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
 
         let translation = gestureRecognizer.translation(in: view)
 
+        // translate view to gesture's location
         view.transform = view.transform.translatedBy(x: translation.x, y: translation.y)
+
+        // reset translation
         gestureRecognizer.setTranslation(.zero, in: view)
     }
 
