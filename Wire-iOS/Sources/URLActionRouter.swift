@@ -29,7 +29,7 @@ protocol URLActionRouterDelegete: class {
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink()
+    func openDeepLink(for appState: AppState)
     func open(url: URL) -> Bool
 }
 
@@ -38,11 +38,11 @@ class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    var url: URL?
     weak var delegate: URLActionRouterDelegete?
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
+    private var url: URL?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
@@ -55,6 +55,7 @@ class URLActionRouter: URLActionRouterProtocol {
     @discardableResult
     func open(url: URL) -> Bool {
         do {
+            self.url = url
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
@@ -72,10 +73,11 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink() {
+    func openDeepLink(for appState: AppState) {
         do {
             guard let deeplink = url else { return }
-            guard let _ = try URLAction(url: deeplink) else { return }
+            guard appState.canProcessDeepLinks else { return }
+            guard try (URLAction(url: deeplink) != nil) else { return }
             open(url: deeplink)
             resetDeepLinkURL()
         } catch {
@@ -206,5 +208,12 @@ extension URLActionRouter: PresentationDelegate {
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
         rootViewController.present(alertController, animated: true)
+    }
+}
+
+extension URLActionRouter {
+    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
+    public func testHelper_setUrl(_ url: URL) {
+        self.url = url
     }
 }

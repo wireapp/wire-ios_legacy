@@ -30,14 +30,6 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator: AppStateCalculator
     private var urlActionRouter: URLActionRouter
-    private var deepLinkURL: URL? {
-        get {
-            return urlActionRouter.url
-        }
-        set {
-            urlActionRouter.url = newValue
-        }
-    }
 
     private var authenticationCoordinator: AuthenticationCoordinator?
     private var switchingAccountRouter: SwitchingAccountRouter
@@ -53,9 +45,6 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    private var isReadyToOpenDeepLink: Bool {
-        return appStateCalculator.canProcessDeepLinks
-    }
 
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
@@ -108,10 +97,6 @@ public class AppRootRouter: NSObject {
     }
 
     public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
-        guard isReadyToOpenDeepLink else {
-            self.deepLinkURL = deepLinkURL
-            return false
-        }
         return urlActionRouter.open(url: deepLinkURL)
     }
 
@@ -241,7 +226,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         switch state {
         case .authenticated:
             authenticationCoordinator = nil
-            break
         default:
             break
         }
@@ -421,16 +405,15 @@ extension AppRootRouter {
     private func applicationDidTransition(to appState: AppState) {
         if case .unauthenticated(let error) = appState {
             presentAlertForDeletedAccountIfNeeded(error)
-            urlActionRouter.openDeepLink()
         } else if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
-            urlActionRouter.openDeepLink()
 
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
             SelfUser.provider = nil
         }
 
+        urlActionRouter.openDeepLink(for: appState)
         appStateTransitionGroup.leave()
     }
 
@@ -519,6 +502,5 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
-
     }
 }

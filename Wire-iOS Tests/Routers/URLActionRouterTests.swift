@@ -25,26 +25,39 @@ final class URLActionRouterTests: XCTestCase {
         // GIVEN
         let invalidDeepLinkUrl = URL(string: "wire://invalidDeepLinkUrl")!
         let router =  TestableURLActionRouter(viewController: RootViewController())
-        router.url = invalidDeepLinkUrl
+        router.testHelper_setUrl(invalidDeepLinkUrl)
 
         // WHEN
-        router.openDeepLink()
+        router.openDeepLink(for: .authenticated(completedRegistration: true))
 
         // THEN
         XCTAssertFalse(router.wasDeepLinkOpened)
     }
 
-    func testThatDeepLinkIsOpened_WhenDeepLinkIsValid() {
+    func testThatDeepLinkIsOpened_WhenDeepLinkIsValidAndAppStateValid() {
         // GIVEN
         let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
         let router =  TestableURLActionRouter(viewController: RootViewController())
-        router.url = validDeepLink
+        router.testHelper_setUrl(validDeepLink)
 
         // WHEN
-        router.openDeepLink()
+        router.openDeepLink(for: .authenticated(completedRegistration: true))
 
         // THEN
         XCTAssertTrue(router.wasDeepLinkOpened)
+    }
+
+    func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndAppStateInvalid() {
+        // GIVEN
+        let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
+        let router =  TestableURLActionRouter(viewController: RootViewController())
+        router.testHelper_setUrl(validDeepLink)
+
+        // WHEN
+        router.openDeepLink(for: .migrating)
+
+        // THEN
+        XCTAssertFalse(router.wasDeepLinkOpened)
     }
 }
 
