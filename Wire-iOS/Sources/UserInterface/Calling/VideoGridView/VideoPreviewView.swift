@@ -21,7 +21,7 @@ import UIKit
 import avs
 import WireSyncEngine
 
-final class VideoPreviewView: BaseVideoPreviewView {
+final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate {
 
     var isPaused = false {
         didSet {
@@ -33,6 +33,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     override var isMaximized: Bool {
         didSet {
             updateFillMode()
+            updateGestureRecognizers()
         }
     }
 
@@ -57,6 +58,8 @@ final class VideoPreviewView: BaseVideoPreviewView {
         variant: .dark
     )
     private var snapshotView: UIView?
+    private let pinchGesture = UIPinchGestureRecognizer()
+    private let panGesture = UIPanGestureRecognizer()
 
     // MARK: - Initialization
     override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
@@ -78,6 +81,16 @@ final class VideoPreviewView: BaseVideoPreviewView {
             insertSubview($0, belowSubview: userDetailsView)
         }
         pausedLabel.textAlignment = .center
+
+        pinchGesture.addTarget(self, action: #selector(handlePinchGesture(_:)))
+        pinchGesture.delegate = self
+
+        panGesture.addTarget(self, action: #selector(handlePanGesture(_:)))
+        panGesture.delegate = self
+        panGesture.minimumNumberOfTouches = 2
+        panGesture.maximumNumberOfTouches = 2
+
+        updateGestureRecognizers()
     }
 
     override func createConstraints() {
@@ -87,7 +100,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
-    // MARK: - Video scaling
+    // MARK: - Video scaling & panning
 
     @objc
     func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
@@ -112,7 +125,27 @@ final class VideoPreviewView: BaseVideoPreviewView {
 
         view.transform = transform
 
+        // Reset the scale
         gestureRecognizer.scale = 1
+    }
+
+    @objc
+    func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
+        guard let view = gestureRecognizer.view else { return }
+
+        let translation = gestureRecognizer.translation(in: view)
+
+        view.transform = view.transform.translatedBy(x: translation.x, y: translation.y)
+        gestureRecognizer.setTranslation(.zero, in: view)
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    private func updateGestureRecognizers() {
+        panGesture.isEnabled = isMaximized
+        pinchGesture.isEnabled = isMaximized
     }
 
     // MARK: - Fill mode
@@ -132,11 +165,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
         guard let previewView = previewView, let container = previewContainer else { return }
 
         // Reset scale if the view was zoomed in
-        guard container.transform.isIdentity else {
-            container.transform = .identity
-            return
-        }
-
+        container.transform = .identity
         previewView.shouldFill = shouldFill
     }
 
@@ -199,10 +228,11 @@ final class VideoPreviewView: BaseVideoPreviewView {
         preview.shouldFill = shouldFill
         previewView = preview
 
-        // Adding the preview into a container allows a smoother scaling
+        // Adding the preview into a container allows smoother scaling
         let container = UIView()
         container.addSubview(preview)
-        container.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:))))
+        container.addGestureRecognizer(pinchGesture)
+        container.addGestureRecognizer(panGesture)
         previewContainer = container
 
         if let snapshotView = snapshotView {
