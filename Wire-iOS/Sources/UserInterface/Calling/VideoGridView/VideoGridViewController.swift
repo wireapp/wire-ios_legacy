@@ -144,9 +144,11 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     private func toggleMaximized(view: BaseVideoPreviewView?) {
         let stream = view?.stream
+        let shouldMaximize = !isMaximized(stream: stream)
 
-        maximizedView = isMaximized(stream: stream) ? nil : view
-        view?.isMaximized = isMaximized(stream: stream)
+        maximizedView = shouldMaximize ? view : nil
+        view?.isMaximized = shouldMaximize
+        thumbnailViewController.view.isUserInteractionEnabled = !shouldMaximize
         updateVideoGrid(with: videoStreams)
     }
 
