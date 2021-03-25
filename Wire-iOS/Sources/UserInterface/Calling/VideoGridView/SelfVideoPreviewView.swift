@@ -37,7 +37,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     deinit {
         stopCapture()
     }
-    
+
     override func setupViews() {
         super.setupViews()
         previewView.backgroundColor = .clear

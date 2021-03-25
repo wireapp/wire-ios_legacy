@@ -95,7 +95,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         createConstraints()
         updateUserDetails()
         updateActiveSpeakerFrame()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
 
