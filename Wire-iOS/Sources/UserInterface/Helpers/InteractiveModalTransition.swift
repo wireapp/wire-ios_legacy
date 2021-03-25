@@ -109,7 +109,7 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
 
 }
 
-final class ModalInteractionController: UIPercentDrivenInteractiveTransition {
+final private class ModalInteractionController: UIPercentDrivenInteractiveTransition {
     var interactionInProgress = false
     private var shouldCompleteTransition = false
     private weak var presentationViewController: ModalPresentationViewController!
@@ -151,7 +151,7 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     fileprivate unowned let viewController: UIViewController
     fileprivate let dimView = UIView()
 
-    let interactionController = ModalInteractionController()
+    private let interactionController = ModalInteractionController()
     private let configuration: ModalPresentationConfiguration
 
     init(viewController: UIViewController, configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3)) {
