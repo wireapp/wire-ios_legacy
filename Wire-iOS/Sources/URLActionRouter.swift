@@ -84,7 +84,7 @@ class URLActionRouter: URLActionRouterProtocol {
             open(url: deeplink)
             resetDeepLinkURL()
         } catch {
-            zmLog.error("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
+            zmLog.error("Could not open deepLink for url: \(String(describing: url?.absoluteString))")
         }
     }
 
