@@ -95,7 +95,6 @@ final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - Setup
 
     private func setupViews() {
-
         gridView.dataSource = self
         view.addSubview(gridView)
 
@@ -107,7 +106,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     private func createConstraints() {
-        for subView: UIView? in [gridView] {
+        for subView in [gridView, thumbnailViewController.view] {
             subView?.translatesAutoresizingMaskIntoConstraints = false
             subView?.fitInSuperview()
         }
