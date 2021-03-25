@@ -33,6 +33,9 @@ protocol URLActionRouterProtocol {
     func open(url: URL) -> Bool
 }
 
+// MARK: - Logging
+private let zmLog = ZMSLog(tag: "UI")
+
 // MARK: - URLActionRouter
 class URLActionRouter: URLActionRouterProtocol {
 
@@ -81,7 +84,7 @@ class URLActionRouter: URLActionRouterProtocol {
             open(url: deeplink)
             resetDeepLinkURL()
         } catch {
-            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
+            zmLog.error("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
         }
     }
 
