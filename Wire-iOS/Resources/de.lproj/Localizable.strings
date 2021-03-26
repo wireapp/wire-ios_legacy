@@ -1626,6 +1626,14 @@
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
 "jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Nicht genügend Speicherplatz";
+"databaseloadingfailure.alert.message" = "Die Datenbank konnte nicht geladen werden, da der Speicherplatz nicht ausreicht. Überprüfen Sie die Nutzung Ihres Geräts und versuchen Sie es erneut.";
+"databaseloadingfailure.alert.settings" = "Einstellungen öffnen";
+"databaseloadingfailure.alert.delete_database" = "Datenbank löschen";
+"databaseloadingfailure.alert.delete_database.message" = "Durch das Löschen der Datenbank werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
+"databaseloadingfailure.alert.delete_database.continue" = "Weiter";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";

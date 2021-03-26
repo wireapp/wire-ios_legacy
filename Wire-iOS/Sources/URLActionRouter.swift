@@ -29,9 +29,12 @@ protocol URLActionRouterDelegete: class {
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink(needsAuthentication: Bool)
+    func openDeepLink(for appState: AppState)
     func open(url: URL) -> Bool
 }
+
+// MARK: - Logging
+private let zmLog = ZMSLog(tag: "UI")
 
 // MARK: - URLActionRouter
 class URLActionRouter: URLActionRouterProtocol {
@@ -46,17 +49,16 @@ class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                sessionManager: SessionManager? = nil,
-                url: URL? = nil) {
+                sessionManager: SessionManager? = nil) {
         self.rootViewController = viewController
         self.sessionManager = sessionManager
-        self.url = url
     }
 
     // MARK: - Public Implementation
     @discardableResult
     func open(url: URL) -> Bool {
         do {
+            self.url = url
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
@@ -74,15 +76,15 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink(needsAuthentication: Bool = false) {
+    func openDeepLink(for appState: AppState) {
         do {
             guard let deeplink = url else { return }
-            guard let action = try URLAction(url: deeplink) else { return }
-            guard action.requiresAuthentication == needsAuthentication else { return }
+            guard appState.canProcessDeepLinks else { return }
+            guard try (URLAction(url: deeplink) != nil) else { return }
             open(url: deeplink)
             resetDeepLinkURL()
         } catch {
-            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
+            zmLog.error("Could not open deepLink for url: \(String(describing: url?.absoluteString))")
         }
     }
 
@@ -209,5 +211,12 @@ extension URLActionRouter: PresentationDelegate {
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
         rootViewController.present(alertController, animated: true)
+    }
+}
+
+extension URLActionRouter {
+    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
+    public func testHelper_setUrl(_ url: URL) {
+        self.url = url
     }
 }

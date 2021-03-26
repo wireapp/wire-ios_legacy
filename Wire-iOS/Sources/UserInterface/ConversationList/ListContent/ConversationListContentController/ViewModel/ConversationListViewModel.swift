@@ -371,12 +371,6 @@ final class ConversationListViewModel: NSObject {
         return conversationDirectory.conversations(by: conversationListType).map({ SectionItem(item: $0, kind: kind) })
     }
 
-    private func reload() {
-        updateAllSections()
-        log.debug("RELOAD conversation list")
-        delegate?.listViewModelShouldBeReloaded()
-    }
-
     /// Select the item at an index path
     ///
     /// - Parameter indexPath: indexPath of the item to select
@@ -499,11 +493,12 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func update(for kind: Section.Kind) {
+    private func update(for kind: Section.Kind? = nil) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
 
         var newValue: [Section]
-        if let sectionNumber = self.sectionNumber(for: kind) {
+        if let kind = kind,
+            let sectionNumber = self.sectionNumber(for: kind) {
             newValue = sections
             let newList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
 
@@ -520,23 +515,25 @@ final class ConversationListViewModel: NSObject {
         }
 
         let changeset = StagedChangeset(source: sections, target: newValue)
-
-        delegate?.reload(using: changeset, interrupt: { _ in
-            return false
-        }) { data in
-            if let data = data {
-                self.sections = data
+        if changeset.isEmpty {
+            sections = newValue
+        } else {
+            delegate?.reload(using: changeset, interrupt: { _ in
+                return false
+            }) { data in
+                if let data = data {
+                    self.sections = data
+                }
             }
         }
 
-        if let sectionNumber = sectionNumber(for: kind) {
-
-            /// When the section is collaped, the setData closure of the reload() above is not called and we need to set here to make sure the folder badge calculation is correct
-            if collapsed(at: sectionNumber) {
-                sections = newValue
-            }
-
+        if let kind = kind,
+           let sectionNumber = sectionNumber(for: kind) {
             delegate?.listViewModel(self, didUpdateSection: sectionNumber)
+        } else {
+            sections.enumerated().forEach {
+                delegate?.listViewModel(self, didUpdateSection: $0.offset)
+            }
         }
     }
 
@@ -699,7 +696,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
-            reload()
+            update()
         } else {
             /// TODO: When 2 sections are visible and a conversation belongs to both, the lower section's update
             /// animation is missing since it started after the top section update animation started. To fix this
