@@ -391,15 +391,8 @@ extension AppRootRouter {
 extension AppRootRouter {
     private func applicationWillTransition(to appState: AppState) {
         appStateTransitionGroup.enter()
-        if case .authenticated = appState {
-            if AppDelegate.shared.shouldConfigureSelfUserProvider {
-                SelfUser.provider = ZMUserSession.shared()
-            }
-        }
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = .accent()
-        colorScheme.variant = Settings.shared.colorSchemeVariant
+        configureSelfUserProvider(for: appState)
+        configureColorScheme()
     }
 
     private func applicationDidTransition(to appState: AppState) {
@@ -411,12 +404,35 @@ extension AppRootRouter {
             authenticatedRouter?.updateActiveCallPresentationState()
 
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
-        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
-            SelfUser.provider = nil
         }
 
+        resetSelfUserProvider(for: appState)
         urlActionRouter.openDeepLink(for: appState)
         appStateTransitionGroup.leave()
+    }
+
+    private func resetSelfUserProvider(for appState: AppState) {
+        guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
+
+        switch appState {
+        case .authenticated: break
+        default:
+            SelfUser.provider = nil
+        }
+    }
+
+    private func configureSelfUserProvider(for appState: AppState) {
+        guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
+
+        if case .authenticated = appState {
+            SelfUser.provider = ZMUserSession.shared()
+        }
+    }
+
+    private func configureColorScheme() {
+        let colorScheme = ColorScheme.default
+        colorScheme.accentColor = .accent()
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
