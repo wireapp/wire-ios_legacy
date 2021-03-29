@@ -405,7 +405,9 @@ extension AppRootRouter {
     private func applicationDidTransition(to appState: AppState) {
         if case .unauthenticated(let error) = appState {
             presentAlertForDeletedAccountIfNeeded(error)
-        } else if case .authenticated = appState {
+        }
+
+        if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
 
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
