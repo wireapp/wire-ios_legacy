@@ -21,7 +21,7 @@ import UIKit
 final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
-    private let thumbnailContainerView = UIView()
+    private let thumbnailContainerView = PassthroughTouchesView()
     private(set) var contentView: OrientableView?
 
     // MARK: - Dynamics
@@ -44,7 +44,6 @@ final class PinnableThumbnailViewController: UIViewController {
     fileprivate(set) var thumbnailContentSize = CGSize(width: 100, height: 100)
 
     func removeCurrentThumbnailContentView() {
-        view.isUserInteractionEnabled = false
         contentView?.removeFromSuperview()
         contentView = nil
         thumbnailView.accessibilityIdentifier = nil
@@ -58,7 +57,6 @@ final class PinnableThumbnailViewController: UIViewController {
 
         self.thumbnailContentSize = contentSize
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
-        view.isUserInteractionEnabled = true
     }
 
     func updateThumbnailContentSize(_ newSize: CGSize, animated: Bool) {
@@ -67,6 +65,10 @@ final class PinnableThumbnailViewController: UIViewController {
     }
 
     // MARK: - Configuration
+
+    override func loadView() {
+        view = PassthroughTouchesView()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +104,6 @@ final class PinnableThumbnailViewController: UIViewController {
     }
 
     private func configureViews() {
-        view.isUserInteractionEnabled = false
         view.addSubview(thumbnailContainerView)
 
         thumbnailContainerView.addSubview(thumbnailView)

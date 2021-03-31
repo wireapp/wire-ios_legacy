@@ -133,9 +133,6 @@ final class VideoGridViewController: SpinnerCapableViewController {
         maximizedView = shouldMaximize ? view : nil
         view?.isMaximized = shouldMaximize
 
-        // disable user interaction on thumbnailViewController to let underlying subviews
-        // receive gestures when the preview is maximized
-        thumbnailViewController.view.isUserInteractionEnabled = !shouldMaximize
         updateVideoGrid(with: videoStreams)
     }
 
