@@ -95,7 +95,7 @@ class AppStateCalculator {
     var canProcessDeepLinks: Bool {
         return appState.canProcessDeepLinks
     }
-    
+
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
     private(set) var pendingAppState: AppState?
