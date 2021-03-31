@@ -391,7 +391,7 @@ extension AppRootRouter {
 extension AppRootRouter {
     private func applicationWillTransition(to appState: AppState) {
         appStateTransitionGroup.enter()
-        configureSelfUserProvider(for: appState)
+        configureSelfUserProviderIfNeeded(for: appState)
         configureColorScheme()
     }
 
@@ -406,12 +406,12 @@ extension AppRootRouter {
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
 
-        resetSelfUserProvider(for: appState)
+        resetSelfUserProviderIfNeeded(for: appState)
         urlActionRouter.openDeepLink(for: appState)
         appStateTransitionGroup.leave()
     }
 
-    private func resetSelfUserProvider(for appState: AppState) {
+    private func resetSelfUserProviderIfNeeded(for appState: AppState) {
         guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
 
         switch appState {
@@ -421,7 +421,7 @@ extension AppRootRouter {
         }
     }
 
-    private func configureSelfUserProvider(for appState: AppState) {
+    private func configureSelfUserProviderIfNeeded(for appState: AppState) {
         guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
 
         if case .authenticated = appState {
