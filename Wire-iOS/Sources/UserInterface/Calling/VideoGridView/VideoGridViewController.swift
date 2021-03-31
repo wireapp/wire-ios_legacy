@@ -260,10 +260,12 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? BaseVideoPreviewView)
+            let view = (streamView(for: $0.stream) as? VideoPreviewView)
+
             view?.stream = $0.stream
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
-            (view as? VideoPreviewView)?.isPaused = $0.isPaused
+            view?.isPaused = $0.isPaused
+            view?.pinchToZoomRules = PinchToZoomRules(isOneToOneCall: configuration.callHasTwoParticipants)
         }
     }
 
@@ -376,7 +378,12 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame)
+            let view = VideoPreviewView(
+                stream: videoStream.stream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                pinchToZoomRules: PinchToZoomRules(isOneToOneCall: configuration.callHasTwoParticipants)
+            )
             viewCache[streamId] = view
             return view
         }
