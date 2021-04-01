@@ -270,7 +270,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
             view?.stream = $0.stream
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
-            view?.pinchToZoomRules = PinchToZoomRules(isOneToOneCall: configuration.callHasTwoParticipants)
+            view?.pinchToZoomRule = PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
         }
     }
 
@@ -387,7 +387,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
                 stream: videoStream.stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
-                pinchToZoomRules: PinchToZoomRules(isOneToOneCall: configuration.callHasTwoParticipants)
+                pinchToZoomRule: PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
             )
             viewCache[streamId] = view
             return view

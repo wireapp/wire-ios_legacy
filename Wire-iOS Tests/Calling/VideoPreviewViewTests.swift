@@ -33,12 +33,12 @@ class VideoPreviewViewTests: XCTestCase {
         super.tearDown()
     }
 
-    private func createView(from stream: Wire.Stream, isCovered: Bool, pinchToZoomRules: PinchToZoomRules = .enableWhenMaximized) -> VideoPreviewView {
+    private func createView(from stream: Wire.Stream, isCovered: Bool, pinchToZoomRule: PinchToZoomRule = .enableWhenMaximized) -> VideoPreviewView {
         let view = VideoPreviewView(
             stream: stream,
             isCovered: isCovered,
             shouldShowActiveSpeakerFrame: true,
-            pinchToZoomRules: pinchToZoomRules
+            pinchToZoomRule: pinchToZoomRule
         )
         view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
         view.backgroundColor = .graphite
@@ -199,7 +199,7 @@ class VideoPreviewViewTests: XCTestCase {
     func testThat_GestureRecognizersAreDisabled_WhenRuleIs_EnableWhenFitted_And_ShouldFill_IsTrue() {
         // given - view is not maximized and videoState is .started, shouldFill will compute to true
         let stream = stubProvider.videoStream(videoState: .started).stream
-        sut = createView(from: stream, isCovered: false, pinchToZoomRules: .enableWhenFitted)
+        sut = createView(from: stream, isCovered: false, pinchToZoomRule: .enableWhenFitted)
         sut.isMaximized = false
 
         // then
@@ -209,7 +209,7 @@ class VideoPreviewViewTests: XCTestCase {
 
     func testThat_GestureRecognizersAreEnabled_WhenRuleIs_EnableWhenFitted_And_ShouldFill_IsFalse() {
         // given - view is maximized, shouldFill will compute to true
-        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRules: .enableWhenFitted)
+        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRule: .enableWhenFitted)
         sut.isMaximized = true
 
         // then
@@ -219,7 +219,7 @@ class VideoPreviewViewTests: XCTestCase {
 
     func testThat_GestureRecognizersAreDisabled_WhenRuleIs_EnableWhenMaximized_And_ViewIsNotMaximized() {
         // given
-        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRules: .enableWhenMaximized)
+        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRule: .enableWhenMaximized)
         sut.isMaximized = false
 
         // then
@@ -229,7 +229,7 @@ class VideoPreviewViewTests: XCTestCase {
 
     func testThat_GestureRecognizersAreEnabled_WhenRuleIs_EnableWhenMaximized_And_ViewIsMaximized() {
         // given
-        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRules: .enableWhenMaximized)
+        sut = createView(from: unmutedStream, isCovered: false, pinchToZoomRule: .enableWhenMaximized)
         sut.isMaximized = true
 
         // then

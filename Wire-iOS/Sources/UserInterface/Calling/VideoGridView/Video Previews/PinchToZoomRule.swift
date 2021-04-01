@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum PinchToZoomRules {
+enum PinchToZoomRule {
     case enableWhenFitted
     case enableWhenMaximized
 

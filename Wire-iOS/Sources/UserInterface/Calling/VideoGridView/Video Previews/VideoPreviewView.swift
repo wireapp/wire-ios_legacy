@@ -63,8 +63,8 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
 
     // MARK: - Initialization
 
-    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRules: PinchToZoomRules) {
-        self.pinchToZoomRules = pinchToZoomRules
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
+        self.pinchToZoomRule = pinchToZoomRule
         super.init(
             stream: stream,
             isCovered: isCovered,
@@ -153,9 +153,9 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         return true
     }
 
-    var pinchToZoomRules: PinchToZoomRules {
+    var pinchToZoomRule: PinchToZoomRule {
         didSet {
-            guard oldValue != pinchToZoomRules else { return }
+            guard oldValue != pinchToZoomRule else { return }
             updateGestureRecognizers()
         }
     }
@@ -167,7 +167,7 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
     }
 
     private var shouldEnableGestureRecognizers: Bool {
-        switch pinchToZoomRules {
+        switch pinchToZoomRule {
         case .enableWhenFitted:
             return !shouldFill
         case .enableWhenMaximized:
