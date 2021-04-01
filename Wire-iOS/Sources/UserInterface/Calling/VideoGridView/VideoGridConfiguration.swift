@@ -27,6 +27,7 @@ protocol VideoGridConfiguration {
     var networkQuality: NetworkQuality { get }
     var shouldShowActiveSpeakerFrame: Bool { get }
     var presentationMode: VideoGridPresentationMode { get }
+    var callHasTwoParticipants: Bool { get }
 
 }
 
@@ -47,7 +48,8 @@ extension VideoGridConfiguration {
             networkQuality == other.networkQuality &&
             shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
             presentationMode == other.presentationMode &&
-            videoState == other.videoState
+            videoState == other.videoState &&
+            callHasTwoParticipants == other.callHasTwoParticipants
     }
 
 }

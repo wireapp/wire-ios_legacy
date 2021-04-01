@@ -127,13 +127,18 @@ final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - View maximization
 
     private func toggleMaximized(view: BaseVideoPreviewView?) {
-        let stream = view?.stream
-        let shouldMaximize = !isMaximized(stream: stream)
+        guard let view = view else { return }
+        guard allowMaximizationToggling(for: view.stream) else { return }
+
+        let shouldMaximize = !isMaximized(stream: view.stream)
 
         maximizedView = shouldMaximize ? view : nil
-        view?.isMaximized = shouldMaximize
-
+        view.isMaximized = shouldMaximize
         updateVideoGrid(with: videoStreams)
+    }
+
+    private func allowMaximizationToggling(for stream: Stream) -> Bool {
+        return !(configuration.callHasTwoParticipants && stream.videoState == .screenSharing)
     }
 
     private func isMaximized(stream: Stream?) -> Bool {
@@ -260,10 +265,12 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? BaseVideoPreviewView)
+            let view = (streamView(for: $0.stream) as? VideoPreviewView)
+
             view?.stream = $0.stream
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
-            (view as? VideoPreviewView)?.isPaused = $0.isPaused
+            view?.isPaused = $0.isPaused
+            view?.pinchToZoomRule = PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
         }
     }
 
@@ -376,7 +383,12 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered, shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame)
+            let view = VideoPreviewView(
+                stream: videoStream.stream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                pinchToZoomRule: PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
+            )
             viewCache[streamId] = view
             return view
         }
