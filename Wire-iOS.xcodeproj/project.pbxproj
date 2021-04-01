@@ -462,6 +462,8 @@
 		634497D924A492140000131D /* VideoParticipantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497D824A492140000131D /* VideoParticipantDetailView.swift */; };
 		634497DB24A49BF80000131D /* BaseVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497DA24A49BF70000131D /* BaseVideoPreviewView.swift */; };
 		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
+		6357B41626121D55008F1761 /* MockPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */; };
+		6357B41A261226C4008F1761 /* MockPinchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */; };
 		63589AA124DAA398008FEC8F /* UIAlertController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */; };
 		6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */; };
 		63654F8025B8CD260015344C /* RoundedSegmentedViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63654F7F25B8CD260015344C /* RoundedSegmentedViewTests.swift */; };
@@ -825,8 +827,6 @@
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
 		A97BC011241EA2660069E145 /* NSAttributedString+EnumerateAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */; };
 		A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */; };
-		A97CC15524DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15424DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift */; };
-		A97CC15724DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15624DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift */; };
 		A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FA6FB23B57067005257A8 /* StartUIViewController.swift */; };
 		A97FA6FE23B5883A005257A8 /* StartUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FA6FD23B5883A005257A8 /* StartUIDelegate.swift */; };
 		A9806A3B23E2024E00691DFE /* AudioTrackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3A23E2024E00691DFE /* AudioTrackPlayer.swift */; };
@@ -1173,6 +1173,7 @@
 		EEE81E9623E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9523E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift */; };
 		EEE81E9823E0815600A1D035 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9723E0815600A1D035 /* ProfilePresenter.swift */; };
 		EEE81E9A23E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE81E9923E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift */; };
+		EEEB8B57260B685300554C39 /* UserRightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB8B56260B685300554C39 /* UserRightTests.swift */; };
 		EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */; };
 		EEEED9B223F6EA53008C94CA /* MockUserType+ZMEditableUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEED9B023F6EA4F008C94CA /* MockUserType+ZMEditableUser.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
@@ -2104,6 +2105,8 @@
 		634497D824A492140000131D /* VideoParticipantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoParticipantDetailView.swift; sourceTree = "<group>"; };
 		634497DA24A49BF70000131D /* BaseVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVideoPreviewView.swift; sourceTree = "<group>"; };
 		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
+		6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPanGestureRecognizer.swift; sourceTree = "<group>"; };
+		6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPinchGestureRecognizer.swift; sourceTree = "<group>"; };
 		63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Permissions.swift"; sourceTree = "<group>"; };
 		6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+CompanyLogin.swift"; sourceTree = "<group>"; };
 		63654F7F25B8CD260015344C /* RoundedSegmentedViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSegmentedViewTests.swift; sourceTree = "<group>"; };
@@ -2259,7 +2262,6 @@
 		874A02531D1D325C00D0D74A /* AudioEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffect.swift; sourceTree = "<group>"; };
 		874A02551D1D329B00D0D74A /* AudioEffectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectCell.swift; sourceTree = "<group>"; };
 		874A17472056D9FA001C6760 /* libcmark.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libcmark.framework; path = Carthage/Build/iOS/libcmark.framework; sourceTree = "<group>"; };
-		874B2C3C1BBA939000396047 /* WireBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WireBridgingHeader.h; path = "Wire-iOS/WireBridgingHeader.h"; sourceTree = SOURCE_ROOT; };
 		874B5DAD1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+AudioMessage.swift"; sourceTree = "<group>"; };
 		874C09391B4A8EF50077393B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		874D0EB01D3E575E003DF418 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -2512,8 +2514,6 @@
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
 		A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+EnumerateAttachment.swift"; sourceTree = "<group>"; };
 		A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerDelegate.swift; sourceTree = "<group>"; };
-		A97CC15424DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPasscodeSetupEventHandler.swift; sourceTree = "<group>"; };
-		A97CC15624DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PasscodeSetup.swift"; sourceTree = "<group>"; };
 		A97FA6FB23B57067005257A8 /* StartUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewController.swift; sourceTree = "<group>"; };
 		A97FA6FD23B5883A005257A8 /* StartUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIDelegate.swift; sourceTree = "<group>"; };
 		A9806A3A23E2024E00691DFE /* AudioTrackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrackPlayer.swift; sourceTree = "<group>"; };
@@ -2940,6 +2940,7 @@
 		EEE81E9523E0521300A1D035 /* TopPeopleLineCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPeopleLineCollectionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		EEE81E9723E0815600A1D035 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		EEE81E9923E091DF00A1D035 /* ProfilePresenter+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePresenter+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		EEEB8B56260B685300554C39 /* UserRightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRightTests.swift; sourceTree = "<group>"; };
 		EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		EEEED9B023F6EA4F008C94CA /* MockUserType+ZMEditableUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+ZMEditableUser.swift"; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
@@ -3951,7 +3952,6 @@
 				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
 				5E8DA787211C499900360979 /* AuthenticationCoordinator+LoginDelegate.swift */,
 				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
-				A97CC15624DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift */,
 				5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */,
 				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
 				5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */,
@@ -4041,7 +4041,6 @@
 		5E8DA756211B04EA00360979 /* Post-Login */ = {
 			isa = PBXGroup;
 			children = (
-				A97CC15324DC700900A6328C /* Passcode */,
 				5E65A7A121304120008BFCC0 /* UserChange */,
 				5E8DA766211B2D8300360979 /* Success */,
 				5E8DA760211B285500360979 /* Backup */,
@@ -4970,6 +4969,8 @@
 				5EC0870E20EF5908000366B7 /* MockURLSession */,
 				5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */,
 				EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */,
+				6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */,
+				6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */,
 				EF207B3A2208438700738E84 /* MockZMUserSession.swift */,
 				160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */,
 				A97192B2221302DD00E72AD1 /* MockUserRight.swift */,
@@ -5295,7 +5296,6 @@
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
 				543DF69E252F5A4B001F6EA6 /* Main.storyboard */,
-				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				5489E20D252C84BE0010461D /* AppStateCalculator.swift */,
 				543DF6AC25309641001F6EA6 /* AppRootRouter.swift */,
 				54B27985258113FD0043ED25 /* AuthenticatedRouter.swift */,
@@ -5841,14 +5841,6 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
-		A97CC15324DC700900A6328C /* Passcode */ = {
-			isa = PBXGroup;
-			children = (
-				A97CC15424DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift */,
-			);
-			path = Passcode;
-			sourceTree = "<group>";
-		};
 		A984AAE424099239002CFF2E /* LinkOpeningOption */ = {
 			isa = PBXGroup;
 			children = (
@@ -6174,6 +6166,7 @@
 				542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */,
 				63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */,
 				6338610125ED3DEC0077BC05 /* ToastViewTests.swift */,
+				EEEB8B56260B685300554C39 /* UserRightTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6239,13 +6232,6 @@
 			);
 			name = EmojiRessources;
 			path = Emoji/EmojiRessources;
-			sourceTree = "<group>";
-		};
-		BF8C8C6C20D9222700442833 /* CallWindow */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CallWindow;
 			sourceTree = "<group>";
 		};
 		BFAC71FC20A1CDFC002711C4 /* Helper */ = {
@@ -6387,7 +6373,6 @@
 			children = (
 				160D6921212C813700096EAD /* CallController */,
 				160D691E212C78C700096EAD /* CallQualityController */,
-				BF8C8C6C20D9222700442833 /* CallWindow */,
 				5E33F0D120AD637400414EA6 /* Permissions */,
 				16C4BDA120A57DDF00BCDB17 /* CallDegradationViewController */,
 				BFAC71FF20A1CE82002711C4 /* CallViewController */,
@@ -8187,7 +8172,6 @@
 				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
 				8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */,
-				A97CC15724DC722A00A6328C /* AuthenticationCoordinator+PasscodeSetup.swift in Sources */,
 				D58191FD2091CAE8003BA7EC /* CallActionsView.swift in Sources */,
 				A95DFDC124E6D2E30005DC0E /* CGSize+Const.swift in Sources */,
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,
@@ -8374,7 +8358,6 @@
 				EF17B0D6223A70D1006252A8 /* SketchColorPickerController.swift in Sources */,
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
-				A97CC15524DC705800A6328C /* AuthenticationPasscodeSetupEventHandler.swift in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
 				A9CBBEC324CF7FF9006543D4 /* AccessoryTextField+factory.swift in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
@@ -8673,6 +8656,7 @@
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				EF24477D2343656A00C747F5 /* ConnectRequestsCellTests.swift in Sources */,
 				A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */,
+				6357B41626121D55008F1761 /* MockPanGestureRecognizer.swift in Sources */,
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
 				EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */,
@@ -8754,6 +8738,7 @@
 				162AE74D219DB1BD00581D98 /* ConversationImageMessageTests.swift in Sources */,
 				A91833112419275E00CBD0B7 /* TokenSeparatorAttachmentTests.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,
+				EEEB8B57260B685300554C39 /* UserRightTests.swift in Sources */,
 				5E294597219087CA0045ACFA /* ConversationReplyCellTests.swift in Sources */,
 				EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */,
 				BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */,
@@ -8854,6 +8839,7 @@
 				5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */,
 				EEA2E57125B2386500E726C3 /* AppLockModulePresenterTests.swift in Sources */,
 				5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */,
+				6357B41A261226C4008F1761 /* MockPinchGestureRecognizer.swift in Sources */,
 				7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */,
 				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
 				EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */,

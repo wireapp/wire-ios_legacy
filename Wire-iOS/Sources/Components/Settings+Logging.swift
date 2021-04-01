@@ -42,7 +42,22 @@ extension Settings {
 
     /// Loads from user default the list of logs that are enabled
     func loadEnabledLogs() {
-        var tagsToEnable: Set<String> = ["AVS", "Network", "SessionManager", "Conversations", "calling", "link previews", "event-processing", "SyncStatus", "OperationStatus", "Push", "Crypto", "cryptobox", "backend-environment", "Backup"]
+        var tagsToEnable: Set<String> = [
+            "AVS",
+            "Network",
+            "SessionManager",
+            "Conversations",
+            "calling",
+            "link previews",
+            "event-processing",
+            "SyncStatus",
+            "OperationStatus",
+            "Push",
+            "Crypto",
+            "cryptobox",
+            "backend-environment",
+            "Backup"
+        ]
 
         if let savedTags = UserDefaults.shared().object(forKey: enabledLogsKey) as? [String] {
             tagsToEnable = Set(savedTags)

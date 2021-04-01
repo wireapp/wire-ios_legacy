@@ -142,4 +142,52 @@ class VideoPreviewViewTests: XCTestCase {
         verify(matching: view, file: file, testName: testName, line: line)
     }
 
+    func testThatPinchGestureScalesView() {
+        // given
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let scale: CGFloat = 2
+
+        let gestureRecognizer = MockPinchGestureRecognizer(
+            location: .zero,
+            view: view,
+            state: .changed,
+            scale: scale
+        )
+
+        let location = CGPoint(x: -view.bounds.midX, y: -view.bounds.midY)
+        let expectedTransform = view.transform
+            .translatedBy(x: location.x, y: location.y)
+            .scaledBy(x: scale, y: scale)
+            .translatedBy(x: -location.x, y: -location.y)
+
+        sut = createView(from: unmutedStream, isCovered: false)
+
+        // when
+        sut.handlePinchGesture(gestureRecognizer)
+
+        // then
+        XCTAssert(view.transform == expectedTransform)
+    }
+
+    func testThatPanGestureTranslatesView() {
+        // given
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let translation = CGPoint(x: 10, y: 10)
+        let gestureRecongnizer = MockPanGestureRecognizer(
+            location: view.center,
+            translation: translation,
+            view: view,
+            state: .changed
+        )
+
+        let expectedTransform = view.transform.translatedBy(x: translation.x, y: translation.y)
+
+        sut = createView(from: unmutedStream, isCovered: false)
+
+        // when
+        sut.handlePanGesture(gestureRecongnizer)
+
+        // then
+        XCTAssert(view.transform == expectedTransform)
+    }
 }

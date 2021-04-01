@@ -169,68 +169,105 @@ class SettingsCellDescriptorFactory {
     }
 
     func developerGroup() -> SettingsCellDescriptorType {
-        let title = "self.settings.developer_options.title".localized
         var developerCellDescriptors: [SettingsCellDescriptorType] = []
 
-        let devController = SettingsExternalScreenCellDescriptor(title: "Logging") { () -> (UIViewController?) in
-            return DeveloperOptionsController()
-        }
+        typealias ExternalScreen = SettingsExternalScreenCellDescriptor
+        typealias Toggle = SettingsPropertyToggleCellDescriptor
+        typealias Button = SettingsButtonCellDescriptor
 
-        developerCellDescriptors.append(devController)
+        developerCellDescriptors.append(
+            ExternalScreen(title: "Logging") { DeveloperOptionsController() }
+        )
 
-        let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
-        developerCellDescriptors.append(enableBatchCollections)
-        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: DebugActions.sendBrokenMessage)
-        developerCellDescriptors.append(sendBrokenMessageButton)
-        let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (badge count)", isDestructive: false, selectAction: DebugActions.findUnreadConversationContributingToBadgeCount)
-        developerCellDescriptors.append(findUnreadBadgeConversationButton)
-        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (back arrow count)", isDestructive: false, selectAction: DebugActions.findUnreadConversationContributingToBackArrowDot)
-        developerCellDescriptors.append(findUnreadBackArrowConversationButton)
-        let shareDatabase = SettingsShareDatabaseCellDescriptor()
-        developerCellDescriptors.append(shareDatabase)
-        let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
-        developerCellDescriptors.append(shareCryptobox)
-        let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: DebugActions.reloadUserInterface)
-        developerCellDescriptors.append(reloadUIButton)
-        let recalculateBadgeCountButton = SettingsButtonCellDescriptor(title: "Re-calculate badge count", isDestructive: false, selectAction: DebugActions.recalculateBadgeCount)
-        developerCellDescriptors.append(recalculateBadgeCountButton)
-        let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
+        developerCellDescriptors.append(
+            Toggle(settingsProperty: settingsPropertyFactory.property(.enableBatchCollections))
+        )
 
-            DebugActions.askNumber(title: "Enter count of messages") { count in
-                DebugActions.appendMessagesInBatches(count: count)
+        developerCellDescriptors.append(
+            Button(title: "Send broken message",
+                   isDestructive: true,
+                   selectAction: DebugActions.sendBrokenMessage)
+        )
+
+        developerCellDescriptors.append(
+            Button(title: "First unread conversation (badge count)",
+                   isDestructive: false,
+                   selectAction: DebugActions.findUnreadConversationContributingToBadgeCount)
+        )
+
+        developerCellDescriptors.append(
+            Button(title: "First unread conversation (back arrow count)",
+                   isDestructive: false,
+                   selectAction: DebugActions.findUnreadConversationContributingToBackArrowDot)
+        )
+
+        developerCellDescriptors.append(SettingsShareDatabaseCellDescriptor())
+        developerCellDescriptors.append(SettingsShareCryptoboxCellDescriptor())
+
+        developerCellDescriptors.append(
+            Button(title: "Reload user interface",
+                   isDestructive: false,
+                   selectAction: DebugActions.reloadUserInterface)
+        )
+
+        developerCellDescriptors.append(
+            Button(title: "Re-calculate badge count",
+                   isDestructive: false,
+                   selectAction: DebugActions.recalculateBadgeCount)
+        )
+
+        developerCellDescriptors.append(
+            Button(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
+                DebugActions.askNumber(title: "Enter count of messages") { count in
+                    DebugActions.appendMessagesInBatches(count: count)
+                }
             }
-        }
-        developerCellDescriptors.append(appendManyMessages)
+        )
 
-        let spamWithMessages = SettingsButtonCellDescriptor(title: "Spam the top conv", isDestructive: true) { _ in
-
-            DebugActions.askNumber(title: "Enter count of messages") { count in
-                DebugActions.spamWithMessages(amount: count)
+        developerCellDescriptors.append(
+            Button(title: "Spam the top conv", isDestructive: true) { _ in
+                DebugActions.askNumber(title: "Enter count of messages") { count in
+                    DebugActions.spamWithMessages(amount: count)
+                }
             }
+        )
+
+        developerCellDescriptors.append(
+            ExternalScreen(title: "Show database statistics",
+                           isDestructive: false,
+                           presentationStyle: .navigation,
+                           presentationAction: {  DatabaseStatisticsController() })
+        )
+
+        if !Analytics.shared.isOptedOut && !TrackingManager.shared.disableAnalyticsSharing {
+            developerCellDescriptors.append(
+                Button(title: "Reset call quality survey",
+                       isDestructive: false,
+                       selectAction: DebugActions.resetCallQualitySurveyMuteFilter)
+            )
         }
-        developerCellDescriptors.append(spamWithMessages)
 
-        let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
-        developerCellDescriptors.append(showStatistics)
+        developerCellDescriptors.append(
+            Button(title: "Generate test crash",
+                   isDestructive: false,
+                   selectAction: DebugActions.generateTestCrash)
+        )
 
-        if !Analytics.shared.isOptedOut &&
-            !TrackingManager.shared.disableAnalyticsSharing {
+        developerCellDescriptors.append(
+            Button(title: "Trigger slow sync",
+                   isDestructive: false,
+                   selectAction: DebugActions.triggerSlowSync)
+        )
 
-            let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Reset call quality survey", isDestructive: false, selectAction: DebugActions.resetCallQualitySurveyMuteFilter)
-            developerCellDescriptors.append(resetSurveyMuteButton)
+        developerCellDescriptors.append(
+            Button(title: "What's my analytics id?",
+                   isDestructive: false,
+                   selectAction: DebugActions.showAnalyticsIdentifier)
+        )
 
-        }
-
-        let generateCrashButton = SettingsButtonCellDescriptor(title: "Generate test crash", isDestructive: false, selectAction: DebugActions.generateTestCrash)
-        developerCellDescriptors.append(generateCrashButton)
-
-        let triggerSlowSyncButton = SettingsButtonCellDescriptor(title: "Trigger slow sync", isDestructive: false, selectAction: DebugActions.triggerSlowSync)
-        developerCellDescriptors.append(triggerSlowSyncButton)
-
-        let showAnalyticsIdentiferButton = SettingsButtonCellDescriptor(title: "What's my analytics id?", isDestructive: false, selectAction: DebugActions.showAnalyticsIdentifier)
-        developerCellDescriptors.append(showAnalyticsIdentiferButton)
-
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)], title: title, icon: .robot)
+        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],
+                                           title: L10n.Localizable.`Self`.Settings.DeveloperOptions.title,
+                                           icon: .robot)
     }
 
     func helpSection() -> SettingsCellDescriptorType {

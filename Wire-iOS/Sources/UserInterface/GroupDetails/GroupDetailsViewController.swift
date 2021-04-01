@@ -134,11 +134,20 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
             let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
 
-            if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
-                if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
+            let maxNumberOfDisplayed = Int.ConversationParticipants.maxNumberOfDisplayed
+            let maxNumberWithoutTruncation = Int.ConversationParticipants.maxNumberWithoutTruncation
+
+            if admins.count <= maxNumberWithoutTruncation || admins.isEmpty {
+                // Dispay the ShowAll button after the first section.
+                if admins.count >= maxNumberOfDisplayed && (participants.count > maxNumberWithoutTruncation) {
                     let adminSection = ParticipantsSectionController(participants: admins,
-                                                                     conversationRole: .admin, conversation: conversation,
-                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: admins.count - 1, maxDisplayedParticipants: Int.ConversationParticipants.maxNumberOfDisplayed)
+                                                                     conversationRole: .admin,
+                                                                     conversation: conversation,
+                                                                     delegate: self,
+                                                                     totalParticipantsCount: participants.count,
+                                                                     clipSection: true,
+                                                                     maxParticipants: admins.count - 1,
+                                                                     maxDisplayedParticipants: Int.ConversationParticipants.maxNumberOfDisplayed)
                     sections.append(adminSection)
                 } else {
                     let adminSection = ParticipantsSectionController(participants: admins,
@@ -153,9 +162,15 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                             sections.append(memberSection)
                         }
                     } else { // Display the ShowAll button after the second section
+                        let maxParticipants = Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count
                         let memberSection = ParticipantsSectionController(participants: members,
-                                                                          conversationRole: .member, conversation: conversation,
-                                                                          delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count), maxDisplayedParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count) - 2)
+                                                                          conversationRole: .member,
+                                                                          conversation: conversation,
+                                                                          delegate: self,
+                                                                          totalParticipantsCount: participants.count,
+                                                                          clipSection: true,
+                                                                          maxParticipants: maxParticipants,
+                                                                          maxDisplayedParticipants: maxParticipants - 2)
                         sections.append(memberSection)
                     }
                 }

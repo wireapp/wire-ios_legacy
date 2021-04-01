@@ -68,7 +68,14 @@ final class ConversationInputBarButtonState {
     private var mode: ConversationInputBarViewControllerMode = .textInput
     private var syncedMessageDestructionTimeout: Bool = false
 
-    func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode, syncedMessageDestructionTimeout: Bool) {
+    func update(textLength: Int,
+                editing: Bool,
+                markingDown: Bool,
+                destructionTimeout: TimeInterval,
+                conversationType: ZMConversationType,
+                mode: ConversationInputBarViewControllerMode,
+                syncedMessageDestructionTimeout: Bool) {
+
         self.textLength = textLength
         self.editing = editing
         self.markingDown = markingDown

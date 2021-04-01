@@ -91,6 +91,7 @@ final class ShareViewControllerTests: XCTestCase {
     }
 
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
+        // swiftlint:disable:next line_length
         let message: MockShareableMessage = MockMessageFactory.textMessage(withText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController(message: message)
     }

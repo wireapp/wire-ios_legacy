@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,29 +19,30 @@
 import Foundation
 import UIKit
 
-final class MockTapGestureRecognizer: UITapGestureRecognizer {
+class MockPinchGestureRecognizer: UIPinchGestureRecognizer {
     let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
+    var mockView: UIView?
 
-    init(location: CGPoint?, state: UIGestureRecognizer.State) {
+    init(location: CGPoint?, view: UIView?, state: UIGestureRecognizer.State, scale: CGFloat) {
         mockLocation = location
         mockState = state
+        mockView = view
 
         super.init(target: nil, action: nil)
+        self.scale = scale
     }
 
     override func location(in view: UIView?) -> CGPoint {
         return mockLocation ?? super.location(in: view)
     }
 
-    override func location(ofTouch touchIndex: Int, in view: UIView?) -> CGPoint {
-        return mockLocation ?? super.location(ofTouch: touchIndex, in: view)
+    override var view: UIView? {
+        return mockView ?? super.view
     }
 
     override var state: UIGestureRecognizer.State {
-        get {
-            return mockState
-        }
-        set {}
+        get { mockState }
+        set { }
     }
 }

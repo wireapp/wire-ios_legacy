@@ -18,18 +18,22 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
+    case databaseFailure
 }
 
 final class BlockerViewController: LaunchImageViewController {
 
     private var context: BlockerViewControllerContext = .blacklist
+    private var sessionManager: SessionManager?
 
-    init(context: BlockerViewControllerContext) {
+    init(context: BlockerViewControllerContext, sessionManager: SessionManager? = nil) {
         self.context = context
+        self.sessionManager = sessionManager
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,17 +51,79 @@ final class BlockerViewController: LaunchImageViewController {
             showBlacklistMessage()
         case .jailbroken:
             showJailbrokenMessage()
+        case .databaseFailure:
+            showDatabaseFailureMessage()
         }
     }
 
     func showBlacklistMessage() {
-        presentAlertWithOKButton(title: "force.update.title".localized, message: "force.update.message".localized) { _ in
+
+        presentAlertWithOKButton(title: L10n.Localizable.Force.Update.title,
+                                 message: L10n.Localizable.Force.Update.message) { _ in
             UIApplication.shared.open(URL.wr_wireAppOnItunes)
         }
     }
 
     func showJailbrokenMessage() {
-        presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized)
+        presentAlertWithOKButton(title: L10n.Localizable.Jailbrokendevice.Alert.title,
+                                 message: L10n.Localizable.Jailbrokendevice.Alert.message)
     }
 
+    func showDatabaseFailureMessage() {
+
+        let databaseFailureAlert = UIAlertController(
+            title: L10n.Localizable.Databaseloadingfailure.Alert.title,
+            message: L10n.Localizable.Databaseloadingfailure.Alert.message,
+            preferredStyle: .alert
+        )
+
+        let settingsAction = UIAlertAction(
+            title: L10n.Localizable.Databaseloadingfailure.Alert.settings,
+            style: .default,
+            handler: { _ in
+                UIApplication.shared.openSettings()
+            }
+        )
+
+        databaseFailureAlert.addAction(settingsAction)
+
+        let deleteDatabaseAction = UIAlertAction(
+            title: L10n.Localizable.Databaseloadingfailure.Alert.deleteDatabase,
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.dismiss(animated: true, completion: {
+                    self?.showConfirmationDatabaseDeletionAlert()
+                })
+            }
+        )
+
+        databaseFailureAlert.addAction(deleteDatabaseAction)
+        present(databaseFailureAlert, animated: true)
+    }
+
+    func showConfirmationDatabaseDeletionAlert() {
+        let deleteDatabaseConfirmationAlert = UIAlertController(
+            title: L10n.Localizable.Databaseloadingfailure.Alert.deleteDatabase,
+            message: L10n.Localizable.Databaseloadingfailure.Alert.DeleteDatabase.message,
+            preferredStyle: .alert
+        )
+
+        let continueAction = UIAlertAction(
+            title: L10n.Localizable.Databaseloadingfailure.Alert.DeleteDatabase.continue,
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.sessionManager?.removeDatabaseFromDisk()
+            }
+        )
+
+        deleteDatabaseConfirmationAlert.addAction(continueAction)
+
+        let cancelAction = UIAlertAction(
+            title: L10n.Localizable.General.cancel,
+            style: .default,
+            handler: nil)
+
+        deleteDatabaseConfirmationAlert.addAction(cancelAction)
+        present(deleteDatabaseConfirmationAlert, animated: true)
+    }
 }
