@@ -21,12 +21,12 @@ import WireSyncEngine
 import Cartography
 
 final class TextSearchViewController: NSObject {
-    public var resultsView: TextSearchResultsView!
-    public var searchBar: TextSearchInputView!
+    var resultsView: TextSearchResultsView!
+    var searchBar: TextSearchInputView!
 
     weak var delegate: MessageActionResponder? = .none
-    public let conversation: ZMConversation
-    public var searchQuery: String? {
+    let conversation: ConversationLike
+    var searchQuery: String? {
         return self.searchBar.query
     }
 
@@ -40,7 +40,7 @@ final class TextSearchViewController: NSObject {
 
     fileprivate var searchStartedDate: Date?
 
-    init(conversation: ZMConversation) {
+    init(conversation: ConversationLike) {
         self.conversation = conversation
         super.init()
         self.loadViews()
@@ -60,7 +60,7 @@ final class TextSearchViewController: NSObject {
         self.searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
     }
 
-    public func teardown() {
+    func teardown() {
         textSearchQuery?.cancel()
     }
 
@@ -118,7 +118,7 @@ final class TextSearchViewController: NSObject {
 }
 
 extension TextSearchViewController: TextSearchQueryDelegate {
-    public func textSearchQueryDidReceive(result: TextQueryResult) {
+    func textSearchQueryDidReceive(result: TextQueryResult) {
         guard result.query == self.textSearchQuery else { return }
         if result.matches.count > 0 || !result.hasMore {
             self.hideLoadingSpinner()
@@ -128,7 +128,7 @@ extension TextSearchViewController: TextSearchQueryDelegate {
 }
 
 extension TextSearchViewController: TextSearchInputViewDelegate {
-    public func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
+    func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
         textSearchQuery?.cancel()
         searchStartedDate = nil
         hideLoadingSpinner()
@@ -142,27 +142,27 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         }
     }
 
-    public func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
+    func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
         return TextSearchQuery.isValid(query: searchView.query)
     }
 }
 
 extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.results.count
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextSearchResultCell.reuseIdentifier) as! TextSearchResultCell
         cell.configure(with: self.results[indexPath.row], queries: self.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? [])
         return cell
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.perform(action: .showInConversation, for: self.results[indexPath.row], view: tableView)
     }
 
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchBar.searchInput.endEditing(true)
     }
 }
