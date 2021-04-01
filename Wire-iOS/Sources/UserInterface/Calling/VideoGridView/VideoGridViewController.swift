@@ -43,6 +43,8 @@ final class VideoGridViewController: SpinnerCapableViewController {
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
+    private let notificationLabel = NotificationLabel()
+    private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
 
@@ -100,21 +102,37 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
         addToSelf(thumbnailViewController)
 
-        view.addSubview(networkConditionView)
+        view.addSubview(topStack)
+        topStack.addArrangedSubview(notificationLabel)
+        topStack.addArrangedSubview(networkConditionView)
+//        view.addSubview(notificationLabel)
+//        view.addSubview(networkConditionView)
+
+        notificationLabel.show(message: "Double tap to go back, pinch to zoom")
 
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     private func createConstraints() {
-        for subView in [gridView, thumbnailViewController.view] {
-            subView?.translatesAutoresizingMaskIntoConstraints = false
-            subView?.fitInSuperview()
+        [gridView, thumbnailViewController.view, topStack, notificationLabel, networkConditionView].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        constrain(view, networkConditionView) { view, networkConditionView in
-            networkConditionView.centerX == view.centerX
-            networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
+        [gridView, thumbnailViewController.view].forEach {
+            $0?.fitInSuperview()
         }
+
+        NSLayoutConstraint.activate([
+            topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
+            topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
+            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+        ])
+
+//        constrain(view, networkConditionView) { view, networkConditionView in
+//            networkConditionView.centerX == view.centerX
+//            networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
+//        }
     }
 
     // MARK: - Public Interface
@@ -159,8 +177,10 @@ final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - UI Update
 
     private func displayIndicatorViewsIfNeeded() {
-        networkConditionView.networkQuality = configuration.networkQuality
-        networkConditionView.isHidden = shouldHideNetworkCondition
+        networkConditionView.networkQuality = NetworkQuality.problem
+        networkConditionView.isHidden = false
+//        networkConditionView.networkQuality = configuration.networkQuality
+//        networkConditionView.isHidden = shouldHideNetworkCondition
     }
 
     private var shouldHideNetworkCondition: Bool {
