@@ -54,7 +54,7 @@ final class ConversationTitleView: TitleView {
 
         super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
-                        interactive: self.interactive && (conversation as? ZMConversation)?.relatedConnectionState != .sent)
+                        interactive: self.interactive && conversation.relatedConnectionState != .sent)
 
         var components: [String] = []
         components.append(conversation.displayName.localizedUppercase)
