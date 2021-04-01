@@ -60,7 +60,7 @@ class SwiftMockConversation: NSObject, Conversation {
     var mutedMessageTypes: MutedMessageTypes = .none
 
     var localParticipantsCount: Int = 0
-    var lastMessage: ZMMessage?
+    var lastMessage: ZMConversationMessage?
     var firstUnreadMessage: ZMConversationMessage?
 
     var areServicesPresent: Bool = false
