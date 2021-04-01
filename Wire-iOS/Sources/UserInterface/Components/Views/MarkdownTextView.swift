@@ -646,6 +646,17 @@ extension DownStyle {
         return style
     }()
 
+    /// The style used within search components.
+    static var search: DownStyle = {
+        let style = DownStyle()
+        style.baseFont = FontSpec(.normal, .light).font!
+        style.baseFontColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.baseParagraphStyle = NSParagraphStyle.default
+        style.listItemPrefixSpacing = 8
+        return style
+    }()
+
     /// The style used within the input bar.
     static var compact: DownStyle = {
         let style = DownStyle()

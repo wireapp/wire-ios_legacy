@@ -176,6 +176,9 @@
 		16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */; };
 		16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */; };
 		16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */; };
+		16E9E8A72613064500783C91 /* FederationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9E8A62613064500783C91 /* FederationSectionController.swift */; };
+		16E9E8AB26130AA100783C91 /* FederationDomainUnavailableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9E8AA26130AA100783C91 /* FederationDomainUnavailableCell.swift */; };
+		16E9E8B32613241D00783C91 /* FederationDomainUnavailableCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9E8B22613241D00783C91 /* FederationDomainUnavailableCellTests.swift */; };
 		16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */; };
 		16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */; };
 		16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */; };
@@ -1799,6 +1802,9 @@
 		16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventListener.swift; sourceTree = "<group>"; };
 		16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsCallingTracker.swift; sourceTree = "<group>"; };
 		16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Calling.swift"; sourceTree = "<group>"; };
+		16E9E8A62613064500783C91 /* FederationSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FederationSectionController.swift; sourceTree = "<group>"; };
+		16E9E8AA26130AA100783C91 /* FederationDomainUnavailableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FederationDomainUnavailableCell.swift; sourceTree = "<group>"; };
+		16E9E8B22613241D00783C91 /* FederationDomainUnavailableCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FederationDomainUnavailableCellTests.swift; sourceTree = "<group>"; };
 		16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHeaderViewController.swift; sourceTree = "<group>"; };
 		16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewController.swift; sourceTree = "<group>"; };
 		16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
@@ -3596,6 +3602,15 @@
 			path = AddContacts;
 			sourceTree = "<group>";
 		};
+		16E9E8A3261305FF00783C91 /* Federation */ = {
+			isa = PBXGroup;
+			children = (
+				16E9E8A62613064500783C91 /* FederationSectionController.swift */,
+				16E9E8AA26130AA100783C91 /* FederationDomainUnavailableCell.swift */,
+			);
+			path = Federation;
+			sourceTree = "<group>";
+		};
 		1E12C04D1BFA6346001A8A26 /* TestCategories */ = {
 			isa = PBXGroup;
 			children = (
@@ -5092,6 +5107,7 @@
 				87DCF4C81D34EA4500BB420F /* TopPeopleLine */,
 				87DCF4CF1D34EA4500BB420F /* Contacts */,
 				16C02A0E204DBA6800811912 /* Services */,
+				16E9E8A3261305FF00783C91 /* Federation */,
 			);
 			path = SectionControllers;
 			sourceTree = "<group>";
@@ -5765,6 +5781,7 @@
 			isa = PBXGroup;
 			children = (
 				A92C443124EE9805006A4AB3 /* SearchResultsViewControllerTests.swift */,
+				16E9E8B22613241D00783C91 /* FederationDomainUnavailableCellTests.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -7402,8 +7419,8 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
@@ -7611,6 +7628,7 @@
 				EFDBA24522941FE800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */,
 				A9150DB523D1B6B900844185 /* Analytics.swift in Sources */,
 				BFFA182B20FDE93400F64377 /* CompanyLoginController.swift in Sources */,
+				16E9E8A72613064500783C91 /* FederationSectionController.swift in Sources */,
 				87A1F9DB200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift in Sources */,
 				EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */,
 				7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */,
@@ -7754,6 +7772,7 @@
 				BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */,
 				F1199D411FC849450070FAC3 /* TextFieldDescription.swift in Sources */,
 				16814840228C6E120069F16F /* UserClientCell.swift in Sources */,
+				16E9E8AB26130AA100783C91 /* FederationDomainUnavailableCell.swift in Sources */,
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
 				EF20BE4322CB57B1004F8910 /* UIViewController+Present.swift in Sources */,
 				EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */,
@@ -8787,6 +8806,7 @@
 				EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */,
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
 				A96E802A24C846E40010CD80 /* WipeDatabaseViewControllerTests.swift in Sources */,
+				16E9E8B32613241D00783C91 /* FederationDomainUnavailableCellTests.swift in Sources */,
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
 				EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */,
 				5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */,

@@ -2622,6 +2622,12 @@ internal enum L10n {
         /// Create group
         internal static let createConversation = L10n.tr("Localizable", "peoplepicker.button.create_conversation")
       }
+      internal enum Federation {
+        /// The federated domain is currently not available. [Learn more](%@)
+        internal static func domainUnvailable(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "peoplepicker.federation.domain_unvailable", String(describing: p1))
+        }
+      }
       internal enum Group {
         /// Create
         internal static let create = L10n.tr("Localizable", "peoplepicker.group.create")
@@ -2647,6 +2653,8 @@ internal enum L10n {
         internal static let conversations = L10n.tr("Localizable", "peoplepicker.header.conversations")
         /// Connect
         internal static let directory = L10n.tr("Localizable", "peoplepicker.header.directory")
+        /// Connect with other domain
+        internal static let federation = L10n.tr("Localizable", "peoplepicker.header.federation")
         /// People
         internal static let people = L10n.tr("Localizable", "peoplepicker.header.people")
         /// Invite

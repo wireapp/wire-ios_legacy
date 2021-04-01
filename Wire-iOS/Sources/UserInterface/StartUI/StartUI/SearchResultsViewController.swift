@@ -83,6 +83,7 @@ enum SearchResultsViewControllerSection: Int {
     case conversations
     case directory
     case services
+    case federation
 }
 
 extension UIViewController {
@@ -147,6 +148,7 @@ final class SearchResultsViewController: UIViewController {
     let teamMemberAndContactsSection: ContactsSectionController = ContactsSectionController()
     let directorySection = DirectorySectionController()
     let conversationsSection: GroupConversationsSectionController = GroupConversationsSectionController()
+    let federationSection = FederationSectionController()
 
     lazy var topPeopleSection: TopPeopleSectionController = {
         return TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()?.topConversationsDirectory)
@@ -261,7 +263,11 @@ final class SearchResultsViewController: UIViewController {
     }
 
     func searchForUsers(withQuery query: String) {
-        self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
+        self.performSearch(query: query, options: [.conversations,
+                                                   .contacts,
+                                                   .teamMembers,
+                                                   .directory,
+                                                   .federated])
     }
 
     func searchForLocalUsers(withQuery query: String) {
@@ -315,9 +321,9 @@ final class SearchResultsViewController: UIViewController {
         case (.people, false):
             switch (mode, team != nil) {
             case (.search, false):
-                sections = [contactsSection, conversationsSection, directorySection]
+                sections = [contactsSection, conversationsSection, directorySection, federationSection]
             case (.search, true):
-                sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
+                sections = [teamMemberAndContactsSection, conversationsSection, directorySection, federationSection]
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
@@ -369,6 +375,7 @@ final class SearchResultsViewController: UIViewController {
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services
+        federationSection.result = searchResult.federation
 
         sectionController.collectionView?.reloadData()
     }
@@ -386,6 +393,8 @@ final class SearchResultsViewController: UIViewController {
             return .directory
         } else if controller === servicesSection {
             return .services
+        } else if controller === federationSection {
+            return .federation
         } else {
             return .unknown
         }
