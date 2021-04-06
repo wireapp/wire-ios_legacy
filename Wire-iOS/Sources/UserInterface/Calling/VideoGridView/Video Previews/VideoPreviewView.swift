@@ -58,16 +58,19 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         variant: .dark
     )
     private var snapshotView: UIView?
-    private let pinchGesture = UIPinchGestureRecognizer()
-    private let panGesture = UIPanGestureRecognizer()
+    let pinchGesture = UIPinchGestureRecognizer()
+    let panGesture = UIPanGestureRecognizer()
 
     // MARK: - Initialization
-    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
+        self.pinchToZoomRule = pinchToZoomRule
         super.init(
             stream: stream,
             isCovered: isCovered,
             shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
         )
+
         updateState()
         updateVideoKind()
     }
@@ -150,9 +153,26 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         return true
     }
 
+    var pinchToZoomRule: PinchToZoomRule {
+        didSet {
+            guard oldValue != pinchToZoomRule else { return }
+            updateGestureRecognizers()
+        }
+    }
+
     private func updateGestureRecognizers() {
-        panGesture.isEnabled = isMaximized
-        pinchGesture.isEnabled = isMaximized
+        let enabled = shouldEnableGestureRecognizers
+        panGesture.isEnabled = enabled
+        pinchGesture.isEnabled = enabled
+    }
+
+    private var shouldEnableGestureRecognizers: Bool {
+        switch pinchToZoomRule {
+        case .enableWhenFitted:
+            return !shouldFill
+        case .enableWhenMaximized:
+            return isMaximized
+        }
     }
 
     // MARK: - Fill mode
@@ -161,6 +181,7 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         didSet {
             guard oldValue != videoKind else { return }
             updateFillMode()
+            updateGestureRecognizers()
         }
     }
 
