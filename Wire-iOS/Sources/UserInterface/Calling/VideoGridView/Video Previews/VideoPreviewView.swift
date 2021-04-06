@@ -167,12 +167,16 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
     }
 
     private var shouldEnableGestureRecognizers: Bool {
-        switch pinchToZoomRule {
-        case .enableWhenFitted:
-            return !shouldFill
-        case .enableWhenMaximized:
-            return isMaximized
-        }
+        return false
+
+//      Temporary comment to disable the pinch-to-zoom feature
+//
+//        switch pinchToZoomRule {
+//        case .enableWhenFitted:
+//            return !shouldFill
+//        case .enableWhenMaximized:
+//            return isMaximized
+//        }
     }
 
     // MARK: - Fill mode
