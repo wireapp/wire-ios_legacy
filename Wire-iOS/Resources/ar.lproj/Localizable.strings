@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "تحرير آخر رسالة";
 "conversation.input_bar.shortcut.cancel_editing_message" = "إلغاء";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
 "conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "اذهب للإعدادات";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "متابعة";
 
 // Third Party
 "giphy.conversation.message" = "%@ · عبر giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "فتح القفل";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

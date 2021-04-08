@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Chèn ngắt dòng";
 "conversation.input_bar.shortcut.edit_last_message" = "Chỉnh sửa Tin nhắn cuối cùng";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Huỷ";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Tin nhắn quá dài";
 "conversation.input_bar.message_too_long.message" = "Bạn có thể gửi tin nhắn dài tối đa %d kí tự.";
@@ -1858,8 +1860,8 @@
 // MARK: - App lock module
 
 "appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
-"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
+"appLockModule.message.touchID" = "Mở khoá Wire với Touch ID hoặc Passcode";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Mở khoá";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

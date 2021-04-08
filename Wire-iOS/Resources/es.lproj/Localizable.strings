@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Insertar salto de línea";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar el último mensaje";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
 "conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Ve a Ajustes";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
 // Third Party
 "giphy.conversation.message" = "%@ · vía giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Desbloquea Wire con Touch ID o el código";
 "appLockModule.message.passcode" = "Desbloquear Wire con Passcode";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear Wire, habilite el uso de Passcode en la configuracion del dispositivo";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

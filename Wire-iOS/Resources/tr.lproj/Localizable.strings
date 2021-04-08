@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Satır sonu ekle";
 "conversation.input_bar.shortcut.edit_last_message" = "Son Mesajı Düzenle";
 "conversation.input_bar.shortcut.cancel_editing_message" = "İptal";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
 "conversation.input_bar.message_too_long.message" = "En fazla %d karakterlik mesajlar gönderebilirsiniz.";
@@ -676,7 +678,7 @@
 "call.participants.list.title" = "Katılımcılar";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.all" = "TÜMÜ";
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Ayarlara git";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Devam et";
 
 // Third Party
 "giphy.conversation.message" = "%@ · giphy.com aracılığıyla";
@@ -1825,11 +1827,11 @@
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "Yanlış Şifre";
 "unlock.submit_button.title" = "unlock";
 
 // Custom app lock - warning screen
-"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.title_label" = "Wire'da bir değişiklik oldu";
 "warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
 "warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
 "warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
 "appLockModule.message.passcode" = "Şifre ile Wire'ın Kilidini Açın";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Kilidi aç";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

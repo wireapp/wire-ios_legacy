@@ -23,7 +23,7 @@ import SnapshotTesting
 @testable import Wire
 
 class VideoPreviewViewTests: XCTestCase {
-
+    var size = XCTestCase.DeviceSizeIPhone5
     var sut: VideoPreviewView!
     var stubProvider = VideoStreamStubProvider()
     var unmutedStream = VideoStreamStubProvider().videoStream(muted: false).stream
@@ -40,7 +40,7 @@ class VideoPreviewViewTests: XCTestCase {
             shouldShowActiveSpeakerFrame: true,
             pinchToZoomRule: pinchToZoomRule
         )
-        view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
+        view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
         view.backgroundColor = .graphite
         return view
     }
@@ -147,9 +147,9 @@ class VideoPreviewViewTests: XCTestCase {
         verify(matching: view, file: file, testName: testName, line: line)
     }
 
-    func testThatPinchGestureScalesView() {
+    func testThatPinchGestureScalesViewUp() {
         // given
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.width))
         let scale: CGFloat = 2
 
         let gestureRecognizer = MockPinchGestureRecognizer(
@@ -174,9 +174,32 @@ class VideoPreviewViewTests: XCTestCase {
         XCTAssert(view.transform == expectedTransform)
     }
 
-    func testThatPanGestureTranslatesView() {
+    func testThatPinchGestureDoesntScaleViewDown() {
         // given
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.width))
+        let scale: CGFloat = 0.5
+
+        let gestureRecognizer = MockPinchGestureRecognizer(
+            location: .zero,
+            view: view,
+            state: .changed,
+            scale: scale
+        )
+
+        sut = createView(from: unmutedStream, isCovered: false)
+
+        // when
+        sut.handlePinchGesture(gestureRecognizer)
+
+        // then
+        XCTAssert(view.transform == .identity)
+    }
+
+    func testThatPanGestureTranslatesView_WhenViewIsScaled() {
+        // given
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.width))
+        view.transform = view.transform.scaledBy(x: 1.1, y: 1.1)
+
         let translation = CGPoint(x: 10, y: 10)
         let gestureRecongnizer = MockPanGestureRecognizer(
             location: view.center,
@@ -194,6 +217,26 @@ class VideoPreviewViewTests: XCTestCase {
 
         // then
         XCTAssert(view.transform == expectedTransform)
+    }
+
+    func testThatPanGestureDoesntTranslateView_WhenViewIsNotScaled() {
+        // given
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.width))
+
+        let gestureRecongnizer = MockPanGestureRecognizer(
+            location: view.center,
+            translation: CGPoint(x: 10, y: 10),
+            view: view,
+            state: .changed
+        )
+
+        sut = createView(from: unmutedStream, isCovered: false)
+
+        // when
+        sut.handlePanGesture(gestureRecongnizer)
+
+        // then
+        XCTAssert(view.transform == .identity)
     }
 
     func testThat_GestureRecognizersAreDisabled_WhenRuleIs_EnableWhenFitted_And_ShouldFill_IsTrue() {

@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Vai a capo";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifica l'ultimo messaggio";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annulla";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Il messaggio è troppo lungo";
 "conversation.input_bar.message_too_long.message" = "Puoi inviare messaggi lunghi al massimo %d caratteri.";
@@ -675,8 +677,8 @@
 "call.participants.show_all" = "Mostra tutti (%@)";
 "call.participants.list.title" = "Partecipanti";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.speakers" = "SPEAKER";
+"call.overlay.switch_to.all" = "TUTTI";
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Vai nelle Impostazioni";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Continua";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Sblocca Wire con Touch ID o Passcode";
 "appLockModule.message.passcode" = "Sblocca Wire con codice d'accesso";
 "appLockModule.message.passcodeUnavailable" = "Per sbloccare Wire, attiva il codice d'accesso nelle impostazioni del dispositivo";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Sblocca";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

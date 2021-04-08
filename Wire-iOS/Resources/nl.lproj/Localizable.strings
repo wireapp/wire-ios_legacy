@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Voeg een regelafbreking toe";
 "conversation.input_bar.shortcut.edit_last_message" = "Bewerkt laaste bericht";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuleer";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Bericht te lang";
 "conversation.input_bar.message_too_long.message" = "Je kan berichten verzenden van maximaal %d tekens lang.";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Ga naar Instellingen";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Ga door";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Ontgrendel Wire met Touch ID of Wachtwoord";
 "appLockModule.message.passcode" = "Ontgrendel Wire met wachtwoord";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Ontgrendel";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
