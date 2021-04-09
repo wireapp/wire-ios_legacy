@@ -112,7 +112,7 @@ extension SoundEventListener: ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObse
                 continue
             }
 
-            let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
+            let isFirstUnreadMessage = message.isEqual(message.conversationLike?.firstUnreadMessage)
 
             if isFirstUnreadMessage {
                 playSoundIfAllowed(.firstMessageReceivedSound)

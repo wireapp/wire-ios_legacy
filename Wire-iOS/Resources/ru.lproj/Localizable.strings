@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
 "conversation.input_bar.shortcut.edit_last_message" = "Изменить последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Выбрать предыдущее упоминание";
+"conversation.input_bar.shortcut.choose_next_mention" = "Выбрать следующее упоминание";
 
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
@@ -1113,7 +1115,7 @@
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если вы используете iCloud, история вызовов будет передана Apple.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
-"self.settings.vbr.description" = "Данная опция позволяет аудиозвонкам экономить трафик и улучшает их качество в сетях с низкой скоростью передачи данных. Вы можете отключить ее, включив кодирование с постоянным битрейтом.";
+"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

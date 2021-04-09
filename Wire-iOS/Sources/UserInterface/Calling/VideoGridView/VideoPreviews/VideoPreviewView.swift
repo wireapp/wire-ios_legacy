@@ -134,11 +134,19 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
 
         // reset scale
         gestureRecognizer.scale = 1
+
+        // reset to identity if the view is scaled smaller than its container
+        if view.frame.size.width < bounds.width {
+            view.transform = .identity
+        }
     }
 
     @objc
     func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard let view = gestureRecognizer.view else { return }
+
+        // prevent translation if the view transform is identity
+        guard view.transform != .identity else { return }
 
         let translation = gestureRecognizer.translation(in: view)
 

@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
+"conversation.input_bar.shortcut.choose_next_mention" = "Виберіть наступну згадку";
 
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
@@ -1858,7 +1860,7 @@
 // MARK: - App lock module
 
 "appLockModule.message.faceID" = "Розблокувати Wire за допомогою Face ID або коду допуску";
-"appLockModule.message.touchID" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
+"appLockModule.message.touchID" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "appLockModule.message.passcode" = "Розблокувати Wire за допомогою коду допуску";
 "appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
 "appLockModule.unlockButton.title" = "Розблокувати";

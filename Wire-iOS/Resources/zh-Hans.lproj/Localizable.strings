@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "插入换行符";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "打开设置";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "继续";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 来源 giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "通过Touch ID或Passcode解锁";
 "appLockModule.message.passcode" = "使用密码解锁Wire";
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "解锁";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

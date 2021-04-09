@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "改行を挿入";
 "conversation.input_bar.shortcut.edit_last_message" = "最後のメッセージを編集";
 "conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "メッセージが長すぎます";
 "conversation.input_bar.message_too_long.message" = "%d 文字までメッセージを送信することができます。";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "設定に移動する";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "続行";
 
 // Third Party
 "giphy.conversation.message" = "%@ giphy.comから";
@@ -1823,10 +1825,10 @@
 
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "パスコードを入力してください";
-"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.title_label" = "Wireのロックを解除するためのパスコードを入力してください";
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "パスコードが間違っています";
-"unlock.submit_button.title" = "unlock";
+"unlock.submit_button.title" = "ロック解除";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Wire に変更がありました。";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Touch ID またはパスコードで Wire をロック解除してください";
 "appLockModule.message.passcode" = "パスコードで Wire をロック解除してください";
 "appLockModule.message.passcodeUnavailable" = "Wire をロック解除するには、デバイス設定でパスコードを有効にしてください";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "ロックを解除";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

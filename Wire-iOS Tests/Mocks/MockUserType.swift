@@ -110,6 +110,8 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Querying
 
+    var isFederated: Bool = false
+
     var isSelfUser: Bool = false
 
     var mockedIsServiceUser: Bool = false

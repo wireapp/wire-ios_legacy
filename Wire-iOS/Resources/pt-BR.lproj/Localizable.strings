@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Inserir quebra de linha";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Mensagem muito longa";
 "conversation.input_bar.message_too_long.message" = "Você pode enviar mensagens até %d caracteres.";
@@ -675,10 +677,10 @@
 "call.participants.show_all" = "Mostrar todas (%@)";
 "call.participants.list.title" = "Participantes";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.speakers" = "Palestrantes";
+"call.overlay.switch_to.all" = "TODOS";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "Não há palestrantes de vídeo ativos...";
 
 "call.video.paused" = "Vídeo pausado";
 
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Vá para os ajustes";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1829,7 +1831,7 @@
 "unlock.submit_button.title" = "desbloquear";
 
 // Custom app lock - warning screen
-"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.title_label" = "Houve uma mudança no Wire";
 "warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
 "warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
 "warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Desbloqueie o Wire com o Touch ID ou Código";
 "appLockModule.message.passcode" = "Desbloquear Wire com senha";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

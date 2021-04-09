@@ -591,9 +591,11 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
 }
 
 extension ConversationStartedSystemMessageCellDescription: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
+    func conversationDidChange(_ note: ConversationChangeInfo) {
         guard note.createdRemotelyChanged else { return }
-        if let conversation = message?.conversation, conversation.conversationType == .group, conversation.localParticipants.count == 1 {
+        if let conversation = message?.conversationLike,
+           conversation.conversationType == .group,
+           conversation.localParticipantsCount == 1 {
             delegate?.conversationMessageShouldUpdate()
         }
     }

@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Vorherige Erwähnung auswählen";
+"conversation.input_bar.shortcut.choose_next_mention" = "Nächste Erwähnung auswählen";
 
 "conversation.input_bar.message_too_long.title" = "Nachricht zu lang";
 "conversation.input_bar.message_too_long.message" = "Sie können Nachrichten mit bist zu %d Zeichen senden.";

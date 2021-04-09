@@ -35,7 +35,8 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate<T: MockMessage>(sender: UserType? = nil, conversation: Conversation? = nil) -> T {
+    class func messageTemplate<T: MockMessage>(sender: UserType? = nil,
+                                               conversation: Conversation? = nil) -> T {
         let message = T()
 
         var mockZMConversation: MockConversation?
@@ -105,9 +106,10 @@ final class MockMessageFactory {
     }
 
     class func systemMessageAndData(with systemMessageType: ZMSystemMessageType,
+                                    conversation: Conversation? = nil,
                                     users numUsers: Int = 0,
                                     sender: UserType? = nil) -> (MockMessage?, MockSystemMessageData) {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+        let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
 
@@ -123,11 +125,14 @@ final class MockMessageFactory {
     }
 
     class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             conversation: Conversation? = nil,
                              users numUsers: Int = 0,
                              clients numClients: Int = 0,
                              sender: UserType? = nil) -> MockMessage? {
 
-        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType, users: numUsers, sender: sender)
+        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType,
+                                                                    conversation: conversation,
+                                                                    users: numUsers, sender: sender)
 
         var userClients: [AnyHashable] = []
 
