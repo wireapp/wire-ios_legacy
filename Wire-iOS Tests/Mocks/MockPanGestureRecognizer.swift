@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,13 +19,17 @@
 import Foundation
 import UIKit
 
-final class MockTapGestureRecognizer: UITapGestureRecognizer {
+final class MockPanGestureRecognizer: UIPanGestureRecognizer {
     let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
+    var mockTranslation: CGPoint?
+    var mockView: UIView?
 
-    init(location: CGPoint?, state: UIGestureRecognizer.State) {
+    init(location: CGPoint?, translation: CGPoint?, view: UIView?, state: UIGestureRecognizer.State) {
         mockLocation = location
+        mockTranslation = translation
         mockState = state
+        mockView = view
 
         super.init(target: nil, action: nil)
     }
@@ -34,14 +38,16 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
         return mockLocation ?? super.location(in: view)
     }
 
-    override func location(ofTouch touchIndex: Int, in view: UIView?) -> CGPoint {
-        return mockLocation ?? super.location(ofTouch: touchIndex, in: view)
+    override func translation(in view: UIView?) -> CGPoint {
+        return mockTranslation ?? super.translation(in: view)
+    }
+
+    override var view: UIView? {
+        return mockView ?? super.view
     }
 
     override var state: UIGestureRecognizer.State {
-        get {
-            return mockState
-        }
+        get { mockState }
         set {}
     }
 }

@@ -1214,6 +1214,10 @@ internal enum L10n {
         internal enum Shortcut {
           /// Cancel
           internal static let cancelEditingMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.cancel_editing_message")
+          /// Choose next mention
+          internal static let chooseNextMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_next_mention")
+          /// Choose previous mention
+          internal static let choosePreviousMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_previous_mention")
           /// Edit Last Message
           internal static let editLastMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.edit_last_message")
           /// Insert line break

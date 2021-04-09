@@ -40,6 +40,11 @@ protocol TypingStatusProvider {
 protocol VoiceChannelProvider {
     var voiceChannel: VoiceChannel? { get }
 }
+
+protocol CanManageAccessProvider {
+    var canManageAccess: Bool { get }
+}
+
 // MARK: - Input Bar View controller
 
 protocol InputBarConversation {
@@ -78,5 +83,6 @@ extension ZMConversation: ConversationStatusProvider {}
 
 extension ZMConversation: TypingStatusProvider {}
 extension ZMConversation: VoiceChannelProvider {}
+extension ZMConversation: CanManageAccessProvider {}
 
 extension ZMConversation: GroupDetailsConversation {}

@@ -53,7 +53,10 @@ final class ConversationSystemMessageTests: XCTestCase {
     }
 
     func testAddParticipant_Service() {
-        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        let mockConversation = SwiftMockConversation()
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded,
+                                                       conversation: mockConversation,
+                                                       users: 1, clients: 0)!
         message.senderUser = SwiftMockLoader.mockUsers().last
         message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 

@@ -129,8 +129,12 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let dequeuedView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                                                           withReuseIdentifier: "SectionFooter",
+                                                                           for: IndexPath(item: 0, section: section))
 
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
+        guard let view = dequeuedView as? SectionFooter else { return .zero }
+
         view.titleLabel.text = "group_details.notification_options_cell.description".localized
         view.size(fittingWidth: collectionView.bounds.width)
         return view.bounds.size

@@ -58,6 +58,12 @@ class SwiftMockConversation: NSObject, Conversation {
     var securityLevel: ZMConversationSecurityLevel = .notSecure
 
     var mutedMessageTypes: MutedMessageTypes = .none
+
+    var localParticipantsCount: Int = 0
+    var lastMessage: ZMConversationMessage?
+    var firstUnreadMessage: ZMConversationMessage?
+
+    var areServicesPresent: Bool = false
 }
 
 final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation {

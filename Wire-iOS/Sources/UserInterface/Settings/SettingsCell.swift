@@ -341,12 +341,18 @@ final class SettingsValueCell: SettingsTableCell {
     override var descriptor: SettingsCellDescriptorType? {
         willSet {
             if let propertyDescriptor = descriptor as? SettingsPropertyCellDescriptorType {
-                NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: propertyDescriptor.settingsProperty.propertyName.changeNotificationName), object: nil)
+                NotificationCenter.default.removeObserver(self,
+                                                          name: propertyDescriptor.settingsProperty.propertyName.notificationName,
+                                                          object: nil)
             }
         }
         didSet {
             if let propertyDescriptor = descriptor as? SettingsPropertyCellDescriptorType {
-                NotificationCenter.default.addObserver(self, selector: #selector(SettingsValueCell.onPropertyChanged(_:)), name: NSNotification.Name(rawValue: propertyDescriptor.settingsProperty.propertyName.changeNotificationName), object: nil)
+
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(SettingsValueCell.onPropertyChanged(_:)),
+                                                       name: propertyDescriptor.settingsProperty.propertyName.notificationName,
+                                                       object: nil)
             }
         }
     }

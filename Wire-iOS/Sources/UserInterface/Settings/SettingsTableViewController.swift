@@ -189,7 +189,15 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     }
 
     func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self, SettingsStaticTextTableCell.self]
+        let allCellTypes: [SettingsTableCell.Type] = [
+            SettingsTableCell.self,
+            SettingsGroupCell.self,
+            SettingsButtonCell.self,
+            SettingsToggleCell.self,
+            SettingsValueCell.self,
+            SettingsTextCell.self,
+            SettingsStaticTextTableCell.self
+        ]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)

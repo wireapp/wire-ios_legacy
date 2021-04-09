@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Prekliči";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Sporočilo je predolgo";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Pojdi v nastavitve";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Nadaljuj";
 
 // Third Party
 "giphy.conversation.message" = "%@ · preko giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Odkleni Wire s Touch ID ali geslom";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Odkleni";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
