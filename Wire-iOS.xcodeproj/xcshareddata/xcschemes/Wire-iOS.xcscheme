@@ -56,6 +56,9 @@
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithPicture()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
