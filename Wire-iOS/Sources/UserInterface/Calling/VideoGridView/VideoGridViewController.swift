@@ -43,7 +43,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
-    private let notificationLabel = NotificationLabel()
+    private let hintView = VideoGridHintNotificationLabel()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
@@ -69,6 +69,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()
             animateNetworkConditionView()
+            hintView.setMessage(hidden: isCovered)
         }
     }
 
@@ -94,6 +95,11 @@ final class VideoGridViewController: SpinnerCapableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateHint(for: .viewDidLoad)
+    }
+
     // MARK: - Setup
 
     private func setupViews() {
@@ -103,18 +109,16 @@ final class VideoGridViewController: SpinnerCapableViewController {
         addToSelf(thumbnailViewController)
 
         view.addSubview(topStack)
-        topStack.addArrangedSubview(notificationLabel)
+        topStack.alignment = .center
+        topStack.spacing = 10
         topStack.addArrangedSubview(networkConditionView)
-//        view.addSubview(notificationLabel)
-//        view.addSubview(networkConditionView)
-
-        notificationLabel.show(message: "Double tap to go back, pinch to zoom")
+        topStack.addArrangedSubview(hintView)
 
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     private func createConstraints() {
-        [gridView, thumbnailViewController.view, topStack, notificationLabel, networkConditionView].forEach {
+        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -128,11 +132,6 @@ final class VideoGridViewController: SpinnerCapableViewController {
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
         ])
-
-//        constrain(view, networkConditionView) { view, networkConditionView in
-//            networkConditionView.centerX == view.centerX
-//            networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
-//        }
     }
 
     // MARK: - Public Interface
@@ -153,6 +152,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         maximizedView = shouldMaximize ? view : nil
         view.isMaximized = shouldMaximize
         updateVideoGrid(with: videoStreams)
+        updateHint(for: .maximizationChanged(maximized: shouldMaximize))
     }
 
     private func allowMaximizationToggling(for stream: Stream) -> Bool {
@@ -174,13 +174,37 @@ final class VideoGridViewController: SpinnerCapableViewController {
         maximizedView = nil
     }
 
+    // MARK: - Hint
+
+    private func updateHint(for event: VideoGridEvent) {
+        switch event {
+        case .viewDidLoad:
+            hintView.show(hint: .fullscreen)
+        case .configurationChanged:
+            guard
+                configuration.callHasTwoParticipants,
+                let stream = configuration.videoStreams.first?.stream
+            else { return }
+
+            if stream.videoState == .some(.screenSharing) {
+                hintView.show(hint: .zoom)
+            } else if isMaximized(stream: stream) {
+                hintView.show(hint: .goBackOrZoom)
+            }
+        case .maximizationChanged(maximized: let maximized):
+            if maximized {
+                hintView.show(hint: .goBackOrZoom)
+            } else {
+                hintView.hideAndStopTimer()
+            }
+        }
+    }
+
     // MARK: - UI Update
 
     private func displayIndicatorViewsIfNeeded() {
-        networkConditionView.networkQuality = NetworkQuality.problem
-        networkConditionView.isHidden = false
-//        networkConditionView.networkQuality = configuration.networkQuality
-//        networkConditionView.isHidden = shouldHideNetworkCondition
+        networkConditionView.networkQuality = configuration.networkQuality
+        networkConditionView.isHidden = shouldHideNetworkCondition
     }
 
     private var shouldHideNetworkCondition: Bool {
@@ -215,6 +239,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         updateVideoGrid(with: videoStreams)
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
+        updateHint(for: .configurationChanged)
 
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }

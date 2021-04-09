@@ -21,7 +21,7 @@ import UIKit
 
 class NotificationLabel: UIView {
 
-    private var timer: Timer?
+    private(set) var timer: Timer?
 
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let messageLabel = UILabel(
@@ -48,6 +48,7 @@ class NotificationLabel: UIView {
     // MARK: - Setup
 
     private func setupViews() {
+        isHidden = true
         layer.cornerRadius = 12
         blurView.layer.cornerRadius = 12
 
@@ -76,40 +77,53 @@ class NotificationLabel: UIView {
 
     // MARK: - Public Interface
 
+    /// Shows a message with an optional timer.
+    /// - Parameters:
+    ///   - message: message to show
+    ///   - timeInterval: optional time interval after which the message will be hidden
     func show(message: String, hideAfter timeInterval: TimeInterval? = nil) {
         messageLabel.text = message
-        createTimer(with: timeInterval)
-        animateMessage(show: true)
-        startTimer()
+        animateMessage(show: true) { [weak self] in
+            self?.startTimer(with: timeInterval)
+        }
     }
 
-    func hide() {
-        stopTimer()
+    /// Hides message and invalidates the timer.
+    func hideAndStopTimer() {
+        timer?.invalidate()
         animateMessage(show: false)
+    }
+
+    /// Changes visibility of the message label.
+    /// No effect if the message has already been hidden after the timer was invalidated.
+    /// - Parameter hidden: wether or not the message should be hidden
+    func setMessage(hidden: Bool) {
+        // only change visibility if timer isn't invalid
+        guard timer == nil || timer?.isValid == true else {
+            return
+        }
+
+        animateMessage(show: !hidden)
     }
 
     // MARK: - Helpers
 
-    private func animateMessage(show: Bool) {
-        UIView.animate(withDuration: 0.5) { [weak self] in
+    private func animateMessage(show: Bool, completion: (() -> Void)? = nil) {
+        if show { isHidden = false }
+
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.alpha = show ? 1 : 0
-        }
+        }, completion: { [weak self] _ in
+            self?.isHidden = !show
+            completion?()
+        })
     }
 
-    private func createTimer(with timeInterval: TimeInterval?) {
+    private func startTimer(with timeInterval: TimeInterval?) {
         guard let timeInterval = timeInterval else { return }
 
-        timer = Timer(timeInterval: timeInterval, repeats: false) { [weak self] _ in
+        timer = .scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
             self?.animateMessage(show: false)
         }
-    }
-
-    private func startTimer() {
-        timer?.fire()
-    }
-
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 }

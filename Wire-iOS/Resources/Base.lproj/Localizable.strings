@@ -682,8 +682,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Video paused";
+"call.grid.hints.fullscreen" = "Double Tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double Tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Video paused";
 "call.video.too_many.alert.title" = "Too many people for Video";
 "call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
 
