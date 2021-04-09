@@ -265,6 +265,8 @@ extension SettingsPropertyName {
             return "self.settings.enable_read_receipts.title".localized
         case .encryptMessagesAtRest:
             return "self.settings.encrypt_messages_at_rest.title".localized
+        case .federationEnabled:
+            return "Federate with other domains"
         }
     }
 }

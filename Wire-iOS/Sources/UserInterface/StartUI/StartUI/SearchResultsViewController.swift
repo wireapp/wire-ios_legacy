@@ -177,6 +177,10 @@ final class SearchResultsViewController: UIViewController {
         }
     }
 
+    var includeFederatedUsers: Bool {
+        return Settings.shared[.federationEnabled] == true
+    }
+
     deinit {
         searchDirectory?.tearDown()
     }
@@ -263,11 +267,16 @@ final class SearchResultsViewController: UIViewController {
     }
 
     func searchForUsers(withQuery query: String) {
-        self.performSearch(query: query, options: [.conversations,
-                                                   .contacts,
-                                                   .teamMembers,
-                                                   .directory,
-                                                   .federated])
+        var options: SearchOptions = [.conversations,
+                                      .contacts,
+                                      .teamMembers,
+                                      .directory]
+
+        if includeFederatedUsers {
+            options.formUnion(.federated)
+        }
+
+        self.performSearch(query: query, options: options)
     }
 
     func searchForLocalUsers(withQuery query: String) {
