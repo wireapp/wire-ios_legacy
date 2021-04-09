@@ -32,6 +32,8 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var networkQuality: NetworkQuality = .normal
 
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
+
+    var callHasTwoParticipants: Bool = false
 }
 
 final class VideoGridViewControllerSnapshotTests: XCTestCase {

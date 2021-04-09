@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "Įterpti naują eilutę";
 "conversation.input_bar.shortcut.edit_last_message" = "Keisti naujausią žinutę";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Atsisakyti";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Žinutė per ilga";
 "conversation.input_bar.message_too_long.message" = "Galite siųsti žinutes, kurių ilgis iki %d simbolių.";
@@ -1632,7 +1634,7 @@
 "databaseloadingfailure.alert.settings" = "Eiti į Nustatymus";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "Tęsti";
 
 // Third Party
 "giphy.conversation.message" = "%@ · iš giphy.com";
@@ -1861,5 +1863,5 @@
 "appLockModule.message.touchID" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
 "appLockModule.message.passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
 "appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Atrakinti";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

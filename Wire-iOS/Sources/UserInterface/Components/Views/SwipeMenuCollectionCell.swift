@@ -68,7 +68,10 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     private var revealAnimationPerforming = false
     private var scrollingFraction: CGFloat = 0 {
         didSet {
-            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
+            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: scrollingFraction * bounds.size.width,
+                                                                             initialOffset: initialDrawerOffset,
+                                                                             drawerWidth: drawerWidth,
+                                                                             viewWidth: bounds.size.width)
         }
     }
 

@@ -27,7 +27,7 @@
 "general.edit" = "編輯";
 "general.done" = "完成";
 "general.confirm" = "確認";
-"general.later" = "稍後";
+"general.later" = "以後再說";
 "general.skip" = "現在略過";
 "general.accept" = "同意";
 "general.decline" = "不了，謝謝";
@@ -313,6 +313,8 @@
 "conversation.input_bar.shortcut.newline" = "插入換行";
 "conversation.input_bar.shortcut.edit_last_message" = "編輯最近訊息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
+"conversation.input_bar.shortcut.choose_previous_mention" = "選擇前一個提及";
+"conversation.input_bar.shortcut.choose_next_mention" = "選擇下一個提及";
 
 "conversation.input_bar.message_too_long.title" = "訊息過長";
 "conversation.input_bar.message_too_long.message" = "每則訊息最多只能包含%d個字元。";
@@ -534,7 +536,7 @@
 
 "content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
 "content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
-"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.reset_session" = "修正將來的信息";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
 "content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
@@ -675,8 +677,8 @@
 "call.participants.show_all" = "全部顯示 (%@)";
 "call.participants.list.title" = "參與者";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.speakers" = "擴音";
+"call.overlay.switch_to.all" = "全部";
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
@@ -1629,10 +1631,10 @@
 // Database Loading Failure alert
 "databaseloadingfailure.alert.title" = "Not Enough Storage";
 "databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
-"databaseloadingfailure.alert.settings" = "開啟設定";
+"databaseloadingfailure.alert.settings" = "前往設定";
 "databaseloadingfailure.alert.delete_database" = "Delete Database";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
-"databaseloadingfailure.alert.delete_database.continue" = "Continue";
+"databaseloadingfailure.alert.delete_database.continue" = "繼續";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 來自giphy.com";
@@ -1858,8 +1860,8 @@
 // MARK: - App lock module
 
 "appLockModule.message.faceID" = "請使用Face ID或密碼解鎖Wire";
-"appLockModule.message.touchID" = "請使用Touch ID或密碼解鎖Wire";
+"appLockModule.message.touchID" = "請使用Touch ID或Passcode解鎖Wire";
 "appLockModule.message.passcode" = "用密碼解鎖Wire";
 "appLockModule.message.passcodeUnavailable" = "要解鎖Wire，請在設置中選擇打開密碼";
-"appLockModule.unlockButton.title" = "Unlock";
-"appLockModule.goToSettingsButton.title" = "Go to settings";
+"appLockModule.unlockButton.title" = "解鎖";
+"appLockModule.goToSettingsButton.title" = "前往設定";
