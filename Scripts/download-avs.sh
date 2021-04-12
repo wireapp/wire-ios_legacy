@@ -107,8 +107,11 @@ else
   fi
 	
 	# Get tag json: need to parse json to get assed URL
+	echo "🦶 mktemp..."
 	TEMP_FILE=`mktemp`
+	echo "🦶 curl..."
 	curl -sLJ -u "${CREDENTIALS}" "${AVS_RELEASE_TAG_PATH}" -o "${TEMP_FILE}"
+	echo "🦶 cat..."
 	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
