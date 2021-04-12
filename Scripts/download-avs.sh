@@ -113,11 +113,13 @@ else
 	curl -sLJ -u "${CREDENTIALS}" "${AVS_RELEASE_TAG_PATH}" -o "${TEMP_FILE}"
 	echo "🦶 cat..."
 	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	echo "🦶 rm..."
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"
 	fi
 	# get file
+	echo "🦶 mktemp(2)..."
 	TEMP_FILE=`mktemp`
 	echo "Redirected to ${ASSET_URL}..."
 	curl -LJ -u "${CREDENTIALS}" "${ASSET_URL}" -o "${TEMP_FILE}" -H "Accept: application/octet-stream"
