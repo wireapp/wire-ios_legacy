@@ -134,16 +134,16 @@ final class EmptySearchResultsView: UIView {
     private var text: String {
         switch state {
         case .everyoneAdded:
-            return L10n.Localizable.AddParticipants.allContactsAdded
+            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.usersAllAdded
         case .noUsers:
             return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.users
         case .noServices:
-            return L10n.Localizable.Peoplepicker.noMatchingResultsTitle // TODO jacob move to .services
+            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.services
         case .noServicesEnabled:
             if isSelfUserAdmin {
-                return L10n.Localizable.Peoplepicker.noMatchingResultsServicesAdminTitle // TODO jacob move to .servicesAdmin
+                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.servicesNotEnabledAdmin
             } else {
-                return L10n.Localizable.Peoplepicker.noMatchingResultsTitle // TODO jacob move to .services
+                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.servicesNotEnabled
             }
         }
     }

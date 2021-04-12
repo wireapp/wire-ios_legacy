@@ -89,8 +89,8 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_services_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
-"peoplepicker.no_matching_results_services_admin_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
+"peoplepicker.no_matching_results.message.services_admin" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
 "peoplepicker.no_matching_results.action.manage_services" = "Керування сервісами";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
