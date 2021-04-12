@@ -192,6 +192,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     // MARK: Viewer is guest
 
+    ///TODO: test failed, check conversation is injected?
     func test_OneToOne_GuestToTeam() {
         // GIVEN
         let guest = MockUserType.createUser(name: "Bob", inTeam: nil)

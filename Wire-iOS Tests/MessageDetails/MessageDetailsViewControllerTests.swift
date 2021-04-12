@@ -76,8 +76,8 @@ final class MessageDetailsViewControllerTests: XCTestCase {
         snapshot(detailsViewController)
     }
 
-    private func createGroupConversation() -> SwiftMockConversation {
-        let conversation = SwiftMockConversation()
+    private func createGroupConversation() -> MockGroupDetailsConversation {
+        let conversation = MockGroupDetailsConversation()
         conversation.teamRemoteIdentifier = UUID()
         conversation.mockLocalParticipantsContain = true
 
