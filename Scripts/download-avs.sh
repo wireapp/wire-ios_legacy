@@ -111,6 +111,8 @@ else
 	TEMP_FILE=`mktemp`
 	echo "🦶 curl..."
 	curl -sLJ -u "${CREDENTIALS}" "${AVS_RELEASE_TAG_PATH}" -o "${TEMP_FILE}"
+	echo "🦶 debug cat..."
+    echo `cat ${TEMP_FILE}`
 	echo "🦶 cat..."
 	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	echo "🦶 rm..."
