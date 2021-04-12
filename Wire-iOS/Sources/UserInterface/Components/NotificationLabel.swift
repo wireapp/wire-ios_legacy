@@ -32,9 +32,13 @@ class NotificationLabel: UIView {
         variant: .dark
     )
 
+    /// use to disable animations for unit tests
+    private var shouldAnimate: Bool
+
     // MARK: - View Life Cycle
 
-    init() {
+    init(shouldAnimate: Bool = true) {
+        self.shouldAnimate = shouldAnimate
         super.init(frame: .zero)
         setupViews()
         createConstraints()
@@ -53,6 +57,7 @@ class NotificationLabel: UIView {
         blurView.layer.cornerRadius = 12
 
         messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
 
         [blurView, messageLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -111,12 +116,21 @@ class NotificationLabel: UIView {
     private func animateMessage(show: Bool, completion: (() -> Void)? = nil) {
         if show { isHidden = false }
 
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        let animationBlock: () -> Void = { [weak self] in
             self?.alpha = show ? 1 : 0
-        }, completion: { [weak self] _ in
+        }
+
+        let completionBlock: (Bool) -> Void = { [weak self] _ in
             self?.isHidden = !show
             completion?()
-        })
+        }
+
+        if shouldAnimate {
+            UIView.animate(withDuration: 0.5, animations: animationBlock, completion: completionBlock)
+        } else {
+            animationBlock()
+            completionBlock(true)
+        }
     }
 
     private func startTimer(with timeInterval: TimeInterval?) {

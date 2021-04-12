@@ -440,6 +440,15 @@ extension VideoGridViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - Test Helpers
+
+extension VideoGridViewController {
+    /// used by snapshot tests
+    func hideHintView() {
+        hintView.hideAndStopTimer()
+    }
+}
+
 // MARK: - Extensions
 
 extension ZMEditableUser {
