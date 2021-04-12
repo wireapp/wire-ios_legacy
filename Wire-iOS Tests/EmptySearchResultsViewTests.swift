@@ -69,32 +69,57 @@ extension ColorSchemeVariant: CaseIterable {
     }
 }
 
-final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
+final class EmptySearchResultsViewTests: XCTestCase {
 
-    func testStates() {
-        let initialState = EmptySearchResultsViewTestState(colorSchemeVariant: .light,
-                                                           isSelfUserAdmin: false,
-                                                           searchingForServices: false,
-                                                           hasFilter: false)
+    func testNoResultsForUsers() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false)
+        sut.updateStatus(searchingForServices: false, hasFilter: true)
+        configureBounds(for: sut)
 
-        let builder = VariantsBuilder(initialValue: initialState)
+        // then
+        verify(matching: sut)
 
-        builder.add(keyPath: \EmptySearchResultsViewTestState.colorSchemeVariant)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.isSelfUserAdmin)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.searchingForServices)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.hasFilter)
-
-        builder.allVariants().forEach { version in
-            let sut = version.createView()
-
-            sut.backgroundColor = .lightGray
-            sut.bounds.size = sut.systemLayoutSizeFitting(
-                CGSize(width: 375, height: 600),
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .fittingSizeLevel
-            )
-
-            verify(view: sut, identifier: version.description)
-        }
     }
+
+    func testNoResultsForUsers_WhenEveryoneHaveBeenAdded() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false)
+        sut.updateStatus(searchingForServices: false, hasFilter: false)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
+    }
+
+    func testNoResultsForServices() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false)
+        sut.updateStatus(searchingForServices: true, hasFilter: true)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
+    }
+
+    func testNoResultsForServices_WhenAdmin() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: true)
+        sut.updateStatus(searchingForServices: true, hasFilter: false)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
+    }
+
+    // MARK: - Helpers
+
+    func configureBounds(for view: UIView) {
+        view.bounds.size = view.systemLayoutSizeFitting(
+            CGSize(width: 375, height: 600),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+    }
+
 }

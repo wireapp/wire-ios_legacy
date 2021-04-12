@@ -2673,7 +2673,11 @@ internal enum L10n {
         internal static let topPeople = L10n.tr("Localizable", "peoplepicker.header.top_people")
       }
       internal enum NoMatchingResults {
+        /// Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname
+        internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.users")
         internal enum Action {
+          /// Learn more
+          internal static let learnMore = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.learn_more")
           /// Send an invitation
           internal static let sendInvite = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.send_invite")
           /// Share contacts
