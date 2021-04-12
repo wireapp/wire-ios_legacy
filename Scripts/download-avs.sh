@@ -105,6 +105,10 @@ else
     echo "❌  Can't find git. Please make sure it is installed ⚠️"
     exit 1
   fi
+  
+  	echo "🦶 GITHUB_USERNAME..."
+	echo "🦶${GITHUB_USERNAME}"
+
 	
 	# Get tag json: need to parse json to get assed URL
 	echo "🦶 mktemp..."
