@@ -47,6 +47,7 @@ enum ClearContentResult {
         return "meta.menu.delete_content.dialog_message".localized
     }
 
+    ///TODO: change to  ConversationLike
     static func options(for conversation: ZMConversation) -> [ClearContentResult] {
         if conversation.conversationType == .oneOnOne || !conversation.isSelfAnActiveMember {
             return [.delete(leave: false), .cancel]

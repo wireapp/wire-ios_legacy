@@ -34,7 +34,7 @@ enum ProfileViewControllerContext {
 
 final class ProfileViewControllerViewModel: NSObject {
     let user: UserType
-    let conversation: ZMConversation?
+    let conversation: ConversationLike?
     let viewer: UserType
     let context: ProfileViewControllerContext
 
@@ -50,7 +50,7 @@ final class ProfileViewControllerViewModel: NSObject {
     weak var viewModelDelegate: ProfileViewControllerViewModelDelegate?
 
     init(user: UserType,
-         conversation: ZMConversation?,
+         conversation: ConversationLike?,
          viewer: UserType,
          context: ProfileViewControllerContext) {
         self.user = user
@@ -123,7 +123,8 @@ final class ProfileViewControllerViewModel: NSObject {
 
     func archiveConversation() {
         transitionToListAndEnqueue {
-            self.conversation?.isArchived.toggle()
+            ///TODO: add isArchived to protocol
+            (self.conversation as? ZMConversation)?.isArchived.toggle()
         }
     }
 
@@ -141,7 +142,8 @@ final class ProfileViewControllerViewModel: NSObject {
 
     func updateMute(enableNotifications: Bool) {
         ZMUserSession.shared()?.enqueue {
-            self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
+            //TODO: mv mutedMessageTypes to protocol
+            (self.conversation as? ZMConversation)?.mutedMessageTypes = enableNotifications ? .none : .all
             // update the footer view to display the correct mute/unmute button
             self.viewModelDelegate?.updateFooterViews()
         }
@@ -150,7 +152,7 @@ final class ProfileViewControllerViewModel: NSObject {
     func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
             ZMUserSession.shared()?.perform {
-                self.conversation?.mutedMessageTypes = mutedMessageTypes
+                (self.conversation as? ZMConversation)?.mutedMessageTypes = mutedMessageTypes
             }
         }
     }
@@ -160,9 +162,10 @@ final class ProfileViewControllerViewModel: NSObject {
     func handleDeleteResult(_ result: ClearContentResult) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
-            self.conversation?.clearMessageHistory()
+            ///TODO: mv clearMessageHistory to protocol
+            (self.conversation as? ZMConversation)?.clearMessageHistory()
             if leave {
-                self.conversation?.removeOrShowError(participant: SelfUser.current)
+                (self.conversation as? ZMConversation)?.removeOrShowError(participant: SelfUser.current)
             }
         }
     }
@@ -188,7 +191,10 @@ final class ProfileViewControllerViewModel: NSObject {
     }
 
     var profileActionsFactory: ProfileActionsFactory {
-        return ProfileActionsFactory(user: user, viewer: viewer, conversation: conversation, context: context)
+        return ProfileActionsFactory(user: user,
+                                     viewer: viewer,
+                                     conversation: conversation,
+                                     context: context)
     }
 
     // MARK: Connect

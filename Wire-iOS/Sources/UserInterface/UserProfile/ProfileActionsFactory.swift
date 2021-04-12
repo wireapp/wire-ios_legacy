@@ -97,7 +97,7 @@ final class ProfileActionsFactory {
     let viewer: UserType
 
     /// The conversation that the user wants to perform the actions in.
-    let conversation: ZMConversation?
+    let conversation: ConversationLike?
 
     /// The context of the Profile VC
     let context: ProfileViewControllerContext
@@ -112,7 +112,10 @@ final class ProfileActionsFactory {
      * perform the actions in.
      */
 
-    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+    init(user: UserType,
+         viewer: UserType,
+         conversation: ConversationLike?,
+         context: ProfileViewControllerContext) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -140,7 +143,7 @@ final class ProfileActionsFactory {
             return [.block(isBlocked: true)]
         }
 
-        var conversation: ZMConversation?
+        var conversation: ConversationLike?
 
         // If there is no conversation and open profile from a conversation, offer to connect to the user if possible
         if let selfConversation = self.conversation {
@@ -166,7 +169,7 @@ final class ProfileActionsFactory {
 
             // Notifications, Archive, Delete Contents if available for every 1:1
             if let conversation = conversation {
-                let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: conversation.mutedMessageTypes != .none)
+                let notificationAction: ProfileAction = viewer.isTeamMember ? .manageNotifications : .mute(isMuted: (conversation as? ZMConversation)?.mutedMessageTypes != .none)
                 actions.append(contentsOf: [notificationAction, .archive, .deleteContents])
             }
 
@@ -195,7 +198,8 @@ final class ProfileActionsFactory {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if let conversation = conversation, viewer.canRemoveUser(from: conversation) {
+            if let conversation = conversation as? ZMConversation,
+               viewer.canRemoveUser(from: conversation) {
                 actions.append(.removeFromGroup)
             }
 

@@ -61,7 +61,9 @@ enum NotificationResult: CaseIterable {
         }
     }
 
-    func action(for conversation: ZMConversation, handler: @escaping (NotificationResult) -> Void) -> UIAlertAction {
+    //TODO: change to ConversationLike
+    func action(for conversation: ZMConversation,
+                handler: @escaping (NotificationResult) -> Void) -> UIAlertAction {
         let checkmarkText: String
 
         if let mutedMessageTypes = self.mutedMessageTypes, conversation.mutedMessageTypes == mutedMessageTypes {

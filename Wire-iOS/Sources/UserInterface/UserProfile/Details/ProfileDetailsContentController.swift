@@ -64,7 +64,7 @@ final class ProfileDetailsContentController: NSObject,
     let viewer: UserType
 
     /// The conversation where the profile details will be displayed.
-    let conversation: ZMConversation?
+    let conversation: ConversationLike?
 
     /// The current group admin status for UI.
     private var isAdminState: Bool
@@ -94,7 +94,7 @@ final class ProfileDetailsContentController: NSObject,
 
     init(user: UserType,
          viewer: UserType,
-         conversation: ZMConversation?) {
+         conversation: ConversationLike?) {
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
@@ -154,7 +154,8 @@ final class ProfileDetailsContentController: NSObject,
             // Do not show group admin toggle for self user or requesting connection user
             var items: [ProfileDetailsContentController.Content] = []
 
-            if let conversation = conversation {
+            if let conversation = conversation as? ZMConversation {
+                ///TODO: add canModifyOtherMember to protocol
                 let viewerCanChangeOtherRoles = viewer.canModifyOtherMember(in: conversation)
                 let userCanHaveRoleChanged = !user.isWirelessUser
 
@@ -284,7 +285,8 @@ final class ProfileDetailsContentController: NSObject,
     }
 
     private func updateConversationRole() {
-        let groupRoles = self.conversation?.getRoles()
+        ///TODO: getRoles in protocol
+        let groupRoles = (conversation as? ZMConversation)?.getRoles()
         let newParticipantRole = groupRoles?.first {
             $0.name == (self.isAdminState ? ZMConversation.defaultAdminRoleName : ZMConversation.defaultMemberRoleName)
         }
@@ -295,7 +297,8 @@ final class ProfileDetailsContentController: NSObject,
             let user = (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
             else { return }
 
-        conversation?.updateRole(of: user, to: role, session: session) { (result) in
+        ///TODO: mv updateRole to protocol
+        (conversation as? ZMConversation)?.updateRole(of: user, to: role, session: session) { (result) in
             if case .failure = result {
                 self.isAdminState.toggle()
                 self.updateUI()

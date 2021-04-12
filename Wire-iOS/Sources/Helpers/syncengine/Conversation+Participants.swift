@@ -53,6 +53,7 @@ extension ZMConversation {
         }
     }
 
+    ///TODO: mv this to protocol extension
     func removeOrShowError(participant user: UserType, completion: ((VoidResult) -> Void)? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {

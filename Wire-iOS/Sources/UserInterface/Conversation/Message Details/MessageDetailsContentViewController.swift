@@ -33,7 +33,7 @@ final class MessageDetailsContentViewController: UIViewController {
     // MARK: - Configuration
 
     /// The conversation that is being accessed.
-    let conversation: ZMConversation
+    let conversation: GroupDetailsConversationType
 
     /// The type of the displayed content.
     let contentType: ContentType
@@ -75,14 +75,15 @@ final class MessageDetailsContentViewController: UIViewController {
      * Creates a view controller to display message details of a certain type.
      */
 
-    init(contentType: ContentType, conversation: ZMConversation) {
+    init(contentType: ContentType, conversation: GroupDetailsConversationType) {
         self.contentType = contentType
         self.conversation = conversation
         super.init(nibName: nil, bundle: nil)
         updateTitle()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

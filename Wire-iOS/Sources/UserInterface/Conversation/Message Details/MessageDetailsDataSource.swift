@@ -47,7 +47,7 @@ final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserve
     let message: ZMConversationMessage
 
     /// The conversation where the message is
-    let conversation: ZMConversation
+    let conversation: GroupDetailsConversationType
 
     /// How to display the message details.
     let displayMode: MessageDetailsDisplayMode
@@ -79,7 +79,7 @@ final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserve
 
     init(message: ZMConversationMessage) {
         self.message = message
-        self.conversation = message.conversation!
+        self.conversation = message.conversationLike as! GroupDetailsConversationType
 
         // Assign the initial data
         self.reactions = MessageDetailsCellDescription.makeReactionCells(message.sortedLikers)
