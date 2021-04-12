@@ -19,56 +19,6 @@
 import XCTest
 @testable import Wire
 
-struct EmptySearchResultsViewTestState: Copyable {
-    init(instance: EmptySearchResultsViewTestState) {
-        self.colorSchemeVariant = instance.colorSchemeVariant
-        self.isSelfUserAdmin = instance.isSelfUserAdmin
-        self.searchingForServices = instance.searchingForServices
-        self.hasFilter = instance.hasFilter
-    }
-
-    init(colorSchemeVariant: ColorSchemeVariant, isSelfUserAdmin: Bool, searchingForServices: Bool, hasFilter: Bool) {
-        self.colorSchemeVariant = colorSchemeVariant
-        self.isSelfUserAdmin = isSelfUserAdmin
-        self.searchingForServices = searchingForServices
-        self.hasFilter = hasFilter
-    }
-
-    var colorSchemeVariant: ColorSchemeVariant
-    var isSelfUserAdmin: Bool
-    var searchingForServices: Bool
-    var hasFilter: Bool
-
-    func createView() -> EmptySearchResultsView {
-        let view = EmptySearchResultsView(variant: colorSchemeVariant, isSelfUserAdmin: isSelfUserAdmin)
-        view.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
-        return view
-    }
-}
-
-extension ColorSchemeVariant: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .dark:
-            return "ColorSchemeVariant.dark"
-        case .light:
-            return "ColorSchemeVariant.light"
-        }
-    }
-}
-
-extension EmptySearchResultsViewTestState: CustomStringConvertible {
-    var description: String {
-        return "colorSchemeVariant: \(colorSchemeVariant) isSelfUserAdmin: \(isSelfUserAdmin) searchingForServices: \(searchingForServices) hasFilter: \(hasFilter)"
-    }
-}
-
-extension ColorSchemeVariant: CaseIterable {
-    public static var allCases: [ColorSchemeVariant] {
-        return [.light, .dark]
-    }
-}
-
 final class EmptySearchResultsViewTests: XCTestCase {
 
     func testNoResultsForUsers() {
