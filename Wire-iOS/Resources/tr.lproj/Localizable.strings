@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sonuç yok.";
 "peoplepicker.no_matching_results_services_title" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır. Onları etkinleştirmek için yöneticinize sorun.";
 "peoplepicker.no_matching_results_services_admin_title" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Hizmetleri yönet";
+"peoplepicker.no_matching_results.action.manage_services" = "Hizmetleri yönet";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Tam bir e-posta adresi girin veya";
 /*  */

@@ -36,7 +36,7 @@ extension EmptySearchResultsViewAction {
     var title: String {
         switch self {
         case .openManageServices:
-            return L10n.Localizable.Peoplepicker.noMatchingResultsServicesManageServicesTitle // TODO jacob move to actions
+            return L10n.Localizable.Peoplepicker.NoMatchingResults.Action.manageServices
         case .openSearchSupportPage:
             return L10n.Localizable.Peoplepicker.NoMatchingResults.Action.learnMore
         }
@@ -136,7 +136,7 @@ final class EmptySearchResultsView: UIView {
         case .everyoneAdded:
             return L10n.Localizable.AddParticipants.allContactsAdded
         case .noUsers:
-            return L10n.Localizable.Peoplepicker.NoMatchingResults.users
+            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.users
         case .noServices:
             return L10n.Localizable.Peoplepicker.noMatchingResultsTitle // TODO jacob move to .services
         case .noServicesEnabled:

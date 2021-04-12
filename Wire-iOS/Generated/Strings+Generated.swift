@@ -2610,8 +2610,6 @@ internal enum L10n {
       internal static let noMatchingResultsProvideValidEmail = L10n.tr("Localizable", "peoplepicker.no_matching_results_provide_valid_email")
       /// Services are helpers that can improve your workflow.
       internal static let noMatchingResultsServicesAdminTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_admin_title")
-      /// Manage Services
-      internal static let noMatchingResultsServicesManageServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_manage_services_title")
       /// Services are helpers that can improve your workflow. To enable them, ask your administrator.
       internal static let noMatchingResultsServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_title")
       /// No results.
@@ -2673,15 +2671,19 @@ internal enum L10n {
         internal static let topPeople = L10n.tr("Localizable", "peoplepicker.header.top_people")
       }
       internal enum NoMatchingResults {
-        /// Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname
-        internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.users")
         internal enum Action {
           /// Learn more
           internal static let learnMore = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.learn_more")
+          /// Manage Services
+          internal static let manageServices = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.manage_services")
           /// Send an invitation
           internal static let sendInvite = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.send_invite")
           /// Share contacts
           internal static let shareContacts = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.share_contacts")
+        }
+        internal enum Message {
+          /// Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname
+          internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users")
         }
       }
       internal enum QuickAction {

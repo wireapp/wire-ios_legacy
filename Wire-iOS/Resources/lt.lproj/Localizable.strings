@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Rezultatų nėra.";
 "peoplepicker.no_matching_results_services_title" = "Paslaugos yra pagalbininkai, kurie padeda pagerinti darbo eigą. Norėdami jomis naudotis, prašykite savo administratoriaus.";
 "peoplepicker.no_matching_results_services_admin_title" = "Paslaugos yra pagalbininkai, kurie padeda pagerinti darbo eigą.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Valdyti paslaugas";
+"peoplepicker.no_matching_results.action.manage_services" = "Valdyti paslaugas";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Įveskite pilną el. pašto adresą arba";
 /*  */

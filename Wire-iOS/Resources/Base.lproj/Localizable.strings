@@ -88,14 +88,15 @@
 "peoplepicker.no_matching_results.action.send_invite" = "Send an invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Share contacts";
 "peoplepicker.no_matching_results.action.learn_more" = "Learn more";
+"peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Please enter a valid email address";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
-"peoplepicker.no_matching_results.users" = "Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname";
 "peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 "peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Enter a full email address or";
 /*  */

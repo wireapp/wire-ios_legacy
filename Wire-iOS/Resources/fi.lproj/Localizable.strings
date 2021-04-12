@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ei tuloksia.";
 "peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 "peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+"peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Anna kelvollinen sähköpostiosoite tai";
 /*  */

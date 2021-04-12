@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
 "peoplepicker.no_matching_results_services_title" = "服务是可以为您的工作流程改善提供帮助。要启用服务，请联系您的管理员。";
 "peoplepicker.no_matching_results_services_admin_title" = "服务是可以为您的工作流程改善提供帮助。";
-"peoplepicker.no_matching_results_services_manage_services_title" = "管理服务";
+"peoplepicker.no_matching_results.action.manage_services" = "管理服务";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "请输入完整的电邮箱地址或";
 /*  */
