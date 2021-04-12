@@ -85,7 +85,7 @@ else
 
   # prepare credentials
   if hash git 2>/dev/null; then
-    GITHUB_USERNAME="`git config user.email`"
+    GITHUB_USERNAME="`git config user.name`"
 
     # guard username exists
     if [[ -z "${GITHUB_USERNAME}" ]]; then
@@ -105,10 +105,6 @@ else
     echo "❌  Can't find git. Please make sure it is installed ⚠️"
     exit 1
   fi
-  
-  	echo "🦶 GITHUB_USERNAME..."
-	echo "🦶${GITHUB_USERNAME}"
-
 	
 	# Get tag json: need to parse json to get assed URL
 	echo "🦶 mktemp..."
