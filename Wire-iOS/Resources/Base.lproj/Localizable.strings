@@ -81,8 +81,6 @@
 
 "peoplepicker.no_contacts_title" = "No Contacts.";
 
-"peoplepicker.no_matching_results_title" = "No results.";
-"peoplepicker.no_matching_results_message" = "Enter a full email address.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Send an invitation";
@@ -90,22 +88,12 @@
 "peoplepicker.no_matching_results.action.learn_more" = "Learn more";
 "peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
-
-"peoplepicker.no_matching_results_provide_valid_email" = "Please enter a valid email address";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
 "peoplepicker.no_matching_results.message.services" = "No results.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-
-
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Enter a full email address or";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "share contacts";
-
-"peoplepicker.share_contacts.no_results.title" = "Find people by name or email address";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
