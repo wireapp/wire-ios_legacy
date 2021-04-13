@@ -102,7 +102,7 @@ class NotificationLabel: UIView {
     /// Changes visibility of the message label.
     /// No effect if the message has already been hidden after the timer was invalidated.
     /// - Parameter hidden: wether or not the message should be hidden
-    func setMessage(hidden: Bool) {
+    func setMessageHidden(_ hidden: Bool) {
         // only change visibility if timer isn't invalid
         guard timer == nil || timer?.isValid == true else {
             return

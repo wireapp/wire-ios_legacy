@@ -78,7 +78,7 @@ class NotificationLabelTests: XCTestCase {
 
         // then
         XCTAssertTrue(sut.isHidden)
-        XCTAssert(sut.alpha == 0)
+        XCTAssertEqual(sut.alpha, 0)
         XCTAssert(sut.timer?.isValid == false)
     }
 
@@ -89,10 +89,10 @@ class NotificationLabelTests: XCTestCase {
         sut.show(message: message)
 
         // when
-        sut.setMessage(hidden: true)
+        sut.setMessageHidden(true)
 
         // then
-        XCTAssert(sut.alpha == 0)
+        XCTAssertEqual(sut.alpha, 0)
         XCTAssertTrue(sut.isHidden)
     }
 
@@ -102,10 +102,10 @@ class NotificationLabelTests: XCTestCase {
         sut.isHidden = true
 
         // when
-        sut.setMessage(hidden: false)
+        sut.setMessageHidden(false)
 
         // then
-        XCTAssert(sut.alpha == 1)
+        XCTAssertEqual(sut.alpha, 1)
         XCTAssertFalse(sut.isHidden)
     }
 
@@ -117,10 +117,10 @@ class NotificationLabelTests: XCTestCase {
         sut.timer?.invalidate()
 
         // when
-        sut.setMessage(hidden: false)
+        sut.setMessageHidden(false)
 
         // then
-        XCTAssert(sut.alpha == 0)
+        XCTAssertEqual(sut.alpha, 0)
         XCTAssertTrue(sut.isHidden)
     }
 }

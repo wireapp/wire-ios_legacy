@@ -20,6 +20,8 @@ import Foundation
 import UIKit
 
 enum VideoGridHintKind {
+    private typealias HintString = L10n.Localizable.Call.Grid.Hints
+
     case fullscreen
     case zoom
     case goBackOrZoom
@@ -27,11 +29,11 @@ enum VideoGridHintKind {
     var message: String {
         switch self {
         case .fullscreen:
-            return L10n.Localizable.Call.Grid.Hints.fullscreen
+            return HintString.fullscreen
         case .zoom:
-            return L10n.Localizable.Call.Grid.Hints.zoom
+            return HintString.zoom
         case .goBackOrZoom:
-            return L10n.Localizable.Call.Grid.Hints.goBackOrZoom
+            return HintString.goBackOrZoom
         }
     }
 }

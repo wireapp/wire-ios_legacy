@@ -69,7 +69,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()
             animateNetworkConditionView()
-            hintView.setMessage(hidden: isCovered)
+            hintView.setMessageHidden(isCovered)
         }
     }
 
