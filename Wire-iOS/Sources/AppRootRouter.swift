@@ -361,17 +361,17 @@ extension AppRootRouter {
     }
 
     private func setupAnalyticsSharing() {
-        Analytics.shared.selfUser = SelfUser.current
-
         guard
             appStateCalculator.wasUnauthenticated,
-            Analytics.shared.selfUser?.isTeamMember ?? false
+            let selfUser = SelfUser.provider?.selfUser,
+            selfUser.isTeamMember
         else {
             return
         }
 
         TrackingManager.shared.disableCrashSharing = true
         TrackingManager.shared.disableAnalyticsSharing = false
+        Analytics.shared.provider?.selfUser = selfUser
     }
 
     private func buildAuthenticatedRouter(account: Account, isComingFromRegistration: Bool) -> AuthenticatedRouter? {
