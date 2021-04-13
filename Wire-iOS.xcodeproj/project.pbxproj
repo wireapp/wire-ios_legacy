@@ -2502,6 +2502,7 @@
 		A949418C23E180FF001B0373 /* Bundle+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+config.swift"; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A94E8FC12625DF46001478BC /* Wire-iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Wire-iOS.xctestplan"; sourceTree = "<group>"; };
+		A94E8FCE2625F52A001478BC /* Wire-iOS-languages.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Wire-iOS-languages.xctestplan"; sourceTree = "<group>"; };
 		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
@@ -5839,6 +5840,7 @@
 		A94E8FCD2625F446001478BC /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
+				A94E8FCE2625F52A001478BC /* Wire-iOS-languages.xctestplan */,
 				A94E8FC12625DF46001478BC /* Wire-iOS.xctestplan */,
 			);
 			path = TestPlans;

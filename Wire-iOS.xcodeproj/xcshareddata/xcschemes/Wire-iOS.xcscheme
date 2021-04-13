@@ -43,6 +43,9 @@
             reference = "container:Wire-iOS Tests/TestPlans/Wire-iOS.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:Wire-iOS Tests/TestPlans/Wire-iOS-languages.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
