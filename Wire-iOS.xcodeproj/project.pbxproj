@@ -5836,6 +5836,14 @@
 			path = "Wire-iOS Tests/ConversationList/SectionHeader";
 			sourceTree = SOURCE_ROOT;
 		};
+		A94E8FCD2625F446001478BC /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				A94E8FC12625DF46001478BC /* Wire-iOS.xctestplan */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
 		A955D3D623F5774100304851 /* URL */ = {
 			isa = PBXGroup;
 			children = (
@@ -6006,7 +6014,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A94E8FC12625DF46001478BC /* Wire-iOS.xctestplan */,
+				A94E8FCD2625F446001478BC /* TestPlans */,
 				63750519262477BE0083DC27 /* Components */,
 				87BEB0D71C734D550094BFE9 /* Mocks */,
 				064AB3D425BAE36A00380D9B /* PasswordRules */,
