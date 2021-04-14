@@ -89,8 +89,8 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "有効なメール アドレスを入力してください";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "結果はありません";
-"peoplepicker.no_matching_results.message.services" = "あなたのワークフローを改善するサービスです。サービスを有効にするには、管理者に問い合わせてください。";
-"peoplepicker.no_matching_results.message.services_admin" = "サービスはあなたのワークフローを改善に役立ちます。";
+"peoplepicker.no_matching_results_services_title" = "あなたのワークフローを改善するサービスです。サービスを有効にするには、管理者に問い合わせてください。";
+"peoplepicker.no_matching_results_services_admin_title" = "サービスはあなたのワークフローを改善に役立ちます。";
 "peoplepicker.no_matching_results.action.manage_services" = "サービスを管理";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "メールアドレスを正確に入力します";

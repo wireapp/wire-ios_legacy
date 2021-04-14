@@ -89,8 +89,8 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
-"peoplepicker.no_matching_results.message.services" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
-"peoplepicker.no_matching_results.message.services_admin" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
+"peoplepicker.no_matching_results_services_title" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
+"peoplepicker.no_matching_results_services_admin_title" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
 "peoplepicker.no_matching_results.action.manage_services" = "Beheer diensten";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";

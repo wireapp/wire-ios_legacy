@@ -89,8 +89,8 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "請輸入有效電子郵件信箱";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
-"peoplepicker.no_matching_results.message.services" = "服務可改善你的工作流程。要啟用它們, 請詢問您的管理員。";
-"peoplepicker.no_matching_results.message.services_admin" = "服務可改善你的工作流程。";
+"peoplepicker.no_matching_results_services_title" = "服務可改善你的工作流程。要啟用它們, 請詢問您的管理員。";
+"peoplepicker.no_matching_results_services_admin_title" = "服務可改善你的工作流程。";
 "peoplepicker.no_matching_results.action.manage_services" = "管理服務";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "請輸入完整的電子郵件地址或";

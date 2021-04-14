@@ -89,8 +89,8 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Proszę wprowadź poprawny adres e-mail";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Brak wyników.";
-"peoplepicker.no_matching_results.message.services" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results.message.services_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.action.manage_services" = "Zarządzaj usługami";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Wprowadź pełny adres e-mail lub";
