@@ -86,6 +86,7 @@ platform :ios do
     desc "Test without building"
     lane :test do |options|
         xcode_version = options[:xcode_version]
+        testplan = options[:testplan]
 
         ios_version = "14.4"
         if !xcode_version.nil? 
@@ -109,7 +110,8 @@ platform :ios do
             derived_data_path: "DerivedData",
             buildlog_path: "test",
             output_directory: "test",
-            output_types: "junit"
+            output_types: "junit",
+            testplan: "#{testplan}"
         )
     end
 
