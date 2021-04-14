@@ -22,6 +22,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "23F20E95-0E11-4280-BB78-BB7B822F0A4A",
       "name" : "right to left language",
       "options" : {
