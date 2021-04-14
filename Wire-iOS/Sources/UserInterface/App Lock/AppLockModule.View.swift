@@ -31,6 +31,10 @@ extension AppLockModule {
             return true
         }
 
+        private var applicationState: UIApplication.State {
+            UIApplication.shared.applicationState
+        }
+        
         let lockView = LockView()
 
         // MARK: - Life cycle
@@ -43,7 +47,9 @@ extension AppLockModule {
 
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
-            presenter.processEvent(.viewDidAppear)
+            if applicationState == .active  {
+                presenter.processEvent(.viewDidAppear)
+            }
         }
 
         // MARK: - Methods
