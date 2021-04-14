@@ -31,13 +31,24 @@ extension AppLockModule {
             return true
         }
 
+        var applicationStateProvider: ApplicationStateProvider
+
         private var applicationState: UIApplication.State {
-            UIApplication.shared.applicationState
+            applicationStateProvider.applicationState
         }
         
         let lockView = LockView()
 
         // MARK: - Life cycle
+
+        init(applicationStateProvider: ApplicationStateProvider = UIApplication.shared) {
+            self.applicationStateProvider = applicationStateProvider
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
 
         override func viewDidLoad() {
             super.viewDidLoad()
