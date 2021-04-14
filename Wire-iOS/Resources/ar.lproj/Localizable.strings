@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
 "peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 "peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.action.manage_services" = "إدارة الخدمات";
+"peoplepicker.no_matching_results_services_manage_services_title" = "إدارة الخدمات";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "أدخل عنوان البريد الإلكتروني أو";
 /*  */

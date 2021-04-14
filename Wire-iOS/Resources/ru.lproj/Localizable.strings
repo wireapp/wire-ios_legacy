@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
 "peoplepicker.no_matching_results_services_title" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс. Чтобы включить их, обратитесь к администратору.";
 "peoplepicker.no_matching_results_services_admin_title" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс.";
-"peoplepicker.no_matching_results.action.manage_services" = "Управление сервисами";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Управление сервисами";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введите полный адрес электронной почты или";
 /*  */

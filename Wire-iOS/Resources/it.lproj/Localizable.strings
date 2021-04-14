@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Nessun risultato.";
 "peoplepicker.no_matching_results_services_title" = "I servizi aiutano a migliorare il tuo flusso di lavoro. Per attivarli, contatta il tuo amministratore.";
 "peoplepicker.no_matching_results_services_admin_title" = "I servizi aiutano a migliorare il tuo flusso di lavoro.";
-"peoplepicker.no_matching_results.action.manage_services" = "Gestisci servizi";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Gestisci servizi";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Metti un indirizzo email completo o";
 /*  */

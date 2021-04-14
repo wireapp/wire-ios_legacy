@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
 "peoplepicker.no_matching_results_services_title" = "Teenused on abistajad, mis võivad aidata sul töid teha. Nende lubamiseks pöördu oma administraatori poole.";
 "peoplepicker.no_matching_results_services_admin_title" = "Teenused on abistajad, mis võivad aidata sul töid teha.";
-"peoplepicker.no_matching_results.action.manage_services" = "Halda teenuseid";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Halda teenuseid";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Otsi meiliaadressi järgi või";
 /*  */
