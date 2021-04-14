@@ -30,6 +30,7 @@ extension AppLockModule {
 
         private let session: Session
         private let authenticationType: AuthenticationTypeProvider
+        private let applicationStateProvider: ApplicationStateProvider
 
         let dispatchGroup = DispatchGroup()
 
@@ -42,10 +43,12 @@ extension AppLockModule {
         // MARK: - Life cycle
 
         init(session: Session,
-             authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector()) {
+             authenticationType: AuthenticationTypeProvider = AuthenticationTypeDetector(),
+             applicationStateProvider: ApplicationStateProvider = UIApplication.shared) {
 
             self.session = session
             self.authenticationType = authenticationType
+            self.applicationStateProvider = applicationStateProvider
         }
 
         // MARK: - Methods
@@ -81,6 +84,9 @@ extension AppLockModule {
             return passcodePreference != nil
         }
 
+        private var applicationState: UIApplication.State {
+            applicationStateProvider.applicationState
+        }
     }
 
 }
@@ -91,11 +97,24 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     func executeRequest(_ request: AppLockModule.Request) {
         switch request {
-        case .initiateAuthentication where !isAuthenticationNeeded:
+        case .initiateAuthentication where !isAuthenticationNeeded,
+             .initiateAuthenticationIfAppIsActive where !isAuthenticationNeeded:
             openAppLock()
 
         case .initiateAuthentication where needsToCreateCustomPasscode:
             presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
+
+        case .initiateAuthenticationIfAppIsActive where needsToCreateCustomPasscode:
+            guard applicationState == .active else {
+                return
+            }
+            presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
+
+        case .initiateAuthenticationIfAppIsActive:
+            guard applicationState == .active else {
+                return
+            }
+            presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .initiateAuthentication:
             presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))

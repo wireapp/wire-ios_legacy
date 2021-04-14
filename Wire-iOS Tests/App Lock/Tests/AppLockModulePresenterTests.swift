@@ -114,7 +114,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.viewDidAppear)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthenticationIfAppIsActive])
     }
 
     func test_UnlockButtonTapped() {

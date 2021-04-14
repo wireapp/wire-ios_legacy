@@ -60,6 +60,7 @@ extension AppLockModule {
     enum Request: Equatable {
 
         case initiateAuthentication
+        case initiateAuthenticationIfAppIsActive
         case evaluateAuthentication
         case openAppLock
 

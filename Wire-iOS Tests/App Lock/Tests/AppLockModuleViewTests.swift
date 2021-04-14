@@ -25,57 +25,29 @@ final class AppLockModuleViewTests: XCTestCase {
 
     private var sut: AppLockModule.View!
     private var presenter: AppLockModule.MockPresenter!
-    private var applicationStateProvider: AppLockModule.MockApplicationStateProvider!
 
     override func setUp() {
         super.setUp()
-        applicationStateProvider = .init()
+        sut = .init()
         presenter = .init()
-        sut = .init(applicationStateProvider: applicationStateProvider)
 
         sut.presenter = presenter
     }
 
     override func tearDown() {
-        applicationStateProvider = nil
-        presenter = nil
         sut = nil
+        presenter = nil
         super.tearDown()
     }
 
     // MARK: - Event sending
 
-    func test_ItSendsEvent_WhenViewAppearsIfAppIsActive() {
-        // Given
-        applicationStateProvider.applicationState = .active
-
+    func test_ItSendsEvent_WhenViewAppears() {
         // When
         sut.viewDidAppear(false)
 
         // Then
         XCTAssertEqual(presenter.events, [.viewDidAppear])
-    }
-
-    func test_ItDoesNotSendEvent_WhenViewAppearsIfAppIsInBackground() {
-        // Given
-        applicationStateProvider.applicationState = .background
-
-        // When
-        sut.viewDidAppear(false)
-
-        // Then
-        XCTAssertEqual(presenter.events, [])
-    }
-
-    func test_ItDoesNotSendEvent_WhenViewAppearsIfAppIsInactive() {
-        // Given
-        applicationStateProvider.applicationState = .inactive
-
-        // When
-        sut.viewDidAppear(false)
-
-        // Then
-        XCTAssertEqual(presenter.events, [])
     }
 
     func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
