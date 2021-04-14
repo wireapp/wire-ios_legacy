@@ -2596,18 +2596,8 @@ internal enum L10n {
       internal static let inviteTeamMembers = L10n.tr("Localizable", "peoplepicker.invite_team_members")
       /// No Contacts.
       internal static let noContactsTitle = L10n.tr("Localizable", "peoplepicker.no_contacts_title")
-      /// share contacts
-      internal static let noMatchingResultsAfterAddressBookUploadButton = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_button")
-      /// Enter a full email address or
-      internal static let noMatchingResultsAfterAddressBookUploadMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_message")
       /// No results.
       internal static let noMatchingResultsAfterAddressBookUploadTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_title")
-      /// Enter a full email address.
-      internal static let noMatchingResultsMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_message")
-      /// Please enter a valid email address
-      internal static let noMatchingResultsProvideValidEmail = L10n.tr("Localizable", "peoplepicker.no_matching_results_provide_valid_email")
-      /// No results.
-      internal static let noMatchingResultsTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_title")
       /// No matching results. Try entering a different name.
       internal static let noSearchResults = L10n.tr("Localizable", "peoplepicker.no_search_results")
       /// Search by name or username
@@ -2682,10 +2672,12 @@ internal enum L10n {
           internal static let servicesNotEnabled = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled")
           /// Services are helpers that can improve your workflow.
           internal static let servicesNotEnabledAdmin = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled_admin")
-          /// Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname
+          /// Find people in Wire by name or @username
           internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users")
           /// Everyone’s here.
           internal static let usersAllAdded = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users_all_added")
+          /// Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname
+          internal static let usersAndFederation = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.usersAndFederation")
         }
       }
       internal enum QuickAction {
@@ -2724,12 +2716,6 @@ internal enum L10n {
         internal enum OpenConversation {
           /// Open conversation
           internal static let item = L10n.tr("Localizable", "peoplepicker.services.open_conversation.item")
-        }
-      }
-      internal enum ShareContacts {
-        internal enum NoResults {
-          /// Find people by name or email address
-          internal static let title = L10n.tr("Localizable", "peoplepicker.share_contacts.no_results.title")
         }
       }
       internal enum Suggested {

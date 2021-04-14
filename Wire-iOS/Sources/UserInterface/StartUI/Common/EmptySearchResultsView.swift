@@ -79,6 +79,7 @@ final class EmptySearchResultsView: UIView {
 
     private let variant: ColorSchemeVariant
     private let isSelfUserAdmin: Bool
+    private let isFederationEnabled: Bool
 
     private let stackView: UIStackView
     private let iconView     = UIImageView()
@@ -87,9 +88,12 @@ final class EmptySearchResultsView: UIView {
 
     weak var delegate: EmptySearchResultsViewDelegate?
 
-    init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
+    init(variant: ColorSchemeVariant,
+         isSelfUserAdmin: Bool,
+         isFederationEnabled: Bool) {
         self.variant = variant
         self.isSelfUserAdmin = isSelfUserAdmin
+        self.isFederationEnabled = isFederationEnabled
         stackView = UIStackView()
         actionButton = InviteButton(variant: variant)
         super.init(frame: .zero)
@@ -136,7 +140,11 @@ final class EmptySearchResultsView: UIView {
         case .everyoneAdded:
             return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.usersAllAdded
         case .noUsers:
-            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.users
+            if isFederationEnabled {
+                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.usersAndFederation
+            } else {
+                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.users
+            }
         case .noServices:
             return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.services
         case .noServicesEnabled:

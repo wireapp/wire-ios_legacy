@@ -89,7 +89,8 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username\n\n Find people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
 "peoplepicker.no_matching_results.message.services" = "No results.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";

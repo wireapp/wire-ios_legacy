@@ -160,6 +160,7 @@ final class SearchResultsViewController: UIViewController {
 
     var pendingSearchTask: SearchTask?
     var isAddingParticipants: Bool
+    let isFederationEnabled: Bool
     var searchGroup: SearchGroup = .people {
         didSet {
             updateVisibleSections()
@@ -177,21 +178,19 @@ final class SearchResultsViewController: UIViewController {
         }
     }
 
-    var includeFederatedUsers: Bool {
-        return Settings.shared[.federationEnabled] == true
-    }
-
     deinit {
         searchDirectory?.tearDown()
     }
 
     init(userSelection: UserSelection,
          isAddingParticipants: Bool = false,
-         shouldIncludeGuests: Bool) {
+         shouldIncludeGuests: Bool,
+         isFederationEnabled: Bool) {
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
         self.shouldIncludeGuests = shouldIncludeGuests
+        self.isFederationEnabled = isFederationEnabled
 
         let team = ZMUser.selfUser().team
         let teamName = team?.name
@@ -272,7 +271,7 @@ final class SearchResultsViewController: UIViewController {
                                       .teamMembers,
                                       .directory]
 
-        if includeFederatedUsers {
+        if isFederationEnabled {
             options.formUnion(.federated)
         }
 
