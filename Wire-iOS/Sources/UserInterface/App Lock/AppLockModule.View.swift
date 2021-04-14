@@ -30,7 +30,7 @@ extension AppLockModule {
         override var prefersStatusBarHidden: Bool {
             return true
         }
-        
+
         let lockView = LockView()
 
         // MARK: - Life cycle
