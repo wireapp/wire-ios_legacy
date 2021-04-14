@@ -87,6 +87,7 @@ extension AppLockModule {
         private var applicationState: UIApplication.State {
             applicationStateProvider.applicationState
         }
+
     }
 
 }
