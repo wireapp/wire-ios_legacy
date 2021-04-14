@@ -117,7 +117,8 @@
       "id" : "A5A7BB94-07EA-4F93-B081-1811A20E0A96",
       "name" : "et",
       "options" : {
-        "language" : ""
+        "language" : "",
+        "region" : "EE"
       }
     },
     {
@@ -132,7 +133,8 @@
       "id" : "ECF3CE59-35E5-48B8-A5CF-DDCAC223F784",
       "name" : "li",
       "options" : {
-        "language" : ""
+        "language" : "",
+        "region" : "LT"
       }
     }
   ],
