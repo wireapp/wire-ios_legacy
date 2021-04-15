@@ -27,7 +27,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private let toggle = UISwitch()
     private let subtitleLabel = UILabel()
 
-    private var action: ((Bool) -> Void)?
+    private var action: ((Bool, UIView?) -> Void)?
     private var variant: ColorSchemeVariant = .light {
         didSet {
             styleViews()
@@ -96,7 +96,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
-        action?(sender.isOn)
+        action?(sender.isOn, self)
     }
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
