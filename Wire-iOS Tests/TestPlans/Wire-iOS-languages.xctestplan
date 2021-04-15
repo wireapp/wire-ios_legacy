@@ -1,6 +1,7 @@
 {
   "configurations" : [
     {
+      "enabled" : false,
       "id" : "CB8CDD81-E41E-4E63-9714-4031F2636EFB",
       "name" : "fr",
       "options" : {
@@ -8,6 +9,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "2DF6897A-E096-4B73-B3A0-E9BC8BD7FF17",
       "name" : "ar",
       "options" : {
@@ -15,6 +17,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "BA356D71-0164-4A89-A333-9FFF9C608F1A",
       "name" : "de",
       "options" : {
@@ -37,6 +40,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "20248899-47DF-41A2-8CBA-4241D8876859",
       "name" : "pt-BR",
       "options" : {
@@ -44,6 +48,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "D14EB83E-9BE9-405A-AAD3-C3C3335998E5",
       "name" : "uk",
       "options" : {
@@ -51,6 +56,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "8588A087-57CF-4121-8D5D-5A7EDB62438C",
       "name" : "es",
       "options" : {
@@ -58,6 +64,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "F66C2B15-C969-4B3C-8344-45E7F9C110F5",
       "name" : "ru",
       "options" : {
@@ -65,6 +72,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "AA30EF61-6A99-4EEF-9EA6-DC8D99D1020A",
       "name" : "jp",
       "options" : {
@@ -72,6 +80,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "63BC276E-0520-414A-AC8E-F94B9C515A71",
       "name" : "it",
       "options" : {
@@ -79,6 +88,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "DC8FAFFC-4F62-4804-B8C3-58CB04FEC608",
       "name" : "nl",
       "options" : {
@@ -86,6 +96,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "5429B48A-5108-4F06-8B34-41A7E1A6E48D",
       "name" : "tr",
       "options" : {
@@ -93,6 +104,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "871851C7-6670-4DE0-BA88-77E2D8280817",
       "name" : "da",
       "options" : {
@@ -100,6 +112,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "1A9EB21B-3E57-4A3F-9CCE-5B53823676AB",
       "name" : "zh-hans",
       "options" : {
@@ -107,6 +120,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "94E35485-1E4B-47A6-A38C-DE0E85BB70DF",
       "name" : "sl",
       "options" : {
@@ -123,6 +137,7 @@
       }
     },
     {
+      "enabled" : false,
       "id" : "93131E92-7CEE-4E6C-A048-00A708CBCD75",
       "name" : "fi",
       "options" : {
