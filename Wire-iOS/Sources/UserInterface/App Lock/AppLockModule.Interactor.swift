@@ -98,24 +98,14 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     func executeRequest(_ request: AppLockModule.Request) {
         switch request {
-        case .initiateAuthentication where !isAuthenticationNeeded,
-             .initiateAuthenticationIfAppIsActive where !isAuthenticationNeeded:
+        case .initiateAuthentication(requireActiveApp: true) where applicationState != .active:
+            return
+
+        case .initiateAuthentication where !isAuthenticationNeeded:
             openAppLock()
 
         case .initiateAuthentication where needsToCreateCustomPasscode:
             presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
-
-        case .initiateAuthenticationIfAppIsActive where needsToCreateCustomPasscode:
-            guard applicationState == .active else {
-                return
-            }
-            presenter.handleResult(.customPasscodeCreationNeeded(shouldInform: needsToNotifyUser))
-
-        case .initiateAuthenticationIfAppIsActive:
-            guard applicationState == .active else {
-                return
-            }
-            presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .initiateAuthentication:
             presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
