@@ -202,7 +202,6 @@ final class ConversationOptionsViewModel {
         }
     }
 
-
     /// set conversation option AllowGuestsAndServices
     /// - Parameters:
     ///   - allowGuests: new state AllowGuestsAndServices
