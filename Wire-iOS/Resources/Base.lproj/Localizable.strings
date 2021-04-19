@@ -685,8 +685,8 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.grid.hints.fullscreen" = "Double Tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double Tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video paused";

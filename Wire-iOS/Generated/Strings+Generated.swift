@@ -278,9 +278,9 @@ internal enum L10n {
         /// No active video speakers...
         internal static let noActiveSpeakers = L10n.tr("Localizable", "call.grid.no_active_speakers")
         internal enum Hints {
-          /// Double Tap on a tile for fullscreen
+          /// Double tap on a tile for fullscreen
           internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
-          /// Double Tap to go back, pinch to zoom
+          /// Double tap to go back, pinch to zoom
           internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
           /// Pinch to zoom
           internal static let zoom = L10n.tr("Localizable", "call.grid.hints.zoom")
