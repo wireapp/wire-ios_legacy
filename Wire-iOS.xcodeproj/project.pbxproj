@@ -470,6 +470,7 @@
 		6357B41626121D55008F1761 /* MockPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */; };
 		6357B41A261226C4008F1761 /* MockPinchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */; };
 		63589AA124DAA398008FEC8F /* UIAlertController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */; };
+		635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635BAFE5262DB34400B986A4 /* Array+CallParticipant.swift */; };
 		6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */; };
 		63654F8025B8CD260015344C /* RoundedSegmentedViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63654F7F25B8CD260015344C /* RoundedSegmentedViewTests.swift */; };
 		636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */; };
@@ -2121,6 +2122,7 @@
 		6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPinchGestureRecognizer.swift; sourceTree = "<group>"; };
 		63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Permissions.swift"; sourceTree = "<group>"; };
+		635BAFE5262DB34400B986A4 /* Array+CallParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+CallParticipant.swift"; sourceTree = "<group>"; };
 		6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+CompanyLogin.swift"; sourceTree = "<group>"; };
 		63654F7F25B8CD260015344C /* RoundedSegmentedViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSegmentedViewTests.swift; sourceTree = "<group>"; };
 		636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilderTests.swift; sourceTree = "<group>"; };
@@ -6293,6 +6295,7 @@
 				BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */,
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
+				635BAFE5262DB34400B986A4 /* Array+CallParticipant.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -8383,6 +8386,7 @@
 				EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */,
 				A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
+				635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
