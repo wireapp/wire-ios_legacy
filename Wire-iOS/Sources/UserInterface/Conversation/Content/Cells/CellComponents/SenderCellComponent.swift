@@ -22,27 +22,56 @@ import WireSyncEngine
 import WireCommonComponents
 
 private enum TextKind {
-    case userName(accent: UIColor)
-    case botName
-    case botSuffix
+    case member(accent: UIColor)
+    case bot
+    case external
 
     var color: UIColor {
         switch self {
-        case let .userName(accent: accent):
+        case let .member(accent: accent):
             return accent
-        case .botName:
+        case .bot, .external:
             return .from(scheme: .textForeground)
-        case .botSuffix:
-            return .from(scheme: .textDimmed)
         }
     }
 
     var font: UIFont {
         switch self {
-        case .userName, .botName:
+        case .member, .bot, .external:
             return FontSpec(.medium, .semibold).font!
-        case .botSuffix:
-            return FontSpec(.medium, .regular).font!
+        }
+    }
+
+    var icon: StyleKitIcon? {
+        switch self {
+        case .member:
+            return .none
+        case .external:
+            return .externalPartner
+        case .bot:
+            return .bot
+        }
+    }
+
+    var accessibilityString: String {
+        switch self {
+        case .member:
+            return ""
+        case .external:
+            return L10n.Localizable.Profile.Details.partner
+        case .bot:
+            return L10n.Localizable.General.service
+        }
+    }
+
+    init(user: UserType) {
+        if user.isServiceUser {
+            self = .bot
+        } else if user.isExternalPartner {
+            self = .external
+        } else {
+            let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
+            self = .member(accent: accentColor)
         }
     }
 }
@@ -122,28 +151,37 @@ final class SenderCellComponent: UIView {
     }
 
     private func configureNameLabel(for user: UserType) {
-        let fullName =  user.name ?? ""
-
-        var attributedString: NSAttributedString
-        if user.isServiceUser {
-            let attachment = NSTextAttachment()
-            let botIcon = StyleKitIcon.bot.makeImage(size: 12, color: UIColor.from(scheme: .iconGuest))
-            attachment.image = botIcon
-            attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
-            attachment.accessibilityLabel = "general.service".localized
-            let bot = NSAttributedString(attachment: attachment)
-            let name = attributedName(for: .botName, string: fullName)
-            attributedString = name + "  ".attributedString + bot
-        } else {
-            let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
-            attributedString = attributedName(for: .userName(accent: accentColor), string: fullName)
-        }
-
-        authorLabel.attributedText = attributedString
+        authorLabel.attributedText = attributedName(for: user)
     }
 
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        return NSAttributedString(string: string, attributes: [.foregroundColor: kind.color, .font: kind.font])
+        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: kind.color, .font: kind.font])
+
+        guard let icon = kind.icon else {
+            return baseAttributedString
+        }
+
+        let attachment = NSTextAttachment.textAttachment(for: icon, with: UIColor.from(scheme: .iconGuest), iconSize: 12, verticalCorrection: -1.5)
+        attachment.accessibilityLabel = kind.accessibilityString
+
+        return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
+    }
+
+    private func attributedName(for user: UserType) -> NSAttributedString {
+        let fullName =  user.name ?? ""
+        var attributedString: NSAttributedString
+
+        let kind = TextKind(user: user)
+
+        switch kind {
+        case .bot:
+            attributedString = attributedName(for: .bot, string: fullName)
+        case .external:
+            attributedString = attributedName(for: .external, string: fullName)
+        case .member:
+            attributedString = attributedName(for: .member(accent: kind.color), string: fullName)
+        }
+        return attributedString
     }
 
     // MARK: - tap gesture of avatar
