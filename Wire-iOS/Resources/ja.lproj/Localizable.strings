@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "連絡先";
 "peoplepicker.header.contacts_personal" = "個人の連絡先";
 "peoplepicker.header.directory" = "接続";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "参加者を追加";
 "peoplepicker.group.title.plural" = "参加者を追加 (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
 "peoplepicker.quick-action.create-guest-room" = "ゲストルームを作成する";
 "peoplepicker.quick-action.admin-services" = "サービスを管理";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "全員がいます。";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "一時停止中";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "一時停止中";
 "call.video.too_many.alert.title" = "ビデオ通話相手が多すぎます";
 "call.video.too_many.alert.message" = "ビデオ通話は４人以下のグループで利用できます。";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "セッションの有効期限が切れました";
 "account_deleted_session_expired_alert.message" = "アプリケーションがサーバーと長時間通信しなかったか、セッションが遠隔から無効化されました。";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "未選択";

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
 "peoplepicker.header.directory" = "Додати до контактів";
+"peoplepicker.header.federation" = "З'єднатися з іншим доменом";
 
 "peoplepicker.group.title.singular" = "Додати учасників";
 "peoplepicker.group.title.plural" = "Додати учасників (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
 "peoplepicker.quick-action.create-guest-room" = "Створити гостьову кімнату";
 "peoplepicker.quick-action.admin-services" = "Керування сервісами";
+
+"peoplepicker.federation.domain_unvailable" = "Федеративний домен наразі не доступний. [Дізнатися більше](%@)";
 
 "add_participants.all_contacts_added" = "Всі вже тут.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "Активні спікери відсутні...";
 
-"call.video.paused" = "Відео призупинено";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Зведіть або розведіть пальці для зміни масштабу";
 
+"call.video.paused" = "Відео призупинено";
 "call.video.too_many.alert.title" = "Занадто багато людей для відеодзвінка";
 "call.video.too_many.alert.message" = "Відеодзвінки працюють тільки в групах з 4-ма або менше учасниками.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
 "account_deleted_session_expired_alert.message" = "Додаток не зв'язувався із сервером впродовж тривалого періоду часу, або ваша сесія була анульована.";
+
+"account_deleted_missing_passcode_alert.title" = "Код допуску для пристрою не заданий";
+"account_deleted_missing_passcode_alert.message" = "Для використання Wire встановіть код допуску в налаштуваннях пристрою.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "не вибрано";

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
 "peoplepicker.header.directory" = "Lisa kontakt";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Lisa osalejaid";
 "peoplepicker.group.title.plural" = "Lisa osalejaid (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 "peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
 "peoplepicker.quick-action.admin-services" = "Halda teenuseid";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Kõik on siin.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Video pausil";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Video pausil";
 "call.video.too_many.alert.title" = "Vestluses on videokõne alustamiseks liiga palju osalejaid";
 "call.video.too_many.alert.message" = "Videokõned töötavad kuni 4 osalejaga vestluses.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Sinu sessioon aegus";
 "account_deleted_session_expired_alert.message" = "Rakendus ei kontakteerunud serveriga pika aja jooksul või su sessioon lõpetati kaugjuhtimise teel.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";

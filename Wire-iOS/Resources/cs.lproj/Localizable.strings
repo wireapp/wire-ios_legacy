@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontakty";
 "peoplepicker.header.contacts_personal" = "Osobní kontakty";
 "peoplepicker.header.directory" = "Připojit";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Přidat účastníky";
 "peoplepicker.group.title.plural" = "Přidat účastníky (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Vytvořit skupinu";
 "peoplepicker.quick-action.create-guest-room" = "Založit místnost pro hosty";
 "peoplepicker.quick-action.admin-services" = "Spravovat služby";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Všichni jsou zde.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Video pozastaveno";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Video pozastaveno";
 "call.video.too_many.alert.title" = "Příliš mnoho lidí pro videohovor";
 "call.video.too_many.alert.message" = "Videohovory fungují pouze ve skupině po čtyřech a méně.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";

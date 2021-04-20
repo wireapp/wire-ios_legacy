@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Contacts personnels";
 "peoplepicker.header.directory" = "Se connecter";
+"peoplepicker.header.federation" = "Se connecter à un autre domaine";
 
 "peoplepicker.group.title.singular" = "Ajouter des Participants";
 "peoplepicker.group.title.plural" = "Ajouter des Participants (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Créer un groupe";
 "peoplepicker.quick-action.create-guest-room" = "Créer une Guest Room";
 "peoplepicker.quick-action.admin-services" = "Gérer les Services";
+
+"peoplepicker.federation.domain_unvailable" = "Le domaine fédéré n'est actuellement pas disponible. [En savoir plus](%@)";
 
 "add_participants.all_contacts_added" = "Tout le monde est là.";
 
@@ -313,8 +316,8 @@
 "conversation.input_bar.shortcut.newline" = "Nouvelle ligne";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
-"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
-"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choisir la mention précédente";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choisir la mention suivante";
 
 "conversation.input_bar.message_too_long.title" = "Message trop long";
 "conversation.input_bar.message_too_long.message" = "Vous pouvez envoyer des messages de %d caractères maximum.";
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "Aucun speaker vidéo actif ...";
 
-"call.video.paused" = "Vidéo en pause";
+"call.grid.hints.fullscreen" = "Appuyez deux fois sur une cellule pour passer en plein écran";
+"call.grid.hints.go_back_or_zoom" = "Appuyez deux fois pour revenir en arrière, pincez pour zoomer";
+"call.grid.hints.zoom" = "Pincez pour zoomer";
 
+"call.video.paused" = "Vidéo en pause";
 "call.video.too_many.alert.title" = "Trop de participants pour un appel vidéo";
 "call.video.too_many.alert.message" = "Les appels vidéo fonctionnent dans les groupes de 4 personnes maximum.";
 
@@ -1629,11 +1635,11 @@
 "jailbrokendevice.alert.message" = "Pour des raisons de sécurité Wire ne peut pas être utilisé sur cet appareil. Toutes données Wire existantes ont été effacées.";
 
 // Database Loading Failure alert
-"databaseloadingfailure.alert.title" = "Not Enough Storage";
-"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.title" = "Espace insuffisant";
+"databaseloadingfailure.alert.message" = "La base de données n'a pas pu être chargée en raison d'un espace de stockage insuffisant. Vérifiez l'utilisation du stockage de votre appareil et réessayez.";
 "databaseloadingfailure.alert.settings" = "Allez dans les paramètres";
-"databaseloadingfailure.alert.delete_database" = "Delete Database";
-"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database" = "Supprimer la base de données";
+"databaseloadingfailure.alert.delete_database.message" = "En supprimant la base de données, toutes les données locales et les messages de ce compte seront supprimés définitivement.";
 "databaseloadingfailure.alert.delete_database.continue" = "Continuer";
 
 // Third Party
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";
 "account_deleted_session_expired_alert.message" = "L'application n'a pas communiqué avec le serveur depuis une longue période, ou votre session a été invalidée à distance.";
+
+"account_deleted_missing_passcode_alert.title" = "Aucun code d'accès de l'appareil";
+"account_deleted_missing_passcode_alert.message" = "Afin d'utiliser Wire, veuillez définir un code d'accès dans les paramètres de votre appareil.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "Non sélectionné";

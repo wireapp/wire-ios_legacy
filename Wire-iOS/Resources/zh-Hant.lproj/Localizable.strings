@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "連絡人";
 "peoplepicker.header.contacts_personal" = "聯絡人";
 "peoplepicker.header.directory" = "加為連絡人";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "加入參與者";
 "peoplepicker.group.title.plural" = "加入參與者（%d）";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "建立群組";
 "peoplepicker.quick-action.create-guest-room" = "建立訪客聊天室";
 "peoplepicker.quick-action.admin-services" = "管理服務";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "大家都已加入";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "影像已暫停";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "影像已暫停";
 "call.video.too_many.alert.title" = "已超過視像通話限定人數";
 "call.video.too_many.alert.message" = "視像通話僅能在4個人以下的群組中使用。";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "你的登入階段已過期。";
 "account_deleted_session_expired_alert.message" = "應用程序長時間未與服務器通信，或您的會話已被遠端拒絕。";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "未選取";

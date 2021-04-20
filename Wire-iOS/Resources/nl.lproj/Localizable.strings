@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contacten";
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
 "peoplepicker.header.directory" = "Contacten toevoegen";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Deelnemers toevoegen";
 "peoplepicker.group.title.plural" = "Voeg deelnemers toe (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Groep creëren";
 "peoplepicker.quick-action.create-guest-room" = "Maak een nieuwe gast chat aan";
 "peoplepicker.quick-action.admin-services" = "Beheer diensten";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Iedereen is hier.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Video is gepauzeerd";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Video is gepauzeerd";
 "call.video.too_many.alert.title" = "Te veel mensen voor Video bellen";
 "call.video.too_many.alert.message" = "Video gesprekken werken in groepen van 4 personen of minder.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";

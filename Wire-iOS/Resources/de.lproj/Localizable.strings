@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontakte";
 "peoplepicker.header.contacts_personal" = "Persönliche Kontakte";
 "peoplepicker.header.directory" = "Verbinden";
+"peoplepicker.header.federation" = "Mit einer anderen Domain verbinden";
 
 "peoplepicker.group.title.singular" = "Teilnehmer hinzufügen";
 "peoplepicker.group.title.plural" = "Teilnehmer hinzufügen (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
 "peoplepicker.quick-action.create-guest-room" = "Gästebereich erstellen";
 "peoplepicker.quick-action.admin-services" = "Dienste verwalten";
+
+"peoplepicker.federation.domain_unvailable" = "Die föderierte Domain ist derzeit nicht verfügbar. [Mehr erfahren](%@)";
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "Keine aktiven Video-Sprecher...";
 
-"call.video.paused" = "Video wurde angehalten";
+"call.grid.hints.fullscreen" = "Für Vollbildmodus auf eine Kachel doppeltippen";
+"call.grid.hints.go_back_or_zoom" = "Zum Zurückgehen doppeltippen, zum Zoomen auf- und zuziehen";
+"call.grid.hints.zoom" = "Zum Zoomen auf- und zuziehen";
 
+"call.video.paused" = "Video wurde angehalten";
 "call.video.too_many.alert.title" = "Zu viele Teilnehmer";
 "call.video.too_many.alert.message" = "Videoanrufe funktionieren nur in Gruppen von 4 oder weniger Personen.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
 "account_deleted_session_expired_alert.message" = "Die App hat über einen längeren Zeitraum nicht mit dem Server kommuniziert oder die Session wurde per Fernzugriff für ungültig erklärt.";
+
+"account_deleted_missing_passcode_alert.title" = "Kein Gerätecode";
+"account_deleted_missing_passcode_alert.message" = "Um Wire zu verwenden, fügen Sie bitte einen Gerätecode in Ihren Einstellungen hinzu.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "nicht ausgewählt";
