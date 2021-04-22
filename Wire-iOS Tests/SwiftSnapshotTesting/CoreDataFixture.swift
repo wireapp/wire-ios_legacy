@@ -94,6 +94,7 @@ final class CoreDataFixture {
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
 
+    let dispatchGroup = DispatchGroup()
     var uiMOC: NSManagedObjectContext!
     var coreDataStack: CoreDataStack!
 
@@ -138,9 +139,11 @@ final class CoreDataFixture {
         }
 
         let account = Account(userName: "", userIdentifier: UUID())
+        let group = ZMSDispatchGroup(dispatchGroup: dispatchGroup, label: "CoreDataStack")
         let coreDataStack = CoreDataStack(account: account,
                                           applicationContainer: documentsDirectory!,
-                                          inMemoryStore: true)
+                                          inMemoryStore: true,
+                                          dispatchGroup: group)
 
         coreDataStack.loadStores(completionHandler: { _ in })
         self.uiMOC = coreDataStack.viewContext
