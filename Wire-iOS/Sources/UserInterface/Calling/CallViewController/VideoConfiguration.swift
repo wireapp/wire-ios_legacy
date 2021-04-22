@@ -197,12 +197,3 @@ private extension VideoGridPresentationMode {
         return self == .allVideoStreams
     }
 }
-
-private extension Array where Element == CallParticipant {
-    mutating func sortByName(selfStreamId: AVSClient?) {
-        self = self.sorted {
-            $0.streamId == selfStreamId ||
-            $0.user.name?.lowercased() < $1.user.name?.lowercased()
-        }
-    }
-}

@@ -287,9 +287,6 @@ platform :ios do
         codecov = "./codecov -J '^Wire$' -D ../DerivedData"
 
         if ENV["BUILD_REASON"] == "PullRequest"
-            if ENV["CODECOV_TOKEN"].nil?
-                UI.user_error! "codecov.io token missing for current repository. Set it in CODECOV_TOKEN environment variable"
-            end
 
             if ENV["BUILD_SOURCEBRANCH"].nil?
                 UI.user_error! "Source branch env variable missing. Set BUILD_SOURCEBRANCH to fix it"
@@ -297,11 +294,10 @@ platform :ios do
 
             pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
+            codecov << " -P #{pull_request_number}"
         end
 
         sh codecov
-
     end
 end
 

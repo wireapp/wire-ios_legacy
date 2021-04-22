@@ -19,82 +19,77 @@
 import XCTest
 @testable import Wire
 
-struct EmptySearchResultsViewTestState: Copyable {
-    init(instance: EmptySearchResultsViewTestState) {
-        self.colorSchemeVariant = instance.colorSchemeVariant
-        self.isSelfUserAdmin = instance.isSelfUserAdmin
-        self.searchingForServices = instance.searchingForServices
-        self.hasFilter = instance.hasFilter
+final class EmptySearchResultsViewTests: XCTestCase {
+
+    func testNoResultsForUsers() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.updateStatus(searchingForServices: false, hasFilter: true)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
     }
 
-    init(colorSchemeVariant: ColorSchemeVariant, isSelfUserAdmin: Bool, searchingForServices: Bool, hasFilter: Bool) {
-        self.colorSchemeVariant = colorSchemeVariant
-        self.isSelfUserAdmin = isSelfUserAdmin
-        self.searchingForServices = searchingForServices
-        self.hasFilter = hasFilter
+    func testNoResultsForUsers_WhenFederationIsEnabled() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: true)
+        sut.updateStatus(searchingForServices: false, hasFilter: true)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
+
     }
 
-    var colorSchemeVariant: ColorSchemeVariant
-    var isSelfUserAdmin: Bool
-    var searchingForServices: Bool
-    var hasFilter: Bool
+    func testNoResultsForUsers_WhenEveryoneHaveBeenAdded() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.updateStatus(searchingForServices: false, hasFilter: false)
+        configureBounds(for: sut)
 
-    func createView() -> EmptySearchResultsView {
-        let view = EmptySearchResultsView(variant: colorSchemeVariant, isSelfUserAdmin: isSelfUserAdmin)
-        view.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
-        return view
+        // then
+        verify(matching: sut)
     }
-}
 
-extension ColorSchemeVariant: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .dark:
-            return "ColorSchemeVariant.dark"
-        case .light:
-            return "ColorSchemeVariant.light"
-        }
+    func testNoResultsForServices() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.updateStatus(searchingForServices: true, hasFilter: true)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
     }
-}
 
-extension EmptySearchResultsViewTestState: CustomStringConvertible {
-    var description: String {
-        return "colorSchemeVariant: \(colorSchemeVariant) isSelfUserAdmin: \(isSelfUserAdmin) searchingForServices: \(searchingForServices) hasFilter: \(hasFilter)"
+    func testServicesNotEnabled() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.updateStatus(searchingForServices: true, hasFilter: false)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
     }
-}
 
-extension ColorSchemeVariant: CaseIterable {
-    public static var allCases: [ColorSchemeVariant] {
-        return [.light, .dark]
+    func testServicesNotEnabled_WhenAdmin() {
+        // given
+        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: true, isFederationEnabled: false)
+        sut.updateStatus(searchingForServices: true, hasFilter: false)
+        configureBounds(for: sut)
+
+        // then
+        verify(matching: sut)
     }
-}
 
-final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
+    // MARK: - Helpers
 
-    func testStates() {
-        let initialState = EmptySearchResultsViewTestState(colorSchemeVariant: .light,
-                                                           isSelfUserAdmin: false,
-                                                           searchingForServices: false,
-                                                           hasFilter: false)
-
-        let builder = VariantsBuilder(initialValue: initialState)
-
-        builder.add(keyPath: \EmptySearchResultsViewTestState.colorSchemeVariant)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.isSelfUserAdmin)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.searchingForServices)
-        builder.add(keyPath: \EmptySearchResultsViewTestState.hasFilter)
-
-        builder.allVariants().forEach { version in
-            let sut = version.createView()
-
-            sut.backgroundColor = .lightGray
-            sut.bounds.size = sut.systemLayoutSizeFitting(
-                CGSize(width: 375, height: 600),
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .fittingSizeLevel
-            )
-
-            verify(view: sut, identifier: version.description)
-        }
+    func configureBounds(for view: UIView) {
+        view.bounds.size = view.systemLayoutSizeFitting(
+            CGSize(width: 375, height: 600),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
     }
+
 }

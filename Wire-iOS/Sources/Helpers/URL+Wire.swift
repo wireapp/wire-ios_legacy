@@ -168,6 +168,10 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "support/email-in-use")
     }
 
+    static var wr_searchSupport: URL {
+        return BackendEnvironment.websiteLink(path: "support/search") // TODO jacob update URL when support page exists
+    }
+
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
             return BackendEnvironment.websiteLink(path: "legal/terms/teams")
