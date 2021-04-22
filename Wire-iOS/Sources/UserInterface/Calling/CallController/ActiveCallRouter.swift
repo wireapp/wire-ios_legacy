@@ -96,7 +96,10 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     }
 
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {
-        guard isActiveCallShown else { return }
+        guard isActiveCallShown else {
+            completion?()
+            return
+        }
         rootViewController.dismiss(animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = false
             self?.scheduledPostCallAction?()
