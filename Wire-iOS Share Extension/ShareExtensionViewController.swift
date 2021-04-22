@@ -113,10 +113,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         setupObserver()
     }
 
-    deinit {
-        StorageStack.reset()
-    }
-
     private func setupObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(extensionHostDidEnterBackground), name: .NSExtensionHostDidEnterBackground, object: nil)
     }
