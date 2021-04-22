@@ -21,23 +21,26 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-private enum TextKind {
+private enum TextType {
     case member(accent: UIColor)
+    case external(accent: UIColor)
+    case guest(accent: UIColor)
     case bot
-    case external
 
     var color: UIColor {
         switch self {
-        case let .member(accent: accent):
-            return accent
-        case .bot, .external:
+        case let .member(accent: accentColor),
+             let .guest(accent: accentColor),
+             let .external(accent: accentColor):
+            return accentColor
+        case .bot:
             return .from(scheme: .textForeground)
         }
     }
 
     var font: UIFont {
         switch self {
-        case .member, .bot, .external:
+        case .member, .bot, .external, .guest:
             return FontSpec(.medium, .semibold).font!
         }
     }
@@ -50,6 +53,8 @@ private enum TextKind {
             return .externalPartner
         case .bot:
             return .bot
+        case .guest:
+            return .guest
         }
     }
 
@@ -59,24 +64,32 @@ private enum TextKind {
             return ""
         case .external:
             return L10n.Localizable.Profile.Details.partner
+        case .guest:
+            return L10n.Localizable.Profile.Details.guest
         case .bot:
             return L10n.Localizable.General.service
         }
     }
 
-    init(user: UserType) {
+    init(user: UserType, conversation: ConversationLike?) {
+        let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
+
         if user.isServiceUser {
             self = .bot
         } else if user.isExternalPartner {
-            self = .external
+            self = .external(accent: accentColor)
+        } else if let conversation = conversation,
+                  user.isGuest(in: conversation) {
+            self = .guest(accent: accentColor)
         } else {
-            let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
             self = .member(accent: accentColor)
         }
     }
 }
 
 final class SenderCellComponent: UIView {
+
+    private var senderType: TextType?
 
     let avatarSpacer = UIView()
     let avatar = UserImageView()
@@ -139,9 +152,9 @@ final class SenderCellComponent: UIView {
             ])
     }
 
-    func configure(with user: UserType) {
+    func configure(with user: UserType, in conversation: ConversationLike?) {
         avatar.user = user
-
+        senderType = TextType(user: user, conversation: conversation)
         configureNameLabel(for: user)
 
         if !ProcessInfo.processInfo.isRunningTests,
@@ -154,34 +167,26 @@ final class SenderCellComponent: UIView {
         authorLabel.attributedText = attributedName(for: user)
     }
 
-    private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: kind.color, .font: kind.font])
+    private func attributedName(for textType: TextType, string: String) -> NSAttributedString {
+        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: textType.color, .font: textType.font])
 
-        guard let icon = kind.icon else {
+        guard let icon = textType.icon else {
             return baseAttributedString
         }
 
         let attachment = NSTextAttachment.textAttachment(for: icon, with: UIColor.from(scheme: .iconGuest), iconSize: 12, verticalCorrection: -1.5)
-        attachment.accessibilityLabel = kind.accessibilityString
+        attachment.accessibilityLabel = textType.accessibilityString
 
         return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
     }
 
-    private func attributedName(for user: UserType) -> NSAttributedString {
-        let fullName =  user.name ?? ""
-        var attributedString: NSAttributedString
+    private func attributedName(for user: UserType) -> NSAttributedString? {
+        let fullName = user.name ?? ""
 
-        let kind = TextKind(user: user)
-
-        switch kind {
-        case .bot:
-            attributedString = attributedName(for: .bot, string: fullName)
-        case .external:
-            attributedString = attributedName(for: .external, string: fullName)
-        case .member:
-            attributedString = attributedName(for: .member(accent: kind.color), string: fullName)
+        guard let senderType = senderType  else {
+            return nil
         }
-        return attributedString
+        return attributedName(for: senderType, string: fullName)
     }
 
     // MARK: - tap gesture of avatar
@@ -193,6 +198,8 @@ final class SenderCellComponent: UIView {
     }
 
 }
+
+// MARK: - User change observer
 
 extension SenderCellComponent: ZMUserObserver {
 
