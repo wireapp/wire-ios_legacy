@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -665,7 +665,6 @@
 		8787D1841EA74F5B00254D02 /* UserType+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787D1831EA74F5B00254D02 /* UserType+Additions.swift */; };
 		878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878A720B1E55D7D3008072B9 /* TextSearchResultFooter.swift */; };
 		878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 878B823F20A1EEEE007455CA /* HTMLString.framework */; };
-		878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
 		87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */; };
 		8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879325091E83BB5C00190067 /* ZMConversation+Status.swift */; };
 		87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */; };
@@ -865,6 +864,7 @@
 		A9A687D9250B7AA900AEE878 /* WipeDatabaseWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A687D8250B7AA900AEE878 /* WipeDatabaseWireframe.swift */; };
 		A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */; };
 		A9BA580D2497994D005B806B /* ContextMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */; };
+		A9C0AD1D2631A7FE00164773 /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C0AD1C2631A7FE00164773 /* WireSyncEngine.xcframework */; };
 		A9C3223F23EB200F00E17311 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCell.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
@@ -1665,7 +1665,6 @@
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
 		06F9864325CBFA6E005572C5 /* UIButton+SetIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+SetIcon.swift"; sourceTree = "<group>"; };
 		06F9864825CC1518005572C5 /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
-		095275931B7E834400123BAF /* WireSyncEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireSyncEngine.framework; path = Carthage/Build/iOS/WireSyncEngine.framework; sourceTree = "<group>"; };
 		16030DAC21A846A200F8032E /* ConversationVideoMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationVideoMessageCellTests.swift; sourceTree = "<group>"; };
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160782DF23C8ED950065392B /* UserDefaults+ApplicationGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+ApplicationGroup.swift"; sourceTree = "<group>"; };
@@ -2559,6 +2558,7 @@
 		A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+conversionTests.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
 		A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDelegate.swift; sourceTree = "<group>"; };
+		A9C0AD1C2631A7FE00164773 /* WireSyncEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = WireSyncEngine.xcframework; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
 		A9C33DFF23D078B80069C8BB /* ConversationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListItemView.swift; sourceTree = "<group>"; };
@@ -3356,6 +3356,7 @@
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
+				A9C0AD1D2631A7FE00164773 /* WireSyncEngine.xcframework in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -3369,7 +3370,6 @@
 				873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */,
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
-				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
 				EF2D6D3A228C507C00D8DBF4 /* SnapshotTesting.framework in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
@@ -4420,6 +4420,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9C0AD1C2631A7FE00164773 /* WireSyncEngine.xcframework */,
 				EF2AF69D236C3DA100793FD0 /* AppCenterAuth.framework */,
 				EF2AF69C236C3DA100793FD0 /* AppCenterPush.framework */,
 				7CAB7B5D235998E200A65042 /* AppCenterData.framework */,
@@ -4458,7 +4459,6 @@
 				8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */,
 				1E3FA0321B78AD9500A9743D /* WireSystem.framework */,
 				1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */,
-				095275931B7E834400123BAF /* WireSyncEngine.framework */,
 				1EC71A271B6A1B9200700A14 /* WireImages.framework */,
 				BA9EAFAA1AD8121800279A40 /* AdSupport.framework */,
 				5407B8C21A643CCE009090C6 /* UIKit.framework */,
@@ -7451,7 +7451,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
@@ -9223,6 +9222,7 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -9232,6 +9232,7 @@
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = NO;
 			};
 			name = Release;
