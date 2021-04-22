@@ -21,13 +21,13 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-private enum TextType {
+private enum SenderType {
     case member(accent: UIColor)
     case external(accent: UIColor)
     case guest(accent: UIColor)
     case bot
 
-    var color: UIColor {
+    var colorText: UIColor {
         switch self {
         case let .member(accent: accentColor),
              let .guest(accent: accentColor),
@@ -35,13 +35,6 @@ private enum TextType {
             return accentColor
         case .bot:
             return .from(scheme: .textForeground)
-        }
-    }
-
-    var font: UIFont {
-        switch self {
-        case .member, .bot, .external, .guest:
-            return FontSpec(.medium, .semibold).font!
         }
     }
 
@@ -61,7 +54,7 @@ private enum TextType {
     var accessibilityString: String {
         switch self {
         case .member:
-            return ""
+            return "Team member"
         case .external:
             return L10n.Localizable.Profile.Details.partner
         case .guest:
@@ -89,7 +82,7 @@ private enum TextType {
 
 final class SenderCellComponent: UIView {
 
-    private var senderType: TextType?
+    private var type: SenderType?
 
     let avatarSpacer = UIView()
     let avatar = UserImageView()
@@ -154,7 +147,7 @@ final class SenderCellComponent: UIView {
 
     func configure(with user: UserType, in conversation: ConversationLike?) {
         avatar.user = user
-        senderType = TextType(user: user, conversation: conversation)
+        type = SenderType(user: user, conversation: conversation)
         configureNameLabel(for: user)
 
         if !ProcessInfo.processInfo.isRunningTests,
@@ -167,15 +160,15 @@ final class SenderCellComponent: UIView {
         authorLabel.attributedText = attributedName(for: user)
     }
 
-    private func attributedName(for textType: TextType, string: String) -> NSAttributedString {
-        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: textType.color, .font: textType.font])
+    private func attributedName(for type: SenderType, string: String) -> NSAttributedString {
+        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: type.colorText, .font: UIFont.mediumSemiboldFont])
 
-        guard let icon = textType.icon else {
+        guard let icon = type.icon else {
             return baseAttributedString
         }
 
         let attachment = NSTextAttachment.textAttachment(for: icon, with: UIColor.from(scheme: .iconGuest), iconSize: 12, verticalCorrection: -1.5)
-        attachment.accessibilityLabel = textType.accessibilityString
+        attachment.accessibilityLabel = type.accessibilityString
 
         return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
     }
@@ -183,7 +176,7 @@ final class SenderCellComponent: UIView {
     private func attributedName(for user: UserType) -> NSAttributedString? {
         let fullName = user.name ?? ""
 
-        guard let senderType = senderType  else {
+        guard let senderType = type  else {
             return nil
         }
         return attributedName(for: senderType, string: fullName)
