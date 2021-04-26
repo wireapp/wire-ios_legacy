@@ -36,6 +36,8 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         oneToOneConversation = createOneOnOneConversation()
 
         sut = SenderCellComponent(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
+
+        ColorScheme.default.variant = .light
         sut.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
@@ -51,6 +53,20 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
 
     func test_SenderIsExternal_OneOnOneConversation() {
         // GIVEN
+        mockUser.teamRole = .partner
+
+        // WHEN
+        sut.configure(with: mockUser, in: oneToOneConversation)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func test_SenderIsExternal_OneOnOneConversation_DarkMode() {
+        // GIVEN
+        ColorScheme.default.variant = .dark
+        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+
         mockUser.teamRole = .partner
 
         // WHEN
@@ -110,6 +126,20 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
 
     func test_SenderIsGuest_GroupConversation() {
         // GIVEN
+        mockUser.isGuestInConversation = true
+
+        // WHEN
+        sut.configure(with: mockUser, in: groupConversation)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func test_SenderIsGuest_GroupConversation_DarkMode() {
+        // GIVEN
+        ColorScheme.default.variant = .dark
+        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+
         mockUser.isGuestInConversation = true
 
         // WHEN
