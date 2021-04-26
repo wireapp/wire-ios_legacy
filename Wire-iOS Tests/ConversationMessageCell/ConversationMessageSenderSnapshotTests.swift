@@ -36,6 +36,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         oneToOneConversation = createOneOnOneConversation()
 
         sut = SenderCellComponent(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
+        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     override func tearDown() {
