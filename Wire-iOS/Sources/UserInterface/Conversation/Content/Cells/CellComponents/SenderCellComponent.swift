@@ -33,14 +33,14 @@ private struct SenderCellConfiguration {
             textColor = .from(scheme: .textForeground)
             icon = .bot
         } else if user.isExternalPartner {
-            textColor = user.accentColor
+            textColor = user.nameAccentColor
             icon = .externalPartner
         } else if let conversation = conversation,
                   user.isGuest(in: conversation) {
-            textColor = user.accentColor
+            textColor = user.nameAccentColor
             icon = .guest
         } else {
-            textColor = user.accentColor
+            textColor = user.nameAccentColor
             icon = .none
         }
     }
