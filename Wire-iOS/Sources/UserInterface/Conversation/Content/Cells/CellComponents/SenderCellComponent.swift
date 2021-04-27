@@ -21,68 +21,33 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-private enum SenderType {
-    case member(accent: UIColor)
-    case external(accent: UIColor)
-    case guest(accent: UIColor)
-    case bot
+private struct SenderCellConfiguration {
 
-    var colorText: UIColor {
-        switch self {
-        case let .member(accent: accentColor),
-             let .guest(accent: accentColor),
-             let .external(accent: accentColor):
-            return accentColor
-        case .bot:
-            return .from(scheme: .textForeground)
-        }
-    }
+    let fullName: String
+    let textColor: UIColor
+    let icon: StyleKitIcon?
 
-    var icon: StyleKitIcon? {
-        switch self {
-        case .member:
-            return .none
-        case .external:
-            return .externalPartner
-        case .bot:
-            return .bot
-        case .guest:
-            return .guest
-        }
-    }
-
-    var accessibilityString: String {
-        switch self {
-        case .member:
-            return "Team member"
-        case .external:
-            return L10n.Localizable.Profile.Details.partner
-        case .guest:
-            return L10n.Localizable.Profile.Details.guest
-        case .bot:
-            return L10n.Localizable.General.service
-        }
-    }
-
-    init(user: UserType, conversation: ConversationLike?) {
-        let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
-
+    init(user: UserType, in conversation: ConversationLike?) {
+        fullName = user.name ?? ""
         if user.isServiceUser {
-            self = .bot
+            textColor = .from(scheme: .textForeground)
+            icon = .bot
         } else if user.isExternalPartner {
-            self = .external(accent: accentColor)
+            textColor = user.accentColor
+            icon = .externalPartner
         } else if let conversation = conversation,
                   user.isGuest(in: conversation) {
-            self = .guest(accent: accentColor)
+            textColor = user.accentColor
+            icon = .guest
         } else {
-            self = .member(accent: accentColor)
+            textColor = user.accentColor
+            icon = .none
         }
     }
+
 }
 
 final class SenderCellComponent: UIView {
-
-    private var type: SenderType?
 
     let avatarSpacer = UIView()
     let avatar = UserImageView()
@@ -91,19 +56,38 @@ final class SenderCellComponent: UIView {
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
 
+    var conversation: ConversationLike?
+
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setUp()
+        setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        setUp()
+        setup()
     }
 
-    func setUp() {
+    // MARK: - Configuration
+
+    func configure(with user: UserType, in conversation: ConversationLike?) {
+        avatar.user = user
+        self.conversation = conversation
+
+        let configuration = SenderCellConfiguration(user: user, in: conversation)
+        configureNameLabel(for: configuration)
+
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+        }
+    }
+
+    private func setup() {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.font = .normalLightFont
         authorLabel.accessibilityIdentifier = "author.name"
@@ -129,7 +113,7 @@ final class SenderCellComponent: UIView {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
 
@@ -145,44 +129,26 @@ final class SenderCellComponent: UIView {
             ])
     }
 
-    func configure(with user: UserType, in conversation: ConversationLike?) {
-        avatar.user = user
-        type = SenderType(user: user, conversation: conversation)
-        configureNameLabel(for: user)
-
-        if !ProcessInfo.processInfo.isRunningTests,
-           let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
-        }
+    private func configureNameLabel(for configuration: SenderCellConfiguration) {
+        authorLabel.attributedText = attributedName(for: configuration)
     }
 
-    private func configureNameLabel(for user: UserType) {
-        authorLabel.attributedText = attributedName(for: user)
-    }
+    private func attributedName(for configuration: SenderCellConfiguration) -> NSAttributedString {
+        let baseAttributedString = NSAttributedString(string: configuration.fullName,
+                                                      attributes: [.foregroundColor: configuration.textColor,
+                                                                   .font: UIFont.mediumSemiboldFont])
 
-    private func attributedName(for type: SenderType, string: String) -> NSAttributedString {
-        let baseAttributedString = NSAttributedString(string: string, attributes: [.foregroundColor: type.colorText, .font: UIFont.mediumSemiboldFont])
-
-        guard let icon = type.icon else {
+        guard let icon = configuration.icon else {
             return baseAttributedString
         }
-
-        let attachment = NSTextAttachment.textAttachment(for: icon, with: UIColor.from(scheme: .iconGuest), iconSize: 12, verticalCorrection: -1.5)
-        attachment.accessibilityLabel = type.accessibilityString
+        let attachment = NSTextAttachment.textAttachment(for: icon,
+                                                         with: UIColor.from(scheme: .iconGuest),
+                                                         iconSize: 12, verticalCorrection: -1.5)
 
         return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
     }
 
-    private func attributedName(for user: UserType) -> NSAttributedString? {
-        let fullName = user.name ?? ""
-
-        guard let senderType = type  else {
-            return nil
-        }
-        return attributedName(for: senderType, string: fullName)
-    }
-
-    // MARK: - tap gesture of avatar
+    // MARK: - Tap gesture of avatar
 
     @objc func tappedOnAvatar() {
         guard let user = avatar.user else { return }
@@ -201,7 +167,8 @@ extension SenderCellComponent: ZMUserObserver {
             return
         }
 
-        configureNameLabel(for: changeInfo.user)
+        let configuration = SenderCellConfiguration(user: changeInfo.user, in: conversation)
+        configureNameLabel(for: configuration)
     }
 
 }
