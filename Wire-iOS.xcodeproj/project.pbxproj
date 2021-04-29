@@ -1542,7 +1542,6 @@
 		F15650F221DD1B4100210504 /* UIFont+Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */; };
 		F15650F321DD1B6D00210504 /* UserType+ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* UserType+ProfileImage.swift */; };
 		F15650F921DD20D900210504 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
-		F15650FD21DD20D900210504 /* UserType+ZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C932179D41100522E61 /* UserType+ZMUser.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */; };
 		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
@@ -1957,7 +1956,6 @@
 		5E65A7B021345314008BFCC0 /* TeamEmailVerificationCodeAvailableEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamEmailVerificationCodeAvailableEventHandler.swift; sourceTree = "<group>"; };
 		5E672C8E2178D85200522E61 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeUserImageView.swift; sourceTree = "<group>"; };
-		5E672C932179D41100522E61 /* UserType+ZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+ZMUser.swift"; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E7315342191EADF00255A78 /* Message+Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Formatters.swift"; sourceTree = "<group>"; };
 		5E7315362191FCC400255A78 /* ConversationMessageActionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageActionControllerTests.swift; sourceTree = "<group>"; };
@@ -5407,7 +5405,6 @@
 				EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */,
 				EFB97F6F22EF45D50092A620 /* UIImage+ImageUtilities.swift */,
 				BF7EF5441D953B3F003E3999 /* Date+Format.swift */,
-				5E672C932179D41100522E61 /* UserType+ZMUser.swift */,
 				168A16A31D95964B005CFA6C /* String+URL.swift */,
 				A955D3D423F576F400304851 /* URL+String.swift */,
 				BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */,
@@ -7902,7 +7899,6 @@
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
 				162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */,
 				BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */,
-				F15650FD21DD20D900210504 /* UserType+ZMUser.swift in Sources */,
 				EEE104052126F68A003C779B /* CameraController.swift in Sources */,
 				EF066E1821EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
