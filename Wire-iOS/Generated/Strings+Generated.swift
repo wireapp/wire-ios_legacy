@@ -1040,11 +1040,19 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
-      /// Guests are present
+      /// **Externals** and **guests** are present
+      internal static let externalsGuestsPresent = L10n.tr("Localizable", "conversation.externals_guests_present")
+      /// **Externals**, **guests** and **services** are present
+      internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.externals_guests_services_present")
+      /// **Externals** are present
+      internal static let externalsPresent = L10n.tr("Localizable", "conversation.externals_present")
+      /// **External**s and **services** are present
+      internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.externals_services_present")
+      /// **Guests** are present
       internal static let guestsPresent = L10n.tr("Localizable", "conversation.guests_present")
-      /// Guests and services are present
+      /// **Guests** and **services** are present
       internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.guests_services_present")
-      /// Services are active
+      /// **Services** are active
       internal static let servicesPresent = L10n.tr("Localizable", "conversation.services_present")
       internal enum Action {
         /// Search

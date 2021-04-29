@@ -23,13 +23,23 @@ extension ConversationViewController {
 
     /// The state that the guest bar should adopt in the current configuration.
     var currentGuestBarState: GuestsBarController.State {
+        typealias Conversation = L10n.Localizable.Conversation
+
         switch conversation.externalParticipantsState {
         case [.visibleGuests]:
-            return .visible(labelKey: "conversation.guests_present", identifier: "label.conversationview.hasguests")
+            return .visible(labelKey: Conversation.guestsPresent, identifier: "label.conversationview.hasguests")
         case [.visibleServices]:
-            return .visible(labelKey: "conversation.services_present", identifier: "label.conversationview.hasservices")
+            return .visible(labelKey: Conversation.servicesPresent, identifier: "label.conversationview.hasservices")
+        case [.visibleExternals]:
+            return .visible(labelKey: Conversation.externalsPresent, identifier: "label.conversationview.hasexternals")
         case [.visibleGuests, .visibleServices]:
-            return .visible(labelKey: "conversation.guests_services_present", identifier: "label.conversationview.hasguestsandservices")
+            return .visible(labelKey: Conversation.guestsServicesPresent, identifier: "label.conversationview.hasguestsandservices")
+        case [.visibleExternals, .visibleServices]:
+            return .visible(labelKey: Conversation.externalsServicesPresent, identifier: "label.conversationview.hasexternalsandservices")
+        case [.visibleExternals, .visibleGuests]:
+            return .visible(labelKey: Conversation.externalsGuestsPresent, identifier: "label.conversationview.hasexternalsandguests")
+        case [.visibleExternals, .visibleGuests, .visibleServices]:
+            return .visible(labelKey: Conversation.externalsGuestsServicesPresent, identifier: "label.conversationview.hasexternalsandguestsandservices")
         default:
             return .hidden
         }
