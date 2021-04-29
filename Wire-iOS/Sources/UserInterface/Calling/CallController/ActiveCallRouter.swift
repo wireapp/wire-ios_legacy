@@ -157,7 +157,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     // MARK: - Helpers
 
     private func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
-        if isActiveCallShown {
+        if !isActiveCallShown {
             action()
         } else {
             scheduledPostCallAction = action
