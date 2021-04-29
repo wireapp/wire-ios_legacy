@@ -17,4 +17,4 @@
 # along with this program. If not, see http://www.gnu.org/licenses/.
 #
 
-export APPSTORE_AVS_VERSION=7.0.8
+export APPSTORE_AVS_VERSION=7.1.1
