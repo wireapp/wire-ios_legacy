@@ -467,6 +467,7 @@
 		634497D924A492140000131D /* VideoParticipantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497D824A492140000131D /* VideoParticipantDetailView.swift */; };
 		634497DB24A49BF80000131D /* BaseVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497DA24A49BF70000131D /* BaseVideoPreviewView.swift */; };
 		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
+		634FDB87263AF418002D6B94 /* ActiveCallRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */; };
 		6357B41626121D55008F1761 /* MockPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */; };
 		6357B41A261226C4008F1761 /* MockPinchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */; };
 		63589AA124DAA398008FEC8F /* UIAlertController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */; };
@@ -2118,6 +2119,7 @@
 		634497D824A492140000131D /* VideoParticipantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoParticipantDetailView.swift; sourceTree = "<group>"; };
 		634497DA24A49BF70000131D /* BaseVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVideoPreviewView.swift; sourceTree = "<group>"; };
 		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
+		634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallRouterTests.swift; sourceTree = "<group>"; };
 		6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPinchGestureRecognizer.swift; sourceTree = "<group>"; };
 		63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Permissions.swift"; sourceTree = "<group>"; };
@@ -4339,6 +4341,7 @@
 				16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */,
 				634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */,
 				BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */,
+				634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -8780,6 +8783,7 @@
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
+				634FDB87263AF418002D6B94 /* ActiveCallRouterTests.swift in Sources */,
 				EEE60E2C2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
 				BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */,
