@@ -340,7 +340,7 @@
 "conversation.guests_services_present" = "**Guests** and **services** are present";
 "conversation.externals_services_present" = "**External**s and **services** are present";
 "conversation.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.externals_guests_services_present" = "**Externals**, **guests** and **services** are present";
+"conversation.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
 "conversation.action.search" = "Search";
 
 // Reply message preview
@@ -1872,4 +1872,3 @@
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Unlock";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
-
