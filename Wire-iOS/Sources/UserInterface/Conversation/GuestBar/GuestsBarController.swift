@@ -144,7 +144,6 @@ private extension DownStyle {
         let style = DownStyle()
         style.baseFont = UIFont.systemFont(ofSize: 12, contentSizeCategory: .medium, weight: .light)
         style.baseFontColor = .white
-        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
 
         return style
