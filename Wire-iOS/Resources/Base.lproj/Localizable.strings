@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "No Contacts.";
 
-"peoplepicker.no_matching_results_title" = "No results.";
-"peoplepicker.no_matching_results_message" = "Enter a full email address.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Send an invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Share contacts";
+"peoplepicker.no_matching_results.action.learn_more" = "Learn more";
+"peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Please enter a valid email address";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Enter a full email address or";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "share contacts";
-
-"peoplepicker.share_contacts.no_results.title" = "Find people by name or email address";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "No results.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Everyone’s here.";
 
 "add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
@@ -685,8 +679,8 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.grid.hints.fullscreen" = "Double Tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double Tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video paused";
@@ -1803,6 +1797,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";

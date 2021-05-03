@@ -57,6 +57,12 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "about.website.title")
       }
     }
+    internal enum AccountDeletedMissingPasscodeAlert {
+      /// In order to use Wire, please set a passcode in your device settings.
+      internal static let message = L10n.tr("Localizable", "account_deleted_missing_passcode_alert.message")
+      /// No device passcode
+      internal static let title = L10n.tr("Localizable", "account_deleted_missing_passcode_alert.title")
+    }
     internal enum AccountDeletedSessionExpiredAlert {
       /// The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.
       internal static let message = L10n.tr("Localizable", "account_deleted_session_expired_alert.message")
@@ -64,8 +70,6 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "account_deleted_session_expired_alert.title")
     }
     internal enum AddParticipants {
-      /// Everyone’s here.
-      internal static let allContactsAdded = L10n.tr("Localizable", "add_participants.all_contacts_added")
       internal enum Alert {
         /// The group is full
         internal static let title = L10n.tr("Localizable", "add_participants.alert.title")
@@ -272,9 +276,9 @@ internal enum L10n {
         /// No active video speakers...
         internal static let noActiveSpeakers = L10n.tr("Localizable", "call.grid.no_active_speakers")
         internal enum Hints {
-          /// Double Tap on a tile for fullscreen
+          /// Double tap on a tile for fullscreen
           internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
-          /// Double Tap to go back, pinch to zoom
+          /// Double tap to go back, pinch to zoom
           internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
           /// Pinch to zoom
           internal static let zoom = L10n.tr("Localizable", "call.grid.hints.zoom")
@@ -2606,24 +2610,8 @@ internal enum L10n {
       internal static let inviteTeamMembers = L10n.tr("Localizable", "peoplepicker.invite_team_members")
       /// No Contacts.
       internal static let noContactsTitle = L10n.tr("Localizable", "peoplepicker.no_contacts_title")
-      /// share contacts
-      internal static let noMatchingResultsAfterAddressBookUploadButton = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_button")
-      /// Enter a full email address or
-      internal static let noMatchingResultsAfterAddressBookUploadMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_message")
       /// No results.
       internal static let noMatchingResultsAfterAddressBookUploadTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_title")
-      /// Enter a full email address.
-      internal static let noMatchingResultsMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_message")
-      /// Please enter a valid email address
-      internal static let noMatchingResultsProvideValidEmail = L10n.tr("Localizable", "peoplepicker.no_matching_results_provide_valid_email")
-      /// Services are helpers that can improve your workflow.
-      internal static let noMatchingResultsServicesAdminTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_admin_title")
-      /// Manage Services
-      internal static let noMatchingResultsServicesManageServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_manage_services_title")
-      /// Services are helpers that can improve your workflow. To enable them, ask your administrator.
-      internal static let noMatchingResultsServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_title")
-      /// No results.
-      internal static let noMatchingResultsTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_title")
       /// No matching results. Try entering a different name.
       internal static let noSearchResults = L10n.tr("Localizable", "peoplepicker.no_search_results")
       /// Search by name or username
@@ -2682,10 +2670,28 @@ internal enum L10n {
       }
       internal enum NoMatchingResults {
         internal enum Action {
+          /// Learn more
+          internal static let learnMore = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.learn_more")
+          /// Manage Services
+          internal static let manageServices = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.manage_services")
           /// Send an invitation
           internal static let sendInvite = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.send_invite")
           /// Share contacts
           internal static let shareContacts = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.share_contacts")
+        }
+        internal enum Message {
+          /// No results.
+          internal static let services = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services")
+          /// Services are helpers that can improve your workflow. To enable them, ask your administrator.
+          internal static let servicesNotEnabled = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled")
+          /// Services are helpers that can improve your workflow.
+          internal static let servicesNotEnabledAdmin = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled_admin")
+          /// Find people in Wire by name or @username
+          internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users")
+          /// Everyone’s here.
+          internal static let usersAllAdded = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users_all_added")
+          /// Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname
+          internal static let usersAndFederation = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.usersAndFederation")
         }
       }
       internal enum QuickAction {
@@ -2724,12 +2730,6 @@ internal enum L10n {
         internal enum OpenConversation {
           /// Open conversation
           internal static let item = L10n.tr("Localizable", "peoplepicker.services.open_conversation.item")
-        }
-      }
-      internal enum ShareContacts {
-        internal enum NoResults {
-          /// Find people by name or email address
-          internal static let title = L10n.tr("Localizable", "peoplepicker.share_contacts.no_results.title")
         }
       }
       internal enum Suggested {

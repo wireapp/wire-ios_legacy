@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontakti";
 "peoplepicker.header.contacts_personal" = "Osobni kontakti";
 "peoplepicker.header.directory" = "Povežite se";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Dodaj sudionike";
 "peoplepicker.group.title.plural" = "Dodaj sudionike (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Kreirajte grupu";
 "peoplepicker.quick-action.create-guest-room" = "Stvori sobu za goste";
 "peoplepicker.quick-action.admin-services" = "Upravljanje uslugama";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Svi su ovdje.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Video pauziran";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Video pauziran";
 "call.video.too_many.alert.title" = "Previše ljudi za video";
 "call.video.too_many.alert.message" = "Video pozivi rade samo u grupama od 4 i manje.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";

@@ -39,7 +39,7 @@ enum AppState: Equatable {
         case (.authenticated, .authenticated):
             return true
         case let (.unauthenticated(error1), .unauthenticated(error2)):
-            return error1 == error2
+            return error1 === error2
         case (blacklisted, blacklisted):
             return true
         case (jailbroken, jailbroken):

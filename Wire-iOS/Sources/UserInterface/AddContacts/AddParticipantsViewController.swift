@@ -143,7 +143,8 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     init(context: Context,
-         variant: ColorSchemeVariant = ColorScheme.default.variant) {
+         variant: ColorSchemeVariant = ColorScheme.default.variant,
+         isFederationEnabled: Bool = Settings.shared[.federationEnabled] == true) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -177,9 +178,12 @@ final class AddParticipantsViewController: UIViewController {
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
                                                                   isAddingParticipants: true,
-                                                                  shouldIncludeGuests: viewModel.context.includeGuests)
+                                                                  shouldIncludeGuests: viewModel.context.includeGuests,
+                                                                  isFederationEnabled: isFederationEnabled)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: SelfUser.current.canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: self.variant,
+                                                 isSelfUserAdmin: SelfUser.current.canManageTeam,
+                                                 isFederationEnabled: isFederationEnabled)
         super.init(nibName: nil, bundle: nil)
 
         emptyResultView.delegate = self
@@ -465,6 +469,8 @@ extension AddParticipantsViewController: EmptySearchResultsViewDelegate {
         switch action {
         case .openManageServices:
             URL.manageTeam(source: .onboarding).openInApp(above: self)
+        case .openSearchSupportPage:
+            URL.wr_searchSupport.open()
         }
     }
 }

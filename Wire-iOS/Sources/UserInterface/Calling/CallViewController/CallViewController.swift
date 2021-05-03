@@ -336,7 +336,7 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
     }
 
     private func updateVideoGridPresentationModeIfNeeded(participants: [CallParticipant]) {
-        guard participants.filter(\.state.isConnected).count <= 2 else { return }
+        guard !participants.hasMoreThanTwoConnectedParticipants else { return }
 
         voiceChannel.videoGridPresentationMode = .allVideoStreams
     }

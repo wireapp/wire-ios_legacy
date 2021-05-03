@@ -114,7 +114,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.viewDidAppear)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: true)])
     }
 
     func test_UnlockButtonTapped() {
@@ -122,7 +122,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.unlockButtonTapped)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: true)])
     }
 
     func test_PasscodeSetupCompleted() {
@@ -162,7 +162,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.applicationWillEnterForeground)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: false)])
     }
 
 }

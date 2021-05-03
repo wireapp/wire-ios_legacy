@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "添加参与者";
 "peoplepicker.group.title.plural" = "添加参与者(%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "创建群聊";
 "peoplepicker.quick-action.create-guest-room" = "创建访客聊天室";
 "peoplepicker.quick-action.admin-services" = "管理服务";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "所有用户已加入群聊";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "视频已暂停";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "视频已暂停";
 "call.video.too_many.alert.title" = "超出群组通话人数";
 "call.video.too_many.alert.message" = "视频通话群不能超过4个人";
 
@@ -1632,7 +1638,7 @@
 "databaseloadingfailure.alert.title" = "Not Enough Storage";
 "databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
 "databaseloadingfailure.alert.settings" = "打开设置";
-"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database" = "删除数据库";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "继续";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "会话已过期";
 "account_deleted_session_expired_alert.message" = "应用程序长期未与服务器通信，或您的会话已被拒绝。";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "未选择";

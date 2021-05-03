@@ -175,7 +175,6 @@ final class ProfileViewController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground)
 
-        setupNavigationItems()
         setupHeader()
         setupTabsController()
         setupConstraints()
@@ -185,6 +184,7 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupNavigationItems()
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: navigationItem.titleView)
     }
 

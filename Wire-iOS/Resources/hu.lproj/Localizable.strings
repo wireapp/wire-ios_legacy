@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Névjegyek";
 "peoplepicker.header.contacts_personal" = "Személyes Névjegyzék";
 "peoplepicker.header.directory" = "Kapcsolatfelvétel";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Résztvevők hozzáadása";
 "peoplepicker.group.title.plural" = "Résztvevők hozzáadása (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Csoport létrehozása";
 "peoplepicker.quick-action.create-guest-room" = "Vendégszoba létrehozása";
 "peoplepicker.quick-action.admin-services" = "Szolgáltatások kezelése";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Mindenki itt van.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
-"call.video.paused" = "Videó szüneteltetve";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Videó szüneteltetve";
 "call.video.too_many.alert.title" = "Too many people for Video";
 "call.video.too_many.alert.message" = "Videóhívások 4 vagy kevesebb emberrel lehetségesek.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "nincs kiválasztva";

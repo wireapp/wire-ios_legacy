@@ -445,8 +445,14 @@ extension AppRootRouter {
 
         switch reason {
         case .sessionExpired:
-            rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
-                                                        message: "account_deleted_session_expired_alert.message".localized)
+            rootViewController.presentAlertWithOKButton(
+                title: L10n.Localizable.AccountDeletedSessionExpiredAlert.title,
+                message: L10n.Localizable.AccountDeletedSessionExpiredAlert.message)
+
+        case .biometricPasscodeNotAvailable:
+            rootViewController.presentAlertWithOKButton(
+                title: L10n.Localizable.AccountDeletedMissingPasscodeAlert.title,
+                message: L10n.Localizable.AccountDeletedMissingPasscodeAlert.message)
 
         case .databaseWiped:
             let wipeCompletionViewController = WipeCompletionViewController()

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contatos";
 "peoplepicker.header.contacts_personal" = "Contatos pessoais";
 "peoplepicker.header.directory" = "Conectar";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Adicionar Participantes";
 "peoplepicker.group.title.plural" = "Adicionar Participantes (%d)";
@@ -109,6 +110,8 @@
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
 "peoplepicker.quick-action.create-guest-room" = "Criar grupo de convidados";
 "peoplepicker.quick-action.admin-services" = "Gerenciar serviços";
+
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
@@ -682,8 +685,11 @@
 
 "call.grid.no_active_speakers" = "Não há palestrantes de vídeo ativos...";
 
-"call.video.paused" = "Vídeo pausado";
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
+"call.video.paused" = "Vídeo pausado";
 "call.video.too_many.alert.title" = "Muitas pessoas para Vídeo";
 "call.video.too_many.alert.message" = "Vídeo chamadas só funcionam em grupos de 4 ou menos.";
 
@@ -1797,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Sua sessão expirou";
 "account_deleted_session_expired_alert.message" = "O aplicativo não se comunicou com o servidor por um longo período ou sua sessão foi invalidada remotamente.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "não selecionado";
