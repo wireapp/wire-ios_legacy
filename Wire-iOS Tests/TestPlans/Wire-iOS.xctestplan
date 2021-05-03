@@ -6,9 +6,35 @@
       "options" : {
 
       }
+    },
+    {
+      "id" : "9C30DC5C-79E0-4EFB-BE4A-968ADAE55533",
+      "name" : "code coverage",
+      "options" : {
+
+      }
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Wire-iOS.xcodeproj",
+          "identifier" : "8F42C537199244A700288E4D",
+          "name" : "Wire-iOS"
+        },
+        {
+          "containerPath" : "container:Wire-iOS.xcodeproj",
+          "identifier" : "168A16A81D9597C2005CFA6C",
+          "name" : "Wire Share Extension"
+        },
+        {
+          "containerPath" : "container:Wire-iOS.xcodeproj",
+          "identifier" : "F1FEA14921DCEB1700790A54",
+          "name" : "WireCommonComponents"
+        }
+      ]
+    },
     "commandLineArgumentEntries" : [
       {
         "argument" : "-com.apple.CoreData.ConcurrencyDebug 1"
