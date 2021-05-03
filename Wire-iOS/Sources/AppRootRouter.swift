@@ -402,7 +402,7 @@ extension AppRootRouter {
 
         if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
-
+            urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
 
