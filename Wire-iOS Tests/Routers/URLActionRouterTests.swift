@@ -69,10 +69,10 @@ final class URLActionRouterTests: XCTestCase {
         router.authenticatedRouter = authenticatedRouter
 
         // WHEN
-        router.navigate(to: .converationList)
+        router.navigate(to: .conversationList)
 
         // THEN
-        guard case .converationList = authenticatedRouter.didNavigateToDestination else {
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
             return XCTFail()
         }
     }
@@ -81,13 +81,13 @@ final class URLActionRouterTests: XCTestCase {
         // GIVEN
         let authenticatedRouter = MockAuthenticatedRouter()
         let router = TestableURLActionRouter(viewController: RootViewController())
-        router.navigate(to: .converationList)
+        router.navigate(to: .conversationList)
 
         // WHEN
         router.authenticatedRouter = authenticatedRouter
 
         // THEN
-        guard case .converationList = authenticatedRouter.didNavigateToDestination else {
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
             return XCTFail()
         }
     }

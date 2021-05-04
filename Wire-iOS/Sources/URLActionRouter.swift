@@ -156,7 +156,7 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     func showConversationList() {
-        navigate(to: .converationList)
+        navigate(to: .conversationList)
     }
 
     // MARK: - Private Implementation

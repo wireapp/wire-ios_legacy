@@ -23,7 +23,7 @@ public enum NavigationDestination {
     case conversation(ZMConversation, ZMConversationMessage?)
     case userProfile(UserType)
     case connectionRequest(UUID)
-    case converationList
+    case conversationList
 }
 
 protocol AuthenticatedRouterProtocol: class {
@@ -84,7 +84,7 @@ extension AuthenticatedRouter: AuthenticatedRouterProtocol {
             _viewController?.showConversation(converation, at: message)
         case .connectionRequest(let userId):
             _viewController?.showConnectionRequest(userId: userId)
-        case .converationList:
+        case .conversationList:
             _viewController?.showConversationList()
         case .userProfile(let user):
             _viewController?.showUserProfile(user: user)
