@@ -72,8 +72,8 @@ final class URLActionRouterTests: XCTestCase {
         router.navigate(to: .converationList)
 
         // THEN
-        if case .converationList = authenticatedRouter.didNavigateToDestination { } else {
-            XCTFail()
+        guard case .converationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
         }
     }
 
@@ -87,8 +87,8 @@ final class URLActionRouterTests: XCTestCase {
         router.authenticatedRouter = authenticatedRouter
 
         // THEN
-        if case .converationList = authenticatedRouter.didNavigateToDestination { } else {
-            XCTFail()
+        guard case .converationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
         }
     }
 }
